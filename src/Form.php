@@ -188,9 +188,9 @@ abstract class Form implements FormInterface
      * {@see getErrors()}
      * {@see getFirstErrors()}
      */
-    public function getFirstError(string $attribute): ?string
+    public function getFirstError(string $attribute): string
     {
-        return isset($this->errors[$attribute]) ? reset($this->errors[$attribute]) : null;
+        return isset($this->errors[$attribute]) ? reset($this->errors[$attribute]) : '';
     }
 
     /**
@@ -234,11 +234,6 @@ abstract class Form implements FormInterface
     /**
      * Populates the model with input data.
      *
-     * This method provides a convenient shortcut for:
-     *
-     * ```php
-     * ```
-     *
      * which, with `load()` can be written as:
      *
      * ```php
@@ -251,7 +246,8 @@ abstract class Form implements FormInterface
      * ```
      *
      * `load()` gets the `'FormName'` from the model's [[formName()]] method (which you may override), unless the
-     * `$formName` parameter is given. If the form name is empty, `load()` populates the model with the whole of `$data`,
+     * `$formName` parameter is given. If the form name is empty, `load()` populates the model with the whole of
+     * `$data`,
      * instead of `$data['FormName']`.
      *
      * Note, that the data being populated is subject to the safety check by [[setAttributes()]].
