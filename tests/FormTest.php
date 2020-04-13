@@ -69,17 +69,6 @@ final class FormTest extends TestCase
         $this->assertEquals($expected, $this->loginForm->attributes());
     }
 
-    public function testAttributesLabels(): void
-    {
-        $expected = [
-            'login' => 'Login:',
-            'password' => 'Password:',
-            'rememberMe' => 'remember Me:'
-        ];
-
-        $this->assertEquals($expected, $this->loginForm->attributesLabels());
-    }
-
     public function testGetAttributes(): void
     {
         $expected = [
@@ -91,10 +80,28 @@ final class FormTest extends TestCase
         $this->assertEquals($expected, $this->loginForm->getAttributes());
     }
 
+    public function testGetAttributeHint(): void
+    {
+        $this->assertEquals('Write your id or email.', $this->loginForm->getAttributeHint('login'));
+        $this->assertEquals('Write your password.', $this->loginForm->getAttributeHint('password'));
+        $this->assertEmpty($this->loginForm->getAttributeHint('noExist'));
+    }
+
     public function testGetAttributeLabel(): void
     {
         $this->assertEquals('Login:', $this->loginForm->getAttributeLabel('login'));
         $this->assertEquals('Testme', $this->loginForm->getAttributeLabel('testme'));
+    }
+
+    public function testGetAttributesLabels(): void
+    {
+        $expected = [
+            'login' => 'Login:',
+            'password' => 'Password:',
+            'rememberMe' => 'remember Me:'
+        ];
+
+        $this->assertEquals($expected, $this->loginForm->getAttributesLabels());
     }
 
     public function testLoad(): void

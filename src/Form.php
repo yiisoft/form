@@ -17,8 +17,6 @@ abstract class Form implements FormInterface
         $this->attributes = $this->attributes();
     }
 
-    abstract public function getFormname(): ?string;
-
     /**
      * Adds a new error to the specified attribute.
      *
@@ -126,6 +124,41 @@ abstract class Form implements FormInterface
     }
 
     /**
+     * Returns the text hint for the specified attribute.
+     *
+     * @param string $attribute the attribute name.
+     *
+     * @return string the attribute hint.
+     *
+     * {@see getAttributesHints()}
+     */
+    public function getAttributeHint(string $attribute): string
+    {
+        $hints = $this->getAttributesHints();
+
+        return isset($hints[$attribute]) ? $hints[$attribute] : '';
+    }
+
+    /**
+     * Returns the attribute hints.
+     *
+     * Attribute hints are mainly used for display purpose. For example, given an attribute `isPublic`, we can declare
+     * a hint `Whether the post should be visible for not logged in users`, which provides user-friendly description of
+     * the attribute meaning and can be displayed to end users.
+     *
+     * Unlike label hint will not be generated, if its explicit declaration is omitted.
+     *
+     * Note, in order to inherit hints defined in the parent class, a child class needs to merge the parent hints with
+     * child hints using functions such as `array_merge()`.
+     *
+     * @return array attribute hints (name => hint)
+     */
+    public function getAttributesHints(): array
+    {
+        return [];
+    }
+
+    /**
      * Returns the text label for the specified attribute.
      *
      * @param string $attribute the attribute name.
@@ -137,11 +170,33 @@ abstract class Form implements FormInterface
      */
     public function getAttributeLabel(string $attribute): string
     {
-        $this->attributesLabels = $this->attributesLabels();
+        $this->attributesLabels = $this->getAttributesLabels();
 
         return isset($this->attributesLabels[$attribute])
             ? $this->attributesLabels[$attribute]
             : $this->generateAttributeLabel($attribute);
+    }
+
+    /**
+     * Returns the form name that this model class should use.
+     *
+     * The form name is mainly used by {\Yiisoft\Form\FormWidget} to determine how to name the input fields for the
+     * attributes in a model. If the form name is "A" and an attribute name is "b", then the corresponding input name
+     * would be "A[b]". If the form name is an empty string, then the input name would be "b".
+     *
+     * The purpose of the above naming schema is that for forms which contain multiple different models, the attributes
+     * of each model are grouped in sub-arrays of the POST-data and it is easier to differentiate between them.
+     *
+     * By default, this method returns the model class name (without the namespace part) as the form name. You may
+     * override it when the model is used in different forms.
+     *
+     * @return string|null the form name of this model class.
+     *
+     * {@see load()}
+     */
+    public function getFormname(): ?string
+    {
+        return null;
     }
 
     /**

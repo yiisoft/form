@@ -12,7 +12,10 @@ interface FormInterface
     public function attributesLabels(): array;
     public function clearErrors(?string $attribute = null): void;
     public function getAttributes(): array;
+    public function getAttributeHint(string $attribute): string;
+    public function getAttributesHints(): array;
     public function getAttributeLabel(string $attribute): string;
+    public function getAttributesLabels(): array;
     public function getErrors(?string $attribute = null): array;
     public function getFirstError(string $attribute): ?string;
     public function getFirstErrors(): array;
