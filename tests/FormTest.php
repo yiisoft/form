@@ -18,7 +18,7 @@ final class FormTest extends TestCase
 
     public function testGetFornname(): void
     {
-        $this->assertEquals('LoginForm', $this->loginForm->getFormname());
+        $this->assertEquals('LoginForm', $this->loginForm->formname());
     }
 
     public function testErrors(): void
@@ -101,7 +101,7 @@ final class FormTest extends TestCase
             'rememberMe' => 'remember Me:'
         ];
 
-        $this->assertEquals($expected, $this->loginForm->getAttributesLabels());
+        $this->assertEquals($expected, $this->loginForm->attributesLabels());
     }
 
     public function testLoad(): void

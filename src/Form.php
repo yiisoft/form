@@ -15,7 +15,26 @@ abstract class Form implements FormInterface
     public function __construct()
     {
         $this->attributes = $this->attributes();
+        $this->attributesLabels = $this->attributesLabels();
     }
+
+    /**
+     * Returns the attribute labels.
+     *
+     * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
+     * declare a label `First Name` which is more user-friendly and can be displayed to end users.
+     *
+     * By default an attribute label is generated using {@see generateAttributeLabel()}. This method allows you to
+     * explicitly specify attribute labels.
+     *
+     * Note, in order to inherit labels defined in the parent class, a child class needs to merge the parent labels
+     * with child labels using functions such as `array_merge()`.
+     *
+     * @return array attribute labels (name => label)
+     *
+     * {@see generateAttributeLabel()}
+     */
+    abstract public function attributesLabels(): array;
 
     /**
      * Adds a new error to the specified attribute.
@@ -44,27 +63,6 @@ abstract class Form implements FormInterface
                 $this->addError($attribute, $error);
              }
         }
-    }
-
-    /**
-     * Returns the attribute labels.
-     *
-     * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
-     * declare a label `First Name` which is more user-friendly and can be displayed to end users.
-     *
-     * By default an attribute label is generated using {@see generateAttributeLabel()}. This method allows you to
-     * explicitly specify attribute labels.
-     *
-     * Note, in order to inherit labels defined in the parent class, a child class needs to merge the parent labels
-     * with child labels using functions such as `array_merge()`.
-     *
-     * @return array attribute labels (name => label)
-     *
-     * {@see generateAttributeLabel()}
-     */
-    public function attributesLabels(): array
-    {
-        return [];
     }
 
     /**
@@ -138,8 +136,6 @@ abstract class Form implements FormInterface
      */
     public function getAttributeLabel(string $attribute): string
     {
-        $this->attributesLabels = $this->getAttributesLabels();
-
         return $this->attributesLabels[$attribute] ?? $this->generateAttributeLabel($attribute);
     }
 
@@ -160,7 +156,7 @@ abstract class Form implements FormInterface
      *
      * {@see load()}
      */
-    public function getFormname(): string
+    public function formname(): string
     {
         return '';
     }
@@ -286,7 +282,7 @@ abstract class Form implements FormInterface
     {
         $result = false;
 
-        $scope = $this->getFormName();
+        $scope = $this->formName();
 
         if ($scope === null && !empty($data)) {
             $this->setAttributes($data);

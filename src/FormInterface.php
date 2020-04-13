@@ -14,12 +14,11 @@ interface FormInterface
     public function getAttributeHint(string $attribute): string;
     public function getAttributesHints(): array;
     public function getAttributeLabel(string $attribute): string;
-    public function getAttributesLabels(): array;
     public function getError(string $attribute): ?array;
     public function getErrors(): ?array;
     public function getFirstError(string $attribute): ?string;
     public function getFirstErrors(): array;
-    public function getFormname(): string;
+    public function formname(): string;
     public function hasErrors(?string $attribute = null): bool;
     public function load(array $data): bool;
 }

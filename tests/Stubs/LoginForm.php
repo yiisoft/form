@@ -50,7 +50,7 @@ class LoginForm extends Form
         ];
     }
 
-    public function getAttributesLabels(): array
+    public function attributesLabels(): array
     {
         return [
             'login' => 'Login:',
@@ -59,7 +59,7 @@ class LoginForm extends Form
         ];
     }
 
-    public function getFormname(): string
+    public function formname(): string
     {
         return 'LoginForm';
     }
