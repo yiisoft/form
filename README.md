@@ -2,17 +2,102 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://github.com/yiisoft.png" height="100px">
     </a>
-    <h1 align="center">Yii _____</h1>
+    <h1 align="center">Yii Form</h1>
     <br>
 </p>
 
-The package ...
+The package allows you to easily implement forms for data entry.
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/_____/v/stable.png)](https://packagist.org/packages/yiisoft/_____)
-[![Total Downloads](https://poser.pugx.org/yiisoft/_____/downloads.png)](https://packagist.org/packages/yiisoft/_____)
-[![Build Status](https://travis-ci.com/yiisoft/_____.svg?branch=master)](https://travis-ci.com/yiisoft/_____)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/_____/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/_____/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/_____/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/_____/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii-form/v/stable.png)](https://packagist.org/packages/yiisoft/yii-form)
+[![Total Downloads](https://poser.pugx.org/yiisoft/yii-form/downloads.png)](https://packagist.org/packages/yiisoft/yii-form)
+[![Build status](https://github.com/yiisoft/yii-form/workflows/build/badge.svg)](https://github.com/yiisoft/yii-form/actions)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/yii-form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/yii-form/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/yii-form/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/yii-form/?branch=master)
 
-## General usage
+## Installation
+
+The package could be installed via composer:
+
+```php
+composer require yiisoft/assets
+```
+## Usage
+
+You must create your form model by extending the abstract form class, defining all the private properties with their respective typehint.
+
+Example: LoginForm.php
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Form;
+
+use Yiisoft\Form\Form;
+
+class LoginForm extends Form
+{
+    /** Define propertys with TypeHint */
+    private ?string $login = null;
+    private ?string $password = null;
+    private bool $rememberMe = false;
+
+    /** Getters propertys */
+    public function getLogin(): ?string
+    {
+        return $this->login;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function getRememberMe(): bool
+    {
+        return $this->rememberMe;
+    }
+
+    /** Setters propertys */
+    public function login(string $value): void
+    {
+        $this->login = $value;
+    }
+
+    public function password(string $value): void
+    {
+        $this->password = $value;
+    }
+
+    public function rememberMe(bool $value): void
+    {
+        $this->rememberMe = $value;
+    }
+
+    /** Define labels */
+    public function attributesLabels(): array
+    {
+        return [
+            'login' => 'Login:',
+            'password' => 'Password:',
+            'rememberMe' => 'remember Me:'
+        ];
+    }
+
+    /** Set formname */
+    public function getFormname(): ?string
+    {
+        return 'LoginForm';
+    }
+}
+```
+
+## Tests
+
+The package is tested with PHPUnit. Tests could be run with
+
+```php
+./vendor/bin/phpunit
+```
 
