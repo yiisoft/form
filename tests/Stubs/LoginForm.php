@@ -59,7 +59,7 @@ class LoginForm extends Form
         ];
     }
 
-    public function getFormname(): ?string
+    public function getFormname(): string
     {
         return 'LoginForm';
     }

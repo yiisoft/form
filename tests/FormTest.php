@@ -37,7 +37,7 @@ final class FormTest extends TestCase
         ];
 
         $this->assertEquals($expected, $this->loginForm->getErrors());
-        $this->assertEquals(['No such user.'], $this->loginForm->getErrors('login'));
+        $this->assertEquals(['No such user.'], $this->loginForm->getError('login'));
 
         $this->loginForm->clearErrors();
 
@@ -66,7 +66,7 @@ final class FormTest extends TestCase
             'rememberMe' => 'bool',
         ];
 
-        $this->assertEquals($expected, $this->loginForm->attributes());
+        $this->assertEquals($expected, $this->loginForm->getAttributes());
     }
 
     public function testGetAttributes(): void

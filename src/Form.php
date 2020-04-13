@@ -10,7 +10,7 @@ abstract class Form implements FormInterface
 {
     private array $attributes = [];
     private array $attributesLabels = [];
-    private array $errors = [];
+    private array $attributesErrors = [];
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ abstract class Form implements FormInterface
      */
     public function addError(string $attribute, string $error): void
     {
-        $this->errors[$attribute][] = $error;
+        $this->attributesErrors[$attribute][] = $error;
     }
 
     /**
@@ -40,42 +40,10 @@ abstract class Form implements FormInterface
     public function addErrors(array $items): void
     {
         foreach ($items as $attribute => $errors) {
-            if (\is_array($errors)) {
-                foreach ($errors as $error) {
-                    $this->addError($attribute, $error);
-                }
-            } else {
-                $this->addError($attribute, $errors);
-            }
+            foreach ((array)$errors as $error) {
+                $this->addError($attribute, $error);
+             }
         }
-    }
-
-    /**
-     * Returns the list of attribute names.
-     *
-     * By default, this method returns all private non-static properties of the class.
-     *
-     * @return array list of attribute names.
-     */
-    public function attributes(): array
-    {
-        $class = new \ReflectionClass($this);
-
-        $type = null;
-
-        foreach ($class->getProperties(\ReflectionProperty::IS_PRIVATE) as $property) {
-            if (!$property->isStatic()) {
-                $type = (new \ReflectionProperty($property->class, $property->name))->getType();
-
-                if ($type !== null) {
-                    $this->attributes[$property->getName()] = $type->getName();
-                } else {
-                    throw new \InvalidArgumentException("You must specify the TypeHint for Class: $property->class");
-                }
-            }
-        }
-
-        return $this->attributes;
     }
 
     /**
@@ -107,9 +75,9 @@ abstract class Form implements FormInterface
     public function clearErrors(?string $attribute = null): void
     {
         if ($attribute === null) {
-            $this->errors = [];
+            $this->attributesErrors = [];
         } else {
-            unset($this->errors[$attribute]);
+            unset($this->attributesErrors[$attribute]);
         }
     }
 
@@ -136,7 +104,7 @@ abstract class Form implements FormInterface
     {
         $hints = $this->getAttributesHints();
 
-        return isset($hints[$attribute]) ? $hints[$attribute] : '';
+        return $hints[$attribute] ?? '';
     }
 
     /**
@@ -172,9 +140,7 @@ abstract class Form implements FormInterface
     {
         $this->attributesLabels = $this->getAttributesLabels();
 
-        return isset($this->attributesLabels[$attribute])
-            ? $this->attributesLabels[$attribute]
-            : $this->generateAttributeLabel($attribute);
+        return $this->attributesLabels[$attribute] ?? $this->generateAttributeLabel($attribute);
     }
 
     /**
@@ -194,18 +160,27 @@ abstract class Form implements FormInterface
      *
      * {@see load()}
      */
-    public function getFormname(): ?string
+    public function getFormname(): string
     {
-        return null;
+        return '';
     }
 
     /**
-     * Returns the errors for all attributes or a single attribute.
+     * Returns the errors for single attribute.
      *
-     * @param string|null $attribute attribute name. Use null to retrieve errors for all attributes.
-     * @property array An array of errors for all attributes. Empty array is returned if no error. The result is a
-     * two-dimensional array. {@see getErrors()} for detailed description.
-     * @return array errors for all attributes or the specified attribute. Empty array is returned if no error.
+     * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
+     *
+     * @return array
+     */
+    public function getError(string $attribute): ?array
+    {
+        return $this->attributesErrors[$attribute] ?? [];
+    }
+
+    /**
+     * Returns the errors for all attributes.
+     *
+     * @return array errors for all attributes or the specified attribute. null is returned if no error.
      *
      * Note that when returning errors for all attributes, the result is a two-dimensional array, like the following:
      *
@@ -224,13 +199,9 @@ abstract class Form implements FormInterface
      * {@see getFirstErrors()}
      * {@see getFirstError()}
      */
-    public function getErrors(?string $attribute = null): array
+    public function getErrors(): ?array
     {
-        if ($attribute === null) {
-            return $this->errors === null ? [] : $this->errors;
-        }
-
-        return isset($this->errors[$attribute]) ? $this->errors[$attribute] : [];
+        return $this->attributesErrors ?? null;
     }
 
     /**
@@ -243,9 +214,9 @@ abstract class Form implements FormInterface
      * {@see getErrors()}
      * {@see getFirstErrors()}
      */
-    public function getFirstError(string $attribute): string
+    public function getFirstError(string $attribute): ?string
     {
-        return isset($this->errors[$attribute]) ? reset($this->errors[$attribute]) : '';
+        return isset($this->attributesErrors[$attribute]) ? reset($this->attributesErrors[$attribute]) : null;
     }
 
     /**
@@ -259,13 +230,13 @@ abstract class Form implements FormInterface
      */
     public function getFirstErrors(): array
     {
-        if (empty($this->errors)) {
+        if (empty($this->attributesErrors)) {
             return [];
         }
 
         $errors = [];
 
-        foreach ($this->errors as $name => $es) {
+        foreach ($this->attributesErrors as $name => $es) {
             if (!empty($es)) {
                 $errors[$name] = \reset($es);
             }
@@ -283,7 +254,7 @@ abstract class Form implements FormInterface
      */
     public function hasErrors(?string $attribute = null): bool
     {
-        return $attribute === null ? !empty($this->errors) : isset($this->errors[$attribute]);
+        return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
     /**
@@ -311,7 +282,7 @@ abstract class Form implements FormInterface
      *
      * @return bool whether `load()` found the expected form in `$data`.
      */
-    public function load($data): bool
+    public function load(array $data): bool
     {
         $result = false;
 
@@ -336,25 +307,53 @@ abstract class Form implements FormInterface
      * {@see safeAttributes()}
      * {@see attributes()}
      */
-    public function setAttributes($values): void
+    public function setAttributes(array $values): void
     {
-        if (\is_array($values)) {
-            foreach ($values as $name => $value) {
-                if (isset($this->attributes[$name])) {
-                    switch ($this->attributes[$name]) {
-                        case 'bool':
-                            $this->$name((bool) $value);
-                            break;
-                        case 'int':
-                            $this->$name((int) $value);
-                            break;
-                        default:
-                            $this->$name($value);
-                            break;
-                    }
+        foreach ($values as $name => $value) {
+            if (isset($this->attributes[$name])) {
+                switch ($this->attributes[$name]) {
+                    case 'bool':
+                        $this->$name((bool) $value);
+                        break;
+                    case 'int':
+                        $this->$name((int) $value);
+                        break;
+                    default:
+                        $this->$name($value);
+                        break;
                 }
             }
         }
+    }
+
+    /**
+     * Returns the list of attribute names.
+     *
+     * By default, this method returns all private non-static properties of the class.
+     *
+     * @throws \ReflectionException
+     *
+     * @return array list of attribute names.
+     */
+    private function attributes(): array
+    {
+        $class = new \ReflectionClass($this);
+
+        $type = null;
+
+        foreach ($class->getProperties(\ReflectionProperty::IS_PRIVATE) as $property) {
+            if (!$property->isStatic()) {
+                $type = (new \ReflectionProperty($property->class, $property->name))->getType();
+
+                if ($type !== null) {
+                    $this->attributes[$property->getName()] = $type->getName();
+                } else {
+                    throw new \InvalidArgumentException("You must specify the TypeHint for Class: $property->class");
+                }
+            }
+        }
+
+        return $this->attributes;
     }
 
     /**
