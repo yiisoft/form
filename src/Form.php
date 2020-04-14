@@ -152,7 +152,7 @@ abstract class Form implements FormInterface
      * By default, this method returns the model class name (without the namespace part) as the form name. You may
      * override it when the model is used in different forms.
      *
-     * @return string|null the form name of this model class.
+     * @return string the form name of this model class.
      *
      * {@see load()}
      */
@@ -284,7 +284,7 @@ abstract class Form implements FormInterface
 
         $scope = $this->formName();
 
-        if ($scope === null && !empty($data)) {
+        if ($scope === '' && !empty($data)) {
             $this->setAttributes($data);
             $result = true;
         } elseif (isset($data[$scope])) {
