@@ -1,7 +1,7 @@
 {
     "name": "yiisoft/yii-form",
     "type": "library",
-    "description": "The package allows you to easily implement forms for data entry.",
+    "description": "The package helps with implementing data entry forms.",
     "keywords": [
         "yii",
         "form"

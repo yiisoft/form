@@ -8,14 +8,14 @@ use Yiisoft\Strings\Inflector;
 
 abstract class Form implements FormInterface
 {
-    private array $attributes = [];
-    private array $attributesLabels = [];
+    private array $attributes;
+    private array $attributesLabels;
     private array $attributesErrors = [];
 
     public function __construct()
     {
         $this->attributes = $this->attributes();
-        $this->attributesLabels = $this->attributesLabels();
+        $this->attributesLabels = $this->attributeLabels();
     }
 
     /**
@@ -34,7 +34,7 @@ abstract class Form implements FormInterface
      *
      * {@see generateAttributeLabel()}
      */
-    abstract public function attributesLabels(): array;
+    abstract public function attributeLabels(): array;
 
     /**
      * Adds a new error to the specified attribute.
@@ -96,11 +96,11 @@ abstract class Form implements FormInterface
      *
      * @return string the attribute hint.
      *
-     * {@see getAttributesHints()}
+     * {@see getAttributeHints()}
      */
     public function getAttributeHint(string $attribute): string
     {
-        $hints = $this->getAttributesHints();
+        $hints = $this->getAttributeHints();
 
         return $hints[$attribute] ?? '';
     }
@@ -119,7 +119,7 @@ abstract class Form implements FormInterface
      *
      * @return array attribute hints (name => hint)
      */
-    public function getAttributesHints(): array
+    public function getAttributeHints(): array
     {
         return [];
     }
@@ -132,7 +132,7 @@ abstract class Form implements FormInterface
      * @return string the attribute label.
      *
      * {@see generateAttributeLabel()}
-     * {@see attributesLabels()}
+     * {@see attributeLabels()}
      */
     public function getAttributeLabel(string $attribute): string
     {
@@ -156,7 +156,7 @@ abstract class Form implements FormInterface
      *
      * {@see load()}
      */
-    public function formname(): string
+    public function formName(): string
     {
         return '';
     }
@@ -366,8 +366,6 @@ abstract class Form implements FormInterface
      */
     private function generateAttributeLabel(string $name): string
     {
-        $inflector = new Inflector();
-
-        return $inflector->camel2words($name, true);
+        return (new Inflector())->camel2words($name, true);
     }
 }

@@ -42,7 +42,7 @@ class LoginForm extends Form
         $this->rememberMe = $value;
     }
 
-    public function getAttributesHints(): array
+    public function getAttributeHints(): array
     {
         return [
             'login' => 'Write your id or email.',
@@ -50,7 +50,7 @@ class LoginForm extends Form
         ];
     }
 
-    public function attributesLabels(): array
+    public function attributeLabels(): array
     {
         return [
             'login' => 'Login:',
@@ -59,7 +59,7 @@ class LoginForm extends Form
         ];
     }
 
-    public function formname(): string
+    public function formName(): string
     {
         return 'LoginForm';
     }

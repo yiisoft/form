@@ -6,7 +6,7 @@
     <br>
 </p>
 
-The package allows you to easily implement forms for data entry.
+The package helps with implementing data entry forms.
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/yii-form/v/stable.png)](https://packagist.org/packages/yiisoft/yii-form)
 [![Total Downloads](https://poser.pugx.org/yiisoft/yii-form/downloads.png)](https://packagist.org/packages/yiisoft/yii-form)
@@ -19,11 +19,13 @@ The package allows you to easily implement forms for data entry.
 The package could be installed via composer:
 
 ```php
-composer require yiisoft/assets
+composer require yiisoft/yii-form
 ```
+
 ## Usage
 
-You must create your form model by extending the abstract form class, defining all the private properties with their respective typehint.
+You must create your form model by extending the abstract form class, defining all the private properties with their
+respective typehint.
 
 Example: LoginForm.php
 
@@ -95,9 +97,8 @@ class LoginForm extends Form
 
 ## Tests
 
-The package is tested with PHPUnit. Tests could be run with
+The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
 ```php
 ./vendor/bin/phpunit
 ```
-
