@@ -336,8 +336,6 @@ abstract class Form implements FormInterface
     {
         $class = new \ReflectionClass($this);
 
-        $type = null;
-
         foreach ($class->getProperties(\ReflectionProperty::IS_PRIVATE) as $property) {
             if (!$property->isStatic()) {
                 $type = (new \ReflectionProperty($property->class, $property->name))->getType();
