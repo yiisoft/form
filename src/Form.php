@@ -11,6 +11,7 @@ abstract class Form implements FormInterface
     private array $attributes;
     private array $attributesLabels;
     private array $attributesErrors = [];
+    private ?Inflector $inflector = null;
 
     public function __construct()
     {
@@ -366,6 +367,10 @@ abstract class Form implements FormInterface
      */
     private function generateAttributeLabel(string $name): string
     {
-        return (new Inflector())->camel2words($name, true);
+        if ($this->inflector === null) {
+            $this->inflector = new Inflector();
+        }
+
+        return $this->inflector->camel2words($name, true);
     }
 }
