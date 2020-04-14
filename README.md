@@ -88,7 +88,7 @@ class LoginForm extends Form
     }
 
     /** Define formname */
-    public function formname(): ?string
+    public function formName(): ?string
     {
         return 'LoginForm';
     }
