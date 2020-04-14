@@ -345,7 +345,7 @@ abstract class Form implements FormInterface
                 if ($type !== null) {
                     $this->attributes[$property->getName()] = $type->getName();
                 } else {
-                    throw new \InvalidArgumentException("You must specify the TypeHint for Class: $property->class");
+                    throw new \InvalidArgumentException("You must specify the type hint for \"$property->class\" class.");
                 }
             }
         }
