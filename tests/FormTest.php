@@ -159,14 +159,14 @@ final class FormTest extends TestCase
         $this->loginForm->login('x');
         $this->loginForm->validate();
         $this->assertEquals(
-            ['Is to short.'],
+            ['Is too short.'],
             $this->loginForm->getError('login')
         );
 
         $this->loginForm->login(\str_repeat('x', 60));
         $this->loginForm->validate();
         $this->assertEquals(
-            'Is to long.',
+            'Is too long.',
             $this->loginForm->getFirstError('login')
         );
 

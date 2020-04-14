@@ -81,8 +81,8 @@ class LoginForm extends Form
             (new HasLength())
             ->min(4)
             ->max(40)
-            ->tooShortMessage('Is to short.')
-            ->tooLongMessage('Is to long.'),
+            ->tooShortMessage('Is too short.')
+            ->tooLongMessage('Is too long.'),
             new Email()
         ];
     }
