@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Strings\Inflector;
+use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Validator\Validator;
 
-abstract class Form implements FormInterface
+abstract class Form implements FormInterface, DataSetInterface
 {
     private array $attributes;
     private array $attributesLabels;
     private array $attributesErrors = [];
+    private array $attributesRules = [];
     private ?Inflector $inflector = null;
 
     public function __construct()
     {
         $this->attributes = $this->attributes();
         $this->attributesLabels = $this->attributeLabels();
+        $this->attributesRules = $this->rules();
     }
 
     /**
@@ -62,7 +66,7 @@ abstract class Form implements FormInterface
         foreach ($items as $attribute => $errors) {
             foreach ((array)$errors as $error) {
                 $this->addError($attribute, $error);
-             }
+            }
         }
     }
 
@@ -78,6 +82,17 @@ abstract class Form implements FormInterface
         } else {
             unset($this->attributesErrors[$attribute]);
         }
+    }
+
+    public function getAttributeValue(string $attribute)
+    {
+        $getter = 'get' . $attribute;
+
+        if (\method_exists($this, $getter)) {
+            return $this->$getter();
+        }
+
+        throw new \InvalidArgumentException('Method no exist for ' . \get_class($this));
     }
 
     /**
@@ -162,6 +177,11 @@ abstract class Form implements FormInterface
         return '';
     }
 
+    public function hasAttribute(string $attribute): bool
+    {
+        return (new \ReflectionClass($this))->hasProperty($attribute);
+    }
+
     /**
      * Returns the errors for single attribute.
      *
@@ -171,7 +191,7 @@ abstract class Form implements FormInterface
      */
     public function getError(string $attribute): ?array
     {
-        return $this->attributesErrors[$attribute] ?? [];
+        return $this->attributesErrors[$attribute] ?? null;
     }
 
     /**
@@ -323,6 +343,25 @@ abstract class Form implements FormInterface
         }
     }
 
+    public function validate(): bool
+    {
+        $this->clearErrors();
+
+        if (!empty($this->attributesRules)) {
+            $results = (new Validator($this->attributesRules))->validate($this);
+
+            foreach ($results as $attribute => $result) {
+                if ($result->isValid() === false) {
+                    foreach ($result->getErrors() as $error) {
+                        $this->addError($attribute, $error);
+                    }
+                }
+            }
+        }
+
+        return !$this->hasErrors();
+    }
+
     /**
      * Returns the list of attribute names.
      *
@@ -343,7 +382,9 @@ abstract class Form implements FormInterface
                 if ($type !== null) {
                     $this->attributes[$property->getName()] = $type->getName();
                 } else {
-                    throw new \InvalidArgumentException("You must specify the type hint for \"$property->class\" class.");
+                    throw new \InvalidArgumentException(
+                        "You must specify the type hint for \"$property->class\" class."
+                    );
                 }
             }
         }

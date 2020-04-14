@@ -37,6 +37,9 @@ declare(strict_types=1);
 namespace App\Form;
 
 use Yiisoft\Form\Form;
+use Yiisoft\Validator\Rule\Email;
+use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\HasLength;
 
 class LoginForm extends Form
 {
@@ -91,6 +94,28 @@ class LoginForm extends Form
     public function formname(): ?string
     {
         return 'LoginForm';
+    }
+
+    /** Add rules */
+    public function rules(): array
+    {
+        return [
+            'login' => $this->loginRules()
+        ];
+    }
+
+    /** Define login rules */
+    private function loginRules(): array
+    {
+        return [
+            new Required(),
+            (new HasLength())
+            ->min(4)
+            ->max(40)
+            ->tooShortMessage('Is to short.')
+            ->tooLongMessage('Is to long.'),
+            new Email()
+        ];
     }
 }
 ```
