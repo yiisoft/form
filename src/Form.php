@@ -326,7 +326,7 @@ abstract class Form implements FormInterface
     /**
      * Returns the list of attribute names.
      *
-     * By default, this method returns all private non-static properties of the class.
+     * By default, this method returns all non-static properties of the class.
      *
      * @throws \ReflectionException
      *
@@ -336,7 +336,7 @@ abstract class Form implements FormInterface
     {
         $class = new \ReflectionClass($this);
 
-        foreach ($class->getProperties(\ReflectionProperty::IS_PRIVATE) as $property) {
+        foreach ($class->getProperties() as $property) {
             if (!$property->isStatic()) {
                 $type = (new \ReflectionProperty($property->class, $property->name))->getType();
 
