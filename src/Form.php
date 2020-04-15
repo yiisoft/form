@@ -446,14 +446,10 @@ abstract class Form implements FormInterface, DataSetInterface
 
     private function propertyReader(string $attribute)
     {
-        $getter = fn ($class, $attribute) => $class->$attribute ?? null;
+        $getter = fn ($class, $attribute) => $class->$attribute;
         $getter = \Closure::bind($getter, null, $this);
 
         $result = $getter($this, $attribute);
-
-        if ($result === null) {
-            throw new \InvalidArgumentException('Property no exist for ' . \get_class($this));
-        }
 
         return $result;
     }

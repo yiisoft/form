@@ -80,9 +80,14 @@ final class FormTest extends TestCase
         $this->loginForm->rememberMe(true);
         $this->assertEquals(true, $this->loginForm->getAttributeValue('rememberMe'));
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Property no exist for Yiisoft\Form\Tests\Stubs\LoginForm');
-        $this->loginForm->getAttributeValue('noExist');
+        try {
+            $this->loginForm->getAttributeValue('noExist');
+        } catch (\Exception $e) {
+            $this->assertEquals(
+                'Undefined property: Yiisoft\Form\Tests\Stubs\LoginForm::$noExist',
+                $e->getMessage()
+            );
+        }
     }
 
     public function testGetAttributes(): void
