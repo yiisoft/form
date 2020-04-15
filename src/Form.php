@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Strings\Inflector;
+use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Validator\Validator;
 
-abstract class Form implements FormInterface
+abstract class Form implements FormInterface, DataSetInterface
 {
     private array $attributes;
     private array $attributesLabels;
@@ -62,7 +64,7 @@ abstract class Form implements FormInterface
         foreach ($items as $attribute => $errors) {
             foreach ((array)$errors as $error) {
                 $this->addError($attribute, $error);
-             }
+            }
         }
     }
 
@@ -78,6 +80,11 @@ abstract class Form implements FormInterface
         } else {
             unset($this->attributesErrors[$attribute]);
         }
+    }
+
+    public function getAttributeValue(string $attribute)
+    {
+        return $this->readProperty($attribute);
     }
 
     /**
@@ -162,6 +169,11 @@ abstract class Form implements FormInterface
         return '';
     }
 
+    public function hasAttribute(string $attribute): bool
+    {
+        return \array_key_exists($attribute, $this->attributes);
+    }
+
     /**
      * Returns the errors for single attribute.
      *
@@ -169,7 +181,7 @@ abstract class Form implements FormInterface
      *
      * @return array
      */
-    public function getError(string $attribute): ?array
+    public function getError(string $attribute): array
     {
         return $this->attributesErrors[$attribute] ?? [];
     }
@@ -297,6 +309,45 @@ abstract class Form implements FormInterface
     }
 
     /**
+     * Returns the validation rules for attributes.
+     *
+     * Validation rules are used by {@see \Yiisoft\Validator\Validator} to check if attribute values are valid.
+     * Child classes may override this method to declare different validation rules.
+     *
+     * Each rule is an array with the following structure:
+     *
+     * ```php
+     * public function rules(): array
+     * {
+     *     return [
+     *         'login' => $this->loginRules()
+     *     ];
+     * }
+     *
+     * private function loginRules(): array
+     * {
+     *   return [
+     *       new \Yiisoft\Validator\Rule\Required(),
+     *       (new \Yiisoft\Validator\Rule\HasLength())
+     *       ->min(4)
+     *       ->max(40)
+     *       ->tooShortMessage('Is too short.')
+     *       ->tooLongMessage('Is too long.'),
+     *       new \Yiisoft\Validator\Rule\Email()
+     *   ];
+     * }
+     * ```
+     *
+     * @return array validation rules
+     */
+
+    protected function rules(): array
+    {
+        return [
+        ];
+    }
+
+    /**
      * Sets the attribute values in a massive way.
      *
      * @param array $values attribute values (name => value) to be assigned to the model.
@@ -310,17 +361,36 @@ abstract class Form implements FormInterface
             if (isset($this->attributes[$name])) {
                 switch ($this->attributes[$name]) {
                     case 'bool':
-                        $this->$name((bool) $value);
+                        $this->writeProperty($name, (bool) $value);
                         break;
                     case 'int':
-                        $this->$name((int) $value);
+                        $this->writeProperty($name, (int) $value);
                         break;
                     default:
-                        $this->$name($value);
+                        $this->writeProperty($name, $value);
                         break;
                 }
             }
         }
+    }
+
+    public function validate(): bool
+    {
+        $this->clearErrors();
+
+        $rules = $this->rules();
+
+        if (!empty($rules)) {
+            $results = (new Validator($rules))->validate($this);
+
+            foreach ($results as $attribute => $result) {
+                if ($result->isValid() === false) {
+                    $this->addErrors([$attribute => $result->getErrors()]);
+                }
+            }
+        }
+
+        return !$this->hasErrors();
     }
 
     /**
@@ -343,7 +413,9 @@ abstract class Form implements FormInterface
                 if ($type !== null) {
                     $this->attributes[$property->getName()] = $type->getName();
                 } else {
-                    throw new \InvalidArgumentException("You must specify the type hint for \"$property->class\" class.");
+                    throw new \InvalidArgumentException(
+                        "You must specify the type hint for \"$property->class\" class."
+                    );
                 }
             }
         }
@@ -370,5 +442,23 @@ abstract class Form implements FormInterface
         }
 
         return $this->inflector->camel2words($name, true);
+    }
+
+    private function readProperty(string $attribute)
+    {
+        $getter = fn ($class, $attribute) => $class->$attribute;
+        $getter = \Closure::bind($getter, null, $this);
+
+        $result = $getter($this, $attribute);
+
+        return $result;
+    }
+
+    private function writeProperty(string $attribute, $value): void
+    {
+        $setter = fn ($class, $attribute, $value) => $class->$attribute = $value;
+        $setter = \Closure::bind($setter, null, $this);
+
+        $setter($this, $attribute, $value);
     }
 }

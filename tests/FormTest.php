@@ -69,6 +69,27 @@ final class FormTest extends TestCase
         $this->assertEquals($expected, $this->loginForm->getAttributes());
     }
 
+    public function testGetAttributeValue(): void
+    {
+        $this->loginForm->login('admin');
+        $this->assertEquals('admin', $this->loginForm->getAttributeValue('login'));
+
+        $this->loginForm->password('123456');
+        $this->assertEquals('123456', $this->loginForm->getAttributeValue('password'));
+
+        $this->loginForm->rememberMe(true);
+        $this->assertEquals(true, $this->loginForm->getAttributeValue('rememberMe'));
+
+        try {
+            $this->loginForm->getAttributeValue('noExist');
+        } catch (\Exception $e) {
+            $this->assertEquals(
+                'Undefined property: Yiisoft\Form\Tests\Stubs\LoginForm::$noExist',
+                $e->getMessage()
+            );
+        }
+    }
+
     public function testGetAttributes(): void
     {
         $expected = [
@@ -104,6 +125,12 @@ final class FormTest extends TestCase
         $this->assertEquals($expected, $this->loginForm->attributeLabels());
     }
 
+    public function testHasAttribute()
+    {
+        $this->assertTrue($this->loginForm->hasAttribute('login'));
+        $this->assertFalse($this->loginForm->hasAttribute('noExist'));
+    }
+
     public function testLoad(): void
     {
         $this->assertNull($this->loginForm->getLogin());
@@ -114,7 +141,8 @@ final class FormTest extends TestCase
             'LoginForm' => [
                 'login' => 'admin',
                 'password' => '123456',
-                'rememberMe' => true
+                'rememberMe' => true,
+                'noExist' => 'noExist'
             ]
         ];
 
@@ -123,5 +151,36 @@ final class FormTest extends TestCase
         $this->assertEquals('admin', $this->loginForm->getLogin());
         $this->assertEquals('123456', $this->loginForm->getPassword());
         $this->assertEquals(true, $this->loginForm->getRememberMe());
+    }
+
+    public function testValidatorRules(): void
+    {
+        $this->loginForm->login('');
+        $this->loginForm->validate();
+        $this->assertEquals(
+            ['Value cannot be blank.'],
+            $this->loginForm->getError('login')
+        );
+
+        $this->loginForm->login('x');
+        $this->loginForm->validate();
+        $this->assertEquals(
+            ['Is too short.'],
+            $this->loginForm->getError('login')
+        );
+
+        $this->loginForm->login(\str_repeat('x', 60));
+        $this->loginForm->validate();
+        $this->assertEquals(
+            'Is too long.',
+            $this->loginForm->getFirstError('login')
+        );
+
+        $this->loginForm->login('admin@.com');
+        $this->loginForm->validate();
+        $this->assertEquals(
+            'This value is not a valid email address.',
+            $this->loginForm->getFirstError('login')
+        );
     }
 }
