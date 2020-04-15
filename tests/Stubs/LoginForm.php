@@ -67,7 +67,7 @@ class LoginForm extends Form
         return 'LoginForm';
     }
 
-    public function rules(): array
+    protected function rules(): array
     {
         return [
             'login' => $this->loginRules()

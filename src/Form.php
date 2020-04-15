@@ -84,7 +84,7 @@ abstract class Form implements FormInterface, DataSetInterface
 
     public function getAttributeValue(string $attribute)
     {
-        return $this->propertyReader($attribute);
+        return $this->readProperty($attribute);
     }
 
     /**
@@ -341,7 +341,7 @@ abstract class Form implements FormInterface, DataSetInterface
      * @return array validation rules
      */
 
-    public function rules(): array
+    protected function rules(): array
     {
         return [
         ];
@@ -361,13 +361,13 @@ abstract class Form implements FormInterface, DataSetInterface
             if (isset($this->attributes[$name])) {
                 switch ($this->attributes[$name]) {
                     case 'bool':
-                        $this->propertyWriter($name, (bool) $value);
+                        $this->writeProperty($name, (bool) $value);
                         break;
                     case 'int':
-                        $this->propertyWriter($name, (int) $value);
+                        $this->writeProperty($name, (int) $value);
                         break;
                     default:
-                        $this->propertyWriter($name, $value);
+                        $this->writeProperty($name, $value);
                         break;
                 }
             }
@@ -444,7 +444,7 @@ abstract class Form implements FormInterface, DataSetInterface
         return $this->inflector->camel2words($name, true);
     }
 
-    private function propertyReader(string $attribute)
+    private function readProperty(string $attribute)
     {
         $getter = fn ($class, $attribute) => $class->$attribute;
         $getter = \Closure::bind($getter, null, $this);
@@ -454,7 +454,7 @@ abstract class Form implements FormInterface, DataSetInterface
         return $result;
     }
 
-    private function propertyWriter(string $attribute, $value): void
+    private function writeProperty(string $attribute, $value): void
     {
         $setter = fn ($class, $attribute, $value) => $class->$attribute = $value;
         $setter = \Closure::bind($setter, null, $this);
