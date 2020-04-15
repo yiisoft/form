@@ -81,7 +81,7 @@ final class FormTest extends TestCase
         $this->assertEquals(true, $this->loginForm->getAttributeValue('rememberMe'));
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Method no exist for Yiisoft\Form\Tests\Stubs\LoginForm');
+        $this->expectExceptionMessage('Property no exist for Yiisoft\Form\Tests\Stubs\LoginForm');
         $this->loginForm->getAttributeValue('noExist');
     }
 
@@ -136,7 +136,8 @@ final class FormTest extends TestCase
             'LoginForm' => [
                 'login' => 'admin',
                 'password' => '123456',
-                'rememberMe' => true
+                'rememberMe' => true,
+                'noExist' => 'noExist'
             ]
         ];
 

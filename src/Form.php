@@ -13,14 +13,12 @@ abstract class Form implements FormInterface, DataSetInterface
     private array $attributes;
     private array $attributesLabels;
     private array $attributesErrors = [];
-    private array $attributesRules = [];
     private ?Inflector $inflector = null;
 
     public function __construct()
     {
         $this->attributes = $this->attributes();
         $this->attributesLabels = $this->attributeLabels();
-        $this->attributesRules = $this->rules();
     }
 
     /**
@@ -86,13 +84,7 @@ abstract class Form implements FormInterface, DataSetInterface
 
     public function getAttributeValue(string $attribute)
     {
-        $getter = 'get' . $attribute;
-
-        if (\method_exists($this, $getter)) {
-            return $this->$getter();
-        }
-
-        throw new \InvalidArgumentException('Method no exist for ' . \get_class($this));
+        return $this->propertyReader($attribute);
     }
 
     /**
@@ -179,7 +171,7 @@ abstract class Form implements FormInterface, DataSetInterface
 
     public function hasAttribute(string $attribute): bool
     {
-        return (new \ReflectionClass($this))->hasProperty($attribute);
+        return \array_key_exists($attribute, $this->attributes);
     }
 
     /**
@@ -189,9 +181,9 @@ abstract class Form implements FormInterface, DataSetInterface
      *
      * @return array
      */
-    public function getError(string $attribute): ?array
+    public function getError(string $attribute): array
     {
-        return $this->attributesErrors[$attribute] ?? null;
+        return $this->attributesErrors[$attribute] ?? [];
     }
 
     /**
@@ -330,13 +322,13 @@ abstract class Form implements FormInterface, DataSetInterface
             if (isset($this->attributes[$name])) {
                 switch ($this->attributes[$name]) {
                     case 'bool':
-                        $this->$name((bool) $value);
+                        $this->propertyWriter($name, (bool) $value);
                         break;
                     case 'int':
-                        $this->$name((int) $value);
+                        $this->propertyWriter($name, (int) $value);
                         break;
                     default:
-                        $this->$name($value);
+                        $this->propertyWriter($name, $value);
                         break;
                 }
             }
@@ -347,14 +339,14 @@ abstract class Form implements FormInterface, DataSetInterface
     {
         $this->clearErrors();
 
-        if (!empty($this->attributesRules)) {
-            $results = (new Validator($this->attributesRules))->validate($this);
+        $rules = $this->rules();
+
+        if (!empty($rules)) {
+            $results = (new Validator($rules))->validate($this);
 
             foreach ($results as $attribute => $result) {
                 if ($result->isValid() === false) {
-                    foreach ($result->getErrors() as $error) {
-                        $this->addError($attribute, $error);
-                    }
+                    $this->addErrors([$attribute => $result->getErrors()]);
                 }
             }
         }
@@ -411,5 +403,27 @@ abstract class Form implements FormInterface, DataSetInterface
         }
 
         return $this->inflector->camel2words($name, true);
+    }
+
+    private function propertyReader(string $attribute)
+    {
+        $getter = fn ($class, $attribute) => $class->$attribute ?? null;
+        $getter = \Closure::bind($getter, null, $this);
+
+        $result = $getter($this, $attribute);
+
+        if ($result === null) {
+            throw new \InvalidArgumentException('Property no exist for ' . \get_class($this));
+        }
+
+        return $result;
+    }
+
+    private function propertyWriter(string $attribute, $value): void
+    {
+        $setter = fn ($class, $attribute, $value) => $class->$attribute = $value;
+        $setter = \Closure::bind($setter, null, $this);
+
+        $setter($this, $attribute, $value);
     }
 }
