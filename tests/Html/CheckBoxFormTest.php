@@ -53,6 +53,6 @@ final class CheckBoxFormTest extends TestCase
         $form = new StubForm();
         $form->fieldBool($value);
 
-        $this->assertEquals($expected, CheckboxForm::create($form, 'fieldCheck', $options));
+        $this->assertEquals($expected, CheckBoxForm::create($form, 'fieldCheck', $options));
     }
 }
