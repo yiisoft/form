@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Html;
 
-use Yiisoft\Form\Html\CheckboxForm;
+use Yiisoft\Form\Html\CheckBoxForm;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\StubForm;
 
