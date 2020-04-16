@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Html;
 
 use Yiisoft\Form\FormInterface;
-use Yiisoft\Html\Html;
 
 final class PasswordInputForm
 {

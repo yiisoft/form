@@ -8,6 +8,10 @@ use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
+use function array_merge;
+use function array_values;
+use function array_unique;
+
 final class ErrorSummaryForm
 {
     /**
@@ -29,7 +33,7 @@ final class ErrorSummaryForm
      */
     public static function create(FormInterface $form, array $options = []): string
     {
-        $header = isset($options['header']) ? $options['header'] : '<p>' . 'Please fix the following errors:' . '</p>';
+        $header = $options['header'] ?? '<p>' . 'Please fix the following errors:' . '</p>';
         $footer = ArrayHelper::remove($options, 'footer', '');
         $encode = ArrayHelper::remove($options, 'encode', true);
         $showAllErrors = ArrayHelper::remove($options, 'showAllErrors', false);
@@ -51,7 +55,7 @@ final class ErrorSummaryForm
     /**
      * Return array of the validation errors.
      *
-     * @param FormInterface $form the form(s) whose validation errors are to be displayed.
+     * @param FormInterface $forms the form(s) whose validation errors are to be displayed.
      * @param $encode boolean, if set to false then the error messages won't be encoded.
      * @param $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
      * only the first error message for each attribute will be shown.
@@ -62,19 +66,15 @@ final class ErrorSummaryForm
     {
         $lines = [];
 
-        if (!\is_array($forms)) {
-            $forms = [$forms];
-        }
-
-        foreach ($forms as $form) {
-            $lines = \array_unique(\array_merge($lines, $form->getErrorSummary($showAllErrors)));
+        foreach ([$forms] as $form) {
+            $lines = array_unique(array_merge($lines, $form->getErrorSummary($showAllErrors)));
         }
 
         /**
          * If there are the same error messages for different attributes, array_unique will leave gaps between
          * sequential keys. Applying array_values to reorder array keys.
          */
-        $lines = \array_values($lines);
+        $lines = array_values($lines);
 
         if ($encode) {
             foreach ($lines as &$line) {

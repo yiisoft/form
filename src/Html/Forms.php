@@ -8,6 +8,13 @@ use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
 
+use function explode;
+use function implode;
+use function strcasecmp;
+use function strpos;
+use function substr;
+use function urldecode;
+
 final class Forms
 {
     /**

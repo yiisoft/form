@@ -7,6 +7,8 @@ namespace Yiisoft\Form\Html;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
+use function array_key_exists;
+
 final class InputForm
 {
     /**
@@ -33,8 +35,8 @@ final class InputForm
         array $options = [],
         string $charset = 'UTF-8'
     ): string {
-        $name = isset($options['name']) ? $options['name'] : BaseForm::getInputName($form, $attribute);
-        $value = isset($options['value']) ? $options['value'] : BaseForm::getAttributeValue($form, $attribute);
+        $name = $options['name'] ?? BaseForm::getInputName($form, $attribute);
+        $value = $options['value'] ?? BaseForm::getAttributeValue($form, $attribute);
 
         if (!array_key_exists('id', $options)) {
             $options['id'] = BaseForm::getInputId($form, $attribute, $charset);

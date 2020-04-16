@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Html;
 
-use Yiisoft\Arrays\ArrayHelper;
+use InvalidArgumentException;
 use Yiisoft\Html\Html;
 use Yiisoft\Form\FormInterface;
+
+use function preg_match;
 
 final class BaseForm
 {
@@ -28,15 +30,15 @@ final class BaseForm
      * @param string $attribute the attribute name or expression
      * @return string the attribute name without prefix and suffix.
      *
-     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
      */
     public static function getAttributeName(string $attribute): string
     {
-        if (\preg_match(Html::$attributeRegex, $attribute, $matches)) {
+        if (preg_match(Html::$attributeRegex, $attribute, $matches)) {
             return $matches[2];
         }
 
-        throw new \InvalidArgumentException('Attribute name must contain word characters only.');
+        throw new InvalidArgumentException('Attribute name must contain word characters only.');
     }
 
     /**
@@ -56,14 +58,13 @@ final class BaseForm
      */
     public static function getAttributeValue(FormInterface $form, string $attribute)
     {
-        if (!\preg_match(Html::$attributeRegex, $attribute, $matches)) {
+        if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
         $attribute = $matches[2];
-        $value = $form->getAttributeValue($attribute);
 
-        return $value;
+        return $form->getAttributeValue($attribute);
     }
 
     /**
@@ -102,14 +103,14 @@ final class BaseForm
      * @param string $attribute the attribute name or expression.
      * @return string the generated input name.
      *
-     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
      */
     public static function getInputName(FormInterface $form, string $attribute): string
     {
         $formName = $form->formName();
 
-        if (!\preg_match(Html::$attributeRegex, $attribute, $matches)) {
-            throw new \InvalidArgumentException('Attribute name must contain word characters only.');
+        if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
+            throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
         $prefix = $matches[1];
@@ -124,7 +125,7 @@ final class BaseForm
             return $formName . $prefix . "[$attribute]" . $suffix;
         }
 
-        throw new \InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
+        throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
     }
 
     /**
@@ -139,7 +140,7 @@ final class BaseForm
     public static function placeHolder(FormInterface $form, string $attribute, &$options = []): void
     {
         if (isset($options['placeholder']) && $options['placeholder'] === true) {
-            $attribute = BaseForm::getAttributeName($attribute);
+            $attribute = self::getAttributeName($attribute);
             $options['placeholder'] = $form->getAttributeLabel($attribute);
         }
     }

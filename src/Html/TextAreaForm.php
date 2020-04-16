@@ -7,6 +7,8 @@ namespace Yiisoft\Form\Html;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
+use function array_key_exists;
+
 final class TextAreaForm
 {
     /**
@@ -30,7 +32,7 @@ final class TextAreaForm
      */
     public static function create(FormInterface $form, string $attribute, array $options = []): string
     {
-        $name = isset($options['name']) ? $options['name'] : BaseForm::getInputName($form, $attribute);
+        $name = $options['name'] ?? BaseForm::getInputName($form, $attribute);
 
         if (isset($options['value'])) {
             $value = $options['value'];

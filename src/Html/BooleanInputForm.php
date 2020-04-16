@@ -7,6 +7,8 @@ namespace Yiisoft\Form\Html;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
+use function array_key_exists;
+
 final class BooleanInputForm
 {
     /**
@@ -30,10 +32,8 @@ final class BooleanInputForm
         array $options = [],
         string $charset = 'UTF-8'
     ): string {
-        $name = isset($options['name']) ? $options['name'] : BaseForm::getInputName($form, $attribute);
-        $value = BaseForm::getAttributeValue($form, $attribute);
+        $name = $options['name'] ?? BaseForm::getInputName($form, $attribute);
         $value = 1;
-
 
         if (!array_key_exists('value', $options)) {
             $options['value'] = '1';
@@ -51,7 +51,7 @@ final class BooleanInputForm
             unset($options['label']);
         }
 
-        $checked = "$value" === "{$options['value']}";
+        $checked = (string)$value === ($options['value']);
 
         if (!array_key_exists('id', $options)) {
             $options['id'] = BaseForm::getInputId($form, $attribute, $charset);
