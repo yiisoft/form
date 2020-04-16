@@ -70,7 +70,8 @@ class LoginForm extends Form
     protected function rules(): array
     {
         return [
-            'login' => $this->loginRules()
+            'login' => $this->loginRules(),
+            'password' => $this->passwordRules()
         ];
     }
 
@@ -84,6 +85,16 @@ class LoginForm extends Form
             ->tooShortMessage('Is too short.')
             ->tooLongMessage('Is too long.'),
             new Email()
+        ];
+    }
+
+    private function passwordRules(): array
+    {
+        return [
+            new Required(),
+            (new HasLength())
+            ->min(8)
+            ->tooShortMessage('Is too short.'),
         ];
     }
 }
