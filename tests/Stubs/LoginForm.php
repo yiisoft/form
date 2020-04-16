@@ -93,8 +93,8 @@ class LoginForm extends Form
         return [
             new Required(),
             (new HasLength())
-            ->max(12)
-            ->tooLongMessage('Is too long.'),
+            ->min(8)
+            ->tooShortMessage('Is too short.'),
         ];
     }
 }

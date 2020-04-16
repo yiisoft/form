@@ -130,13 +130,13 @@ final class FormTest extends TestCase
         $data = [
             'LoginForm' => [
                 'login' => 'admin@.com',
-                'password' => (\str_repeat('x', 14))
+                'password' => '123456'
             ]
         ];
 
         $expected = [
             'This value is not a valid email address.',
-            'Is too long.'
+            'Is too short.'
         ];
 
         $this->loginForm->load($data);
