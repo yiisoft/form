@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Tests\Html;
 
 use Yiisoft\Form\Html\Forms;
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
 
 final class FormsTest extends TestCase
 {

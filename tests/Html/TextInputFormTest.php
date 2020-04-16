@@ -10,7 +10,7 @@ use Yiisoft\Form\Tests\Stub\StubForm;
 
 final class TextInputFormTest extends TestCase
 {
-    public function testTextInputForm()
+    public function testTextInputForm(): void
     {
         $form = new StubForm();
 
@@ -43,7 +43,7 @@ final class TextInputFormTest extends TestCase
         );
     }
 
-    public function testTextInputFormPlaceholderFillFromModelTabular()
+    public function testTextInputFormPlaceholderFillFromModelTabular(): void
     {
         $form = new StubForm();
 

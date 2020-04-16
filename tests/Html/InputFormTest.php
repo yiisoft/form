@@ -45,7 +45,7 @@ final class InputFormTest extends TestCase
      *
      * @param string $value
      * @param array $options
-     * @param string $expectedHtml
+     * @param string $expected
      */
     public function testInputForm(string $value, array $options, string $expected): void
     {

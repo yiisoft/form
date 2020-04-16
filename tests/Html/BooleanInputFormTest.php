@@ -10,7 +10,7 @@ use Yiisoft\Form\Tests\Stub\StubForm;
 
 final class BooleanInputFormTest extends TestCase
 {
-    public function testCheckboxForm()
+    public function testCheckboxForm(): void
     {
         $form = new StubForm();
 

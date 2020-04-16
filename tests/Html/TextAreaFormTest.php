@@ -54,7 +54,7 @@ final class TextAreaFormTest extends TestCase
      * @param array $options
      * @param string $expectedHtml
      */
-    public function testActiveTextArea($value, array $options, $expectedHtml)
+    public function testActiveTextArea($value, array $options, $expectedHtml): void
     {
         $form = new StubForm();
         $form->fieldString($value);

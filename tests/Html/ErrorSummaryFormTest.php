@@ -10,7 +10,7 @@ use Yiisoft\Form\Tests\Stub\StubForm;
 
 final class ErrorSummaryFormTest extends TestCase
 {
-    public function errorSummaryDataProvider()
+    public function errorSummaryDataProvider(): array
     {
         return [
             [
@@ -37,9 +37,8 @@ final class ErrorSummaryFormTest extends TestCase
      * @param string $value
      * @param array $options
      * @param string $expectedHtml
-     * @param \Closure $beforeValidate
      */
-    public function testErrorSummaryForm(string $value, array $options, string $expectedHtml)
+    public function testErrorSummaryForm(string $value, array $options, string $expectedHtml): void
     {
         $data = [
             'StubForm' => [

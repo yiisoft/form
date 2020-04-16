@@ -48,7 +48,7 @@ final class CheckBoxFormTest extends TestCase
      * @param array $options
      * @param string $expected
      */
-    public function testCheckboxForm(bool $value, array $options, string $expected)
+    public function testCheckboxForm(bool $value, array $options, string $expected): void
     {
         $form = new StubForm();
         $form->fieldBool($value);

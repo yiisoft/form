@@ -10,7 +10,7 @@ use Yiisoft\Form\Tests\Stub\StubForm;
 
 final class FileInputFormTest extends TestCase
 {
-    public function testFileInputForm()
+    public function testFileInputForm(): void
     {
         $form = new StubForm();
 

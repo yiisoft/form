@@ -10,7 +10,7 @@ use Yiisoft\Form\Tests\Stub\StubForm;
 
 final class ErrorFormTest extends TestCase
 {
-    public function testErrorForm()
+    public function testErrorForm(): void
     {
         $data = [
             'StubForm' =>
