@@ -125,6 +125,29 @@ final class FormTest extends TestCase
         $this->assertEquals($expected, $this->loginForm->attributeLabels());
     }
 
+    public function testGetErrorSumary(): void
+    {
+        $data = [
+            'LoginForm' => [
+                'login' => 'admin@.com',
+                'password' => (\str_repeat('x', 14))
+            ]
+        ];
+
+        $expected = [
+            'This value is not a valid email address.',
+            'Is too long.'
+        ];
+
+        $this->loginForm->load($data);
+        $this->loginForm->validate();
+
+        $this->assertEquals(
+            $expected,
+            $this->loginForm->getErrorSummary(true)
+        );
+    }
+
     public function testHasAttribute()
     {
         $this->assertTrue($this->loginForm->hasAttribute('login'));
