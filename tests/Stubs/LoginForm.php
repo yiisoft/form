@@ -91,6 +91,7 @@ class LoginForm extends Form
     private function passwordRules(): array
     {
         return [
+            new Required(),
             (new HasLength())
             ->max(12)
             ->tooLongMessage('Is too long.'),
