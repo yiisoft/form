@@ -106,7 +106,7 @@ final class BaseForm
      */
     public static function getInputName(FormInterface $form, string $attribute): string
     {
-        $formName = $form->formname();
+        $formName = $form->formName();
 
         if (!\preg_match(Html::$attributeRegex, $attribute, $matches)) {
             throw new \InvalidArgumentException('Attribute name must contain word characters only.');
