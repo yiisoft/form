@@ -21,7 +21,7 @@
         "php": "^7.4",
         "yiisoft/strings": "^3.0@dev",
         "yiisoft/html": "^3.0@dev",
-        "Yiisoft/http": "^1.0@dev",
+        "yiisoft/http": "^1.0@dev",
         "yiisoft/validator": "^3.0@dev"
     },
     "require-dev": {
