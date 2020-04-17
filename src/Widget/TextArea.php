@@ -17,7 +17,7 @@ final class TextArea extends Widget
      */
     public function run(): string
     {
-        $name = $options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
+        $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
         $id = $this->options['id'] ?? $this->id;
 
         if (isset($this->options['value'])) {

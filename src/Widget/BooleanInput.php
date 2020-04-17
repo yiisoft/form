@@ -22,7 +22,7 @@ final class BooleanInput extends Widget
      */
     public function run(): string
     {
-        $name = $options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
+        $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
         $value = BaseForm::getAttributeValue($this->form, $this->attribute);
 
         if ($value === true) {
