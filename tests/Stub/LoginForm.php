@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Stubs;
+namespace Yiisoft\Form\Tests\Stub;
 
 use Yiisoft\Form\Form;
 use Yiisoft\Validator\Rule\Email;

@@ -84,7 +84,7 @@ final class FormTest extends TestCase
             $this->loginForm->getAttributeValue('noExist');
         } catch (\Exception $e) {
             $this->assertEquals(
-                'Undefined property: Yiisoft\Form\Tests\Stubs\LoginForm::$noExist',
+                'Undefined property: Yiisoft\Form\Tests\Stub\LoginForm::$noExist',
                 $e->getMessage()
             );
         }

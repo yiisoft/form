@@ -1,0 +1,96 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Yiisoft\Form\Widget;
+
+use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Html\Html;
+use Yiisoft\Http\Method;
+
+use function explode;
+use function implode;
+use function strcasecmp;
+use function strpos;
+use function substr;
+use function urldecode;
+
+final class Forms extends Widget
+{
+    private ?string $action = null;
+    private string $method = Method::POST;
+
+    /**
+     * Generates a form start tag.
+     *
+     * @return string the generated form start tag.
+     *
+     * {@see end())}
+     */
+    public function start(): string
+    {
+        $hiddenInputs = [];
+
+        $csrf = ArrayHelper::remove($this->options, 'csrf', false);
+
+        if ($csrf && strcasecmp($this->method, Method::POST) === 0) {
+            $hiddenInputs[] = Html::hiddenInput('_csrf', $csrf);
+        }
+
+        $action = $this->action;
+
+        if (!strcasecmp($this->method, 'get') && ($pos = strpos($this->action, '?')) !== false) {
+            /**
+             * Query parameters in the action are ignored for GET method we use hidden fields to add them back.
+             */
+            foreach (explode('&', substr($this->action, $pos + 1)) as $pair) {
+                if (($pos1 = strpos($pair, '=')) !== false) {
+                    $hiddenInputs[] = Html::hiddenInput(
+                        urldecode(substr($pair, 0, $pos1)),
+                        urldecode(substr($pair, $pos1 + 1))
+                    );
+                } else {
+                    $hiddenInputs[] = Html::hiddenInput(urldecode($pair), '');
+                }
+            }
+            $action = substr($this->action, 0, $pos);
+        }
+
+        $this->options['action'] = $action;
+        $this->options['method'] = $this->method;
+
+        $form = Html::beginTag('form', $this->options);
+
+        if (!empty($hiddenInputs)) {
+            $form .= "\n" . implode("\n", $hiddenInputs);
+        }
+
+        return $form;
+    }
+
+    /**
+     * Generates a form end tag.
+     *
+     * @return string the generated tag.
+     *
+     * {@see beginForm()}
+     */
+    public function run(): string
+    {
+        return '</form>';
+    }
+
+    public function action(string $value): self
+    {
+        $this->action = $value;
+
+        return $this;
+    }
+
+    public function method(string $value): self
+    {
+        $this->method = $value;
+
+        return $this;
+    }
+}
