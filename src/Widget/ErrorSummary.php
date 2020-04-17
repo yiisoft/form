@@ -43,8 +43,8 @@ final class ErrorSummary extends Widget
     /**
      * Return array of the validation errors.
      *
-     * @param $encode boolean, if set to false then the error messages won't be encoded.
-     * @param $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
+     * @param bool $encode, if set to false then the error messages won't be encoded.
+     * @param bool $showAllErrors, if set to true every error message for each attribute will be shown otherwise
      * only the first error message for each attribute will be shown.
      *
      * @return array of the validation errors

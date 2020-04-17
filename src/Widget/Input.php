@@ -9,7 +9,7 @@ use Yiisoft\Html\Html;
 final class Input extends Widget
 {
     private string $charset = 'UTF-8';
-    private ?string $type = null;
+    private string $type;
 
     /**
      * Generates an input tag for the given form attribute.

@@ -25,7 +25,7 @@ final class BooleanInput extends Widget
         $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
         $value = BaseForm::getAttributeValue($this->form, $this->attribute);
 
-        if ($value === true) {
+        if ($value) {
             $this->options['value'] = '1';
         }
 
@@ -78,7 +78,7 @@ final class BooleanInput extends Widget
      *
      *  @param string $value the input type.
      *
-     *  @return self
+     *  @return static
      */
     public function type(string $value): self
     {

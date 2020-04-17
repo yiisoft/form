@@ -208,9 +208,9 @@ abstract class Form implements FormInterface, DataSetInterface
      * {@see getFirstErrors()}
      * {@see getFirstError()}
      */
-    public function getErrors(): ?array
+    public function getErrors(): array
     {
-        return $this->attributesErrors ?? null;
+        return $this->attributesErrors ?? [];
     }
 
     /**
@@ -227,7 +227,7 @@ abstract class Form implements FormInterface, DataSetInterface
     public function getErrorSummary(bool $showAllErrors): array
     {
         $lines = [];
-        $errors = $showAllErrors ? $this->getErrors() : $this->getFirstErrors();
+        $errors = $showAllErrors ? $this->getErrors() : [$this->getFirstErrors()];
 
         foreach ($errors as $error) {
             $lines = \array_merge($lines, $error);
@@ -241,14 +241,14 @@ abstract class Form implements FormInterface, DataSetInterface
      *
      * @param string $attribute attribute name.
      *
-     * @return string|null the error message. Null is returned if no error.
+     * @return string the error message. Null is returned if no error.
      *
      * {@see getErrors()}
      * {@see getFirstErrors()}
      */
-    public function getFirstError(string $attribute): ?string
+    public function getFirstError(string $attribute): string
     {
-        return isset($this->attributesErrors[$attribute]) ? reset($this->attributesErrors[$attribute]) : null;
+        return isset($this->attributesErrors[$attribute]) ? reset($this->attributesErrors[$attribute]) : '';
     }
 
     /**

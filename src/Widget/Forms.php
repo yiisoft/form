@@ -17,7 +17,7 @@ use function urldecode;
 
 final class Forms extends Widget
 {
-    private ?string $action = null;
+    private string $action;
     private string $method = Method::POST;
 
     /**
