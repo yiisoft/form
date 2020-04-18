@@ -10,6 +10,7 @@ use Yiisoft\Validator\Rule\Required;
 
 class StubForm extends Form
 {
+    private iterable $fieldArray = [];
     private bool $fieldBool = false;
     private bool $fieldCheck = false;
     private ?string $fieldFile = null;
@@ -25,6 +26,11 @@ class StubForm extends Form
     public function attributeLabels(): array
     {
         return [];
+    }
+
+    public function fieldArray(iterable $value): void
+    {
+        $this->fieldArray = $value;
     }
 
     public function fieldBool(bool $value): void
