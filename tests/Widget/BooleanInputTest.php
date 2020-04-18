@@ -26,7 +26,7 @@ final class BooleanInputTest extends TestCase
         $this->assertEquals($expected, $created);
 
         $form->fieldBool(true);
-        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="1">' .
+        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="0">' .
             '<label><input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" checked> Field Bool</label>';
         $created = BooleanInput::widget()
             ->type('checkbox')
@@ -49,7 +49,7 @@ final class BooleanInputTest extends TestCase
         $this->assertEquals($expected, $created);
 
         $form->fieldBool(true);
-        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="1">' .
+        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="0">' .
             '<label><input type="radio" id="id-testme" name="StubForm[fieldBool]" value="1" checked> Field Bool</label>';
         $created = BooleanInput::widget()
             ->id('id-testme')

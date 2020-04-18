@@ -25,12 +25,14 @@ final class BooleanInput extends Widget
         $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
         $value = BaseForm::getAttributeValue($this->form, $this->attribute);
 
-        if ($value) {
+        if (!array_key_exists('value', $this->options)) {
             $this->options['value'] = '1';
         }
 
         if ($this->uncheck) {
-            $this->options['uncheck'] = true;
+            $this->options['uncheck'] = '0';
+        } else {
+            unset($this->options['uncheck']);
         }
 
         if ($this->label) {
@@ -73,13 +75,6 @@ final class BooleanInput extends Widget
         return $this;
     }
 
-    /**
-     *  Set type this can be either `radio` or `checkbox`.
-     *
-     *  @param string $value the input type.
-     *
-     *  @return static
-     */
     public function type(string $value): self
     {
         $this->type = $value;

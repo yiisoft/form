@@ -38,13 +38,6 @@ final class Input extends Widget
         return $this;
     }
 
-    /**
-     *  Set type this can be either `radio` or `checkbox`.
-     *
-     *  @param string $value the input type.
-     *
-     *  @return self
-     */
     public function type(string $value): self
     {
         $this->type = $value;

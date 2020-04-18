@@ -19,25 +19,11 @@ final class CheckBoxTest extends TestCase
     {
         return [
             [
-                false,
-                false,
-                false,
-                [],
-                '<input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1">',
-            ],
-            [
                 true,
-                false,
-                false,
-                [],
-                '<input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1" checked>',
-            ],
-            [
-                false,
                 true,
-                false,
+                true,
                 [],
-                '<label><input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1"> Field Check</label>',
+                '<input type="hidden" name="StubForm[fieldCheck]" value="0"><label><input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1" checked> Field Check</label>',
             ],
             [
                 true,
@@ -47,11 +33,18 @@ final class CheckBoxTest extends TestCase
                 '<label><input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1" checked> Field Check</label>',
             ],
             [
-                false,
+                true,
                 false,
                 true,
                 [],
-                '<input type="hidden" name="StubForm[fieldCheck]" value="1"><input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1">',
+                '<input type="hidden" name="StubForm[fieldCheck]" value="0"><input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1" checked>',
+            ],
+            [
+                true,
+                false,
+                false,
+                [],
+                '<input type="checkbox" id="stubform-fieldcheck" name="StubForm[fieldCheck]" value="1" checked>',
             ],
         ];
     }
