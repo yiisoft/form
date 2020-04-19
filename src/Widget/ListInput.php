@@ -31,12 +31,6 @@ final class ListInput extends Widget
             BaseForm::getAttributeValue($this->form, $this->attribute)
         );
 
-        if (!empty($this->unselect)) {
-            $this->options['unselect'] = '';
-        } else {
-            $this->options['unselect'] = $this->unselect;
-        }
-
         $this->options['id'] = $this->id;
 
         if ($this->id === null) {
@@ -45,6 +39,10 @@ final class ListInput extends Widget
 
         if ($this->multiple) {
             $this->options['multiple'] = $this->multiple;
+        }
+
+        if ($this->unselect !== null) {
+            $this->options['unselect'] = $this->unselect;
         }
 
         $type = $this->type;

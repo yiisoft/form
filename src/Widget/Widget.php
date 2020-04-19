@@ -14,6 +14,16 @@ abstract class Widget extends AbstractWidget
     protected string $attribute;
     protected array $options = [];
 
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
     /**
      * Returns the Id of the widget.
      *
