@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use Yiisoft\Composer\Config\Builder;
 use Yiisoft\Di\Container;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 use Yiisoft\Widget\WidgetFactory;
@@ -17,7 +18,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->container = new Container([]);
+        $config = require Builder::path('tests');
+
+        $this->container = new Container($config);
         $this->loginForm = new LoginForm();
 
         WidgetFactory::initialize($this->container, []);

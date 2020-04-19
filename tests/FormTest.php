@@ -180,6 +180,7 @@ final class FormTest extends TestCase
     {
         $this->loginForm->login('');
         $this->loginForm->validate();
+
         $this->assertEquals(
             ['Value cannot be blank.'],
             $this->loginForm->getError('login')
