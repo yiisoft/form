@@ -6,6 +6,7 @@ namespace Yiisoft\Form;
 
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
 
 abstract class Form implements FormInterface, DataSetInterface
@@ -19,6 +20,31 @@ abstract class Form implements FormInterface, DataSetInterface
     {
         $this->attributes = $this->attributes();
         $this->attributesLabels = $this->attributeLabels();
+    }
+
+    /**
+     * Returns a value indicating whether the attribute is required.
+     *
+     * This is determined by checking if the attribute is associated with a {@see Yiisoft\Validator\Rule\Required}
+     * validation rule.
+     *
+     * Note that when the validator has a conditional validation applied using
+     * {@see Yiisoft\Validator\Rule\Required::$when|$when} this method will return `false` regardless of the `when`
+     * condition because it may be called be before the model is loaded with data.
+     *
+     * @param string $attribute attribute name.
+     *
+     * @return bool whether the attribute is required.
+     */
+    public function isAttributeRequired(string $attribute): bool
+    {
+        foreach ($this->rules()[$attribute] as $validator) {
+            if ($validator instanceof Required) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
