@@ -20,9 +20,9 @@ final class Input extends Widget
     {
         $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
         $value = $this->options['value'] ?? BaseForm::getAttributeValue($this->form, $this->attribute);
-        $id = $this->options['id'] ?? $this->id;
+        $this->options['id'] = $this->options['id'] ?? $this->id;
 
-        if ($id === null) {
+        if ($this->options['id'] === null) {
             $this->options['id'] = BaseForm::getInputId($this->form, $this->attribute, $this->charset);
         }
 

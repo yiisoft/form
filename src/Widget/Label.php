@@ -39,5 +39,4 @@ final class Label extends Widget
 
         return $this;
     }
-
 }
