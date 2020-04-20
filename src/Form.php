@@ -25,12 +25,12 @@ abstract class Form implements FormInterface, DataSetInterface
     /**
      * Returns a value indicating whether the attribute is required.
      *
-     * This is determined by checking if the attribute is associated with a {@see Yiisoft\Validator\Rule\Required}
+     * This is determined by checking if the attribute is associated with a {@see \Yiisoft\Validator\Rule\Required}
      * validation rule.
      *
      * Note that when the validator has a conditional validation applied using
-     * {@see Yiisoft\Validator\Rule\Required::$when|$when} this method will return `false` regardless of the `when`
-     * condition because it may be called be before the model is loaded with data.
+     * {@see \Yiisoft\Validator\Rule\Required::$when|$when} this method will return `false` regardless of the `when`
+     * condition because it may be called before the model is loaded with data.
      *
      * @param string $attribute attribute name.
      *
