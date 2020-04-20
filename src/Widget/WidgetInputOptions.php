@@ -13,7 +13,7 @@ trait WidgetInputOptions
     protected bool $disabled = false;
     protected array $inputOptions = [];
     protected int $maxlength = 0;
-    protected ?string $placeHolder = null;
+    protected ?string $placeholder = null;
     protected bool $required = true;
     protected int $size = 0;
     protected ?string $tabindex = null;
@@ -104,10 +104,10 @@ trait WidgetInputOptions
         }
     }
 
-    private function addPlaceHoder(array $options = []): void
+    private function addPlacehoder(array $options = []): void
     {
-        if (!isset($options['placeholder']) && $this->placeHolder !== null) {
-            $this->inputOptions['placeholder'] = $this->placeHolder;
+        if (!isset($options['placeholder']) && $this->placeholder !== null) {
+            $this->inputOptions['placeholder'] = $this->placeholder;
         }
     }
 
@@ -163,9 +163,9 @@ trait WidgetInputOptions
         return $this;
     }
 
-    public function placeHolder(string $value): self
+    public function placeholder(string $value): self
     {
-        $this->placeHolder = $value;
+        $this->placeholder = $value;
 
         return $this;
     }

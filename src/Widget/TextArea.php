@@ -32,7 +32,7 @@ final class TextArea extends Widget
         }
 
 
-        BaseForm::placeHolder($this->form, $this->attribute, $this->options);
+        BaseForm::placeholder($this->form, $this->attribute, $this->options);
 
         return Html::textarea($name, $value, $this->options);
     }

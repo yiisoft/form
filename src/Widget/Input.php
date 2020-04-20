@@ -26,7 +26,7 @@ final class Input extends Widget
             $this->options['id'] = BaseForm::getInputId($this->form, $this->attribute, $this->charset);
         }
 
-        BaseForm::placeHolder($this->form, $this->attribute, $this->options);
+        BaseForm::placeholder($this->form, $this->attribute, $this->options);
 
         return Html::input($this->type, $name, $value, $this->options);
     }

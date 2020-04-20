@@ -137,7 +137,7 @@ final class BaseForm
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see encode()}.
      */
-    public static function placeHolder(FormInterface $form, string $attribute, &$options = []): void
+    public static function placeholder(FormInterface $form, string $attribute, &$options = []): void
     {
         if (isset($options['placeholder']) && $options['placeholder'] === true) {
             $attribute = self::getAttributeName($attribute);
