@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\FormInterface;
-use Yiisoft\Form\Widget\Event\AfterFormRender;
-use Yiisoft\Form\Widget\Event\BeforeFormRender;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
 
@@ -40,13 +36,6 @@ final class FormBuilder extends Widget
     private bool $scrollToError = true;
     private int $scrollToErrorOffset = 0;
     private array $attributes = [];
-    private ?EventDispatcherInterface $eventDispatcher = null;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-
-    }
 
     public function start(): self
     {
@@ -179,33 +168,9 @@ final class FormBuilder extends Widget
         return $result;
     }
 
-    /**
-     * This method is invoked right before an FieldBuilder is rendered.
-     *
-     * The method will trigger the {@see BeforeFormRender} event.
-     *
-     * @param FieldBuilder $field active field to be rendered.
-     */
-    public function beforeFieldRender(FieldBuilder $field): void
-    {
-        $this->eventDispatcher->dispatch(new BeforeFormRender($field));
-    }
-
-    /**
-     * This method is invoked right after an FieldBuilder is rendered.
-     *
-     * The method will trigger the {@see AfterFormRender} event.
-     *
-     * @param FieldBuilder $field active field to be rendered.
-     */
-    public function afterRender(FieldBuilder $field): void
-    {
-        $this->eventDispatcher->dispatch(new AfterFormRender($field));
-    }
-
     public function isEnableAjaxValidation(): bool
     {
-        return enableAjaxValidation;
+        return $enableAjaxValidation;
     }
 
     public function isEnableClientValidation(): bool
