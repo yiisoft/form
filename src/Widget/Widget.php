@@ -9,6 +9,8 @@ use Yiisoft\Widget\Widget as AbstractWidget;
 
 abstract class Widget extends AbstractWidget
 {
+    use WidgetInputOptions;
+
     protected ?string $id = null;
     protected FormInterface $form;
     protected string $attribute;
@@ -25,7 +27,7 @@ abstract class Widget extends AbstractWidget
     }
 
     /**
-     * Returns the Id of the widget.
+     * Set the Id of the widget.
      *
      * @param string|null $value
      *

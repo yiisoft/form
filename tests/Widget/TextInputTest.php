@@ -19,6 +19,7 @@ final class TextInputTest extends TestCase
             ->form($form)
             ->attribute('fieldString')
             ->options(['class' => 'testMe'])
+            ->required(false)
             ->run();
         $this->assertEquals($expected, $created);
     }

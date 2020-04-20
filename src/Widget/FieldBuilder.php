@@ -10,13 +10,13 @@ use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
 use function array_merge;
+use function is_subclass_of;
 
 class FieldBuilder extends Widget
 {
     private ?FormBuilder $forms = null;
     private string $template = "{label}\n{input}\n{hint}\n{error}";
     private array $divOptions = ['class' => 'form-group'];
-    private array $inputOptions = ['class' => 'form-control'];
     private array $errorOptions = ['class' => 'help-block'];
     private array $labelOptions = ['class' => 'control-label'];
     private array $hintOptions = ['class' => 'hint-block'];
@@ -28,7 +28,6 @@ class FieldBuilder extends Widget
     private ?int $validationDelay = null;
     private array $selectors = [];
     private array $parts = [];
-    public bool $addAriaAttributes = true;
     private ?string $inputId = null;
     private bool $skipLabelFor = false;
 
@@ -47,7 +46,7 @@ class FieldBuilder extends Widget
      *
      * @return string the rendering result.
      */
-    public function run($content = null): string
+    public function run(?string $content = null): string
     {
         if ($content === null) {
             if (!isset($this->parts['{input}'])) {
@@ -81,13 +80,12 @@ class FieldBuilder extends Widget
      */
     public function renderBegin(): string
     {
-        /**
         if ($this->forms->isEnableClientScript()) {
             $clientOptions = $this->getClientOptions();
             if (!empty($clientOptions)) {
-                $this->forms->attributes[]($clientOptions)
+                $this->forms->attributes([$clientOptions]);
             }
-        }*/
+        }
 
         $attribute = Html::getAttributeName($this->attribute);
         $inputId = $this->getInputId();
@@ -259,14 +257,14 @@ class FieldBuilder extends Widget
      */
     public function input(string $type, array $options = []): self
     {
+        $this->configInputOptions($options);
+        $this->addInputCssClass($options);
+
         $options = array_merge($this->inputOptions, $options);
 
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
-
-        $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = Input::widget()
             ->type($type)
@@ -298,14 +296,15 @@ class FieldBuilder extends Widget
      */
     public function textInput(array $options = []): self
     {
+        $this->configInputOptions($options);
+
+        $this->addInputCssClass($options);
+
         $options = array_merge($this->inputOptions, $options);
 
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
-
-        $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = TextInput::widget()
             ->form($this->form)
@@ -339,6 +338,8 @@ class FieldBuilder extends Widget
     {
         $this->label(null);
 
+        Html::addCssClass($options, $this->forms->getInputCssClass());
+
         $options = array_merge($this->inputOptions, $options);
 
         $this->adjustLabelFor($options);
@@ -369,14 +370,15 @@ class FieldBuilder extends Widget
      */
     public function passwordInput(array $options = []): self
     {
+        $this->configInputOptions($options);
+
+        Html::addCssClass($options, $this->forms->getInputCssClass());
+
         $options = array_merge($this->inputOptions, $options);
 
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
-
-        $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = PasswordInput::widget()
             ->form($this->form)
@@ -404,10 +406,7 @@ class FieldBuilder extends Widget
      */
     public function fileInput(array $options = []): self
     {
-        /** {@see https://github.com/yiisoft/yii2/pull/795} */
-        if ($this->inputOptions !== ['class' => 'form-control']) {
-            $options = array_merge($this->inputOptions, $options);
-        }
+        $options = array_merge($this->inputOptions, $options);
 
         if (!isset($this->options['enctype'])) {
             $this->forms->options(array_merge($this->options, ['enctype' => 'multipart/form-data']));
@@ -445,6 +444,8 @@ class FieldBuilder extends Widget
      */
     public function textArea(array $options = []): self
     {
+        Html::addCssClass($options, $this->forms->getInputCssClass());
+
         $options = array_merge($this->inputOptions, $options);
 
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
@@ -566,6 +567,8 @@ class FieldBuilder extends Widget
      */
     public function checkbox(array $options = [], bool $enclosedByLabel = true): self
     {
+        $this->configInputOptions($options);
+
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Checkbox::widget()
                 ->form($this->form)
@@ -594,9 +597,6 @@ class FieldBuilder extends Widget
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
-
-        $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
 
         return $this;
     }
@@ -627,6 +627,8 @@ class FieldBuilder extends Widget
      */
     public function dropDownList(array $items, array $options = []): self
     {
+        Html::addCssClass($options, $this->forms->getInputCssClass());
+
         $options = array_merge($this->inputOptions, $options);
 
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
@@ -672,6 +674,8 @@ class FieldBuilder extends Widget
      */
     public function listBox(array $items, array $options = []): self
     {
+        Html::addCssClass($options, $this->forms->getInputCssClass());
+
         $options = array_merge($this->inputOptions, $options);
 
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
@@ -704,9 +708,11 @@ class FieldBuilder extends Widget
      * For the list of available options please refer to the `$options` parameter of
      * {@see \Yiisoft\Html\Html::activeCheckboxList()}.
      *
-     * @return string the field object itself.
+     * @throws InvalidConfigException
+     *
+     * @return self the field object itself.
      */
-    public function checkboxList(array $items, array $options = []): string
+    public function checkboxList(array $items, array $options = []): self
     {
         if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
@@ -722,6 +728,8 @@ class FieldBuilder extends Widget
             ->items($items)
             ->options($options)
             ->run();
+
+        return $this;
     }
 
     /**
@@ -735,6 +743,8 @@ class FieldBuilder extends Widget
      * @param array $options options (name => config) for the radio button list.
      * For the list of available options please refer to the `$options` parameter of
      * {@see \Yiisoft\Html\Html::activeRadioList()}.
+     *
+     * @throws InvalidConfigException
      *
      * @return self the field object itself.
      */
@@ -791,7 +801,7 @@ class FieldBuilder extends Widget
         $config['attribute'] = $this->attribute;
         $config['view'] = $this->forms->getView();
 
-        if (\is_subclass_of($class, InputWidget::class, true)) {
+        if (is_subclass_of($class, InputWidget::class, true)) {
             $config['field'] = $this;
 
             if (isset($config['options'])) {
@@ -807,24 +817,6 @@ class FieldBuilder extends Widget
         $this->parts['{input}'] = $class::widget($config);
 
         return $this;
-    }
-
-    /**
-     * Adjusts the `for` attribute for the label based on the input options.
-     *
-     * @param array $options the input options.
-     */
-    protected function adjustLabelFor(array $options = []): void
-    {
-        if (!isset($options['id'])) {
-            return;
-        }
-
-        $this->inputId = $options['id'];
-
-        if (!isset($this->labelOptions['for'])) {
-            $this->labelOptions['for'] = $options['id'];
-        }
     }
 
     /**
@@ -860,26 +852,6 @@ class FieldBuilder extends Widget
     }
 
     /**
-     * Adds aria attributes to the input options.
-     *
-     * @param array $options array input options
-     */
-    protected function addAriaAttributes(array &$options = []): void
-    {
-        if ($this->addAriaAttributes && ($this->form instanceof FormInterface)) {
-            if (!isset($options['aria-required']) && $this->form->isAttributeRequired($this->attribute)) {
-                $options['aria-required'] = 'true';
-            }
-
-            if (!isset($options['aria-invalid'])) {
-                if ($this->form->hasErrors($this->attribute)) {
-                    $options['aria-invalid'] = 'true';
-                }
-            }
-        }
-    }
-
-    /**
      * Adds validation class to the input options if needed.
      *
      * @param array $options array input options
@@ -906,28 +878,6 @@ class FieldBuilder extends Widget
     }
 
     /**
-     * @param array $value the HTML attributes (name-value pairs) for the field container tag.
-     * The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     * If a value is `null`, the corresponding attribute will not be rendered.
-     * The following special options are recognized:
-     *
-     * - `tag`: the tag name of the container element. Defaults to `div`. Setting it to `false` will not render a
-     * container tag. {@see also \Yiisoft\Html\Html::tag()}.
-     *
-     * If you set a custom `id` for the container element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @return self
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function options(array $value): self
-    {
-        $this->options = $value;
-
-        return $this;
-    }
-
-    /**
      * @param string $value the template that is used to arrange the label, the input field, the error message and the
      * hint text. The following tokens will be replaced when {@see render()} is called: `{label}`, `{input}`, `{error}`
      * and `{hint}`.
@@ -937,23 +887,6 @@ class FieldBuilder extends Widget
     public function template(string $value): self
     {
         $this->template = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param array the default options for the input tags. The parameter passed to individual input methods
-     * (e.g. {@see textInput()} will be merged with this property when rendering the input tag.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @return self
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function inputOptions(array $value): self
-    {
-        $this->inputOptions = $value;
 
         return $this;
     }
@@ -1151,5 +1084,14 @@ class FieldBuilder extends Widget
         $this->skipLabelFor = $value;
 
         return $this;
+    }
+
+    private function addInputCssClass($options): void
+    {
+        if (!isset($options['class'])) {
+            Html::addCssClass($this->inputOptions, $this->forms->getInputCssClass());
+        } elseif ($options['class'] !== 'form-control') {
+            Html::addCssClass($this->inputOptions, $this->forms->getInputCssClass());
+        }
     }
 }

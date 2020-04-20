@@ -23,7 +23,7 @@ final class FormBuilderTest extends TestCase
 
         $expected = <<<'HTML'
 <div class="form-group field-stubform-fieldstring">
-<input type="email" id="stubform-fieldstring" class="form-control" name="StubForm[fieldString]" required aria-required="true">
+<input type="email" id="stubform-fieldstring" class="form-control" name="StubForm[fieldString]" aria-required="true" required>
 </div>
 HTML;
         $created = FieldBuilder::widget()
@@ -31,7 +31,8 @@ HTML;
             ->form($form)
             ->attribute('fieldString')
             ->template('{input}')
-            ->input('email', ['required' => true])
+            ->required(true)
+            ->input('email')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -45,21 +46,8 @@ HTML;
             ->form($form)
             ->attribute('fieldString')
             ->template('{input}')
-            ->input('email', ['required' => false])
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $created);
-
-        $expected = <<<'HTML'
-<div class="form-group field-stubform-fieldstring">
-<input type="email" id="stubform-fieldstring" class="form-control" name="StubForm[fieldString]" required="test" aria-required="true">
-</div>
-HTML;
-        $created = FieldBuilder::widget()
-            ->withForm($forms)
-            ->form($form)
-            ->attribute('fieldString')
-            ->template('{input}')
-            ->input('email', ['required' => 'test'])
+            ->required(false)
+            ->input('email')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }
