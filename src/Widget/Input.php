@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Html\Html;
+use Yiisoft\Form\FormHtml;
 
 final class Input extends Widget
 {
@@ -18,15 +19,15 @@ final class Input extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
-        $value = $this->options['value'] ?? BaseForm::getAttributeValue($this->form, $this->attribute);
+        $name = $this->options['name'] ?? FormHTml::getInputName($this->form, $this->attribute);
+        $value = $this->options['value'] ?? FormHTml::getAttributeValue($this->form, $this->attribute);
         $this->options['id'] = $this->options['id'] ?? $this->id;
 
         if ($this->options['id'] === null) {
-            $this->options['id'] = BaseForm::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
         }
 
-        BaseForm::placeholder($this->form, $this->attribute, $this->options);
+        FormHTml::placeholder($this->form, $this->attribute, $this->options);
 
         return Html::input($this->type, $name, $value, $this->options);
     }

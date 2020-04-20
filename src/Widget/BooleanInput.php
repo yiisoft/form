@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Form\FormHtml;
 use Yiisoft\Html\Html;
 
 final class BooleanInput extends Widget
@@ -22,8 +23,8 @@ final class BooleanInput extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
-        $value = BaseForm::getAttributeValue($this->form, $this->attribute);
+        $name = $this->options['name'] ?? FormHTml::getInputName($this->form, $this->attribute);
+        $value = FormHTml::getAttributeValue($this->form, $this->attribute);
 
         if (!array_key_exists('value', $this->options)) {
             $this->options['value'] = '1';
@@ -38,7 +39,7 @@ final class BooleanInput extends Widget
         if ($this->label) {
             $this->options['label'] = Html::encode(
                 $this->form->getAttributeLabel(
-                    BaseForm::getAttributeName($this->attribute)
+                    FormHTml::getAttributeName($this->attribute)
                 )
             );
         }
@@ -46,7 +47,7 @@ final class BooleanInput extends Widget
         $this->options['id'] = $this->id;
 
         if ($this->id === null) {
-            $this->options['id'] = BaseForm::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
         }
 
         $type = $this->type;

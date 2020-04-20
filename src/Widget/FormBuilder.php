@@ -129,7 +129,7 @@ final class FormBuilder extends Widget
         foreach ($forms as $form) {
             $form->validate($attributes);
             foreach ($form->getErrors() as $attribute => $errors) {
-                $result[BaseForm::getInputId($form, $attribute)] = $errors;
+                $result[FormHTml::getInputId($form, $attribute)] = $errors;
             }
         }
 
@@ -161,7 +161,7 @@ final class FormBuilder extends Widget
         foreach ($forms as $i => $form) {
             $form->validate($attributes);
             foreach ($form->getErrors() as $attribute => $errors) {
-                $result[BaseForm::getInputId($form, "[$i]" . $attribute)] = $errors;
+                $result[FormHTml::getInputId($form, "[$i]" . $attribute)] = $errors;
             }
         }
 

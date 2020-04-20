@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\FormHtml;
 use Yiisoft\Widget\Widget as AbstractWidget;
 
 abstract class Widget extends AbstractWidget
@@ -61,7 +62,7 @@ abstract class Widget extends AbstractWidget
      *
      * @return self
      *
-     * {@see \Yiisoft\Html\BaseForm::getAttributeName()} for the format about attribute expression.
+     * {@see \Yiisoft\Html\FormHTml::getAttributeName()} for the format about attribute expression.
      */
     public function attribute(string $value): self
     {

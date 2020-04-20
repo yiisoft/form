@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Form\FormHtml;
 use Yiisoft\Html\Html;
 
 use function array_merge;
@@ -845,7 +846,7 @@ class FieldBuilder extends Widget
      */
     public function getInputId(): string
     {
-        return $this->inputId ?: BaseForm::getInputId($this->form, $this->attribute);
+        return $this->inputId ?: FormHTml::getInputId($this->form, $this->attribute);
     }
 
     /**
@@ -855,7 +856,7 @@ class FieldBuilder extends Widget
      */
     protected function addErrorClassIfNeeded(array &$options = []): void
     {
-        $attributeName = BaseForm::getAttributeName($this->attribute);
+        $attributeName = FormHTml::getAttributeName($this->attribute);
 
         if ($this->form->hasErrors($attributeName)) {
             Html::addCssClass($options, $this->forms->getErrorCssClass());

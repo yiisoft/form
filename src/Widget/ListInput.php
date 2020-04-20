@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
+use Yiisoft\Form\FormHtml;
 
 final class ListInput extends Widget
 {
@@ -24,17 +25,17 @@ final class ListInput extends Widget
      */
     public function run(): string
     {
-        $name = ArrayHelper::remove($this->options, 'name', BaseForm::getInputName($this->form, $this->attribute));
+        $name = ArrayHelper::remove($this->options, 'name', FormHTml::getInputName($this->form, $this->attribute));
         $selection = ArrayHelper::remove(
             $this->options,
             'value',
-            BaseForm::getAttributeValue($this->form, $this->attribute)
+            FormHTml::getAttributeValue($this->form, $this->attribute)
         );
 
         $this->options['id'] = $this->id;
 
         if ($this->id === null) {
-            $this->options['id'] = BaseForm::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
         }
 
         if ($this->multiple) {

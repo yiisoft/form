@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Form;
 
 use InvalidArgumentException;
 use Yiisoft\Html\Html;
@@ -10,7 +10,7 @@ use Yiisoft\Form\FormInterface;
 
 use function preg_match;
 
-final class BaseForm
+final class FormHtml
 {
     /**
      * Returns the real attribute name from the given attribute expression.

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
+use Yiisoft\Form\FormHtml;
 
 final class Label extends Widget
 {
@@ -21,7 +22,7 @@ final class Label extends Widget
         $for = ArrayHelper::remove(
             $this->options,
             'for',
-            BaseForm::getInputId($this->form, $this->attribute, $this->charset)
+            FormHTml::getInputId($this->form, $this->attribute, $this->charset)
         );
 
         $label = ArrayHelper::remove(

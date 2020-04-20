@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Html\Html;
+use Yiisoft\Form\FormHtml;
 
 final class TextArea extends Widget
 {
@@ -17,22 +18,22 @@ final class TextArea extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? BaseForm::getInputName($this->form, $this->attribute);
+        $name = $this->options['name'] ?? FormHTml::getInputName($this->form, $this->attribute);
         $id = $this->options['id'] ?? $this->id;
 
         if (isset($this->options['value'])) {
             $value = $this->options['value'];
             unset($this->options['value']);
         } else {
-            $value = BaseForm::getAttributeValue($this->form, $this->attribute);
+            $value = FormHTml::getAttributeValue($this->form, $this->attribute);
         }
 
         if ($id === null) {
-            $this->options['id'] = BaseForm::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
         }
 
 
-        BaseForm::placeholder($this->form, $this->attribute, $this->options);
+        FormHTml::placeholder($this->form, $this->attribute, $this->options);
 
         return Html::textarea($name, $value, $this->options);
     }
