@@ -38,7 +38,9 @@ abstract class Form implements FormInterface, DataSetInterface
      */
     public function isAttributeRequired(string $attribute): bool
     {
-        foreach ($this->rules()[$attribute] as $validator) {
+        $validators = $this->rules()[$attribute] ?? [];
+
+        foreach ($validators as $validator) {
             if ($validator instanceof Required) {
                 return true;
             }
