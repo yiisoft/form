@@ -20,8 +20,6 @@ class FieldBuilder extends Widget
     private array $errorOptions = ['class' => 'help-block'];
     private array $labelOptions = ['class' => 'control-label'];
     private array $hintOptions = ['class' => 'hint-block'];
-    private ?bool $enableClientValidation = null;
-    private ?bool $enableAjaxValidation = null;
     private ?bool $validateOnChange = null;
     private ?bool $validateOnBlur = null;
     private ?bool $validateOnType = null;
@@ -80,13 +78,6 @@ class FieldBuilder extends Widget
      */
     public function renderBegin(): string
     {
-        if ($this->form->isEnableClientScript()) {
-            $clientOptions = $this->getClientOptions();
-            if (!empty($clientOptions)) {
-                $this->form->attributes([$clientOptions]);
-            }
-        }
-
         $attribute = Html::getAttributeName($this->attribute);
         $inputId = $this->getInputId();
 
@@ -818,28 +809,6 @@ class FieldBuilder extends Widget
     }
 
     /**
-     * Checks if client validation enabled for the field.
-     *
-     * @return bool whether client validation enabled for the field.
-     */
-    public function isClientValidationEnabled(): bool
-    {
-        return $this->enableClientValidation ||
-            ($this->enableClientValidation === null && $this->form->isEnableClientValidation());
-    }
-
-    /**
-     * Checks if AJAX validation enabled for the field.
-     *
-     * @return bool whether AJAX validation enabled for the field.
-     */
-    public function isAjaxValidationEnabled(): bool
-    {
-        return $this->enableAjaxValidation ||
-            ($this->enableAjaxValidation === null && $this->form->isEnableAjaxValidation());
-    }
-
-    /**
      * Returns the HTML `id` of the input element of this form field.
      *
      * @return string the input id.
@@ -942,32 +911,6 @@ class FieldBuilder extends Widget
     public function hintOptions(array $value): self
     {
         $this->hintOptions = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $value whether to enable client-side data validation.
-     * If not set, it will take the value of {@see FormBuilder::enableClientValidation}.
-     *
-     * @return self
-     */
-    public function enableClientValidation(bool $value): self
-    {
-        $this->enableClientValidation = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $value whether to enable AJAX-based data validation.
-     * If not set, it will take the value of {@see FormBuilder::enableAjaxValidation}.
-     *
-     * @return self
-     */
-    public function enableAjaxValidation(bool $value): self
-    {
-        $this->enableAjaxValidation = $value;
 
         return $this;
     }

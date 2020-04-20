@@ -22,9 +22,6 @@ final class FormBuilder extends Widget
     private string $successCssClass = 'has-success';
     private string $validatingCssClass = 'validating';
     private string $validationStateOn = self::VALIDATION_STATE_ON_CONTAINER;
-    private bool $enableClientValidation = true;
-    private bool $enableAjaxValidation = false;
-    private bool $enableClientScript = false;
     private ?string $validationUrl = null;
     private bool $validateOnSubmit = true;
     private bool $validateOnChange = true;
@@ -166,21 +163,6 @@ final class FormBuilder extends Widget
         }
 
         return $result;
-    }
-
-    public function isEnableAjaxValidation(): bool
-    {
-        return $enableAjaxValidation;
-    }
-
-    public function isEnableClientValidation(): bool
-    {
-        return $this->enableClientValidation;
-    }
-
-    public function isEnableClientScript(): bool
-    {
-        return $this->enableClientScript;
     }
 
     public function getErrorCssClass(): string
@@ -486,24 +468,6 @@ final class FormBuilder extends Widget
     public function scrollToErrorOffset(int $value): self
     {
         $this->scrollToErrorOffset = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param bool whether to hook up `yii.activeForm` JavaScript plugin.
-     *
-     * This property must be set `true` if you want to support client validation and/or AJAX validation, or if you want
-     * to take advantage of the `yii.activeForm` plugin. When this is `false`, the form will not generate any
-     * JavaScript.
-     *
-     * @return self
-     *
-     * {@see registerClientScript}
-     */
-    public function enableClientScript(bool $value): self
-    {
-        $this->enableClientScript = $value;
 
         return $this;
     }
