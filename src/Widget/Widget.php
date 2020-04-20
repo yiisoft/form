@@ -13,7 +13,7 @@ abstract class Widget extends AbstractWidget
     use WidgetInputOptions;
 
     protected ?string $id = null;
-    protected FormInterface $form;
+    protected FormInterface $data;
     protected string $attribute;
     protected array $options = [];
 
@@ -48,9 +48,9 @@ abstract class Widget extends AbstractWidget
      *
      * @return self
      */
-    public function form(FormInterface $value): self
+    public function data(FormInterface $value): self
     {
-        $this->form = $value;
+        $this->data = $value;
 
         return $this;
     }

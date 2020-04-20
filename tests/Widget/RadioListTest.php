@@ -18,7 +18,7 @@ final class RadioListTest extends TestCase
 <input type="hidden" name="StubForm[fieldArray]" value=""><div id="stubform-fieldarray" class="testMe"><label><input type="radio" name="StubForm[fieldArray]" value="0"> foo</label></div>
 HTML;
         $created = RadioList::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items(['foo'])
             ->options(['class' => 'testMe'])

@@ -56,7 +56,7 @@ final class InputTest extends TestCase
         $form->fieldString($value);
         $created = Input::widget()
             ->type('text')
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options($options)
             ->run();

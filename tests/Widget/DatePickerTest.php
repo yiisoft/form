@@ -17,7 +17,7 @@ final class DatePickerTest extends TestCase
 
         $expected = '<input type="date" id="stubform-fieldstring" name="StubForm[fieldString]" value="2020-20-04">';
         $created = (new DatePicker())
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options([])
             ->run();

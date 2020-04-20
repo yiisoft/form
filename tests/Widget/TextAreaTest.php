@@ -62,7 +62,7 @@ final class TextAreaTest extends TestCase
         $form = new StubForm();
         $form->fieldString($value);
         $created = TextArea::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options($options)
             ->run();

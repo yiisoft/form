@@ -20,7 +20,7 @@ final class RadioList extends Widget
     {
         return ListInput::widget()
             ->type('radioList')
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($this->items)
             ->options($this->options)

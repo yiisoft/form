@@ -53,7 +53,7 @@ final class ErrorSummary extends Widget
     {
         $lines = [];
 
-        foreach ([$this->form] as $form) {
+        foreach ([$this->data] as $form) {
             $lines = array_unique(array_merge($lines, $form->getErrorSummary($showAllErrors)));
         }
 

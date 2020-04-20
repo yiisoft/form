@@ -22,13 +22,13 @@ final class Label extends Widget
         $for = ArrayHelper::remove(
             $this->options,
             'for',
-            FormHTml::getInputId($this->form, $this->attribute, $this->charset)
+            FormHTml::getInputId($this->data, $this->attribute, $this->charset)
         );
 
         $label = ArrayHelper::remove(
             $this->options,
             'label',
-            Html::encode($this->form->getAttributeLabel($this->attribute))
+            Html::encode($this->data->getAttributeLabel($this->attribute))
         );
 
         return Html::label($label, $for, $this->options);

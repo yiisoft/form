@@ -23,8 +23,8 @@ final class BooleanInput extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? FormHTml::getInputName($this->form, $this->attribute);
-        $value = FormHTml::getAttributeValue($this->form, $this->attribute);
+        $name = $this->options['name'] ?? FormHtml::getInputName($this->data, $this->attribute);
+        $value = FormHtml::getAttributeValue($this->data, $this->attribute);
 
         if (!array_key_exists('value', $this->options)) {
             $this->options['value'] = '1';
@@ -38,8 +38,8 @@ final class BooleanInput extends Widget
 
         if ($this->label) {
             $this->options['label'] = Html::encode(
-                $this->form->getAttributeLabel(
-                    FormHTml::getAttributeName($this->attribute)
+                $this->data->getAttributeLabel(
+                    FormHtml::getAttributeName($this->attribute)
                 )
             );
         }
@@ -47,7 +47,7 @@ final class BooleanInput extends Widget
         $this->options['id'] = $this->id;
 
         if ($this->id === null) {
-            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHtml::getInputId($this->data, $this->attribute, $this->charset);
         }
 
         $type = $this->type;

@@ -64,7 +64,7 @@ final class CheckBoxTest extends TestCase
         $form->fieldCheck($value);
 
         $created = (new CheckBox())
-            ->form($form)
+            ->data($form)
             ->attribute('fieldCheck')
             ->label($label)
             ->uncheck($uncheck)

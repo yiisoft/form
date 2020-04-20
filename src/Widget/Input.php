@@ -19,15 +19,15 @@ final class Input extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? FormHTml::getInputName($this->form, $this->attribute);
-        $value = $this->options['value'] ?? FormHTml::getAttributeValue($this->form, $this->attribute);
+        $name = $this->options['name'] ?? FormHTml::getInputName($this->data, $this->attribute);
+        $value = $this->options['value'] ?? FormHTml::getAttributeValue($this->data, $this->attribute);
         $this->options['id'] = $this->options['id'] ?? $this->id;
 
         if ($this->options['id'] === null) {
-            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        FormHTml::placeholder($this->form, $this->attribute, $this->options);
+        FormHTml::placeholder($this->data, $this->attribute, $this->options);
 
         return Html::input($this->type, $name, $value, $this->options);
     }

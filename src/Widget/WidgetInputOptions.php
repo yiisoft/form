@@ -52,13 +52,13 @@ trait WidgetInputOptions
      */
     protected function addAriaAttribute(array $options = []): void
     {
-        if ($this->ariaAttribute && ($this->form instanceof FormInterface)) {
-            if (!isset($options['aria-required']) && $this->form->isAttributeRequired($this->attribute)) {
+        if ($this->ariaAttribute && ($this->data instanceof FormInterface)) {
+            if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
                 $this->inputOptions['aria-required'] = 'true';
             }
 
             if (!isset($options['aria-invalid'])) {
-                if ($this->form->hasErrors($this->attribute)) {
+                if ($this->data->hasErrors($this->attribute)) {
                     $this->inputOptions['aria-invalid'] = 'true';
                 }
             }

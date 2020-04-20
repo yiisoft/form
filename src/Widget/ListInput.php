@@ -25,17 +25,17 @@ final class ListInput extends Widget
      */
     public function run(): string
     {
-        $name = ArrayHelper::remove($this->options, 'name', FormHTml::getInputName($this->form, $this->attribute));
+        $name = ArrayHelper::remove($this->options, 'name', FormHTml::getInputName($this->data, $this->attribute));
         $selection = ArrayHelper::remove(
             $this->options,
             'value',
-            FormHTml::getAttributeValue($this->form, $this->attribute)
+            FormHTml::getAttributeValue($this->data, $this->attribute)
         );
 
         $this->options['id'] = $this->id;
 
         if ($this->id === null) {
-            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->data, $this->attribute, $this->charset);
         }
 
         if ($this->multiple) {

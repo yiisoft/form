@@ -16,7 +16,7 @@ final class HiddenInputTest extends TestCase
 
         $expected = '<input type="hidden" id="stubform-fieldstring" name="test">';
         $created = HiddenInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options(['name' => 'test'])
             ->run();
@@ -24,7 +24,7 @@ final class HiddenInputTest extends TestCase
 
         $expected = '<input type="hidden" id="stubform-fieldstring" class="test" name="test" value="value">';
         $created = HiddenInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options(['name' => 'test', 'value' => 'value', 'class' => 'test'])
             ->run();

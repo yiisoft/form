@@ -31,7 +31,7 @@ final class ListBox extends Widget
 
         return ListInput::Widget()
             ->type('listBox')
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($this->items)
             ->multiple($this->multiple)

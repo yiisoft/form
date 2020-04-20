@@ -16,7 +16,7 @@ final class Hint extends Widget
      */
     public function run(): string
     {
-        $hint = $this->options['hint'] ?? $this->form->getAttributeHint($this->attribute);
+        $hint = $this->options['hint'] ?? $this->data->getAttributeHint($this->attribute);
 
         if (empty($hint)) {
             return '';

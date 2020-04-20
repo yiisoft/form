@@ -17,7 +17,7 @@ final class FileInputTest extends TestCase
         $form->fieldFile('testme.doc');
         $expected = '<input type="hidden" name="foo" value=""><input type="file" id="stubform-fieldfile" name="foo" value="testme.doc">';
         $created = FileInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldFile')
             ->options(['name' => 'foo'])
             ->run();
@@ -26,7 +26,7 @@ final class FileInputTest extends TestCase
         $form->fieldFile('testme.png');
         $expected = '<input type="hidden" name="foo" value="" disabled><input type="file" id="stubform-fieldfile" name="foo" value="testme.png" disabled>';
         $created = FileInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldFile')
             ->options(['name' => 'foo', 'disabled' => true])
             ->run();
@@ -35,7 +35,7 @@ final class FileInputTest extends TestCase
         $form->fieldFile('testme.jpg');
         $expected = '<input type="hidden" id="specific-id" name="foo" value=""><input type="file" id="stubform-fieldfile" name="foo" value="testme.jpg">';
         $created = FileInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldFile')
             ->options(['name' => 'foo', 'hiddenOptions' => ['id' => 'specific-id']])
             ->run();
@@ -44,7 +44,7 @@ final class FileInputTest extends TestCase
         $form->fieldFile('testme.bak');
         $expected = '<input type="hidden" id="specific-id" name="StubForm[fieldFile]" value=""><input type="file" id="stubform-fieldfile" name="StubForm[fieldFile]" value="testme.bak">';
         $created = FileInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldFile')
             ->options(['hiddenOptions' => ['id' => 'specific-id']])
             ->run();
@@ -53,7 +53,7 @@ final class FileInputTest extends TestCase
         $form->fieldFile('1.jpg');
         $expected = '<input type="hidden" name="StubForm[fieldFile]" value=""><input type="file" id="stubform-fieldfile" name="StubForm[fieldFile]" value="1.jpg">';
         $created = FileInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldFile')
             ->options(['hiddenOptions' => []])
             ->run();
@@ -62,7 +62,7 @@ final class FileInputTest extends TestCase
         $form->fieldFile('21.png');
         $expected = '<input type="hidden" name="foo" value=""><input type="file" id="stubform-fieldfile" name="foo" value="21.png">';
         $created = FileInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldFile')
             ->options(['name' => 'foo', 'hiddenOptions' => []])
             ->run();

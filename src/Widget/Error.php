@@ -19,9 +19,9 @@ final class Error extends Widget
         $errorSource = ArrayHelper::remove($this->options, 'errorSource');
 
         if ($errorSource !== null) {
-            $error = $errorSource($this->form, $this->attribute);
+            $error = $errorSource($this->data, $this->attribute);
         } else {
-            $error = $this->form->getFirstError($this->attribute);
+            $error = $this->data->getFirstError($this->attribute);
         }
 
         $tag = ArrayHelper::remove($this->options, 'tag', 'div');

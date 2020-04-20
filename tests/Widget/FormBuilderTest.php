@@ -27,8 +27,8 @@ final class FormBuilderTest extends TestCase
 </div>
 HTML;
         $created = FieldBuilder::widget()
-            ->withForm($forms)
-            ->form($form)
+            ->form($forms)
+            ->data($form)
             ->attribute('fieldString')
             ->template('{input}')
             ->required(true)
@@ -42,8 +42,8 @@ HTML;
 </div>
 HTML;
         $created = FieldBuilder::widget()
-            ->withForm($forms)
-            ->form($form)
+            ->form($forms)
+            ->data($form)
             ->attribute('fieldString')
             ->template('{input}')
             ->required(false)

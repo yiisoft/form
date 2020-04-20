@@ -16,7 +16,7 @@ final class TextInputTest extends TestCase
 
         $expected = '<input type="text" id="stubform-fieldstring" class="testMe" name="StubForm[fieldString]">';
         $created = TextInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options(['class' => 'testMe'])
             ->required(false)
@@ -30,7 +30,7 @@ final class TextInputTest extends TestCase
 
         $expected = 'placeholder="Custom placeholder"';
         $created = TextInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options(['placeholder' => 'Custom placeholder'])
             ->run();
@@ -43,7 +43,7 @@ final class TextInputTest extends TestCase
 
         $expected  = 'placeholder="Field String"';
         $created = TextInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldString')
             ->options(['placeholder' => true])
             ->run();
@@ -56,7 +56,7 @@ final class TextInputTest extends TestCase
 
         $expected = 'placeholder="Field String"';
         $created = TextInput::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('[0]fieldString')
             ->options(['placeholder' => true])
             ->run();

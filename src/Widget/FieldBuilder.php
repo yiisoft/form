@@ -14,7 +14,7 @@ use function is_subclass_of;
 
 class FieldBuilder extends Widget
 {
-    private ?FormBuilder $forms = null;
+    private ?FormBuilder $form = null;
     private string $template = "{label}\n{input}\n{hint}\n{error}";
     private array $divOptions = ['class' => 'form-group'];
     private array $errorOptions = ['class' => 'help-block'];
@@ -80,23 +80,23 @@ class FieldBuilder extends Widget
      */
     public function renderBegin(): string
     {
-        if ($this->forms->isEnableClientScript()) {
+        if ($this->form->isEnableClientScript()) {
             $clientOptions = $this->getClientOptions();
             if (!empty($clientOptions)) {
-                $this->forms->attributes([$clientOptions]);
+                $this->form->attributes([$clientOptions]);
             }
         }
 
         $attribute = Html::getAttributeName($this->attribute);
         $inputId = $this->getInputId();
 
-        if ($this->form->isAttributeRequired($attribute)) {
-            $class[] = $this->forms->getRequiredCssClass();
+        if ($this->data->isAttributeRequired($attribute)) {
+            $class[] = $this->form->getRequiredCssClass();
         }
 
         $options['class'] = implode(' ', array_merge($this->divOptions, ["field-$inputId"]));
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_CONTAINER) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_CONTAINER) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -150,7 +150,7 @@ class FieldBuilder extends Widget
         }
 
         $this->parts['{label}'] = Label::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -191,7 +191,7 @@ class FieldBuilder extends Widget
         $options = array_merge($this->errorOptions, $options);
 
         $this->parts['{error}'] = Error::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -232,7 +232,7 @@ class FieldBuilder extends Widget
         }
 
         $this->parts['{hint}'] = Hint::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -260,13 +260,13 @@ class FieldBuilder extends Widget
 
         $options = array_merge($this->inputOptions, $options);
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
         $this->parts['{input}'] = Input::widget()
             ->type($type)
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -300,12 +300,12 @@ class FieldBuilder extends Widget
 
         $options = array_merge($this->inputOptions, $options);
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
         $this->parts['{input}'] = TextInput::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -336,14 +336,14 @@ class FieldBuilder extends Widget
     {
         $this->label(null);
 
-        Html::addCssClass($options, $this->forms->getInputCssClass());
+        Html::addCssClass($options, $this->form->getInputCssClass());
 
         $options = array_merge($this->inputOptions, $options);
 
         $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = HiddenInput::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -370,16 +370,16 @@ class FieldBuilder extends Widget
     {
         $this->configInputOptions($options);
 
-        Html::addCssClass($options, $this->forms->getInputCssClass());
+        Html::addCssClass($options, $this->form->getInputCssClass());
 
         $options = array_merge($this->inputOptions, $options);
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
         $this->parts['{input}'] = PasswordInput::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -407,10 +407,10 @@ class FieldBuilder extends Widget
         $options = array_merge($this->inputOptions, $options);
 
         if (!isset($this->options['enctype'])) {
-            $this->forms->options(array_merge($this->options, ['enctype' => 'multipart/form-data']));
+            $this->form->options(array_merge($this->options, ['enctype' => 'multipart/form-data']));
         }
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -418,7 +418,7 @@ class FieldBuilder extends Widget
         $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = FileInput::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -442,11 +442,11 @@ class FieldBuilder extends Widget
      */
     public function textArea(array $options = []): self
     {
-        Html::addCssClass($options, $this->forms->getInputCssClass());
+        Html::addCssClass($options, $this->form->getInputCssClass());
 
         $options = array_merge($this->inputOptions, $options);
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -454,7 +454,7 @@ class FieldBuilder extends Widget
         $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = TextArea::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($options)
             ->run();
@@ -498,7 +498,7 @@ class FieldBuilder extends Widget
     {
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Radio::widget()
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->options($options)
                 ->run();
@@ -515,13 +515,13 @@ class FieldBuilder extends Widget
 
             $options['label'] = null;
             $this->parts['{input}'] = Radio::widget()
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->options($options)
                 ->run();
         }
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -569,7 +569,7 @@ class FieldBuilder extends Widget
 
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Checkbox::widget()
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->options($options)
                 ->run();
@@ -586,13 +586,13 @@ class FieldBuilder extends Widget
 
             $options['label'] = null;
             $this->parts['{input}'] = Checkbox::widget()
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->options($options)
                 ->run();
         }
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -625,11 +625,11 @@ class FieldBuilder extends Widget
      */
     public function dropDownList(array $items, array $options = []): self
     {
-        Html::addCssClass($options, $this->forms->getInputCssClass());
+        Html::addCssClass($options, $this->form->getInputCssClass());
 
         $options = array_merge($this->inputOptions, $options);
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -637,7 +637,7 @@ class FieldBuilder extends Widget
         $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = DropDownList::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
             ->options($options)
@@ -672,11 +672,11 @@ class FieldBuilder extends Widget
      */
     public function listBox(array $items, array $options = []): self
     {
-        Html::addCssClass($options, $this->forms->getInputCssClass());
+        Html::addCssClass($options, $this->form->getInputCssClass());
 
         $options = array_merge($this->inputOptions, $options);
 
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -684,7 +684,7 @@ class FieldBuilder extends Widget
         $this->adjustLabelFor($options);
 
         $this->parts['{input}'] = ListBox::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
             ->options($options)
@@ -712,7 +712,7 @@ class FieldBuilder extends Widget
      */
     public function checkboxList(array $items, array $options = []): self
     {
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -721,7 +721,7 @@ class FieldBuilder extends Widget
 
         $this->skipLabelFor = true;
         $this->parts['{input}'] = CheckboxList::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
             ->options($options)
@@ -748,7 +748,7 @@ class FieldBuilder extends Widget
      */
     public function radioList(array $items, array $options = []): self
     {
-        if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+        if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
             $this->addErrorClassIfNeeded($options);
         }
 
@@ -757,7 +757,7 @@ class FieldBuilder extends Widget
 
         $this->skipLabelFor = true;
         $this->parts['{input}'] = RadioList::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
             ->options($options)
@@ -795,15 +795,15 @@ class FieldBuilder extends Widget
      */
     public function renderWidget(string $class, array $config = []): self
     {
-        $config['model'] = $this->form;
+        $config['model'] = $this->data;
         $config['attribute'] = $this->attribute;
-        $config['view'] = $this->forms->getView();
+        $config['view'] = $this->form->getView();
 
         if (is_subclass_of($class, InputWidget::class, true)) {
             $config['field'] = $this;
 
             if (isset($config['options'])) {
-                if ($this->forms->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
+                if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
                     $this->addErrorClassIfNeeded($config['options']);
                 }
 
@@ -825,7 +825,7 @@ class FieldBuilder extends Widget
     public function isClientValidationEnabled(): bool
     {
         return $this->enableClientValidation ||
-            ($this->enableClientValidation === null && $this->forms->isEnableClientValidation());
+            ($this->enableClientValidation === null && $this->form->isEnableClientValidation());
     }
 
     /**
@@ -836,7 +836,7 @@ class FieldBuilder extends Widget
     public function isAjaxValidationEnabled(): bool
     {
         return $this->enableAjaxValidation ||
-            ($this->enableAjaxValidation === null && $this->forms->isEnableAjaxValidation());
+            ($this->enableAjaxValidation === null && $this->form->isEnableAjaxValidation());
     }
 
     /**
@@ -846,7 +846,7 @@ class FieldBuilder extends Widget
      */
     public function getInputId(): string
     {
-        return $this->inputId ?: FormHTml::getInputId($this->form, $this->attribute);
+        return $this->inputId ?: FormHTml::getInputId($this->data, $this->attribute);
     }
 
     /**
@@ -858,8 +858,8 @@ class FieldBuilder extends Widget
     {
         $attributeName = FormHTml::getAttributeName($this->attribute);
 
-        if ($this->form->hasErrors($attributeName)) {
-            Html::addCssClass($options, $this->forms->getErrorCssClass());
+        if ($this->data->hasErrors($attributeName)) {
+            Html::addCssClass($options, $this->form->getErrorCssClass());
         }
     }
 
@@ -868,9 +868,9 @@ class FieldBuilder extends Widget
      *
      * @return self
      */
-    public function withForm(FormBuilder $value): self
+    public function form(FormBuilder $value): self
     {
-        $this->forms = $value;
+        $this->form = $value;
 
         return $this;
     }
@@ -1087,9 +1087,9 @@ class FieldBuilder extends Widget
     private function addInputCssClass($options): void
     {
         if (!isset($options['class'])) {
-            Html::addCssClass($this->inputOptions, $this->forms->getInputCssClass());
+            Html::addCssClass($this->inputOptions, $this->form->getInputCssClass());
         } elseif ($options['class'] !== 'form-control') {
-            Html::addCssClass($this->inputOptions, $this->forms->getInputCssClass());
+            Html::addCssClass($this->inputOptions, $this->form->getInputCssClass());
         }
     }
 }

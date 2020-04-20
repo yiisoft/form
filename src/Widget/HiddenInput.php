@@ -19,7 +19,7 @@ final class HiddenInput extends Widget
     {
         return Input::widget()
             ->type('hidden')
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->options($this->options)
             ->run();

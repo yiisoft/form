@@ -26,7 +26,7 @@ final class DropDownList extends Widget
         if (!$this->multiple) {
             return ListInput::widget()
                 ->type('dropDownList')
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->items($this->items)
                 ->options($this->options)
@@ -37,7 +37,7 @@ final class DropDownList extends Widget
         $this->options['multiple'] = 'true';
 
         return ListBox::widget()
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->items($this->items)
             ->options($this->options)

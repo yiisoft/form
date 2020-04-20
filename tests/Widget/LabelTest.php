@@ -15,11 +15,11 @@ final class LabelTest extends TestCase
         $form = new StubForm();
 
         $expected = '<label for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()->form($form)->attribute('fieldString')->run();
+        $created = Label::widget()->data($form)->attribute('fieldString')->run();
         $this->assertEquals($expected, $created);
 
         $expected = '<label class="test" for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()->form($form)->attribute('fieldString')->options(['class' => 'test'])->run();
+        $created = Label::widget()->data($form)->attribute('fieldString')->options(['class' => 'test'])->run();
         $this->assertEquals($expected, $created);
     }
 }

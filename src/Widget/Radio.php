@@ -22,7 +22,7 @@ final class Radio extends Widget
     {
         return BooleanInput::widget()
             ->type('radio')
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->label($this->label)
             ->uncheck($this->uncheck)

@@ -18,22 +18,22 @@ final class TextArea extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? FormHTml::getInputName($this->form, $this->attribute);
+        $name = $this->options['name'] ?? FormHTml::getInputName($this->data, $this->attribute);
         $id = $this->options['id'] ?? $this->id;
 
         if (isset($this->options['value'])) {
             $value = $this->options['value'];
             unset($this->options['value']);
         } else {
-            $value = FormHTml::getAttributeValue($this->form, $this->attribute);
+            $value = FormHTml::getAttributeValue($this->data, $this->attribute);
         }
 
         if ($id === null) {
-            $this->options['id'] = FormHTml::getInputId($this->form, $this->attribute, $this->charset);
+            $this->options['id'] = FormHTml::getInputId($this->data, $this->attribute, $this->charset);
         }
 
 
-        FormHTml::placeholder($this->form, $this->attribute, $this->options);
+        FormHTml::placeholder($this->data, $this->attribute, $this->options);
 
         return Html::textarea($name, $value, $this->options);
     }

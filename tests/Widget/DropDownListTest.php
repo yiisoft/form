@@ -20,7 +20,7 @@ final class DropDownListTest extends TestCase
 HTML;
         $form = new StubForm();
         $created = DropDownList::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->multiple(true)
             ->items(['city1' => 1, 'city2' => 2])

@@ -19,7 +19,7 @@ final class CheckBoxListTest extends TestCase
 <label><input type="checkbox" name="StubForm[fieldArray][]" value="1"> bar</label></div>
 HTML;
         $created = CheckboxList::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items(['foo', 'bar'])
             ->run();
@@ -33,7 +33,7 @@ HTML;
 <input type="hidden" name="foo" value=""><div id="stubform-fieldarray"><label><input type="checkbox" name="foo[]" value="0" checked> foo</label></div>
 HTML;
         $created = CheckboxList::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items(['foo'])
             ->options(['name' => 'foo', 'value' => 0])

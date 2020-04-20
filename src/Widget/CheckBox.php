@@ -21,7 +21,7 @@ final class CheckBox extends Widget
         return (new BooleanInput())
             ->type('checkbox')
             ->id($this->id)
-            ->form($this->form)
+            ->data($this->data)
             ->attribute($this->attribute)
             ->label($this->label)
             ->uncheck($this->uncheck)

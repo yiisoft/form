@@ -41,13 +41,13 @@ final class FileInput extends Widget
          */
         return
             HiddenInput::widget()
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->options($hiddenOptions)
                 ->run() .
             Input::widget()
                 ->type('file')
-                ->form($this->form)
+                ->data($this->data)
                 ->attribute($this->attribute)
                 ->options($this->options)
                 ->run();

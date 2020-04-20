@@ -20,7 +20,7 @@ final class ListBoxTest extends TestCase
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
@@ -32,7 +32,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems())
             ->size(5)
@@ -46,7 +46,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems2())
             ->run();
@@ -59,7 +59,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems2())
             ->options(['encodeSpaces' => true])
@@ -73,7 +73,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems2())
             ->options(['encode' => false])
@@ -87,7 +87,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems2())
             ->options(['encodeSpaces' => true, 'encode' => false])
@@ -102,7 +102,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems())
             ->run();
@@ -116,7 +116,7 @@ EOD;
 EOD;
         $form->fieldArray(['value1', 'value2']);
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems())
             ->run();
@@ -128,7 +128,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->multiple(true)
             ->run();
@@ -140,7 +140,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->unselect('0')
             ->run();
@@ -152,7 +152,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->unselect('0')
             ->options(['disabled' => true])
@@ -167,7 +167,7 @@ EOD;
 EOD;
         $form->fieldArray(new \ArrayObject(['value1', 'value2']));
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems())
             ->run();
@@ -182,7 +182,7 @@ EOD;
 EOD;
         $form->fieldArray(['0']);
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems3())
             ->run();
@@ -190,7 +190,7 @@ EOD;
 
         $form->fieldArray(new \ArrayObject([0]));
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems3())
             ->run();
@@ -205,7 +205,7 @@ EOD;
 EOD;
         $form->fieldArray(['1', 'value3']);
         $created = ListBox::widget()
-            ->form($form)
+            ->data($form)
             ->attribute('fieldArray')
             ->items($this->getDataItems3())
             ->run();
@@ -213,7 +213,7 @@ EOD;
 
         $form->fieldArray(new \ArrayObject(['1', 'value3']));
         $created = ListBox::widget()
-        ->form($form)
+        ->data($form)
         ->attribute('fieldArray')
         ->items($this->getDataItems3())
         ->run();
