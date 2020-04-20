@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Yiisoft\EventDispatcher\Dispatcher;
-use Yiisoft\EventDispatcher\Provider\Provider;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Form\Widget\Event\AfterFormRender;

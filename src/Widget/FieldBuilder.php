@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
 use function array_merge;
