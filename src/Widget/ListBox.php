@@ -11,7 +11,6 @@ final class ListBox extends Widget
     private bool $multiple = false;
     private array $items = [];
     private ?string $unselect = null;
-    private int $size = 0;
 
     /**
      * Generates a list box.
@@ -58,13 +57,6 @@ final class ListBox extends Widget
     public function unselect(?string $value): self
     {
         $this->unselect = $value;
-
-        return $this;
-    }
-
-    public function size(int $value): self
-    {
-        $this->size = $value;
 
         return $this;
     }
