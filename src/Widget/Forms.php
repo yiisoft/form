@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Widget;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
+use Yiisoft\Widget\Widget;
 
 use function explode;
 use function implode;
@@ -17,6 +18,8 @@ use function urldecode;
 
 final class Forms extends Widget
 {
+    use Collection\Options;
+
     private string $action;
     private string $method = Method::POST;
 

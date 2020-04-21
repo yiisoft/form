@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Html\Html;
-use Yiisoft\Form\FormHtml;
+use Yiisoft\Widget\Widget;
 
 final class Label extends Widget
 {
-    private string $charset = 'UTF-8';
+    use Collection\Options;
+    use Collection\HtmlForm;
 
     /**
      * Generates a label tag for the given form attribute.
+     *
+     * @throws InvalidArgumentException
      *
      * @return string the generated label tag.
      */
@@ -22,7 +26,7 @@ final class Label extends Widget
         $for = ArrayHelper::remove(
             $this->options,
             'for',
-            FormHTml::getInputId($this->data, $this->attribute, $this->charset)
+            $this->addInputId($this->data, $this->attribute, $this->charset)
         );
 
         $label = ArrayHelper::remove(
@@ -32,12 +36,5 @@ final class Label extends Widget
         );
 
         return Html::label($label, $for, $this->options);
-    }
-
-    public function charset(string $value): self
-    {
-        $this->charset = $value;
-
-        return $this;
     }
 }

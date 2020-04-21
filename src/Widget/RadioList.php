@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Form\Exception\InvalidArgumentException;
+use Yiisoft\Widget\Widget;
+
 final class RadioList extends Widget
 {
-    private array $items = [];
-    private ?string $unselect = '';
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\ListOptions;
 
     /**
      * Generates a list of radio buttons.
      *
      * A radio button list is like a checkbox list, except that it only allows single selection.
+     *
+     * @throws InvalidConfigException
+     * @throws InvalidArgumentException
      *
      * @return string the generated radio button list
      */
@@ -26,19 +34,5 @@ final class RadioList extends Widget
             ->options($this->options)
             ->unselect($this->unselect)
             ->run();
-    }
-
-    public function items(array $value): self
-    {
-        $this->items = $value;
-
-        return $this;
-    }
-
-    public function unselect(?string $value): self
-    {
-        $this->unselect = $value;
-
-        return $this;
     }
 }

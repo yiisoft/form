@@ -6,14 +6,20 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\FormHtml;
+use Yiisoft\Form\Exception\InvalidArgumentException;
+use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 use function array_merge;
 use function is_subclass_of;
 
 class FieldBuilder extends Widget
 {
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\HtmlForm;
+
     private ?FormBuilder $form = null;
     private string $template = "{label}\n{input}\n{hint}\n{error}";
     private array $divOptions = ['class' => 'form-group'];
@@ -73,6 +79,8 @@ class FieldBuilder extends Widget
 
     /**
      * Renders the opening tag of the field container.
+     *
+     * @throws InvalidArgumentException
      *
      * @return string the rendering result.
      */
@@ -240,12 +248,14 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
      */
     public function input(string $type, array $options = []): self
     {
+        $this->addAriaAttributes($options);
         $this->configInputOptions($options);
         $this->addInputCssClass($options);
 
@@ -353,6 +363,7 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -389,6 +400,7 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -427,6 +439,7 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the textarea element, you may need to adjust the {@see $selectors} accordingly.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -481,6 +494,7 @@ class FieldBuilder extends Widget
      * If `true`, the method will still use {@see template} to layout the radio button and the error message except
      * that the radio is enclosed by the label tag.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -550,6 +564,7 @@ class FieldBuilder extends Widget
      * If `true`, the method will still use [[template]] to layout the checkbox and the error message except that the
      * checkbox is enclosed by the label tag.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -610,6 +625,7 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -657,6 +673,7 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -697,6 +714,7 @@ class FieldBuilder extends Widget
      * For the list of available options please refer to the `$options` parameter of
      * {@see \Yiisoft\Html\Html::activeCheckboxList()}.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -733,6 +751,7 @@ class FieldBuilder extends Widget
      * For the list of available options please refer to the `$options` parameter of
      * {@see \Yiisoft\Html\Html::activeRadioList()}.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -811,21 +830,25 @@ class FieldBuilder extends Widget
     /**
      * Returns the HTML `id` of the input element of this form field.
      *
+     * @throws InvalidArgumentException
+     *
      * @return string the input id.
      */
     public function getInputId(): string
     {
-        return $this->inputId ?: FormHTml::getInputId($this->data, $this->attribute);
+        return $this->inputId ?: $this->addInputId($this->data, $this->attribute);
     }
 
     /**
      * Adds validation class to the input options if needed.
      *
      * @param array $options array input options
+     *
+     * @throws InvalidArgumentException
      */
     protected function addErrorClassIfNeeded(array &$options = []): void
     {
-        $attributeName = FormHTml::getAttributeName($this->attribute);
+        $attributeName = $this->getAttributeName($this->attribute);
 
         if ($this->data->hasErrors($attributeName)) {
             Html::addCssClass($options, $this->form->getErrorCssClass());
@@ -1033,6 +1056,24 @@ class FieldBuilder extends Widget
             Html::addCssClass($this->inputOptions, $this->form->getInputCssClass());
         } elseif ($options['class'] !== 'form-control') {
             Html::addCssClass($this->inputOptions, $this->form->getInputCssClass());
+        }
+    }
+
+    /**
+     * Adds aria attributes to the input options.
+     *
+     * @param array $options array input options
+     */
+    private function addAriaAttributes(array $options = []): void
+    {
+        if ($this->ariaAttribute && ($this->data instanceof FormInterface)) {
+            if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
+                $this->inputOptions['aria-required'] = 'true';
+            }
+
+            if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
+                $this->inputOptions['aria-invalid'] = 'true';
+            }
         }
     }
 }

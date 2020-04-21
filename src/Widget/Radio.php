@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Widget\Widget;
 
 final class Radio extends Widget
 {
-    private bool $label = true;
-    private bool $uncheck = false;
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\BooleanOptions;
 
     /**
      * Generates a radio button tag together with a label for the given form attribute.
@@ -28,19 +30,5 @@ final class Radio extends Widget
             ->uncheck($this->uncheck)
             ->options($this->options)
             ->run();
-    }
-
-    public function label(bool $value): self
-    {
-        $this->label = $value;
-
-        return $this;
-    }
-
-    public function uncheck(bool $value): self
-    {
-        $this->uncheck = $value;
-
-        return $this;
     }
 }

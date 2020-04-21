@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\FormHtml;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
+
+use function array_key_exists;
 
 final class BooleanInput extends Widget
 {
-    private string $charset = 'UTF-8';
-    private bool $label = true;
-    private bool $uncheck = false;
-    private ?string $type = null;
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\HtmlForm;
+    use Collection\BooleanOptions;
 
     /**
      * Generates a boolean input.
@@ -23,63 +25,36 @@ final class BooleanInput extends Widget
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? FormHtml::getInputName($this->data, $this->attribute);
-        $value = FormHtml::getAttributeValue($this->data, $this->attribute);
+        $this->addId();
+        $this->addLabel();
+        $this->addUncheck();
 
-        if (!array_key_exists('value', $this->options)) {
-            $this->options['value'] = '1';
-        }
-
-        if ($this->uncheck) {
-            $this->options['uncheck'] = '0';
-        } else {
-            unset($this->options['uncheck']);
-        }
-
-        if ($this->label) {
-            $this->options['label'] = Html::encode(
-                $this->data->getAttributeLabel(
-                    FormHtml::getAttributeName($this->attribute)
-                )
-            );
-        }
-
-        $this->options['id'] = $this->id;
-
-        if ($this->id === null) {
-            $this->options['id'] = FormHtml::getInputId($this->data, $this->attribute, $this->charset);
-        }
-
+        $name = $this->addName();
+        $value = $this->addValue();
         $type = $this->type;
 
         return Html::$type($name, $value, $this->options);
     }
 
-    public function charset(string $value): self
+    private function addLabel(): void
     {
-        $this->charset = $value;
-
-        return $this;
+        if ($this->label) {
+            $this->options['label'] = Html::encode(
+                $this->data->getAttributeLabel(
+                    $this->getAttributeName($this->attribute)
+                )
+            );
+        }
     }
 
-    public function label(bool $value): self
+    private function addValue(): bool
     {
-        $this->label = $value;
+        $value = $this->getAttributeValue($this->data, $this->attribute);
 
-        return $this;
-    }
+        if (!array_key_exists('value', $this->options)) {
+            $this->options['value'] = '1';
+        }
 
-    public function uncheck(bool $value): self
-    {
-        $this->uncheck = $value;
-
-        return $this;
-    }
-
-    public function type(string $value): self
-    {
-        $this->type = $value;
-
-        return $this;
+        return (bool) $value;
     }
 }

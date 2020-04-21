@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
+use Yiisoft\Widget\Widget;
 
 final class FormBuilder extends Widget
 {
+    use Collection\Options;
+
     public const VALIDATION_STATE_ON_CONTAINER = 'container';
     public const VALIDATION_STATE_ON_INPUT = 'input';
     private string $action = '';
@@ -72,9 +76,9 @@ final class FormBuilder extends Widget
      * using {@see \Yiisoft\Html\Html::encode()}. If a value is `null`, the corresponding attribute will not be
      * rendered.
      *
-     * @return string the generated error summary.
-     *
      * @throws InvalidConfigException
+     *
+     * @return string the generated error summary.
      *
      * {@see errorSummaryCssClass}
      */
@@ -85,84 +89,6 @@ final class FormBuilder extends Widget
         $options['encode'] = $this->encodeErrorSummary;
 
         return ErrorSummary::widget()->form($forms)->options($options)->run();
-    }
-
-    /**
-     * Validates one or several forms and returns an error message array indexed by the attribute IDs.
-     *
-     * This is a helper method that simplifies the way of writing AJAX validation code.
-     *
-     * For example, you may use the following code in a controller action to respond to an AJAX validation request:
-     *
-     * ```php
-     * // ... respond to non-AJAX request ...
-     * ```
-     *
-     * To validate multiple forms, simply pass each model as a parameter to this method, like the following:
-     *
-     * ```php
-     * ```
-     *
-     * @param FormInterface $form the form to be validated.
-     * @param string|null $attributes list of attributes that should be validated. If this parameter is empty, it means
-     * any attribute listed in the applicable validation rules should be validated.
-     *
-     * When this method is used to validate multiple forms, this parameter will be interpreted as a form.
-     *
-     * @return array the error message array indexed by the attribute IDs.
-     */
-    public static function validate(FormInterface $form, string $attributes = null): array
-    {
-        $result = [];
-        if ($attributes instanceof FormInterface) {
-            /** validating multiple forms */
-            $forms = func_get_args();
-            $attributes = null;
-        } else {
-            $forms = [$form];
-        }
-
-        /** @var FormInterface $form */
-        foreach ($forms as $form) {
-            $form->validate($attributes);
-            foreach ($form->getErrors() as $attribute => $errors) {
-                $result[FormHTml::getInputId($form, $attribute)] = $errors;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Validates an array of form instances and returns an error message array indexed by the attribute IDs.
-     *
-     * This is a helper method that simplifies the way of writing AJAX validation code for tabular input.
-     *
-     * For example, you may use the following code in a controller action to respond to an AJAX validation request:
-     *
-     * ```php
-     * // ... load $forms ...
-     * // ... respond to non-AJAX request ...
-     * ```
-     *
-     * @param FormInterface $forms an array of forms to be validated.
-     * @param string|null $attributes list of attributes that should be validated. If this parameter is empty, it means
-     * any attribute listed in the applicable validation rules should be validated.
-     *
-     * @return array the error message array indexed by the attribute IDs.
-     */
-    public static function validateMultiple(FormInterface $forms, ?string $attributes = null)
-    {
-        $result = [];
-        /** @var FormInterface $form */
-        foreach ($forms as $i => $form) {
-            $form->validate($attributes);
-            foreach ($form->getErrors() as $attribute => $errors) {
-                $result[FormHTml::getInputId($form, "[$i]" . $attribute)] = $errors;
-            }
-        }
-
-        return $result;
     }
 
     public function getErrorCssClass(): string

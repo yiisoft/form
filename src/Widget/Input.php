@@ -4,45 +4,37 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Html\Html;
 use Yiisoft\Form\FormHtml;
+use Yiisoft\Widget\Widget;
 
 final class Input extends Widget
 {
-    private string $charset = 'UTF-8';
-    private string $type;
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\HtmlForm;
 
     /**
      * Generates an input tag for the given form attribute.
+     *
+     * @throws InvalidArgumentException
      *
      * @return string the generated input tag.
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? FormHTml::getInputName($this->data, $this->attribute);
-        $value = $this->options['value'] ?? FormHTml::getAttributeValue($this->data, $this->attribute);
-        $this->options['id'] = $this->options['id'] ?? $this->id;
+        $this->addId();
+        $this->addPlaceholders($this->data, $this->attribute, $this->options);
 
-        if ($this->options['id'] === null) {
-            $this->options['id'] = FormHTml::getInputId($this->data, $this->attribute, $this->charset);
-        }
-
-        FormHTml::placeholder($this->data, $this->attribute, $this->options);
+        $name = $this->addName();
+        $value = $this->addValue();
 
         return Html::input($this->type, $name, $value, $this->options);
     }
 
-    public function charset(string $value): self
+    private function addValue(): ?string
     {
-        $this->charset = $value;
-
-        return $this;
-    }
-
-    public function type(string $value): self
-    {
-        $this->type = $value;
-
-        return $this;
+        return $this->options['value'] ?? $this->getAttributeValue($this->data, $this->attribute);
     }
 }

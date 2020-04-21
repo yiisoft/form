@@ -6,12 +6,17 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Form\Exception\InvalidArgumentException;
+use Yiisoft\Widget\Widget;
 
 final class FileInput extends Widget
 {
+    use Collection\Options;
+
     /**
      * Generates a file input tag for the given form attribute.
      *
+     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return string the generated input tag.

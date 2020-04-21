@@ -4,44 +4,40 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Html\Html;
-use Yiisoft\Form\FormHtml;
+use Yiisoft\Widget\Widget;
 
 final class TextArea extends Widget
 {
-    private string $charset = 'UTF-8';
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\HtmlForm;
 
     /**
      * Generates a textarea tag for the given form attribute.
+     *
+     * @throws InvalidArgumentException
      *
      * @return string the generated textarea tag.
      */
     public function run(): string
     {
-        $name = $this->options['name'] ?? FormHTml::getInputName($this->data, $this->attribute);
-        $id = $this->options['id'] ?? $this->id;
+        $this->addId();
+        $this->addPlaceholders($this->data, $this->attribute, $this->options);
 
-        if (isset($this->options['value'])) {
-            $value = $this->options['value'];
-            unset($this->options['value']);
-        } else {
-            $value = FormHTml::getAttributeValue($this->data, $this->attribute);
-        }
-
-        if ($id === null) {
-            $this->options['id'] = FormHTml::getInputId($this->data, $this->attribute, $this->charset);
-        }
-
-
-        FormHTml::placeholder($this->data, $this->attribute, $this->options);
+        $name = $this->addName();
+        $value = $this->addValue();
 
         return Html::textarea($name, $value, $this->options);
     }
 
-    public function charset(string $value): self
+    private function addValue(): string
     {
-        $this->charset = $value;
+        $value = $this->options['value'] ?? $this->getAttributeValue($this->data, $this->attribute);
 
-        return $this;
+        unset($this->options['value']);
+
+        return $value;
     }
 }

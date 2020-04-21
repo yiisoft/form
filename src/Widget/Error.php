@@ -6,9 +6,12 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 final class Error extends Widget
 {
+    use Collection\Options;
+
     /**
      * Generates a tag that contains the first validation error of the specified form attribute.
      *

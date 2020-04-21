@@ -6,9 +6,12 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 final class Hint extends Widget
 {
+    use Collection\Options;
+
     /**
      * Generates a hint tag for the given form attribute.
      *
@@ -16,15 +19,15 @@ final class Hint extends Widget
      */
     public function run(): string
     {
-        $hint = $this->options['hint'] ?? $this->data->getAttributeHint($this->attribute);
+        $hint = $this->addhint();
 
-        if (empty($hint)) {
-            return '';
+        if (!empty($hint)) {
+            $tag = ArrayHelper::remove($this->options, 'tag', 'div');
+            unset($this->options['hint']);
+
+            return Html::tag($tag, $hint, $this->options);
         }
 
-        $tag = ArrayHelper::remove($this->options, 'tag', 'div');
-        unset($this->options['hint']);
-
-        return Html::tag($tag, $hint, $this->options);
+        return $hint;
     }
 }

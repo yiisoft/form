@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Widget\Widget;
 
 final class ListBox extends Widget
 {
-    private bool $multiple = false;
-    private array $items = [];
-    private ?string $unselect = null;
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\ListOptions;
 
     /**
      * Generates a list box.
@@ -23,11 +24,8 @@ final class ListBox extends Widget
      */
     public function run(): string
     {
-        $this->options['size'] = $this->size;
-
-        if ($this->size === 0) {
-            $this->options['size'] = 4;
-        }
+        $this->addCustomUnselect();
+        $this->addOptionSize();
 
         return ListInput::Widget()
             ->type('listBox')
@@ -40,24 +38,19 @@ final class ListBox extends Widget
             ->run();
     }
 
-    public function multiple(bool $value): self
+    private function addCustomUnselect(): void
     {
-        $this->multiple = $value;
-
-        return $this;
+        if ($this->type !== 'dropDownList') {
+            $this->unselect =  $this->unselect === '' ? null : $this->unselect;
+        }
     }
 
-    public function items(array $value): self
+    private function addOptionSize(): void
     {
-        $this->items = $value;
+        $this->options['size'] = $this->size;
 
-        return $this;
-    }
-
-    public function unselect(?string $value): self
-    {
-        $this->unselect = $value;
-
-        return $this;
+        if ($this->size === 0) {
+            $this->options['size'] = 4;
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 use function array_merge;
 use function array_values;
@@ -13,6 +14,8 @@ use function array_unique;
 
 final class ErrorSummary extends Widget
 {
+    use Collection\Options;
+
     /**
      * Generates a summary of the validation errors.
      *
@@ -24,6 +27,7 @@ final class ErrorSummary extends Widget
         $footer = ArrayHelper::remove($this->options, 'footer', '');
         $encode = ArrayHelper::remove($this->options, 'encode', true);
         $showAllErrors = ArrayHelper::remove($this->options, 'showAllErrors', false);
+
         unset($this->options['header']);
 
         $lines = $this->collectErrors($encode, $showAllErrors);

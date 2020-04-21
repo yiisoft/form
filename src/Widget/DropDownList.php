@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Widget\Widget;
 
 final class DropDownList extends Widget
 {
-    private bool $multiple = false;
-    private array $items = [];
-    private ?string $unselect = '';
+    use Collection\Options;
+    use Collection\InputOptions;
+    use Collection\ListOptions;
 
     /**
      * Generates a drop-down list for the given form attribute.
@@ -37,32 +38,12 @@ final class DropDownList extends Widget
         $this->options['multiple'] = 'true';
 
         return ListBox::widget()
+            ->type('dropDownList')
             ->data($this->data)
             ->attribute($this->attribute)
             ->items($this->items)
             ->options($this->options)
             ->unselect($this->unselect)
             ->run();
-    }
-
-    public function multiple(bool $value): self
-    {
-        $this->multiple = $value;
-
-        return $this;
-    }
-
-    public function items(array $value): self
-    {
-        $this->items = $value;
-
-        return $this;
-    }
-
-    public function unselect(?string $value): self
-    {
-        $this->unselect = $value;
-
-        return $this;
     }
 }
