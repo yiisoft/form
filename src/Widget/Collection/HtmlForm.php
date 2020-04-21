@@ -25,10 +25,11 @@ trait HtmlForm
      *
      * If `$attribute` has neither prefix nor suffix, it will be returned back without change.
      *
-     * @param string $attribute the attribute name or expression
-     * @return string the attribute name without prefix and suffix.
+     * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
+     * @return string the attribute name without prefix and suffix.
      */
     private function getAttributeName(string $attribute): string
     {
@@ -50,9 +51,10 @@ trait HtmlForm
      *
      * @param FormInterface $form the form object.
      * @param string $attribute the attribute name or expression.
-     * @return string|array the corresponding attribute value.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
+     * @return string|array the corresponding attribute value.
      */
     private function getAttributeValue(FormInterface $form, string $attribute)
     {
@@ -77,8 +79,9 @@ trait HtmlForm
      * attribute expression.
      * @param string $charset default `UTF-8`.
      *
-     * @return string the generated input ID.
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
+     * @return string the generated input ID.
      */
     private function addInputId(FormInterface $form, string $attribute, string $charset = 'UTF-8'): string
     {
@@ -99,9 +102,10 @@ trait HtmlForm
      *
      * @param FormInterface $form the form object.
      * @param string $attribute the attribute name or expression.
-     * @return string the generated input name.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
+     * @return string the generated input name.
      */
     private function getInputName(FormInterface $form, string $attribute): string
     {
@@ -136,6 +140,8 @@ trait HtmlForm
      * the resulting tag. The values will be HTML-encoded using {@see encode()}.
      *
      * @throws InvalidArgumentException
+     *
+     * @return void
      */
     private function addPlaceholders(FormInterface $form, string $attribute, &$options = []): void
     {

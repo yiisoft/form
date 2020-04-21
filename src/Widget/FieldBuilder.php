@@ -924,8 +924,9 @@ class FieldBuilder extends Widget
     }
 
     /**
-     * @param int number of milliseconds that the validation should be delayed when the user types in the field and
-     * {@see validateOnType] is set `true`.
+     * @param int $value number of milliseconds that the validation should be delayed when the user types in the field
+     * and {@see validateOnType] is set `true`.
+     *
      * If not set, it will take the value of {@see FormBuilder::validationDelay}.
      *
      * @return self
@@ -972,8 +973,8 @@ class FieldBuilder extends Widget
     }
 
     /**
-     * @param string this property holds a custom input id if it was set using {@see inputOptions} or in one of the
-     * `$options` parameters of the `input*` methods.
+     * @param string $value this property holds a custom input id if it was set using {@see inputOptions} or in one of
+     * the `$options` parameters of the `input*` methods.
      *
      * @return self
      */

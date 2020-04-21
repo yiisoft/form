@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Strings\Inflector;
-use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
 
-abstract class Form implements FormInterface, DataSetInterface
+abstract class Form implements FormInterface
 {
     private array $attributes;
     private array $attributesLabels;

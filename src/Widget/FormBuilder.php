@@ -371,8 +371,8 @@ final class FormBuilder extends Widget
     }
 
     /**
-     * @param array the client validation options for individual attributes. Each element of the array represents the
-     * validation options for a particular attribute.
+     * @param array $value the client validation options for individual attributes. Each element of the array
+     * represents the validation options for a particular attribute.
      *
      * @return self
      */
