@@ -179,7 +179,7 @@ class FieldBuilder extends Widget
      */
     public function error(array $options = []): self
     {
-        if ($options === []) {
+        if ($options === false) {
             $this->parts['{error}'] = '';
 
             return $this;
