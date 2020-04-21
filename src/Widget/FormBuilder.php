@@ -238,34 +238,6 @@ final class FormBuilder extends Widget
     }
 
     /**
-     * @param bool $value whether to enable client-side data validation.
-     *
-     * If {@see FieldBuilder::enableClientValidation} is set, its value will take precedence for that input field.
-     *
-     * @return self
-     */
-    public function enableClientValidation(bool $value): self
-    {
-        $this->enableClientValidation = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param bool $value whether to enable AJAX-based data validation.
-     *
-     * If {@see FieldBuilder::enableAjaxValidation} is set, its value will take precedence for that input field.
-     *
-     * @return self
-     */
-    public function enableAjaxValidation(bool $value): self
-    {
-        $this->enableAjaxValidation = $value;
-
-        return $this;
-    }
-
-    /**
      * @param string $value the URL for performing AJAX-based validation.
      *
      * If this property is not set, it will take the value of the form's action attribute.

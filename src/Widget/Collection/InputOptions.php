@@ -11,7 +11,9 @@ trait InputOptions
     private bool $autofocus = false;
     private bool $ariaAttribute = true;
     private bool $disabled = false;
+    private ?string $inputId = null;
     private array $inputOptions = [];
+    private array $labelOptions = ['class' => 'control-label'];
     private int $maxlength = 0;
     private ?string $placeholder = null;
     private bool $required = true;
@@ -52,7 +54,7 @@ trait InputOptions
     }
 
     /**
-     * @param array the default options for the input tags. The parameter passed to individual input methods
+     * @param array $value the default options for the input tags. The parameter passed to individual input methods
      * (e.g. {@see textInput()} will be merged with this property when rendering the input tag.
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.

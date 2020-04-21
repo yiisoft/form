@@ -24,7 +24,6 @@ class FieldBuilder extends Widget
     private string $template = "{label}\n{input}\n{hint}\n{error}";
     private array $divOptions = ['class' => 'form-group'];
     private array $errorOptions = ['class' => 'help-block'];
-    private array $labelOptions = ['class' => 'control-label'];
     private array $hintOptions = ['class' => 'hint-block'];
     private ?bool $validateOnChange = null;
     private ?bool $validateOnBlur = null;
@@ -32,7 +31,6 @@ class FieldBuilder extends Widget
     private ?int $validationDelay = null;
     private array $selectors = [];
     private array $parts = [];
-    private ?string $inputId = null;
     private bool $skipLabelFor = false;
 
     /**
@@ -181,7 +179,7 @@ class FieldBuilder extends Widget
      */
     public function error(array $options = []): self
     {
-        if ($options) {
+        if ($options === []) {
             $this->parts['{error}'] = '';
 
             return $this;
@@ -256,8 +254,8 @@ class FieldBuilder extends Widget
     public function input(string $type, array $options = []): self
     {
         $this->addAriaAttributes($options);
-        $this->configInputOptions($options);
         $this->addInputCssClass($options);
+        $this->configInputOptions($options);
 
         $options = array_merge($this->inputOptions, $options);
 
@@ -295,9 +293,8 @@ class FieldBuilder extends Widget
      */
     public function textInput(array $options = []): self
     {
-        $this->configInputOptions($options);
-
         $this->addInputCssClass($options);
+        $this->configInputOptions($options);
 
         $options = array_merge($this->inputOptions, $options);
 
@@ -772,57 +769,6 @@ class FieldBuilder extends Widget
             ->items($items)
             ->options($options)
             ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a widget as the input of the field.
-     *
-     * Note that the widget must have both `model` and `attribute` properties. They will be initialized with
-     * {@see model} and [[attribute]] of this field, respectively.
-     *
-     * If you want to use a widget that does not have `model` and `attribute` properties, please use {@see render()}
-     * instead.
-     *
-     * For example to use the {@see MaskedInput} widget to get some date input, you can use the following code,
-     * assuming that `$forms` is your {@see FormBuilder} instance:
-     *
-     * ```php
-     * $form->field($model, 'date')->widget(\Yiisoft\Yii\MaskedInput\MaskedInput::class, [
-     *     'mask' => '99/99/9999',
-     * ]);
-     * ```
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @param string $class  the widget class name.
-     * @param array $config name-value pairs that will be used to initialize the widget.
-     *
-     * @throws \Exception
-     *
-     * @return self the field object itself.
-     */
-    public function renderWidget(string $class, array $config = []): self
-    {
-        $config['model'] = $this->data;
-        $config['attribute'] = $this->attribute;
-        $config['view'] = $this->form->getView();
-
-        if (is_subclass_of($class, InputWidget::class, true)) {
-            $config['field'] = $this;
-
-            if (isset($config['options'])) {
-                if ($this->form->getValidationStateOn() === FormBuilder::VALIDATION_STATE_ON_INPUT) {
-                    $this->addErrorClassIfNeeded($config['options']);
-                }
-
-                $this->addAriaAttributes($config['options']);
-                $this->adjustLabelFor($config['options']);
-            }
-        }
-
-        $this->parts['{input}'] = $class::widget($config);
 
         return $this;
     }
