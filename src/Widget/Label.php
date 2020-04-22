@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 final class Label extends Widget
 {
     use Collection\Options;
-    use Collection\HtmlForm;
 
     /**
      * Generates a label tag for the given form attribute.
@@ -23,7 +23,7 @@ final class Label extends Widget
         $for = ArrayHelper::remove(
             $this->options,
             'for',
-            $this->addInputId($this->data, $this->attribute, $this->charset)
+            HtmlForm::getInputId($this->data, $this->attribute, $this->charset)
         );
 
         $label = ArrayHelper::remove(

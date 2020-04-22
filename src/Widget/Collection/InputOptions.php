@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Collection;
 
+use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
+
 trait InputOptions
 {
     private bool $autofocus = false;
@@ -23,6 +26,7 @@ trait InputOptions
         $this->adjustLabelFor($options);
         $this->addAutofocus($options);
         $this->addDisabled($options);
+        $this->addInputCssClass($options);
         $this->addMaxLength($options);
         $this->addPlaceholder($options);
         $this->addRequired($options);
@@ -51,16 +55,6 @@ trait InputOptions
         return $new;
     }
 
-    /**
-     * @param array $value the default options for the input tags. The parameter passed to individual input methods
-     * (e.g. {@see textInput()} will be merged with this property when rendering the input tag.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @return self
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
     public function inputOptions(array $value): self
     {
         $new = clone $this;
@@ -110,11 +104,11 @@ trait InputOptions
         }
     }
 
-    /**
-     * Adjusts the `for` attribute for the label based on the input options.
-     *
-     * @param array $options the input options.
-     */
+    public function addInputId(): string
+    {
+        return $this->inputId ?: HtmlForm::getInputId($this->data, $this->attribute);
+    }
+
     private function adjustLabelFor(array $options = []): void
     {
         if (!isset($options['id'])) {
@@ -132,6 +126,15 @@ trait InputOptions
     {
         if (!isset($options['disabled'])) {
             $this->inputOptions['disabled'] = $this->disabled;
+        }
+    }
+
+    private function addInputCssClass($options): void
+    {
+        if (!isset($options['class'])) {
+            Html::addCssClass($this->inputOptions, $this->inputCss);
+        } elseif ($options['class'] !== 'form-control') {
+            Html::addCssClass($this->inputOptions, $this->inputCss);
         }
     }
 

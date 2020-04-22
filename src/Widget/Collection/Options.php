@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget\Collection;
 
 use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\Helper\HtmlForm;
 
 trait Options
 {
@@ -15,13 +16,6 @@ trait Options
     private string $charset = 'UTF-8';
     private ?string $type = null;
 
-    /**
-     * Set the Id of the widget.
-     *
-     * @param string|null $value
-     *
-     * @return self Id of the widget.
-     */
     public function id(?string $value): self
     {
         $new = clone $this;
@@ -29,13 +23,6 @@ trait Options
         return $new;
     }
 
-    /**
-     * Form structure data entry of the widget.
-     *
-     * @param FormInterface $value
-     *
-     * @return self
-     */
     public function data(FormInterface $value): self
     {
         $new = clone $this;
@@ -43,15 +30,6 @@ trait Options
         return $new;
     }
 
-    /**
-     * The attribute name or expression.
-     *
-     * @param string $value
-     *
-     * @return self
-     *
-     * {@see \Yiisoft\Html\FormHTml::getAttributeName()} for the format about attribute expression.
-     */
     public function attribute(string $value): self
     {
         $new = clone $this;
@@ -73,15 +51,6 @@ trait Options
         return $new;
     }
 
-    /**
-     * The HTML attributes for the widget container tag. The following special options are recognized.
-     *
-     * @param array $value
-     *
-     * @return self
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
     public function options(array $value): self
     {
         $new = clone $this;
@@ -94,7 +63,7 @@ trait Options
         $this->options['id'] = $this->options['id'] ?? $this->id;
 
         if ($this->options['id'] === null) {
-            $this->options['id'] = $this->addInputId($this->data, $this->attribute, $this->charset);
+            $this->options['id'] = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
     }
 
@@ -105,11 +74,11 @@ trait Options
 
     private function addName(): string
     {
-        return $this->options['name'] ?? $this->getInputName($this->data, $this->attribute);
+        return $this->options['name'] ?? HtmlForm::getInputName($this->data, $this->attribute);
     }
 
     private function addSelection(): string
     {
-        return $this->options['name'] ?? $this->getInputName($this->data, $this->attribute);
+        return $this->options['name'] ?? HtmlForm::getInputName($this->data, $this->attribute);
     }
 }

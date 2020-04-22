@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Html\Html;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Widget\Widget;
 
 use function array_key_exists;
@@ -13,7 +14,6 @@ final class BooleanInput extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\HtmlForm;
     use Collection\BooleanOptions;
 
     /**
@@ -41,7 +41,7 @@ final class BooleanInput extends Widget
         if ($this->label) {
             $this->options['label'] = Html::encode(
                 $this->data->attributeLabel(
-                    $this->getAttributeName($this->attribute)
+                    Html::getAttributeName($this->attribute)
                 )
             );
         }
@@ -49,7 +49,7 @@ final class BooleanInput extends Widget
 
     private function addValue(): bool
     {
-        $value = $this->getAttributeValue($this->data, $this->attribute);
+        $value = HtmlForm::getAttributeValue($this->data, $this->attribute);
 
         if (!array_key_exists('value', $this->options)) {
             $this->options['value'] = '1';

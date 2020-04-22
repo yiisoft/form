@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -11,7 +12,6 @@ final class Input extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\HtmlForm;
 
     /**
      * Generates an input tag for the given form attribute.
@@ -21,7 +21,7 @@ final class Input extends Widget
     public function run(): string
     {
         $this->addId();
-        $this->addPlaceholders($this->data, $this->attribute, $this->options);
+        $this->options = HtmlForm::addPlaceholders($this->data, $this->attribute, $this->options);
 
         $name = $this->addName();
         $value = $this->addValue();
@@ -31,6 +31,6 @@ final class Input extends Widget
 
     private function addValue(): ?string
     {
-        return $this->options['value'] ?? $this->getAttributeValue($this->data, $this->attribute);
+        return $this->options['value'] ?? HtmlForm::getAttributeValue($this->data, $this->attribute);
     }
 }
