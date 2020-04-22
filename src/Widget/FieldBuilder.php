@@ -11,7 +11,6 @@ use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 use function array_merge;
-use function is_subclass_of;
 
 class FieldBuilder extends Widget
 {
