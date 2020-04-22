@@ -495,9 +495,7 @@ abstract class Form implements FormInterface
         $getter = fn ($class, $attribute) => $class->$attribute;
         $getter = \Closure::bind($getter, null, $this);
 
-        $result = $getter($this, $attribute);
-
-        return $result;
+        return $getter($this, $attribute);
     }
 
     private function writeProperty(string $attribute, $value): void

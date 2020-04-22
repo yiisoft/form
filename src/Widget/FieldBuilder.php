@@ -105,9 +105,7 @@ class FieldBuilder extends Widget
      */
     public function renderEnd(): string
     {
-        $html = Html::endTag(ArrayHelper::keyExists($this->options, 'tag') ? $this->options['tag'] : 'div');
-
-        return $html;
+        return Html::endTag(ArrayHelper::keyExists($this->options, 'tag') ? $this->options['tag'] : 'div');
     }
 
     /**
