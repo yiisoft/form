@@ -114,9 +114,7 @@ trait HtmlForm
             throw new \InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
-        $prefix = $matches[1];
-        $attribute = $matches[2];
-        $suffix = $matches[3];
+        [, $prefix, $attribute, $suffix] = $matches;
 
         if ($formName === '' && $prefix === '') {
             return $attribute . $suffix;

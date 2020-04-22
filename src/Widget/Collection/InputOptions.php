@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Collection;
 
-use Yiisoft\Form\FormInterface;
-
 trait InputOptions
 {
     private bool $autofocus = false;
