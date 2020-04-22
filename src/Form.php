@@ -34,8 +34,6 @@ abstract class Form implements FormInterface
         return false;
     }
 
-    abstract public function attributeLabels(): array;
-
     public function addError(string $attribute, string $error): void
     {
         $this->attributesErrors[$attribute][] = $error;
