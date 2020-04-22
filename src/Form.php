@@ -192,7 +192,6 @@ abstract class Form implements FormInterface
      *
      * @return array validation rules
      */
-
     protected function rules(): array
     {
         return [
