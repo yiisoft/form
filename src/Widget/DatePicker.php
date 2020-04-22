@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Widget\Widget;
 
 final class DatePicker extends Widget
@@ -15,7 +14,6 @@ final class DatePicker extends Widget
     /**
      * Generates a datepicker tag together with a label for the given form attribute.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return string the generated checkbox tag.

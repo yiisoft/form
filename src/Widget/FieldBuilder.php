@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
@@ -77,8 +76,6 @@ class FieldBuilder extends Widget
 
     /**
      * Renders the opening tag of the field container.
-     *
-     * @throws InvalidArgumentException
      *
      * @return string the rendering result.
      */
@@ -246,7 +243,6 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -360,7 +356,6 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -397,7 +392,6 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -436,7 +430,6 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the textarea element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -491,7 +484,6 @@ class FieldBuilder extends Widget
      * If `true`, the method will still use {@see template} to layout the radio button and the error message except
      * that the radio is enclosed by the label tag.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -561,7 +553,6 @@ class FieldBuilder extends Widget
      * If `true`, the method will still use [[template]] to layout the checkbox and the error message except that the
      * checkbox is enclosed by the label tag.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -622,7 +613,6 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -670,7 +660,6 @@ class FieldBuilder extends Widget
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -711,7 +700,6 @@ class FieldBuilder extends Widget
      * For the list of available options please refer to the `$options` parameter of
      * {@see \Yiisoft\Html\Html::activeCheckboxList()}.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -748,7 +736,6 @@ class FieldBuilder extends Widget
      * For the list of available options please refer to the `$options` parameter of
      * {@see \Yiisoft\Html\Html::activeRadioList()}.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
@@ -776,8 +763,6 @@ class FieldBuilder extends Widget
     /**
      * Returns the HTML `id` of the input element of this form field.
      *
-     * @throws InvalidArgumentException
-     *
      * @return string the input id.
      */
     public function getInputId(): string
@@ -789,8 +774,6 @@ class FieldBuilder extends Widget
      * Adds validation class to the input options if needed.
      *
      * @param array $options array input options
-     *
-     * @throws InvalidArgumentException
      */
     protected function addErrorClassIfNeeded(array &$options = []): void
     {

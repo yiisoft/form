@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -20,8 +19,6 @@ final class ListInput extends Widget
      * Generates a list of input fields.
      *
      * This method is mainly called by {@see ListBox()}, {@see RadioList()} and {@see CheckboxList()}.
-     *
-     * @throws InvalidArgumentException
      *
      * @return string the generated input list
      */

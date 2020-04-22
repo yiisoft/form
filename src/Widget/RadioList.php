@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Widget\Widget;
 
 final class RadioList extends Widget
@@ -20,7 +19,6 @@ final class RadioList extends Widget
      * A radio button list is like a checkbox list, except that it only allows single selection.
      *
      * @throws InvalidConfigException
-     * @throws InvalidArgumentException
      *
      * @return string the generated radio button list
      */

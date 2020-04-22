@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Widget\Widget;
 
 final class HiddenInput extends Widget
@@ -15,7 +14,6 @@ final class HiddenInput extends Widget
     /**
      * Generates a hidden input tag for the given form attribute.
      *
-     * @throws InvalidArgumentException
      * @throws InvalidConfigException
      *
      * @return string the generated input tag.

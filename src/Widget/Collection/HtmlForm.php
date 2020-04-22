@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Collection;
 
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 
@@ -27,7 +26,7 @@ trait HtmlForm
      *
      * @param string $attribute the attribute name or expression.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
      *
      * @return string the attribute name without prefix and suffix.
      */
@@ -37,7 +36,7 @@ trait HtmlForm
             return $matches[2];
         }
 
-        throw new InvalidArgumentException('Attribute name must contain word characters only.');
+        throw new \InvalidArgumentException('Attribute name must contain word characters only.');
     }
 
     /**
@@ -52,14 +51,14 @@ trait HtmlForm
      * @param FormInterface $form the form object.
      * @param string $attribute the attribute name or expression.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
      *
      * @return string|array the corresponding attribute value.
      */
     private function getAttributeValue(FormInterface $form, string $attribute)
     {
         if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
+            throw new \InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
         $attribute = $matches[2];
@@ -79,7 +78,7 @@ trait HtmlForm
      * attribute expression.
      * @param string $charset default `UTF-8`.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
      *
      * @return string the generated input ID.
      */
@@ -103,7 +102,7 @@ trait HtmlForm
      * @param FormInterface $form the form object.
      * @param string $attribute the attribute name or expression.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
      *
      * @return string the generated input name.
      */
@@ -112,7 +111,7 @@ trait HtmlForm
         $formName = $form->formName();
 
         if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
+            throw new \InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
         $prefix = $matches[1];
@@ -127,7 +126,7 @@ trait HtmlForm
             return $formName . $prefix . "[$attribute]" . $suffix;
         }
 
-        throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
+        throw new \InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
     }
 
     /**
@@ -138,10 +137,6 @@ trait HtmlForm
      * attribute expression.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see encode()}.
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return void
      */
     private function addPlaceholders(FormInterface $form, string $attribute, &$options = []): void
     {

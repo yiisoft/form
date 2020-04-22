@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -16,8 +15,6 @@ final class Label extends Widget
 
     /**
      * Generates a label tag for the given form attribute.
-     *
-     * @throws InvalidArgumentException
      *
      * @return string the generated label tag.
      */

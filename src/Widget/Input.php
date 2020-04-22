@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Exception\InvalidArgumentException;
 use Yiisoft\Html\Html;
-use Yiisoft\Form\FormHtml;
 use Yiisoft\Widget\Widget;
 
 final class Input extends Widget
@@ -17,8 +15,6 @@ final class Input extends Widget
 
     /**
      * Generates an input tag for the given form attribute.
-     *
-     * @throws InvalidArgumentException
      *
      * @return string the generated input tag.
      */
