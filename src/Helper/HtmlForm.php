@@ -109,7 +109,7 @@ final class HtmlForm
      *
      * @return array
      */
-    public static function addPlaceholders(FormInterface $form, string $attribute, &$options = []): array
+    public static function addPlaceholders(FormInterface $form, string $attribute, $options = []): array
     {
         if (isset($options['placeholder']) && $options['placeholder'] === true) {
             $attribute = Html::getAttributeName($attribute);
