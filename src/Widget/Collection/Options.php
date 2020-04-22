@@ -76,9 +76,4 @@ trait Options
     {
         return $this->options['name'] ?? HtmlForm::getInputName($this->data, $this->attribute);
     }
-
-    private function addSelection(): string
-    {
-        return $this->options['name'] ?? HtmlForm::getInputName($this->data, $this->attribute);
-    }
 }
