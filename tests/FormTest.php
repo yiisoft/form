@@ -8,16 +8,6 @@ use Yiisoft\Form\Tests\Stub\LoginForm;
 
 final class FormTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
     public function testGetFormName(): void
     {
         $form = new LoginForm();
@@ -48,7 +38,7 @@ final class FormTest extends TestCase
 
         $this->assertEmpty($form->getErrors());
 
-        $form->AddErrors([
+        $form->addErrors([
             'login' => [
                 'No such user.',
                 'String max(40).'

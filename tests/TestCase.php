@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests;
 use Yiisoft\Di\Container;
 use Yiisoft\Widget\WidgetFactory;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected function setUp(): void
     {
