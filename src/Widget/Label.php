@@ -29,7 +29,7 @@ final class Label extends Widget
         $label = ArrayHelper::remove(
             $this->options,
             'label',
-            Html::encode($this->data->getAttributeLabel($this->attribute))
+            Html::encode($this->data->attributeLabel($this->attribute))
         );
 
         return Html::label($label, $for, $this->options);

@@ -16,7 +16,7 @@ class StubForm extends Form
     private ?string $fieldFile = null;
     private ?string $fieldString = null;
 
-    public function getAttributeHints(): array
+    public function attributeHints(): array
     {
         return [
             'fieldString' => 'Enter your name.'

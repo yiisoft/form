@@ -140,7 +140,7 @@ trait HtmlForm
     {
         if (isset($options['placeholder']) && $options['placeholder'] === true) {
             $attribute = $this->getAttributeName($attribute);
-            $this->options['placeholder'] = $form->getAttributeLabel($attribute);
+            $this->options['placeholder'] = $form->attributeLabel($attribute);
         }
     }
 }

@@ -45,7 +45,7 @@ class LoginForm extends Form
         $this->rememberMe = $value;
     }
 
-    public function getAttributeHints(): array
+    public function attributeHints(): array
     {
         return [
             'login' => 'Write your id or email.',

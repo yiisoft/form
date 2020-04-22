@@ -18,7 +18,7 @@ final class FormTest extends TestCase
     {
         $form = new LoginForm();
 
-        $this->assertEmpty($form->getErrors());
+        $this->assertEmpty($form->errors());
         $this->assertFalse($form->hasErrors('login'));
 
         $form->addError('login', 'No such user.');
@@ -31,12 +31,12 @@ final class FormTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $form->getErrors());
-        $this->assertEquals(['No such user.'], $form->getError('login'));
+        $this->assertEquals($expected, $form->errors());
+        $this->assertEquals(['No such user.'], $form->error('login'));
 
         $form->clearErrors();
 
-        $this->assertEmpty($form->getErrors());
+        $this->assertEmpty($form->errors());
 
         $form->addErrors([
             'login' => [
@@ -49,8 +49,8 @@ final class FormTest extends TestCase
             ],
         ]);
 
-        $this->assertEquals('No such user.', $form->getFirstError('login'));
-        $this->assertEquals(['login' => 'No such user.', 'password' => 'Password invalid.'], $form->getFirstErrors());
+        $this->assertEquals('No such user.', $form->firstError('login'));
+        $this->assertEquals(['login' => 'No such user.', 'password' => 'Password invalid.'], $form->firstErrors());
     }
 
     public function testAttributes(): void
@@ -106,20 +106,20 @@ final class FormTest extends TestCase
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Write your id or email.', $form->getAttributeHint('login'));
-        $this->assertEquals('Write your password.', $form->getAttributeHint('password'));
-        $this->assertEmpty($form->getAttributeHint('noExist'));
+        $this->assertEquals('Write your id or email.', $form->attributeHint('login'));
+        $this->assertEquals('Write your password.', $form->attributeHint('password'));
+        $this->assertEmpty($form->attributeHint('noExist'));
     }
 
     public function testGetAttributeLabel(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Login:', $form->getAttributeLabel('login'));
-        $this->assertEquals('Testme', $form->getAttributeLabel('testme'));
+        $this->assertEquals('Login:', $form->attributeLabel('login'));
+        $this->assertEquals('Testme', $form->attributeLabel('testme'));
     }
 
-    public function testGetAttributesLabels(): void
+    public function testAttributesLabels(): void
     {
         $form = new LoginForm();
 
@@ -132,7 +132,7 @@ final class FormTest extends TestCase
         $this->assertEquals($expected, $form->attributeLabels());
     }
 
-    public function testGetErrorSummary(): void
+    public function testErrorSummary(): void
     {
         $form = new LoginForm();
 
@@ -153,7 +153,7 @@ final class FormTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->getErrorSummary(true)
+            $form->errorSummary(true)
         );
     }
 
@@ -198,28 +198,28 @@ final class FormTest extends TestCase
 
         $this->assertEquals(
             ['Value cannot be blank.'],
-            $form->getError('login')
+            $form->error('login')
         );
 
         $form->login('x');
         $form->validate();
         $this->assertEquals(
             ['Is too short.'],
-            $form->getError('login')
+            $form->error('login')
         );
 
         $form->login(\str_repeat('x', 60));
         $form->validate();
         $this->assertEquals(
             'Is too long.',
-            $form->getFirstError('login')
+            $form->firstError('login')
         );
 
         $form->login('admin@.com');
         $form->validate();
         $this->assertEquals(
             'This value is not a valid email address.',
-            $form->getFirstError('login')
+            $form->firstError('login')
         );
     }
 }

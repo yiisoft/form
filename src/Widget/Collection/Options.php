@@ -100,7 +100,7 @@ trait Options
 
     private function addHint(): string
     {
-        return $this->options['hint'] ?? $this->data->getAttributeHint($this->attribute);
+        return $this->options['hint'] ?? $this->data->attributeHint($this->attribute);
     }
 
     private function addName(): string

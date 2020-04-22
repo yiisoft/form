@@ -40,7 +40,7 @@ final class BooleanInput extends Widget
     {
         if ($this->label) {
             $this->options['label'] = Html::encode(
-                $this->data->getAttributeLabel(
+                $this->data->attributeLabel(
                     $this->getAttributeName($this->attribute)
                 )
             );
