@@ -11,16 +11,16 @@ trait BooleanOptions
 
     public function label(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->label = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->label = $value;
+        return $new;
     }
 
     public function uncheck(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->uncheck = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->uncheck = $value;
+        return $new;
     }
 
     private function addUncheck(): void

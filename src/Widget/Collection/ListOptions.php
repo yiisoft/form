@@ -12,23 +12,23 @@ trait ListOptions
 
     public function items(array $value): self
     {
-        $immutable = clone $this;
-        $immutable->items = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->items = $value;
+        return $new;
     }
 
     public function multiple(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->multiple = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->multiple = $value;
+        return $new;
     }
 
     public function unselect(?string $value): self
     {
-        $immutable = clone $this;
-        $immutable->unselect = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->unselect = $value;
+        return $new;
     }
 
     private function addMultiple(): void

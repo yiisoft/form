@@ -32,23 +32,23 @@ trait InputOptions
 
     public function autofocus(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->autofocus = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->autofocus = $value;
+        return $new;
     }
 
     public function ariaAttribute(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->ariaAttribute = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->ariaAttribute = $value;
+        return $new;
     }
 
     public function disabled(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->disabled = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->disabled = $value;
+        return $new;
     }
 
     /**
@@ -63,44 +63,44 @@ trait InputOptions
      */
     public function inputOptions(array $value): self
     {
-        $immutable = clone $this;
-        $immutable->inputOptions = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->inputOptions = $value;
+        return $new;
     }
 
     public function maxlength(int $value): self
     {
-        $immutable = clone $this;
-        $immutable->maxlength = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->maxlength = $value;
+        return $new;
     }
 
     public function placeholder(string $value): self
     {
-        $immutable = clone $this;
-        $immutable->placeholder = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->placeholder = $value;
+        return $new;
     }
 
     public function required(bool $value): self
     {
-        $immutable = clone $this;
-        $immutable->required = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->required = $value;
+        return $new;
     }
 
     public function size(int $value): self
     {
-        $immutable = clone $this;
-        $immutable->size = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->size = $value;
+        return $new;
     }
 
     public function tabindex(string $value): self
     {
-        $immutable = clone $this;
-        $immutable->tabindex = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->tabindex = $value;
+        return $new;
     }
 
     private function addAutofocus(array $options = []): void

@@ -24,9 +24,9 @@ trait Options
      */
     public function id(?string $value): self
     {
-        $immutable = clone $this;
-        $immutable->id = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->id = $value;
+        return $new;
     }
 
     /**
@@ -38,9 +38,9 @@ trait Options
      */
     public function data(FormInterface $value): self
     {
-        $immutable = clone $this;
-        $immutable->data = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->data = $value;
+        return $new;
     }
 
     /**
@@ -54,23 +54,23 @@ trait Options
      */
     public function attribute(string $value): self
     {
-        $immutable = clone $this;
-        $immutable->attribute = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->attribute = $value;
+        return $new;
     }
 
     public function charset(string $value): self
     {
-        $immutable = clone $this;
-        $immutable->charset = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->charset = $value;
+        return $new;
     }
 
     public function type(string $value): self
     {
-        $immutable = clone $this;
-        $immutable->type = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->type = $value;
+        return $new;
     }
 
     /**
@@ -84,9 +84,9 @@ trait Options
      */
     public function options(array $value): self
     {
-        $immutable = clone $this;
-        $immutable->options = $value;
-        return $immutable;
+        $new = clone $this;
+        $new->options = $value;
+        return $new;
     }
 
     private function addId(): void
