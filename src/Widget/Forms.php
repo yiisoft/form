@@ -40,8 +40,6 @@ final class Forms extends Widget
             $hiddenInputs[] = Html::hiddenInput('_csrf', $csrf);
         }
 
-        $action = $this->action;
-
         if (!strcasecmp($this->method, 'get') && ($pos = strpos($this->action, '?')) !== false) {
             /**
              * Query parameters in the action are ignored for GET method we use hidden fields to add them back.
@@ -56,10 +54,11 @@ final class Forms extends Widget
                     $hiddenInputs[] = Html::hiddenInput(urldecode($pair), '');
                 }
             }
-            $action = substr($this->action, 0, $pos);
+
+            $this->action = substr($this->action, 0, $pos);
         }
 
-        $this->options['action'] = $action;
+        $this->options['action'] = $this->action;
         $this->options['method'] = $this->method;
 
         $form = Html::beginTag('form', $this->options);

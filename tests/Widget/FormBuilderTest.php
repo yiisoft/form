@@ -13,39 +13,39 @@ final class FormBuilderTest extends TestCase
 {
     public function testBooleanAttributes()
     {
-        $form = new StubForm();
-        ob_start();
+        $data = new StubForm();
 
-        $forms = FormBuilder::begin()->action('/something')->start();
-        FormBuilder::end();
+        $form = FormBuilder::begin()->action('/something')->start();
 
-        ob_end_clean();
+            echo $form->field($data, 'fieldString')
+                ->template('{input}')
+                ->input('email');
+
+        $html = FormBuilder::end();
 
         $expected = <<<'HTML'
-<div class="form-group field-stubform-fieldstring">
+<form action="/something" method="POST"><div class="form-group field-stubform-fieldstring">
 <input type="email" id="stubform-fieldstring" class="form-control" name="StubForm[fieldString]" aria-required="true" required>
-</div>
+</div></form>
 HTML;
-        $created = FieldBuilder::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->template('{input}')
-            ->input('email')
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $created);
+
+        $this->assertEqualsWithoutLE($expected, $html);
+
+        $form = FormBuilder::begin()->action('/something')->options(['class' => 'formTestMe'])->start();
+
+            echo $form->field($data, 'fieldString', ['class' => 'fieldTestMe'])
+                ->template('{input}')
+                ->required(false)
+                ->input('email');
+
+        $html = FormBuilder::end();
 
         $expected = <<<'HTML'
-<div class="form-group field-stubform-fieldstring">
+<form class="formTestMe" action="/something" method="POST"><div class="form-group field-stubform-fieldstring fieldTestMe">
 <input type="email" id="stubform-fieldstring" class="form-control" name="StubForm[fieldString]" aria-required="true">
-</div>
+</div></form>
 HTML;
-        $created = FieldBuilder::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->template('{input}')
-            ->required(false)
-            ->input('email')
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $created);
+
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

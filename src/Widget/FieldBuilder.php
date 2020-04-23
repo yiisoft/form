@@ -58,7 +58,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
             }
 
             $content = strtr($this->template, $this->parts);
-        } elseif (!is_string($content)) {
+        } else {
             $content = $content($this);
         }
 
@@ -74,22 +74,19 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function renderBegin(): string
     {
-        $attribute = Html::getAttributeName($this->attribute);
         $inputId = $this->addInputId();
 
-        if ($this->data->isAttributeRequired($attribute)) {
-            $class[] = $this->requiredCss;
-        }
+        $class = [];
+        $class[] = "field-$inputId";
+        $class[] = $this->options['class'] ?? '';
 
-        $options['class'] = implode(' ', array_merge(self::DIV_CSS, ["field-$inputId"]));
+        $this->optionsField['class'] = trim(implode(' ', array_merge(self::DIV_CSS, $class)));
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
+        $this->addErrorClassIfNeeded($this->optionsField);
 
-        $tag = ArrayHelper::remove($options, 'tag', 'div');
+        $tag = ArrayHelper::remove($this->optionsField, 'tag', 'div');
 
-        return Html::beginTag($tag, $options);
+        return Html::beginTag($tag, $this->optionsField);
     }
 
     /**
@@ -116,7 +113,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function label(?string $label = null, array $options = []): self
     {
-        $this->optionField = $options;
+        $this->optionsField = $options;
 
         if ($label === null) {
             $this->parts['{label}'] = '';
@@ -162,12 +159,6 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function error(array $options = []): self
     {
-        if ($options === false) {
-            $this->parts['{error}'] = '';
-
-            return $this;
-        }
-
         Html::addCssClass($options, self::ERROR_CSS);
 
         $this->parts['{error}'] = Error::widget()
@@ -276,18 +267,20 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function textInput(array $options = []): self
     {
+        $this->addAriaAttributes($options);
+        $this->addInputCssClass($options);
         $this->configInputOptions($options);
 
-        $options = array_merge($this->inputOptions, $options);
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
         if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
+            $this->addErrorClassIfNeeded($this->optionsField);
         }
 
         $this->parts['{input}'] = TextInput::widget()
             ->data($this->data)
             ->attribute($this->attribute)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -314,18 +307,15 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function hiddenInput(array $options = []): self
     {
-        $this->label(null);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
 
-        Html::addCssClass($options, $this->inputCss);
-
-        $options = array_merge($this->inputOptions, $options);
-
-        $this->adjustLabelFor($options);
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
         $this->parts['{input}'] = HiddenInput::widget()
             ->data($this->data)
             ->attribute($this->attribute)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -349,18 +339,20 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function passwordInput(array $options = []): self
     {
-        Html::addCssClass($options, $this->inputCss);
+        $this->addAriaAttributes($options);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
 
-        $options = array_merge($this->inputOptions, $options);
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
         if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
+            $this->addErrorClassIfNeeded($this->optionsField);
         }
 
         $this->parts['{input}'] = PasswordInput::widget()
             ->data($this->data)
             ->attribute($this->attribute)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -749,22 +741,6 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
             ->run();
 
         return $this;
-    }
-
-    /**
-     * Adds validation class to the input options if needed.
-     *
-     * @param array $options array input options
-     *
-     * @throws InvalidArgumentException
-     */
-    protected function addErrorClassIfNeeded(array &$options = []): void
-    {
-        $attributeName = Html::getAttributeName($this->attribute);
-
-        if ($this->data->hasErrors($attributeName)) {
-            Html::addCssClass($options, $this->errorCss);
-        }
     }
 
     /**

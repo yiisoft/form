@@ -121,6 +121,17 @@ trait FieldBuilderOptions
         }
     }
 
+    private function addErrorClassIfNeeded(): void
+    {
+        if ($this->validationStateOn === 'input' || $this->validationStateOn === 'container') {
+            $attributeName = Html::getAttributeName($this->attribute);
+
+            if ($this->data->hasErrors($attributeName)) {
+                Html::addCssClass($this->optionsField, $this->errorCss);
+            }
+        }
+    }
+
     private function addInputCssClass(array $options = []): void
     {
         if (!isset($options['class'])) {

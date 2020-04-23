@@ -13,6 +13,7 @@ use Yiisoft\Widget\Widget;
 final class FormBuilder extends Widget
 {
     public const VALIDATION_STATE_ON_CONTAINER = 'container';
+    public const VALIDATION_STATE_ON_INPUT = 'input';
     private string $id;
     private string $action = '';
     private string $method = Method::POST;
@@ -24,7 +25,7 @@ final class FormBuilder extends Widget
         'requiredCss()' => ['required'],
         'succesCss()' => ['has-success'],
         'validatingCss()' => ['validating'],
-        'validationStateOn()' => ['input'],
+        'validationStateOn()' => [self::VALIDATION_STATE_ON_INPUT],
     ];
     private array $listOptions = [
         'accept-charset',
@@ -62,11 +63,12 @@ final class FormBuilder extends Widget
         return $html;
     }
 
-    public function field(FormInterface $form, string $attribute, $options = [])
+    public function field(FormInterface $form, string $attribute, array $options = [])
     {
         return FieldBuilder::widget($this->fieldOptions)
             ->data($form)
-            ->attribute($attribute);
+            ->attribute($attribute)
+            ->options($options);
     }
 
     public function id(string $value): self
