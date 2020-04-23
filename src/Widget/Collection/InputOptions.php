@@ -26,7 +26,6 @@ trait InputOptions
         $this->adjustLabelFor($options);
         $this->addAutofocus($options);
         $this->addDisabled($options);
-        $this->addInputCssClass($options);
         $this->addMaxLength($options);
         $this->addPlaceholder($options);
         $this->addRequired($options);
@@ -129,15 +128,6 @@ trait InputOptions
         }
     }
 
-    private function addInputCssClass($options): void
-    {
-        if (!isset($options['class'])) {
-            Html::addCssClass($this->inputOptions, $this->inputCss);
-        } elseif ($options['class'] !== 'form-control') {
-            Html::addCssClass($this->inputOptions, $this->inputCss);
-        }
-    }
-
     private function addMaxLength(array $options = []): void
     {
         if (!isset($options['maxlength']) && $this->maxlength > 0) {
@@ -154,9 +144,7 @@ trait InputOptions
 
     private function addRequired(array $options = []): void
     {
-        if (!isset($options['required'])) {
-            $this->inputOptions['required'] = $this->required;
-        }
+        $this->inputOptions['required'] = $options['required'] ?? $this->required;
     }
 
     private function addTabIndex(array $options = []): void

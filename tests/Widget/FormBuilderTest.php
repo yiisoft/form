@@ -30,7 +30,6 @@ HTML;
             ->data($form)
             ->attribute('fieldString')
             ->template('{input}')
-            ->required(true)
             ->input('email')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);

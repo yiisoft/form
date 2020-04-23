@@ -237,19 +237,20 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
     public function input(string $type, array $options = []): self
     {
         $this->addAriaAttributes($options);
+        $this->addInputCssClass($options);
         $this->configInputOptions($options);
 
-        $options = array_merge($this->inputOptions, $options);
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
         if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
+            $this->addErrorClassIfNeeded($this->optionsField);
         }
 
         $this->parts['{input}'] = Input::widget()
             ->type($type)
             ->data($this->data)
             ->attribute($this->attribute)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -778,23 +779,5 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
         $this->template = $value;
 
         return $this;
-    }
-
-    /**
-     * Adds aria attributes to the input options.
-     *
-     * @param array $options array input options
-     */
-    private function addAriaAttributes(array $options = []): void
-    {
-        if ($this->ariaAttribute && ($this->data instanceof FormInterface)) {
-            if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
-                $this->inputOptions['aria-required'] = 'true';
-            }
-
-            if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
-                $this->inputOptions['aria-invalid'] = 'true';
-            }
-        }
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget\Collection;
 
 use Yiisoft\Form\FormInterface;
+use Yiisoft\Html\Html;
 
 trait FieldBuilderOptions
 {
@@ -99,6 +100,33 @@ trait FieldBuilderOptions
     {
         if ($this->skipLabelFor) {
             $this->optionsField['for'] = null;
+        }
+    }
+
+    /**
+     * Adds aria attributes to the input options.
+     *
+     * @param array $options array input options
+     */
+    private function addAriaAttributes(array $options = []): void
+    {
+        if ($this->ariaAttribute && ($this->data instanceof FormInterface)) {
+            if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
+                $this->optionsField['aria-required'] = 'true';
+            }
+
+            if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
+                $this->optionsField['aria-invalid'] = 'true';
+            }
+        }
+    }
+
+    private function addInputCssClass(array $options = []): void
+    {
+        if (!isset($options['class'])) {
+            Html::addCssClass($this->optionsField, $this->inputCss);
+        } elseif ($options['class'] !== 'form-control') {
+            Html::addCssClass($this->optionsField, $this->inputCss . ' ' . $options['class']);
         }
     }
 }
