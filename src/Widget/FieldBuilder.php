@@ -82,7 +82,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
 
         $this->optionsField['class'] = trim(implode(' ', array_merge(self::DIV_CSS, $class)));
 
-        $this->addErrorClassIfNeeded($this->optionsField);
+        $this->addErrorClassIfNeeded();
 
         $tag = ArrayHelper::remove($this->optionsField, 'tag', 'div');
 
@@ -233,9 +233,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
 
         $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($this->optionsField);
-        }
+        $this->addErrorClassIfNeeded();
 
         $this->parts['{input}'] = Input::widget()
             ->type($type)
@@ -273,9 +271,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
 
         $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($this->optionsField);
-        }
+        $this->addErrorClassIfNeeded();
 
         $this->parts['{input}'] = TextInput::widget()
             ->data($this->data)
@@ -345,9 +341,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
 
         $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($this->optionsField);
-        }
+        $this->addErrorClassIfNeeded();
 
         $this->parts['{input}'] = PasswordInput::widget()
             ->data($this->data)
@@ -376,15 +370,15 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function fileInput(array $options = []): self
     {
-        $options = array_merge($this->inputOptions, $options);
+        $this->configInputOptions($options);
+
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
 
         if (!isset($this->options['enctype'])) {
             $this->options(array_merge($this->options, ['enctype' => 'multipart/form-data']));
         }
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
+        $this->addErrorClassIfNeeded();
 
         $this->addAriaAttributes($options);
         $this->adjustLabelFor($options);
@@ -392,7 +386,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
         $this->parts['{input}'] = FileInput::widget()
             ->data($this->data)
             ->attribute($this->attribute)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -415,21 +409,18 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function textArea(array $options = []): self
     {
-        Html::addCssClass($options, $this->inputCss);
-
-        $options = array_merge($this->inputOptions, $options);
-
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
-
         $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
+
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+
+        $this->addErrorClassIfNeeded();
 
         $this->parts['{input}'] = TextArea::widget()
             ->data($this->data)
             ->attribute($this->attribute)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -495,12 +486,10 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
                 ->run();
         }
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
+        $this->addErrorClassIfNeeded();
 
         $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $this->configInputOptions($options);
 
         return $this;
     }
@@ -565,9 +554,7 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
                 ->run();
         }
 
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
+        $this->addErrorClassIfNeeded();
 
         return $this;
     }
@@ -599,22 +586,20 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function dropDownList(array $items, array $options = []): self
     {
-        Html::addCssClass($options, $this->inputCss);
-
-        $options = array_merge($this->inputOptions, $options);
-
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
-
         $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
+
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+
+        $this->addErrorClassIfNeeded();
+
 
         $this->parts['{input}'] = DropDownList::widget()
             ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -647,22 +632,19 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function listBox(array $items, array $options = []): self
     {
-        Html::addCssClass($options, $this->inputCss);
-
-        $options = array_merge($this->inputOptions, $options);
-
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
-
         $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
+
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+
+        $this->addErrorClassIfNeeded();
 
         $this->parts['{input}'] = ListBox::widget()
             ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -688,19 +670,20 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function checkboxList(array $items, array $options = []): self
     {
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
-
         $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
+
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+
+        $this->addErrorClassIfNeeded();
 
         $this->skipLabelFor = true;
         $this->parts['{input}'] = CheckboxList::widget()
             ->data($this->data)
             ->attribute($this->attribute)
             ->items($items)
-            ->options($options)
+            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -725,14 +708,16 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function radioList(array $items, array $options = []): self
     {
-        if ($this->validationStateOn === 'input') {
-            $this->addErrorClassIfNeeded($options);
-        }
+        $this->skipLabelFor = true;
 
         $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $this->addInputCssClass($options);
+        $this->configInputOptions($options);
 
-        $this->skipLabelFor = true;
+        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+
+        $this->addErrorClassIfNeeded();
+
         $this->parts['{input}'] = RadioList::widget()
             ->data($this->data)
             ->attribute($this->attribute)
