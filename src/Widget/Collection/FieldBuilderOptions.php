@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget\Collection;
 
 use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 
 trait FieldBuilderOptions
@@ -124,7 +125,7 @@ trait FieldBuilderOptions
     private function addErrorClassIfNeeded(): void
     {
         if ($this->validationStateOn === 'input' || $this->validationStateOn === 'container') {
-            $attributeName = Html::getAttributeName($this->attribute);
+            $attributeName = HtmlForm::getAttributeName($this->attribute);
 
             if ($this->data->hasErrors($attributeName)) {
                 Html::addCssClass($this->optionsField, $this->errorCss);

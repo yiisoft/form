@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Html\Html;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 use function array_key_exists;
@@ -41,7 +41,7 @@ final class BooleanInput extends Widget
         if ($this->label) {
             $this->options['label'] = Html::encode(
                 $this->data->attributeLabel(
-                    Html::getAttributeName($this->attribute)
+                    HtmlForm::getAttributeName($this->attribute)
                 )
             );
         }

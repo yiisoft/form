@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
