@@ -27,18 +27,6 @@ final class FormBuilder extends Widget
         'validatingCss()' => ['validating'],
         'validationStateOn()' => [self::VALIDATION_STATE_ON_INPUT],
     ];
-    private array $listOptions = [
-        'accept-charset',
-        'action',
-        'autocomplete',
-        'class',
-        'csrf',
-        'enctype',
-        'method',
-        'name',
-        'novalidate',
-        'target'
-    ];
 
     public function start(): self
     {
