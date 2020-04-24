@@ -9,32 +9,6 @@ use Yiisoft\Validator\DataSetInterface;
 interface FormInterface extends DataSetInterface
 {
     /**
-     * Adds a list of errors.
-     *
-     * @param array $items a list of errors. The array keys must be attribute names.
-     * The array values should be error messages. If an attribute has multiple errors, these errors must be given in
-     * terms of an array.
-     *
-     * You may use the result of {@see errors()} as the value for this parameter.
-     */
-    public function addErrors(array $items): void;
-
-    /**
-     * Adds a new error to the specified attribute.
-     *
-     * @param string $attribute attribute name
-     * @param string $error new error message
-     */
-    public function addError(string $attribute, string $error): void;
-
-    /**
-     * Removes errors for all attributes or a single attribute.
-     *
-     * @param string|null $attribute attribute name. Use null to remove errors for all attributes.
-     */
-    public function clearErrors(?string $attribute = null): void;
-
-    /**
      * Returns the attribute labels.
      *
      * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
@@ -241,4 +215,19 @@ interface FormInterface extends DataSetInterface
      * @return bool whether `load()` found the expected form in `$data`.
      */
     public function load(array $data): bool;
+
+    /**
+     * Performs the data validation.
+     *
+     * This method executes the validation rules applicable.
+     * The following criteria are used to determine whether a rule is currently applicable:
+     *
+     * - the rule must be associated with the attributes.
+     *
+     * Errors found during the validation can be retrieved via {@see getErrors()}, {@see getFirstErrors()} and
+     * {@see getFirstError()}.
+     *
+     * @return bool whether the validation is successful without any error.
+     */
+    public function validate(): bool;
 }

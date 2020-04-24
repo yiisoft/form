@@ -34,29 +34,6 @@ abstract class Form implements FormInterface
         return false;
     }
 
-    public function addError(string $attribute, string $error): void
-    {
-        $this->attributesErrors[$attribute][] = $error;
-    }
-
-    public function addErrors(array $items): void
-    {
-        foreach ($items as $attribute => $errors) {
-            foreach ((array)$errors as $error) {
-                $this->addError($attribute, $error);
-            }
-        }
-    }
-
-    public function clearErrors(?string $attribute = null): void
-    {
-        if ($attribute === null) {
-            $this->attributesErrors = [];
-        } else {
-            unset($this->attributesErrors[$attribute]);
-        }
-    }
-
     public function getAttributeValue(string $attribute)
     {
         return $this->readProperty($attribute);
@@ -244,6 +221,15 @@ abstract class Form implements FormInterface
         return !$this->hasErrors();
     }
 
+    private function addErrors(array $items): void
+    {
+        foreach ($items as $attribute => $errors) {
+            foreach ((array)$errors as $error) {
+                $this->attributesErrors[$attribute][] = $error;
+            }
+        }
+    }
+
     /**
      * Returns the list of attribute names.
      *
@@ -272,6 +258,15 @@ abstract class Form implements FormInterface
         }
 
         return $this->attributes;
+    }
+
+    private function clearErrors(?string $attribute = null): void
+    {
+        if ($attribute === null) {
+            $this->attributesErrors = [];
+        } else {
+            unset($this->attributesErrors[$attribute]);
+        }
     }
 
     /**
