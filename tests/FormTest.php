@@ -14,45 +14,6 @@ final class FormTest extends TestCase
         $this->assertEquals('LoginForm', $form->formName());
     }
 
-    public function testErrors(): void
-    {
-        $form = new LoginForm();
-
-        $this->assertEmpty($form->errors());
-        $this->assertFalse($form->hasErrors('login'));
-
-        $form->addError('login', 'No such user.');
-
-        $this->assertTrue($form->hasErrors('login'));
-
-        $expected = [
-            'login' => [
-                'No such user.'
-            ]
-        ];
-
-        $this->assertEquals($expected, $form->errors());
-        $this->assertEquals(['No such user.'], $form->error('login'));
-
-        $form->clearErrors();
-
-        $this->assertEmpty($form->errors());
-
-        $form->addErrors([
-            'login' => [
-                'No such user.',
-                'String max(40).'
-            ],
-            'password' => [
-                'Password invalid.',
-                'String max(50).'
-            ],
-        ]);
-
-        $this->assertEquals('No such user.', $form->firstError('login'));
-        $this->assertEquals(['login' => 'No such user.', 'password' => 'Password invalid.'], $form->firstErrors());
-    }
-
     public function testAttributes(): void
     {
         $form = new LoginForm();
@@ -144,12 +105,22 @@ final class FormTest extends TestCase
         ];
 
         $expected = [
-            'This value is not a valid email address.',
-            'Is too short.'
+            'login' => 'This value is not a valid email address.',
+            'password' => 'Is too short.'
         ];
 
         $form->load($data);
         $form->validate();
+
+        $this->assertEquals(
+            $expected,
+            $form->errorSummary(false)
+        );
+
+        $expected = [
+            'This value is not a valid email address.',
+            'Is too short.'
+        ];
 
         $this->assertEquals(
             $expected,
