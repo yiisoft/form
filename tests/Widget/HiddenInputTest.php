@@ -16,17 +16,13 @@ final class HiddenInputTest extends TestCase
 
         $expected = '<input type="hidden" id="stubform-fieldstring" name="test">';
         $created = HiddenInput::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->options(['name' => 'test'])
+            ->config($form, 'fieldString', ['name' => 'test'])
             ->run();
         $this->assertEquals($expected, $created);
 
         $expected = '<input type="hidden" id="stubform-fieldstring" class="test" name="test" value="value">';
         $created = HiddenInput::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->options(['name' => 'test', 'value' => 'value', 'class' => 'test'])
+            ->config($form, 'fieldString', ['name' => 'test', 'value' => 'value', 'class' => 'test'])
             ->run();
         $this->assertEquals($expected, $created);
     }

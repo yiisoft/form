@@ -11,35 +11,6 @@ use Yiisoft\Html\Html;
 final class HtmlForm
 {
     /**
-     * Returns the real attribute name from the given attribute expression.
-     *
-     * An attribute expression is an attribute name prefixed and/or suffixed with array indexes. It is mainly used in
-     * tabular data input and/or input of array type. Below are some examples:
-     *
-     * - `[0]content` is used in tabular data input to represent the "content" attribute for the first model in tabular
-     * input;
-     * - `dates[0]` represents the first array element of the "dates" attribute;
-     * - `[0]dates[0]` represents the first array element of the "dates" attribute for the first model in tabular
-     * input.
-     *
-     * If `$attribute` has neither prefix nor suffix, it will be returned back without change.
-     *
-     * @param string $attribute the attribute name or expression
-     *
-     * @return string the attribute name without prefix and suffix.
-     *
-     * @throws \InvalidArgumentException if the attribute name contains non-word characters.
-     */
-    public static function getAttributeName(string $attribute): string
-    {
-        if (preg_match(Html::$attributeRegex, $attribute, $matches)) {
-            return $matches[2];
-        }
-
-        throw new \InvalidArgumentException('Attribute name must contain word characters only.');
-    }
-
-    /**
      * Returns the value of the specified attribute name or expression.
      *
      * For an attribute expression like `[0]dates[0]`, this method will return the value of `$form->dates[0]`.
@@ -125,26 +96,5 @@ final class HtmlForm
         }
 
         throw new \InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
-    }
-
-    /**
-     * Generate placeholder from form attribute label.
-     *
-     * @param FormInterface $form the form object.
-     * @param string $attribute the attribute name or expression. See {@see getAttributeName()} for the format about
-     * attribute expression.
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the resulting tag. The values will be HTML-encoded using {@see encode()}.
-     *
-     * @return array
-     */
-    public static function addPlaceholders(FormInterface $form, string $attribute, $options = []): array
-    {
-        if (isset($options['placeholder']) && $options['placeholder'] === true) {
-            $attribute = static::getAttributeName($attribute);
-            $options['placeholder'] = $form->attributeLabel($attribute);
-        }
-
-        return $options;
     }
 }

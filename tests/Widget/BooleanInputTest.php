@@ -18,10 +18,9 @@ final class BooleanInputTest extends TestCase
         $expected = '<input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1">';
         $created = BooleanInput::widget()
             ->type('checkbox')
-            ->data($form)
-            ->attribute('fieldBool')
-            ->label(false)
-            ->uncheck(false)
+            ->config($form, 'fieldBool')
+            ->addLabel(false)
+            ->addUncheck(false)
             ->run();
         $this->assertEquals($expected, $created);
 
@@ -30,10 +29,9 @@ final class BooleanInputTest extends TestCase
             '<label><input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" checked> Field Bool</label>';
         $created = BooleanInput::widget()
             ->type('checkbox')
-            ->data($form)
-            ->attribute('fieldBool')
-            ->label(true)
-            ->uncheck(true)
+            ->config($form, 'fieldBool')
+            ->addLabel(true)
+            ->addUncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
 
@@ -41,10 +39,9 @@ final class BooleanInputTest extends TestCase
         $expected = '<input type="radio" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1">';
         $created = BooleanInput::widget()
             ->type('radio')
-            ->data($form)
-            ->attribute('fieldBool')
-            ->label(false)
-            ->uncheck(false)
+            ->config($form, 'fieldBool')
+            ->addLabel(false)
+            ->addUncheck(false)
             ->run();
         $this->assertEquals($expected, $created);
 
@@ -54,10 +51,9 @@ final class BooleanInputTest extends TestCase
         $created = BooleanInput::widget()
             ->id('id-testme')
             ->type('radio')
-            ->data($form)
-            ->attribute('fieldBool')
-            ->label(true)
-            ->uncheck(true)
+            ->config($form, 'fieldBool')
+            ->addLabel(true)
+            ->addUncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
     }

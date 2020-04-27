@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 final class CheckBox extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\BooleanOptions;
 
     /**
      * Generates a checkbox tag together with a label for the given form attribute.
@@ -21,14 +21,12 @@ final class CheckBox extends Widget
      */
     public function run(): string
     {
-        return (new BooleanInput())
-            ->type('checkbox')
-            ->id($this->id)
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->label($this->label)
-            ->uncheck($this->uncheck)
-            ->options($this->options)
-            ->run();
+        $new = clone $this;
+
+        if (!empty($new->addId())) {
+            $new->options['id'] = $new->addId();
+        }
+
+        return Html::checkBox($new->addName(), $new->addBooleanValue(), $new->options);
     }
 }

@@ -15,13 +15,13 @@ final class ListBoxTest extends TestCase
         $form = new StubForm();
 
         $expected = <<<'EOD'
-<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4">
+<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4" required>
 
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -32,23 +32,23 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems())
-            ->size(5)
+            ->addRequired(false)
+            ->addSize(5)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $expected = <<<'EOD'
-<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4">
+<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4" required>
 <option value="value1&lt;&gt;">text1&lt;&gt;</option>
 <option value="value  2">text  2</option>
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems2())
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -59,10 +59,8 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray', ['encodeSpaces' => true, 'required' => false])
             ->items($this->getDataItems2())
-            ->options(['encodeSpaces' => true])
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -73,24 +71,21 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray', ['encode' => false, 'required' => false])
             ->items($this->getDataItems2())
-            ->options(['encode' => false])
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $expected = <<<'EOD'
-<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4">
+<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4" required>
 <option value="value1&lt;&gt;">text1<></option>
 <option value="value  2">text&nbsp;&nbsp;2</option>
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray', ['encodeSpaces' => true, 'encode' => false])
             ->items($this->getDataItems2())
-            ->options(['encodeSpaces' => true, 'encode' => false])
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -102,23 +97,22 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray', ['required' => false])
             ->items($this->getDataItems())
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $expected = <<<'EOD'
-<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4">
+<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4" required>
 <option value="value1" selected>text1</option>
 <option value="value2" selected>text2</option>
 </select>
 EOD;
         $form->fieldArray(['value1', 'value2']);
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems())
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -128,9 +122,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
-            ->multiple(true)
+            ->config($form, 'fieldArray', ['multiple' => true, 'required' => false])
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -140,9 +132,7 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
-            ->unselect('0')
+            ->config($form, 'fieldArray', ['required' => false, 'unselect' => '0'])
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -152,29 +142,27 @@ EOD;
 </select>
 EOD;
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
-            ->unselect('0')
-            ->options(['disabled' => true])
+            ->config($form, 'fieldArray', ['disabled' => true, 'required' => false])
+            ->addUnselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $expected = <<<'EOD'
-<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4">
+<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4" required>
 <option value="value1" selected>text1</option>
 <option value="value2" selected>text2</option>
 </select>
 EOD;
         $form->fieldArray(new \ArrayObject(['value1', 'value2']));
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems())
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $expected = <<<'EOD'
-<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4">
+<select id="stubform-fieldarray" name="StubForm[fieldArray]" size="4" required>
 <option value="0" selected>zero</option>
 <option value="1">one</option>
 <option value="value3">text3</option>
@@ -182,17 +170,17 @@ EOD;
 EOD;
         $form->fieldArray(['0']);
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems3())
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $form->fieldArray(new \ArrayObject([0]));
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems3())
+            ->addRequired(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -205,18 +193,16 @@ EOD;
 EOD;
         $form->fieldArray(['1', 'value3']);
         $created = ListBox::widget()
-            ->data($form)
-            ->attribute('fieldArray')
+            ->config($form, 'fieldArray')
             ->items($this->getDataItems3())
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
         $form->fieldArray(new \ArrayObject(['1', 'value3']));
         $created = ListBox::widget()
-        ->data($form)
-        ->attribute('fieldArray')
-        ->items($this->getDataItems3())
-        ->run();
+            ->config($form, 'fieldArray')
+            ->items($this->getDataItems3())
+            ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }
 

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -20,18 +18,10 @@ final class Label extends Widget
      */
     public function run(): string
     {
-        $for = ArrayHelper::remove(
-            $this->options,
-            'for',
-            HtmlForm::getInputId($this->data, $this->attribute, $this->charset)
-        );
+        $new = clone $this;
 
-        $label = ArrayHelper::remove(
-            $this->options,
-            'label',
-            Html::encode($this->data->attributeLabel($this->attribute))
-        );
+        $new->addPlaceholderOptions($new);
 
-        return Html::label($label, $for, $this->options);
+        return Html::label($new->asStringLabel(), $new->asStringFor(), $new->options);
     }
 }

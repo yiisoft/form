@@ -14,11 +14,11 @@ final class HintTest extends TestCase
     {
         $form = new StubForm();
         $expected = '<div>Enter your name.</div>';
-        $created = Hint::widget()->data($form)->attribute('fieldString')->run();
+        $created = Hint::widget()->config($form, 'fieldString')->run();
         $this->assertEquals($expected, $created);
 
         $expected = '<div class="test">Enter your name.</div>';
-        $created = Hint::widget()->data($form)->attribute('fieldString')->options(['class' => 'test'])->run();
+        $created = Hint::widget()->config($form, 'fieldString', ['class' => 'test'])->run();
         $this->assertEquals($expected, $created);
     }
 }

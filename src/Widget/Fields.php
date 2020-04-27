@@ -7,25 +7,20 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\FormInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 use function array_merge;
-use function is_subclass_of;
 
-class FieldBuilder extends Widget implements FieldBuilderInterface
+class Fields extends Widget implements FieldsInterface
 {
-    use Collection\FieldBuilderOptions;
-    use Collection\Options;
-    use Collection\inputOptions;
+    use Collection\FieldsOptions;
 
     public const DIV_CSS = ['class' => 'form-group'];
     public const ERROR_CSS = ['class' => 'help-block'];
     public const HINT_CSS = ['class' => 'hint-block'];
     public const LABEL_CSS = ['class' => 'control-label'];
-    private string $template = "{label}\n{input}\n{hint}\n{error}";
 
     /**
      * Renders the whole field.
@@ -37,6 +32,8 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      *
      * If `null` (not set), the default methods will be called to generate the label, error tag and input tag, and use
      * them as the content.
+     *
+     * @throws InvalidConfigException
      *
      * @return string the rendering result.
      */
@@ -76,19 +73,21 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function renderBegin(): string
     {
-        $inputId = $this->addInputId();
+        $new = clone $this;
+
+        $inputId = $new->addInputId();
 
         $class = [];
         $class[] = "field-$inputId";
-        $class[] = $this->options['class'] ?? '';
+        $class[] = $new->options['class'] ?? '';
 
-        $this->optionsField['class'] = trim(implode(' ', array_merge(self::DIV_CSS, $class)));
+        $new->options['class'] = trim(implode(' ', array_merge($new::DIV_CSS, $class)));
 
-        $this->addErrorClassIfNeeded();
+        $new->addErrorCssContainer($new);
 
-        $tag = ArrayHelper::remove($this->optionsField, 'tag', 'div');
+        $tag = ArrayHelper::remove($new->options, 'tag', 'div');
 
-        return Html::beginTag($tag, $this->optionsField);
+        return Html::beginTag($tag, $new->options);
     }
 
     /**
@@ -104,34 +103,37 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
     /**
      * Generates a label tag for {@see attribute}.
      *
-     * @param string|null $label the label to use. If `null`, the label will be generated via
-     * {@see FormBuilder::getAttributeLabel()}.
-     * Note that this will NOT be {@see \Yiisoft\Html\Html::encode()|encoded}.
+     * @param bool $enabledLabel enabled/disable <label>.
      * @param array $options the tag options in terms of name-value pairs. It will be merged with {@see labelOptions}.
      * The options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded using
      * {@see \Yiisoft\Html\Html::encode()}. If a value is `null`, the corresponding attribute will not be rendered.
+     * @param string|null $label the label to use. If `null`, the label will be generated via
+     * {@see FormBuilder::getAttributeLabel()}.
+     * Note that this will NOT be {@see \Yiisoft\Html\Html::encode()|encoded}.
+     *
+     * @throws InvalidConfigException
      *
      * @return self the field object itself.
      */
-    public function label(?string $label = null, array $options = []): self
+    public function label(bool $enabledLabel = false, array $options = [], string $label = ''): self
     {
-        $this->optionsField = $options;
-
-        if ($label === null) {
+        if ($enabledLabel === false) {
             $this->parts['{label}'] = '';
 
             return $this;
         }
 
-        $this->addLabel($label);
-        $this->addSkipLabelFor();
+        $new = clone $this;
 
-        Html::addCssClass($this->optionsField, self::LABEL_CSS);
+        $new->inputOptions['label'] = !empty($label) ? $label : Html::getAttributeName($new->attribute);
+
+        $new->addLabelCss($new, $options);
+        $new->addSkipLabelFor($new);
+
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{label}'] = Label::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -161,12 +163,14 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function error(array $options = []): self
     {
-        Html::addCssClass($options, self::ERROR_CSS);
+        $new = clone $this;
+
+        $new->addErrorCss($new, $options);
+
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{error}'] = Error::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($options)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -198,16 +202,18 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
             return $this;
         }
 
-        Html::addCssClass($options, self::HINT_CSS);
+        $new = clone $this;
+
+        $new->addLabelCss($new, $options);
 
         if ($content !== null) {
-            $options['hint'] = $content;
+            $new->inputOptions['hint'] = $content;
         }
 
+        $new->inputOptions = array_merge($new->inputOptions, $options);
+
         $this->parts['{hint}'] = Hint::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($options)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -229,19 +235,17 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function input(string $type, array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->addInputCss($new, $options);
+        $new->addErrorCssInput($new);
 
-        $this->addErrorClassIfNeeded();
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = Input::widget()
             ->type($type)
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -267,18 +271,16 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function textInput(array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->addInputCss($new, $options);
+        $new->addErrorCssInput($new);
 
-        $this->addErrorClassIfNeeded();
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = TextInput::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -305,15 +307,14 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function hiddenInput(array $options = []): self
     {
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addInputCss($new, $options);
+
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = HiddenInput::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -337,18 +338,16 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function passwordInput(array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->addInputCss($new, $options);
+        $new->addErrorCssInput($new);
 
-        $this->addErrorClassIfNeeded();
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = PasswordInput::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -372,23 +371,20 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function fileInput(array $options = []): self
     {
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
-
-        if (!isset($this->options['enctype'])) {
-            $this->options(array_merge($this->options, ['enctype' => 'multipart/form-data']));
+        if (!isset($options['enctype'])) {
+            $new->inputOptions['enctype'] = 'multipart/form-data';
         }
 
-        $this->addErrorClassIfNeeded();
+        $new->addAriaAttributes($new, $options);
+        $new->addErrorCssInput($new);
+        $new->adjustLabelFor($new, $options);
 
-        $this->addAriaAttributes($options);
-        $this->adjustLabelFor($options);
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = FileInput::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -411,18 +407,16 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function textArea(array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->addInputCss($new, $options);
+        $new->addErrorCssInput($new);
 
-        $this->addErrorClassIfNeeded();
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = TextArea::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->optionsField)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
 
         return $this;
@@ -463,18 +457,18 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function radio(array $options = [], bool $enclosedByLabel = true): self
     {
+        $new = clone $this;
+
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Radio::widget()
-                ->data($this->data)
-                ->attribute($this->attribute)
-                ->options($options)
+                ->config($new->data, $new->attribute, $options)
                 ->run();
             $this->parts['{label}'] = '';
         } else {
             if (isset($options['label']) && !isset($this->parts['{label}'])) {
                 $this->parts['{label}'] = $options['label'];
                 if (!empty($options['labelOptions'])) {
-                    $this->labelOptions = $options['labelOptions'];
+                    $new->labelOptions = $options['labelOptions'];
                 }
             }
 
@@ -482,16 +476,12 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
 
             $options['label'] = null;
             $this->parts['{input}'] = Radio::widget()
-                ->data($this->data)
-                ->attribute($this->attribute)
-                ->options($options)
+                ->config($new->data, $new->attribute, $options)
                 ->run();
         }
 
-        $this->addErrorClassIfNeeded();
-
-        $this->addAriaAttributes($options);
-        $this->configInputOptions($options);
+        $new->addAriaAttributes($new, $options);
+        $new->addErrorCssInput($new);
 
         return $this;
     }
@@ -531,32 +521,32 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function checkbox(array $options = [], bool $enclosedByLabel = true): self
     {
+        $new = clone $this;
+
         if ($enclosedByLabel) {
-            $this->parts['{input}'] = Checkbox::widget()
-                ->data($this->data)
-                ->attribute($this->attribute)
-                ->options($options)
+            $this->parts['{input}'] = CheckBox::widget()
+                ->config($new->data, $new->attribute, $options)
+                ->addLabel()
                 ->run();
             $this->parts['{label}'] = '';
         } else {
             if (isset($options['label']) && !isset($this->parts['{label}'])) {
                 $this->parts['{label}'] = $options['label'];
                 if (!empty($options['labelOptions'])) {
-                    $this->labelOptions = $options['labelOptions'];
+                    $new->labelOptions = $options['labelOptions'];
                 }
             }
 
             unset($options['labelOptions']);
 
             $options['label'] = null;
-            $this->parts['{input}'] = Checkbox::widget()
-                ->data($this->data)
-                ->attribute($this->attribute)
-                ->options($options)
+            $this->parts['{input}'] = CheckBox::widget()
+                ->config($new->data, $new->attribute, $options)
+                ->addLabel()
                 ->run();
         }
 
-        $this->addErrorClassIfNeeded();
+        $new->addErrorCssInput($new);
 
         return $this;
     }
@@ -588,20 +578,17 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function dropDownList(array $items, array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->addInputCss($new, $options);
+        $new->addErrorCssInput($new);
 
-        $this->addErrorClassIfNeeded();
-
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = DropDownList::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->items($items)
-            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -634,19 +621,16 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function listBox(array $items, array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->adjustLabelFor($new, $options);
 
-        $this->addErrorClassIfNeeded();
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = ListBox::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->items($items)
-            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -672,20 +656,17 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function checkboxList(array $items, array $options = []): self
     {
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new = clone $this;
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->addAriaAttributes($new, $options);
+        $new->adjustLabelFor($new, $options);
 
-        $this->addErrorClassIfNeeded();
+        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->skipLabelFor = true;
 
-        $this->skipLabelFor = true;
-        $this->parts['{input}'] = CheckboxList::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
+        $this->parts['{input}'] = CheckBoxList::widget()
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->items($items)
-            ->options($this->optionsField)
             ->run();
 
         return $this;
@@ -710,37 +691,26 @@ class FieldBuilder extends Widget implements FieldBuilderInterface
      */
     public function radioList(array $items, array $options = []): self
     {
-        $this->skipLabelFor = true;
+        $new = clone $this;
 
-        $this->addAriaAttributes($options);
-        $this->addInputCssClass($options);
-        $this->configInputOptions($options);
+        $new->addAriaAttributes($new, $options);
+        $new->addInputCss($new, $options);
+        $new->addErrorCssInput($new);
 
-        $this->optionsField = array_merge($this->optionsField, $this->inputOptions);
+        $new->inputOptions = array_merge($options, $new->inputOptions);
 
-        $this->addErrorClassIfNeeded();
+        $new->skipLabelFor = true;
 
         $this->parts['{input}'] = RadioList::widget()
-            ->data($this->data)
-            ->attribute($this->attribute)
+            ->config($new->data, $new->attribute, $new->inputOptions)
             ->items($items)
-            ->options($options)
             ->run();
 
         return $this;
     }
 
-    /**
-     * @param string $value the template that is used to arrange the label, the input field, the error message and the
-     * hint text. The following tokens will be replaced when {@see render()} is called: `{label}`, `{input}`, `{error}`
-     * and `{hint}`.
-     *
-     * @return self
-     */
-    public function template(string $value): self
+    public function addInputId(): string
     {
-        $this->template = $value;
-
-        return $this;
+        return $this->inputId ?: HtmlForm::getInputId($this->data, $this->attribute);
     }
 }

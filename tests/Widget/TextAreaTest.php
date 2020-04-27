@@ -21,29 +21,30 @@ final class TextAreaTest extends TestCase
         return [
             [
                 'some text',
-                [],
-                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]">some text</textarea>',
+                ['placeholder' => true],
+                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" placeholder="Field String">some text</textarea>',
             ],
             [
                 'some text',
                 [
-                    'maxlength' => 500,
+                    'maxlength' => 500
                 ],
                 '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" maxlength="500">some text</textarea>',
             ],
             [
                 'some text',
                 [
-                    'maxlength' => 99,
+                    'maxlength' => 99
                 ],
                 '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" maxlength="99">some text</textarea>',
             ],
             [
                 'some text',
                 [
-                    'value' => 'override text',
+                    'placeholder' => 'Override Text',
+                    'value' => 'Override Text',
                 ],
-                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]">override text</textarea>',
+                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" placeholder="Override Text">Override Text</textarea>',
             ],
         ];
     }
@@ -62,9 +63,7 @@ final class TextAreaTest extends TestCase
         $form = new StubForm();
         $form->fieldString($value);
         $created = TextArea::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->options($options)
+            ->config($form, 'fieldString', $options)
             ->run();
         $this->assertEquals($expected, $created);
     }

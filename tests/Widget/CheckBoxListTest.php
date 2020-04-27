@@ -5,38 +5,54 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\CheckBoxList;
 
 final class CheckBoxListTest extends TestCase
 {
     public function testCheckboxList(): void
     {
-        $form = new StubForm();
+        $form = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="StubForm[fieldArray]" value=""><div id="stubform-fieldarray"><label><input type="checkbox" name="StubForm[fieldArray][]" value="0"> foo</label>
-<label><input type="checkbox" name="StubForm[fieldArray][]" value="1"> bar</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
 HTML;
         $created = CheckboxList::widget()
-            ->data($form)
-            ->attribute('fieldArray')
-            ->items(['foo', 'bar'])
+            ->config($form, 'sex')
+            ->items(['Female', 'Male'])
+            ->addUnselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }
 
     public function testCheckboxListOptions(): void
     {
-        $form = new StubForm();
+        $form = new PersonalForm();
+
+        $form->sex(0);
         $expected = <<<'HTML'
-<input type="hidden" name="foo" value=""><div id="stubform-fieldarray"><label><input type="checkbox" name="foo[]" value="0" checked> foo</label></div>
+<input type="hidden" name="sex" value="0"><div id="personalform-sex"><label><input type="checkbox" name="sex[]" value="0" checked> Female</label>
+<label><input type="checkbox" name="sex[]" value="1"> Male</label></div>
 HTML;
         $created = CheckboxList::widget()
-            ->data($form)
-            ->attribute('fieldArray')
-            ->items(['foo'])
-            ->options(['name' => 'foo', 'value' => 0])
+            ->config($form, 'sex', ['name' => 'sex'])
+            ->items(['Female', 'Male'])
+            ->addUnselect('0')
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $created);
+
+        $form->sex(1);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value="1"><div id="personalform-sex" autofocus><label><input type="checkbox" class="testMe" name="PersonalForm[sex][]" value="0"> Female</label>
+<label><input type="checkbox" class="testMe" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+HTML;
+        $created = CheckboxList::widget()
+            ->config($form, 'sex')
+            ->autofocus(true)
+            ->items(['Female', 'Male'])
+            ->addItemOptions(['class' => 'testMe'])
+            ->addUnselect('1')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }

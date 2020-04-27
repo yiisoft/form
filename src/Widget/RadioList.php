@@ -11,7 +11,8 @@ final class RadioList extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\ListOptions;
+
+    private array $items = [];
 
     /**
      * Generates a list of radio buttons.
@@ -26,11 +27,15 @@ final class RadioList extends Widget
     {
         return ListInput::widget()
             ->type('radioList')
-            ->data($this->data)
-            ->attribute($this->attribute)
+            ->config($this->data, $this->attribute, $this->options)
             ->items($this->items)
-            ->options($this->options)
-            ->unselect($this->unselect)
             ->run();
+    }
+
+    public function items(array $value): self
+    {
+        $new = clone $this;
+        $new->items = $value;
+        return $new;
     }
 }

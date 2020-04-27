@@ -15,11 +15,22 @@ final class LabelTest extends TestCase
         $form = new StubForm();
 
         $expected = '<label for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()->data($form)->attribute('fieldString')->run();
+        $created = Label::widget()
+            ->config($form, 'fieldString')
+            ->run();
         $this->assertEquals($expected, $created);
 
-        $expected = '<label class="test" for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()->data($form)->attribute('fieldString')->options(['class' => 'test'])->run();
+        $expected = '<label class="test" placeholder="Field String" for="stubform-fieldstring">Field String</label>';
+        $created = Label::widget()
+            ->config($form, 'fieldString', ['class' => 'test', 'placeholder' => true])
+            ->run();
+        $this->assertEquals($expected, $created);
+
+        $expected = '<label class="test" placeholder="Custom PlaceHolder" for="stubform-fieldstring">Field String</label>';
+        $created = Label::widget()
+            ->config($form, 'fieldString', ['class' => 'test'])
+            ->addPlaceHolder(false, 'Custom PlaceHolder')
+            ->run();
         $this->assertEquals($expected, $created);
     }
 }

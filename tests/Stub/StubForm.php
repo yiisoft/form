@@ -12,7 +12,6 @@ class StubForm extends Form
 {
     private iterable $fieldArray = [];
     private bool $fieldBool = false;
-    private bool $fieldCheck = false;
     private ?string $fieldFile = null;
     private ?string $fieldString = null;
 
@@ -36,11 +35,6 @@ class StubForm extends Form
     public function fieldBool(bool $value): void
     {
         $this->fieldBool = $value;
-    }
-
-    public function fieldCheck(bool $value): void
-    {
-        $this->fieldCheck = $value;
     }
 
     public function fieldFile(string $value): void

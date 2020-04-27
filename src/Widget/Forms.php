@@ -18,10 +18,9 @@ use function urldecode;
 
 final class Forms extends Widget
 {
-    use Collection\Options;
-
     private string $action;
     private string $method = Method::POST;
+    private array $options = [];
 
     /**
      * Generates a form start tag.
@@ -84,15 +83,22 @@ final class Forms extends Widget
 
     public function action(string $value): self
     {
-        $this->action = $value;
-
-        return $this;
+        $new = clone $this;
+        $new->action = $value;
+        return $new;
     }
 
     public function method(string $value): self
     {
-        $this->method = $value;
+        $new = clone $this;
+        $new->method = $value;
+        return $new;
+    }
 
-        return $this;
+    public function options(array $value = []): self
+    {
+        $new = clone $this;
+        $new->options = $value;
+        return $new;
     }
 }

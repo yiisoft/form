@@ -11,7 +11,9 @@ final class ListBox extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\ListOptions;
+
+    private array $items = [];
+    private string $type;
 
     /**
      * Generates a list box.
@@ -24,33 +26,30 @@ final class ListBox extends Widget
      */
     public function run(): string
     {
-        $this->addCustomUnselect();
-        $this->addOptionSize();
+        $new = clone $this;
+
+        if (!empty($new->addId())) {
+            $new->options['id'] = $new->addId();
+        }
 
         return ListInput::Widget()
             ->type('listBox')
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->items($this->items)
-            ->multiple($this->multiple)
-            ->options($this->options)
-            ->unselect($this->unselect)
+            ->config($new->data, $new->attribute, $new->options)
+            ->items($new->items)
             ->run();
     }
 
-    private function addCustomUnselect(): void
+    public function items(array $value): self
     {
-        if ($this->type !== 'dropDownList') {
-            $this->unselect =  $this->unselect === '' ? null : $this->unselect;
-        }
+        $new = clone $this;
+        $new->items = $value;
+        return $new;
     }
 
-    private function addOptionSize(): void
+    public function type(string $value): self
     {
-        $this->options['size'] = $this->size;
-
-        if ($this->size === 0) {
-            $this->options['size'] = 4;
-        }
+        $new = clone $this;
+        $new->type = $value;
+        return $new;
     }
 }

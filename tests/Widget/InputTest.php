@@ -56,9 +56,7 @@ final class InputTest extends TestCase
         $form->fieldString($value);
         $created = Input::widget()
             ->type('text')
-            ->data($form)
-            ->attribute('fieldString')
-            ->options($options)
+            ->config($form, 'fieldString', $options)
             ->run();
         $this->assertEquals($expected, $created);
     }

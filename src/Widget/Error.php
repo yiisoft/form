@@ -19,17 +19,19 @@ final class Error extends Widget
      */
     public function run(): string
     {
-        $errorSource = ArrayHelper::remove($this->options, 'errorSource');
+        $new = clone $this;
+
+        $errorSource = ArrayHelper::remove($new->options, 'errorSource');
 
         if ($errorSource !== null) {
-            $error = $errorSource($this->data, $this->attribute);
+            $error = $errorSource($new->data, $new->attribute);
         } else {
-            $error = $this->data->firstError($this->attribute);
+            $error = $new->data->firstError($new->attribute);
         }
 
-        $tag = ArrayHelper::remove($this->options, 'tag', 'div');
-        $encode = ArrayHelper::remove($this->options, 'encode', true);
+        $tag = ArrayHelper::remove($new->options, 'tag', 'div');
+        $encode = ArrayHelper::remove($new->options, 'encode', true);
 
-        return Html::tag($tag, $encode ? Html::encode($error) : $error, $this->options);
+        return Html::tag($tag, $encode ? Html::encode($error) : $error, $new->options);
     }
 }

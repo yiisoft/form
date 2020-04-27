@@ -26,8 +26,7 @@ final class ErrorTest extends TestCase
 
         $expected = '<div>Value cannot be blank.</div>';
         $created = Error::widget()
-            ->data($form)
-            ->attribute('fieldString')
+            ->config($form, 'fieldString')
             ->run();
         $this->assertEquals(
             $expected,
@@ -47,9 +46,7 @@ final class ErrorTest extends TestCase
 
         $expected = '<div>This is custom error message.</div>';
         $created = Error::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->options(['errorSource' => [$form, 'customError']])
+            ->config($form, 'fieldString', ['errorSource' => [$form, 'customError']])
             ->run();
         $this->assertEquals(
             $expected,

@@ -21,18 +21,20 @@ final class FileInput extends Widget
      */
     public function run(): string
     {
+        $new = clone $this;
+
         $hiddenOptions = ['id' => false, 'value' => ''];
 
-        if (isset($this->options['name'])) {
-            $hiddenOptions['name'] = $this->options['name'];
+        if (isset($new->options['name'])) {
+            $hiddenOptions['name'] = $new->options['name'];
         }
 
         /** make sure disabled input is not sending any value */
-        if (!empty($this->options['disabled'])) {
-            $hiddenOptions['disabled'] = $this->options['disabled'];
+        if (!empty($new->options['disabled'])) {
+            $hiddenOptions['disabled'] = $new->options['disabled'];
         }
 
-        $hiddenOptions = ArrayHelper::merge($hiddenOptions, ArrayHelper::remove($this->options, 'hiddenOptions', []));
+        $hiddenOptions = ArrayHelper::merge($hiddenOptions, ArrayHelper::remove($new->options, 'hiddenOptions', []));
 
         /**
          * Add a hidden field so that if a form only has a file field, we can still use isset($body[$formClass]) to
@@ -44,15 +46,11 @@ final class FileInput extends Widget
          */
         return
             HiddenInput::widget()
-                ->data($this->data)
-                ->attribute($this->attribute)
-                ->options($hiddenOptions)
+                ->config($new->data, $new->attribute, $hiddenOptions)
                 ->run() .
             Input::widget()
                 ->type('file')
-                ->data($this->data)
-                ->attribute($this->attribute)
-                ->options($this->options)
+                ->config($new->data, $new->attribute, $new->options)
                 ->run();
     }
 }

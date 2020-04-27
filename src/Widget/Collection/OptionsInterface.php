@@ -8,9 +8,8 @@ use Yiisoft\Form\FormInterface;
 
 interface OptionsInterface
 {
-    public function data(FormInterface $value): self;
-    public function attribute(string $value): self;
+    public function config(FormInterface $data, string $attribute, array $options = []): self;
     public function charset(string $value): self;
-    public function type(string $value): self;
-    public function options(array $value): self;
+    public function addLabel(bool $value = true): self;
+    public function addPlaceholder(bool $generate = true, ?string $value = null): void;
 }

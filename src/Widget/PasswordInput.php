@@ -23,9 +23,7 @@ final class PasswordInput extends Widget
     {
         return Input::widget()
             ->type('password')
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->options)
+            ->config($this->data, $this->attribute, $this->options)
             ->run();
     }
 }

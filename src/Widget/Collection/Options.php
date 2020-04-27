@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Collection;
 
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
 
 trait Options
 {
@@ -14,7 +16,6 @@ trait Options
     private string $attribute;
     private array $options = [];
     private string $charset = 'UTF-8';
-    private ?string $type = null;
 
     public function id(?string $value): self
     {
@@ -23,17 +24,12 @@ trait Options
         return $new;
     }
 
-    public function data(FormInterface $value): self
+    public function config(FormInterface $data, string $attribute, array $options = []): self
     {
         $new = clone $this;
-        $new->data = $value;
-        return $new;
-    }
-
-    public function attribute(string $value): self
-    {
-        $new = clone $this;
-        $new->attribute = $value;
+        $new->data = $data;
+        $new->attribute = $attribute;
+        $new->options = $options;
         return $new;
     }
 
@@ -44,36 +40,116 @@ trait Options
         return $new;
     }
 
-    public function type(string $value): self
+    public function addLabel(bool $value = true): self
     {
         $new = clone $this;
-        $new->type = $value;
-        return $new;
-    }
 
-    public function options(array $value): self
-    {
-        $new = clone $this;
-        $new->options = $value;
-        return $new;
-    }
-
-    private function addId(): void
-    {
-        $this->options['id'] = $this->options['id'] ?? $this->id;
-
-        if ($this->options['id'] === null) {
-            $this->options['id'] = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
+        if ($value) {
+            $new->options['label'] = Html::encode(
+                $new->data->attributeLabel(
+                    Html::getAttributeName($new->attribute)
+                )
+            );
         }
+
+        return $new;
+    }
+
+    public function addPlaceholder(bool $generate = true, ?string $value = null): self
+    {
+        $new = clone $this;
+
+        if ($generate) {
+            $attributeName = Html::getAttributeName($new->attribute);
+            $new->options['placeholder'] = $new->data->attributeLabel($attributeName);
+        }
+
+        if (!$generate && !empty($value)) {
+            $new->options['placeholder'] = $value;
+        }
+
+        return $new;
+    }
+
+    private function addId(): string
+    {
+        $new = clone $this;
+
+        $id = $new->options['id'] ?? $new->id;
+
+        if ($id === null) {
+            $id = HtmlForm::getInputId($new->data, $new->attribute, $new->charset);
+        }
+
+        return $id !== false ? $id : '';
+    }
+
+    private function addBooleanValue(): bool
+    {
+        $new = clone $this;
+        $value = HtmlForm::getAttributeValue($new->data, $new->attribute);
+
+        if (!array_key_exists('value', $new->options)) {
+            $new->options['value'] = '1';
+        }
+
+        return (bool) $value;
     }
 
     private function addHint(): string
     {
-        return $this->options['hint'] ?? $this->data->attributeHint($this->attribute);
+        $new = clone $this;
+        return $new->options['hint'] ?? $new->data->attributeHint($new->attribute);
     }
 
     private function addName(): string
     {
-        return $this->options['name'] ?? HtmlForm::getInputName($this->data, $this->attribute);
+        $new = clone $this;
+        $name = $new->options['name'] ?? HtmlForm::getInputName($new->data, $new->attribute);
+
+        return ArrayHelper::remove($this->options, 'name', $name);
+    }
+
+    private function asStringLabel(): string
+    {
+        $new = clone $this;
+
+        return ArrayHelper::remove(
+            $this->options,
+            'label',
+            Html::encode($new->data->attributeLabel($new->attribute))
+        );
+    }
+
+    private function asStringFor(): ?string
+    {
+        $new = clone $this;
+
+        return ArrayHelper::remove(
+            $this->options,
+            'for',
+            HtmlForm::getInputId($new->data, $new->attribute, $new->charset)
+        );
+    }
+
+    private function addPlaceholderOptions(self $new): self
+    {
+        if (isset($new->options['placeholder']) && $new->options['placeholder'] === true) {
+            $attributeName = Html::getAttributeName($new->attribute);
+            $new->options['placeholder'] = $new->data->attributeLabel($attributeName);
+        }
+
+        return $new;
+    }
+
+    private function addValue()
+    {
+        $new = clone $this;
+
+        return ArrayHelper::remove(
+            $this->options,
+            'value',
+            HtmlForm::getAttributeValue($new->data, $new->attribute)
+        );
     }
 }

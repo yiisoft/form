@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -20,21 +19,14 @@ final class TextArea extends Widget
      */
     public function run(): string
     {
-        $this->addId();
-        $this->options = HtmlForm::addPlaceholders($this->data, $this->attribute, $this->options);
+        $new = clone $this;
 
-        $name = $this->addName();
-        $value = $this->addValue();
+        $new->addPlaceholderOptions($new);
 
-        return Html::textarea($name, $value, $this->options);
-    }
+        if (!empty($new->addId())) {
+            $new->options['id'] = $new->addId();
+        }
 
-    private function addValue(): string
-    {
-        $value = $this->options['value'] ?? HtmlForm::getAttributeValue($this->data, $this->attribute);
-
-        unset($this->options['value']);
-
-        return $value;
+        return Html::textarea($new->addName(), $new->addValue(), $new->options);
     }
 }

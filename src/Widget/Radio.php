@@ -11,7 +11,8 @@ final class Radio extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\BooleanOptions;
+
+    private bool $label = true;
 
     /**
      * Generates a radio button tag together with a label for the given form attribute.
@@ -24,11 +25,7 @@ final class Radio extends Widget
     {
         return BooleanInput::widget()
             ->type('radio')
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->label($this->label)
-            ->uncheck($this->uncheck)
-            ->options($this->options)
+            ->config($this->data, $this->attribute, $this->options)
             ->run();
     }
 }

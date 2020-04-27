@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-
-use function array_key_exists;
 
 final class BooleanInput extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\BooleanOptions;
+
+    private string $type;
 
     /**
      * Generates a boolean input.
@@ -25,36 +23,20 @@ final class BooleanInput extends Widget
      */
     public function run(): string
     {
-        $this->addId();
-        $this->addLabel();
-        $this->addUncheck();
+        $new = clone $this;
+        $type = $new->type;
 
-        $name = $this->addName();
-        $value = $this->addValue();
-        $type = $this->type;
-
-        return Html::$type($name, $value, $this->options);
-    }
-
-    private function addLabel(): void
-    {
-        if ($this->label) {
-            $this->options['label'] = Html::encode(
-                $this->data->attributeLabel(
-                    HtmlForm::getAttributeName($this->attribute)
-                )
-            );
-        }
-    }
-
-    private function addValue(): bool
-    {
-        $value = HtmlForm::getAttributeValue($this->data, $this->attribute);
-
-        if (!array_key_exists('value', $this->options)) {
-            $this->options['value'] = '1';
+        if (!empty($new->addId())) {
+            $new->options['id'] = $new->addId();
         }
 
-        return (bool) $value;
+        return Html::$type($new->addName(), $new->addBooleanValue(), $new->options);
+    }
+
+    public function type(string $value): self
+    {
+        $new = clone $this;
+        $new->type = $value;
+        return $new;
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -13,7 +11,9 @@ final class ListInput extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\ListOptions;
+
+    private array $items = [];
+    private string $type;
 
     /**
      * Generates a list of input fields.
@@ -24,22 +24,28 @@ final class ListInput extends Widget
      */
     public function run(): string
     {
-        $this->addId();
-        $this->addUnselect();
-        $this->addMultiple();
+        $new = clone $this;
 
-        $name = ArrayHelper::remove(
-            $this->options,
-            'name',
-            HtmlForm::getInputName($this->data, $this->attribute)
-        );
-        $selection = ArrayHelper::remove(
-            $this->options,
-            'value',
-            HtmlForm::getAttributeValue($this->data, $this->attribute)
-        );
-        $type = $this->type;
+        if (!empty($new->addId())) {
+            $new->options['id'] = $new->addId();
+        }
 
-        return Html::$type($name, $selection, $this->items, $this->options);
+        $type = $new->type;
+
+        return Html::$type($new->addName(), $new->addValue(), $new->items, $new->options);
+    }
+
+    public function items(array $value): self
+    {
+        $new = clone $this;
+        $new->items = $value;
+        return $new;
+    }
+
+    public function type(string $value): self
+    {
+        $new = clone $this;
+        $new->type = $value;
+        return $new;
     }
 }

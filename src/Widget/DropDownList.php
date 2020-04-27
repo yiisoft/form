@@ -11,7 +11,8 @@ final class DropDownList extends Widget
 {
     use Collection\Options;
     use Collection\InputOptions;
-    use Collection\ListOptions;
+
+    private array $items = [];
 
     /**
      * Generates a drop-down list for the given form attribute.
@@ -24,26 +25,25 @@ final class DropDownList extends Widget
      */
     public function run(): string
     {
-        if (!$this->multiple) {
+        if (!$this->options['multiple']) {
             return ListInput::widget()
                 ->type('dropDownList')
-                ->data($this->data)
-                ->attribute($this->attribute)
+                ->config($this->data, $this->attribute, $this->options)
                 ->items($this->items)
-                ->options($this->options)
-                ->unselect($this->unselect)
                 ->run();
         }
 
-        $this->options['multiple'] = 'true';
-
         return ListBox::widget()
             ->type('dropDownList')
-            ->data($this->data)
-            ->attribute($this->attribute)
+            ->config($this->data, $this->attribute, $this->options)
             ->items($this->items)
-            ->options($this->options)
-            ->unselect($this->unselect)
             ->run();
+    }
+
+    public function items(array $value): self
+    {
+        $new = clone $this;
+        $new->items = $value;
+        return $new;
     }
 }

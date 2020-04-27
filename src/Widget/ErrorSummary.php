@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\FormInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -14,7 +15,8 @@ use function array_unique;
 
 final class ErrorSummary extends Widget
 {
-    use Collection\Options;
+    private FormInterface $data;
+    private array $options = [];
 
     /**
      * Generates a summary of the validation errors.
@@ -23,25 +25,35 @@ final class ErrorSummary extends Widget
      */
     public function run(): string
     {
-        $header = $this->options['header'] ?? '<p>' . 'Please fix the following errors:' . '</p>';
-        $footer = ArrayHelper::remove($this->options, 'footer', '');
-        $encode = ArrayHelper::remove($this->options, 'encode', true);
-        $showAllErrors = ArrayHelper::remove($this->options, 'showAllErrors', false);
+        $new = clone $this;
 
-        unset($this->options['header']);
+        $header = $new->options['header'] ?? '<p>' . 'Please fix the following errors:' . '</p>';
+        $footer = ArrayHelper::remove($new->options, 'footer', '');
+        $encode = ArrayHelper::remove($new->options, 'encode', true);
+        $showAllErrors = ArrayHelper::remove($new->options, 'showAllErrors', false);
 
-        $lines = $this->collectErrors($encode, $showAllErrors);
+        unset($new->options['header']);
+
+        $lines = $new->collectErrors($encode, $showAllErrors);
 
         if (empty($lines)) {
             /** still render the placeholder for client-side validation use */
             $content = '<ul></ul>';
-            $this->options['style'] = isset($this->options['style'])
-                ? rtrim($this->options['style'], ';') . '; display:none' : 'display:none';
+            $new->options['style'] = isset($new->options['style'])
+                ? rtrim($new->options['style'], ';') . '; display:none' : 'display:none';
         } else {
             $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
         }
 
-        return Html::tag('div', $header . $content . $footer, $this->options);
+        return Html::tag('div', $header . $content . $footer, $new->options);
+    }
+
+    public function config(FormInterface $data, array $options = []): self
+    {
+        $new = clone $this;
+        $new->data = $data;
+        $new->options = $options;
+        return $new;
     }
 
     /**
@@ -55,9 +67,11 @@ final class ErrorSummary extends Widget
      */
     private function collectErrors(bool $encode, bool $showAllErrors): array
     {
+        $new = clone $this;
+
         $lines = [];
 
-        foreach ([$this->data] as $form) {
+        foreach ([$new->data] as $form) {
             $lines = array_unique(array_merge($lines, $form->errorSummary($showAllErrors)));
         }
 

@@ -16,16 +16,13 @@ final class PasswordInputTest extends TestCase
 
         $expected = '<input type="password" id="stubform-fieldstring" name="StubForm[fieldString]">';
         $created = PasswordInput::widget()
-            ->data($form)
-            ->attribute('fieldString')
+            ->config($form, 'fieldString')
             ->run();
         $this->assertEquals($expected, $created);
 
         $expected = '<input type="password" id="stubform-fieldstring" class="test" name="StubForm[fieldString]" value="value">';
         $created = PasswordInput::widget()
-            ->data($form)
-            ->attribute('fieldString')
-            ->options(['class' => 'test', 'value' => 'value'])
+            ->config($form, 'fieldString', ['class' => 'test', 'value' => 'value'])
             ->run();
         $this->assertEquals($expected, $created);
     }

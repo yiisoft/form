@@ -22,9 +22,7 @@ final class DatePicker extends Widget
     {
         return Input::widget()
             ->type('date')
-            ->data($this->data)
-            ->attribute($this->attribute)
-            ->options($this->options)
+            ->config($this->data, $this->attribute, $this->options)
             ->run();
     }
 }

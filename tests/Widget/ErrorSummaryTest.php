@@ -53,7 +53,7 @@ final class ErrorSummaryTest extends TestCase
 
         $form->load($data);
         $form->validate();
-        $created = ErrorSummary::widget()->data($form)->options($options)->run();
+        $created = ErrorSummary::widget()->config($form, $options)->run();
 
         $this->assertEqualsWithoutLE($expected, $created);
     }
