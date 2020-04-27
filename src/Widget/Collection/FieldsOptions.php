@@ -138,9 +138,9 @@ trait FieldsOptions
     private function addErrorCss(self $new, array $options = []): self
     {
         if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, $new::ERROR_CSS);
+            Html::addCssClass($new->inputOptions, self::ERROR_CSS);
         } elseif ($options['class'] !== 'help-block') {
-            Html::addCssClass($new->inputOptions, $new::ERROR_CSS . ' ' . $options['class']);
+            Html::addCssClass($new->inputOptions, self::ERROR_CSS . ' ' . $options['class']);
         }
 
         return $new;
@@ -149,9 +149,9 @@ trait FieldsOptions
     private function addHintCss(self $new, array $options = []): self
     {
         if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, $new::HINT_CSS);
+            Html::addCssClass($new->inputOptions, self::HINT_CSS);
         } elseif ($options['class'] !== 'hint-block') {
-            Html::addCssClass($new->inputOptions, $new::HINT_CSS . ' ' . $options['class']);
+            Html::addCssClass($new->inputOptions, self::HINT_CSS . ' ' . $options['class']);
         }
 
         return $new;
@@ -171,9 +171,9 @@ trait FieldsOptions
     private function addLabelCss(self $new, array $options = []): self
     {
         if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, $new::LABEL_CSS);
+            Html::addCssClass($new->inputOptions, self::LABEL_CSS);
         } elseif ($options['class'] !== 'control-label') {
-            Html::addCssClass($new->inputOptions, $new::LABEL_CSS . ' ' . $options['class']);
+            Html::addCssClass($new->inputOptions, self::LABEL_CSS . ' ' . $options['class']);
         }
 
         return $new;

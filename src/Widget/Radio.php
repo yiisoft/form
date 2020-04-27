@@ -12,8 +12,6 @@ final class Radio extends Widget
     use Collection\Options;
     use Collection\InputOptions;
 
-    private bool $label = true;
-
     /**
      * Generates a radio button tag together with a label for the given form attribute.
      *
