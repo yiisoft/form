@@ -25,7 +25,9 @@ final class DropDownList extends Widget
      */
     public function run(): string
     {
-        if (!$this->options['multiple']) {
+        $multiple = $this->options['multiple'] ?? false;
+
+        if (!$multiple) {
             return ListInput::widget()
                 ->type('dropDownList')
                 ->config($this->data, $this->attribute, $this->options)

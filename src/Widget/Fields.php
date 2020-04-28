@@ -130,6 +130,8 @@ class Fields extends Widget implements FieldsInterface
         $new->addLabelCss($new, $options);
         $new->addSkipLabelFor($new);
 
+        unset($options['class']);
+
         $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{label}'] = Label::widget()
@@ -166,6 +168,8 @@ class Fields extends Widget implements FieldsInterface
         $new = clone $this;
 
         $new->addErrorCss($new, $options);
+
+        unset($options['class']);
 
         $new->inputOptions = array_merge($new->inputOptions, $options);
 
@@ -204,7 +208,9 @@ class Fields extends Widget implements FieldsInterface
 
         $new = clone $this;
 
-        $new->addLabelCss($new, $options);
+        $new->addHintCss($new, $options);
+
+        unset($options['class']);
 
         if ($content !== null) {
             $new->inputOptions['hint'] = $content;
@@ -240,6 +246,8 @@ class Fields extends Widget implements FieldsInterface
         $new->addAriaAttributes($new, $options);
         $new->addInputCss($new, $options);
         $new->addErrorCssInput($new);
+
+        unset($options['class']);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -277,6 +285,8 @@ class Fields extends Widget implements FieldsInterface
         $new->addInputCss($new, $options);
         $new->addErrorCssInput($new);
 
+        unset($options['class']);
+
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = TextInput::widget()
@@ -311,6 +321,8 @@ class Fields extends Widget implements FieldsInterface
 
         $new->addInputCss($new, $options);
 
+        unset($options['class']);
+
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = HiddenInput::widget()
@@ -343,6 +355,8 @@ class Fields extends Widget implements FieldsInterface
         $new->addAriaAttributes($new, $options);
         $new->addInputCss($new, $options);
         $new->addErrorCssInput($new);
+
+        unset($options['class']);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -379,7 +393,10 @@ class Fields extends Widget implements FieldsInterface
 
         $new->addAriaAttributes($new, $options);
         $new->addErrorCssInput($new);
+        $new->addInputCss($new, $options);
         $new->adjustLabelFor($new, $options);
+
+        unset($options['class']);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -412,6 +429,8 @@ class Fields extends Widget implements FieldsInterface
         $new->addAriaAttributes($new, $options);
         $new->addInputCss($new, $options);
         $new->addErrorCssInput($new);
+
+        unset($options['class']);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -462,6 +481,7 @@ class Fields extends Widget implements FieldsInterface
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Radio::widget()
                 ->config($new->data, $new->attribute, $options)
+                ->addLabel(true)
                 ->run();
             $this->parts['{label}'] = '';
         } else {
@@ -474,7 +494,6 @@ class Fields extends Widget implements FieldsInterface
 
             unset($options['labelOptions']);
 
-            $options['label'] = null;
             $this->parts['{input}'] = Radio::widget()
                 ->config($new->data, $new->attribute, $options)
                 ->run();
@@ -526,7 +545,7 @@ class Fields extends Widget implements FieldsInterface
         if ($enclosedByLabel) {
             $this->parts['{input}'] = CheckBox::widget()
                 ->config($new->data, $new->attribute, $options)
-                ->addLabel()
+                ->addLabel(true)
                 ->run();
             $this->parts['{label}'] = '';
         } else {
@@ -539,10 +558,8 @@ class Fields extends Widget implements FieldsInterface
 
             unset($options['labelOptions']);
 
-            $options['label'] = null;
             $this->parts['{input}'] = CheckBox::widget()
                 ->config($new->data, $new->attribute, $options)
-                ->addLabel()
                 ->run();
         }
 
@@ -583,6 +600,8 @@ class Fields extends Widget implements FieldsInterface
         $new->addAriaAttributes($new, $options);
         $new->addInputCss($new, $options);
         $new->addErrorCssInput($new);
+
+        unset($options['class']);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -694,8 +713,10 @@ class Fields extends Widget implements FieldsInterface
         $new = clone $this;
 
         $new->addAriaAttributes($new, $options);
+        $new->adjustLabelFor($new, $options);
         $new->addInputCss($new, $options);
         $new->addErrorCssInput($new);
+        $new->addRoleAttributes($new, $options);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 

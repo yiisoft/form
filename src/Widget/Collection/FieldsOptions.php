@@ -137,44 +137,59 @@ trait FieldsOptions
 
     private function addErrorCss(self $new, array $options = []): self
     {
-        if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, self::ERROR_CSS);
-        } elseif ($options['class'] !== 'help-block') {
-            Html::addCssClass($new->inputOptions, self::ERROR_CSS . ' ' . $options['class']);
+        $class = $options['class'] ?? self::ERROR_CSS['class'];
+
+        if ($class !== self::ERROR_CSS['class']) {
+            $class = self::ERROR_CSS['class'] . ' ' . $options['class'];
         }
+
+        Html::addCssClass($new->inputOptions, $class);
 
         return $new;
     }
 
     private function addHintCss(self $new, array $options = []): self
     {
-        if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, self::HINT_CSS);
-        } elseif ($options['class'] !== 'hint-block') {
-            Html::addCssClass($new->inputOptions, self::HINT_CSS . ' ' . $options['class']);
+        $class = $options['class'] ?? self::HINT_CSS['class'];
+
+        if ($class !== self::HINT_CSS['class']) {
+            $class = self::HINT_CSS['class'] . ' ' . $options['class'];
         }
+
+        Html::addCssClass($new->inputOptions, $class);
 
         return $new;
     }
 
     private function addInputCss(self $new, array $options = []): self
     {
-        if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, $this->inputCss);
-        } elseif ($options['class'] !== 'form-control') {
-            Html::addCssClass($new->inputOptions, $this->inputCss . ' ' . $options['class']);
+        $class = $options['class'] ?? $this->inputCss;
+
+        if ($class !== $this->inputCss) {
+            $class = $this->inputCss . ' ' . $options['class'];
         }
+
+        Html::addCssClass($new->inputOptions, $class);
 
         return $new;
     }
 
     private function addLabelCss(self $new, array $options = []): self
     {
-        if (!isset($options['class'])) {
-            Html::addCssClass($new->inputOptions, self::LABEL_CSS);
-        } elseif ($options['class'] !== 'control-label') {
-            Html::addCssClass($new->inputOptions, self::LABEL_CSS . ' ' . $options['class']);
+        $class = $options['class'] ?? self::LABEL_CSS['class'];
+
+        if ($class !== self::LABEL_CSS['class']) {
+            $class = self::LABEL_CSS['class'] . ' ' . $options['class'];
         }
+
+        Html::addCssClass($new->inputOptions, $class);
+
+        return $new;
+    }
+
+    private function addRoleAttributes(self $new, array $options = []): self
+    {
+        $new->inputOptions['role'] = $options['role'] ?? 'radiogroup';
 
         return $new;
     }
