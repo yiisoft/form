@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget\Collection;
+namespace Yiisoft\Form\Widget\Options;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
@@ -12,7 +12,7 @@ use Yiisoft\Html\Html;
 /**
  * Common form widget options
  */
-trait Options
+trait Common
 {
     private ?string $id = null;
     private FormModelInterface $data;

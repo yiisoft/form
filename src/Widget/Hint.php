@@ -10,7 +10,7 @@ use Yiisoft\Widget\Widget;
 
 final class Hint extends Widget
 {
-    use Collection\Options;
+    use Options\Common;
 
     /**
      * Generates a hint tag for the given form attribute.

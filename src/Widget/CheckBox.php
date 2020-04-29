@@ -9,8 +9,8 @@ use Yiisoft\Widget\Widget;
 
 final class CheckBox extends Widget
 {
-    use Collection\Options;
-    use Collection\InputOptions;
+    use Options\Common;
+    use Options\Input;
 
     /**
      * Generates a checkbox tag together with a label for the given form attribute.

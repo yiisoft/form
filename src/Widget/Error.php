@@ -10,7 +10,7 @@ use Yiisoft\Widget\Widget;
 
 final class Error extends Widget
 {
-    use Collection\Options;
+    use Options\Common;
 
     /**
      * Generates a tag that contains the first validation error of the specified form attribute.

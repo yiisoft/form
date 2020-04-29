@@ -9,8 +9,8 @@ use Yiisoft\Widget\Widget;
 
 final class PasswordInput extends Widget
 {
-    use Collection\Options;
-    use Collection\InputOptions;
+    use Options\Common;
+    use Options\Input;
 
     /**
      * Generates a password input tag for the given form attribute.

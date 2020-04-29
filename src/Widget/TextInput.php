@@ -9,8 +9,8 @@ use Yiisoft\Widget\Widget;
 
 final class TextInput extends Widget
 {
-    use Collection\Options;
-    use Collection\InputOptions;
+    use Options\Common;
+    use Options\Input;
 
     /**
      * Generates a text input tag for the given form attribute.

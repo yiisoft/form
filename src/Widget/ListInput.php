@@ -9,8 +9,8 @@ use Yiisoft\Widget\Widget;
 
 final class ListInput extends Widget
 {
-    use Collection\Options;
-    use Collection\InputOptions;
+    use Options\Common;
+    use Options\Input;
 
     private array $items = [];
     private string $type;

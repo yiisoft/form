@@ -9,8 +9,8 @@ use Yiisoft\Widget\Widget;
 
 final class BooleanInput extends Widget
 {
-    use Collection\Options;
-    use Collection\InputOptions;
+    use Options\Common;
+    use Options\Input;
 
     private string $type;
 

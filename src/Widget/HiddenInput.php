@@ -9,7 +9,7 @@ use Yiisoft\Widget\Widget;
 
 final class HiddenInput extends Widget
 {
-    use Collection\Options;
+    use Options\Common;
 
     /**
      * Generates a hidden input tag for the given form attribute.

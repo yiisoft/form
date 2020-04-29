@@ -9,7 +9,7 @@ use Yiisoft\Widget\Widget;
 
 final class DatePicker extends Widget
 {
-    use Collection\Options;
+    use Options\Common;
 
     /**
      * Generates a datepicker tag together with a label for the given form attribute.

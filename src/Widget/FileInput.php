@@ -10,7 +10,7 @@ use Yiisoft\Widget\Widget;
 
 final class FileInput extends Widget
 {
-    use Collection\Options;
+    use Options\Common;
 
     /**
      * Generates a file input tag for the given form attribute.

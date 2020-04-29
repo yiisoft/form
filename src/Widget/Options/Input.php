@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget\Collection;
+namespace Yiisoft\Form\Widget\Options;
 
 /**
  * Form input options
  */
-trait InputOptions
+trait Input
 {
     public function autofocus(bool $value = true): self
     {

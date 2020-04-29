@@ -9,7 +9,7 @@ use Yiisoft\Widget\Widget;
 
 final class Label extends Widget
 {
-    use Collection\Options;
+    use Options\Common;
 
     /**
      * Generates a label tag for the given form attribute.
