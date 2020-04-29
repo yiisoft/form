@@ -78,21 +78,6 @@ interface FormInterface extends DataSetInterface
     public function isAttributeRequired(string $attribute): bool;
 
     /**
-     * Returns the list of all the attributes, specifying their typehint.
-     *
-     * @return array
-     *
-     * ```php
-     * [
-     *     'login' => 'string',
-     *     'password' => 'string',
-     *     'rememberMe' => 'bool',
-     * ];
-     * ```
-     */
-    public function getAttributes(): array;
-
-    /**
      * Returns the errors for all attributes.
      *
      * @return array errors for all attributes or the specified attribute. null is returned if no error.

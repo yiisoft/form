@@ -39,11 +39,6 @@ abstract class Form implements FormInterface
         return $this->readProperty($attribute);
     }
 
-    public function getAttributes(): array
-    {
-        return $this->attributes;
-    }
-
     public function attributeHint(string $attribute): string
     {
         $hints = $this->attributeHints();
