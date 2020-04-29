@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\FormModelInterface;
 
-interface FieldsInterface
+interface FieldInterface
 {
     public function config(FormModelInterface $data, string $attribute, array $options = []): self;
     public function ariaAttribute(bool $value): self;

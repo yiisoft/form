@@ -8,9 +8,9 @@ use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\Form;
-use Yiisoft\Form\Widget\Fields;
+use Yiisoft\Form\Widget\Field;
 
-final class FormsTest extends TestCase
+final class FormTest extends TestCase
 {
     public function testFormsBegin(): void
     {
@@ -87,7 +87,7 @@ final class FormsTest extends TestCase
 
         $data->email('admin@example.com');
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()
+            $html .= Field::widget()
                 ->config($data, 'email')
                 ->template('{input}')
                 ->input('email');
@@ -101,7 +101,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
         $html = Form::begin()->action('/something')->options(['class' => 'formTestMe'])->start();
-            $html .= Fields::widget()
+            $html .= Field::widget()
                 ->config($data, 'email', ['class' => 'fieldTestMe'])
                 ->template('{input}')
                 ->input('email', ['required' => true]);
@@ -124,7 +124,7 @@ HTML;
         $data->validate();
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()
+            $html .= Field::widget()
                 ->config($data, 'name')
                 ->inputCss('form-testme');
         $html .= Form::end();
@@ -140,7 +140,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()
+            $html .= Field::widget()
                 ->config($data, 'name')
                 ->inputCss('form-testme');
         $html .= Form::end();
@@ -169,7 +169,7 @@ HTML;
         $data->cityBirth(2);
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()
+            $html .= Field::widget()
                 ->config($data, 'cityBirth')
                 ->template('{input}')
                 ->listBox($citys, ['multiple' => true, 'unselect' => '1']);
@@ -189,7 +189,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()
+            $html .= Field::widget()
                 ->config($data, 'cityBirth')
                 ->listBox($citys, ['multiple' => true, 'unselect' => '1']);
         $html .= Form::end();
@@ -219,8 +219,8 @@ HTML;
         $data->validate();
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()->config($data, 'name')->validationStateOn('container');
-            $html .= Fields::widget()->config($data, 'email')->validationStateOn('container');
+            $html .= Field::widget()->config($data, 'name')->validationStateOn('container');
+            $html .= Field::widget()->config($data, 'email')->validationStateOn('container');
         $html .= Form::end();
 
         $expected = <<<'HTML'
@@ -247,8 +247,8 @@ HTML;
         $data->validate();
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget()->config($data, 'name');
-            $html .= Fields::widget()->config($data, 'email');
+            $html .= Field::widget()->config($data, 'name');
+            $html .= Field::widget()->config($data, 'email');
         $html .= Form::end();
 
         $expected = <<<'HTML'
@@ -298,31 +298,31 @@ HTML;
         $data->validate();
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'id')
                 ->label(true)
                 ->textinput();
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'email')
                 ->label(true, ['placeholder' => true])
                 ->input('email');
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'name')
                 ->label(true)
                 ->textinput();
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'cityBirth')
                 ->label(true)
                 ->listBox($cities, ['multiple' => true, 'unselect' => '1']);
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'entryDate')
                 ->label(true)
                 ->input('date');
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'sex')
                 ->label(true)
                 ->checkboxList(['Female', 'Male'], ['unselect' => '0']);
-            $html .= Fields::widget($fieldConfig)
+            $html .= Field::widget($fieldConfig)
                 ->config($data, 'terms')
                 ->checkbox(['unselect' => '0']);
         $html .= Form::end();

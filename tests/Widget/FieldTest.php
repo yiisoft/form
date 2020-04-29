@@ -6,26 +6,26 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Widget\Fields;
+use Yiisoft\Form\Widget\Field;
 
-final class FieldsTest extends TestCase
+final class FieldTest extends TestCase
 {
     public function testFieldsRenderBegin(): void
     {
         $data = new PersonalForm();
 
         $expected = '<article class="form-group field-personalform-name">';
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name', ['tag' => 'article'])
             ->renderBegin();
         $this->assertEquals($expected, $html);
 
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name', ['tag' => null])
             ->renderBegin();
         $this->assertEquals('', $html);
 
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name', ['tag' => false])
             ->renderBegin();
         $this->assertEquals('', $html);
@@ -36,18 +36,18 @@ final class FieldsTest extends TestCase
         $data = new PersonalForm();
 
         $expected = '</div>';
-        $html = Fields::widget()
+        $html = Field::widget()
             ->renderEnd();
         $this->assertEquals($expected, $html);
 
         $expected = '';
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name', ['tag' => null])
             ->renderEnd();
         $this->assertEquals($expected, $html);
 
         $expected = '';
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name', ['tag' => false])
             ->renderEnd();
         $this->assertEquals($expected, $html);
@@ -65,7 +65,7 @@ final class FieldsTest extends TestCase
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'email')
             ->run();
         $this->assertEquals($expected, $html);
@@ -78,7 +78,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'email')
             ->label(false)
             ->run();
@@ -92,7 +92,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'email')
             ->label(true)
             ->run();
@@ -106,7 +106,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'email')
             ->label(true, ['class' => 'labelTestMe'], 'Email:')
             ->run();
@@ -127,7 +127,7 @@ HTML;
 <div class="help-block">Is too short.</div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->label(true)
             ->run();
@@ -145,7 +145,7 @@ HTML;
 <div class="help-block errorTestMe">Is too short.</div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->label(true)
             ->error(['class' => 'errorTestMe'])
@@ -167,7 +167,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, '[0]name')
             ->label(true)
             ->run();
@@ -187,7 +187,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->hint(null, false)
             ->run();
@@ -201,7 +201,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->hint(null, true, ['class' => 'hintTestMe'])
             ->run();
@@ -215,7 +215,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->hint('Hint Content', true, ['class' => 'hint-block'])
             ->run();
@@ -235,7 +235,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'email')
             ->input('email')
             ->run();
@@ -249,7 +249,7 @@ HTML;
         <div class="help-block"></div>
         </div>
         HTML;
-                $html = Fields::widget()
+                $html = Field::widget()
                     ->config($data, 'email')
                     ->input('email', ['class' => 'inputTestMe'])
                     ->run();
@@ -268,7 +268,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->textInput()
             ->run();
@@ -282,7 +282,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->textInput(['class' => 'textInputTestMe'])
             ->run();
@@ -301,7 +301,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->hiddenInput()
             ->run();
@@ -317,7 +317,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->hiddenInput(['class' => 'hiddenInputTestMe'])
             ->run();
@@ -338,7 +338,7 @@ HTML;
 <div class="help-block">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'password')
             ->passwordInput()
             ->run();
@@ -352,7 +352,7 @@ HTML;
 <div class="help-block">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'password')
             ->passwordInput(['class' => 'passwordTestMe'])
             ->run();
@@ -374,7 +374,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'attachFiles')
             ->label(true)
             ->fileInput()
@@ -389,7 +389,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'attachFiles')
             ->label(true)
             ->fileInput(['class' => 'fileInputTestMe'])
@@ -410,7 +410,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->label(true)
             ->textArea()
@@ -425,7 +425,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->label(true)
             ->textArea(['class' => 'textAreaTestMe'])
@@ -445,7 +445,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'terms')
             ->radio([], false)
             ->run();
@@ -460,7 +460,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'terms')
             ->radio([], true)
             ->run();
@@ -479,7 +479,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'terms')
             ->checkbox([], false)
             ->run();
@@ -494,7 +494,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'terms')
             ->checkbox([], true)
             ->run();
@@ -527,7 +527,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'cityBirth')
             ->dropDownList($cities)
             ->run();
@@ -561,7 +561,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'cityBirth')
             ->dropDownList($cities, ['multiple' => true, 'unselect' => '0', 'size' => 5])
             ->run();
@@ -593,7 +593,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'cityBirth')
             ->listBox($cities)
             ->run();
@@ -612,7 +612,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'cityBirth')
             ->listBox($cities, ['unselect' => '0'])
             ->run();
@@ -632,7 +632,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'cityBirth')
             ->listBox(
                 $cities,
@@ -656,7 +656,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'sex')
             ->checkboxList(['Female', 'Male'], ['unselect' => '0'])
             ->run();
@@ -672,7 +672,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'sex')
             ->label(true, [], 'Sex:')
             ->checkboxList(['Female', 'Male'], ['unselect' => '0'])
@@ -693,7 +693,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'terms')
             ->label(true)
             ->radioList(['1' => 'Accept terms and conditions.'], ['unselect' => ''])
@@ -713,7 +713,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->ariaAttribute(false)
             ->label(true)
@@ -728,7 +728,7 @@ HTML;
 <div class="help-block"></div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->label(true)
             ->run();
@@ -744,7 +744,7 @@ HTML;
 <div class="help-block">Is too short.</div>
 </div>
 HTML;
-        $html = Fields::widget()
+        $html = Field::widget()
             ->config($data, 'name')
             ->label(true)
             ->run();

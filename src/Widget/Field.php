@@ -13,7 +13,7 @@ use Yiisoft\Widget\Widget;
 
 use function array_merge;
 
-class Fields extends Widget implements FieldsInterface
+class Field extends Widget implements FieldInterface
 {
     use Collection\FieldsOptions;
 
