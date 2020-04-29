@@ -23,13 +23,13 @@ final class Input extends Widget
     {
         $new = clone $this;
 
-        $new->placeholderOptions($new);
+        $new->setPlaceholderOptions();
 
         if (!empty($new->getId())) {
             $new->options['id'] = $new->getId();
         }
 
-        return Html::input($new->type, $new->addName(), $new->addValue(), $new->options);
+        return Html::input($new->type, $new->getNameAndRemoveItFromOptions(), $new->getValueAndRemoveItFromOptions(), $new->options);
     }
 
     public function type(string $value): self

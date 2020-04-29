@@ -32,7 +32,7 @@ final class ListInput extends Widget
 
         $type = $new->type;
 
-        return Html::$type($new->addName(), $new->addValue(), $new->items, $new->options);
+        return Html::$type($new->getNameAndRemoveItFromOptions(), $new->getValueAndRemoveItFromOptions(), $new->items, $new->options);
     }
 
     public function items(array $value): self

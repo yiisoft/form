@@ -21,12 +21,12 @@ final class TextArea extends Widget
     {
         $new = clone $this;
 
-        $new->placeholderOptions($new);
+        $new->setPlaceholderOptions();
 
         if (!empty($new->getId())) {
             $new->options['id'] = $new->getId();
         }
 
-        return Html::textarea($new->addName(), $new->addValue(), $new->options);
+        return Html::textarea($new->getNameAndRemoveItFromOptions(), $new->getValueAndRemoveItFromOptions(), $new->options);
     }
 }

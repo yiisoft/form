@@ -27,6 +27,6 @@ final class CheckBox extends Widget
             $new->options['id'] = $new->getId();
         }
 
-        return Html::checkBox($new->addName(), $new->addBooleanValue(), $new->options);
+        return Html::checkBox($new->getNameAndRemoveItFromOptions(), $new->getBooleanValueAndAddItToOptions(), $new->options);
     }
 }

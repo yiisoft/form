@@ -85,63 +85,42 @@ trait Common
         return $id !== false ? $id : '';
     }
 
-    private function addBooleanValue(): bool
+    private function getBooleanValueAndAddItToOptions(): bool
     {
-        $new = clone $this;
-        $value = HtmlForm::getAttributeValue($new->data, $new->attribute);
+        $value = HtmlForm::getAttributeValue($this->data, $this->attribute);
 
-        if (!array_key_exists('value', $new->options)) {
-            $new->options['value'] = '1';
+        if (!array_key_exists('value', $this->options)) {
+            $this->options['value'] = '1';
         }
 
         return (bool) $value;
     }
 
-    private function addName(): string
+    private function getNameAndRemoveItFromOptions(): string
     {
-        $new = clone $this;
-        $name = $new->options['name'] ?? HtmlForm::getInputName($new->data, $new->attribute);
-
-        return ArrayHelper::remove($this->options, 'name', $name);
+        return ArrayHelper::remove($this->options, 'name', HtmlForm::getInputName($this->data, $this->attribute));
     }
 
-    private function asStringLabel(): string
+    private function getLabelAndRemoveItFromOptions(): string
     {
-        $new = clone $this;
-
         return ArrayHelper::remove(
             $this->options,
             'label',
-            Html::encode($new->data->attributeLabel($new->attribute))
+            Html::encode($this->data->attributeLabel($this->attribute))
         );
     }
 
-    private function asStringFor(): ?string
+    private function setPlaceholderOptions(): void
     {
-        $new = clone $this;
-
-        return ArrayHelper::remove(
-            $this->options,
-            'for',
-            HtmlForm::getInputId($new->data, $new->attribute, $new->charset)
-        );
-    }
-
-    private function placeholderOptions(self $new): self
-    {
-        if (isset($new->options['placeholder']) && $new->options['placeholder'] === true) {
-            $attributeName = Html::getAttributeName($new->attribute);
-            $new->options['placeholder'] = $new->data->attributeLabel($attributeName);
+        if (isset($this->options['placeholder']) && $this->options['placeholder'] === true) {
+            $attributeName = Html::getAttributeName($this->attribute);
+            $this->options['placeholder'] = $this->data->attributeLabel($attributeName);
         }
-
-        return $new;
     }
 
-    private function addValue()
+    private function getValueAndRemoveItFromOptions()
     {
-        $new = clone $this;
-
-        $value = HtmlForm::getAttributeValue($new->data, $new->attribute);
+        $value = HtmlForm::getAttributeValue($this->data, $this->attribute);
         if ($value !== null && is_scalar($value)) {
             $value = (string)$value;
         }

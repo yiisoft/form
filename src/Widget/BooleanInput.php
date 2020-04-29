@@ -30,7 +30,7 @@ final class BooleanInput extends Widget
             $new->options['id'] = $new->getId();
         }
 
-        return Html::$type($new->addName(), $new->addBooleanValue(), $new->options);
+        return Html::$type($new->getNameAndRemoveItFromOptions(), $new->getBooleanValueAndAddItToOptions(), $new->options);
     }
 
     public function type(string $value): self
