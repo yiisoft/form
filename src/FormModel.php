@@ -8,6 +8,9 @@ use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
 
+/**
+ * Form model represents and HTML form: its data, validation and presentation.
+ */
 abstract class FormModel implements FormModelInterface
 {
     private array $attributes;

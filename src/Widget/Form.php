@@ -16,6 +16,9 @@ use function strpos;
 use function substr;
 use function urldecode;
 
+/**
+ * A widget for rendering a form
+ */
 final class Form extends Widget
 {
     private string $action;

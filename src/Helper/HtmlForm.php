@@ -8,6 +8,9 @@ use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 
+/**
+ * Form-related HTML tag generation
+ */
 final class HtmlForm
 {
     /**
