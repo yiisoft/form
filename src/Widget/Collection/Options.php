@@ -146,10 +146,15 @@ trait Options
     {
         $new = clone $this;
 
+        $value = HtmlForm::getAttributeValue($new->data, $new->attribute);
+        if ($value !== null && is_scalar($value)) {
+            $value = (string)$value;
+        }
+
         return ArrayHelper::remove(
             $this->options,
             'value',
-            HtmlForm::getAttributeValue($new->data, $new->attribute)
+            $value
         );
     }
 }

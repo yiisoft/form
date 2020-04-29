@@ -274,7 +274,7 @@ HTML;
             'validationStateOn()' => ['container'],
         ];
 
-        $citys = [
+        $cities = [
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
@@ -313,7 +313,7 @@ HTML;
             $html .= Fields::widget($fieldConfig)
                 ->config($data, 'cityBirth')
                 ->label(true)
-                ->listBox($citys, ['multiple' => true, 'unselect' => '1']);
+                ->listBox($cities, ['multiple' => true, 'unselect' => '1']);
             $html .= Fields::widget($fieldConfig)
                 ->config($data, 'entryDate')
                 ->label(true)
