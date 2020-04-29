@@ -72,7 +72,7 @@ trait InputOptions
         if ($value) {
             $new->options['uncheck'] = '0';
         } else {
-            unset($this->options['uncheck']);
+            unset($new->options['uncheck']);
         }
 
         return $new;
