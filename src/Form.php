@@ -218,13 +218,13 @@ abstract class Form implements FormInterface
     }
 
     /**
-     * Returns the list of attribute names.
+     * Returns the list of attribute types indexed by attribute names.
      *
      * By default, this method returns all non-static properties of the class.
      *
      * @throws \ReflectionException
      *
-     * @return array list of attribute names.
+     * @return array list of attribute types indexed by attribute names.
      */
     private function attributes(): array
     {

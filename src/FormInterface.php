@@ -14,15 +14,13 @@ interface FormInterface extends DataSetInterface
      * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
      * declare a label `First Name` which is more user-friendly and can be displayed to end users.
      *
-     * By default an attribute label is generated using {@see generateAttributeLabel()}. This method allows you to
+     * By default an attribute label is generated automatically. This method allows you to
      * explicitly specify attribute labels.
      *
      * Note, in order to inherit labels defined in the parent class, a child class needs to merge the parent labels
      * with child labels using functions such as `array_merge()`.
      *
      * @return array attribute labels (name => label)
-     *
-     * {@see generateAttributeLabel()}
      */
     public function attributeLabels(): array;
 
@@ -33,7 +31,6 @@ interface FormInterface extends DataSetInterface
      *
      * @return string the attribute label.
      *
-     * {@see generateAttributeLabel()}
      * {@see attributeLabels()}
      */
     public function attributeLabel(string $attribute): string;
@@ -108,7 +105,7 @@ interface FormInterface extends DataSetInterface
      *
      * @return array
      */
-    public function error(string $attribute): ?array;
+    public function error(string $attribute): array;
 
     /**
      * Returns the errors for all attributes as a one-dimensional array.
@@ -158,7 +155,7 @@ interface FormInterface extends DataSetInterface
     /**
      * Returns the form name that this model class should use.
      *
-     * The form name is mainly used by {\Yiisoft\Form\FormWidget} to determine how to name the input fields for the
+     * The form name is mainly used by {@see \Yiisoft\Form\Helper\HtmlForm} to determine how to name the input fields for the
      * attributes in a model. If the form name is "A" and an attribute name is "b", then the corresponding input name
      * would be "A[b]". If the form name is an empty string, then the input name would be "b".
      *
@@ -188,14 +185,11 @@ interface FormInterface extends DataSetInterface
      * }
      * ```
      *
-     * `load()` gets the `'FormName'` from the model's [[formName()]] method (which you may override), unless the
+     * `load()` gets the `'FormName'` from the {@see formName()} method (which you may override), unless the
      * `$formName` parameter is given. If the form name is empty, `load()` populates the model with the whole of
-     * `$data`,
-     * instead of `$data['FormName']`.
+     * `$data` instead of `$data['FormName']`.
      *
-     * Note, that the data being populated is subject to the safety check by [[setAttributes()]].
-     *
-     * @param array $data the data array to load, typically `$_POST` or `$_GET`.
+     * @param array $data the data array to load, typically server request attributes.
      *
      * @return bool whether `load()` found the expected form in `$data`.
      */
@@ -209,8 +203,8 @@ interface FormInterface extends DataSetInterface
      *
      * - the rule must be associated with the attributes.
      *
-     * Errors found during the validation can be retrieved via {@see getErrors()}, {@see getFirstErrors()} and
-     * {@see getFirstError()}.
+     * Errors found during the validation can be retrieved via {@see errors()}, {@see firstErrors()} and
+     * {@see firstError()}.
      *
      * @return bool whether the validation is successful without any error.
      */
