@@ -230,4 +230,11 @@ interface FormInterface extends DataSetInterface
      * @return bool whether the validation is successful without any error.
      */
     public function validate(): bool;
+
+    /**
+     * Sets the attribute values in a massive way.
+     *
+     * @param array $values attribute values (name => value) to be assigned to the model.
+     */
+    public function setAttributes(array $values): void;
 }

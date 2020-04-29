@@ -175,14 +175,6 @@ abstract class Form implements FormInterface
         ];
     }
 
-    /**
-     * Sets the attribute values in a massive way.
-     *
-     * @param array $values attribute values (name => value) to be assigned to the model.
-
-     * {@see safeAttributes()}
-     * {@see attributes()}
-     */
     public function setAttributes(array $values): void
     {
         foreach ($values as $name => $value) {
