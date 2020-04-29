@@ -70,7 +70,7 @@ trait FieldsOptions
         return $new;
     }
 
-    public function succesCss(string $value): self
+    public function successCss(string $value): self
     {
         $new = clone $this;
         $new->successCss = $value;
