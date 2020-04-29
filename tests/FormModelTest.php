@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests;
 
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
-final class FormTest extends TestCase
+final class FormModelTest extends TestCase
 {
     public function testGetFormName(): void
     {

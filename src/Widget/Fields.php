@@ -184,7 +184,7 @@ class Fields extends Widget implements FieldsInterface
      * Renders the hint tag.
      *
      * @param string|null $content the hint content. If `null`, the hint will be generated via
-     * {@see Form::getAttributeHint()}.
+     * {@see FormModel::getAttributeHint()}.
      * @param bool $typeHint If `false`, the generated field will not contain the hint part. Note that this will NOT be
      * {@see \Yiisoft\Html\Html::encode()|encoded}.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of

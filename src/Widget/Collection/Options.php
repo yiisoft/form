@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget\Collection;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 
 trait Options
 {
     private ?string $id = null;
-    private FormInterface $data;
+    private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
     private string $charset = 'UTF-8';
@@ -24,7 +24,7 @@ trait Options
         return $new;
     }
 
-    public function config(FormInterface $data, string $attribute, array $options = []): self
+    public function config(FormModelInterface $data, string $attribute, array $options = []): self
     {
         $new = clone $this;
         $new->data = $data;

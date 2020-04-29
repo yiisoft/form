@@ -8,7 +8,7 @@ use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
 
-abstract class Form implements FormInterface
+abstract class FormModel implements FormModelInterface
 {
     private array $attributes;
     private array $attributesLabels;

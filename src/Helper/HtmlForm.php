@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Helper;
 
 use InvalidArgumentException;
-use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 
 final class HtmlForm
@@ -19,14 +19,14 @@ final class HtmlForm
      * If an attribute value an array of such instances, the primary value(s) of the AR instance(s) will be returned
      * instead.
      *
-     * @param FormInterface $form the form object.
+     * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
      * @return string|array the corresponding attribute value.
+     *@throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
      */
-    public static function getAttributeValue(FormInterface $form, string $attribute)
+    public static function getAttributeValue(FormModelInterface $form, string $attribute)
     {
         if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
@@ -44,16 +44,16 @@ final class HtmlForm
      *
      * For example, if {@see getInputName()} returns `Post[content]`, this method will return `post-content`.
      *
-     * @param FormInterface $form the form object
+     * @param FormModelInterface $form the form object
      * @param string $attribute the attribute name or expression. See {@see getAttributeName()} for explanation of
      * attribute expression.
      * @param string $charset default `UTF-8`.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
      * @return string the generated input ID.
+     *@throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
      */
-    public static function getInputId(FormInterface $form, string $attribute, string $charset = 'UTF-8'): string
+    public static function getInputId(FormModelInterface $form, string $attribute, string $charset = 'UTF-8'): string
     {
         $name = mb_strtolower(static::getInputName($form, $attribute), $charset);
 
@@ -70,14 +70,14 @@ final class HtmlForm
      *
      * See {@see getAttributeName()} for explanation of attribute expression.
      *
-     * @param FormInterface $form the form object.
+     * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
      *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
      * @return string the generated input name.
+     *@throws InvalidArgumentException if the attribute name contains non-word characters.
+     *
      */
-    public static function getInputName(FormInterface $form, string $attribute): string
+    public static function getInputName(FormModelInterface $form, string $attribute): string
     {
         $formName = $form->formName();
 

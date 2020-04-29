@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -15,7 +15,7 @@ use function array_unique;
 
 final class ErrorSummary extends Widget
 {
-    private FormInterface $data;
+    private FormModelInterface $data;
     private array $options = [];
 
     /**
@@ -48,7 +48,7 @@ final class ErrorSummary extends Widget
         return Html::tag('div', $header . $content . $footer, $new->options);
     }
 
-    public function config(FormInterface $data, array $options = []): self
+    public function config(FormModelInterface $data, array $options = []): self
     {
         $new = clone $this;
         $new->data = $data;

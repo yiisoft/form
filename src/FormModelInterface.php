@@ -6,7 +6,7 @@ namespace Yiisoft\Form;
 
 use Yiisoft\Validator\DataSetInterface;
 
-interface FormInterface extends DataSetInterface
+interface FormModelInterface extends DataSetInterface
 {
     /**
      * Returns the attribute labels.

@@ -16,7 +16,7 @@ use function strpos;
 use function substr;
 use function urldecode;
 
-final class Forms extends Widget
+final class Form extends Widget
 {
     private string $action;
     private string $method = Method::POST;

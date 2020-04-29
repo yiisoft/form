@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Widget;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Widget\Forms;
+use Yiisoft\Form\Widget\Form;
 use Yiisoft\Form\Widget\Fields;
 
 final class FormsTest extends TestCase
@@ -15,13 +15,13 @@ final class FormsTest extends TestCase
     public function testFormsBegin(): void
     {
         $expected = '<form action="/test" method="POST">';
-        $created = Forms::begin()
+        $created = Form::begin()
             ->action('/test')
             ->start();
         $this->assertEquals($expected, $created);
 
         $expected = '<form action="/example" method="GET">';
-        $created = Forms::begin()
+        $created = Form::begin()
             ->action('/example')
             ->method('GET')
             ->start();
@@ -33,11 +33,11 @@ final class FormsTest extends TestCase
         ];
         $this->assertEquals(
             '<form action="/example" method="GET">' . "\n" . implode("\n", $hiddens),
-            Forms::begin()->action('/example?id=1&title=%3C')->method('GET')->start()
+            Form::begin()->action('/example?id=1&title=%3C')->method('GET')->start()
         );
 
         $expected = '<form action="/foo" method="GET">%A<input type="hidden" name="p" value="">';
-        $actual = Forms::begin()
+        $actual = Form::begin()
             ->action('/foo?p')
             ->method('GET')
             ->start();
@@ -68,7 +68,7 @@ final class FormsTest extends TestCase
      */
     public function testFormsBeginSimulateViaPost(string $expected, string $method, array $options = []): void
     {
-        $actual = Forms::begin()
+        $actual = Form::begin()
             ->action('/foo')
             ->method($method)
             ->options($options)
@@ -78,7 +78,7 @@ final class FormsTest extends TestCase
 
     public function testFormsEnd(): void
     {
-        $this->assertEquals('</form>', Forms::end());
+        $this->assertEquals('</form>', Form::end());
     }
 
     public function testFormsSimpleFields(): void
@@ -86,12 +86,12 @@ final class FormsTest extends TestCase
         $data = new PersonalForm();
 
         $data->email('admin@example.com');
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()
                 ->config($data, 'email')
                 ->template('{input}')
                 ->input('email');
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-email">
@@ -100,12 +100,12 @@ final class FormsTest extends TestCase
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
-        $html = Forms::begin()->action('/something')->options(['class' => 'formTestMe'])->start();
+        $html = Form::begin()->action('/something')->options(['class' => 'formTestMe'])->start();
             $html .= Fields::widget()
                 ->config($data, 'email', ['class' => 'fieldTestMe'])
                 ->template('{input}')
                 ->input('email', ['required' => true]);
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form class="formTestMe" action="/something" method="POST"><div class="form-group field-personalform-email fieldTestMe">
@@ -123,11 +123,11 @@ HTML;
         $data->name('yii test');
         $data->validate();
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()
                 ->config($data, 'name')
                 ->inputCss('form-testme');
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
@@ -139,11 +139,11 @@ HTML;
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()
                 ->config($data, 'name')
                 ->inputCss('form-testme');
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
@@ -168,12 +168,12 @@ HTML;
         $data = new PersonalForm();
         $data->cityBirth(2);
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()
                 ->config($data, 'cityBirth')
                 ->template('{input}')
                 ->listBox($citys, ['multiple' => true, 'unselect' => '1']);
-        $html .= Forms::end();
+        $html .= Form::end();
 
         /** https://github.com/yiisoft/yii2/issues/5356 */
         $expected = <<<'HTML'
@@ -188,11 +188,11 @@ HTML;
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()
                 ->config($data, 'cityBirth')
                 ->listBox($citys, ['multiple' => true, 'unselect' => '1']);
-        $html .= Forms::end();
+        $html .= Form::end();
 
         /** https://github.com/yiisoft/yii2/issues/5356 */
         $expected = <<<'HTML'
@@ -218,10 +218,10 @@ HTML;
         $data->email('admin@example.com');
         $data->validate();
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()->config($data, 'name')->validationStateOn('container');
             $html .= Fields::widget()->config($data, 'email')->validationStateOn('container');
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name has-error">
@@ -246,10 +246,10 @@ HTML;
         $data->email('admin');
         $data->validate();
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget()->config($data, 'name');
             $html .= Fields::widget()->config($data, 'email');
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
@@ -297,7 +297,7 @@ HTML;
         $data->load($record);
         $data->validate();
 
-        $html = Forms::begin()->action('/something')->start();
+        $html = Form::begin()->action('/something')->start();
             $html .= Fields::widget($fieldConfig)
                 ->config($data, 'id')
                 ->label(true)
@@ -325,7 +325,7 @@ HTML;
             $html .= Fields::widget($fieldConfig)
                 ->config($data, 'terms')
                 ->checkbox(['unselect' => '0']);
-        $html .= Forms::end();
+        $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-id has-error">

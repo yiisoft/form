@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Collection;
 
-use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 
 trait FieldsOptions
 {
-    private ?FormInterface $data = null;
+    private ?FormModelInterface $data = null;
     private string $attribute;
     private array $options = [];
     private array $inputOptions = [];
@@ -27,7 +27,7 @@ trait FieldsOptions
     private array $parts = [];
     private bool $skipLabelFor = false;
 
-    public function config(FormInterface $data, string $attribute, array $options = []): self
+    public function config(FormModelInterface $data, string $attribute, array $options = []): self
     {
         $new = clone $this;
         $new->data = $data;
@@ -100,7 +100,7 @@ trait FieldsOptions
 
     private function addAriaAttributes(self $new, array $options = []): self
     {
-        if ($new->ariaAttribute && ($new->data instanceof FormInterface)) {
+        if ($new->ariaAttribute && ($new->data instanceof FormModelInterface)) {
             if (!isset($options['aria-required']) && $new->data->isAttributeRequired($new->attribute)) {
                 $new->inputOptions['aria-required'] = 'true';
             }

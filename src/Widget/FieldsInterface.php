@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\FormInterface;
+use Yiisoft\Form\FormModelInterface;
 
 interface FieldsInterface
 {
-    public function config(FormInterface $data, string $attribute, array $options = []): self;
+    public function config(FormModelInterface $data, string $attribute, array $options = []): self;
     public function ariaAttribute(bool $value): self;
     public function errorCss(string $value): self;
     public function errorSummaryCss(string $value): self;
