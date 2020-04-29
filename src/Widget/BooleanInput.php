@@ -26,8 +26,8 @@ final class BooleanInput extends Widget
         $new = clone $this;
         $type = $new->type;
 
-        if (!empty($new->addId())) {
-            $new->options['id'] = $new->addId();
+        if (!empty($new->getId())) {
+            $new->options['id'] = $new->getId();
         }
 
         return Html::$type($new->addName(), $new->addBooleanValue(), $new->options);

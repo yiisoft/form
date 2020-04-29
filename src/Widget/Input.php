@@ -25,8 +25,8 @@ final class Input extends Widget
 
         $new->placeholderOptions($new);
 
-        if (!empty($new->addId())) {
-            $new->options['id'] = $new->addId();
+        if (!empty($new->getId())) {
+            $new->options['id'] = $new->getId();
         }
 
         return Html::input($new->type, $new->addName(), $new->addValue(), $new->options);

@@ -28,8 +28,8 @@ final class ListBox extends Widget
     {
         $new = clone $this;
 
-        if (!empty($new->addId())) {
-            $new->options['id'] = $new->addId();
+        if (!empty($new->getId())) {
+            $new->options['id'] = $new->getId();
         }
 
         return ListInput::Widget()

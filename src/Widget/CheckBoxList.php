@@ -25,8 +25,8 @@ final class CheckBoxList extends Widget
     {
         $new = clone $this;
 
-        if (!empty($new->addId())) {
-            $new->options['id'] = $new->addId();
+        if (!empty($new->getId())) {
+            $new->options['id'] = $new->getId();
         }
 
         return Html::checkBoxList($new->addName(), $new->addValue(), $new->items, $new->options);

@@ -23,8 +23,8 @@ final class TextArea extends Widget
 
         $new->placeholderOptions($new);
 
-        if (!empty($new->addId())) {
-            $new->options['id'] = $new->addId();
+        if (!empty($new->getId())) {
+            $new->options['id'] = $new->getId();
         }
 
         return Html::textarea($new->addName(), $new->addValue(), $new->options);

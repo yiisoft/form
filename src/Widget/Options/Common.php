@@ -74,14 +74,12 @@ trait Common
         return $new;
     }
 
-    private function addId(): string
+    private function getId(): string
     {
-        $new = clone $this;
-
-        $id = $new->options['id'] ?? $new->id;
+        $id = $this->options['id'] ?? $this->id;
 
         if ($id === null) {
-            $id = HtmlForm::getInputId($new->data, $new->attribute, $new->charset);
+            $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
         return $id !== false ? $id : '';
