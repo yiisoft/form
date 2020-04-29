@@ -9,6 +9,9 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 
+/**
+ * Common form widget options
+ */
 trait Options
 {
     private ?string $id = null;
@@ -55,7 +58,7 @@ trait Options
         return $new;
     }
 
-    public function addPlaceholder(bool $generate = true, ?string $value = null): self
+    public function placeholder(bool $generate = true, ?string $value = null): self
     {
         $new = clone $this;
 
@@ -132,7 +135,7 @@ trait Options
         );
     }
 
-    private function addPlaceholderOptions(self $new): self
+    private function placeholderOptions(self $new): self
     {
         if (isset($new->options['placeholder']) && $new->options['placeholder'] === true) {
             $attributeName = Html::getAttributeName($new->attribute);

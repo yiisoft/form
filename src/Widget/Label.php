@@ -20,7 +20,7 @@ final class Label extends Widget
     {
         $new = clone $this;
 
-        $new->addPlaceholderOptions($new);
+        $new->placeholderOptions($new);
 
         return Html::label($new->asStringLabel(), $new->asStringFor(), $new->options);
     }

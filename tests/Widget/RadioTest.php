@@ -39,7 +39,7 @@ final class RadioTest extends TestCase
         $created = Radio::widget()
             ->config($form, 'fieldBool', $options)
             ->addLabel($label)
-            ->addUncheck($uncheck)
+            ->uncheck($uncheck)
             ->run();
         $this->assertEquals($expected, $created);
     }

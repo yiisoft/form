@@ -33,8 +33,8 @@ HTML;
         $created = DropDownList::widget()
             ->config($form, 'cityBirth')
             ->items($cities)
-            ->addMultiple(false)
-            ->addRequired(true)
+            ->multiple(false)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -50,9 +50,9 @@ HTML;
         $created = DropDownList::widget()
             ->config($form, 'cityBirth')
             ->items($cities)
-            ->addMultiple(true)
-            ->addUnselect('0')
-            ->addRequired(true)
+            ->multiple(true)
+            ->unselect('0')
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }

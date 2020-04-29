@@ -21,7 +21,7 @@ HTML;
         $created = CheckboxList::widget()
             ->config($form, 'sex')
             ->items(['Female', 'Male'])
-            ->addUnselect('0')
+            ->unselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }
@@ -38,7 +38,7 @@ HTML;
         $created = CheckboxList::widget()
             ->config($form, 'sex', ['name' => 'sex'])
             ->items(['Female', 'Male'])
-            ->addUnselect('0')
+            ->unselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -51,8 +51,8 @@ HTML;
             ->config($form, 'sex')
             ->autofocus(true)
             ->items(['Female', 'Male'])
-            ->addItemOptions(['class' => 'testMe'])
-            ->addUnselect('1')
+            ->itemOptions(['class' => 'testMe'])
+            ->unselect('1')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }

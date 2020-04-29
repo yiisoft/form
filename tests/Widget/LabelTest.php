@@ -29,7 +29,7 @@ final class LabelTest extends TestCase
         $expected = '<label class="test" placeholder="Custom PlaceHolder" for="stubform-fieldstring">Field String</label>';
         $created = Label::widget()
             ->config($form, 'fieldString', ['class' => 'test'])
-            ->addPlaceHolder(false, 'Custom PlaceHolder')
+            ->placeholder(false, 'Custom PlaceHolder')
             ->run();
         $this->assertEquals($expected, $created);
     }

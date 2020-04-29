@@ -23,7 +23,7 @@ final class Input extends Widget
     {
         $new = clone $this;
 
-        $new->addPlaceholderOptions($new);
+        $new->placeholderOptions($new);
 
         if (!empty($new->addId())) {
             $new->options['id'] = $new->addId();

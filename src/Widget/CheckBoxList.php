@@ -29,7 +29,7 @@ final class CheckBoxList extends Widget
             $new->options['id'] = $new->addId();
         }
 
-        return Html::CheckBoxList($new->addName(), $new->addValue(), $new->items, $new->options);
+        return Html::checkBoxList($new->addName(), $new->addValue(), $new->items, $new->options);
     }
 
     public function items(array $value): self

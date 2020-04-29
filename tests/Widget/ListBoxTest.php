@@ -21,7 +21,7 @@ final class ListBoxTest extends TestCase
 EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -34,7 +34,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
             ->items($this->getDataItems())
-            ->addRequired(false)
+            ->required(false)
             ->addSize(5)
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
@@ -48,7 +48,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
             ->items($this->getDataItems2())
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -85,7 +85,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray', ['encodeSpaces' => true, 'encode' => false])
             ->items($this->getDataItems2())
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -112,7 +112,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
             ->items($this->getDataItems())
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -143,7 +143,7 @@ EOD;
 EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray', ['disabled' => true, 'required' => false])
-            ->addUnselect('0')
+            ->unselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -157,7 +157,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
             ->items($this->getDataItems())
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -172,7 +172,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
             ->items($this->getDataItems3())
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 
@@ -180,7 +180,7 @@ EOD;
         $created = ListBox::widget()
             ->config($form, 'fieldArray')
             ->items($this->getDataItems3())
-            ->addRequired(true)
+            ->required()
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
 

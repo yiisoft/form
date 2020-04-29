@@ -31,7 +31,7 @@ HTML;
         $created = RadioList::widget()
             ->config($form, 'cityBirth', ['class' => 'testMe'])
             ->items($cities)
-            ->addUnselect('0')
+            ->unselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }

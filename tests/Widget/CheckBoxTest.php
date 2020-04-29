@@ -66,7 +66,7 @@ final class CheckBoxTest extends TestCase
         $created = CheckBox::widget()
             ->config($form, 'terms', $options)
             ->addLabel($label)
-            ->addUncheck($uncheck)
+            ->uncheck($uncheck)
             ->run();
         $this->assertEquals($expected, $created);
     }

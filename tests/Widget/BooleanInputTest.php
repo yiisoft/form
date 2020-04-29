@@ -20,7 +20,7 @@ final class BooleanInputTest extends TestCase
             ->type('checkbox')
             ->config($form, 'fieldBool')
             ->addLabel(false)
-            ->addUncheck(false)
+            ->uncheck(false)
             ->run();
         $this->assertEquals($expected, $created);
 
@@ -31,7 +31,7 @@ final class BooleanInputTest extends TestCase
             ->type('checkbox')
             ->config($form, 'fieldBool')
             ->addLabel(true)
-            ->addUncheck(true)
+            ->uncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
 
@@ -41,7 +41,7 @@ final class BooleanInputTest extends TestCase
             ->type('radio')
             ->config($form, 'fieldBool')
             ->addLabel(false)
-            ->addUncheck(false)
+            ->uncheck(false)
             ->run();
         $this->assertEquals($expected, $created);
 
@@ -53,7 +53,7 @@ final class BooleanInputTest extends TestCase
             ->type('radio')
             ->config($form, 'fieldBool')
             ->addLabel(true)
-            ->addUncheck(true)
+            ->uncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
     }

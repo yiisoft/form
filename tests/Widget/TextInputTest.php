@@ -17,7 +17,7 @@ final class TextInputTest extends TestCase
         $expected = '<input type="text" id="stubform-fieldstring" class="testMe" name="StubForm[fieldString]">';
         $created = TextInput::widget()
             ->config($form, 'fieldString', ['class' => 'testMe'])
-            ->addRequired(false)
+            ->required(false)
             ->run();
         $this->assertEquals($expected, $created);
     }
@@ -29,7 +29,7 @@ final class TextInputTest extends TestCase
         $expected = 'placeholder="Custom placeholder"';
         $created = TextInput::widget()
             ->config($form, 'fieldString')
-            ->addPlaceHolder(false, 'Custom placeholder')
+            ->placeholder(false, 'Custom placeholder')
             ->run();
         $this->assertStringContainsString($expected, $created);
     }
