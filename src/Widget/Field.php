@@ -83,7 +83,7 @@ class Field extends Widget implements FieldInterface
 
         $new->options['class'] = trim(implode(' ', array_merge($new::DIV_CSS, $class)));
 
-        $new->addErrorCssContainer($new);
+        $new->addErrorCssClassToContainer($new);
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
 
@@ -127,8 +127,8 @@ class Field extends Widget implements FieldInterface
 
         $new->inputOptions['label'] = !empty($label) ? $label : Html::getAttributeName($new->attribute);
 
-        $new->addLabelCss($new, $options);
-        $new->addSkipLabelFor($new);
+        $new->addLabelCssClass($options);
+        $new->skipForInLabel();
 
         unset($options['class']);
 
@@ -167,7 +167,7 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addErrorCss($new, $options);
+        $new->addErrorCssClass($options);
 
         unset($options['class']);
 
@@ -208,7 +208,7 @@ class Field extends Widget implements FieldInterface
 
         $new = clone $this;
 
-        $new->addHintCss($new, $options);
+        $new->addHintCssClass($options);
 
         unset($options['class']);
 
@@ -243,9 +243,9 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->addInputCss($new, $options);
-        $new->addErrorCssInput($new);
+        $new->setAriaAttributes($options);
+        $new->addInputCssClass($options);
+        $new->addErrorCssClassToInput();
 
         unset($options['class']);
 
@@ -281,9 +281,9 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->addInputCss($new, $options);
-        $new->addErrorCssInput($new);
+        $new->setAriaAttributes($options);
+        $new->addInputCssClass($options);
+        $new->addErrorCssClassToInput();
 
         unset($options['class']);
 
@@ -319,7 +319,7 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addInputCss($new, $options);
+        $new->addInputCssClass($options);
 
         unset($options['class']);
 
@@ -352,9 +352,9 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->addInputCss($new, $options);
-        $new->addErrorCssInput($new);
+        $new->setAriaAttributes($options);
+        $new->addInputCssClass($options);
+        $new->addErrorCssClassToInput();
 
         unset($options['class']);
 
@@ -391,10 +391,10 @@ class Field extends Widget implements FieldInterface
             $new->inputOptions['enctype'] = 'multipart/form-data';
         }
 
-        $new->addAriaAttributes($new, $options);
-        $new->addErrorCssInput($new);
-        $new->addInputCss($new, $options);
-        $new->adjustLabelFor($new, $options);
+        $new->setAriaAttributes($options);
+        $new->addErrorCssClassToInput();
+        $new->addInputCssClass($options);
+        $new->setForInLabel($options);
 
         unset($options['class']);
 
@@ -426,9 +426,9 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->addInputCss($new, $options);
-        $new->addErrorCssInput($new);
+        $new->setAriaAttributes($options);
+        $new->addInputCssClass($options);
+        $new->addErrorCssClassToInput();
 
         unset($options['class']);
 
@@ -499,8 +499,8 @@ class Field extends Widget implements FieldInterface
                 ->run();
         }
 
-        $new->addAriaAttributes($new, $options);
-        $new->addErrorCssInput($new);
+        $new->setAriaAttributes($options);
+        $new->addErrorCssClassToInput();
 
         return $this;
     }
@@ -563,7 +563,7 @@ class Field extends Widget implements FieldInterface
                 ->run();
         }
 
-        $new->addErrorCssInput($new);
+        $new->addErrorCssClassToInput($new);
 
         return $this;
     }
@@ -597,9 +597,9 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->addInputCss($new, $options);
-        $new->addErrorCssInput($new);
+        $new->setAriaAttributes($options);
+        $new->addInputCssClass($options);
+        $new->addErrorCssClassToInput();
 
         unset($options['class']);
 
@@ -642,8 +642,8 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->adjustLabelFor($new, $options);
+        $new->setAriaAttributes($options);
+        $new->setForInLabel($options);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -677,11 +677,11 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->adjustLabelFor($new, $options);
+        $new->setAriaAttributes($options);
+        $new->setForInLabel($options);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
-        $new->skipLabelFor = true;
+        $new->skipForInLabel = true;
 
         $this->parts['{input}'] = CheckBoxList::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -712,15 +712,15 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->addAriaAttributes($new, $options);
-        $new->adjustLabelFor($new, $options);
-        $new->addInputCss($new, $options);
-        $new->addErrorCssInput($new);
-        $new->addRoleAttributes($new, $options);
+        $new->setAriaAttributes($options);
+        $new->setForInLabel($options);
+        $new->addInputCssClass($options);
+        $new->addErrorCssClassToInput();
+        $new->setInputRole($options);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
-        $new->skipLabelFor = true;
+        $new->skipForInLabel = true;
 
         $this->parts['{input}'] = RadioList::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)

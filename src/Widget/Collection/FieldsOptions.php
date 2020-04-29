@@ -25,7 +25,7 @@ trait FieldsOptions
     private string $validationStateOn = 'input';
     private ?string $inputId = null;
     private array $parts = [];
-    private bool $skipLabelFor = false;
+    private bool $skipForInLabel = false;
 
     public function config(FormModelInterface $data, string $attribute, array $options = []): self
     {
@@ -38,8 +38,9 @@ trait FieldsOptions
 
     public function ariaAttribute(bool $value): self
     {
-        $this->ariaAttribute = $value;
-        return $this;
+        $new = clone $this;
+        $new->ariaAttribute = $value;
+        return $new;
     }
 
     public function errorCss(string $value): self
@@ -98,44 +99,38 @@ trait FieldsOptions
         return $new;
     }
 
-    private function addAriaAttributes(self $new, array $options = []): self
+    private function setAriaAttributes(array $options = []): void
     {
-        if ($new->ariaAttribute && ($new->data instanceof FormModelInterface)) {
-            if (!isset($options['aria-required']) && $new->data->isAttributeRequired($new->attribute)) {
-                $new->inputOptions['aria-required'] = 'true';
+        if ($this->ariaAttribute && ($this->data instanceof FormModelInterface)) {
+            if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
+                $this->inputOptions['aria-required'] = 'true';
             }
 
-            if (!isset($options['aria-invalid']) && $new->data->hasErrors($new->attribute)) {
-                $new->inputOptions['aria-invalid'] = 'true';
+            if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
+                $this->inputOptions['aria-invalid'] = 'true';
             }
         }
-
-        return $new;
     }
 
-    private function addErrorCssContainer(self $new): self
+    private function addErrorCssClassToContainer(): void
     {
-        if ($new->validationStateOn === 'container') {
-            Html::addCssClass($new->options, $this->errorCss);
+        if ($this->validationStateOn === 'container') {
+            Html::addCssClass($this->options, $this->errorCss);
         }
-
-        return $new;
     }
 
-    private function addErrorCssInput(self $new): self
+    private function addErrorCssClassToInput(): void
     {
-        if ($new->validationStateOn === 'input') {
-            $attributeName = Html::getAttributeName($new->attribute);
+        if ($this->validationStateOn === 'input') {
+            $attributeName = Html::getAttributeName($this->attribute);
 
-            if ($new->data->hasErrors($attributeName)) {
-                Html::addCssClass($new->inputOptions, $new->errorCss);
+            if ($this->data->hasErrors($attributeName)) {
+                Html::addCssClass($this->inputOptions, $this->errorCss);
             }
         }
-
-        return $new;
     }
 
-    private function addErrorCss(self $new, array $options = []): self
+    private function addErrorCssClass(array $options = []): void
     {
         $class = $options['class'] ?? self::ERROR_CSS['class'];
 
@@ -143,12 +138,10 @@ trait FieldsOptions
             $class = self::ERROR_CSS['class'] . ' ' . $options['class'];
         }
 
-        Html::addCssClass($new->inputOptions, $class);
-
-        return $new;
+        Html::addCssClass($this->inputOptions, $class);
     }
 
-    private function addHintCss(self $new, array $options = []): self
+    private function addHintCssClass(array $options = []): void
     {
         $class = $options['class'] ?? self::HINT_CSS['class'];
 
@@ -156,12 +149,10 @@ trait FieldsOptions
             $class = self::HINT_CSS['class'] . ' ' . $options['class'];
         }
 
-        Html::addCssClass($new->inputOptions, $class);
-
-        return $new;
+        Html::addCssClass($this->inputOptions, $class);
     }
 
-    private function addInputCss(self $new, array $options = []): self
+    private function addInputCssClass(array $options = []): void
     {
         $class = $options['class'] ?? $this->inputCss;
 
@@ -169,12 +160,10 @@ trait FieldsOptions
             $class = $this->inputCss . ' ' . $options['class'];
         }
 
-        Html::addCssClass($new->inputOptions, $class);
-
-        return $new;
+        Html::addCssClass($this->inputOptions, $class);
     }
 
-    private function addLabelCss(self $new, array $options = []): self
+    private function addLabelCssClass(array $options = []): void
     {
         $class = $options['class'] ?? self::LABEL_CSS['class'];
 
@@ -182,37 +171,29 @@ trait FieldsOptions
             $class = self::LABEL_CSS['class'] . ' ' . $options['class'];
         }
 
-        Html::addCssClass($new->inputOptions, $class);
-
-        return $new;
+        Html::addCssClass($this->inputOptions, $class);
     }
 
-    private function addRoleAttributes(self $new, array $options = []): self
+    private function setInputRole(array $options = []): void
     {
-        $new->inputOptions['role'] = $options['role'] ?? 'radiogroup';
-
-        return $new;
+        $this->inputOptions['role'] = $options['role'] ?? 'radiogroup';
     }
 
-    private function addSkipLabelFor(self $new): self
+    private function skipForInLabel(): void
     {
-        if ($new->skipLabelFor) {
-            $new->inputOptions['for'] = null;
+        if ($this->skipForInLabel) {
+            $this->inputOptions['for'] = null;
         }
-
-        return $new;
     }
 
-    private function adjustLabelFor(self $new, array $options = []): self
+    private function setForInLabel(array $options = []): void
     {
         if (isset($options['id'])) {
-            $new->inputId = $options['id'];
+            $this->inputId = $options['id'];
 
             if (!isset($new->labelOptions['for'])) {
-                $new->labelOptions['for'] = $options['id'];
+                $this->labelOptions['for'] = $options['id'];
             }
         }
-
-        return $new;
     }
 }
