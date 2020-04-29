@@ -19,7 +19,7 @@ trait FieldsOptions
     private string $errorSummaryCss = 'error-summary';
     private string $inputCss = 'form-control';
     private string $requiredCss = 'required';
-    private string $succesCss = 'has-success';
+    private string $successCss = 'has-success';
     private string $template = "{label}\n{input}\n{hint}\n{error}";
     private string $validatingCss = 'validating';
     private string $validationStateOn = 'input';
@@ -73,7 +73,7 @@ trait FieldsOptions
     public function succesCss(string $value): self
     {
         $new = clone $this;
-        $new->succesCss = $value;
+        $new->successCss = $value;
         return $new;
     }
 
