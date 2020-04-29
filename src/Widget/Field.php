@@ -498,7 +498,7 @@ class Field extends Widget implements FieldInterface
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Radio::widget()
                 ->config($new->data, $new->attribute, $options)
-                ->addLabel(true)
+                ->addLabel()
                 ->run();
             $this->parts['{label}'] = '';
         } else {
@@ -562,7 +562,7 @@ class Field extends Widget implements FieldInterface
         if ($enclosedByLabel) {
             $this->parts['{input}'] = CheckBox::widget()
                 ->config($new->data, $new->attribute, $options)
-                ->addLabel(true)
+                ->addLabel()
                 ->run();
             $this->parts['{label}'] = '';
         } else {

@@ -30,7 +30,7 @@ final class BooleanInputTest extends TestCase
         $created = BooleanInput::widget()
             ->type('checkbox')
             ->config($form, 'fieldBool')
-            ->addLabel(true)
+            ->addLabel()
             ->uncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
@@ -52,7 +52,7 @@ final class BooleanInputTest extends TestCase
             ->id('id-testme')
             ->type('radio')
             ->config($form, 'fieldBool')
-            ->addLabel(true)
+            ->addLabel()
             ->uncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
