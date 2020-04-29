@@ -30,6 +30,12 @@ final class Label extends Widget
             HtmlForm::getInputId($new->data, $new->attribute, $new->charset)
         );
 
-        return Html::label($new->getLabelAndRemoveItFromOptions(), $for, $new->options);
+        $label = ArrayHelper::remove(
+            $new->options,
+            'label',
+            Html::encode($new->data->attributeLabel($new->attribute))
+        );
+
+        return Html::label($label, $for, $new->options);
     }
 }

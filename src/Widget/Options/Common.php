@@ -101,15 +101,6 @@ trait Common
         return ArrayHelper::remove($this->options, 'name', HtmlForm::getInputName($this->data, $this->attribute));
     }
 
-    private function getLabelAndRemoveItFromOptions(): string
-    {
-        return ArrayHelper::remove(
-            $this->options,
-            'label',
-            Html::encode($this->data->attributeLabel($this->attribute))
-        );
-    }
-
     private function setPlaceholderOptions(): void
     {
         if (isset($this->options['placeholder']) && $this->options['placeholder'] === true) {
