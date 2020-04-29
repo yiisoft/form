@@ -14,19 +14,6 @@ final class FormTest extends TestCase
         $this->assertEquals('LoginForm', $form->formName());
     }
 
-    public function testAttributes(): void
-    {
-        $form = new LoginForm();
-
-        $expected = [
-            'login' => 'string',
-            'password' => 'string',
-            'rememberMe' => 'bool',
-        ];
-
-        $this->assertEquals($expected, $form->getAttributes());
-    }
-
     public function testGetAttributeValue(): void
     {
         $form = new LoginForm();
@@ -48,19 +35,6 @@ final class FormTest extends TestCase
                 $e->getMessage()
             );
         }
-    }
-
-    public function testGetAttributes(): void
-    {
-        $form = new LoginForm();
-
-        $expected = [
-            'login' => 'string',
-            'password' => 'string',
-            'rememberMe' => 'bool',
-        ];
-
-        $this->assertEquals($expected, $form->getAttributes());
     }
 
     public function testGetAttributeHint(): void
