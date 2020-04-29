@@ -31,11 +31,11 @@ final class PersonalForm extends FormModel
     public function attributeHints(): array
     {
         return [
-            'name' => 'Write your firts name.'
+            'name' => 'Write your first name.'
         ];
     }
 
-    public function formname(): string
+    public function formName(): string
     {
         return 'PersonalForm';
     }

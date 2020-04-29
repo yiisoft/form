@@ -20,17 +20,15 @@ final class FieldsTest extends TestCase
             ->renderBegin();
         $this->assertEquals($expected, $html);
 
-        $expected = '';
         $html = Fields::widget()
             ->config($data, 'name', ['tag' => null])
             ->renderBegin();
-        $this->assertEquals($expected, $html);
+        $this->assertEquals('', $html);
 
-        $expectedValue = '';
         $html = Fields::widget()
             ->config($data, 'name', ['tag' => false])
             ->renderBegin();
-        $this->assertEquals($expected, $html);
+        $this->assertEquals('', $html);
     }
 
     public function testFieldsRenderEnd(): void
@@ -125,7 +123,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div>
 HTML;
@@ -143,7 +141,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block errorTestMe">Is too short.</div>
 </div>
 HTML;
@@ -199,7 +197,7 @@ HTML;
 <div class="form-group field-personalform-name">
 
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true">
-<div class="hint-block hintTestMe">Write your firts name.</div>
+<div class="hint-block hintTestMe">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -266,7 +264,7 @@ HTML;
 <div class="form-group field-personalform-name">
 
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -280,7 +278,7 @@ HTML;
 <div class="form-group field-personalform-name">
 
 <input type="text" id="personalform-name" class="form-control textInputTestMe" name="PersonalForm[name]" aria-required="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -299,7 +297,7 @@ HTML;
 <div class="form-group field-personalform-name">
 
 <input type="hidden" id="personalform-name" class="form-control" name="PersonalForm[name]">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -315,7 +313,7 @@ HTML;
 <div class="form-group field-personalform-name">
 
 <input type="hidden" id="personalform-name" class="form-control hiddenInputTestMe" name="PersonalForm[name]">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -364,7 +362,7 @@ HTML;
     /**
      * @see https://github.com/yiisoft/yii2/issues/8779
      */
-    public function testFielsFileInput(): void
+    public function testFieldsFileInput(): void
     {
         $data = new PersonalForm();
 
@@ -408,7 +406,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <textarea id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true"></textarea>
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -423,7 +421,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <textarea id="personalform-name" class="form-control textAreaTestMe" name="PersonalForm[name]" aria-required="true"></textarea>
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -505,7 +503,7 @@ HTML;
 
     public function testFieldsDropDownList(): void
     {
-        $citys = [
+        $cities = [
             '0' => 'Not assigned',
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
@@ -531,14 +529,14 @@ HTML;
 HTML;
         $html = Fields::widget()
             ->config($data, 'cityBirth')
-            ->dropDownList($citys)
+            ->dropDownList($cities)
             ->run();
         $this->assertEquals($expected, $html);
     }
 
     public function testFieldsDropDownListSelectionMultiple(): void
     {
-        $citys = [
+        $cities = [
             '0' => 'Not assigned',
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
@@ -565,14 +563,14 @@ HTML;
 HTML;
         $html = Fields::widget()
             ->config($data, 'cityBirth')
-            ->dropDownList($citys, ['multiple' => true, 'unselect' => '0', 'size' => 5])
+            ->dropDownList($cities, ['multiple' => true, 'unselect' => '0', 'size' => 5])
             ->run();
         $this->assertEquals($expected, $html);
     }
 
     public function testFieldsListBox(): void
     {
-        $citys = [
+        $cities = [
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
@@ -597,7 +595,7 @@ HTML;
 HTML;
         $html = Fields::widget()
             ->config($data, 'cityBirth')
-            ->listBox($citys)
+            ->listBox($cities)
             ->run();
         $this->assertEquals($expected, $html);
 
@@ -616,7 +614,7 @@ HTML;
 HTML;
         $html = Fields::widget()
             ->config($data, 'cityBirth')
-            ->listBox($citys, ['unselect' => '0'])
+            ->listBox($cities, ['unselect' => '0'])
             ->run();
         $this->assertEquals($expected, $html);
 
@@ -637,7 +635,7 @@ HTML;
         $html = Fields::widget()
             ->config($data, 'cityBirth')
             ->listBox(
-                $citys,
+                $cities,
                 ['unselect' => '0', 'options' => ['1' => ['disabled' => true], '4' => ['label' => 'Ekaterinburgo']]]
             )
             ->run();
@@ -711,7 +709,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -726,7 +724,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
 HTML;
@@ -742,7 +740,7 @@ HTML;
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div>
 HTML;

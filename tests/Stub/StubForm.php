@@ -47,7 +47,7 @@ class StubForm extends FormModel
         $this->fieldString = $value;
     }
 
-    public function formname(): string
+    public function formName(): string
     {
         return 'StubForm';
     }

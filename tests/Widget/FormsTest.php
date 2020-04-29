@@ -133,7 +133,7 @@ HTML;
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
 
 <input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div></form>
 HTML;
@@ -149,7 +149,7 @@ HTML;
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
 
 <input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div></form>
 HTML;
@@ -227,7 +227,7 @@ HTML;
 <form action="/something" method="POST"><div class="form-group field-personalform-name has-error">
 
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div><div class="form-group field-personalform-email has-error">
 
@@ -255,7 +255,7 @@ HTML;
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
 
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div><div class="form-group field-personalform-email">
 
@@ -341,7 +341,7 @@ HTML;
 </div><div class="form-group field-personalform-name has-error">
 <label class="control-label" for="personalform-name">name</label>
 <input type="text" id="personalform-name" class="form-control testMe" name="PersonalForm[name]" value="Jack Ryan" aria-required="true">
-<div class="hint-block">Write your firts name.</div>
+<div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-citybirth has-error">
 <label class="control-label" for="personalform-citybirth">cityBirth</label>

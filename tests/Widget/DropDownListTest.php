@@ -12,7 +12,7 @@ final class DropDownListTest extends TestCase
 {
     public function testDropDownList(): void
     {
-        $citys = [
+        $cities = [
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
@@ -32,7 +32,7 @@ HTML;
         $form->cityBirth(2);
         $created = DropDownList::widget()
             ->config($form, 'cityBirth')
-            ->items($citys)
+            ->items($cities)
             ->addMultiple(false)
             ->addRequired(true)
             ->run();
@@ -49,7 +49,7 @@ HTML;
         $form->cityBirth(3);
         $created = DropDownList::widget()
             ->config($form, 'cityBirth')
-            ->items($citys)
+            ->items($cities)
             ->addMultiple(true)
             ->addUnselect('0')
             ->addRequired(true)

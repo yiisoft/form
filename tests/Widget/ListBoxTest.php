@@ -10,7 +10,7 @@ use Yiisoft\Form\Widget\ListBox;
 
 final class ListBoxTest extends TestCase
 {
-    public function testListBox()
+    public function testListBox(): void
     {
         $form = new StubForm();
 

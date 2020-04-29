@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Html;
+namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\Tests\TestCase;

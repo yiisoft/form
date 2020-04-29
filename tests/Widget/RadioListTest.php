@@ -10,9 +10,9 @@ use Yiisoft\Form\Widget\RadioList;
 
 final class RadioListTest extends TestCase
 {
-    public function testActiveRadioList()
+    public function testActiveRadioList(): void
     {
-        $citys = [
+        $cities = [
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
@@ -30,8 +30,8 @@ HTML;
         $form->cityBirth(2);
         $created = RadioList::widget()
             ->config($form, 'cityBirth', ['class' => 'testMe'])
-            ->items($citys)
-            ->addUnselect("0")
+            ->items($cities)
+            ->addUnselect('0')
             ->run();
         $this->assertEqualsWithoutLE($expected, $created);
     }
