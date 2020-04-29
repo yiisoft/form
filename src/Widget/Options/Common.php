@@ -99,12 +99,6 @@ trait Common
         return (bool) $value;
     }
 
-    private function addHint(): string
-    {
-        $new = clone $this;
-        return $new->options['hint'] ?? $new->data->attributeHint($new->attribute);
-    }
-
     private function addName(): string
     {
         $new = clone $this;

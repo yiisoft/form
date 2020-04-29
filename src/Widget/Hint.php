@@ -19,17 +19,13 @@ final class Hint extends Widget
      */
     public function run(): string
     {
-        $new = clone $this;
+        $hint = ArrayHelper::remove($this->options, 'hint', $this->data->attributeHint($this->attribute));
 
-        $hint = $new->addhint();
-
-        if (!empty($hint)) {
-            $tag = ArrayHelper::remove($new->options, 'tag', 'div');
-            unset($new->options['hint']);
-
-            return Html::tag($tag, $hint, $new->options);
+        if (empty($hint)) {
+            return '';
         }
 
-        return $hint;
+        $tag = ArrayHelper::remove($this->options, 'tag', 'div');
+        return Html::tag($tag, $hint, $this->options);
     }
 }
