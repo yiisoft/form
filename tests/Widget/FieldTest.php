@@ -242,18 +242,18 @@ HTML;
         $this->assertEquals($expected, $html);
 
         $expected = <<<'HTML'
-        <div class="form-group field-personalform-email">
+<div class="form-group field-personalform-email">
 
-        <input type="email" id="personalform-email" class="form-control inputTestMe" name="PersonalForm[email]" value="admin@example.com">
+<input type="email" id="personalform-email" class="form-control inputTestMe" name="PersonalForm[email]" value="admin@example.com">
 
-        <div class="help-block"></div>
-        </div>
-        HTML;
-                $html = Field::widget()
-                    ->config($data, 'email')
-                    ->input('email', ['class' => 'inputTestMe'])
-                    ->run();
-                $this->assertEquals($expected, $html);
+<div class="help-block"></div>
+</div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'email')
+            ->input('email', ['class' => 'inputTestMe'])
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 
     public function testFieldsTextInput(): void
