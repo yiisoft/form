@@ -15,44 +15,46 @@ final class BooleanInputTest extends TestCase
         $form = new StubForm();
 
         $form->fieldBool(false);
-        $expected = '<input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1">';
+        $expected = '<input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" form="fieldBool">';
         $created = BooleanInput::widget()
             ->type('checkbox')
             ->config($form, 'fieldBool')
-            ->addLabel(false)
+            ->label(false)
             ->uncheck(false)
             ->run();
         $this->assertEquals($expected, $created);
 
         $form->fieldBool(true);
-        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="0">' .
-            '<label><input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" checked> Field Bool</label>';
+        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="0" form="fieldBool">' .
+            '<label><input type="checkbox" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" form="fieldBool" checked> Field Bool</label>';
         $created = BooleanInput::widget()
             ->type('checkbox')
             ->config($form, 'fieldBool')
-            ->addLabel()
+            ->label()
             ->uncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
 
         $form->fieldBool(false);
-        $expected = '<input type="radio" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1">';
+        $expected = '<input type="radio" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" form="fieldBool">';
         $created = BooleanInput::widget()
             ->type('radio')
             ->config($form, 'fieldBool')
-            ->addLabel(false)
+            ->label(false)
             ->uncheck(false)
             ->run();
         $this->assertEquals($expected, $created);
 
         $form->fieldBool(true);
-        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="0">' .
-            '<label><input type="radio" id="id-testme" name="StubForm[fieldBool]" value="1" checked> Field Bool</label>';
+        $expected = '<input type="hidden" name="StubForm[fieldBool]" value="0" form="formTestMe">' .
+            '<label class="labelTestMe"><input type="radio" id="id-testme" name="StubForm[fieldBool]" value="1" form="formTestMe" checked> Field Bool</label>';
         $created = BooleanInput::widget()
             ->id('id-testme')
             ->type('radio')
             ->config($form, 'fieldBool')
-            ->addLabel()
+            ->form('formTestMe')
+            ->label()
+            ->labelOptions(['class' => 'labelTestMe'])
             ->uncheck(true)
             ->run();
         $this->assertEquals($expected, $created);
