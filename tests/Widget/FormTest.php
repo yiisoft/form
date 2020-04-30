@@ -324,27 +324,27 @@ HTML;
                 ->checkboxList(['Female', 'Male'], ['unselect' => '0']);
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'terms')
-                ->checkbox(['unselect' => '0']);
+                ->radio(['unselect' => '0']);
         $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-id has-error">
-<label class="control-label" for="personalform-id">id</label>
+<label class="control-label" for="personalform-id">Id</label>
 <input type="text" id="personalform-id" class="form-control testMe" name="PersonalForm[id]" value="1">
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-email has-error">
-<label class="control-label" placeholder="Email" for="personalform-email">email</label>
+<label class="control-label" placeholder="Email" for="personalform-email">Email</label>
 <input type="email" id="personalform-email" class="form-control testMe" name="PersonalForm[email]" value="admin@.com" aria-invalid="true">
 
 <div class="help-block">This value is not a valid email address.</div>
 </div><div class="form-group field-personalform-name has-error">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control testMe" name="PersonalForm[name]" value="Jack Ryan" aria-required="true">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-citybirth has-error">
-<label class="control-label" for="personalform-citybirth">cityBirth</label>
+<label class="control-label" for="personalform-citybirth">City Birth</label>
 <input type="hidden" name="PersonalForm[cityBirth]" value="1"><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -354,19 +354,19 @@ HTML;
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-entrydate has-error">
-<label class="control-label" for="personalform-entrydate">entryDate</label>
+<label class="control-label" for="personalform-entrydate">Entry Date</label>
 <input type="date" id="personalform-entrydate" class="form-control testMe" name="PersonalForm[entryDate]" value="2019-04-20">
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-sex has-error">
-<label class="control-label" for="personalform-sex">sex</label>
+<label class="control-label" for="personalform-sex">Sex</label>
 <input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-terms has-error">
 
-<label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked unselect="0"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked unselect="0"> Terms</label>
 
 <div class="help-block"></div>
 </div></form>

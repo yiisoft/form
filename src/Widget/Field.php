@@ -100,7 +100,7 @@ class Field extends Widget implements FieldInterface
 
         $new->options['class'] = trim(implode(' ', array_merge($new::DIV_CSS, $class)));
 
-        $new->addErrorCssClassToContainer($new);
+        $new->addErrorCssClassToContainer();
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
 
@@ -132,7 +132,7 @@ class Field extends Widget implements FieldInterface
      *
      * @return self the field object itself.
      */
-    public function label(bool $enabledLabel = false, array $options = [], string $label = ''): self
+    public function label(bool $enabledLabel = false, array $options = [], ?string $label = null): self
     {
         if ($enabledLabel === false) {
             $this->parts['{label}'] = '';
@@ -142,7 +142,9 @@ class Field extends Widget implements FieldInterface
 
         $new = clone $this;
 
-        $new->inputOptions['label'] = !empty($label) ? $label : Html::getAttributeName($new->attribute);
+        if ($label !== null) {
+            $new->inputOptions['label'] = $label;
+        }
 
         $new->addLabelCssClass($options);
         $new->skipForInLabel();
@@ -498,21 +500,21 @@ class Field extends Widget implements FieldInterface
         if ($enclosedByLabel) {
             $this->parts['{input}'] = Radio::widget()
                 ->config($new->data, $new->attribute, $options)
-                ->addLabel()
                 ->run();
             $this->parts['{label}'] = '';
         } else {
-            if (isset($options['label']) && !isset($this->parts['{label}'])) {
-                $this->parts['{label}'] = $options['label'];
-                if (!empty($options['labelOptions'])) {
-                    $new->labelOptions = $options['labelOptions'];
-                }
-            }
+            $label = $options['label'] ?? null;
+            $labelOptions = $options['labelOptions'] ?? [];
+            unset($options['label'], $options['labelOptions']);
 
-            unset($options['labelOptions']);
+            if ($label !== false) {
+                $new->label(true, $labelOptions, $label);
+                $this->parts['{label}'] = $new->parts['{label}'];
+            }
 
             $this->parts['{input}'] = Radio::widget()
                 ->config($new->data, $new->attribute, $options)
+                ->nolabel()
                 ->run();
         }
 
@@ -562,25 +564,25 @@ class Field extends Widget implements FieldInterface
         if ($enclosedByLabel) {
             $this->parts['{input}'] = CheckBox::widget()
                 ->config($new->data, $new->attribute, $options)
-                ->addLabel()
                 ->run();
             $this->parts['{label}'] = '';
         } else {
-            if (isset($options['label']) && !isset($this->parts['{label}'])) {
-                $this->parts['{label}'] = $options['label'];
-                if (!empty($options['labelOptions'])) {
-                    $new->labelOptions = $options['labelOptions'];
-                }
-            }
+            $label = $options['label'] ?? null;
+            $labelOptions = $options['labelOptions'] ?? [];
+            unset($options['label'], $options['labelOptions']);
 
-            unset($options['labelOptions']);
+            if ($label !== false) {
+                $new->label(true, $labelOptions, $label);
+                $this->parts['{label}'] = $new->parts['{label}'];
+            }
 
             $this->parts['{input}'] = CheckBox::widget()
                 ->config($new->data, $new->attribute, $options)
+                ->nolabel()
                 ->run();
         }
 
-        $new->addErrorCssClassToInput($new);
+        $new->addErrorCssClassToInput();
 
         return $this;
     }

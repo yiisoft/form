@@ -86,7 +86,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
-<label class="control-label" for="personalform-email">email</label>
+<label class="control-label" for="personalform-email">Email</label>
 <input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]">
 
 <div class="help-block"></div>
@@ -121,7 +121,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
@@ -139,7 +139,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block errorTestMe">Is too short.</div>
@@ -161,7 +161,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-0-name">
-<label class="control-label" for="personalform-0-name">name</label>
+<label class="control-label" for="personalform-0-name">Name</label>
 <input type="text" id="personalform-0-name" class="form-control has-error" name="PersonalForm[0][name]" value="yii">
 
 <div class="help-block"></div>
@@ -368,7 +368,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-attachfiles">
-<label class="control-label" for="personalform-attachfiles">attachFiles</label>
+<label class="control-label" for="personalform-attachfiles">Attach Files</label>
 <input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" class="form-control" name="PersonalForm[attachFiles]" enctype="multipart/form-data">
 
 <div class="help-block"></div>
@@ -383,7 +383,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-attachfiles">
-<label class="control-label" for="personalform-attachfiles">attachFiles</label>
+<label class="control-label" for="personalform-attachfiles">Attach Files</label>
 <input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" class="form-control fileInputTestMe" name="PersonalForm[attachFiles]" enctype="multipart/form-data">
 
 <div class="help-block"></div>
@@ -404,7 +404,7 @@ HTML;
         $data->address('San Petesburgo, Rusia');
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <textarea id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true"></textarea>
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -419,7 +419,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <textarea id="personalform-name" class="form-control textAreaTestMe" name="PersonalForm[name]" aria-required="true"></textarea>
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -437,10 +437,27 @@ HTML;
     {
         $data = new PersonalForm();
 
+        /** Default options enclosed by label. */
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
 
-<input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
+
+<div class="help-block"></div>
+</div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'terms')
+            ->radio()
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** Options unclosed by label. */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<div class="form-group field-personalform-terms">
+<label class="control-label" for="personalform-terms">Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked>
 
 <div class="help-block"></div>
 </div>
@@ -451,18 +468,35 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        $data->terms(true);
+        /** With custom label, labelOptions */
+        $data->terms(false);
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
-
-<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<label class="control-label customCssLabel" for="personalform-terms">customLabel</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
 
 <div class="help-block"></div>
 </div>
 HTML;
         $html = Field::widget()
             ->config($data, 'terms')
-            ->radio([], true)
+            ->radio(['label' => 'customLabel', 'labelOptions' => ['class' => 'customCssLabel']], false)
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** Without any label */
+        $data->terms(false);
+        $expected = <<<'HTML'
+<div class="form-group field-personalform-terms">
+
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
+
+<div class="help-block"></div>
+</div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'terms')
+            ->radio(['label' => false], false)
             ->run();
         $this->assertEquals($expected, $html);
     }
@@ -471,10 +505,28 @@ HTML;
     {
         $data = new PersonalForm();
 
+        /** Default options enclosed by label. */
+        $data->terms(true);
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
 
-<input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1">
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+
+<div class="help-block"></div>
+</div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'terms')
+            ->checkbox()
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** Options unclosed by label. */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<div class="form-group field-personalform-terms">
+<label class="control-label" for="personalform-terms">Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked>
 
 <div class="help-block"></div>
 </div>
@@ -485,18 +537,35 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        $data->terms(true);
+        /** With custom label, labelOptions */
+        $data->terms(false);
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
-
-<label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
+<label class="control-label customCssLabel" for="personalform-terms">customLabel</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
 
 <div class="help-block"></div>
 </div>
 HTML;
         $html = Field::widget()
             ->config($data, 'terms')
-            ->checkbox([], true)
+            ->checkbox(['label' => 'customLabel', 'labelOptions' => ['class' => 'customCssLabel']], false)
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** Without any label */
+        $data->terms(false);
+        $expected = <<<'HTML'
+<div class="form-group field-personalform-terms">
+
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
+
+<div class="help-block"></div>
+</div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'terms')
+            ->checkbox(['label' => false], false)
             ->run();
         $this->assertEquals($expected, $html);
     }
@@ -687,7 +756,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
-<label class="control-label" for="personalform-terms">terms</label>
+<label class="control-label" for="personalform-terms">Terms</label>
 <input type="hidden" name="PersonalForm[terms]" value=""><div id="personalform-terms" class="form-control" role="radiogroup"><label><input type="radio" name="PersonalForm[terms]" value="1" checked> Accept terms and conditions.</label></div>
 
 <div class="help-block"></div>
@@ -707,7 +776,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -722,7 +791,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -738,7 +807,7 @@ HTML;
         $data->validate();
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">name</label>
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
