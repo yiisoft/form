@@ -12,13 +12,15 @@ use Yiisoft\Widget\Widget;
 
 final class BooleanInput extends Widget
 {
-
     private ?string $id = null;
     private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
     private string $type;
     private string $charset = 'UTF-8';
+    private bool $noForm = false;
+    private bool $noLabel = false;
+    private bool $uncheck = true;
 
     /**
      * Generates a boolean input.
@@ -31,7 +33,21 @@ final class BooleanInput extends Widget
     {
         $new = clone $this;
         $type = $new->type;
-        $new->options['form'] = $new->options['form'] ?? $new->attribute;
+
+        if (!$new->noForm) {
+            $new->options['form'] = $new->options['form'] ?? $new->attribute;
+        }
+
+        if (!$new->noLabel) {
+            $new->options['label'] = $new->options['label']
+                ?? $new->data->attributeLabel(Html::getAttributeName($new->attribute));
+        }
+
+        if ($new->uncheck) {
+            $new->options['uncheck'] = '0';
+        } else {
+            unset($new->options['uncheck']);
+        }
 
         if (!empty($new->getId())) {
             $new->options['id'] = $new->getId();
@@ -70,7 +86,7 @@ final class BooleanInput extends Widget
         return $new;
     }
 
-    public function form(?string $value): self
+    public function form(string $value): self
     {
         $new = clone $this;
         $new->options['form'] = $value;
@@ -84,18 +100,10 @@ final class BooleanInput extends Widget
         return $new;
     }
 
-    public function label(bool $value = true): self
+    public function label(string $value): self
     {
         $new = clone $this;
-
-        if ($value) {
-            $new->options['label'] = Html::encode(
-                $new->data->attributeLabel(
-                    Html::getAttributeName($new->attribute)
-                )
-            );
-        }
-
+        $new->options['label'] = $value;
         return $new;
     }
 
@@ -103,6 +111,20 @@ final class BooleanInput extends Widget
     {
         $new = clone $this;
         $new->options['labelOptions'] = $value;
+        return $new;
+    }
+
+    public function noForm(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->noForm = $value;
+        return $new;
+    }
+
+    public function noLabel(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->noLabel = $value;
         return $new;
     }
 
@@ -116,13 +138,7 @@ final class BooleanInput extends Widget
     public function uncheck(bool $value = true): self
     {
         $new = clone $this;
-
-        if ($value) {
-            $new->options['uncheck'] = '0';
-        } else {
-            unset($new->options['uncheck']);
-        }
-
+        $new->uncheck = $value;
         return $new;
     }
 
