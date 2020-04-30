@@ -18,7 +18,7 @@ final class RadioTest extends TestCase
                 true,
                 true,
                 [],
-                '<input type="hidden" name="StubForm[fieldBool]" value="0"><label><input type="radio" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" checked> Field Bool</label>',
+                '<input type="hidden" name="StubForm[fieldBool]" value="0" form="fieldBool"><label><input type="radio" id="stubform-fieldbool" name="StubForm[fieldBool]" value="1" form="fieldBool" checked> Field Bool</label>',
             ]
         ];
     }

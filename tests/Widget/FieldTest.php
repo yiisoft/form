@@ -440,7 +440,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
 
-<input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1">
+<input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
 
 <div class="help-block"></div>
 </div>
@@ -455,7 +455,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-terms">
 
-<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
+<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
 
 <div class="help-block"></div>
 </div>
