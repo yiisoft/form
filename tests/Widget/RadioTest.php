@@ -29,7 +29,7 @@ HTML;
     {
         $data = new PersonalForm();
 
-        /** options(): options for tag generate for Radio::class */
+        /** options(): options for tag input. */
         $data->terms(true);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
@@ -39,7 +39,7 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        /** noForm(): disabled attribute form */
+        /** noForm(): disabled attribute form for tag input. */
         $data->terms(true);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
@@ -50,7 +50,7 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        /** noLabel(): disabled tag label */
+        /** noLabel(): disabled tag label. */
         $data->terms(false);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
@@ -61,7 +61,7 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        /** uncheck(false): disabled tag input hidden */
+        /** uncheck(false): disabled tag hidden input. */
         $data->terms(true);
         $expected = <<<'HTML'
 <label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
@@ -73,8 +73,8 @@ HTML;
         $this->assertEquals($expected, $html);
 
         /**
-         * label: add custom label
-         * labelOptions: add options labels
+         * label: add custom tag label.
+         * labelOptions: add options tag label.
          */
         $data->terms(true);
         $expected = <<<'HTML'
@@ -87,7 +87,7 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        /** autofocus(): enabled attribute autofocus */
+        /** autofocus(): enabled attribute autofocus for tag input. */
         $data->terms(true);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked autofocus> Terms</label>
@@ -99,7 +99,7 @@ HTML;
         $this->assertEquals($expected, $html);
 
 
-        /** disabled(): add attribute disabled for tag input */
+        /** disabled(): add attribute disabled for tag input. */
         $data->terms(true);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0" form="terms" disabled><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked disabled> Terms</label>
@@ -110,7 +110,7 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        /** form(): add attribute custom form for tag input */
+        /** form(): add attribute custom form for tag input. */
         $data->terms(false);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0" form="customForm"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="customForm"> Terms</label>
@@ -121,18 +121,7 @@ HTML;
             ->run();
         $this->assertEquals($expected, $html);
 
-        /** id(): add custom id for tag input */
-        $data->terms(false);
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
-HTML;
-        $html = Radio::widget()
-            ->id('custom-id')
-            ->config($data, 'terms')
-            ->run();
-        $this->assertEquals($expected, $html);
-
-        /** type(): Type of control generated Radio, Radio */
+        /** id(): add custom id for tag input. */
         $data->terms(false);
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
