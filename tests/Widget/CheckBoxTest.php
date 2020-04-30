@@ -10,64 +10,137 @@ use Yiisoft\Form\Widget\CheckBox;
 
 final class CheckBoxTest extends TestCase
 {
-    /**
-     * Data provider for {@see Checkbox()}.
-     *
-     * @return array test data.
-     */
-    public function dataProviderCheckbox(): array
+    public function testCheckBoxDefaultOptions(): void
     {
-        return [
-            [
-                true,
-                true,
-                true,
-                [],
-                '<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>',
-            ],
-            [
-                true,
-                true,
-                false,
-                [],
-                '<label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>',
-            ],
-            [
-                true,
-                false,
-                true,
-                [],
-                '<input type="hidden" name="PersonalForm[terms]" value="0"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked>',
-            ],
-            [
-                true,
-                false,
-                false,
-                [],
-                '<input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked>',
-            ],
-        ];
+        $data = new PersonalForm();
+
+        $data->terms(true);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->uncheck(true)
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 
-    /**
-     * @dataProvider dataProviderCheckbox
-     *
-     * @param bool $value
-     * @param bool $label
-     * @param bool $uncheck
-     * @param array $options
-     * @param string $expected
-     */
-    public function testCheckbox(bool $value, bool $label, bool $uncheck, array $options, string $expected): void
+    public function testCheckBoxCustomOptions(): void
     {
-        $form = new PersonalForm();
-        $form->terms($value);
+        $data = new PersonalForm();
 
-        $created = CheckBox::widget()
-            ->config($form, 'terms', $options)
-            ->addLabel($label)
-            ->uncheck($uncheck)
+        /** options(): options for tag generate for CheckBox::class */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms', ['class' => 'customClass'])
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
+
+        /** noForm(): disabled attribute form */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->noForm()
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** noLabel(): disabled tag label */
+        $data->terms(false);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->noLabel()
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** uncheck(false): disabled tag input hidden */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->uncheck(false)
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /**
+         * label: add custom label
+         * labelOptions: add options labels
+         */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label class="labelClass"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> customLabel</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->label('customLabel')
+            ->labelOptions(['class' => 'labelClass'])
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** autofocus(): enabled attribute autofocus */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked autofocus> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->autofocus()
+            ->run();
+        $this->assertEquals($expected, $html);
+
+
+        /** disabled(): add attribute disabled for tag input */
+        $data->terms(true);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms" disabled><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked disabled> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->disabled()
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** form(): add attribute custom form for tag input */
+        $data->terms(false);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="customForm"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="customForm"> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'terms')
+            ->form('customForm')
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** id(): add custom id for tag input */
+        $data->terms(false);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->id('custom-id')
+            ->config($data, 'terms')
+            ->run();
+        $this->assertEquals($expected, $html);
+
+        /** type(): Type of control generated CheckBox, Radio */
+        $data->terms(false);
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
+HTML;
+        $html = CheckBox::widget()
+            ->id('custom-id')
+            ->config($data, 'terms')
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 }
