@@ -197,7 +197,7 @@ HTML;
         /** https://github.com/yiisoft/yii2/issues/5356 */
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-citybirth">
-
+<label class="control-label" for="personalform-citybirth">City Birth</label>
 <input type="hidden" name="PersonalForm[cityBirth]" value="1"><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -312,7 +312,6 @@ HTML;
                 ->textinput();
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'cityBirth')
-                ->label(true)
                 ->listBox($cities, ['multiple' => true, 'unselect' => '1']);
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'entryDate')
@@ -320,7 +319,6 @@ HTML;
                 ->input('date');
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'sex')
-                ->label(true)
                 ->checkboxList(['Female', 'Male'], ['unselect' => '0']);
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'terms')
@@ -366,7 +364,7 @@ HTML;
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-terms has-error">
 
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked unselect="0"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked unselect="0"> Terms</label>
 
 <div class="help-block"></div>
 </div></form>

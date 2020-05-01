@@ -616,6 +616,15 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
+        $label = $options['label'] ?? null;
+        $labelOptions = $options['labelOptions'] ?? [];
+        unset($options['label'], $options['labelOptions']);
+
+        if ($label !== false) {
+            $new->label(true, $labelOptions, $label);
+            $this->parts['{label}'] = $new->parts['{label}'];
+        }
+
         $new->setAriaAttributes($options);
         $new->addInputCssClass($options);
         $new->addErrorCssClassToInput();
@@ -661,8 +670,18 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->setAriaAttributes($options);
         $new->setForInLabel($options);
+
+        $label = $options['label'] ?? null;
+        $labelOptions = $options['labelOptions'] ?? [];
+        unset($options['label'], $options['labelOptions']);
+
+        if ($label !== false) {
+            $new->label(true, $labelOptions, $label);
+            $this->parts['{label}'] = $new->parts['{label}'];
+        }
+
+        $new->setAriaAttributes($options);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
@@ -696,8 +715,18 @@ class Field extends Widget implements FieldInterface
     {
         $new = clone $this;
 
-        $new->setAriaAttributes($options);
         $new->setForInLabel($options);
+
+        $label = $options['label'] ?? null;
+        $labelOptions = $options['labelOptions'] ?? [];
+        unset($options['label'], $options['labelOptions']);
+
+        if ($label !== false) {
+            $new->label(true, $labelOptions, $label);
+            $this->parts['{label}'] = $new->parts['{label}'];
+        }
+
+        $new->setAriaAttributes($options);
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
         $new->skipForInLabel = true;

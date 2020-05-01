@@ -17,7 +17,9 @@ final class PersonalForm extends FormModel
     private ?string $name = null;
     private ?string $password = null;
     private ?string $address = null;
+    private object $cities;
     private int $cityBirth = 0;
+    private array $citiesVisited = [];
     private ?string $entryDate = null;
     private ?int $sex = null;
     private bool $terms = false;
@@ -60,6 +62,16 @@ final class PersonalForm extends FormModel
     public function address(string $value): void
     {
         $this->address = $value;
+    }
+
+    public function cities(object $value): void
+    {
+        $this->cities = $value;
+    }
+
+    public function citiesVisited(array $value): void
+    {
+        $this->citiesVisited = $value;
     }
 
     public function cityBirth(int $value): void
