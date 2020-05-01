@@ -10,50 +10,185 @@ use Yiisoft\Form\Widget\CheckBoxList;
 
 final class CheckBoxListTest extends TestCase
 {
-    public function testCheckboxList(): void
+    public function testCheckBoxList(): void
     {
-        $form = new PersonalForm();
+        $data = new PersonalForm();
+        $data->sex(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
 HTML;
-        $created = CheckboxList::widget()
-            ->config($form, 'sex')
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
             ->items(['Female', 'Male'])
-            ->unselect('0')
             ->run();
-        $this->assertEqualsWithoutLE($expected, $created);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testCheckboxListOptions(): void
+    public function testCheckBoxListOptions(): void
     {
-        $form = new PersonalForm();
+        $data = new PersonalForm();
+        $data->sex(0);
 
-        $form->sex(0);
         $expected = <<<'HTML'
-<input type="hidden" name="sex" value="0"><div id="personalform-sex"><label><input type="checkbox" name="sex[]" value="0" checked> Female</label>
-<label><input type="checkbox" name="sex[]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="customClass"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
 HTML;
-        $created = CheckboxList::widget()
-            ->config($form, 'sex', ['name' => 'sex'])
+        $html = CheckboxList::widget()
+            ->config($data, 'sex', ['class' => 'customClass'])
+            ->items(['Female', 'Male'])
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListUnselect(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
             ->items(['Female', 'Male'])
             ->unselect('0')
             ->run();
-        $this->assertEqualsWithoutLE($expected, $created);
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
 
-        $form->sex(1);
+    public function testCheckBoxListNoUnselect(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="1"><div id="personalform-sex" autofocus><label><input type="checkbox" class="testMe" name="PersonalForm[sex][]" value="0"> Female</label>
-<label><input type="checkbox" class="testMe" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+<div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
 HTML;
-        $created = CheckboxList::widget()
-            ->config($form, 'sex')
-            ->autofocus(true)
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
             ->items(['Female', 'Male'])
-            ->itemOptions(['class' => 'testMe'])
-            ->unselect('1')
+            ->nounselect()
             ->run();
-        $this->assertEqualsWithoutLE($expected, $created);
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListItem(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><div class = 'col-sm-12'><label><input tabindex = '0' class = 'book' type = 'checkbox' 1 name= 'PersonalForm[sex][]' value = '0'> Female</label></div>
+<div class = 'col-sm-12'><label><input tabindex = '1' class = 'book' type = 'checkbox'  name= 'PersonalForm[sex][]' value = '1'> Male</label></div></div>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['Female', 'Male'])
+            ->item(static function ($index, $label, $name, $checked, $value) {
+                return "<div class = 'col-sm-12'><label><input tabindex = '{$index}' class = 'book' type = 'checkbox' {$checked} name= '{$name}' value = '{$value}'> {$label}</label></div>";
+            })
+            ->itemOptions(['class' => 'itemClass'])
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListItemsOptions(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="1"> Male</label></div>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['Female', 'Male'])
+            ->itemOptions(['class' => 'itemClass'])
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListDisabled(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value="" disabled><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['Female', 'Male'])
+            ->disabled()
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListNoEncode(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> &#9792;</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> &#9896;</label></div>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['&#9792;', '&#9896;'])
+            ->noEncode()
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListSeparator(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(1);
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>&#9866;<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['Female', 'Male'])
+            ->separator('&#9866;')
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testCheckBoxListTag(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(0);
+
+        /** Without container */
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value=""><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['Female', 'Male'])
+            ->tag()
+            ->run();
+
+        /** Custom container tag */
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[sex]" value=""><span id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></span>
+HTML;
+        $html = CheckboxList::widget()
+            ->config($data, 'sex')
+            ->items(['Female', 'Male'])
+            ->tag('span')
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }
