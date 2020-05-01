@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Widget\Widget;
 
 final class CheckBoxList extends Widget
 {
-    private ?string $id = null;
     private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
     private array $items = [];
     private bool $noUnselect = false;
-    private ?string $tag = null;
     private string $unselect = '';
 
     /**
@@ -103,7 +99,7 @@ final class CheckBoxList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param callabe $value
+     * @param callable $value
      *
      * @return self
      */
@@ -121,11 +117,11 @@ final class CheckBoxList extends Widget
      *
      * Note that the labels will NOT be HTML-encoded, while the values will.
      *
-     * @param array $items
+     * @param array $value
      *
      * @return self
      */
-    public function items(array $value): self
+    public function items(array $value = []): self
     {
         $new = clone $this;
         $new->items = $value;
@@ -135,7 +131,7 @@ final class CheckBoxList extends Widget
     /**
      * The options for generating the list of checkboxes tag using {@see CheckBoxList}.
      *
-     * @params array $value
+     * @param array $value
      *
      * @return self
      */
@@ -178,6 +174,10 @@ final class CheckBoxList extends Widget
      * The tag name of the container element.
      *
      * Null to render list of checkboxes without container {@see Html::tag()}.
+     *
+     * @param string|null $value
+     *
+     * @return CheckBoxList
      */
     public function tag(?string $value = null): self
     {

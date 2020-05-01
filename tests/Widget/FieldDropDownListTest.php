@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\Field;
 
 final class FieldDropDownListTest extends TestCase
 {
-    private FormModelInterface $data;
+    private PersonalForm $data;
     private array $cities = [];
 
     protected function setUp(): void

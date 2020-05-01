@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\ListBox;
 
 final class ListBoxTest extends TestCase
 {
-    private FormModelInterface $data;
+    private PersonalForm $data;
 
     protected function setUp(): void
     {

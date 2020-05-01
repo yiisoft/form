@@ -934,7 +934,7 @@ class Field extends Widget implements FieldInterface
         if (isset($options['id'])) {
             $this->inputId = $options['id'];
 
-            if (!isset($new->labelOptions['for'])) {
+            if (!isset($this->labelOptions['for'])) {
                 $this->labelOptions['for'] = $options['id'];
             }
         }

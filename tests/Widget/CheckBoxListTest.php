@@ -178,6 +178,7 @@ HTML;
             ->items(['Female', 'Male'])
             ->tag()
             ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
 
         /** Custom container tag */
         $expected = <<<'HTML'

@@ -10,7 +10,6 @@ use Yiisoft\Widget\Widget;
 
 final class ListBox extends Widget
 {
-    private ?string $id = null;
     private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
@@ -121,7 +120,7 @@ final class ListBox extends Widget
      * The array keys are option values, and the array values are the corresponding option labels. The array can also
      * be nested (i.e. some array values are arrays too). For each sub-array, an option group will be generated whose
      * label is the key associated with the sub-array. If you have a list of data {@see FormModel}, you may convert
-     * them into the format described above using {@se Yiisoft\Arrays\ArrayHelper::map()}
+     * them into the format described above using {@see \Yiisoft\Arrays\ArrayHelper::map()}
      *
      * Example:
      * ```php
@@ -211,7 +210,7 @@ final class ListBox extends Widget
      * ]
      * ```
      *
-     * @param array value
+     * @param array $value
      *
      * @return self
      */

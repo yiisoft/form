@@ -18,7 +18,6 @@ final class ListInput extends Widget
     private array $options = [];
     private string $charset = 'UTF-8';
     private array $items = [];
-    private bool $noLabel = false;
     private bool $noUnselect = false;
     private string $unselect = '';
     private string $type;
@@ -103,7 +102,7 @@ final class ListInput extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param callabe $value
+     * @param callable $value
      *
      * @return self
      */
@@ -120,7 +119,7 @@ final class ListInput extends Widget
      * The array keys are option values, and the array values are the corresponding option labels. The array can also
      * be nested (i.e. some array values are arrays too). For each sub-array, an option group will be generated whose
      * label is the key associated with the sub-array. If you have a list of data {@see FormModel}, you may convert
-     * them into the format described above using {@se Yiisoft\Arrays\ArrayHelper::map()}
+     * them into the format described above using {@see \Yiisoft\Arrays\ArrayHelper::map()}
      *
      * Example:
      * ```php
