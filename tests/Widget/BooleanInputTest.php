@@ -10,13 +10,13 @@ use Yiisoft\Form\Widget\BooleanInput;
 
 final class BooleanInputTest extends TestCase
 {
-    public function testBooleanInputDefaultOptions(): void
+    public function testBooleanInput(): void
     {
         $data = new PersonalForm();
-
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('checkbox')
@@ -25,37 +25,27 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testBooleanInputCustomOptions(): void
+    public function testBooleanInputOptions(): void
     {
         $data = new PersonalForm();
-
-        /** options(): options for tag generate for BooleanInput::class */
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" checked> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('checkbox')
             ->config($data, 'terms', ['class' => 'customClass'])
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** noForm(): disabled attribute form */
-        $data->terms(true);
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
-HTML;
-        $html = BooleanInput::widget()
-            ->type('checkbox')
-            ->config($data, 'terms')
-            ->noForm()
-            ->run();
-        $this->assertEquals($expected, $html);
+    public function testBooleanInputNoLabel(): void
+    {
+        $data = new PersonalForm();
 
-        /** noLabel(): disabled tag label */
-        $data->terms(false);
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
+<input type="hidden" name="PersonalForm[terms]" value="0"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1">
 HTML;
         $html = BooleanInput::widget()
             ->type('radio')
@@ -63,26 +53,31 @@ HTML;
             ->noLabel()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** uncheck(false): disabled tag input hidden */
+    public function testBooleanInputUncheck(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('radio')
             ->config($data, 'terms')
-            ->uncheck(false)
+            ->uncheck()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /**
-         * label: add custom label
-         * labelOptions: add options labels
-         */
+    public function testBooleanInputLabelWithLabelOptions(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label class="labelClass"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> customLabel</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label class="labelClass"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> customLabel</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('radio')
@@ -91,11 +86,15 @@ HTML;
             ->labelOptions(['class' => 'labelClass'])
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** autofocus(): enabled attribute autofocus */
+    public function testBooleanInputAutofocus(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked autofocus> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked autofocus> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('radio')
@@ -103,12 +102,15 @@ HTML;
             ->autofocus()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-
-        /** disabled(): add attribute disabled for tag input */
+    public function testBooleanInputDisabled(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms" disabled><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked disabled> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" disabled><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked disabled> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('radio')
@@ -116,23 +118,29 @@ HTML;
             ->disabled()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** form(): add attribute custom form for tag input */
-        $data->terms(false);
+    public function testBooleanInputForm(): void
+    {
+        $data = new PersonalForm();
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="customForm"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="customForm"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="form-id"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="form-id"> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->type('radio')
             ->config($data, 'terms')
-            ->form('customForm')
+            ->form('form-id')
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** id(): add custom id for tag input */
-        $data->terms(false);
+    public function testBooleanInputId(): void
+    {
+        $data = new PersonalForm();
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="custom-id" name="PersonalForm[terms]" value="1"> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->id('custom-id')
@@ -140,16 +148,35 @@ HTML;
             ->config($data, 'terms')
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** type(): Type of control generated CheckBox, Radio */
-        $data->terms(false);
+    public function testBooleanInputType(): void
+    {
+        $data = new PersonalForm();
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="checkbox" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="custom-id" name="PersonalForm[terms]" value="1"> Terms</label>
 HTML;
         $html = BooleanInput::widget()
             ->id('custom-id')
             ->type('checkbox')
             ->config($data, 'terms')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testBooleanInputRequired(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="custom-id" name="PersonalForm[terms]" value="1" required> Terms</label>
+HTML;
+        $html = BooleanInput::widget()
+            ->id('custom-id')
+            ->type('checkbox')
+            ->config($data, 'terms')
+            ->required()
             ->run();
         $this->assertEquals($expected, $html);
     }
