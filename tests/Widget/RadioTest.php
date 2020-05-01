@@ -10,13 +10,13 @@ use Yiisoft\Form\Widget\Radio;
 
 final class RadioTest extends TestCase
 {
-    public function testRadioDefaultOptions(): void
+    public function testRadio(): void
     {
         $data = new PersonalForm();
-
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
@@ -25,60 +25,56 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testRadioCustomOptions(): void
+    public function testRadioOptions(): void
     {
         $data = new PersonalForm();
-
-        /** options(): options for tag input. */
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" checked> Terms</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms', ['class' => 'customClass'])
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** noForm(): disabled attribute form for tag input. */
-        $data->terms(true);
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
-HTML;
-        $html = Radio::widget()
-            ->config($data, 'terms')
-            ->noForm()
-            ->run();
-        $this->assertEquals($expected, $html);
+    public function testRadioNoLabel(): void
+    {
+        $data = new PersonalForm();
 
-        /** noLabel(): disabled tag label. */
-        $data->terms(false);
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms">
+<input type="hidden" name="PersonalForm[terms]" value="0"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1">
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
             ->noLabel()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** uncheck(false): disabled tag hidden input. */
+    public function testRadioUncheck(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> Terms</label>
+<label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
             ->uncheck(false)
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /**
-         * label: add custom tag label.
-         * labelOptions: add options tag label.
-         */
+    public function testRadioLabelWithLabelOptions(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label class="labelClass"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked> customLabel</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label class="labelClass"><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> customLabel</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
@@ -86,49 +82,76 @@ HTML;
             ->labelOptions(['class' => 'labelClass'])
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** autofocus(): enabled attribute autofocus for tag input. */
+    public function testRadioAutofocus(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked autofocus> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked autofocus> Terms</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
             ->autofocus()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-
-        /** disabled(): add attribute disabled for tag input. */
+    public function testRadioDisabled(): void
+    {
+        $data = new PersonalForm();
         $data->terms(true);
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms" disabled><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="terms" checked disabled> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" disabled><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" checked disabled> Terms</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
             ->disabled()
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** form(): add attribute custom form for tag input. */
-        $data->terms(false);
+    public function testRadioForm(): void
+    {
+        $data = new PersonalForm();
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="customForm"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="customForm"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0" form="form-id"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" form="form-id"> Terms</label>
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
-            ->form('customForm')
+            ->form('form-id')
             ->run();
         $this->assertEquals($expected, $html);
+    }
 
-        /** id(): add custom id for tag input. */
-        $data->terms(false);
+    public function testRadioId(): void
+    {
+        $data = new PersonalForm();
+
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="terms"><label><input type="radio" id="custom-id" name="PersonalForm[terms]" value="1" form="terms"> Terms</label>
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="custom-id" name="PersonalForm[terms]" value="1"> Terms</label>
 HTML;
         $html = Radio::widget()
             ->id('custom-id')
             ->config($data, 'terms')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testRadioRequired(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="radio" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
+HTML;
+        $html = Radio::widget()
+            ->config($data, 'terms')
+            ->required(true)
             ->run();
         $this->assertEquals($expected, $html);
     }
