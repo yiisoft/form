@@ -60,7 +60,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 
-<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -73,7 +73,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 
-<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -87,7 +87,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 <label class="control-label" for="personalform-email">Email</label>
-<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -101,7 +101,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 <label class="control-label labelTestMe" for="personalform-email">Email:</label>
-<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -122,7 +122,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
+<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div>
@@ -140,7 +140,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
+<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block errorTestMe">Is too short.</div>
 </div>
@@ -162,7 +162,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-0-name">
 <label class="control-label" for="personalform-0-name">Name</label>
-<input type="text" id="personalform-0-name" class="form-control has-error" name="PersonalForm[0][name]" value="yii">
+<input type="text" id="personalform-0-name" class="form-control has-error" name="PersonalForm[0][name]" value="yii" placeholder="Name">
 
 <div class="help-block"></div>
 </div>
@@ -182,7 +182,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 
-<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true" placeholder="Name">
 
 <div class="help-block"></div>
 </div>
@@ -196,7 +196,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 
-<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true" placeholder="Name">
 <div class="hint-block hintTestMe">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -210,7 +210,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 
-<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="Jack Ryan" aria-required="true" placeholder="Name">
 <div class="hint-block">Hint Content</div>
 <div class="help-block"></div>
 </div>
@@ -230,7 +230,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 
-<input type="email" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com">
+<input type="email" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -244,7 +244,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 
-<input type="email" id="personalform-email" class="form-control inputTestMe" name="PersonalForm[email]" value="admin@example.com">
+<input type="email" id="personalform-email" class="form-control inputTestMe" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -263,7 +263,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 
-<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -277,7 +277,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 
-<input type="text" id="personalform-name" class="form-control textInputTestMe" name="PersonalForm[name]" aria-required="true">
+<input type="text" id="personalform-name" class="form-control textInputTestMe" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -333,7 +333,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 
-<input type="password" id="personalform-password" class="form-control has-error" name="PersonalForm[password]" value="a7gh56ry" aria-required="true" aria-invalid="true">
+<input type="password" id="personalform-password" class="form-control has-error" name="PersonalForm[password]" value="a7gh56ry" aria-required="true" aria-invalid="true" placeholder="Password">
 
 <div class="help-block">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
 </div>
@@ -347,7 +347,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 
-<input type="password" id="personalform-password" class="form-control passwordTestMe has-error" name="PersonalForm[password]" value="a7gh56ry" aria-required="true" aria-invalid="true">
+<input type="password" id="personalform-password" class="form-control passwordTestMe has-error" name="PersonalForm[password]" value="a7gh56ry" aria-required="true" aria-invalid="true" placeholder="Password">
 
 <div class="help-block">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
 </div>
@@ -461,7 +461,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -476,7 +476,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -492,7 +492,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true">
+<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div>
