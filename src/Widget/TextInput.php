@@ -214,6 +214,14 @@ final class TextInput extends Widget
         return $new;
     }
 
+    /**
+     * Spellcheck is a global attribute which is used to indicate whether or not to enable spell checking for an
+     * element.
+     *
+     * @param bool $value
+     *
+     * @return self
+     */
     public function spellcheck(bool $value = true): self
     {
         $new = clone $this;
@@ -258,6 +266,20 @@ final class TextInput extends Widget
     {
         $new = clone $this;
         $new->options['tabindex'] = $value;
+        return $new;
+    }
+
+    /**
+     * The title global attribute contains text representing advisory information related to the element it belongs to.
+     *
+     * @param string $value
+     *
+     * @return self
+     */
+    public function title(string $value): self
+    {
+        $new = clone $this;
+        $new->options['title'] = $value;
         return $new;
     }
 }

@@ -19,7 +19,7 @@ final class Input extends Widget
     private string $attribute;
     private array $options = [];
     private string $charset = 'UTF-8';
-    private bool $noPlaceHolder = false;
+    private bool $noPlaceholder = false;
     private string $type;
 
     /**
@@ -31,7 +31,7 @@ final class Input extends Widget
     {
         $new = clone $this;
 
-        if ($new->noPlaceHolder === false) {
+        if ($new->noPlaceholder === false) {
             $new->setPlaceholder();
         }
 
@@ -138,7 +138,7 @@ final class Input extends Widget
     public function noPlaceholder(bool $value = true): self
     {
         $new = clone $this;
-        $new->noPlaceHolder = $value;
+        $new->noPlaceholder = $value;
         return $new;
     }
 
@@ -240,7 +240,7 @@ final class Input extends Widget
         );
     }
 
-    private function setPlaceHolder(): void
+    private function setPlaceholder(): void
     {
         if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color']))) {
             $attributeName = Html::getAttributeName($this->attribute);

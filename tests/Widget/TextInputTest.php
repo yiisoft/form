@@ -106,7 +106,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testTextInputNoPlaceHolder(): void
+    public function testTextInputNoPlaceholder(): void
     {
         $data = new PersonalForm();
 
@@ -125,11 +125,12 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="text" id="personalform-name" name="PersonalForm[name]" pattern="[A-Za-z]" placeholder="Name">
+<input type="text" id="personalform-name" name="PersonalForm[name]" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]" placeholder="Name">
 HTML;
         $html = TextInput::widget()
             ->config($data, 'name')
             ->pattern('[A-Za-z]')
+            ->title('Only accepts uppercase and lowercase letters.')
             ->run();
         $this->assertEquals($expected, $html);
     }
