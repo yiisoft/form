@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
 
 final class RadioList extends Widget
 {
-    use Options\Common;
-    use Options\Input;
-
+    private FormModelInterface $data;
+    private string $attribute;
+    private array $options = [];
     private array $items = [];
+    private bool $noUnselect = false;
 
     /**
      * Generates a list of radio buttons.
      *
      * A radio button list is like a checkbox list, except that it only allows single selection.
-     *
-     * @throws InvalidConfigException
      *
      * @return string the generated radio button list
      */
@@ -29,13 +28,156 @@ final class RadioList extends Widget
             ->type('radioList')
             ->config($this->data, $this->attribute, $this->options)
             ->items($this->items)
+            ->noUnselect($this->noUnselect)
             ->run();
     }
 
-    public function items(array $value): self
+    /**
+     * Configure the FormModel options for the widget.
+     *
+     * @param FormModelInterface $data Represents the {@see FormModel}.
+     * @param string $attribute It is the property defined in the {@see FormModel}.
+     * @param array $options The HTML attributes for the widget container tag. The following special options are
+     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     * @return self
+     */
+    public function config(FormModelInterface $data, string $attribute, array $options = []): self
+    {
+        $new = clone $this;
+        $new->data = $data;
+        $new->attribute = $attribute;
+        $new->options = $options;
+        return $new;
+    }
+
+    /**
+     * Callable, a callback that can be used to customize the generation of the HTML code corresponding to a single
+     * item in $items.
+     *
+     * The signature of this callback must be:
+     *
+     * ```php
+     * function ($index, $label, $name, $checked, $value)
+     * ```
+     *
+     * @param callable $value
+     *
+     * @return self
+     */
+    public function item(callable $value): self
+    {
+        $new = clone $this;
+        $new->options['item'] = $value;
+        return $new;
+    }
+
+    /**
+     * The data item used to generate the list of radio.
+     *
+     * The array keys are the list of radio values, and the array values are the corresponding labels.
+     *
+     * Note that the labels will NOT be HTML-encoded, while the values will.
+     *
+     * @param array $value
+     *
+     * @return self
+     */
+    public function items(array $value = []): self
     {
         $new = clone $this;
         $new->items = $value;
+        return $new;
+    }
+
+    /**
+     * The options for generating the list of radio tag using {@see RadioList}.
+     *
+     * @param array $value
+     *
+     * @return self
+     */
+    public function itemOptions(array $value = []): self
+    {
+        $new = clone $this;
+        $new->options['itemOptions'] = $value;
+        return $new;
+    }
+
+    /**
+     * Whether to HTML-encode the list of radio labels.
+     *
+     * Defaults to true. This option is ignored if item option is set.
+     *
+     * @param bool $value
+     *
+     * @return self
+     */
+    public function noEncode(bool $value = false): self
+    {
+        $new = clone $this;
+        $new->options['encode'] = $value;
+        return $new;
+    }
+
+    /**
+     * Allows you to disable the widgets hidden input tag.
+     *
+     * @param bool $value
+     *
+     * @return self
+     */
+    public function noUnselect(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->noUnselect = $value;
+        return $new;
+    }
+
+    /**
+     * The HTML code that separates items.
+     *
+     * @param string $value
+     *
+     * @return self
+     */
+    public function separator(string $value = ''): self
+    {
+        $new = clone $this;
+        $new->options['separator'] = $value;
+        return $new;
+    }
+
+    /**
+     * The tag name of the container element.
+     *
+     * Null to render list of radio without container {@see Html::tag()}.
+     *
+     * @param string|null $value
+     *
+     * @return self
+     */
+    public function tag(?string $value = null): self
+    {
+        $new = clone $this;
+        $new->options['tag'] = $value;
+        return $new;
+    }
+
+    /**
+     * The value that should be submitted when none of the list of radio is selected.
+     *
+     * You may set this option to be null to prevent default value submission. If this option is not set, an empty
+     * string will be submitted.
+     *
+     * @param string $value
+     *
+     * @return self
+     */
+    public function unselect(string $value = ''): self
+    {
+        $new = clone $this;
+        $new->options['unselect'] = $value;
         return $new;
     }
 }
