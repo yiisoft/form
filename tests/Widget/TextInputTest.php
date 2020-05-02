@@ -5,54 +5,206 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\TextInput;
 
 final class TextInputTest extends TestCase
 {
     public function testTextInput(): void
     {
-        $form = new StubForm();
+        $data = new PersonalForm();
 
-        $expected = '<input type="text" id="stubform-fieldstring" class="testMe" name="StubForm[fieldString]">';
-        $created = TextInput::widget()
-            ->config($form, 'fieldString', ['class' => 'testMe'])
-            ->required(false)
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
     }
 
-    public function testTextInputCustomPlaceholder(): void
+    public function testTextInputOptions(): void
     {
-        $form = new StubForm();
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" class="customClass" name="PersonalForm[name]" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name', ['class' => 'customClass'])
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputAutofocus(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" autofocus placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->autofocus()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputDisabled(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" disabled placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->disabled()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputForm(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" form="form-id" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->form('form-id')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputMinLength(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" minlength="2" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->minlength(2)
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputMaxLength(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" maxlength="10" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->maxlength(10)
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputNoPlaceHolder(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->noPlaceHolder()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputPattern(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" pattern="[A-Za-z]" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->pattern('[A-Za-z]')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputPlaceholder(): void
+    {
+        $data = new PersonalForm();
 
         $expected = 'placeholder="Custom placeholder"';
-        $created = TextInput::widget()
-            ->config($form, 'fieldString')
-            ->placeholder(false, 'Custom placeholder')
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->placeholder('Custom placeholder')
             ->run();
-        $this->assertStringContainsString($expected, $created);
+        $this->assertStringContainsString($expected, $html);
+
+        $expected = 'placeholder="Name"';
+        $html = TextInput::widget()
+            ->config($data, '[0]name')
+            ->run();
+        $this->assertStringContainsString($expected, $html);
     }
 
-    public function testTextInputPlaceholderFillFromForm(): void
+    public function testTextInputReadOnly(): void
     {
-        $form = new StubForm();
+        $data = new PersonalForm();
 
-        $expected  = 'placeholder="Field String"';
-        $created = TextInput::widget()
-            ->config($form, 'fieldString', ['placeholder' => true])
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" readonly placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->readOnly()
             ->run();
-        $this->assertStringContainsString($expected, $created);
+        $this->assertEquals($expected, $html);
     }
 
-    public function testTextInputPlaceholderFillFromModelTabular(): void
+    public function testTextInputsize(): void
     {
-        $form = new StubForm();
+        $data = new PersonalForm();
 
-        $expected = 'placeholder="Field String"';
-        $created = TextInput::widget()
-            ->config($form, '[0]fieldString', ['placeholder' => true])
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" size="10" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->size(10)
             ->run();
-        $this->assertStringContainsString($expected, $created);
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputRequired(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" required placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->required()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputTabIndex(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" tabindex="0" placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->tabindex()
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 }
