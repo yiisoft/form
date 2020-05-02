@@ -48,6 +48,15 @@ final class ErrorSummary extends Widget
         return Html::tag('div', $header . $content . $footer, $new->options);
     }
 
+    /**
+     * Configure the FormModel options for the widget.
+     *
+     * @param FormModelInterface $data Represents the {@see FormModel}.
+     * @param array $options The HTML attributes for the widget container tag. The following special options are
+     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     * @return self
+     */
     public function config(FormModelInterface $data, array $options = []): self
     {
         $new = clone $this;
@@ -60,10 +69,10 @@ final class ErrorSummary extends Widget
      * Return array of the validation errors.
      *
      * @param bool $encode, if set to false then the error messages won't be encoded.
-     * @param bool $showAllErrors, if set to true every error message for each attribute will be shown otherwise
-     * only the first error message for each attribute will be shown.
+     * @param bool $showAllErrors, if set to true every error message for each attribute will be shown otherwise only
+     * the first error message for each attribute will be shown.
      *
-     * @return array of the validation errors
+     * @return array of the validation errors.
      */
     private function collectErrors(bool $encode, bool $showAllErrors): array
     {

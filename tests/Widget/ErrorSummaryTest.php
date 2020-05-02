@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\ErrorSummary;
 
 final class ErrorSummaryTest extends TestCase
@@ -15,19 +14,27 @@ final class ErrorSummaryTest extends TestCase
     {
         return [
             [
-                'ok',
+                'Jack Ryan',
+                'jack@example.com',
+                'A258*fgh',
                 [],
                 '<div style="display:none"><p>Please fix the following errors:</p><ul></ul></div>',
             ],
             [
-                'ok',
+                'Jack Ryan',
+                'jack@example.com',
+                'A258*fgh',
                 ['header' => 'Custom header', 'footer' => 'Custom footer', 'style' => 'color: red'],
                 '<div style="color: red; display:none">Custom header<ul></ul>Custom footer</div>',
             ],
             [
-                str_repeat('x', 110),
+                'jac',
+                'jack@.com',
+                'A258*f',
                 ['showAllErrors' => true],
-                '<div><p>Please fix the following errors:</p><ul><li>This value should contain at most {max, number} {max, plural, one{character} other{characters}}.</li></ul></div>',
+                '<div><p>Please fix the following errors:</p><ul><li>Is too short.</li>' . "\n" .
+                '<li>This value is not a valid email address.</li>' . "\n" .
+                '<li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li></ul></div>'
             ],
         ];
     }
@@ -35,26 +42,27 @@ final class ErrorSummaryTest extends TestCase
     /**
      * @dataProvider dataProviderErrorSummary
      *
-     * @param string $value
+     * @param string $name
+     * @param string $email
+     * @param string $password
      * @param array $options
      * @param string $expected
-     *
-     * @throws InvalidConfigException
      */
-    public function testErrorSummary(string $value, array $options, string $expected): void
+    public function testErrorSummary(string $name, string $email, string $password, array $options, string $expected): void
     {
-        $data = [
-            'StubForm' => [
-                'fieldString' => $value
+        $record = [
+            'PersonalForm' => [
+                'name' => $name,
+                'email' => $email,
+                'password' => $password
             ]
         ];
 
-        $form = new StubForm();
+        $data = new PersonalForm();
 
-        $form->load($data);
-        $form->validate();
-        $created = ErrorSummary::widget()->config($form, $options)->run();
-
-        $this->assertEqualsWithoutLE($expected, $created);
+        $data->load($record);
+        $data->validate();
+        $html = ErrorSummary::widget()->config($data, $options)->run();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }
