@@ -115,7 +115,7 @@ HTML;
 HTML;
         $html = TextInput::widget()
             ->config($data, 'name')
-            ->noPlaceHolder()
+            ->noPlaceholder()
             ->run();
         $this->assertEquals($expected, $html);
     }
@@ -203,7 +203,21 @@ HTML;
 HTML;
         $html = TextInput::widget()
             ->config($data, 'name')
-            ->tabindex()
+            ->tabIndex()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextInputSpellCheck(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-name" name="PersonalForm[name]" spellcheck placeholder="Name">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'name')
+            ->spellcheck()
             ->run();
         $this->assertEquals($expected, $html);
     }

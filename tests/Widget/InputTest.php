@@ -138,7 +138,7 @@ HTML;
         $html = Input::widget()
             ->type('text')
             ->config($data, 'name')
-            ->tabindex(1)
+            ->tabIndex(1)
             ->run();
         $this->assertEquals($expected, $html);
     }

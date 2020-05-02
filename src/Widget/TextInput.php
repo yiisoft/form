@@ -141,7 +141,7 @@ final class TextInput extends Widget
      *
      * @return self
      */
-    public function noPlaceHolder(bool $value = true): self
+    public function noPlaceholder(bool $value = true): self
     {
         $new = clone $this;
         $new->noPlaceHolder = $value;
@@ -216,7 +216,9 @@ final class TextInput extends Widget
 
     public function spellcheck(bool $value = true): self
     {
-
+        $new = clone $this;
+        $new->options['spellcheck'] = $value;
+        return $new;
     }
 
     /**

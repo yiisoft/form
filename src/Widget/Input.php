@@ -135,7 +135,7 @@ final class Input extends Widget
      *
      * @return self
      */
-    public function noPlaceHolder(bool $value = true): self
+    public function noPlaceholder(bool $value = true): self
     {
         $new = clone $this;
         $new->noPlaceHolder = $value;
