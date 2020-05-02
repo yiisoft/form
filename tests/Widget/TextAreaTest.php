@@ -4,67 +4,203 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\TextArea;
 
 final class TextAreaTest extends TestCase
 {
-    /**
-     * Data provider for {@see testTextArea()}.
-     *
-     * @return array test data.
-     */
-    public function dataProviderTextArea(): array
+    public function testTextArea(): void
     {
-        return [
-            [
-                'some text',
-                ['placeholder' => true],
-                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" placeholder="Field String">some text</textarea>',
-            ],
-            [
-                'some text',
-                [
-                    'maxlength' => 500
-                ],
-                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" maxlength="500">some text</textarea>',
-            ],
-            [
-                'some text',
-                [
-                    'maxlength' => 99
-                ],
-                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" maxlength="99">some text</textarea>',
-            ],
-            [
-                'some text',
-                [
-                    'placeholder' => 'Override Text',
-                    'value' => 'Override Text',
-                ],
-                '<textarea id="stubform-fieldstring" name="StubForm[fieldString]" placeholder="Override Text">Override Text</textarea>',
-            ],
-        ];
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 
-    /**
-     * @dataProvider dataProviderTextArea
-     *
-     * @param string $value
-     * @param array $options
-     * @param string $expected
-     *
-     * @throws InvalidConfigException
-     */
-    public function testTextArea(string $value, array $options, $expected): void
+    public function testTextAreaOptions(): void
     {
-        $form = new StubForm();
-        $form->fieldString($value);
-        $created = TextArea::widget()
-            ->config($form, 'fieldString', $options)
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" class="customClass" name="PersonalForm[address]" placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address', ['class' => 'customClass'])
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaAutofocus(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" autofocus placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->autofocus()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaDisabled(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" disabled placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->disabled()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaForm(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" form="form-id" placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->form('form-id')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaMinLength(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" minlength="10" placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->minlength(10)
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaMaxLength(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" maxlength="50" placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->maxlength(50)
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaNoPlaceholder(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->noPlaceholder()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaPlaceholder(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" placeholder="Home address."></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->placeholder('Home address.')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaReadOnly(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" readonly placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->readOnly()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaSpellCheck(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" spellcheck placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->spellcheck()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaRequired(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" required placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->required()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaTabIndex(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" tabindex="0" placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->tabIndex()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testTextAreaTitle(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<textarea id="personalform-address" name="PersonalForm[address]" title="Enter the city, municipality, avenue, house or apartment number." placeholder="Address"></textarea>
+HTML;
+        $html = TextArea::widget()
+            ->config($data, 'address')
+            ->title('Enter the city, municipality, avenue, house or apartment number.')
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 }
