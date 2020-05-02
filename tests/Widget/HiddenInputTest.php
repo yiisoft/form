@@ -5,25 +5,34 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\HiddenInput;
 
 final class HiddenInputTest extends TestCase
 {
     public function testHiddenInput(): void
     {
-        $form = new StubForm();
+        $data = new PersonalForm();
 
-        $expected = '<input type="hidden" id="stubform-fieldstring" name="test">';
-        $created = HiddenInput::widget()
-            ->config($form, 'fieldString', ['name' => 'test'])
+        $expected = <<<'HTML'
+<input type="hidden" id="personalform-name" name="PersonalForm[name]">
+HTML;
+        $html = HiddenInput::widget()
+            ->config($data, 'name')
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
+    }
 
-        $expected = '<input type="hidden" id="stubform-fieldstring" class="test" name="test" value="value">';
-        $created = HiddenInput::widget()
-            ->config($form, 'fieldString', ['name' => 'test', 'value' => 'value', 'class' => 'test'])
+    public function testHiddenInputOptions(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="hidden" id="personalform-name" class="customClass" name="PersonalForm[name]" value="1">
+HTML;
+        $html = HiddenInput::widget()
+            ->config($data, 'name', ['value' => '1', 'class' => 'customClass'])
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
     }
 }
