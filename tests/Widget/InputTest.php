@@ -83,7 +83,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testInputNoPlaceHolder(): void
+    public function testInputNoPlaceholder(): void
     {
         $data = new PersonalForm();
 
@@ -93,7 +93,7 @@ HTML;
         $html = Input::widget()
             ->type('text')
             ->config($data, 'name')
-            ->noPlaceHolder()
+            ->noPlaceholder()
             ->run();
         $this->assertEquals($expected, $html);
     }

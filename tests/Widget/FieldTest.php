@@ -405,7 +405,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<textarea id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true"></textarea>
+<textarea id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name"></textarea>
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -420,7 +420,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label" for="personalform-name">Name</label>
-<textarea id="personalform-name" class="form-control textAreaTestMe" name="PersonalForm[name]" aria-required="true"></textarea>
+<textarea id="personalform-name" class="form-control textAreaTestMe" name="PersonalForm[name]" aria-required="true" placeholder="Name"></textarea>
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>

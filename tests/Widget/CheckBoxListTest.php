@@ -82,14 +82,15 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><div class = 'col-sm-12'><label><input tabindex = '0' class = 'book' type = 'checkbox' 1 name= 'PersonalForm[sex][]' value = '0'> Female</label></div>
-<div class = 'col-sm-12'><label><input tabindex = '1' class = 'book' type = 'checkbox'  name= 'PersonalForm[sex][]' value = '1'> Male</label></div></div>
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><div class='col-sm-12'><label><input tabindex='0' class='book' type='checkbox' checked name='PersonalForm[sex][]' value='0'> Female</label></div>
+<div class='col-sm-12'><label><input tabindex='1' class='book' type='checkbox'  name='PersonalForm[sex][]' value='1'> Male</label></div></div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
             ->items(['Female', 'Male'])
             ->item(static function ($index, $label, $name, $checked, $value) {
-                return "<div class = 'col-sm-12'><label><input tabindex = '{$index}' class = 'book' type = 'checkbox' {$checked} name= '{$name}' value = '{$value}'> {$label}</label></div>";
+                $check = $checked == 1 ? 'checked' : '';
+                return "<div class='col-sm-12'><label><input tabindex='{$index}' class='book' type='checkbox' {$check} name='{$name}' value='{$value}'> {$label}</label></div>";
             })
             ->itemOptions(['class' => 'itemClass'])
             ->run();

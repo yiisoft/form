@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
 
@@ -20,8 +19,6 @@ final class Radio extends Widget
 
     /**
      * Generates a radio button tag together with a label for the given form attribute.
-     *
-     * @throws InvalidConfigException
      *
      * @return string the generated radio button tag.
      */
