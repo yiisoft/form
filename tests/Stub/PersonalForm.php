@@ -37,6 +37,16 @@ final class PersonalForm extends FormModel
         ];
     }
 
+    public function customError(): string
+    {
+        return 'This is custom error message.';
+    }
+
+    public function customErrorWithIcon(): string
+    {
+        return '(&#10006;) This is custom error message.';
+    }
+
     public function formName(): string
     {
         return 'PersonalForm';

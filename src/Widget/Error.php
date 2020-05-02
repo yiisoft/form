@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 final class Error extends Widget
 {
-    use Options\Common;
+    private FormModelInterface $data;
+    private string $attribute;
+    private array $options = [];
 
     /**
      * Generates a tag that contains the first validation error of the specified form attribute.
@@ -33,5 +36,76 @@ final class Error extends Widget
         $encode = ArrayHelper::remove($new->options, 'encode', true);
 
         return Html::tag($tag, $encode ? Html::encode($error) : $error, $new->options);
+    }
+
+    /**
+     * Configure the FormModel options for the widget.
+     *
+     * @param FormModelInterface $data Represents the {@see FormModel}.
+     * @param string $attribute It is the property defined in the {@see FormModel}.
+     * @param array $options The HTML attributes for the widget container tag. The following special options are
+     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     * @return self
+     */
+    public function config(FormModelInterface $data, string $attribute, array $options = []): self
+    {
+        $new = clone $this;
+        $new->data = $data;
+        $new->attribute = $attribute;
+        $new->options = $options;
+        return $new;
+    }
+
+    /**
+     * Callback that will be called to obtain an error message.
+     *
+     * The signature of the callback must be:
+     *
+     * ```php
+     * [$FormModel, function()]
+     * ```
+     *
+     * @param array $value
+     *
+     * @return self
+     */
+    public function errorSource(array $value = []): self
+    {
+        $new = clone $this;
+        $new->options['errorSource'] = $value;
+        return $new;
+    }
+
+    /**
+     * Whether to HTML-encode the error messages.
+     *
+     * Defaults to true. This option is ignored if item option is set.
+     *
+     * @param bool $value
+     *
+     * @return self
+     */
+    public function noEncode(bool $value = false): self
+    {
+        $new = clone $this;
+        $new->options['encode'] = $value;
+        return $new;
+    }
+
+    /**
+     * The tag name of the container element.
+     *
+     * Null to render error messages without container {@see Html::tag()}.
+     *
+     * @param string|null $value
+     *
+     * @return self
+     */
+    public function tag(?string $value = null): self
+    {
+        $new = clone $this;
+        $new->options['tag'] = $value;
+        return $new;
     }
 }
