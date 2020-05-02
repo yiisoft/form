@@ -303,7 +303,7 @@ HTML;
                 ->textinput();
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'email')
-                ->label(true, ['placeholder' => true])
+                ->label(true)
                 ->input('email');
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'name')
@@ -331,7 +331,7 @@ HTML;
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-email has-error">
-<label class="control-label" placeholder="Email" for="personalform-email">Email</label>
+<label class="control-label" for="personalform-email">Email</label>
 <input type="email" id="personalform-email" class="form-control testMe" name="PersonalForm[email]" value="admin@.com" aria-invalid="true" placeholder="Email">
 
 <div class="help-block">This value is not a valid email address.</div>

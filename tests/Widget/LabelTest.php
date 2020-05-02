@@ -5,32 +5,62 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\StubForm;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Widget\Label;
 
 final class LabelTest extends TestCase
 {
-    public function testLabelForm(): void
+    public function testLabel(): void
     {
-        $form = new StubForm();
+        $data = new PersonalForm();
 
-        $expected = '<label for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()
-            ->config($form, 'fieldString')
+        $expected = <<<'HTML'
+<label for="personalform-name">Name</label>
+HTML;
+        $html = Label::widget()
+            ->config($data, 'name')
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
+    }
 
-        $expected = '<label class="test" placeholder="Field String" for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()
-            ->config($form, 'fieldString', ['class' => 'test', 'placeholder' => true])
-            ->run();
-        $this->assertEquals($expected, $created);
+    public function testLabelOptions(): void
+    {
+        $data = new PersonalForm();
 
-        $expected = '<label class="test" placeholder="Custom PlaceHolder" for="stubform-fieldstring">Field String</label>';
-        $created = Label::widget()
-            ->config($form, 'fieldString', ['class' => 'test'])
-            ->placeholder(false, 'Custom PlaceHolder')
+        $expected = <<<'HTML'
+<label class="customClass" for="personalform-name">Name</label>
+HTML;
+        $html = Label::widget()
+            ->config($data, 'name', ['class' => 'customClass'])
             ->run();
-        $this->assertEquals($expected, $created);
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testLabelFor(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<label for="for-id">Name</label>
+HTML;
+        $html = Label::widget()
+            ->config($data, 'name')
+            ->for('for-id')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testLabelCustomLabel(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<label for="personalform-name">Firts Name:</label>
+HTML;
+        $html = Label::widget()
+            ->config($data, 'name')
+            ->label('Firts Name:')
+            ->run();
+        $this->assertEquals($expected, $html);
     }
 }

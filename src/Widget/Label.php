@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 final class Label extends Widget
 {
-    use Options\Common;
+    private FormModelInterface $data;
+    private string $attribute;
+    private array $options = [];
+    private string $charset = 'UTF-8';
 
     /**
      * Generates a label tag for the given form attribute.
@@ -21,8 +25,6 @@ final class Label extends Widget
     public function run(): string
     {
         $new = clone $this;
-
-        $new->setPlaceholderOptions();
 
         $for = ArrayHelper::remove(
             $new->options,
@@ -37,5 +39,73 @@ final class Label extends Widget
         );
 
         return Html::label($label, $for, $new->options);
+    }
+
+    /**
+     * Configure the FormModel options for the widget.
+     *
+     * @param FormModelInterface $data Represents the {@see FormModel}.
+     * @param string $attribute It is the property defined in the {@see FormModel}.
+     * @param array $options The HTML attributes for the widget container tag. The following special options are
+     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     * @return self
+     */
+    public function config(FormModelInterface $data, string $attribute, array $options = []): self
+    {
+        $new = clone $this;
+        $new->data = $data;
+        $new->attribute = $attribute;
+        $new->options = $options;
+        return $new;
+    }
+
+    /**
+     * It allows defining the character set used to generate the widget id. {@see HtmlForm::getInputId()}
+     *
+     * @param string $value
+     *
+     * @return self
+     */
+    public function charset(string $value): self
+    {
+        $new = clone $this;
+        $new->charset = $value;
+        return $new;
+    }
+
+    /**
+     * The id of a labelable form-related element in the same document as the tag label element.
+     *
+     * The first element in the document with an id matching the value of the for attribute is the labeled control for
+     * this label element, if it is a labelable element.
+     *
+     * @param string $value
+     *
+     * @return self
+     */
+    public function for(string $value): self
+    {
+        $new = clone $this;
+        $new->options['for'] = $value;
+        return $new;
+    }
+
+    /**
+     * This specifies the label to be displayed.
+     *
+     * @param string $value
+     *
+     * @return self
+     *
+     * Note that this will NOT be encoded.
+     * - If this is not set, {@see \Yiisoft\Form\FormModel::getAttributeLabel() will be called to get the label for
+     * display (after encoding).
+     */
+    public function label(string $value): self
+    {
+        $new = clone $this;
+        $new->options['label'] = $value;
+        return $new;
     }
 }
