@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Html\Html;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 final class CheckBoxList extends Widget
@@ -177,7 +177,7 @@ final class CheckBoxList extends Widget
      *
      * @param string|null $value
      *
-     * @return CheckBoxList
+     * @return self
      */
     public function tag(?string $value = null): self
     {
