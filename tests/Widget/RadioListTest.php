@@ -171,6 +171,7 @@ HTML;
             ->items($this->cities)
             ->tag()
             ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
 
         $expected = <<<'HTML'
 <input type="hidden" name="PersonalForm[cityBirth]" value=""><span id="personalform-citybirth"><label><input type="radio" name="PersonalForm[cityBirth]" value="1" checked> Moscu</label>
