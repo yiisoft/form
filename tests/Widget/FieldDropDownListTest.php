@@ -48,7 +48,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldDropDownListPromptWithLabel(): void
+    public function testFieldDropDownListPromptWithLabelCustom(): void
     {
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
@@ -66,6 +66,7 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($this->data, 'cityBirth')
+            ->label(true, ['class' => 'customLabelClass'], 'City Birth:')
             ->dropDownList($this->cities, [
                 'prompt' => [
                     'text' => 'Select City Birth',
@@ -74,8 +75,6 @@ HTML;
                         'selected' => 'selected'
                     ],
                 ],
-                'label' => 'City Birth:',
-                'labelOptions' => ['class' => 'customLabelClass']
             ])
             ->run();
         $this->assertEquals($expected, $html);
@@ -137,7 +136,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldDropDownListPromptMultipleWithoutAnyLabel(): void
+    public function testFieldDropDownListPromptMultipleAnyLabel(): void
     {
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
@@ -155,6 +154,7 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($this->data, 'cityBirth')
+            ->label(false)
             ->dropDownList($this->cities, [
                 'prompt' => [
                     'text' => 'Select City Birth',
@@ -163,7 +163,6 @@ HTML;
                         'selected' => 'selected'
                     ],
                 ],
-                'label' => false,
                 'multiple' => true,
                 'unselect' => '0',
                 'size' => 5

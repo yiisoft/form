@@ -40,7 +40,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testBooleanInputNoLabel(): void
+    public function testBooleanInputUnClosedByLabel(): void
     {
         $data = new PersonalForm();
 
@@ -50,7 +50,7 @@ HTML;
         $html = BooleanInput::widget()
             ->type('radio')
             ->config($data, 'terms')
-            ->noLabel()
+            ->enClosedByLabel(false)
             ->run();
         $this->assertEquals($expected, $html);
     }
@@ -177,6 +177,21 @@ HTML;
             ->type('checkbox')
             ->config($data, 'terms')
             ->required()
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
+    public function testBooleanInputCharset(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[имя]" value="0"><label><input type="checkbox" id="personalform-имя" name="PersonalForm[имя]" value="1"> Имя</label>
+HTML;
+        $html = BooleanInput::widget()
+            ->type('checkbox')
+            ->config($data, 'имя')
+            ->charset('UTF-8')
             ->run();
         $this->assertEquals($expected, $html);
     }

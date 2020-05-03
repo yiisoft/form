@@ -39,7 +39,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testCheckBoxNoLabel(): void
+    public function testCheckBoxUnClosedByLabel(): void
     {
         $data = new PersonalForm();
 
@@ -48,7 +48,7 @@ HTML;
 HTML;
         $html = CheckBox::widget()
             ->config($data, 'terms')
-            ->noLabel()
+            ->enClosedByLabel(false)
             ->run();
         $this->assertEquals($expected, $html);
     }
@@ -154,5 +154,19 @@ HTML;
             ->required(true)
             ->run();
         $this->assertEquals($expected, $html);
+    }
+
+    public function testCheckBoxCharset(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="hidden" name="PersonalForm[имя]" value="0"><label><input type="checkbox" id="personalform-имя" name="PersonalForm[имя]" value="1"> Имя</label>
+HTML;
+        $html = CheckBox::widget()
+            ->config($data, 'имя')
+            ->charset('UTF-8')
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

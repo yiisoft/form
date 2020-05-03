@@ -50,7 +50,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldsListBoxWithLabel(): void
+    public function testFieldsListBoxWithLabelCustom(): void
     {
         $this->data->cityBirth(2);
 
@@ -69,12 +69,13 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($this->data, 'cityBirth')
-            ->listBox($this->cities, ['label' => 'customLabel:', 'labelOptions' => ['class' => 'customCssLabel']])
+            ->label(true, ['class' => 'customCssLabel'], 'customLabel:')
+            ->listBox($this->cities)
             ->run();
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldsListBoxWithoutAnyLabel(): void
+    public function testFieldsListBoxAnyLabel(): void
     {
         $this->data->cityBirth(2);
 
@@ -93,7 +94,8 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($this->data, 'cityBirth')
-            ->listBox($this->cities, ['label' => false])
+            ->label(false)
+            ->listBox($this->cities)
             ->run();
         $this->assertEquals($expected, $html);
     }

@@ -14,7 +14,7 @@ final class Radio extends Widget
     private string $attribute;
     private array $options = [];
     private string $charset = 'UTF-8';
-    private bool $noLabel = false;
+    private bool $enClosedByLabel = true;
     private bool $uncheck = true;
 
     /**
@@ -28,7 +28,7 @@ final class Radio extends Widget
             ->type('radio')
             ->id($this->id)
             ->config($this->data, $this->attribute, $this->options)
-            ->noLabel($this->noLabel)
+            ->enClosedByLabel($this->enClosedByLabel)
             ->uncheck($this->uncheck)
             ->run();
     }
@@ -169,16 +169,16 @@ final class Radio extends Widget
     }
 
     /**
-     * Allows you to disable the widgets label tag.
+     * Allows you to enable/disable enclosed by label widget tag.
      *
      * @param bool $value
      *
      * @return self
      */
-    public function noLabel(bool $value = true): self
+    public function enClosedByLabel(bool $value = true): self
     {
         $new = clone $this;
-        $new->noLabel = $value;
+        $new->enClosedByLabel = $value;
         return $new;
     }
 

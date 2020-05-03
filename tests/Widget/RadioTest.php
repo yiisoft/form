@@ -39,7 +39,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testRadioNoLabel(): void
+    public function testRadioUnClosedByLabel(): void
     {
         $data = new PersonalForm();
 
@@ -48,7 +48,7 @@ HTML;
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
-            ->noLabel()
+            ->enClosedByLabel(false)
             ->run();
         $this->assertEquals($expected, $html);
     }

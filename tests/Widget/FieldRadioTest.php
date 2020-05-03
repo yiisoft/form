@@ -10,7 +10,7 @@ use Yiisoft\Form\Widget\Field;
 
 final class FieldRadioTest extends TestCase
 {
-    public function testFieldRadioClosedByLabel(): void
+    public function testFieldRadio(): void
     {
         $data = new PersonalForm();
 
@@ -29,7 +29,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldRadioUnclosedByLabel(): void
+    public function testFieldRadioUnClosedByLabel(): void
     {
         $data = new PersonalForm();
         $data->terms(true);
@@ -49,7 +49,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldRadioLabelWithLabelOptions(): void
+    public function testFieldRadioWithLabelCustomUnClosedByLabel(): void
     {
         $data = new PersonalForm();
 
@@ -63,12 +63,13 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'terms')
-            ->radio(['label' => 'customLabel', 'labelOptions' => ['class' => 'customCssLabel']], false)
+            ->label(true, ['class' => 'customCssLabel'], 'customLabel')
+            ->radio([], false)
             ->run();
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldRadioWithoutAnyLabel(): void
+    public function testFieldRadioAnyLabel(): void
     {
         $data = new PersonalForm();
 
@@ -82,7 +83,8 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'terms')
-            ->radio(['label' => false], false)
+            ->label(false)
+            ->radio([], false)
             ->run();
         $this->assertEquals($expected, $html);
     }

@@ -130,7 +130,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
-
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -146,7 +146,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
-
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -212,24 +212,30 @@ HTML;
 
     public function testFormsFieldsValidationOnContainer(): void
     {
+        $fieldConfig = [
+            'validationStateOn()' => ['container']
+        ];
+
         $data = new PersonalForm();
         $data->name('yii');
         $data->email('admin@example.com');
         $data->validate();
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Field::widget()->config($data, 'name')->validationStateOn('container');
-            $html .= Field::widget()->config($data, 'email')->validationStateOn('container');
+            $html .= Field::widget($fieldConfig)
+                ->config($data, 'name');
+            $html .= Field::widget($fieldConfig)
+                ->config($data, 'email');
         $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name has-error">
-
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div><div class="form-group field-personalform-email has-error">
-
+<label class="control-label" for="personalform-email">Email</label>
 <input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
 
 <div class="help-block"></div>
@@ -246,18 +252,20 @@ HTML;
         $data->validate();
 
         $html = Form::begin()->action('/something')->start();
-            $html .= Field::widget()->config($data, 'name');
-            $html .= Field::widget()->config($data, 'email');
+            $html .= Field::widget()
+                ->config($data, 'name');
+            $html .= Field::widget()
+                ->config($data, 'email');
         $html .= Form::end();
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
-
+<label class="control-label" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div><div class="form-group field-personalform-email">
-
+<label class="control-label" for="personalform-email">Email</label>
 <input type="text" id="personalform-email" class="form-control has-error" name="PersonalForm[email]" value="admin" aria-invalid="true" placeholder="Email">
 
 <div class="help-block">This value is not a valid email address.</div>
@@ -299,22 +307,18 @@ HTML;
         $html = Form::begin()->action('/something')->start();
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'id')
-                ->label(true)
                 ->textinput();
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'email')
-                ->label(true)
                 ->input('email');
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'name')
-                ->label(true)
                 ->textinput();
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'cityBirth')
                 ->listBox($cities, ['multiple' => true, 'unselect' => '1']);
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'entryDate')
-                ->label(true)
                 ->input('date');
             $html .= Field::widget($fieldConfig)
                 ->config($data, 'sex')

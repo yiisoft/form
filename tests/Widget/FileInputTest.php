@@ -28,10 +28,10 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" class="customClass" name="PersonalForm[attachFiles]">
+<input type="hidden" name="fileName" value=""><input type="file" id="personalform-attachfiles" class="customClass" name="fileName">
 HTML;
         $html = FileInput::widget()
-            ->config($data, 'attachFiles', ['class' => 'customClass'])
+            ->config($data, 'attachFiles', ['class' => 'customClass', 'name' => 'fileName'])
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }

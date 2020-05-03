@@ -31,7 +31,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldCheckBoxListWithLabel(): void
+    public function testFieldCheckBoxListWithLabelCustom(): void
     {
         $data = new PersonalForm();
         $data->sex(1);
@@ -47,9 +47,10 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'sex')
+            ->label(true, ['class' => 'customLabelClass'], 'Sex:')
             ->checkboxList(
                 ['Female', 'Male'],
-                ['unselect' => '0', 'label' => 'Sex:', 'labelOptions' => ['class' => 'customLabelClass']]
+                ['unselect' => '0']
             )
             ->run();
         $this->assertEquals($expected, $html);
@@ -71,7 +72,8 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'sex')
-            ->checkboxList(['Female', 'Male'], ['unselect' => '0', 'label' => false])
+            ->label(false)
+            ->checkboxList(['Female', 'Male'], ['unselect' => '0'])
             ->run();
         $this->assertEquals($expected, $html);
     }

@@ -16,6 +16,11 @@ use function array_merge;
 
 class Field extends Widget implements FieldInterface
 {
+    public const DIV_CSS = ['class' => 'form-group'];
+    public const ERROR_CSS = ['class' => 'help-block'];
+    public const HINT_CSS = ['class' => 'hint-block'];
+    public const LABEL_CSS = ['class' => 'control-label'];
+
     private ?FormModelInterface $data = null;
     private string $attribute;
     private array $options = [];
@@ -33,11 +38,6 @@ class Field extends Widget implements FieldInterface
     private ?string $inputId = null;
     private array $parts = [];
     private bool $skipForInLabel = false;
-
-    public const DIV_CSS = ['class' => 'form-group'];
-    public const ERROR_CSS = ['class' => 'help-block'];
-    public const HINT_CSS = ['class' => 'hint-block'];
-    public const LABEL_CSS = ['class' => 'control-label'];
 
     /**
      * Renders the whole field.
@@ -124,15 +124,15 @@ class Field extends Widget implements FieldInterface
      * @param array $options the tag options in terms of name-value pairs. It will be merged with {@see labelOptions}.
      * The options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded using
      * {@see \Yiisoft\Html\Html::encode()}. If a value is `null`, the corresponding attribute will not be rendered.
-     * @param string|null $label the label to use. If `null`, the label will be generated via
-     * {@see FormBuilder::getAttributeLabel()}.
+     * @param string|null $label the label to use.
+     * If `null`, the label will be generated via {@see FormModel::getAttributeLabel()}.
      * Note that this will NOT be {@see \Yiisoft\Html\Html::encode()|encoded}.
      *
      * @throws InvalidConfigException
      *
      * @return self the field object itself.
      */
-    public function label(bool $enabledLabel = false, array $options = [], ?string $label = null): self
+    public function label(bool $enabledLabel = true, array $options = [], ?string $label = null): self
     {
         if ($enabledLabel === false) {
             $this->parts['{label}'] = '';
@@ -344,6 +344,9 @@ class Field extends Widget implements FieldInterface
 
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
+        $this->parts['{label}'] = '';
+        $this->parts['{hint}'] = '';
+        $this->parts['{error}'] = '';
         $this->parts['{input}'] = HiddenInput::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
             ->run();
@@ -498,25 +501,13 @@ class Field extends Widget implements FieldInterface
         $new = clone $this;
 
         if ($enclosedByLabel) {
-            $this->parts['{input}'] = Radio::widget()
-                ->config($new->data, $new->attribute, $options)
-                ->run();
             $this->parts['{label}'] = '';
-        } else {
-            $label = $options['label'] ?? null;
-            $labelOptions = $options['labelOptions'] ?? [];
-            unset($options['label'], $options['labelOptions']);
-
-            if ($label !== false) {
-                $new->label(true, $labelOptions, $label);
-                $this->parts['{label}'] = $new->parts['{label}'];
-            }
-
-            $this->parts['{input}'] = Radio::widget()
-                ->config($new->data, $new->attribute, $options)
-                ->nolabel()
-                ->run();
         }
+
+        $this->parts['{input}'] = Radio::widget()
+            ->config($new->data, $new->attribute, $options)
+            ->enclosedByLabel($enclosedByLabel)
+            ->run();
 
         $new->setAriaAttributes($options);
         $new->addErrorCssClassToInput();
@@ -562,25 +553,13 @@ class Field extends Widget implements FieldInterface
         $new = clone $this;
 
         if ($enclosedByLabel) {
-            $this->parts['{input}'] = CheckBox::widget()
-                ->config($new->data, $new->attribute, $options)
-                ->run();
             $this->parts['{label}'] = '';
-        } else {
-            $label = $options['label'] ?? null;
-            $labelOptions = $options['labelOptions'] ?? [];
-            unset($options['label'], $options['labelOptions']);
-
-            if ($label !== false) {
-                $new->label(true, $labelOptions, $label);
-                $this->parts['{label}'] = $new->parts['{label}'];
-            }
-
-            $this->parts['{input}'] = CheckBox::widget()
-                ->config($new->data, $new->attribute, $options)
-                ->nolabel()
-                ->run();
         }
+
+        $this->parts['{input}'] = CheckBox::widget()
+            ->config($new->data, $new->attribute, $options)
+            ->enclosedByLabel($enclosedByLabel)
+            ->run();
 
         $new->addErrorCssClassToInput();
 
@@ -615,15 +594,6 @@ class Field extends Widget implements FieldInterface
     public function dropDownList(array $items, array $options = []): self
     {
         $new = clone $this;
-
-        $label = $options['label'] ?? null;
-        $labelOptions = $options['labelOptions'] ?? [];
-        unset($options['label'], $options['labelOptions']);
-
-        if ($label !== false) {
-            $new->label(true, $labelOptions, $label);
-            $this->parts['{label}'] = $new->parts['{label}'];
-        }
 
         $new->setAriaAttributes($options);
         $new->addInputCssClass($options);
@@ -671,18 +641,7 @@ class Field extends Widget implements FieldInterface
         $new = clone $this;
 
         $new->setForInLabel($options);
-
-        $label = $options['label'] ?? null;
-        $labelOptions = $options['labelOptions'] ?? [];
-        unset($options['label'], $options['labelOptions']);
-
-        if ($label !== false) {
-            $new->label(true, $labelOptions, $label);
-            $this->parts['{label}'] = $new->parts['{label}'];
-        }
-
         $new->setAriaAttributes($options);
-
         $new->inputOptions = array_merge($options, $new->inputOptions);
 
         $this->parts['{input}'] = ListBox::widget()
@@ -716,18 +675,7 @@ class Field extends Widget implements FieldInterface
         $new = clone $this;
 
         $new->setForInLabel($options);
-
-        $label = $options['label'] ?? null;
-        $labelOptions = $options['labelOptions'] ?? [];
-        unset($options['label'], $options['labelOptions']);
-
-        if ($label !== false) {
-            $new->label(true, $labelOptions, $label);
-            $this->parts['{label}'] = $new->parts['{label}'];
-        }
-
         $new->setAriaAttributes($options);
-
         $new->inputOptions = array_merge($options, $new->inputOptions);
         $new->skipForInLabel = true;
 
@@ -765,9 +713,7 @@ class Field extends Widget implements FieldInterface
         $new->addInputCssClass($options);
         $new->addErrorCssClassToInput();
         $new->setInputRole($options);
-
         $new->inputOptions = array_merge($options, $new->inputOptions);
-
         $new->skipForInLabel = true;
 
         $this->parts['{input}'] = RadioList::widget()

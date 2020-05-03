@@ -18,7 +18,7 @@ final class BooleanInput extends Widget
     private array $options = [];
     private string $type;
     private string $charset = 'UTF-8';
-    private bool $noLabel = false;
+    private bool $enClosedByLabel = true;
     private bool $uncheck = true;
 
     /**
@@ -33,7 +33,7 @@ final class BooleanInput extends Widget
         $new = clone $this;
         $type = $new->type;
 
-        if (!$new->noLabel) {
+        if ($new->enClosedByLabel) {
             $new->options['label'] = $new->options['label']
                 ?? $new->data->attributeLabel(Html::getAttributeName($new->attribute));
         }
@@ -187,16 +187,16 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * Allows you to disable the widgets label tag.
+     * Allows you to enable/disable enclosed by label widget tag.
      *
      * @param bool $value
      *
      * @return self
      */
-    public function noLabel(bool $value = true): self
+    public function enClosedByLabel(bool $value = true): self
     {
         $new = clone $this;
-        $new->noLabel = $value;
+        $new->enClosedByLabel = $value;
         return $new;
     }
 

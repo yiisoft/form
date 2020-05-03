@@ -50,7 +50,7 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldCheckBoxLabelWithLabelOptions(): void
+    public function testFieldCheckBoxWithLabelCustomUnClosedByLabel(): void
     {
         $data = new PersonalForm();
 
@@ -64,12 +64,13 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'terms')
-            ->checkbox(['label' => 'customLabel', 'labelOptions' => ['class' => 'customCssLabel']], false)
+            ->label(true, ['class' => 'customCssLabel'], 'customLabel')
+            ->checkbox([], false)
             ->run();
         $this->assertEquals($expected, $html);
     }
 
-    public function testFieldCheckBoxWithoutAnyLabel(): void
+    public function testFieldCheckBoxAnyLabel(): void
     {
         $data = new PersonalForm();
 
@@ -83,7 +84,8 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'terms')
-            ->checkbox(['label' => false], false)
+            ->label(false)
+            ->checkbox([], false)
             ->run();
         $this->assertEquals($expected, $html);
     }
