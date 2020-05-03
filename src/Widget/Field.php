@@ -25,6 +25,8 @@ class Field extends Widget implements FieldInterface
     private string $attribute;
     private array $options = [];
     private array $inputOptions = [];
+    private array $errorOptions = [];
+    private array $hintOptions = [];
     private array $labelOptions = [];
     private bool $ariaAttribute = true;
     private string $errorCss = 'has-error';
@@ -143,7 +145,7 @@ class Field extends Widget implements FieldInterface
         $new = clone $this;
 
         if ($label !== null) {
-            $new->inputOptions['label'] = $label;
+            $new->labelOptions['label'] = $label;
         }
 
         $new->addLabelCssClass($options);
@@ -151,10 +153,10 @@ class Field extends Widget implements FieldInterface
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($new->inputOptions, $options);
+        $new->labelOptions = array_merge($new->labelOptions, $options);
 
         $this->parts['{label}'] = Label::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
+            ->config($new->data, $new->attribute, $new->labelOptions)
             ->run();
 
         return $this;
@@ -190,10 +192,10 @@ class Field extends Widget implements FieldInterface
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($new->inputOptions, $options);
+        $new->errorOptions = array_merge($new->errorOptions, $options);
 
         $this->parts['{error}'] = Error::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
+            ->config($new->data, $new->attribute, $new->errorOptions)
             ->run();
 
         return $this;
@@ -232,13 +234,13 @@ class Field extends Widget implements FieldInterface
         unset($options['class']);
 
         if ($content !== null) {
-            $new->inputOptions['hint'] = $content;
+            $new->hintOptions['hint'] = $content;
         }
 
-        $new->inputOptions = array_merge($new->inputOptions, $options);
+        $new->hintOptions = array_merge($new->hintOptions, $options);
 
         $this->parts['{hint}'] = Hint::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
+            ->config($new->data, $new->attribute, $new->hintOptions)
             ->run();
 
         return $this;
@@ -801,6 +803,50 @@ class Field extends Widget implements FieldInterface
         return $new;
     }
 
+    public function addErrorCssClass(array $options = []): void
+    {
+        $class = $options['class'] ?? self::ERROR_CSS['class'];
+
+        if ($class !== self::ERROR_CSS['class']) {
+            $class = self::ERROR_CSS['class'] . ' ' . $options['class'];
+        }
+
+        Html::addCssClass($this->errorOptions, $class);
+    }
+
+    public function addHintCssClass(array $options = []): void
+    {
+        $class = $options['class'] ?? self::HINT_CSS['class'];
+
+        if ($class !== self::HINT_CSS['class']) {
+            $class = self::HINT_CSS['class'] . ' ' . $options['class'];
+        }
+
+        Html::addCssClass($this->hintOptions, $class);
+    }
+
+    public function addInputCssClass(array $options = []): void
+    {
+        $class = $options['class'] ?? $this->inputCss;
+
+        if ($class !== $this->inputCss) {
+            $class = $this->inputCss . ' ' . $options['class'];
+        }
+
+        Html::addCssClass($this->inputOptions, $class);
+    }
+
+    public function addLabelCssClass(array $options = []): void
+    {
+        $class = $options['class'] ?? self::LABEL_CSS['class'];
+
+        if ($class !== self::LABEL_CSS['class']) {
+            $class = self::LABEL_CSS['class'] . ' ' . $options['class'];
+        }
+
+        Html::addCssClass($this->labelOptions, $class);
+    }
+
     private function addErrorCssClassToContainer(): void
     {
         if ($this->validationStateOn === 'container') {
@@ -819,50 +865,6 @@ class Field extends Widget implements FieldInterface
         }
     }
 
-    private function addErrorCssClass(array $options = []): void
-    {
-        $class = $options['class'] ?? self::ERROR_CSS['class'];
-
-        if ($class !== self::ERROR_CSS['class']) {
-            $class = self::ERROR_CSS['class'] . ' ' . $options['class'];
-        }
-
-        Html::addCssClass($this->inputOptions, $class);
-    }
-
-    private function addHintCssClass(array $options = []): void
-    {
-        $class = $options['class'] ?? self::HINT_CSS['class'];
-
-        if ($class !== self::HINT_CSS['class']) {
-            $class = self::HINT_CSS['class'] . ' ' . $options['class'];
-        }
-
-        Html::addCssClass($this->inputOptions, $class);
-    }
-
-    private function addInputCssClass(array $options = []): void
-    {
-        $class = $options['class'] ?? $this->inputCss;
-
-        if ($class !== $this->inputCss) {
-            $class = $this->inputCss . ' ' . $options['class'];
-        }
-
-        Html::addCssClass($this->inputOptions, $class);
-    }
-
-    private function addLabelCssClass(array $options = []): void
-    {
-        $class = $options['class'] ?? self::LABEL_CSS['class'];
-
-        if ($class !== self::LABEL_CSS['class']) {
-            $class = self::LABEL_CSS['class'] . ' ' . $options['class'];
-        }
-
-        Html::addCssClass($this->inputOptions, $class);
-    }
-
     private function setInputRole(array $options = []): void
     {
         $this->inputOptions['role'] = $options['role'] ?? 'radiogroup';
@@ -871,7 +873,7 @@ class Field extends Widget implements FieldInterface
     private function skipForInLabel(): void
     {
         if ($this->skipForInLabel) {
-            $this->inputOptions['for'] = null;
+            $this->labelOptions['for'] = null;
         }
     }
 
