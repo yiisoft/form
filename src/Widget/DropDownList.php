@@ -50,12 +50,12 @@ final class DropDownList extends Widget
     }
 
     /**
-     * Configure the FormModel options for the widget.
+     * Set form model, name and options for the widget.
      *
-     * @param FormModelInterface $data Represents the {@see FormModel}.
-     * @param string $attribute It is the property defined in the {@see FormModel}.
-     * @param array $options The HTML attributes for the widget container tag. The following special options are
-     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @param FormModelInterface $data Form model.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $options The HTML attributes for the widget container tag.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      *
      * @return self
      */
@@ -218,8 +218,7 @@ final class DropDownList extends Widget
     }
 
     /**
-     * The Boolean required attribute which, if present, indicates that the user must specify a value for the input
-     * before the owning form can be submitted.
+     * If it is required to fill in a value in order to submit the form.
      *
      * @param bool $value
      *

@@ -46,12 +46,12 @@ final class ListInput extends Widget
     }
 
     /**
-     * Configure the FormModel options for the widget.
+     * Set form model, name and options for the widget.
      *
-     * @param FormModelInterface $data Represents the {@see FormModel}.
-     * @param string $attribute It is the property defined in the {@see FormModel}.
-     * @param array $options The HTML attributes for the widget container tag. The following special options are
-     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @param FormModelInterface $data Form model.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $options The HTML attributes for the widget container tag.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      *
      * @return self
      */
@@ -65,7 +65,7 @@ final class ListInput extends Widget
     }
 
     /**
-     * It allows defining the character set used to generate the widget id. {@see HtmlForm::getInputId()}
+     * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
      *
      * @param string $value
      *
@@ -177,7 +177,7 @@ final class ListInput extends Widget
     }
 
     /**
-     * Lets you specify the input control to generate.
+     * Type of the input control to use.
      *
      * @param string $value
      *

@@ -49,11 +49,11 @@ final class ErrorSummary extends Widget
     }
 
     /**
-     * Configure the FormModel options for the widget.
+     * Set form model, name and options for the widget.
      *
-     * @param FormModelInterface $data Represents the {@see FormModel}.
-     * @param array $options The HTML attributes for the widget container tag. The following special options are
-     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @param FormModelInterface $data Form model.
+     * @param array $options The HTML attributes for the widget container tag.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      *
      * @return self
      */

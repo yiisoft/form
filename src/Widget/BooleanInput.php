@@ -52,12 +52,12 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * Configure the FormModel options for the widget.
+     * Set form model, name and options for the widget.
      *
-     * @param FormModelInterface $data Represents the {@see FormModel}.
-     * @param string $attribute It is the property defined in the {@see FormModel}.
-     * @param array $options The HTML attributes for the widget container tag. The following special options are
-     * recognized. {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @param FormModelInterface $data Form model.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $options The HTML attributes for the widget container tag.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      *
      * @return self
      */
@@ -71,11 +71,10 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * This attribute allows you to specify that a form control have the cursor when the page loads, unless the user
-     * replaces it, for example, by typing in a different control. Only one form element in the same document can have
-     * the autofocus attribute, which is Boolean.
+     * Focus on the control (put cursor into it) when the page loads.
+     * Only one form element could be in focus at the same time.
      *
-     * It cannot be applied if the type attribute has a hidden value (that is, you cannot automatically set the cursor
+     * It cannot be applied if the type attribute is "hidden" (that is, you cannot automatically set the cursor
      * to a hidden control).
      *
      * @param bool $value
@@ -90,7 +89,7 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * It allows defining the character set used to generate the widget id. {@see HtmlForm::getInputId()}
+     * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
      *
      * @param string $value
      *
@@ -104,9 +103,9 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * Indicates whether the element is disabled or not.
+     * Set whether the element is disabled or not.
      *
-     * If this attribute is set, the element is disabled. Disabled elements are usually drawn with grayed-out text.
+     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out text.
      * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
      * this will suggest you can set it to false to enable the element again, which is not the case.
@@ -171,7 +170,7 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * the HTML attributes for the label tag.
+     * HTML attributes for the label tag.
      *
      * Do not set this option unless you set the "label" option.
      *
@@ -187,7 +186,7 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * Allows you to enable/disable enclosed by label widget tag.
+     * If the widget should be enclosed by label.
      *
      * @param bool $value
      *
@@ -201,8 +200,7 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * The Boolean required attribute which, if present, indicates that the user must specify a value for the input
-     * before the owning form can be submitted.
+     * If it is required to fill in a value in order to submit the form.
      *
      * @param bool $value
      *
@@ -216,13 +214,13 @@ final class BooleanInput extends Widget
     }
 
     /**
-     * Lets you specify the input control to generate.
+     * Type of the input control to use.
      *
      * @param string $value
      *
      * @return self
      *
-     * Note: Specification only allowed {@see CheckBox} and {@see Redio}
+     * Note: Specification only allows {@see CheckBox} and {@see Radio}
      */
     public function type(string $value): self
     {

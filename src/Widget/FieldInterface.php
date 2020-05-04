@@ -8,6 +8,16 @@ use Yiisoft\Form\FormModelInterface;
 
 interface FieldInterface
 {
+    /**
+     * Set form model, name and options for the widget.
+     *
+     * @param FormModelInterface $data Form model.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $options The HTML attributes for the widget container tag.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     * @return self
+     */
     public function config(FormModelInterface $data, string $attribute, array $options = []): self;
     public function ariaAttribute(bool $value): self;
     public function errorCss(string $value): self;
