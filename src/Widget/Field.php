@@ -14,6 +14,9 @@ use Yiisoft\Widget\Widget;
 
 use function array_merge;
 
+/**
+ * Renders the field widget along with label, error tag and hint tag (if any) according to template.
+ */
 class Field extends Widget implements FieldInterface
 {
     public const DIV_CSS = ['class' => 'form-group'];
@@ -29,13 +32,13 @@ class Field extends Widget implements FieldInterface
     private array $hintOptions = [];
     private array $labelOptions = [];
     private bool $ariaAttribute = true;
-    private string $errorCss = 'has-error';
-    private string $errorSummaryCss = 'error-summary';
-    private string $inputCss = 'form-control';
-    private string $requiredCss = 'required';
-    private string $successCss = 'has-success';
+    private string $errorCssClass = 'has-error';
+    private string $errorSummaryCssClass = 'error-summary';
+    private string $inputCssClass = 'form-control';
+    private string $requiredCssClass = 'required';
+    private string $successCssClass = 'has-success';
     private string $template = "{label}\n{input}\n{hint}\n{error}";
-    private string $validatingCss = 'validating';
+    private string $validatingCssClass = 'validating';
     private string $validationStateOn = 'input';
     private ?string $inputId = null;
     private array $parts = [];
@@ -750,35 +753,35 @@ class Field extends Widget implements FieldInterface
     public function errorCss(string $value): self
     {
         $new = clone $this;
-        $new->errorCss = $value;
+        $new->errorCssClass = $value;
         return $new;
     }
 
     public function errorSummaryCss(string $value): self
     {
         $new = clone $this;
-        $new->errorSummaryCss = $value;
+        $new->errorSummaryCssClass = $value;
         return $new;
     }
 
     public function inputCss(string $value): self
     {
         $new = clone $this;
-        $new->inputCss = $value;
+        $new->inputCssClass = $value;
         return $new;
     }
 
     public function requiredCss(string $value): self
     {
         $new = clone $this;
-        $new->requiredCss = $value;
+        $new->requiredCssClass = $value;
         return $new;
     }
 
     public function successCss(string $value): self
     {
         $new = clone $this;
-        $new->successCss = $value;
+        $new->successCssClass = $value;
         return $new;
     }
 
@@ -792,7 +795,7 @@ class Field extends Widget implements FieldInterface
     public function validatingCss(string $value): self
     {
         $new = clone $this;
-        $new->validatingCss = $value;
+        $new->validatingCssClass = $value;
         return $new;
     }
 
@@ -827,10 +830,10 @@ class Field extends Widget implements FieldInterface
 
     public function addInputCssClass(array $options = []): void
     {
-        $class = $options['class'] ?? $this->inputCss;
+        $class = $options['class'] ?? $this->inputCssClass;
 
-        if ($class !== $this->inputCss) {
-            $class = $this->inputCss . ' ' . $options['class'];
+        if ($class !== $this->inputCssClass) {
+            $class = $this->inputCssClass . ' ' . $options['class'];
         }
 
         Html::addCssClass($this->inputOptions, $class);
@@ -850,7 +853,7 @@ class Field extends Widget implements FieldInterface
     private function addErrorCssClassToContainer(): void
     {
         if ($this->validationStateOn === 'container') {
-            Html::addCssClass($this->options, $this->errorCss);
+            Html::addCssClass($this->options, $this->errorCssClass);
         }
     }
 
@@ -860,7 +863,7 @@ class Field extends Widget implements FieldInterface
             $attributeName = Html::getAttributeName($this->attribute);
 
             if ($this->data->hasErrors($attributeName)) {
-                Html::addCssClass($this->inputOptions, $this->errorCss);
+                Html::addCssClass($this->inputOptions, $this->errorCssClass);
             }
         }
     }
