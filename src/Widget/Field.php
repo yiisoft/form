@@ -818,46 +818,50 @@ final class Field extends Widget
 
     public function errorOptions(array $options = []): void
     {
-        $class = $options['class'] ?? self::DEFAULT_ERROR_OPTIONS['class'];
+        $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_ERROR_OPTIONS['class']);
 
-        if ($class !== self::DEFAULT_ERROR_OPTIONS['class']) {
-            $class = self::DEFAULT_ERROR_OPTIONS['class'] . ' ' . $options['class'];
+        if ($classFromOptions !== self::DEFAULT_ERROR_OPTIONS['class']) {
+            $classFromOptions = self::DEFAULT_ERROR_OPTIONS['class'] . ' ' . $classFromOptions;
         }
 
-        Html::addCssClass($this->errorOptions, $class);
+        $this->errorOptions = array_merge($this->errorOptions, $options);
+        Html::addCssClass($this->errorOptions, $classFromOptions);
     }
 
     public function hintOptions(array $options = []): void
     {
-        $class = $options['class'] ?? self::DEFAULT_HINT_OPTIONS['class'];
+        $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_HINT_OPTIONS['class']);
 
-        if ($class !== self::DEFAULT_HINT_OPTIONS['class']) {
-            $class = self::DEFAULT_HINT_OPTIONS['class'] . ' ' . $options['class'];
+        if ($classFromOptions !== self::DEFAULT_HINT_OPTIONS['class']) {
+            $classFromOptions = self::DEFAULT_HINT_OPTIONS['class'] . ' ' . $classFromOptions;
         }
 
-        Html::addCssClass($this->hintOptions, $class);
+        $this->hintOptions = array_merge($this->hintOptions, $options);
+        Html::addCssClass($this->hintOptions, $classFromOptions);
     }
 
     public function inputOptions(array $options = []): void
     {
-        $class = $options['class'] ?? $this->inputCssClass;
+        $classFromOptions = ArrayHelper::remove($options, 'class', $this->inputCssClass);
 
-        if ($class !== $this->inputCssClass) {
-            $class = $this->inputCssClass . ' ' . $options['class'];
+        if ($classFromOptions !== $this->inputCssClass) {
+            $classFromOptions = $this->inputCssClass . ' ' . $classFromOptions;
         }
 
-        Html::addCssClass($this->inputOptions, $class);
+        $this->inputOptions = array_merge($this->inputOptions, $options);
+        Html::addCssClass($this->inputOptions, $classFromOptions);
     }
 
     public function labelOptions(array $options = []): void
     {
-        $class = $options['class'] ?? self::DEFAULT_LABEL_OPTIONS['class'];
+        $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_LABEL_OPTIONS['class']);
 
-        if ($class !== self::DEFAULT_LABEL_OPTIONS['class']) {
-            $class = self::DEFAULT_LABEL_OPTIONS['class'] . ' ' . $options['class'];
+        if ($classFromOptions !== self::DEFAULT_LABEL_OPTIONS['class']) {
+            $classFromOptions = self::DEFAULT_LABEL_OPTIONS['class'] . ' ' . $classFromOptions;
         }
 
-        Html::addCssClass($this->labelOptions, $class);
+        $this->labelOptions = array_merge($this->labelOptions, $options);
+        Html::addCssClass($this->labelOptions, $classFromOptions);
     }
 
     private function addErrorCssClassToContainer(): void
