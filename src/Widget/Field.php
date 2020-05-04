@@ -19,10 +19,10 @@ use function array_merge;
  */
 final class Field extends Widget
 {
-    public const DIV_CSS = ['class' => 'form-group'];
-    public const ERROR_CSS = ['class' => 'help-block'];
-    public const HINT_CSS = ['class' => 'hint-block'];
-    public const LABEL_CSS = ['class' => 'control-label'];
+    private const DEFAULT_DIV_OPTIONS = ['class' => 'form-group'];
+    private const DEFAULT_ERROR_OPTIONS = ['class' => 'help-block'];
+    private const DEFAULT_HINT_OPTIONS = ['class' => 'hint-block'];
+    private const DEFAULT_LABEL_OPTIONS = ['class' => 'control-label'];
 
     private ?FormModelInterface $data = null;
     private string $attribute;
@@ -103,7 +103,7 @@ final class Field extends Widget
         $class[] = "field-$inputId";
         $class[] = $new->options['class'] ?? '';
 
-        $new->options['class'] = trim(implode(' ', array_merge($new::DIV_CSS, $class)));
+        $new->options['class'] = trim(implode(' ', array_merge(self::DEFAULT_DIV_OPTIONS, $class)));
 
         $new->addErrorCssClassToContainer();
 
@@ -171,7 +171,7 @@ final class Field extends Widget
      * Note that even if there is no validation error, this method will still return an empty error tag.
      *
      * @param array $options the tag options in terms of name-value pairs. It will be merged with
-     * {@see ERROR_CSS}.
+     * {@see DEFAULT_ERROR_OPTIONS}.
      * The options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded using
      * {@see \Yiisoft\Html\Html::encode()}. If this parameter is `false`, no error tag will be rendered.
      *
@@ -181,11 +181,11 @@ final class Field extends Widget
      *
      * If you set a custom `id` for the error element, you may need to adjust the {@see $selectors} accordingly.
      *
-     * @throws InvalidConfigException
-     *
      * @return self the field object itself.
      *
-     * {@see ERROR_CSS}
+     * {@see DEFAULT_ERROR_OPTIONS}
+     *@throws InvalidConfigException
+     *
      */
     public function error(array $options = []): self
     {
@@ -818,10 +818,10 @@ final class Field extends Widget
 
     public function addErrorCssClass(array $options = []): void
     {
-        $class = $options['class'] ?? self::ERROR_CSS['class'];
+        $class = $options['class'] ?? self::DEFAULT_ERROR_OPTIONS['class'];
 
-        if ($class !== self::ERROR_CSS['class']) {
-            $class = self::ERROR_CSS['class'] . ' ' . $options['class'];
+        if ($class !== self::DEFAULT_ERROR_OPTIONS['class']) {
+            $class = self::DEFAULT_ERROR_OPTIONS['class'] . ' ' . $options['class'];
         }
 
         Html::addCssClass($this->errorOptions, $class);
@@ -829,10 +829,10 @@ final class Field extends Widget
 
     public function addHintCssClass(array $options = []): void
     {
-        $class = $options['class'] ?? self::HINT_CSS['class'];
+        $class = $options['class'] ?? self::DEFAULT_HINT_OPTIONS['class'];
 
-        if ($class !== self::HINT_CSS['class']) {
-            $class = self::HINT_CSS['class'] . ' ' . $options['class'];
+        if ($class !== self::DEFAULT_HINT_OPTIONS['class']) {
+            $class = self::DEFAULT_HINT_OPTIONS['class'] . ' ' . $options['class'];
         }
 
         Html::addCssClass($this->hintOptions, $class);
@@ -851,10 +851,10 @@ final class Field extends Widget
 
     public function addLabelCssClass(array $options = []): void
     {
-        $class = $options['class'] ?? self::LABEL_CSS['class'];
+        $class = $options['class'] ?? self::DEFAULT_LABEL_OPTIONS['class'];
 
-        if ($class !== self::LABEL_CSS['class']) {
-            $class = self::LABEL_CSS['class'] . ' ' . $options['class'];
+        if ($class !== self::DEFAULT_LABEL_OPTIONS['class']) {
+            $class = self::DEFAULT_LABEL_OPTIONS['class'] . ' ' . $options['class'];
         }
 
         Html::addCssClass($this->labelOptions, $class);
