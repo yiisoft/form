@@ -36,10 +36,10 @@ final class Form extends Widget
     {
         $hiddenInputs = [];
 
-        $csrf = ArrayHelper::remove($this->options, 'csrf', false);
+        $csrfToken = ArrayHelper::remove($this->options, 'csrf', false);
 
-        if ($csrf && strcasecmp($this->method, Method::POST) === 0) {
-            $hiddenInputs[] = Html::hiddenInput('_csrf', $csrf);
+        if ($csrfToken && strcasecmp($this->method, Method::POST) === 0) {
+            $hiddenInputs[] = Html::hiddenInput('_csrf', $csrfToken);
         }
 
         if (!strcasecmp($this->method, 'get') && ($pos = strpos($this->action, '?')) !== false) {
