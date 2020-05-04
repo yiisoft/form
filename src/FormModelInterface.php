@@ -6,6 +6,9 @@ namespace Yiisoft\Form;
 
 use Yiisoft\Validator\DataSetInterface;
 
+/**
+ * FormModelInterface model represents an HTML form: its data, validation and presentation.
+ */
 interface FormModelInterface extends DataSetInterface
 {
     /**

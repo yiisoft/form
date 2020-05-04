@@ -9,7 +9,7 @@ use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
 
 /**
- * Form model represents and HTML form: its data, validation and presentation.
+ * Form model represents an HTML form: its data, validation and presentation.
  */
 abstract class FormModel implements FormModelInterface
 {
