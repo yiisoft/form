@@ -17,7 +17,7 @@ use function array_merge;
 /**
  * Renders the field widget along with label, error tag and hint tag (if any) according to template.
  */
-class Field extends Widget implements FieldInterface
+final class Field extends Widget
 {
     public const DIV_CSS = ['class' => 'form-group'];
     public const ERROR_CSS = ['class' => 'help-block'];
@@ -734,6 +734,16 @@ class Field extends Widget implements FieldInterface
         return $this->inputId ?: HtmlForm::getInputId($this->data, $this->attribute);
     }
 
+    /**
+     * Set form model, name and options for the widget.
+     *
+     * @param FormModelInterface $data Form model.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $options The HTML attributes for the widget container tag.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     * @return self
+     */
     public function config(FormModelInterface $data, string $attribute, array $options = []): self
     {
         $new = clone $this;
