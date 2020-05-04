@@ -18,7 +18,7 @@ final class BooleanInput extends Widget
     private array $options = [];
     private string $type;
     private string $charset = 'UTF-8';
-    private bool $enClosedByLabel = true;
+    private bool $enclosedByLabel = true;
     private bool $uncheck = true;
 
     /**
@@ -33,7 +33,7 @@ final class BooleanInput extends Widget
         $new = clone $this;
         $type = $new->type;
 
-        if ($new->enClosedByLabel) {
+        if ($new->enclosedByLabel) {
             $new->options['label'] = $new->options['label']
                 ?? $new->data->attributeLabel(Html::getAttributeName($new->attribute));
         }
@@ -193,10 +193,10 @@ final class BooleanInput extends Widget
      *
      * @return self
      */
-    public function enClosedByLabel(bool $value = true): self
+    public function enclosedByLabel(bool $value = true): self
     {
         $new = clone $this;
-        $new->enClosedByLabel = $value;
+        $new->enclosedByLabel = $value;
         return $new;
     }
 

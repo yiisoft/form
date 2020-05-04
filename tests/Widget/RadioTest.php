@@ -48,7 +48,7 @@ HTML;
 HTML;
         $html = Radio::widget()
             ->config($data, 'terms')
-            ->enClosedByLabel(false)
+            ->enclosedByLabel(false)
             ->run();
         $this->assertEquals($expected, $html);
     }

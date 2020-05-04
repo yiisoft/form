@@ -14,7 +14,7 @@ final class CheckBox extends Widget
     private string $attribute;
     private array $options = [];
     private string $charset = 'UTF-8';
-    private bool $enClosedByLabel = true;
+    private bool $enclosedByLabel = true;
     private bool $uncheck = true;
 
     /**
@@ -31,7 +31,7 @@ final class CheckBox extends Widget
             ->id($this->id)
             ->charset($this->charset)
             ->config($this->data, $this->attribute, $this->options)
-            ->enClosedByLabel($this->enClosedByLabel)
+            ->enclosedByLabel($this->enclosedByLabel)
             ->uncheck($this->uncheck)
             ->run();
     }
@@ -178,10 +178,10 @@ final class CheckBox extends Widget
      *
      * @return self
      */
-    public function enClosedByLabel(bool $value = true): self
+    public function enclosedByLabel(bool $value = true): self
     {
         $new = clone $this;
-        $new->enClosedByLabel = $value;
+        $new->enclosedByLabel = $value;
         return $new;
     }
 

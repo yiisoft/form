@@ -50,7 +50,7 @@ HTML;
         $html = BooleanInput::widget()
             ->type('radio')
             ->config($data, 'terms')
-            ->enClosedByLabel(false)
+            ->enclosedByLabel(false)
             ->run();
         $this->assertEquals($expected, $html);
     }
