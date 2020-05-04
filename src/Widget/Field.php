@@ -151,7 +151,7 @@ final class Field extends Widget
             $new->labelOptions['label'] = $label;
         }
 
-        $new->addLabelCssClass($options);
+        $new->labelOptions($options);
         $new->skipForInLabel();
 
         unset($options['class']);
@@ -191,7 +191,7 @@ final class Field extends Widget
     {
         $new = clone $this;
 
-        $new->addErrorCssClass($options);
+        $new->errorOptions($options);
 
         unset($options['class']);
 
@@ -232,7 +232,7 @@ final class Field extends Widget
 
         $new = clone $this;
 
-        $new->addHintCssClass($options);
+        $new->hintOptions($options);
 
         unset($options['class']);
 
@@ -268,7 +268,7 @@ final class Field extends Widget
         $new = clone $this;
 
         $new->setAriaAttributes($options);
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
 
         unset($options['class']);
@@ -306,7 +306,7 @@ final class Field extends Widget
         $new = clone $this;
 
         $new->setAriaAttributes($options);
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
 
         unset($options['class']);
@@ -343,7 +343,7 @@ final class Field extends Widget
     {
         $new = clone $this;
 
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
 
         unset($options['class']);
 
@@ -380,7 +380,7 @@ final class Field extends Widget
         $new = clone $this;
 
         $new->setAriaAttributes($options);
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
 
         unset($options['class']);
@@ -420,7 +420,7 @@ final class Field extends Widget
 
         $new->setAriaAttributes($options);
         $new->addErrorCssClassToInput();
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->setForInLabel($options);
 
         unset($options['class']);
@@ -454,7 +454,7 @@ final class Field extends Widget
         $new = clone $this;
 
         $new->setAriaAttributes($options);
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
 
         unset($options['class']);
@@ -601,7 +601,7 @@ final class Field extends Widget
         $new = clone $this;
 
         $new->setAriaAttributes($options);
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
 
         unset($options['class']);
@@ -715,7 +715,7 @@ final class Field extends Widget
 
         $new->setAriaAttributes($options);
         $new->setForInLabel($options);
-        $new->addInputCssClass($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
         $new->setInputRole($options);
         $new->inputOptions = array_merge($options, $new->inputOptions);
@@ -816,7 +816,7 @@ final class Field extends Widget
         return $new;
     }
 
-    public function addErrorCssClass(array $options = []): void
+    public function errorOptions(array $options = []): void
     {
         $class = $options['class'] ?? self::DEFAULT_ERROR_OPTIONS['class'];
 
@@ -827,7 +827,7 @@ final class Field extends Widget
         Html::addCssClass($this->errorOptions, $class);
     }
 
-    public function addHintCssClass(array $options = []): void
+    public function hintOptions(array $options = []): void
     {
         $class = $options['class'] ?? self::DEFAULT_HINT_OPTIONS['class'];
 
@@ -838,7 +838,7 @@ final class Field extends Widget
         Html::addCssClass($this->hintOptions, $class);
     }
 
-    public function addInputCssClass(array $options = []): void
+    public function inputOptions(array $options = []): void
     {
         $class = $options['class'] ?? $this->inputCssClass;
 
@@ -849,7 +849,7 @@ final class Field extends Widget
         Html::addCssClass($this->inputOptions, $class);
     }
 
-    public function addLabelCssClass(array $options = []): void
+    public function labelOptions(array $options = []): void
     {
         $class = $options['class'] ?? self::DEFAULT_LABEL_OPTIONS['class'];
 
