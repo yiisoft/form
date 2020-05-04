@@ -111,7 +111,7 @@ final class CheckBoxList extends Widget
     }
 
     /**
-     * The data item used to generate the list of checkboxes.
+     * The data used to generate the list of checkboxes.
      *
      * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
      *

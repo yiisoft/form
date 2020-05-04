@@ -73,7 +73,7 @@ final class RadioList extends Widget
     }
 
     /**
-     * The data item used to generate the list of radio.
+     * The data used to generate the list of radios.
      *
      * The array keys are the list of radio values, and the array values are the corresponding labels.
      *
