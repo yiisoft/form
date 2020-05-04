@@ -750,35 +750,35 @@ class Field extends Widget implements FieldInterface
         return $new;
     }
 
-    public function errorCss(string $value): self
+    public function errorCssClass(string $value): self
     {
         $new = clone $this;
         $new->errorCssClass = $value;
         return $new;
     }
 
-    public function errorSummaryCss(string $value): self
+    public function errorSummaryCssClass(string $value): self
     {
         $new = clone $this;
         $new->errorSummaryCssClass = $value;
         return $new;
     }
 
-    public function inputCss(string $value): self
+    public function inputCssClass(string $value): self
     {
         $new = clone $this;
         $new->inputCssClass = $value;
         return $new;
     }
 
-    public function requiredCss(string $value): self
+    public function requiredCssClass(string $value): self
     {
         $new = clone $this;
         $new->requiredCssClass = $value;
         return $new;
     }
 
-    public function successCss(string $value): self
+    public function successCssClass(string $value): self
     {
         $new = clone $this;
         $new->successCssClass = $value;
@@ -792,7 +792,7 @@ class Field extends Widget implements FieldInterface
         return $new;
     }
 
-    public function validatingCss(string $value): self
+    public function validatingCssClass(string $value): self
     {
         $new = clone $this;
         $new->validatingCssClass = $value;

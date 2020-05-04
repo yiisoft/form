@@ -20,12 +20,12 @@ interface FieldInterface
      */
     public function config(FormModelInterface $data, string $attribute, array $options = []): self;
     public function ariaAttribute(bool $value): self;
-    public function errorCss(string $value): self;
-    public function errorSummaryCss(string $value): self;
-    public function inputCss(string $value): self;
-    public function requiredCss(string $value): self;
-    public function successCss(string $value): self;
+    public function errorCssClass(string $value): self;
+    public function errorSummaryCssClass(string $value): self;
+    public function inputCssClass(string $value): self;
+    public function requiredCssClass(string $value): self;
+    public function successCssClass(string $value): self;
     public function template(string $value): self;
-    public function validatingCss(string $value): self;
+    public function validatingCssClass(string $value): self;
     public function validationStateOn(string $value): self;
 }
