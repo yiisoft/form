@@ -19,7 +19,7 @@ use function array_merge;
  */
 final class Field extends Widget
 {
-    private const DEFAULT_DIV_OPTIONS = ['class' => 'form-group'];
+    private const DEFAULT_CONTAINER_OPTIONS = ['class' => 'form-group'];
     private const DEFAULT_ERROR_OPTIONS = ['class' => 'help-block'];
     private const DEFAULT_HINT_OPTIONS = ['class' => 'hint-block'];
     private const DEFAULT_LABEL_OPTIONS = ['class' => 'control-label'];
@@ -103,7 +103,7 @@ final class Field extends Widget
         $class[] = "field-$inputId";
         $class[] = $new->options['class'] ?? '';
 
-        $new->options['class'] = trim(implode(' ', array_merge(self::DEFAULT_DIV_OPTIONS, $class)));
+        $new->options['class'] = trim(implode(' ', array_merge(self::DEFAULT_CONTAINER_OPTIONS, $class)));
 
         $new->addErrorCssClassToContainer();
 
