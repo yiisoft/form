@@ -93,7 +93,7 @@ final class Field extends Widget
      *
      * @return string the rendering result.
      */
-    public function renderBegin(): string
+    private function renderBegin(): string
     {
         $new = clone $this;
 
@@ -117,7 +117,7 @@ final class Field extends Widget
      *
      * @return string the rendering result.
      */
-    public function renderEnd(): string
+    private function renderEnd(): string
     {
         return Html::endTag(ArrayHelper::keyExists($this->options, 'tag') ? $this->options['tag'] : 'div');
     }
@@ -729,7 +729,7 @@ final class Field extends Widget
         return $this;
     }
 
-    public function addInputId(): string
+    private function addInputId(): string
     {
         return $this->inputId ?: HtmlForm::getInputId($this->data, $this->attribute);
     }

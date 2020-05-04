@@ -10,49 +10,6 @@ use Yiisoft\Form\Widget\Field;
 
 final class FieldTest extends TestCase
 {
-    public function testFieldsRenderBegin(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = '<article class="form-group field-personalform-name">';
-        $html = Field::widget()
-            ->config($data, 'name', ['tag' => 'article'])
-            ->renderBegin();
-        $this->assertEquals($expected, $html);
-
-        $html = Field::widget()
-            ->config($data, 'name', ['tag' => null])
-            ->renderBegin();
-        $this->assertEquals('', $html);
-
-        $html = Field::widget()
-            ->config($data, 'name', ['tag' => false])
-            ->renderBegin();
-        $this->assertEquals('', $html);
-    }
-
-    public function testFieldsRenderEnd(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = '</div>';
-        $html = Field::widget()
-            ->renderEnd();
-        $this->assertEquals($expected, $html);
-
-        $expected = '';
-        $html = Field::widget()
-            ->config($data, 'name', ['tag' => null])
-            ->renderEnd();
-        $this->assertEquals($expected, $html);
-
-        $expected = '';
-        $html = Field::widget()
-            ->config($data, 'name', ['tag' => false])
-            ->renderEnd();
-        $this->assertEquals($expected, $html);
-    }
-
     public function testFieldAriaAttributes(): void
     {
         $data = new PersonalForm();
