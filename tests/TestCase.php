@@ -4,23 +4,31 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
-use Yiisoft\Form\Tests\Stubs\LoginForm;
+use Yiisoft\Di\Container;
+use Yiisoft\Widget\WidgetFactory;
 
-class TestCase extends \PHPUnit\Framework\TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected LoginForm $loginForm;
-
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->loginForm = new LoginForm();
+        WidgetFactory::initialize(new Container(), []);
     }
 
-    protected function tearDown(): void
+    /**
+     * Asserting two strings equality ignoring line endings.
+     *
+     * @param string $expected
+     * @param string $actual
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function assertEqualsWithoutLE(string $expected, string $actual, string $message = ''): void
     {
-        parent::tearDown();
+        $expected = str_replace("\r\n", "\n", $expected);
+        $actual = str_replace("\r\n", "\n", $actual);
 
-        unset($this->loginForm);
+        $this->assertEquals($expected, $actual, $message);
     }
 }

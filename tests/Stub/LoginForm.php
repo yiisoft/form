@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Stubs;
+namespace Yiisoft\Form\Tests\Stub;
 
-use Yiisoft\Form\Form;
+use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\HasLength;
 
-class LoginForm extends Form
+class LoginForm extends FormModel
 {
     private ?string $login = null;
     private ?string $password = null;
@@ -45,7 +45,7 @@ class LoginForm extends Form
         $this->rememberMe = $value;
     }
 
-    public function getAttributeHints(): array
+    public function attributeHints(): array
     {
         return [
             'login' => 'Write your id or email.',
