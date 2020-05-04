@@ -219,11 +219,12 @@ final class BooleanInput extends Widget
      * @param string $value
      *
      * @return self
-     *
-     * Note: Specification only allows {@see CheckBox} and {@see Radio}
      */
     public function type(string $value): self
     {
+        if (!in_array($value, ['checkbox', 'radio'])) {
+            throw new \InvalidArgumentException('Type should be either "checkbox" or "radio".');
+        }
         $new = clone $this;
         $new->type = $value;
         return $new;
