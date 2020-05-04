@@ -125,7 +125,7 @@ HTML;
         $html = Form::begin()->action('/something')->start();
             $html .= Field::widget()
                 ->config($data, 'name')
-                ->inputCss('form-testme');
+                ->inputCssClass('form-testme');
         $html .= Form::end();
 
         $expected = <<<'HTML'
@@ -141,7 +141,7 @@ HTML;
         $html = Form::begin()->action('/something')->start();
             $html .= Field::widget()
                 ->config($data, 'name')
-                ->inputCss('form-testme');
+                ->inputCssClass('form-testme');
         $html .= Form::end();
 
         $expected = <<<'HTML'
@@ -277,7 +277,7 @@ HTML;
     public function testForms(): void
     {
         $fieldConfig = [
-            'inputCss()' => ['form-control testMe'],
+            'inputCssClass()' => ['form-control testMe'],
             'validationStateOn()' => ['container'],
         ];
 
