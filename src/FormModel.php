@@ -259,6 +259,14 @@ abstract class FormModel implements FormModelInterface
         }
     }
 
+    private function getInflector(): Inflector
+    {
+        if ($this->inflector === null) {
+            $this->inflector = new Inflector();
+        }
+        return $this->inflector;
+    }
+
     /**
      * Generates a user friendly attribute label based on the give attribute name.
      *
@@ -273,11 +281,7 @@ abstract class FormModel implements FormModelInterface
      */
     private function generateAttributeLabel(string $name): string
     {
-        if ($this->inflector === null) {
-            $this->inflector = new Inflector();
-        }
-
-        return $this->inflector->camel2words($name, true);
+        return $this->getInflector()->camel2words($name, true);
     }
 
     private function readProperty(string $attribute)
