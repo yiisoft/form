@@ -25,7 +25,7 @@ HTML;
         $html = Field::widget()
             ->config($data, 'name')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldTextInputWithLabelCustom(): void
@@ -44,7 +44,7 @@ HTML;
             ->config($data, 'name')
             ->label(true, ['class' => 'customClass'], 'Name:')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldTextInputAnyLabel(): void
@@ -63,6 +63,6 @@ HTML;
             ->config($data, 'name')
             ->label(false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

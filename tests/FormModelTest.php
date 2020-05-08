@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use InvalidArgumentException;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
 final class FormModelTest extends TestCase
@@ -27,14 +28,9 @@ final class FormModelTest extends TestCase
         $form->rememberMe(true);
         $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
 
-        try {
-            $form->getAttributeValue('noExist');
-        } catch (\Exception $e) {
-            $this->assertEquals(
-                'Undefined property: Yiisoft\Form\Tests\Stub\LoginForm::$noExist',
-                $e->getMessage()
-            );
-        }
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm noExist".');
+        $form->getAttributeValue('noExist');
     }
 
     public function testGetAttributeHint(): void

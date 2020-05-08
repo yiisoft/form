@@ -47,7 +47,7 @@ HTML;
             ->config($this->data, 'cityBirth')
             ->listBox($this->cities)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsListBoxWithLabelCustom(): void
@@ -72,7 +72,7 @@ HTML;
             ->label(true, ['class' => 'customCssLabel'], 'customLabel:')
             ->listBox($this->cities)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsListBoxAnyLabel(): void
@@ -97,7 +97,7 @@ HTML;
             ->label(false)
             ->listBox($this->cities)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
 
@@ -124,6 +124,6 @@ HTML;
                 ['unselect' => '0', 'options' => ['1' => ['disabled' => true], '4' => ['label' => 'customText']]]
             )
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

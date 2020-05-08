@@ -28,7 +28,7 @@ HTML;
             ->config($data, 'sex')
             ->checkboxList(['Female', 'Male'])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldCheckBoxListWithLabelCustom(): void
@@ -53,7 +53,7 @@ HTML;
                 ['unselect' => '0']
             )
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldCheckBoxWithoutAnyLabel(): void
@@ -75,6 +75,6 @@ HTML;
             ->label(false)
             ->checkboxList(['Female', 'Male'], ['unselect' => '0'])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

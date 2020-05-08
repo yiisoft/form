@@ -28,7 +28,7 @@ HTML;
             ->config($data, 'sex')
             ->radioList(['1' => 'Female', '2' => 'Male'], ['unselect' => ''])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldRadioListWithLabelCustom(): void
@@ -50,7 +50,7 @@ HTML;
             ->label(true, ['class' => 'customClass'], 'Sex:')
             ->radioList(['1' => 'Female', '2' => 'Male'], ['unselect' => ''])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldRadioListAnyLabel(): void
@@ -72,6 +72,6 @@ HTML;
             ->label(false)
             ->radioList(['1' => 'Female', '2' => 'Male'], ['unselect' => ''])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

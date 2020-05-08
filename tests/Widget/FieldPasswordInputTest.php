@@ -29,7 +29,7 @@ HTML;
             ->config($data, 'password')
             ->passwordInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsPasswordInputWithLabelCustom(): void
@@ -49,7 +49,7 @@ HTML;
             ->label(true, ['class' => 'customClass'], 'Password:')
             ->passwordInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsPasswordInputAnyLabel(): void
@@ -69,6 +69,6 @@ HTML;
             ->label(false)
             ->passwordInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

@@ -27,7 +27,7 @@ HTML;
             ->config($data, 'email')
             ->input('email')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsInputWithLabelCustom(): void
@@ -47,7 +47,7 @@ HTML;
             ->label(true, ['class' => 'customClass'], 'Email:')
             ->input('email')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsInputAnyLabel(): void
@@ -67,6 +67,6 @@ HTML;
             ->label(false)
             ->input('email')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

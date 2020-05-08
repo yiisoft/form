@@ -25,7 +25,7 @@ HTML;
         $html = Field::widget()
             ->config($data, 'name')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldHintCustom(): void
@@ -44,7 +44,7 @@ HTML;
             ->config($data, 'name')
             ->hint('Custom hint.', true, ['class' => 'customClass'])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldAnyHint(): void
@@ -63,6 +63,6 @@ HTML;
             ->config($data, 'name')
             ->hint(null, false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }
