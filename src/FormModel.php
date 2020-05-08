@@ -290,9 +290,8 @@ abstract class FormModel implements FormModelInterface
         $getter = fn ($class, $attribute) => $class->$attribute;
         $getter = \Closure::bind($getter, null, $this);
 
-        $class = get_class($this);;
-
-        if (!property_exists($this, $attribute)) {
+        $class = get_class($this);
+        if (!property_exists($class, $attribute)) {
             throw new InvalidArgumentException("Undefined property: \"$class $attribute\".");
         }
 
