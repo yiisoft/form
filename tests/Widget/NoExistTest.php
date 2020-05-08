@@ -17,7 +17,7 @@ final class NoExistTest extends TestCase
         $data = new LoginForm();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm undefined_form_attribute".');
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm::undefined_form_attribute".');
 
         (new TextInput)->config($data, 'login')->run();
         (new PasswordInput)->config($data, 'password')->run();

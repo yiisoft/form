@@ -287,13 +287,13 @@ abstract class FormModel implements FormModelInterface
 
     private function readProperty(string $attribute)
     {
-        $getter = fn ($class, $attribute) => $class->$attribute;
-        $getter = \Closure::bind($getter, null, $this);
-
         $class = get_class($this);
         if (!property_exists($class, $attribute)) {
-            throw new InvalidArgumentException("Undefined property: \"$class $attribute\".");
+            throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
         }
+
+        $getter = fn ($class, $attribute) => $class->$attribute;
+        $getter = \Closure::bind($getter, null, $this);
 
         return $getter($this, $attribute);
     }

@@ -29,7 +29,7 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm noExist".');
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm::noExist".');
         $form->getAttributeValue('noExist');
     }
 
