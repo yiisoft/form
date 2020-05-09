@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\LoginForm;
-use Yiisoft\Form\Widget\PasswordInput;
 use Yiisoft\Form\Widget\TextInput;
 
 final class NoExistTest extends TestCase
@@ -19,8 +18,6 @@ final class NoExistTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm::undefined_form_attribute".');
 
-        (new TextInput)->config($data, 'login')->run();
-        (new PasswordInput)->config($data, 'password')->run();
-        (new TextInput)->config($data, 'undefined_form_attribute')->run();
+        (new TextInput())->config($data, 'undefined_form_attribute')->run();
     }
 }
