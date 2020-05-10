@@ -27,7 +27,7 @@ HTML;
             ->config($data, 'terms')
             ->checkbox()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldCheckBoxUnclosedByLabel(): void
@@ -47,7 +47,7 @@ HTML;
             ->config($data, 'terms')
             ->checkbox([], false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldCheckBoxWithLabelCustomUnClosedByLabel(): void
@@ -67,7 +67,7 @@ HTML;
             ->label(true, ['class' => 'customCssLabel'], 'customLabel')
             ->checkbox([], false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldCheckBoxAnyLabel(): void
@@ -87,6 +87,6 @@ HTML;
             ->label(false)
             ->checkbox([], false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

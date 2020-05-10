@@ -29,7 +29,7 @@ HTML;
             ->config($data, 'attachFiles')
             ->fileInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldFileInputWithLabelCustom(): void
@@ -49,7 +49,7 @@ HTML;
             ->label(true, ['class' => 'customClass'], 'Attach Files:')
             ->fileInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldFileInputAnyLabel(): void
@@ -69,6 +69,6 @@ HTML;
             ->label(false)
             ->fileInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

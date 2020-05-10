@@ -45,7 +45,7 @@ HTML;
             ->config($this->data, 'cityBirth')
             ->dropDownList($this->cities)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldDropDownListPromptWithLabelCustom(): void
@@ -77,7 +77,7 @@ HTML;
                 ],
             ])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldDropDownListPromptWithGroup(): void
@@ -133,7 +133,7 @@ HTML;
                 ],
             ])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldDropDownListPromptMultipleAnyLabel(): void
@@ -168,6 +168,6 @@ HTML;
                 'size' => 5
             ])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

@@ -28,7 +28,7 @@ HTML;
             ->config($data, 'name')
             ->label(true)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldErrorOptions(): void
@@ -50,7 +50,7 @@ HTML;
             ->label(true)
             ->error(['class' => 'errorTestMe'])
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsTabularInputErrors(): void
@@ -71,6 +71,6 @@ HTML;
             ->config($data, '[0]name')
             ->label(true)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

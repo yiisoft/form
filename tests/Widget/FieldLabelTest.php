@@ -25,7 +25,7 @@ HTML;
         $html = Field::widget()
             ->config($data, 'email')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldLabelCustom(): void
@@ -44,7 +44,7 @@ HTML;
             ->config($data, 'email')
             ->label(true, ['class' => 'labelTestMe'], 'Email:')
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldAnyLabel(): void
@@ -63,6 +63,6 @@ HTML;
             ->config($data, 'email')
             ->label(false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

@@ -26,7 +26,7 @@ HTML;
             ->config($data, 'terms')
             ->radio()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldRadioUnClosedByLabel(): void
@@ -46,7 +46,7 @@ HTML;
             ->config($data, 'terms')
             ->radio([], false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldRadioWithLabelCustomUnClosedByLabel(): void
@@ -66,7 +66,7 @@ HTML;
             ->label(true, ['class' => 'customCssLabel'], 'customLabel')
             ->radio([], false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldRadioAnyLabel(): void
@@ -86,6 +86,6 @@ HTML;
             ->label(false)
             ->radio([], false)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

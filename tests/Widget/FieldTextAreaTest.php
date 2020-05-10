@@ -27,7 +27,7 @@ HTML;
             ->config($data, 'address')
             ->textArea()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsTextAreaWithLabelCustom(): void
@@ -47,7 +47,7 @@ HTML;
             ->label(true, ['class' => 'customClass'], 'Address:')
             ->textArea()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testFieldsTextAreaAnyLabel(): void
@@ -67,6 +67,6 @@ HTML;
             ->label(false)
             ->textArea()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

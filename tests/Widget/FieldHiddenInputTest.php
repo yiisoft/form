@@ -26,6 +26,6 @@ HTML;
             ->config($data, 'name')
             ->hiddenInput()
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }

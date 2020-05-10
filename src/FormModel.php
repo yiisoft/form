@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use InvalidArgumentException;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
@@ -286,6 +287,11 @@ abstract class FormModel implements FormModelInterface
 
     private function readProperty(string $attribute)
     {
+        $class = get_class($this);
+        if (!property_exists($class, $attribute)) {
+            throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
+        }
+
         $getter = fn ($class, $attribute) => $class->$attribute;
         $getter = \Closure::bind($getter, null, $this);
 

@@ -27,7 +27,7 @@ HTML;
             ->ariaAttribute(false)
             ->label(true)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
@@ -41,7 +41,7 @@ HTML;
             ->config($data, 'name')
             ->label(true)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
 
         $data->name('yii');
         $data->validate();
@@ -57,6 +57,6 @@ HTML;
             ->config($data, 'name')
             ->label(true)
             ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 }
