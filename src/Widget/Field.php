@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Yii\Form\Helper\HtmlForm;
 
 use function array_merge;
 
@@ -24,7 +24,7 @@ final class Field extends Widget
     private const DEFAULT_HINT_OPTIONS = ['class' => 'hint-block'];
     private const DEFAULT_LABEL_OPTIONS = ['class' => 'control-label'];
 
-    private ?FormModelInterface $data = null;
+    private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
     private array $inputOptions = [];

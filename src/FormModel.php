@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Yii\Form;
 
 use InvalidArgumentException;
 use Yiisoft\Strings\Inflector;

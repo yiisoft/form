@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Widget;
+namespace Yiisoft\Yii\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Widget\TextArea;
+use Yiisoft\Yii\Form\Tests\TestCase;
+use Yiisoft\Yii\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Yii\Form\Widget\TextArea;
 
 final class TextAreaTest extends TestCase
 {

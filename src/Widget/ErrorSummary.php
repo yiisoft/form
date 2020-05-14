@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
 
 use function array_merge;
 use function array_values;

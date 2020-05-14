@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
 
 final class DropDownList extends Widget
 {
@@ -248,7 +248,7 @@ final class DropDownList extends Widget
     }
 
     /**
-     * The value that should be submitted when none of the dropdownlist is selected.
+     * The value that should be submitted when none of the dropdown list is selected.
      *
      * You may set this option to be null to prevent default value submission. If this option is not set, an empty
      * string will be submitted.

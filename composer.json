@@ -18,7 +18,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "yiisoft/html": "^3.0@dev",
         "yiisoft/http": "^1.0@dev",
         "yiisoft/strings": "^3.0@dev",
@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\Form\\": "src"
+            "Yiisoft\\Yii\\Form\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\Form\\Tests\\": "tests"
+            "Yiisoft\\Yii\\Form\\Tests\\": "tests"
         }
     },
     "extra": {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
 
 final class FileInput extends Widget
 {
@@ -107,7 +107,8 @@ final class FileInput extends Widget
     /**
      * Set whether the element is disabled or not.
      *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out text.
+     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
+     * text.
      * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
      * this will suggest you can set it to false to enable the element again, which is not the case.

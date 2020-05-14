@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Yii\Form;
 
 use Yiisoft\Validator\DataSetInterface;
 
@@ -158,9 +158,10 @@ interface FormModelInterface extends DataSetInterface
     /**
      * Returns the form name that this model class should use.
      *
-     * The form name is mainly used by {@see \Yiisoft\Form\Helper\HtmlForm} to determine how to name the input fields for the
-     * attributes in a model. If the form name is "A" and an attribute name is "b", then the corresponding input name
-     * would be "A[b]". If the form name is an empty string, then the input name would be "b".
+     * The form name is mainly used by {@see \Yiisoft\Yii\Form\Helper\HtmlForm} to determine how to name the input
+     * fields for the attributes in a model.
+     * If the form name is "A" and an attribute name is "b", then the corresponding input name would be "A[b]".
+     * If the form name is an empty string, then the input name would be "b".
      *
      * The purpose of the above naming schema is that for forms which contain multiple different models, the attributes
      * of each model are grouped in sub-arrays of the POST-data and it is easier to differentiate between them.
