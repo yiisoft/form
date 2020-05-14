@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
 
 final class RadioList extends Widget
 {

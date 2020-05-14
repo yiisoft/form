@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Helper;
+namespace Yiisoft\Yii\Form\Helper;
 
 use InvalidArgumentException;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
+use Yiisoft\Yii\Form\FormModelInterface;
 
 /**
  * Form-related HTML tag generation
@@ -85,7 +85,7 @@ final class HtmlForm
         $formName = $form->formName();
 
         if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
-            throw new \InvalidArgumentException('Attribute name must contain word characters only.');
+            throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
         [, $prefix, $attribute, $suffix] = $matches;
@@ -98,6 +98,6 @@ final class HtmlForm
             return $formName . $prefix . "[$attribute]" . $suffix;
         }
 
-        throw new \InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
+        throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
     }
 }

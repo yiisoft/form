@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Widget;
+namespace Yiisoft\Yii\Form\Tests\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Widget\Form;
-use Yiisoft\Form\Widget\Field;
+use Yiisoft\Yii\Form\Tests\TestCase;
+use Yiisoft\Yii\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Yii\Form\Widget\Form;
+use Yiisoft\Yii\Form\Widget\Field;
 
 final class FormTest extends TestCase
 {
@@ -63,8 +62,6 @@ final class FormTest extends TestCase
      * @param string $expected
      * @param string $method
      * @param array $options
-     *
-     * @throws InvalidConfigException
      */
     public function testFormsBeginSimulateViaPost(string $expected, string $method, array $options = []): void
     {

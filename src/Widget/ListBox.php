@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
 
 final class ListBox extends Widget
 {
@@ -22,8 +21,6 @@ final class ListBox extends Widget
      * Generates a list box.
      *
      * The selection of the list box is taken from the value of the model attribute.
-     *
-     * @throws InvalidConfigException
      *
      * @return string the generated list box tag.
      */

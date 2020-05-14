@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Yii\Form\Widget;
 
+use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
+use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Yii\Form\Helper\HtmlForm;
 
 final class BooleanInput extends Widget
 {
@@ -223,7 +224,7 @@ final class BooleanInput extends Widget
     public function type(string $value): self
     {
         if (!in_array($value, ['checkbox', 'radio'])) {
-            throw new \InvalidArgumentException('Type should be either "checkbox" or "radio".');
+            throw new InvalidArgumentException('Type should be either "checkbox" or "radio".');
         }
         $new = clone $this;
         $new->type = $value;
