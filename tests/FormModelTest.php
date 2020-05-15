@@ -130,6 +130,17 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getRememberMe());
     }
 
+    public function testAddError(): void
+    {
+        $form = new LoginForm();
+        $errorMessage = 'Invalid password.';
+
+        $form->addError('password', $errorMessage);
+
+        $this->assertTrue($form->hasErrors());
+        $this->assertEquals($errorMessage, $form->firstError('password'));
+    }
+
     public function testValidatorRules(): void
     {
         $form = new LoginForm();
