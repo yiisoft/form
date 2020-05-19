@@ -141,6 +141,17 @@ final class FormModelTest extends TestCase
         $this->assertEquals($errorMessage, $form->firstError('password'));
     }
 
+    public function testAddAndGetErrorForNonExistingAttribute(): void
+    {
+        $form = new LoginForm();
+        $errorMessage = 'Invalid username and/or password.';
+
+        $form->addError('form', $errorMessage);
+
+        $this->assertTrue($form->hasErrors());
+        $this->assertEquals($errorMessage, $form->firstError('form'));
+    }
+
     public function testValidatorRules(): void
     {
         $form = new LoginForm();
