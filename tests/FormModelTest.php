@@ -7,6 +7,8 @@ namespace Yiisoft\Yii\Form\Tests;
 use InvalidArgumentException;
 use Yiisoft\Yii\Form\Tests\Stub\LoginForm;
 
+use function str_repeat;
+
 final class FormModelTest extends TestCase
 {
     public function testGetFormName(): void
@@ -171,7 +173,7 @@ final class FormModelTest extends TestCase
             $form->error('login')
         );
 
-        $form->login(\str_repeat('x', 60));
+        $form->login(str_repeat('x', 60));
         $form->validate();
         $this->assertEquals(
             'Is too long.',
