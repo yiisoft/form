@@ -7,6 +7,8 @@ namespace Yiisoft\Yii\Form\Tests;
 use InvalidArgumentException;
 use Yiisoft\Yii\Form\Tests\Stub\LoginForm;
 
+use function str_repeat;
+
 final class FormModelTest extends TestCase
 {
     public function testGetFormName(): void
@@ -130,6 +132,28 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getRememberMe());
     }
 
+    public function testAddError(): void
+    {
+        $form = new LoginForm();
+        $errorMessage = 'Invalid password.';
+
+        $form->addError('password', $errorMessage);
+
+        $this->assertTrue($form->hasErrors());
+        $this->assertEquals($errorMessage, $form->firstError('password'));
+    }
+
+    public function testAddAndGetErrorForNonExistingAttribute(): void
+    {
+        $form = new LoginForm();
+        $errorMessage = 'Invalid username and/or password.';
+
+        $form->addError('form', $errorMessage);
+
+        $this->assertTrue($form->hasErrors());
+        $this->assertEquals($errorMessage, $form->firstError('form'));
+    }
+
     public function testValidatorRules(): void
     {
         $form = new LoginForm();
@@ -149,7 +173,7 @@ final class FormModelTest extends TestCase
             $form->error('login')
         );
 
-        $form->login(\str_repeat('x', 60));
+        $form->login(str_repeat('x', 60));
         $form->validate();
         $this->assertEquals(
             'Is too long.',

@@ -215,6 +215,11 @@ abstract class FormModel implements FormModelInterface
         return !$this->hasErrors();
     }
 
+    public function addError(string $attribute, string $error): void
+    {
+        $this->attributesErrors[$attribute][] = $error;
+    }
+
     private function addErrors(array $items): void
     {
         foreach ($items as $attribute => $errors) {
