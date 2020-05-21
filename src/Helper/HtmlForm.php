@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Helper;
+namespace Yiisoft\Form\Helper;
 
 use InvalidArgumentException;
 use Yiisoft\Html\Html;
-use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Form\FormModelInterface;
 
 /**
  * Form-related HTML tag generation

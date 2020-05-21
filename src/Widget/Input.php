@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Yii\Form\Helper\HtmlForm;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Form\FormModelInterface;
 
 use function in_array;
 

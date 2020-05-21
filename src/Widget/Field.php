@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
-use Yiisoft\Yii\Form\Helper\HtmlForm;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Helper\HtmlForm;
 
 use function array_merge;
 

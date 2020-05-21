@@ -1,5 +1,5 @@
 {
-    "name": "yiisoft/yii-form",
+    "name": "yiisoft/form",
     "type": "library",
     "description": "The package helps with implementing data entry forms.",
     "keywords": [
@@ -9,11 +9,11 @@
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii-form/issues?state=open",
+        "issues": "https://github.com/yiisoft/form/issues?state=open",
         "forum": "https://www.yiiframework.com/forum/",
         "wiki": "https://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii-form"
+        "source": "https://github.com/yiisoft/form"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\Yii\\Form\\": "src"
+            "Yiisoft\\Form\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\Yii\\Form\\Tests\\": "tests"
+            "Yiisoft\\Form\\Tests\\": "tests"
         }
     },
     "extra": {

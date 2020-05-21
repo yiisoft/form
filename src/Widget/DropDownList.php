@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Form\FormModelInterface;
 
 final class DropDownList extends Widget
 {

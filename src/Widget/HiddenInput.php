@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Form\FormModelInterface;
 
 final class HiddenInput extends Widget
 {
