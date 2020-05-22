@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Tests\Widget;
+namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Yii\Form\Tests\TestCase;
-use Yiisoft\Yii\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Yii\Form\Widget\Form;
-use Yiisoft\Yii\Form\Widget\Field;
+use Yiisoft\Form\Tests\TestCase;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Widget\Form;
+use Yiisoft\Form\Widget\Field;
 
 final class FormTest extends TestCase
 {

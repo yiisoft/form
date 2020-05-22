@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Tests\Stub;
+namespace Yiisoft\Form\Tests\Stub;
 
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Yii\Form\FormModel;
+use Yiisoft\Form\FormModel;
 
 final class PersonalForm extends FormModel
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Form\FormModelInterface;
 
 final class Hint extends Widget
 {
@@ -58,7 +58,7 @@ final class Hint extends Widget
      * This specifies the hint to be displayed.
      *
      * Note that this will NOT be encoded.
-     * If this is not set, {@see \Yiisoft\Yii\Form\FormModel::getAttributeHint()} will be called to get the hint for
+     * If this is not set, {@see \Yiisoft\Form\FormModel::getAttributeHint()} will be called to get the hint for
      * display (without encoding).
      *
      * @param string $value

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Tests;
+namespace Yiisoft\Form\Tests;
 
 use InvalidArgumentException;
-use Yiisoft\Yii\Form\Tests\Stub\LoginForm;
+use Yiisoft\Form\Tests\Stub\LoginForm;
 
 use function str_repeat;
 
@@ -31,7 +31,7 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Yii\Form\Tests\Stub\LoginForm::noExist".');
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm::noExist".');
         $form->getAttributeValue('noExist');
     }
 

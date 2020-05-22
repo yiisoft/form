@@ -8,18 +8,18 @@
 
 The package helps with implementing data entry forms.
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii-form/v/stable.png)](https://packagist.org/packages/yiisoft/yii-form)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii-form/downloads.png)](https://packagist.org/packages/yiisoft/yii-form)
-[![Build status](https://github.com/yiisoft/yii-form/workflows/build/badge.svg)](https://github.com/yiisoft/yii-form/actions)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/yii-form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/yii-form/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/yii-form/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/yii-form/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/yiisoft/form/v/stable.png)](https://packagist.org/packages/yiisoft/form)
+[![Total Downloads](https://poser.pugx.org/yiisoft/form/downloads.png)](https://packagist.org/packages/yiisoft/form)
+[![Build status](https://github.com/yiisoft/form/workflows/build/badge.svg)](https://github.com/yiisoft/form/actions)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/form/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
 
 ## Installation
 
 The package could be installed via composer:
 
 ```php
-composer require yiisoft/yii-form
+composer require yiisoft/form
 ```
 
 ## Usage

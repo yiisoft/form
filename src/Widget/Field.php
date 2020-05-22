@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
-use Yiisoft\Yii\Form\Helper\HtmlForm;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Helper\HtmlForm;
 
 use function array_merge;
 
@@ -907,7 +907,7 @@ final class Field extends Widget
 
     private function setAriaAttributes(array $options = []): void
     {
-        if ($this->ariaAttribute && ($this->data instanceof FormModelInterface)) {
+        if ($this->ariaAttribute) {
             if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
                 $this->inputOptions['aria-required'] = 'true';
             }

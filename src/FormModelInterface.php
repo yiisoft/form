@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form;
+namespace Yiisoft\Form;
 
 use Yiisoft\Validator\DataSetInterface;
 
@@ -107,7 +107,7 @@ interface FormModelInterface extends DataSetInterface
      * {@see firstErrors()}
      * {@see firstError()}
      */
-    public function errors(): ?array;
+    public function errors(): array;
 
     /**
      * Returns the errors for single attribute.
@@ -161,12 +161,12 @@ interface FormModelInterface extends DataSetInterface
      * {@see errors()}
      * {@see firstErrors()}
      */
-    public function firstError(string $attribute): ?string;
+    public function firstError(string $attribute): string;
 
     /**
      * Returns the form name that this model class should use.
      *
-     * The form name is mainly used by {@see \Yiisoft\Yii\Form\Helper\HtmlForm} to determine how to name the input
+     * The form name is mainly used by {@see \Yiisoft\Form\Helper\HtmlForm} to determine how to name the input
      * fields for the attributes in a model.
      * If the form name is "A" and an attribute name is "b", then the corresponding input name would be "A[b]".
      * If the form name is an empty string, then the input name would be "b".

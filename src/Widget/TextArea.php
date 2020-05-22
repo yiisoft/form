@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
-use Yiisoft\Yii\Form\Helper\HtmlForm;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Helper\HtmlForm;
 
 final class TextArea extends Widget
 {
@@ -276,7 +276,7 @@ final class TextArea extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? $id : '';
+        return $id !== false ? (string) $id : '';
     }
 
     private function getName(): string

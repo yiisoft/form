@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Tests\Widget;
+namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Yii\Form\Tests\TestCase;
-use Yiisoft\Yii\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Yii\Form\Widget\DatePicker;
+use Yiisoft\Form\Tests\TestCase;
+use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Widget\DatePicker;
 
 final class DatePickerTest extends TestCase
 {

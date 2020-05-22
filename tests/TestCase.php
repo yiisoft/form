@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Tests;
+namespace Yiisoft\Form\Tests;
 
 use Yiisoft\Di\Container;
 use Yiisoft\Widget\WidgetFactory;

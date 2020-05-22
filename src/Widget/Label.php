@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
-use Yiisoft\Yii\Form\Helper\HtmlForm;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Helper\HtmlForm;
 
 final class Label extends Widget
 {
@@ -99,7 +99,7 @@ final class Label extends Widget
      * @return self
      *
      * Note that this will NOT be encoded.
-     * - If this is not set, {@see \Yiisoft\Yii\Form\FormModel::getAttributeLabel() will be called to get the label for
+     * - If this is not set, {@see \Yiisoft\Form\FormModel::getAttributeLabel() will be called to get the label for
      * display (after encoding).
      */
     public function label(string $value): self

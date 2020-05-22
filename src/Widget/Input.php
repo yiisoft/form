@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Form\Widget;
+namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Yii\Form\Helper\HtmlForm;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Yii\Form\FormModelInterface;
+use Yiisoft\Form\FormModelInterface;
 
 use function in_array;
 
@@ -217,7 +217,7 @@ final class Input extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? $id : '';
+        return $id !== false ? (string) $id : '';
     }
 
     private function getName(): string
@@ -241,7 +241,7 @@ final class Input extends Widget
 
     private function setPlaceholder(): void
     {
-        if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color']))) {
+        if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color'], true))) {
             $attributeName = Html::getAttributeName($this->attribute);
             $this->options['placeholder'] = $this->data->attributeLabel($attributeName);
         }
