@@ -107,7 +107,7 @@ interface FormModelInterface extends DataSetInterface
      * {@see firstErrors()}
      * {@see firstError()}
      */
-    public function errors(): ?array;
+    public function errors(): array;
 
     /**
      * Returns the errors for single attribute.
@@ -161,7 +161,7 @@ interface FormModelInterface extends DataSetInterface
      * {@see errors()}
      * {@see firstErrors()}
      */
-    public function firstError(string $attribute): ?string;
+    public function firstError(string $attribute): string;
 
     /**
      * Returns the form name that this model class should use.

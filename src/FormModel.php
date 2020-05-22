@@ -77,7 +77,7 @@ abstract class FormModel implements FormModelInterface
 
     public function errors(): array
     {
-        return $this->attributesErrors ?? [];
+        return $this->attributesErrors;
     }
 
     public function errorSummary(bool $showAllErrors): array

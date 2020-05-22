@@ -907,7 +907,7 @@ final class Field extends Widget
 
     private function setAriaAttributes(array $options = []): void
     {
-        if ($this->ariaAttribute && ($this->data instanceof FormModelInterface)) {
+        if ($this->ariaAttribute) {
             if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
                 $this->inputOptions['aria-required'] = 'true';
             }

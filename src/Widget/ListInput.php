@@ -81,7 +81,7 @@ final class ListInput extends Widget
     /**
      * Set the Id of the widget.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return self
      */
@@ -215,7 +215,7 @@ final class ListInput extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? $id : '';
+        return $id !== false ? (string) $id : '';
     }
 
     private function getName(): string

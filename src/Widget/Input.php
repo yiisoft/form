@@ -217,7 +217,7 @@ final class Input extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? $id : '';
+        return $id !== false ? (string) $id : '';
     }
 
     private function getName(): string
@@ -241,7 +241,7 @@ final class Input extends Widget
 
     private function setPlaceholder(): void
     {
-        if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color']))) {
+        if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color'], true))) {
             $attributeName = Html::getAttributeName($this->attribute);
             $this->options['placeholder'] = $this->data->attributeLabel($attributeName);
         }

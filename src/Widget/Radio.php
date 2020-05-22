@@ -119,7 +119,7 @@ final class Radio extends Widget
     /**
      * Set the Id of the widget.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return self
      */

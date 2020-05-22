@@ -276,7 +276,7 @@ final class TextArea extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? $id : '';
+        return $id !== false ? (string) $id : '';
     }
 
     private function getName(): string

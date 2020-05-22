@@ -106,7 +106,8 @@ final class BooleanInput extends Widget
     /**
      * Set whether the element is disabled or not.
      *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out text.
+     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
+     * text.
      * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
      * this will suggest you can set it to false to enable the element again, which is not the case.
@@ -140,7 +141,7 @@ final class BooleanInput extends Widget
     /**
      * Set the Id of the widget.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return self
      */
@@ -223,7 +224,7 @@ final class BooleanInput extends Widget
      */
     public function type(string $value): self
     {
-        if (!in_array($value, ['checkbox', 'radio'])) {
+        if (!in_array($value, ['checkbox', 'radio'], true)) {
             throw new InvalidArgumentException('Type should be either "checkbox" or "radio".');
         }
         $new = clone $this;
@@ -256,7 +257,7 @@ final class BooleanInput extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? $id : '';
+        return $id !== false ? (string) $id : '';
     }
 
     private function getName(): string
