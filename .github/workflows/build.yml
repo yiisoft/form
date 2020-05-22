@@ -49,6 +49,7 @@ jobs:
           extensions: ${{ env.extensions }}
           ini-values: date.timezone='UTC'
           coverage: pcov
+          tools: cs2pr, phan
 
       - name: Determine composer cache directory on Linux
         if: matrix.os == 'ubuntu-latest'
@@ -82,3 +83,8 @@ jobs:
         run: |
           wget https://scrutinizer-ci.com/ocular.phar
           php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
+      - name: Phan static analysis
+        if: matrix.php-version == '7.4'
+        continue-on-error: true
+        run: phan --no-progress-bar --output-mode checkstyle | cs2pr
