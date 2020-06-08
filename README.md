@@ -13,8 +13,10 @@ The package helps with implementing data entry forms.
 [![Build status](https://github.com/yiisoft/form/workflows/build/badge.svg)](https://github.com/yiisoft/form/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/form/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Fform%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/form/master)
+![static analysis with phan](https://github.com/yiisoft/form/workflows/static%20analysis%20with%20phan/badge.svg)
 
-## Installation
+### Installation
 
 The package could be installed via composer:
 
@@ -22,7 +24,7 @@ The package could be installed via composer:
 composer require yiisoft/form
 ```
 
-## Usage
+### Usage
 
 You must create your form model by extending the abstract form class, defining all the private properties with their
 respective typehint.
@@ -120,10 +122,18 @@ class LoginForm extends FormModel
 }
 ```
 
-## Tests
+### Tests
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
 ```php
 ./vendor/bin/phpunit
+```
+
+### Tests mutation
+
+The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
+
+```php
+./vendor/bin/infection
 ```

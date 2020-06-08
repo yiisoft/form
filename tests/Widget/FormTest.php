@@ -75,6 +75,7 @@ final class FormTest extends TestCase
 
     public function testFormsEnd(): void
     {
+        Form::begin()->start();
         $this->assertEquals('</form>', Form::end());
     }
 
