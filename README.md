@@ -14,6 +14,7 @@ The package helps with implementing data entry forms.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/form/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Fform%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/form/master)
+![Phan](https://github.com/yiisoft/form/workflows/Phan/badge.svg)
 
 ### Installation
 
@@ -136,7 +137,3 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 ```php
 ./vendor/bin/infection
 ```
-
-### Static analysis with phan
-
-![static analysis with phan](https://github.com/yiisoft/form/workflows/static%20analysis%20with%20phan/badge.svg)
