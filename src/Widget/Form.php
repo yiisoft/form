@@ -21,7 +21,7 @@ use function urldecode;
  */
 final class Form extends Widget
 {
-    private string $action;
+    private string $action = '';
     private string $method = Method::POST;
     private array $options = [];
 

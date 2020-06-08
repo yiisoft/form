@@ -1,8 +1,8 @@
+name: static analysis with phan
+
 on:
   - pull_request
   - push
-
-name: Phan
 
 jobs:
   mutation:
