@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use InvalidArgumentException;
+use Yiisoft\I18n\TranslatorInterface;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Validator;
@@ -14,13 +15,24 @@ use Yiisoft\Validator\Validator;
  */
 abstract class FormModel implements FormModelInterface
 {
+    private ?TranslatorInterface $translator;
+    private ?string $translationDomain;
+    private ?string $translationLocale;
+
     private array $attributes;
     private array $attributesLabels;
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
 
-    public function __construct()
-    {
+    public function __construct(
+        TranslatorInterface $translator = null,
+        string $translationDomain = null,
+        string $translationLocale = null
+    ) {
+        $this->translator = $translator;
+        $this->translationDomain = $translationDomain;
+        $this->translationLocale = $translationLocale;
+
         $this->attributes = $this->attributes();
         $this->attributesLabels = $this->attributeLabels();
     }
@@ -41,6 +53,11 @@ abstract class FormModel implements FormModelInterface
     public function getAttributeValue(string $attribute)
     {
         return $this->readProperty($attribute);
+    }
+
+    public function attributeLabels(): array
+    {
+        return [];
     }
 
     public function attributeHint(string $attribute): string
@@ -203,7 +220,9 @@ abstract class FormModel implements FormModelInterface
         $rules = $this->rules();
 
         if (!empty($rules)) {
-            $results = (new Validator($rules))->validate($this);
+            $results = (new Validator(
+                $rules, $this->translator, $this->translationDomain, $this->translationLocale
+            ))->validate($this);
 
             foreach ($results as $attribute => $result) {
                 if ($result->isValid() === false) {
