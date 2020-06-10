@@ -27,6 +27,7 @@
     },
     "require-dev": {
         "infection/infection": "^0.16.3",
+        "phan/phan": "^3.0.2",
         "phpunit/phpunit": "^9.2",
         "yiisoft/di": " ^3.0@dev"
     },
@@ -44,9 +45,6 @@
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
-    },
-    "scripts": {
-        "phan": "phan --progress-bar -o analysis.txt"
     },
     "config": {
         "sort-packages": true
