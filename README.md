@@ -14,7 +14,7 @@ The package helps with implementing data entry forms.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/form/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/form/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/form/?branch=master)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Fform%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/form/master)
-[![static analysis with phan](https://github.com/yiisoft/form/workflows/static%20analysis%20with%20phan/badge.svg)](https://github.com/yiisoft/form/actions?query=workflow%3A%22static+analysis+with+phan%22)
+[![static analysis](https://github.com/yiisoft/form/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/form/actions?query=workflow%3A%22static+analysis%22)
 
 ### Installation
 
@@ -122,7 +122,7 @@ class LoginForm extends FormModel
 }
 ```
 
-### Tests
+### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
@@ -130,10 +130,18 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 ./vendor/bin/phpunit
 ```
 
-### Tests mutation
+### Mutation testing
 
-The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
+The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
 
 ```php
 ./vendor/bin/infection
+```
+
+### Static analysis
+
+The code is statically analyzed with [Phan](https://github.com/phan/phan/wiki). To run static analysis:
+
+```php
+./vendor/bin/phan
 ```
