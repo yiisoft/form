@@ -13,6 +13,7 @@ final class FileInput extends Widget
     private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
+    private bool $noHiddenInput = false;
 
     /**
      * Generates a file input tag for the given form attribute.
@@ -44,10 +45,14 @@ final class FileInput extends Widget
          *
          * Note: For file-field-only form with `disabled` option set to `true` input submitting detection won't work.
          */
+        $hiddenInput = '';
+
+        if ($new->noHiddenInput === false) {
+            $hiddenInput = HiddenInput::widget()->config($new->data, $new->attribute, $hiddenOptions)->run();
+        }
+
         return
-            HiddenInput::widget()
-                ->config($new->data, $new->attribute, $hiddenOptions)
-                ->run() .
+            $hiddenInput .
             Input::widget()
                 ->type('file')
                 ->config($new->data, $new->attribute, $new->options)
@@ -188,6 +193,20 @@ final class FileInput extends Widget
     {
         $new = clone $this;
         $new->options['tabindex'] = $value;
+        return $new;
+    }
+
+    /**
+     * Allows you to disable hidden input widget.
+     *
+     * @param bool $value
+     *
+     * @return self
+     */
+    public function noHiddenInput(bool $value): self
+    {
+        $new = clone $this;
+        $new->noHiddenInput = $value;
         return $new;
     }
 }
