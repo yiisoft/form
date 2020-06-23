@@ -134,7 +134,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testFileInputNoHiddenInput(): void
+    public function testFileInputWithoutHiddenInput(): void
     {
         $data = new PersonalForm();
 
@@ -143,7 +143,7 @@ HTML;
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
-            ->noHiddenInput(true)
+            ->withoutHiddenInput(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }

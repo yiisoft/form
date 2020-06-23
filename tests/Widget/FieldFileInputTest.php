@@ -72,7 +72,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testFieldFileInputNoHiddenInput(): void
+    public function testFieldFileInputWithoutHiddenInput(): void
     {
         $data = new PersonalForm();
 
