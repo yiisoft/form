@@ -71,4 +71,23 @@ HTML;
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
+
+    public function testFieldFileInputWithoutHiddenInput(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<div class="form-group field-personalform-attachfiles">
+<label class="control-label" for="personalform-attachfiles">Attach Files</label>
+<input type="file" id="personalform-attachfiles" class="form-control" name="PersonalForm[attachFiles]" enctype="multipart/form-data">
+
+<div class="help-block"></div>
+</div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'attachFiles')
+            ->fileInput([], true)
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
 }

@@ -400,6 +400,7 @@ final class Field extends Widget
      * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
      * they are explicitly specified in `$options`.
      *
+     * @param bool $withoutHiddenInput enable/disable hidden input field.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
      *
@@ -410,7 +411,7 @@ final class Field extends Widget
      *
      * @return self the field object itself.
      */
-    public function fileInput(array $options = []): self
+    public function fileInput(array $options = [], bool $withoutHiddenInput = false): self
     {
         $new = clone $this;
 
@@ -429,6 +430,7 @@ final class Field extends Widget
 
         $this->parts['{input}'] = FileInput::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
+            ->withoutHiddenInput($withoutHiddenInput)
             ->run();
 
         return $this;
