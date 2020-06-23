@@ -411,7 +411,7 @@ final class Field extends Widget
      *
      * @return self the field object itself.
      */
-    public function fileInput(bool $withoutHiddenInput = false, array $options = []): self
+    public function fileInput(array $options = [], bool $withoutHiddenInput = false): self
     {
         $new = clone $this;
 

@@ -86,7 +86,7 @@ HTML;
 HTML;
         $html = Field::widget()
             ->config($data, 'attachFiles')
-            ->fileInput(true)
+            ->fileInput([], true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
