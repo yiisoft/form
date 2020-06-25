@@ -5,16 +5,30 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use InvalidArgumentException;
+use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
 use function str_repeat;
 
 final class FormModelTest extends TestCase
 {
-    public function testGetFormName(): void
+    public function testAnonymousFormName(): void
     {
-        $form = new LoginForm();
-        $this->assertEquals('LoginForm', $form->formName());
+        $form = new class extends FormModel {
+        };
+        $this->assertEquals('', $form->formName());
+    }
+
+    public function testDefaultFormName(): void
+    {
+        $form = new DefaultFormNameForm();
+        $this->assertEquals('DefaultFormNameForm', $form->formName());
+    }
+
+    public function testCustomFormName(): void
+    {
+        $form = new CustomFormNameForm();
+        $this->assertEquals('my-best-form-name', $form->formName());
     }
 
     public function testGetAttributeValue(): void
@@ -59,7 +73,7 @@ final class FormModelTest extends TestCase
         $expected = [
             'login' => 'Login:',
             'password' => 'Password:',
-            'rememberMe' => 'remember Me:'
+            'rememberMe' => 'remember Me:',
         ];
 
         $this->assertEquals($expected, $form->attributeLabels());
@@ -72,13 +86,13 @@ final class FormModelTest extends TestCase
         $data = [
             'LoginForm' => [
                 'login' => 'admin@.com',
-                'password' => '123456'
-            ]
+                'password' => '123456',
+            ],
         ];
 
         $expected = [
             'login' => 'This value is not a valid email address.',
-            'password' => 'Is too short.'
+            'password' => 'Is too short.',
         ];
 
         $form->load($data);
@@ -91,7 +105,7 @@ final class FormModelTest extends TestCase
 
         $expected = [
             'This value is not a valid email address.',
-            'Is too short.'
+            'Is too short.',
         ];
 
         $this->assertEquals(
@@ -121,8 +135,8 @@ final class FormModelTest extends TestCase
                 'login' => 'admin',
                 'password' => '123456',
                 'rememberMe' => true,
-                'noExist' => 'noExist'
-            ]
+                'noExist' => 'noExist',
+            ],
         ];
 
         $form->load($data);
@@ -186,5 +200,17 @@ final class FormModelTest extends TestCase
             'This value is not a valid email address.',
             $form->firstError('login')
         );
+    }
+}
+
+final class DefaultFormNameForm extends FormModel
+{
+}
+
+final class CustomFormNameForm extends FormModel
+{
+    public function formName(): string
+    {
+        return 'my-best-form-name';
     }
 }
