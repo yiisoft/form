@@ -77,9 +77,14 @@ abstract class FormModel implements FormModelInterface
         return $this->attributesLabels[$attribute] ?? $this->generateAttributeLabel($attribute);
     }
 
+    /**
+     * @return string Returns classname without a namespace part or empty string when class is anonymous
+     */
     public function formName(): string
     {
-        return '';
+        return strpos(static::class, '@anonymous') !== false
+            ? ''
+            : mb_substr(mb_strrchr(static::class, "\\"), 1);
     }
 
     public function hasAttribute(string $attribute): bool
@@ -260,6 +265,7 @@ abstract class FormModel implements FormModelInterface
     private function attributes(): array
     {
         $class = new \ReflectionClass($this);
+        $this->attributes = [];
 
         foreach ($class->getProperties() as $property) {
             if (!$property->isStatic()) {

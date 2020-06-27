@@ -48,11 +48,6 @@ final class PersonalForm extends FormModel
         return '(&#10006;) This is custom error message.';
     }
 
-    public function formName(): string
-    {
-        return 'PersonalForm';
-    }
-
     protected function rules(): array
     {
         return [

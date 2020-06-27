@@ -62,11 +62,6 @@ class LoginForm extends FormModel
         ];
     }
 
-    public function formName(): string
-    {
-        return 'LoginForm';
-    }
-
     protected function rules(): array
     {
         return [
