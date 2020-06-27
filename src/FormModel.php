@@ -33,7 +33,7 @@ abstract class FormModel implements FormModelInterface
         $this->translationDomain = $translationDomain;
         $this->translationLocale = $translationLocale;
 
-        $this->attributes = $this->attributes();
+        $this->attributes = $this->collectAttributes();
         $this->attributesLabels = $this->attributeLabels();
     }
 
@@ -262,26 +262,28 @@ abstract class FormModel implements FormModelInterface
      *
      * @return array list of attribute types indexed by attribute names.
      */
-    private function attributes(): array
+    private function collectAttributes(): array
     {
         $class = new \ReflectionClass($this);
-        $this->attributes = [];
+        $attributes = [];
 
         foreach ($class->getProperties() as $property) {
-            if (!$property->isStatic()) {
-                $type = (new \ReflectionProperty($property->class, $property->name))->getType();
-
-                if ($type !== null) {
-                    $this->attributes[$property->getName()] = $type->getName();
-                } else {
-                    throw new \InvalidArgumentException(
-                        "You must specify the type hint for \"$property->class\" class."
-                    );
-                }
+            if ($property->isStatic()) {
+                continue;
             }
+
+            $type = (new \ReflectionProperty($property->class, $property->name))->getType();
+
+            if ($type === null) {
+                throw new \InvalidArgumentException(
+                    "You must specify the type hint for \"$property->class\" class."
+                );
+            }
+
+            $attributes[$property->getName()] = $type->getName();
         }
 
-        return $this->attributes;
+        return $attributes;
     }
 
     private function clearErrors(?string $attribute = null): void
