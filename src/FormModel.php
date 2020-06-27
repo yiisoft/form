@@ -265,6 +265,7 @@ abstract class FormModel implements FormModelInterface
     private function attributes(): array
     {
         $class = new \ReflectionClass($this);
+        $this->attributes = [];
 
         foreach ($class->getProperties() as $property) {
             if (!$property->isStatic()) {
