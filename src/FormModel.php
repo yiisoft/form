@@ -15,9 +15,9 @@ use Yiisoft\Validator\Validator;
  */
 abstract class FormModel implements FormModelInterface
 {
-    protected ?TranslatorInterface $translator;
-    protected ?string $translationDomain;
-    protected ?string $translationLocale;
+    protected ?TranslatorInterface $translator = null;
+    protected ?string $translationDomain = null;
+    protected ?string $translationLocale = null;
 
     private array $attributes;
     private array $attributesLabels;
@@ -226,7 +226,10 @@ abstract class FormModel implements FormModelInterface
 
         if (!empty($rules)) {
             $results = (new Validator(
-                $rules, $this->translator, $this->translationDomain, $this->translationLocale
+                $rules,
+                $this->translator,
+                $this->translationDomain,
+                $this->translationLocale
             ))->validate($this);
 
             foreach ($results as $attribute => $result) {
