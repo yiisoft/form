@@ -122,6 +122,7 @@ final class FormModelTest extends TestCase
         $this->assertTrue($form->hasAttribute('password'));
         $this->assertTrue($form->hasAttribute('rememberMe'));
         $this->assertFalse($form->hasAttribute('noExist'));
+        $this->assertFalse($form->hasAttribute('extraField'));
     }
 
     public function testLoad(): void

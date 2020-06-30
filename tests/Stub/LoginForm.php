@@ -11,6 +11,7 @@ use Yiisoft\Form\FormModel;
 
 class LoginForm extends FormModel
 {
+    private static ?string $extraField = null;
     private ?string $login = null;
     private ?string $password = null;
     private bool $rememberMe = false;
