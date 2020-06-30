@@ -31,6 +31,18 @@ final class FormModelTest extends TestCase
         $this->assertEquals('my-best-form-name', $form->formName());
     }
 
+    public function testUnknownPropertyType(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches(sprintf(
+            '/You must specify the type hint for "%s" property in "([^"]+)" class./',
+            'property',
+        ));
+        $form = new class extends FormModel{
+            private $property;
+        };
+    }
+
     public function testGetAttributeValue(): void
     {
         $form = new LoginForm();
@@ -95,8 +107,8 @@ final class FormModelTest extends TestCase
             'password' => 'Is too short.',
         ];
 
-        $form->load($data);
-        $form->validate();
+        $this->assertTrue($form->load($data));
+        $this->assertFalse($form->validate());
 
         $this->assertEquals(
             $expected,
@@ -119,7 +131,10 @@ final class FormModelTest extends TestCase
         $form = new LoginForm();
 
         $this->assertTrue($form->hasAttribute('login'));
+        $this->assertTrue($form->hasAttribute('password'));
+        $this->assertTrue($form->hasAttribute('rememberMe'));
         $this->assertFalse($form->hasAttribute('noExist'));
+        $this->assertFalse($form->hasAttribute('extraField'));
     }
 
     public function testLoad(): void
@@ -139,11 +154,54 @@ final class FormModelTest extends TestCase
             ],
         ];
 
-        $form->load($data);
+        $this->assertTrue($form->load($data));
 
         $this->assertEquals('admin', $form->getLogin());
         $this->assertEquals('123456', $form->getPassword());
         $this->assertEquals(true, $form->getRememberMe());
+    }
+
+    public function testFailedLoadForm(): void
+    {
+        $form1 = new LoginForm();
+        $form2 = new class extends FormModel{
+        };
+
+        $data1 = [
+            'LoginForm2' => [
+                'login' => 'admin',
+                'password' => '123456',
+                'rememberMe' => true,
+                'noExist' => 'noExist',
+            ],
+        ];
+        $data2 = [];
+
+        $this->assertFalse($form1->load($data1));
+        $this->assertFalse($form1->load($data2));
+
+        $this->assertTrue($form2->load($data1));
+        $this->assertFalse($form2->load($data2));
+    }
+
+    public function testSetAttributes()
+    {
+        $form = new class extends FormModel{
+            private int $int = 1;
+            private string $string = 'string';
+            private float $float = 3.14;
+            private bool $bool = true;
+        };
+        $form->setAttributes([
+            'int' => '2',
+            'float' => '3.15',
+            'bool' => 'false',
+            'string' => 555,
+        ]);
+        $this->assertIsInt($form->getAttributeValue('int'));
+        $this->assertIsFloat($form->getAttributeValue('float'));
+        $this->assertIsBool($form->getAttributeValue('bool'));
+        $this->assertIsString($form->getAttributeValue('string'));
     }
 
     public function testAddError(): void

@@ -33,7 +33,7 @@ abstract class FormModel implements FormModelInterface
         $this->translationDomain = $translationDomain;
         $this->translationLocale = $translationLocale;
 
-        $this->attributes = $this->attributes();
+        $this->attributes = $this->collectAttributes();
         $this->attributesLabels = $this->attributeLabels();
     }
 
@@ -84,7 +84,7 @@ abstract class FormModel implements FormModelInterface
     {
         return strpos(static::class, '@anonymous') !== false
             ? ''
-            : mb_substr(mb_strrchr(static::class, "\\"), 1);
+            : substr(strrchr(static::class, "\\"), 1);
     }
 
     public function hasAttribute(string $attribute): bool
@@ -210,6 +210,9 @@ abstract class FormModel implements FormModelInterface
                     case 'int':
                         $this->writeProperty($name, (int) $value);
                         break;
+                    case 'string':
+                        $this->writeProperty($name, (string) $value);
+                        break;
                     default:
                         $this->writeProperty($name, $value);
                         break;
@@ -247,10 +250,13 @@ abstract class FormModel implements FormModelInterface
         $this->attributesErrors[$attribute][] = $error;
     }
 
+    /**
+     * @param string[][] $items
+     */
     private function addErrors(array $items): void
     {
         foreach ($items as $attribute => $errors) {
-            foreach ((array)$errors as $error) {
+            foreach ($errors as $error) {
                 $this->attributesErrors[$attribute][] = $error;
             }
         }
@@ -265,26 +271,29 @@ abstract class FormModel implements FormModelInterface
      *
      * @return array list of attribute types indexed by attribute names.
      */
-    private function attributes(): array
+    private function collectAttributes(): array
     {
         $class = new \ReflectionClass($this);
-        $this->attributes = [];
+        $attributes = [];
 
         foreach ($class->getProperties() as $property) {
-            if (!$property->isStatic()) {
-                $type = (new \ReflectionProperty($property->class, $property->name))->getType();
-
-                if ($type !== null) {
-                    $this->attributes[$property->getName()] = $type->getName();
-                } else {
-                    throw new \InvalidArgumentException(
-                        "You must specify the type hint for \"$property->class\" class."
-                    );
-                }
+            if ($property->isStatic()) {
+                continue;
             }
+
+            $type = $property->getType();
+            if ($type === null) {
+                throw new \InvalidArgumentException(sprintf(
+                    'You must specify the type hint for "%s" property in "%s" class.',
+                    $property->getName(),
+                    $property->getDeclaringClass()->getName(),
+                ));
+            }
+
+            $attributes[$property->getName()] = $type->getName();
         }
 
-        return $this->attributes;
+        return $attributes;
     }
 
     private function clearErrors(?string $attribute = null): void

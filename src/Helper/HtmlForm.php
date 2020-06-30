@@ -60,7 +60,7 @@ final class HtmlForm
     {
         $name = mb_strtolower(static::getInputName($form, $attribute), $charset);
 
-        return str_replace(['[]', '][', '[', ']', ' ', '.'], ['', '-', '-', '', '-', '-'], (string) $name);
+        return str_replace(['[]', '][', '[', ']', ' ', '.'], ['', '-', '-', '', '-', '-'], $name);
     }
 
     /**
