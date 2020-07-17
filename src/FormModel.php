@@ -5,33 +5,25 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use InvalidArgumentException;
-use Yiisoft\I18n\TranslatorInterface;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\Validator;
+use Yiisoft\Validator\ValidatorFactoryInterface;
 
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
 abstract class FormModel implements FormModelInterface
 {
-    protected ?TranslatorInterface $translator = null;
-    protected ?string $translationDomain = null;
-    protected ?string $translationLocale = null;
+    private ValidatorFactoryInterface $validatorFactory;
 
     private array $attributes;
     private array $attributesLabels;
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
 
-    public function __construct(
-        TranslatorInterface $translator = null,
-        string $translationDomain = null,
-        string $translationLocale = null
-    ) {
-        $this->translator = $translator;
-        $this->translationDomain = $translationDomain;
-        $this->translationLocale = $translationLocale;
+    public function __construct(ValidatorFactoryInterface $validatorFactory)
+    {
+        $this->validatorFactory = $validatorFactory;
 
         $this->attributes = $this->collectAttributes();
         $this->attributesLabels = $this->attributeLabels();
@@ -158,6 +150,57 @@ abstract class FormModel implements FormModelInterface
         return $result;
     }
 
+    public function setAttributes(array $values): void
+    {
+        foreach ($values as $name => $value) {
+            if (isset($this->attributes[$name])) {
+                switch ($this->attributes[$name]) {
+                    case 'bool':
+                        $this->writeProperty($name, (bool) $value);
+                        break;
+                    case 'float':
+                        $this->writeProperty($name, (float) $value);
+                        break;
+                    case 'int':
+                        $this->writeProperty($name, (int) $value);
+                        break;
+                    case 'string':
+                        $this->writeProperty($name, (string) $value);
+                        break;
+                    default:
+                        $this->writeProperty($name, $value);
+                        break;
+                }
+            }
+        }
+    }
+
+    public function validate(): bool
+    {
+        $this->clearErrors();
+
+        $rules = $this->rules();
+
+        if (!empty($rules)) {
+            $results = $this->validatorFactory
+                ->create($rules)
+                ->validate($this);
+
+            foreach ($results as $attribute => $result) {
+                if ($result->isValid() === false) {
+                    $this->addErrors([$attribute => $result->getErrors()]);
+                }
+            }
+        }
+
+        return !$this->hasErrors();
+    }
+
+    public function addError(string $attribute, string $error): void
+    {
+        $this->attributesErrors[$attribute][] = $error;
+    }
+
     /**
      * Returns the validation rules for attributes.
      *
@@ -192,62 +235,7 @@ abstract class FormModel implements FormModelInterface
      */
     protected function rules(): array
     {
-        return [
-        ];
-    }
-
-    public function setAttributes(array $values): void
-    {
-        foreach ($values as $name => $value) {
-            if (isset($this->attributes[$name])) {
-                switch ($this->attributes[$name]) {
-                    case 'bool':
-                        $this->writeProperty($name, (bool) $value);
-                        break;
-                    case 'float':
-                        $this->writeProperty($name, (float) $value);
-                        break;
-                    case 'int':
-                        $this->writeProperty($name, (int) $value);
-                        break;
-                    case 'string':
-                        $this->writeProperty($name, (string) $value);
-                        break;
-                    default:
-                        $this->writeProperty($name, $value);
-                        break;
-                }
-            }
-        }
-    }
-
-    public function validate(): bool
-    {
-        $this->clearErrors();
-
-        $rules = $this->rules();
-
-        if (!empty($rules)) {
-            $results = (new Validator(
-                $rules,
-                $this->translator,
-                $this->translationDomain,
-                $this->translationLocale
-            ))->validate($this);
-
-            foreach ($results as $attribute => $result) {
-                if ($result->isValid() === false) {
-                    $this->addErrors([$attribute => $result->getErrors()]);
-                }
-            }
-        }
-
-        return !$this->hasErrors();
-    }
-
-    public function addError(string $attribute, string $error): void
-    {
-        $this->attributesErrors[$attribute][] = $error;
+        return [];
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Stub;
 
+use Yiisoft\Form\Tests\ValidatorFactoryMock;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\HasLength;
@@ -15,6 +16,11 @@ class LoginForm extends FormModel
     private ?string $login = null;
     private ?string $password = null;
     private bool $rememberMe = false;
+
+    public function __construct()
+    {
+        parent::__construct(new ValidatorFactoryMock());
+    }
 
     public function getLogin(): ?string
     {
