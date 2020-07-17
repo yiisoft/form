@@ -83,7 +83,7 @@ class LoginForm extends FormModel
     }
 
     /** Define labels */
-    public function attributesLabels(): array
+    public function attributeLabels(): array
     {
         return [
             'login' => 'Login:',
