@@ -8,14 +8,15 @@ use InvalidArgumentException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
+use Yiisoft\Validator\ValidatorFactoryInterface;
+
 use function str_repeat;
 
 final class FormModelTest extends TestCase
 {
     public function testAnonymousFormName(): void
     {
-        $form = new class extends FormModel {
-        };
+        $form = new class(new ValidatorFactoryMock()) extends FormModel {};
         $this->assertEquals('', $form->formName());
     }
 
@@ -38,7 +39,7 @@ final class FormModelTest extends TestCase
             '/You must specify the type hint for "%s" property in "([^"]+)" class./',
             'property',
         ));
-        $form = new class extends FormModel{
+        $form = new class(new ValidatorFactoryMock()) extends FormModel{
             private $property;
         };
     }
@@ -164,7 +165,7 @@ final class FormModelTest extends TestCase
     public function testFailedLoadForm(): void
     {
         $form1 = new LoginForm();
-        $form2 = new class extends FormModel{
+        $form2 = new class(new ValidatorFactoryMock()) extends FormModel{
         };
 
         $data1 = [
@@ -186,7 +187,7 @@ final class FormModelTest extends TestCase
 
     public function testSetAttributes()
     {
-        $form = new class extends FormModel{
+        $form = new class(new ValidatorFactoryMock()) extends FormModel{
             private int $int = 1;
             private string $string = 'string';
             private float $float = 3.14;
@@ -263,10 +264,19 @@ final class FormModelTest extends TestCase
 
 final class DefaultFormNameForm extends FormModel
 {
+    public function __construct()
+    {
+        parent::__construct(new ValidatorFactoryMock());
+    }
 }
 
 final class CustomFormNameForm extends FormModel
 {
+    public function __construct()
+    {
+        parent::__construct(new ValidatorFactoryMock());
+    }
+
     public function formName(): string
     {
         return 'my-best-form-name';
