@@ -43,6 +43,7 @@ final class Field extends Widget
     private ?string $inputId = null;
     private array $parts = [];
     private bool $skipForInLabel = false;
+    private bool $containerEnabled;
 
     /**
      * Renders the whole field.
@@ -83,7 +84,12 @@ final class Field extends Widget
             $content = $content($this);
         }
 
-        return $this->renderBegin() . "\n" . $content . "\n" . $this->renderEnd();
+        if ($this->containerEnabled) {
+            return $this->renderBegin() . "\n" . $content . "\n" . $this->renderEnd();
+        }
+
+        return $content;
+
     }
 
     /**
@@ -741,17 +747,19 @@ final class Field extends Widget
      *
      * @param FormModelInterface $data Form model.
      * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
+     * @param array $options The HTML attributes for the widget container tag if it is enabled.
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @param bool $containerEnabled whether the widget container is enabled. Default: true
      *
      * @return self
      */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
+    public function config(FormModelInterface $data, string $attribute, array $options = [], $containerEnabled = true): self
     {
         $new = clone $this;
         $new->data = $data;
         $new->attribute = $attribute;
         $new->options = $options;
+        $new->containerEnabled = $containerEnabled;
         return $new;
     }
 
