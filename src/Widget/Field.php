@@ -13,6 +13,7 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 
 use function array_merge;
+use function strtr;
 
 /**
  * Renders the field widget along with label, error tag and hint tag (if any) according to template.
@@ -43,7 +44,7 @@ final class Field extends Widget
     private ?string $inputId = null;
     private array $parts = [];
     private bool $skipForInLabel = false;
-    private bool $containerEnabled;
+    private bool $containerEnabled = true;
 
     /**
      * Renders the whole field.
@@ -406,9 +407,9 @@ final class Field extends Widget
      * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
      * they are explicitly specified in `$options`.
      *
-     * @param bool $withoutHiddenInput enable/disable hidden input field.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     * @param bool $withoutHiddenInput enable/disable hidden input field.
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
