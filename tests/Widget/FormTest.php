@@ -100,7 +100,8 @@ HTML;
 
         $html = Form::begin()->action('/something')->options(['class' => 'formTestMe'])->start();
             $html .= Field::widget()
-                ->config($data, 'email', ['class' => 'fieldTestMe'])
+                ->config($data, 'email')
+                ->enclosedByContainer(true, ['class' => 'fieldTestMe'])
                 ->template('{input}')
                 ->input('email', ['required' => true]);
         $html .= Form::end();
