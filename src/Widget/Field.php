@@ -743,21 +743,32 @@ final class Field extends Widget
     }
 
     /**
-     * Set form model, name and options for the widget.
+     * Set form model and name for the widget.
      *
      * @param FormModelInterface $data Form model.
      * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag if it is enabled.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     * @param bool $containerEnabled whether the widget container is enabled. Default: true
      *
      * @return self
      */
-    public function config(FormModelInterface $data, string $attribute, array $options = [], $containerEnabled = true): self
+    public function config(FormModelInterface $data, string $attribute): self
     {
         $new = clone $this;
         $new->data = $data;
         $new->attribute = $attribute;
+        return $new;
+    }
+
+    /**
+     * Generate a container tag for {@see attribute}.
+     *
+     * @param bool $containerEnabled enabled/disable container for the widget.
+     * @param array $options The HTML attributes for the widget container tag if it is enabled.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @return self
+     */
+    public function enclosedByContainer($containerEnabled = true, array $options = []): self
+    {
+        $new = clone $this;
         $new->options = $options;
         $new->containerEnabled = $containerEnabled;
         return $new;
