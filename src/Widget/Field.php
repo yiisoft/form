@@ -767,7 +767,7 @@ final class Field extends Widget
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      * @return self
      */
-    public function enclosedByContainer($containerEnabled = true, array $options = []): self
+    public function enclosedByContainer(bool $containerEnabled, array $options = []): self
     {
         $new = clone $this;
         $new->options = $options;
