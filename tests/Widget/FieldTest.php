@@ -59,4 +59,21 @@ HTML;
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
+
+    public function testEnclosedByContainer(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<label class="control-label" for="personalform-name">Name</label>
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
+<div class="hint-block">Write your first name.</div>
+<div class="help-block"></div>
+HTML;
+        $html = Field::widget()
+            ->config($data, 'name')
+            ->enclosedByContainer(false)
+            ->run();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
 }

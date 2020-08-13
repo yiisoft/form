@@ -13,6 +13,7 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 
 use function array_merge;
+use function strtr;
 
 /**
  * Renders the field widget along with label, error tag and hint tag (if any) according to template.
@@ -43,6 +44,7 @@ final class Field extends Widget
     private ?string $inputId = null;
     private array $parts = [];
     private bool $skipForInLabel = false;
+    private bool $containerEnabled = true;
 
     /**
      * Renders the whole field.
@@ -83,7 +85,12 @@ final class Field extends Widget
             $content = $content($this);
         }
 
-        return $this->renderBegin() . "\n" . $content . "\n" . $this->renderEnd();
+        if ($this->containerEnabled) {
+            return $this->renderBegin() . "\n" . $content . "\n" . $this->renderEnd();
+        }
+
+        return $content;
+
     }
 
     /**
@@ -400,9 +407,9 @@ final class Field extends Widget
      * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
      * they are explicitly specified in `$options`.
      *
-     * @param bool $withoutHiddenInput enable/disable hidden input field.
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     * @param bool $withoutHiddenInput enable/disable hidden input field.
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
@@ -737,21 +744,34 @@ final class Field extends Widget
     }
 
     /**
-     * Set form model, name and options for the widget.
+     * Set form model and name for the widget.
      *
      * @param FormModelInterface $data Form model.
      * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      *
      * @return self
      */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
+    public function config(FormModelInterface $data, string $attribute): self
     {
         $new = clone $this;
         $new->data = $data;
         $new->attribute = $attribute;
+        return $new;
+    }
+
+    /**
+     * Generate a container tag for {@see attribute}.
+     *
+     * @param bool $containerEnabled enabled/disable container for the widget.
+     * @param array $options The HTML attributes for the widget container tag if it is enabled.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @return self
+     */
+    public function enclosedByContainer(bool $containerEnabled, array $options = []): self
+    {
+        $new = clone $this;
         $new->options = $options;
+        $new->containerEnabled = $containerEnabled;
         return $new;
     }
 
