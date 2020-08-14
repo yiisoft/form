@@ -338,7 +338,7 @@ abstract class FormModel implements FormModelInterface
 
         $getter = 'get' . $this->inflector->camelize($attribute);
         if (is_callable([$this, $getter], true)) {
-            $method = new ReflectionMethod($class, 'get' . $this->inflector->camelize($attribute));
+            $method = new ReflectionMethod($class, $getter);
             if ($method->getNumberOfRequiredParameters() === 0) {
                 return $this->$getter();
             }
