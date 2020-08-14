@@ -49,7 +49,7 @@ final class FormModelTest extends TestCase
         $form = new LoginForm();
 
         $form->login('admin');
-        $this->assertEquals('admin', $form->getAttributeValue('login'));
+        $this->assertEquals('app-admin', $form->getAttributeValue('login'));
 
         $form->password('123456');
         $this->assertEquals('123456', $form->getAttributeValue('password'));
@@ -157,7 +157,7 @@ final class FormModelTest extends TestCase
 
         $this->assertTrue($form->load($data));
 
-        $this->assertEquals('admin', $form->getLogin());
+        $this->assertEquals('app-admin', $form->getLogin());
         $this->assertEquals('123456', $form->getPassword());
         $this->assertEquals(true, $form->getRememberMe());
     }
@@ -269,19 +269,19 @@ final class FormModelTest extends TestCase
     {
         $form = new LoginForm();
 
-        $form->login('');
+        $form->password('');
         $form->validate();
 
         $this->assertEquals(
             ['Value cannot be blank.'],
-            $form->error('login')
+            $form->error('password')
         );
 
-        $form->login('x');
+        $form->password('x');
         $form->validate();
         $this->assertEquals(
             ['Is too short.'],
-            $form->error('login')
+            $form->error('password')
         );
 
         $form->login(str_repeat('x', 60));
