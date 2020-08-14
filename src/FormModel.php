@@ -4,10 +4,18 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Closure;
 use InvalidArgumentException;
+use ReflectionClass;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
+
+use function array_key_exists;
+use function array_merge;
+use function get_object_vars;
+use function reset;
+use function sprintf;
 
 /**
  * Form model represents an HTML form: its data, validation and presentation.
@@ -81,7 +89,7 @@ abstract class FormModel implements FormModelInterface
 
     public function hasAttribute(string $attribute): bool
     {
-        return \array_key_exists($attribute, $this->attributes);
+        return array_key_exists($attribute, $this->attributes);
     }
 
     public function error(string $attribute): array
@@ -100,7 +108,7 @@ abstract class FormModel implements FormModelInterface
         $errors = $showAllErrors ? $this->errors() : [$this->firstErrors()];
 
         foreach ($errors as $error) {
-            $lines = \array_merge($lines, $error);
+            $lines = array_merge($lines, $error);
         }
 
         return $lines;
@@ -121,7 +129,7 @@ abstract class FormModel implements FormModelInterface
 
         foreach ($this->attributesErrors as $name => $es) {
             if (!empty($es)) {
-                $errors[$name] = \reset($es);
+                $errors[$name] = reset($es);
             }
         }
 
@@ -261,7 +269,7 @@ abstract class FormModel implements FormModelInterface
      */
     private function collectAttributes(): array
     {
-        $class = new \ReflectionClass($this);
+        $class = new ReflectionClass($this);
         $attributes = [];
 
         foreach ($class->getProperties() as $property) {
@@ -271,7 +279,7 @@ abstract class FormModel implements FormModelInterface
 
             $type = $property->getType();
             if ($type === null) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new InvalidArgumentException(sprintf(
                     'You must specify the type hint for "%s" property in "%s" class.',
                     $property->getName(),
                     $property->getDeclaringClass()->getName(),
@@ -325,17 +333,30 @@ abstract class FormModel implements FormModelInterface
             throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
         }
 
+        if ($this->isPublicAttribute($attribute)) {
+            return $this->$attribute;
+        }
+
         $getter = fn ($class, $attribute) => $class->$attribute;
-        $getter = \Closure::bind($getter, null, $this);
+        $getter = Closure::bind($getter, null, $this);
 
         return $getter($this, $attribute);
     }
 
     private function writeProperty(string $attribute, $value): void
     {
-        $setter = fn ($class, $attribute, $value) => $class->$attribute = $value;
-        $setter = \Closure::bind($setter, null, $this);
+        if ($this->isPublicAttribute($attribute)) {
+            $this->$attribute = $value;
+        } else {
+            $setter = fn($class, $attribute, $value) => $class->$attribute = $value;
+            $setter = Closure::bind($setter, null, $this);
 
-        $setter($this, $attribute, $value);
+            $setter($this, $attribute, $value);
+        }
+    }
+
+    private function isPublicAttribute(string $attribute): bool
+    {
+        return array_key_exists($attribute, get_object_vars($this));
     }
 }
