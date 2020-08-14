@@ -162,6 +162,44 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getRememberMe());
     }
 
+    public function testSetterAndGetterForAttributes(): void
+    {
+        $form = new LoginForm();
+
+        $data = [
+            'LoginForm' => [
+                'login' => 'admin',
+            ],
+        ];
+
+        $this->assertTrue($form->load($data));
+
+        $this->assertEquals('app-admin', $form->getLogin());
+
+        $form->login('user');
+
+        $this->assertEquals('app-user', $form->getAttributeValue('login'));
+    }
+
+    public function testSetterAndGetterIsIgnoredWhenIncorrectNumberOfParameters(): void
+    {
+        $form = new LoginForm();
+
+        $data = [
+            'LoginForm' => [
+                'password' => '1234',
+            ],
+        ];
+
+        $this->assertTrue($form->load($data));
+
+        $this->assertEquals('1234', $form->getPassword());
+
+        $form->password('123456');
+
+        $this->assertEquals('123456', $form->getAttributeValue('password'));
+    }
+
     public function testFailedLoadForm(): void
     {
         $form1 = new LoginForm();

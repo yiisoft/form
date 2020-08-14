@@ -336,8 +336,8 @@ abstract class FormModel implements FormModelInterface
             throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
         }
 
-        $getter = 'get' . $this->inflector->camelize($attribute);
-        if (is_callable([$this, $getter], true)) {
+        $getter = 'get' . $this->getInflector()->camelize($attribute) . 'Attribute';
+        if (is_callable([$this, $getter])) {
             $method = new ReflectionMethod($class, $getter);
             if ($method->getNumberOfRequiredParameters() === 0) {
                 return $this->$getter();
@@ -356,13 +356,16 @@ abstract class FormModel implements FormModelInterface
 
     private function writeProperty(string $attribute, $value): void
     {
-        $setter = 'set' . $this->inflector->camelize($attribute);
+        $setter = 'set' . $this->getInflector()->camelize($attribute) . 'Attribute';
         if (is_callable([$this, $setter])) {
             $method = new ReflectionMethod(static::class, $setter);
             if ($method->getNumberOfRequiredParameters() === 1) {
                 $this->$setter($value);
+                return;
             }
-        } else if ($this->isPublicAttribute($attribute)) {
+        }
+
+        if ($this->isPublicAttribute($attribute)) {
             $this->$attribute = $value;
         } else {
             $setter = fn($class, $attribute, $value) => $class->$attribute = $value;
