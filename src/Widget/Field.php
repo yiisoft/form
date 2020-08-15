@@ -422,10 +422,6 @@ final class Field extends Widget
     {
         $new = clone $this;
 
-        if (!isset($options['enctype'])) {
-            $new->inputOptions['enctype'] = 'multipart/form-data';
-        }
-
         $new->setAriaAttributes($options);
         $new->addErrorCssClassToInput();
         $new->inputOptions($options);
