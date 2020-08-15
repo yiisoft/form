@@ -13,7 +13,7 @@ final class FileInput extends Widget
     private FormModelInterface $data;
     private string $attribute;
     private array $options = [];
-    private bool $withoutHiddenInput = false;
+    private bool $withHiddenInput = false;
 
     /**
      * Generates a file input tag for the given form attribute.
@@ -47,7 +47,7 @@ final class FileInput extends Widget
          */
         $hiddenInput = '';
 
-        if ($new->withoutHiddenInput === false) {
+        if ($new->withHiddenInput === true) {
             $hiddenInput = HiddenInput::widget()->config($new->data, $new->attribute, $hiddenOptions)->run();
         }
 
@@ -204,10 +204,10 @@ final class FileInput extends Widget
      *
      * @return self
      */
-    public function withoutHiddenInput(bool $value): self
+    public function withHiddenInput(bool $value): self
     {
         $new = clone $this;
-        $new->withoutHiddenInput = $value;
+        $new->withHiddenInput = $value;
         return $new;
     }
 }

@@ -409,7 +409,7 @@ final class Field extends Widget
      *
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     * @param bool $withoutHiddenInput enable/disable hidden input field.
+     * @param bool $withHiddenInput enable/disable hidden input field.
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
@@ -418,7 +418,7 @@ final class Field extends Widget
      *
      * @return self the field object itself.
      */
-    public function fileInput(array $options = [], bool $withoutHiddenInput = false): self
+    public function fileInput(array $options = [], bool $withHiddenInput = false): self
     {
         $new = clone $this;
 
@@ -433,7 +433,7 @@ final class Field extends Widget
 
         $this->parts['{input}'] = FileInput::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
-            ->withoutHiddenInput($withoutHiddenInput)
+            ->withHiddenInput($withHiddenInput)
             ->run();
 
         return $this;

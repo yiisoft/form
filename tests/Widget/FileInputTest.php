@@ -15,7 +15,7 @@ final class FileInputTest extends TestCase
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -28,7 +28,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="fileName" value=""><input type="file" id="personalform-attachfiles" class="customClass" name="fileName">
+<input type="file" id="personalform-attachfiles" class="customClass" name="fileName">
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles', ['class' => 'customClass', 'name' => 'fileName'])
@@ -41,7 +41,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" accept="image/*">
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" accept="image/*">
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -55,7 +55,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" autofocus>
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" autofocus>
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -69,7 +69,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value="" disabled><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" disabled>
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" disabled>
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -88,6 +88,7 @@ HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
             ->hiddenOptions(['id' => 'specific-id'])
+            ->withHiddenInput(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -97,7 +98,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" multiple>
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" multiple>
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -111,7 +112,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" required>
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" required>
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -125,7 +126,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" tabindex="0">
+<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" tabindex="0">
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
@@ -134,16 +135,16 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testFileInputWithoutHiddenInput(): void
+    public function testFileInputWithHiddenInput(): void
     {
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
+<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
 HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
-            ->withoutHiddenInput(true)
+            ->withHiddenInput(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
