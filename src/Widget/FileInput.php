@@ -51,6 +51,7 @@ final class FileInput extends Widget
             $hiddenInput = HiddenInput::widget()->config($new->data, $new->attribute, $hiddenOptions)->run();
         }
 
+        $new->options['value'] = false;
         return
             $hiddenInput .
             Input::widget()

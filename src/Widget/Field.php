@@ -404,7 +404,7 @@ final class Field extends Widget
     /**
      * Renders a file input.
      *
-     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * This method will generate the `name` tag attribute automatically for the model attribute unless
      * they are explicitly specified in `$options`.
      *
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
