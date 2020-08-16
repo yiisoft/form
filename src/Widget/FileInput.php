@@ -141,6 +141,7 @@ final class FileInput extends Widget
     {
         $new = clone $this;
         $new->options['hiddenOptions'] = $value;
+        $new->withHiddenInput = true;
         return $new;
     }
 

@@ -88,7 +88,6 @@ HTML;
         $html = FileInput::widget()
             ->config($data, 'attachFiles')
             ->hiddenOptions(['id' => 'specific-id'])
-            ->withHiddenInput(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
