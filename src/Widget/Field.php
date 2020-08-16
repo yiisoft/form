@@ -409,7 +409,8 @@ final class Field extends Widget
      *
      * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
      * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     * @param bool $withHiddenInput enable/disable hidden input field.
+     * @param bool $withHiddenInput enable/disable hidden input field. Enable this if the file input is the only
+     * field of the form.
      *
      * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
      *
