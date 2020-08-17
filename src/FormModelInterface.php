@@ -198,14 +198,15 @@ interface FormModelInterface extends DataSetInterface
      * ```
      *
      * `load()` gets the `'FormName'` from the {@see formName()} method (which you may override), unless the
-     * `$formName` parameter is given. If the form name is empty, `load()` populates the model with the whole of
+     * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
      * `$data` instead of `$data['FormName']`.
      *
      * @param array $data the data array to load, typically server request attributes.
+     * @param string|null $formName scope from which to get data
      *
      * @return bool whether `load()` found the expected form in `$data`.
      */
-    public function load(array $data): bool;
+    public function load(array $data, $formName = null): bool;
 
     /**
      * Performs the data validation.
@@ -223,9 +224,10 @@ interface FormModelInterface extends DataSetInterface
     public function validate(): bool;
 
     /**
-     * Sets the attribute values in a massive way.
+     * Set specified attribute
      *
-     * @param array $values attribute values (name => value) to be assigned to the model.
+     * @param string $name of the attribute to set
+     * @param mixed $value value
      */
-    public function setAttributes(array $values): void;
+    public function setAttribute(string $name, $value): void;
 }
