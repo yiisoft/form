@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
+use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function str_repeat;
@@ -79,12 +80,26 @@ final class FormModelTest extends TestCase
         $this->assertEmpty($form->attributeHint('noExist'));
     }
 
+    public function testGetNestedAttributeHint(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertEquals('Write your id or email.', $form->attributeHint('user.login'));
+    }
+
     public function testGetAttributeLabel(): void
     {
         $form = new LoginForm();
 
         $this->assertEquals('Login:', $form->attributeLabel('login'));
         $this->assertEquals('Testme', $form->attributeLabel('testme'));
+    }
+
+    public function testGetNestedAttributeLabel(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertEquals('Login:', $form->attributeLabel('user.login'));
     }
 
     public function testAttributesLabels(): void
@@ -314,6 +329,27 @@ final class FormWithNestedAttribute extends FormModel
     {
         $this->user = new LoginForm();
         parent::__construct(new ValidatorFactoryMock());
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => 'ID',
+        ];
+    }
+
+    public function attributeHints(): array
+    {
+        return [
+            'id' => 'Readonly ID',
+        ];
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'id' => new Required(),
+        ];
     }
 
     public function setUserLogin(string $login): void

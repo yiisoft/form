@@ -65,6 +65,11 @@ abstract class FormModel implements FormModelInterface
 
     public function attributeHint(string $attribute): string
     {
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+        if ($nested !== null) {
+            return $this->readProperty($attribute)->attributeHint($nested);
+        }
+
         $hints = $this->attributeHints();
 
         return $hints[$attribute] ?? '';
@@ -77,7 +82,7 @@ abstract class FormModel implements FormModelInterface
 
     public function attributeLabel(string $attribute): string
     {
-        return $this->attributesLabels[$attribute] ?? $this->generateAttributeLabel($attribute);
+        return $this->attributesLabels[$attribute] ?? $this->getAttributeLabel($attribute);
     }
 
     /**
@@ -311,6 +316,15 @@ abstract class FormModel implements FormModelInterface
             $this->inflector = new Inflector();
         }
         return $this->inflector;
+    }
+
+    private function getAttributeLabel(string $attribute): string
+    {
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        return $nested !== null
+            ? $this->readProperty($attribute)->attributeLabel($nested)
+            : $this->generateAttributeLabel($attribute);
     }
 
     /**
