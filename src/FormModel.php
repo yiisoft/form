@@ -13,9 +13,12 @@ use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function array_key_exists;
 use function array_merge;
+use function explode;
 use function get_object_vars;
+use function is_subclass_of;
 use function reset;
 use function sprintf;
+use function strpos;
 
 /**
  * Form model represents an HTML form: its data, validation and presentation.
@@ -62,6 +65,11 @@ abstract class FormModel implements FormModelInterface
 
     public function attributeHint(string $attribute): string
     {
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+        if ($nested !== null) {
+            return $this->readProperty($attribute)->attributeHint($nested);
+        }
+
         $hints = $this->attributeHints();
 
         return $hints[$attribute] ?? '';
@@ -74,7 +82,7 @@ abstract class FormModel implements FormModelInterface
 
     public function attributeLabel(string $attribute): string
     {
-        return $this->attributesLabels[$attribute] ?? $this->generateAttributeLabel($attribute);
+        return $this->attributesLabels[$attribute] ?? $this->getAttributeLabel($attribute);
     }
 
     /**
@@ -141,44 +149,45 @@ abstract class FormModel implements FormModelInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
-    public function load(array $data): bool
+    public function load(array $data, $formName = null): bool
     {
-        $result = false;
+        $scope = $formName ?? $this->formName();
 
-        $scope = $this->formName();
+        $values = [];
 
         if ($scope === '' && !empty($data)) {
-            $this->setAttributes($data);
-            $result = true;
+            $values = $data;
         } elseif (isset($data[$scope])) {
-            $this->setAttributes($data[$scope]);
-            $result = true;
+            $values = $data[$scope];
         }
 
-        return $result;
+        foreach ($values as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+
+        return $values !== [];
     }
 
-    public function setAttributes(array $values): void
+    public function setAttribute(string $name, $value): void
     {
-        foreach ($values as $name => $value) {
-            if (isset($this->attributes[$name])) {
-                switch ($this->attributes[$name]) {
-                    case 'bool':
-                        $this->writeProperty($name, (bool) $value);
-                        break;
-                    case 'float':
-                        $this->writeProperty($name, (float) $value);
-                        break;
-                    case 'int':
-                        $this->writeProperty($name, (int) $value);
-                        break;
-                    case 'string':
-                        $this->writeProperty($name, (string) $value);
-                        break;
-                    default:
-                        $this->writeProperty($name, $value);
-                        break;
-                }
+        [$realName] = $this->getNestedAttribute($name);
+        if (isset($this->attributes[$realName])) {
+            switch ($this->attributes[$realName]) {
+                case 'bool':
+                    $this->writeProperty($name, (bool) $value);
+                    break;
+                case 'float':
+                    $this->writeProperty($name, (float) $value);
+                    break;
+                case 'int':
+                    $this->writeProperty($name, (int) $value);
+                    break;
+                case 'string':
+                    $this->writeProperty($name, (string) $value);
+                    break;
+                default:
+                    $this->writeProperty($name, $value);
+                    break;
             }
         }
     }
@@ -309,6 +318,15 @@ abstract class FormModel implements FormModelInterface
         return $this->inflector;
     }
 
+    private function getAttributeLabel(string $attribute): string
+    {
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        return $nested !== null
+            ? $this->readProperty($attribute)->attributeLabel($nested)
+            : $this->generateAttributeLabel($attribute);
+    }
+
     /**
      * Generates a user friendly attribute label based on the give attribute name.
      *
@@ -329,15 +347,20 @@ abstract class FormModel implements FormModelInterface
     private function readProperty(string $attribute)
     {
         $class = get_class($this);
+
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
         if (!property_exists($class, $attribute)) {
             throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
         }
 
         if ($this->isPublicAttribute($attribute)) {
-            return $this->$attribute;
+            return $nested === null ? $this->$attribute : $this->$attribute->getAttributeValue($nested);
         }
 
-        $getter = fn ($class, $attribute) => $class->$attribute;
+        $getter = fn (FormModel $class, $attribute) => $nested === null
+            ? $class->$attribute
+            : $class->$attribute->getAttributeValue($nested);
         $getter = Closure::bind($getter, null, $this);
 
         return $getter($this, $attribute);
@@ -345,10 +368,17 @@ abstract class FormModel implements FormModelInterface
 
     private function writeProperty(string $attribute, $value): void
     {
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
         if ($this->isPublicAttribute($attribute)) {
-            $this->$attribute = $value;
+            if ($nested === null) {
+                $this->$attribute = $value;
+            } else {
+                $this->$attribute->setAttribute($attribute, $value);
+            }
         } else {
-            $setter = fn($class, $attribute, $value) => $class->$attribute = $value;
+            $setter = fn(FormModel $class, $attribute, $value) => $nested === null
+                ? $class->$attribute = $value
+                : $class->$attribute->setAttribute($nested, $value);
             $setter = Closure::bind($setter, null, $this);
 
             $setter($this, $attribute, $value);
@@ -358,5 +388,20 @@ abstract class FormModel implements FormModelInterface
     private function isPublicAttribute(string $attribute): bool
     {
         return array_key_exists($attribute, get_object_vars($this));
+    }
+
+    private function getNestedAttribute(string $attribute): array
+    {
+        if (strpos($attribute, '.') === false) {
+            return [$attribute, null];
+        }
+
+        [$attribute, $nested] = explode('.', $attribute, 2);
+
+        if (!is_subclass_of($this->attributes[$attribute], self::class)) {
+            throw new InvalidArgumentException('Nested attribute can only be of ' . self::class . ' type.');
+        }
+
+        return [$attribute, $nested];
     }
 }

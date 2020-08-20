@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
+use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function str_repeat;
@@ -62,6 +63,14 @@ final class FormModelTest extends TestCase
         $form->getAttributeValue('noExist');
     }
 
+    public function testGetAttributeValueWithNestedAttribute(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $form->setUserLogin('admin');
+        $this->assertEquals('admin', $form->getAttributeValue('user.login'));
+    }
+
     public function testGetAttributeHint(): void
     {
         $form = new LoginForm();
@@ -71,12 +80,26 @@ final class FormModelTest extends TestCase
         $this->assertEmpty($form->attributeHint('noExist'));
     }
 
+    public function testGetNestedAttributeHint(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertEquals('Write your id or email.', $form->attributeHint('user.login'));
+    }
+
     public function testGetAttributeLabel(): void
     {
         $form = new LoginForm();
 
         $this->assertEquals('Login:', $form->attributeLabel('login'));
         $this->assertEquals('Testme', $form->attributeLabel('testme'));
+    }
+
+    public function testGetNestedAttributeLabel(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertEquals('Login:', $form->attributeLabel('user.login'));
     }
 
     public function testAttributesLabels(): void
@@ -162,6 +185,20 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getRememberMe());
     }
 
+    public function testLoadWithNestedAttribute(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $data = [
+            'FormWithNestedAttribute' => [
+                'user.login' => 'admin',
+            ],
+        ];
+
+        $this->assertTrue($form->load($data));
+        $this->assertEquals('admin', $form->getUserLogin());
+    }
+
     public function testFailedLoadForm(): void
     {
         $form1 = new LoginForm();
@@ -185,7 +222,7 @@ final class FormModelTest extends TestCase
         $this->assertFalse($form2->load($data2));
     }
 
-    public function testSetAttributes()
+    public function testLoadWithEmptyScope()
     {
         $form = new class(new ValidatorFactoryMock()) extends FormModel{
             private int $int = 1;
@@ -193,12 +230,12 @@ final class FormModelTest extends TestCase
             private float $float = 3.14;
             private bool $bool = true;
         };
-        $form->setAttributes([
+        $form->load([
             'int' => '2',
             'float' => '3.15',
             'bool' => 'false',
             'string' => 555,
-        ]);
+        ], '');
         $this->assertIsInt($form->getAttributeValue('int'));
         $this->assertIsFloat($form->getAttributeValue('float'));
         $this->assertIsBool($form->getAttributeValue('bool'));
@@ -280,5 +317,48 @@ final class CustomFormNameForm extends FormModel
     public function formName(): string
     {
         return 'my-best-form-name';
+    }
+}
+
+final class FormWithNestedAttribute extends FormModel
+{
+    private ?int $id = null;
+    private ?LoginForm $user = null;
+
+    public function __construct()
+    {
+        $this->user = new LoginForm();
+        parent::__construct(new ValidatorFactoryMock());
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => 'ID',
+        ];
+    }
+
+    public function attributeHints(): array
+    {
+        return [
+            'id' => 'Readonly ID',
+        ];
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'id' => new Required(),
+        ];
+    }
+
+    public function setUserLogin(string $login): void
+    {
+        $this->user->login('admin');
+    }
+
+    public function getUserLogin(): ?string
+    {
+        return $this->user->getLogin();
     }
 }
