@@ -198,7 +198,7 @@ abstract class FormModel implements FormModelInterface
     {
         $this->clearErrors();
 
-        $rules = $this->rules();
+        $rules = $this->collectRules();
 
         if (!empty($rules)) {
             $results = $this->validatorFactory
@@ -213,6 +213,25 @@ abstract class FormModel implements FormModelInterface
         }
 
         return !$this->hasErrors();
+    }
+
+    /**
+     * Cellects all the rules including those from nested attributes
+     * @return array
+     */
+    private function collectRules(): array
+    {
+        $rules = $this->rules();
+
+        foreach ($this->attributes as $name => $type) {
+            if (is_subclass_of($type, self::class)) {
+                foreach ($this->readProperty($name)->rules() as $attribute => $nestedRules) {
+                    $rules["$name.$attribute"] = $nestedRules;
+                }
+            }
+        }
+
+        return $rules;
     }
 
     public function addError(string $attribute, string $error): void
@@ -300,7 +319,7 @@ abstract class FormModel implements FormModelInterface
 
             $supportedTypes = ['string', 'bool', 'float', 'int'];
 
-            if (!in_array($type->getName(), $supportedTypes, true) || !is_subclass_of(
+            if (!in_array($type->getName(), $supportedTypes, true) && !is_subclass_of(
                     $type->getName(),
                     self::class
                 )) {
@@ -363,11 +382,11 @@ abstract class FormModel implements FormModelInterface
 
     private function readProperty(string $attribute)
     {
-        $class = get_class($this);
+        $class = static::class;
 
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        if (!property_exists($class, $attribute)) {
+        if (!$this->hasAttribute($attribute)) {
             throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
         }
 
@@ -390,7 +409,7 @@ abstract class FormModel implements FormModelInterface
             if ($nested === null) {
                 $this->$attribute = $value;
             } else {
-                $this->$attribute->setAttribute($attribute, $value);
+                $this->$attribute->setAttribute($nested, $value);
             }
         } else {
             $setter = fn(FormModel $class, $attribute, $value) => $nested === null

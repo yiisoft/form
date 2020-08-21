@@ -40,8 +40,34 @@ final class FormModelTest extends TestCase
             '/You must specify the type hint for "%s" property in "([^"]+)" class./',
             'property',
         ));
-        $form = new class(new ValidatorFactoryMock()) extends FormModel{
+        $form = new class(new ValidatorFactoryMock()) extends FormModel {
             private $property;
+        };
+    }
+
+    public function testSupportedTypes(): void
+    {
+        $form = new class(new ValidatorFactoryMock()) extends FormModel {
+            private int $intProperty;
+            private bool $boolProperty;
+            private float $floatProperty;
+            private string $stringProperty;
+            private LoginForm $nestedProperty;
+        };
+
+        $this->assertInstanceOf(FormModel::class, $form);
+    }
+
+    public function testNotSupportedPropertyType(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf(
+                                                 'Only scalar or "%s" types are supported for the property.',
+                                                 FormModel::class,
+                                             ));
+
+        $form = new class(new ValidatorFactoryMock()) extends FormModel {
+            private ?array $property = null;
         };
     }
 
@@ -297,6 +323,22 @@ final class FormModelTest extends TestCase
             $form->firstError('login')
         );
     }
+
+    public function testValidateNestedRules(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $form->validate();
+        $this->assertTrue($form->hasErrors());
+        $this->assertEquals(
+            ['Value cannot be blank.'],
+            $form->error('id')
+        );
+        $this->assertEquals(
+            ['Value cannot be blank.'],
+            $form->error('user.login')
+        );
+    }
 }
 
 final class DefaultFormNameForm extends FormModel
@@ -348,8 +390,13 @@ final class FormWithNestedAttribute extends FormModel
     protected function rules(): array
     {
         return [
-            'id' => new Required(),
+            'id' => [new Required()],
         ];
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function setUserLogin(string $login): void
