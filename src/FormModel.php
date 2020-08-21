@@ -7,6 +7,7 @@ namespace Yiisoft\Form;
 use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionNamedType;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
@@ -15,6 +16,7 @@ use function array_key_exists;
 use function array_merge;
 use function explode;
 use function get_object_vars;
+use function in_array;
 use function is_subclass_of;
 use function reset;
 use function sprintf;
@@ -286,6 +288,7 @@ abstract class FormModel implements FormModelInterface
                 continue;
             }
 
+            /** @var ReflectionNamedType|null $type */
             $type = $property->getType();
             if ($type === null) {
                 throw new InvalidArgumentException(sprintf(
@@ -293,6 +296,20 @@ abstract class FormModel implements FormModelInterface
                     $property->getName(),
                     $property->getDeclaringClass()->getName(),
                 ));
+            }
+
+            $supportedTypes = ['string', 'bool', 'float', 'int'];
+
+            if (!in_array($type->getName(), $supportedTypes, true) || !is_subclass_of(
+                    $type->getName(),
+                    self::class
+                )) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Only scalar or "%s" types are supported for the property.',
+                        self::class,
+                    )
+                );
             }
 
             $attributes[$property->getName()] = $type->getName();
