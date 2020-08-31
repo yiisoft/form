@@ -341,7 +341,7 @@ abstract class FormModel implements FormModelInterface
      */
     private function generateAttributeLabel(string $name): string
     {
-        return $this->getInflector()->camel2words($name, true);
+        return $this->getInflector()->toWords($name, true);
     }
 
     private function readProperty(string $attribute)
