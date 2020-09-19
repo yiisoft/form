@@ -7,6 +7,7 @@ namespace Yiisoft\Form;
 use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
+use Yiisoft\Strings\StringHelper;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
@@ -341,7 +342,9 @@ abstract class FormModel implements FormModelInterface
      */
     private function generateAttributeLabel(string $name): string
     {
-        return $this->getInflector()->toWords($name, true);
+        return StringHelper::uppercaseFirstCharacterInEachWord(
+            $this->getInflector()->toWords($name, true)
+        );
     }
 
     private function readProperty(string $attribute)
