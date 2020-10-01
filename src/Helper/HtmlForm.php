@@ -31,7 +31,7 @@ final class HtmlForm
      */
     public static function getAttributeValue(FormModelInterface $form, string $attribute)
     {
-        if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
+        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
@@ -84,7 +84,7 @@ final class HtmlForm
     {
         $formName = $form->formName();
 
-        if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
+        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
