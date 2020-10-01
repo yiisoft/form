@@ -112,7 +112,7 @@ final class Error extends Widget
 
     private function attribute(string $attribute): string
     {
-        if (!preg_match(Html::$attributeRegex, $attribute, $matches)) {
+        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
 
