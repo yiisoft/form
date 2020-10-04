@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
@@ -30,7 +29,7 @@ final class Error extends Widget
         if ($errorSource !== null) {
             $error = $errorSource($new->data, $new->attribute);
         } else {
-            $error = $new->data->firstError($this->attribute($new->attribute));
+            $error = $new->data->firstError(Html::getAttributeName($new->attribute));
         }
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
@@ -108,14 +107,5 @@ final class Error extends Widget
         $new = clone $this;
         $new->options['tag'] = $value;
         return $new;
-    }
-
-    private function attribute(string $attribute): string
-    {
-        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
-        }
-
-        return $matches[2];
     }
 }
