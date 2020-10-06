@@ -24,20 +24,14 @@ final class HtmlForm
      *
      * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
-     *
      * @return string|array the corresponding attribute value.
-     *@throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
      */
     public static function getAttributeValue(FormModelInterface $form, string $attribute)
     {
-        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
-        }
-
-        $attribute = $matches[2];
-
-        return $form->getAttributeValue($attribute);
+        return $form->getAttributeValue(
+            Html::getAttributeName($attribute)
+        );
     }
 
     /**
@@ -75,20 +69,17 @@ final class HtmlForm
      *
      * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
-     *
      * @return string the generated input name.
-     *@throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
      */
     public static function getInputName(FormModelInterface $form, string $attribute): string
     {
         $formName = $form->formName();
 
-        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
-        }
-
-        [, $prefix, $attribute, $suffix] = $matches;
+        $data = Html::parseAttribute($attribute);
+        $prefix = $data['prefix'];
+        $attribute = $data['name'];
+        $suffix = $data['suffix'];
 
         if ($formName === '' && $prefix === '') {
             return $attribute . $suffix;
