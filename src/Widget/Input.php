@@ -242,7 +242,7 @@ final class Input extends Widget
     private function setPlaceholder(): void
     {
         if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color'], true))) {
-            $attributeName = Html::getAttributeName($this->attribute);
+            $attributeName = HtmlForm::getAttributeName($this->attribute);
             $this->options['placeholder'] = $this->data->attributeLabel($attributeName);
         }
     }

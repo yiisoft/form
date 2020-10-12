@@ -36,7 +36,7 @@ final class BooleanInput extends Widget
 
         if ($new->enclosedByLabel) {
             $new->options['label'] = $new->options['label']
-                ?? $new->data->attributeLabel(Html::getAttributeName($new->attribute));
+                ?? $new->data->attributeLabel(HtmlForm::getAttributeName($new->attribute));
         }
 
         if ($new->uncheck) {
