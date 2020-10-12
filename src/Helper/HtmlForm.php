@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Helper;
 
 use InvalidArgumentException;
+use Yiisoft\Html\EmptyWrapNameException;
 use Yiisoft\Html\Html;
 use Yiisoft\Form\FormModelInterface;
 
@@ -70,25 +71,17 @@ final class HtmlForm
      * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
      * @return string the generated input name.
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws InvalidArgumentException if the attribute name contains non-word characters
+     * or empty form name for tabular inputs
      */
     public static function getInputName(FormModelInterface $form, string $attribute): string
     {
         $formName = $form->formName();
 
-        $data = Html::parseAttribute($attribute);
-        $prefix = $data['prefix'];
-        $attribute = $data['name'];
-        $suffix = $data['suffix'];
-
-        if ($formName === '' && $prefix === '') {
-            return $attribute . $suffix;
+        try {
+            return Html::wrapAttributeName($formName, $attribute);
+        } catch (EmptyWrapNameException $e) {
+            throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
         }
-
-        if ($formName !== '') {
-            return $formName . $prefix . "[$attribute]" . $suffix;
-        }
-
-        throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
     }
 }
