@@ -892,7 +892,7 @@ final class Field extends Widget
     private function addErrorCssClassToInput(): void
     {
         if ($this->validationStateOn === 'input') {
-            $attributeName = Html::getAttributeName($this->attribute);
+            $attributeName = HtmlForm::getAttributeName($this->attribute);
 
             if ($this->data->hasErrors($attributeName)) {
                 Html::addCssClass($this->inputOptions, $this->errorCssClass);

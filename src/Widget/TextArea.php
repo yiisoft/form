@@ -301,7 +301,7 @@ final class TextArea extends Widget
     private function setPlaceholder(): void
     {
         if (!isset($this->options['placeholder'])) {
-            $attributeName = Html::getAttributeName($this->attribute);
+            $attributeName = HtmlForm::getAttributeName($this->attribute);
             $this->options['placeholder'] = $this->data->attributeLabel($attributeName);
         }
     }

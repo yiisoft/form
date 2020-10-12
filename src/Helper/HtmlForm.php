@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Helper;
 
 use InvalidArgumentException;
-use Yiisoft\Html\Html;
 use Yiisoft\Form\FormModelInterface;
 
 /**
@@ -24,20 +23,14 @@ final class HtmlForm
      *
      * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
-     *
      * @return string|array the corresponding attribute value.
-     *@throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
      */
     public static function getAttributeValue(FormModelInterface $form, string $attribute)
     {
-        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
-        }
-
-        $attribute = $matches[2];
-
-        return $form->getAttributeValue($attribute);
+        return $form->getAttributeValue(
+            static::getAttributeName($attribute)
+        );
     }
 
     /**
@@ -53,7 +46,7 @@ final class HtmlForm
      * @param string $charset default `UTF-8`.
      *
      * @return string the generated input ID.
-     *@throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
      *
      */
     public static function getInputId(FormModelInterface $form, string $attribute, string $charset = 'UTF-8'): string
@@ -75,29 +68,67 @@ final class HtmlForm
      *
      * @param FormModelInterface $form the form object.
      * @param string $attribute the attribute name or expression.
-     *
      * @return string the generated input name.
-     *@throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
+     * @throws InvalidArgumentException if the attribute name contains non-word characters
+     * or empty form name for tabular inputs
      */
     public static function getInputName(FormModelInterface $form, string $attribute): string
     {
         $formName = $form->formName();
 
-        if (!preg_match(Html::ATTRIBUTE_REGEX, $attribute, $matches)) {
-            throw new InvalidArgumentException('Attribute name must contain word characters only.');
-        }
+        $data = static::parseAttribute($attribute);
 
-        [, $prefix, $attribute, $suffix] = $matches;
-
-        if ($formName === '' && $prefix === '') {
-            return $attribute . $suffix;
+        if ($formName === '' && $data['prefix'] === '') {
+            return $attribute;
         }
 
         if ($formName !== '') {
-            return $formName . $prefix . "[$attribute]" . $suffix;
+            return $formName . $data['prefix'] . '[' . $data['name'] . ']' . $data['suffix'];
         }
 
         throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
+    }
+
+    /**
+     * Returns the real attribute name from the given attribute expression.
+     * If `$attribute` has neither prefix nor suffix, it will be returned back without change.
+     * @param string $attribute the attribute name or expression
+     * @return string the attribute name without prefix and suffix.
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @see static::parseAttribute()
+     */
+    public static function getAttributeName(string $attribute): string
+    {
+        return static::parseAttribute($attribute)['name'];
+    }
+
+    /**
+     * This method parses an attribute expression and returns an associative array containing
+     * real attribute name, prefix and suffix.
+     * For example: `['name' => 'content', 'prefix' => '', 'suffix' => '[0]']`
+     *
+     * An attribute expression is an attribute name prefixed and/or suffixed with array indexes. It is mainly used in
+     * tabular data input and/or input of array type. Below are some examples:
+     *
+     * - `[0]content` is used in tabular data input to represent the "content" attribute for the first model in tabular
+     *    input;
+     * - `dates[0]` represents the first array element of the "dates" attribute;
+     * - `[0]dates[0]` represents the first array element of the "dates" attribute for the first model in tabular
+     *    input.
+     *
+     * @param string $attribute the attribute name or expression
+     * @return array
+     * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     */
+    private static function parseAttribute(string $attribute)
+    {
+        if (!preg_match('/(^|.*\])([\w\.\+]+)(\[.*|$)/u', $attribute, $matches)) {
+            throw new InvalidArgumentException('Attribute name must contain word characters only.');
+        }
+        return [
+            'name' => $matches[2],
+            'prefix' => $matches[1],
+            'suffix' => $matches[3],
+        ];
     }
 }

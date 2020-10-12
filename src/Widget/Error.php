@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
@@ -29,7 +30,7 @@ final class Error extends Widget
         if ($errorSource !== null) {
             $error = $errorSource($new->data, $new->attribute);
         } else {
-            $error = $new->data->firstError(Html::getAttributeName($new->attribute));
+            $error = $new->data->firstError(HtmlForm::getAttributeName($new->attribute));
         }
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
