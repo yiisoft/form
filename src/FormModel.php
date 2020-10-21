@@ -374,6 +374,9 @@ abstract class FormModel implements FormModelInterface
             : $class->$attribute->getAttributeValue($nested);
         $getter = Closure::bind($getter, null, $this);
 
+        /**
+         * @psalm-var Closure $getter
+         */
         return $getter($this, $attribute);
     }
 
@@ -392,6 +395,9 @@ abstract class FormModel implements FormModelInterface
                 : $class->$attribute->setAttribute($nested, $value);
             $setter = Closure::bind($setter, null, $this);
 
+            /**
+             * @psalm-var Closure $setter
+             */
             $setter($this, $attribute, $value);
         }
     }

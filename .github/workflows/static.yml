@@ -7,8 +7,6 @@ name: static analysis
 jobs:
   mutation:
     name: PHP ${{ matrix.php-version }}-${{ matrix.os }}
-    env:
-      extensions: ast
 
     runs-on: ${{ matrix.os }}
 
@@ -28,7 +26,6 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: ${{ env.extensions }}
           tools: composer:v2, cs2pr
           coverage: none
 
@@ -46,5 +43,5 @@ jobs:
       - name: Install dependencies with composer
         run: composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader
 
-      - name: Static analysis with phan
-        run: vendor/bin/phan --no-progress-bar --output-mode checkstyle | cs2pr --graceful-warnings --colorize
+      - name: Static analysis with psalm
+        run: vendor/bin/psalm --shepherd --stats --output-format=checkstyle | cs2pr --graceful-warnings --colorize

@@ -843,6 +843,9 @@ final class Field extends Widget
         }
 
         $this->errorOptions = array_merge($this->errorOptions, $options);
+        /**
+         * @psalm-suppress PossiblyNullPropertyAssignmentValue
+         */
         Html::addCssClass($this->errorOptions, $classFromOptions);
     }
 
@@ -855,6 +858,9 @@ final class Field extends Widget
         }
 
         $this->hintOptions = array_merge($this->hintOptions, $options);
+        /**
+         * @psalm-suppress PossiblyNullPropertyAssignmentValue
+         */
         Html::addCssClass($this->hintOptions, $classFromOptions);
     }
 
@@ -867,6 +873,9 @@ final class Field extends Widget
         }
 
         $this->inputOptions = array_merge($this->inputOptions, $options);
+        /**
+         * @psalm-suppress PossiblyNullPropertyAssignmentValue
+         */
         Html::addCssClass($this->inputOptions, $classFromOptions);
     }
 
@@ -879,12 +888,18 @@ final class Field extends Widget
         }
 
         $this->labelOptions = array_merge($this->labelOptions, $options);
+        /**
+         * @psalm-suppress PossiblyNullPropertyAssignmentValue
+         */
         Html::addCssClass($this->labelOptions, $classFromOptions);
     }
 
     private function addErrorCssClassToContainer(): void
     {
         if ($this->validationStateOn === 'container') {
+            /**
+             * @psalm-suppress PossiblyNullPropertyAssignmentValue
+             */
             Html::addCssClass($this->options, $this->errorCssClass);
         }
     }
@@ -895,6 +910,9 @@ final class Field extends Widget
             $attributeName = HtmlForm::getAttributeName($this->attribute);
 
             if ($this->data->hasErrors($attributeName)) {
+                /**
+                 * @psalm-suppress PossiblyNullPropertyAssignmentValue
+                 */
                 Html::addCssClass($this->inputOptions, $this->errorCssClass);
             }
         }
