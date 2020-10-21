@@ -31,6 +31,7 @@ final class Form extends Widget
      * @return string the generated form start tag.
      *
      * {@see end())}
+     * @throws \JsonException
      */
     public function start(): string
     {
@@ -50,7 +51,7 @@ final class Form extends Widget
                 if (($pos1 = strpos($pair, '=')) !== false) {
                     $hiddenInputs[] = Html::hiddenInput(
                         urldecode(substr($pair, 0, $pos1)),
-                        urldecode(substr($pair, $pos1 + 1))
+                        urldecode((string) substr($pair, $pos1 + 1))
                     );
                 } else {
                     $hiddenInputs[] = Html::hiddenInput(urldecode($pair), '');

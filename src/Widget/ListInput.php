@@ -35,7 +35,7 @@ final class ListInput extends Widget
         $type = $new->type;
 
         if (!$new->noUnselect) {
-            $new->options['unselect'] =  $new->options['unselect'] ?? $new->unselect;
+            $new->options['unselect'] ??= $new->unselect;
         }
 
         if (!empty($new->getId())) {

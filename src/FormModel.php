@@ -93,7 +93,7 @@ abstract class FormModel implements FormModelInterface
     {
         return strpos(static::class, '@anonymous') !== false
             ? ''
-            : substr(strrchr(static::class, "\\"), 1);
+            : (string) substr((string) strrchr(static::class, "\\"), 1);
     }
 
     public function hasAttribute(string $attribute): bool
@@ -125,7 +125,7 @@ abstract class FormModel implements FormModelInterface
 
     public function firstError(string $attribute): string
     {
-        return isset($this->attributesErrors[$attribute]) ? reset($this->attributesErrors[$attribute]) : '';
+        return isset($this->attributesErrors[$attribute]) ? (string) reset($this->attributesErrors[$attribute]) : '';
     }
 
     public function firstErrors(): array
@@ -150,10 +150,18 @@ abstract class FormModel implements FormModelInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
+    /**
+     * @param array $data
+     * @param string|null $formName
+     * @return bool
+     */
     public function load(array $data, $formName = null): bool
     {
         $scope = $formName ?? $this->formName();
 
+        /**
+         * @psalm-var array<string,mixed>
+         */
         $values = [];
 
         if ($scope === '' && !empty($data)) {
@@ -343,7 +351,7 @@ abstract class FormModel implements FormModelInterface
     private function generateAttributeLabel(string $name): string
     {
         return StringHelper::uppercaseFirstCharacterInEachWord(
-            $this->getInflector()->toWords($name, true)
+            $this->getInflector()->toWords($name)
         );
     }
 

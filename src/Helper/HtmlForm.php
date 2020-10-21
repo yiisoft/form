@@ -51,7 +51,7 @@ final class HtmlForm
      */
     public static function getInputId(FormModelInterface $form, string $attribute, string $charset = 'UTF-8'): string
     {
-        $name = mb_strtolower(static::getInputName($form, $attribute), $charset);
+        $name = (string) mb_strtolower(static::getInputName($form, $attribute), $charset);
 
         return str_replace(['[]', '][', '[', ']', ' ', '.'], ['', '-', '-', '', '-', '-'], $name);
     }
