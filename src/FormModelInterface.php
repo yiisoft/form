@@ -206,7 +206,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return bool whether `load()` found the expected form in `$data`.
      */
-    public function load(array $data, $formName = null): bool;
+    public function load(array $data, ?string $formName = null): bool;
 
     /**
      * Performs the data validation.

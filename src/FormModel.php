@@ -155,7 +155,7 @@ abstract class FormModel implements FormModelInterface
      * @param string|null $formName
      * @return bool
      */
-    public function load(array $data, $formName = null): bool
+    public function load(array $data, ?string $formName = null): bool
     {
         $scope = $formName ?? $this->formName();
 
