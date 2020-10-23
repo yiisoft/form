@@ -45,12 +45,12 @@ use Yiisoft\Validator\Rule\HasLength;
 
 class LoginForm extends FormModel
 {
-    /** Define propertys with TypeHint */
+    /** Define properties with TypeHint */
     private ?string $login = null;
     private ?string $password = null;
     private bool $rememberMe = false;
 
-    /** Getters propertys */
+    /** Getters properties */
     public function getLogin(): ?string
     {
         return $this->login;
@@ -66,7 +66,7 @@ class LoginForm extends FormModel
         return $this->rememberMe;
     }
 
-    /** Setters propertys */
+    /** Setters properties */
     public function login(string $value): void
     {
         $this->login = $value;
@@ -92,7 +92,7 @@ class LoginForm extends FormModel
         ];
     }
 
-    /** Define formname */
+    /** Define form name */
     public function formName(): ?string
     {
         return 'LoginForm';
