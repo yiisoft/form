@@ -47,11 +47,16 @@ final class HtmlForm
      *
      * @return string the generated input ID.
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
+     * @throws \UnexpectedValueException if charset is unknown
      *
      */
     public static function getInputId(FormModelInterface $form, string $attribute, string $charset = 'UTF-8'): string
     {
-        $name = (string) mb_strtolower(static::getInputName($form, $attribute), $charset);
+        $name = @mb_strtolower(static::getInputName($form, $attribute), $charset);
+
+        if (!is_string($name)) {
+            throw new \UnexpectedValueException('Unknown charset');
+        }
 
         return str_replace(['[]', '][', '[', ']', ' ', '.'], ['', '-', '-', '', '-', '-'], $name);
     }
