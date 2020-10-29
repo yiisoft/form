@@ -132,7 +132,11 @@ abstract class FormModel implements FormModelInterface
 
     public function firstError(string $attribute): string
     {
-        return isset($this->attributesErrors[$attribute]) ? (string) reset($this->attributesErrors[$attribute]) : '';
+        if (empty($this->attributesErrors[$attribute])) {
+            return '';
+        }
+
+        return reset($this->attributesErrors[$attribute]);
     }
 
     public function firstErrors(): array

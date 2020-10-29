@@ -156,7 +156,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @param string $attribute attribute name.
      *
-     * @return string the error message. Null is returned if no error.
+     * @return string the error message. Empty string is returned if there is no error.
      *
      * {@see errors()}
      * {@see firstErrors()}
