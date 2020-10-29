@@ -91,9 +91,16 @@ abstract class FormModel implements FormModelInterface
      */
     public function formName(): string
     {
-        return strpos(static::class, '@anonymous') !== false
-            ? ''
-            : (string) substr((string) strrchr(static::class, "\\"), 1);
+        if (strpos(static::class, '@anonymous') !== false) {
+            return '';
+        }
+
+        $className = strrchr(static::class, "\\");
+        if ($className === false) {
+            return static::class;
+        }
+
+        return substr($className, 1);
     }
 
     public function hasAttribute(string $attribute): bool
