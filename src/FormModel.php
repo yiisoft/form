@@ -91,9 +91,16 @@ abstract class FormModel implements FormModelInterface
      */
     public function formName(): string
     {
-        return strpos(static::class, '@anonymous') !== false
-            ? ''
-            : substr(strrchr(static::class, "\\"), 1);
+        if (strpos(static::class, '@anonymous') !== false) {
+            return '';
+        }
+
+        $className = strrchr(static::class, "\\");
+        if ($className === false) {
+            return static::class;
+        }
+
+        return substr($className, 1);
     }
 
     public function hasAttribute(string $attribute): bool
@@ -125,7 +132,11 @@ abstract class FormModel implements FormModelInterface
 
     public function firstError(string $attribute): string
     {
-        return isset($this->attributesErrors[$attribute]) ? reset($this->attributesErrors[$attribute]) : '';
+        if (empty($this->attributesErrors[$attribute])) {
+            return '';
+        }
+
+        return reset($this->attributesErrors[$attribute]);
     }
 
     public function firstErrors(): array
@@ -150,10 +161,18 @@ abstract class FormModel implements FormModelInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
-    public function load(array $data, $formName = null): bool
+    /**
+     * @param array $data
+     * @param string|null $formName
+     * @return bool
+     */
+    public function load(array $data, ?string $formName = null): bool
     {
         $scope = $formName ?? $this->formName();
 
+        /**
+         * @psalm-var array<string,mixed>
+         */
         $values = [];
 
         if ($scope === '' && !empty($data)) {
@@ -343,7 +362,7 @@ abstract class FormModel implements FormModelInterface
     private function generateAttributeLabel(string $name): string
     {
         return StringHelper::uppercaseFirstCharacterInEachWord(
-            $this->getInflector()->toWords($name, true)
+            $this->getInflector()->toWords($name)
         );
     }
 
@@ -366,6 +385,9 @@ abstract class FormModel implements FormModelInterface
             : $class->$attribute->getAttributeValue($nested);
         $getter = Closure::bind($getter, null, $this);
 
+        /**
+         * @psalm-var Closure $getter
+         */
         return $getter($this, $attribute);
     }
 
@@ -384,6 +406,9 @@ abstract class FormModel implements FormModelInterface
                 : $class->$attribute->setAttribute($nested, $value);
             $setter = Closure::bind($setter, null, $this);
 
+            /**
+             * @psalm-var Closure $setter
+             */
             $setter($this, $attribute, $value);
         }
     }

@@ -22,6 +22,7 @@ final class ErrorSummary extends Widget
      * Generates a summary of the validation errors.
      *
      * @return string the generated error summary
+     * @throws \JsonException
      */
     public function run(): string
     {
@@ -40,7 +41,7 @@ final class ErrorSummary extends Widget
             /** still render the placeholder for client-side validation use */
             $content = '<ul></ul>';
             $new->options['style'] = isset($new->options['style'])
-                ? rtrim($new->options['style'], ';') . '; display:none' : 'display:none';
+                ? rtrim((string) $new->options['style'], ';') . '; display:none' : 'display:none';
         } else {
             $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
         }

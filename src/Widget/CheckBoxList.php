@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
 
@@ -23,6 +22,7 @@ final class CheckBoxList extends Widget
      * A checkbox list allows multiple selection, like {@see ListBox}.
      *
      * @return string the generated checkbox list.
+     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
     public function run(): string
     {
@@ -174,7 +174,7 @@ final class CheckBoxList extends Widget
     /**
      * The tag name of the container element.
      *
-     * Null to render list of checkboxes without container {@see Html::tag()}.
+     * Null to render list of checkboxes without container {@see \Yiisoft\Html\Html::tag()}.
      *
      * @param string|null $value
      *

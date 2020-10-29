@@ -31,6 +31,7 @@ final class Form extends Widget
      * @return string the generated form start tag.
      *
      * {@see end())}
+     * @throws \JsonException
      */
     public function start(): string
     {

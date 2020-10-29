@@ -9,9 +9,10 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
 
 use function str_repeat;
+
+require __DIR__ . '/Stub/NonNamespacedForm.php';
 
 final class FormModelTest extends TestCase
 {
@@ -25,6 +26,12 @@ final class FormModelTest extends TestCase
     {
         $form = new DefaultFormNameForm();
         $this->assertEquals('DefaultFormNameForm', $form->formName());
+    }
+
+    public function testNonNamespacedFormName(): void
+    {
+        $form = new \NonNamespacedForm();
+        $this->assertEquals('NonNamespacedForm', $form->formName());
     }
 
     public function testCustomFormName(): void
