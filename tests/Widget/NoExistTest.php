@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\LoginForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\TextInput;
 
 final class NoExistTest extends TestCase

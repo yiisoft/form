@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Closure;
-use InvalidArgumentException;
-use ReflectionClass;
-use Yiisoft\Strings\StringHelper;
-use Yiisoft\Strings\Inflector;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
-
 use function array_key_exists;
 use function array_merge;
+use Closure;
 use function explode;
 use function get_object_vars;
+use InvalidArgumentException;
 use function is_subclass_of;
+
+use ReflectionClass;
 use function reset;
 use function sprintf;
 use function strpos;
+use Yiisoft\Strings\Inflector;
+use Yiisoft\Strings\StringHelper;
+use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\ValidatorFactoryInterface;
 
 /**
  * Form model represents an HTML form: its data, validation and presentation.
@@ -95,7 +95,7 @@ abstract class FormModel implements FormModelInterface
             return '';
         }
 
-        $className = strrchr(static::class, "\\");
+        $className = strrchr(static::class, '\\');
         if ($className === false) {
             return static::class;
         }
@@ -164,6 +164,7 @@ abstract class FormModel implements FormModelInterface
     /**
      * @param array $data
      * @param string|null $formName
+     *
      * @return bool
      */
     public function load(array $data, ?string $formName = null): bool
@@ -368,7 +369,7 @@ abstract class FormModel implements FormModelInterface
 
     private function readProperty(string $attribute)
     {
-        $class = get_class($this);
+        $class = static::class;
 
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
@@ -401,7 +402,7 @@ abstract class FormModel implements FormModelInterface
                 $this->$attribute->setAttribute($attribute, $value);
             }
         } else {
-            $setter = fn(FormModel $class, $attribute, $value) => $nested === null
+            $setter = fn (FormModel $class, $attribute, $value) => $nested === null
                 ? $class->$attribute = $value
                 : $class->$attribute->setAttribute($nested, $value);
             $setter = Closure::bind($setter, null, $this);

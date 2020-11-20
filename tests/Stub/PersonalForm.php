@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Stub;
 
+use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\ValidatorFactoryMock;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Form\FormModel;
 
 final class PersonalForm extends FormModel
 {
@@ -40,7 +40,7 @@ final class PersonalForm extends FormModel
     public function attributeHints(): array
     {
         return [
-            'name' => 'Write your first name.'
+            'name' => 'Write your first name.',
         ];
     }
 
@@ -65,9 +65,8 @@ final class PersonalForm extends FormModel
                     ->message(
                         'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or ' .
                         'more characters.'
-                    )
-
-            ]
+                    ),
+            ],
         ];
     }
 

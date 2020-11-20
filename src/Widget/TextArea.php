@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Html\Html;
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 final class TextArea extends Widget
 {

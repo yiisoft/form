@@ -56,7 +56,6 @@ final class HtmlFormTest extends TestCase
         Html::wrapAttributeName('form', 'content body');
     }
 
-
     public function t1estWrapAttributeNameEmptyWrapName(): void
     {
         $this->expectException(EmptyWrapNameException::class);

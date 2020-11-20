@@ -6,10 +6,10 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Html\Html;
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 final class BooleanInput extends Widget
 {

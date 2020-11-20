@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Error;
 
 final class ErrorTest extends TestCase
@@ -21,8 +21,8 @@ final class ErrorTest extends TestCase
         $this->record = [
             'PersonalForm' =>
             [
-                'name' => null
-            ]
+                'name' => null,
+            ],
         ];
     }
 

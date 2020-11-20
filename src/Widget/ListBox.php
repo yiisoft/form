@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Widget\Widget;
 
 final class ListBox extends Widget
 {
@@ -26,7 +26,6 @@ final class ListBox extends Widget
      */
     public function run(): string
     {
-
         return ListInput::Widget()
             ->type('listBox')
             ->config($this->data, $this->attribute, $this->options)

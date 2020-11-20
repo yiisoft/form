@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Widget\Widget;
 
 final class DropDownList extends Widget
 {

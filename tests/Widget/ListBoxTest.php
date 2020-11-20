@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\ListBox;
 
 final class ListBoxTest extends TestCase
@@ -280,7 +280,7 @@ HTML;
     {
         $groups = [
             '1' => ['label' => 'Russia'],
-            '2' => ['label' => 'Chile']
+            '2' => ['label' => 'Chile'],
         ];
 
         $expected = <<<'HTML'
@@ -330,7 +330,7 @@ HTML;
             'text' => 'Select City Birth',
             'options' => [
                 'value' => '0',
-                'selected' => 'selected'
+                'selected' => 'selected',
             ],
         ];
 
@@ -375,7 +375,7 @@ HTML;
             'text' => 'Select City Birth',
             'options' => [
                 'value' => '0',
-                'selected' => 'selected'
+                'selected' => 'selected',
             ],
         ];
 
@@ -417,7 +417,7 @@ HTML;
             1 => 'Moscu',
             2 => 'San Petersburgo',
             3 => 'Novosibirsk',
-            4 => 'Ekaterinburgo'
+            4 => 'Ekaterinburgo',
         ];
     }
 
@@ -445,13 +445,13 @@ HTML;
                 '2' => ' Moscu',
                 '3' => ' San Petersburgo',
                 '4' => ' Novosibirsk',
-                '5' => ' Ekaterinburgo'
+                '5' => ' Ekaterinburgo',
             ],
             '2' => [
                 '6' => 'Santiago',
                 '7' => 'Concepcion',
-                '8' => 'Chillan'
-            ]
+                '8' => 'Chillan',
+            ],
         ];
     }
 }

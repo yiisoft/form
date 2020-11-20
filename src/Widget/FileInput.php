@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Widget\Widget;
 
 final class FileInput extends Widget
 {

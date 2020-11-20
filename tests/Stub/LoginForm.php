@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Stub;
 
+use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\ValidatorFactoryMock;
 use Yiisoft\Validator\Rule\Email;
-use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\Rule\Required;
 
 class LoginForm extends FormModel
 {
@@ -56,7 +56,7 @@ class LoginForm extends FormModel
     {
         return [
             'login' => 'Write your id or email.',
-            'password' => 'Write your password.'
+            'password' => 'Write your password.',
         ];
     }
 
@@ -65,7 +65,7 @@ class LoginForm extends FormModel
         return [
             'login' => 'Login:',
             'password' => 'Password:',
-            'rememberMe' => 'remember Me:'
+            'rememberMe' => 'remember Me:',
         ];
     }
 
@@ -73,7 +73,7 @@ class LoginForm extends FormModel
     {
         return [
             'login' => $this->loginRules(),
-            'password' => $this->passwordRules()
+            'password' => $this->passwordRules(),
         ];
     }
 
@@ -86,7 +86,7 @@ class LoginForm extends FormModel
             ->max(40)
             ->tooShortMessage('Is too short.')
             ->tooLongMessage('Is too long.'),
-            new Email()
+            new Email(),
         ];
     }
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
 
 final class FieldListBoxTest extends TestCase
@@ -22,7 +22,7 @@ final class FieldListBoxTest extends TestCase
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
-            '4' => 'Ekaterinburgo'
+            '4' => 'Ekaterinburgo',
         ];
     }
 
@@ -99,7 +99,6 @@ HTML;
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
-
 
     public function testFieldListBoxIssue8848(): void
     {

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use function array_merge;
 use InvalidArgumentException;
+use function strtr;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
-use Yiisoft\Html\Html;
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 
-use function array_merge;
-use function strtr;
+use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 /**
  * Renders the field widget along with label, error tag and hint tag (if any) according to template.
@@ -90,7 +90,6 @@ final class Field extends Widget
         }
 
         return $content;
-
     }
 
     /**
@@ -188,11 +187,11 @@ final class Field extends Widget
      *
      * If you set a custom `id` for the error element, you may need to adjust the {@see $selectors} accordingly.
      *
+     *@throws InvalidConfigException
+     *
      * @return self the field object itself.
      *
      * {@see DEFAULT_ERROR_OPTIONS}
-     *@throws InvalidConfigException
-     *
      */
     public function error(array $options = []): self
     {
@@ -761,6 +760,7 @@ final class Field extends Widget
      * @param bool $containerEnabled enabled/disable container for the widget.
      * @param array $options The HTML attributes for the widget container tag if it is enabled.
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
      * @return self
      */
     public function enclosedByContainer(bool $containerEnabled, array $options = []): self

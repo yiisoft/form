@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\DropDownList;
 
 final class DropDownListTest extends TestCase
@@ -22,7 +22,7 @@ final class DropDownListTest extends TestCase
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
-            '4' => 'Ekaterinburgo'
+            '4' => 'Ekaterinburgo',
         ];
     }
 
@@ -70,7 +70,7 @@ HTML;
             '1' => '&#127961; ' . 'Moscu',
             '2' => '&#127961; ' . 'San Petersburgo',
             '3' => '&#127961; ' . 'Novosibirsk',
-            '4' => '&#127961; ' . 'Ekaterinburgo'
+            '4' => '&#127961; ' . 'Ekaterinburgo',
         ];
 
         $this->data->cityBirth(1);
@@ -97,7 +97,7 @@ HTML;
             '1' => ' Moscu',
             '2' => ' San Petersburgo',
             '3' => ' Novosibirsk',
-            '4' => ' Ekaterinburgo'
+            '4' => ' Ekaterinburgo',
         ];
 
         $this->data->cityBirth(1);
@@ -122,7 +122,7 @@ HTML;
     {
         $groups = [
             '1' => ['label' => 'Russia'],
-            '2' => ['label' => 'Chile']
+            '2' => ['label' => 'Chile'],
         ];
 
         $this->cities = [
@@ -130,13 +130,13 @@ HTML;
                 '2' => ' Moscu',
                 '3' => ' San Petersburgo',
                 '4' => ' Novosibirsk',
-                '5' => ' Ekaterinburgo'
+                '5' => ' Ekaterinburgo',
             ],
             '2' => [
                 '6' => 'Santiago',
                 '7' => 'Concepcion',
-                '8' => 'Chillan'
-            ]
+                '8' => 'Chillan',
+            ],
         ];
 
         $this->data->cityBirth(1);
@@ -190,7 +190,7 @@ HTML;
             'text' => 'Select City Birth',
             'options' => [
                 'value' => '0',
-                'selected' => 'selected'
+                'selected' => 'selected',
             ],
         ];
 

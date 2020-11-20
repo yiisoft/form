@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
 
 final class FieldDropDownListTest extends TestCase
@@ -22,7 +22,7 @@ final class FieldDropDownListTest extends TestCase
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
-            '4' => 'Ekaterinburgo'
+            '4' => 'Ekaterinburgo',
         ];
     }
 
@@ -72,7 +72,7 @@ HTML;
                     'text' => 'Select City Birth',
                     'options' => [
                         'value' => '0',
-                        'selected' => 'selected'
+                        'selected' => 'selected',
                     ],
                 ],
             ])
@@ -92,7 +92,7 @@ HTML;
                 '4' => 'Moscu',
                 '5' => 'San Petersburgo',
                 '6' => 'Novosibirsk',
-                '7' => 'Ekaterinburgo'
+                '7' => 'Ekaterinburgo',
             ],
         ];
 
@@ -122,13 +122,13 @@ HTML;
             ->dropDownList($this->cities, [
                 'groups' => [
                     '1' => ['label' => 'Chile'],
-                    '2' => ['label' => 'Russia']
+                    '2' => ['label' => 'Russia'],
                 ],
                 'prompt' => [
                     'text' => 'Select City Birth',
                     'options' => [
                         'value' => '0',
-                        'selected' => 'selected'
+                        'selected' => 'selected',
                     ],
                 ],
             ])
@@ -160,12 +160,12 @@ HTML;
                     'text' => 'Select City Birth',
                     'options' => [
                         'value' => '0',
-                        'selected' => 'selected'
+                        'selected' => 'selected',
                     ],
                 ],
                 'multiple' => true,
                 'unselect' => '0',
-                'size' => 5
+                'size' => 5,
             ])
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);

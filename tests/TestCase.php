@@ -21,8 +21,6 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param string $expected
      * @param string $actual
      * @param string $message
-     *
-     * @return void
      */
     protected function assertEqualsWithoutLE(string $expected, string $actual, string $message = ''): void
     {

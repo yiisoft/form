@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use function array_merge;
+use function array_unique;
+use function array_values;
 use Yiisoft\Arrays\ArrayHelper;
+
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-use Yiisoft\Form\FormModelInterface;
-
-use function array_merge;
-use function array_values;
-use function array_unique;
 
 final class ErrorSummary extends Widget
 {
@@ -21,8 +21,9 @@ final class ErrorSummary extends Widget
     /**
      * Generates a summary of the validation errors.
      *
-     * @return string the generated error summary
      * @throws \JsonException
+     *
+     * @return string the generated error summary
      */
     public function run(): string
     {

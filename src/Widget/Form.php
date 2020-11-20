@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Html\Html;
-use Yiisoft\Http\Method;
-use Yiisoft\Widget\Widget;
-
 use function explode;
 use function implode;
 use function strcasecmp;
 use function strpos;
+
 use function substr;
 use function urldecode;
+use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Html\Html;
+use Yiisoft\Http\Method;
+use Yiisoft\Widget\Widget;
 
 /**
  * A widget for rendering a form
@@ -28,10 +28,11 @@ final class Form extends Widget
     /**
      * Generates a form start tag.
      *
+     * @throws \JsonException
+     *
      * @return string the generated form start tag.
      *
      * {@see end())}
-     * @throws \JsonException
      */
     public function start(): string
     {

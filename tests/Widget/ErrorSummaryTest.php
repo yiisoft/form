@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\ErrorSummary;
 
 final class ErrorSummaryTest extends TestCase
@@ -34,7 +34,7 @@ final class ErrorSummaryTest extends TestCase
                 ['showAllErrors' => true],
                 '<div><p>Please fix the following errors:</p><ul><li>Is too short.</li>' . "\n" .
                 '<li>This value is not a valid email address.</li>' . "\n" .
-                '<li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li></ul></div>'
+                '<li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li></ul></div>',
             ],
         ];
     }
@@ -54,8 +54,8 @@ final class ErrorSummaryTest extends TestCase
             'PersonalForm' => [
                 'name' => $name,
                 'email' => $email,
-                'password' => $password
-            ]
+                'password' => $password,
+            ],
         ];
 
         $data = new PersonalForm();

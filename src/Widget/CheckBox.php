@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Widget\Widget;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Widget\Widget;
 
 final class CheckBox extends Widget
 {
