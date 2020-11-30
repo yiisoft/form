@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use function explode;
-use function implode;
-use function strcasecmp;
-use function strpos;
-
-use function substr;
-use function urldecode;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
 use Yiisoft\Widget\Widget;
+
+use function explode;
+use function implode;
+use function strcasecmp;
+use function strpos;
+use function substr;
+use function urldecode;
 
 /**
  * A widget for rendering a form
@@ -34,8 +34,10 @@ final class Form extends Widget
      *
      * {@see end())}
      */
-    public function start(): string
+    public function begin(): ?string
     {
+        parent::begin();
+
         $hiddenInputs = [];
 
         $csrfToken = ArrayHelper::remove($this->options, 'csrf', false);
