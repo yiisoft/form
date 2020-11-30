@@ -14,16 +14,16 @@ final class FormTest extends TestCase
     public function testFormsBegin(): void
     {
         $expected = '<form action="/test" method="POST">';
-        $created = Form::begin()
+        $created = Form::widget()
             ->action('/test')
-            ->start();
+            ->begin();
         $this->assertEquals($expected, $created);
 
         $expected = '<form action="/example" method="GET">';
-        $created = Form::begin()
+        $created = Form::widget()
             ->action('/example')
             ->method('GET')
-            ->start();
+            ->begin();
         $this->assertEquals($expected, $created);
 
         $hiddens = [
@@ -32,14 +32,14 @@ final class FormTest extends TestCase
         ];
         $this->assertEquals(
             '<form action="/example" method="GET">' . "\n" . implode("\n", $hiddens),
-            Form::begin()->action('/example?id=1&title=%3C')->method('GET')->start()
+            Form::widget()->action('/example?id=1&title=%3C')->method('GET')->begin()
         );
 
         $expected = '<form action="/foo" method="GET">%A<input type="hidden" name="p" value="">';
-        $actual = Form::begin()
+        $actual = Form::widget()
             ->action('/foo?p')
             ->method('GET')
-            ->start();
+            ->begin();
         $this->assertStringMatchesFormat($expected, $actual);
     }
 
@@ -65,17 +65,17 @@ final class FormTest extends TestCase
      */
     public function testFormsBeginSimulateViaPost(string $expected, string $method, array $options = []): void
     {
-        $actual = Form::begin()
+        $actual = Form::widget()
             ->action('/foo')
             ->method($method)
             ->options($options)
-            ->start();
+            ->begin();
         $this->assertStringMatchesFormat($expected, $actual);
     }
 
     public function testFormsEnd(): void
     {
-        Form::begin()->start();
+        Form::widget()->begin();
         $this->assertEquals('</form>', Form::end());
     }
 
@@ -84,7 +84,7 @@ final class FormTest extends TestCase
         $data = new PersonalForm();
 
         $data->email('admin@example.com');
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
                 ->config($data, 'email')
                 ->template('{input}')
@@ -98,7 +98,7 @@ final class FormTest extends TestCase
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
-        $html = Form::begin()->action('/something')->options(['class' => 'formTestMe'])->start();
+        $html = Form::widget()->action('/something')->options(['class' => 'formTestMe'])->begin();
         $html .= Field::widget()
                 ->config($data, 'email')
                 ->enclosedByContainer(true, ['class' => 'fieldTestMe'])
@@ -121,7 +121,7 @@ HTML;
         $data->name('yii test');
         $data->validate();
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
                 ->config($data, 'name')
                 ->inputCssClass('form-testme');
@@ -137,7 +137,7 @@ HTML;
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
                 ->config($data, 'name')
                 ->inputCssClass('form-testme');
@@ -166,7 +166,7 @@ HTML;
         $data = new PersonalForm();
         $data->cityBirth(2);
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
                 ->config($data, 'cityBirth')
                 ->template('{input}')
@@ -186,7 +186,7 @@ HTML;
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
                 ->config($data, 'cityBirth')
                 ->listBox($citys, ['multiple' => true, 'unselect' => '1']);
@@ -220,7 +220,7 @@ HTML;
         $data->email('admin@example.com');
         $data->validate();
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget($fieldConfig)
                 ->config($data, 'name');
         $html .= Field::widget($fieldConfig)
@@ -250,7 +250,7 @@ HTML;
         $data->email('admin');
         $data->validate();
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
                 ->config($data, 'name');
         $html .= Field::widget()
@@ -303,7 +303,7 @@ HTML;
         $data->load($record);
         $data->validate();
 
-        $html = Form::begin()->action('/something')->start();
+        $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget($fieldConfig)
                 ->config($data, 'id')
                 ->textinput();

@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use function array_key_exists;
-use function array_merge;
 use Closure;
-use function explode;
-use function get_object_vars;
-use InvalidArgumentException;
-use function is_subclass_of;
-
 use ReflectionClass;
-use function reset;
-use function sprintf;
-use function strpos;
+use InvalidArgumentException;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
+
+use function array_key_exists;
+use function array_merge;
+use function explode;
+use function get_object_vars;
+use function is_subclass_of;
+use function reset;
+use function sprintf;
+use function strpos;
 
 /**
  * Form model represents an HTML form: its data, validation and presentation.

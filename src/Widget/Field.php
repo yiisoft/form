@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use function array_merge;
 use InvalidArgumentException;
-use function strtr;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
-
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
+
+use function array_merge;
+use function strtr;
 
 /**
  * Renders the field widget along with label, error tag and hint tag (if any) according to template.

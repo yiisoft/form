@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use function in_array;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
-
 use Yiisoft\Widget\Widget;
+
+use function in_array;
 
 final class Input extends Widget
 {

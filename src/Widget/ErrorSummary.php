@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use function array_merge;
-use function array_unique;
-use function array_values;
 use Yiisoft\Arrays\ArrayHelper;
-
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
+
+use function array_merge;
+use function array_unique;
+use function array_values;
 
 final class ErrorSummary extends Widget
 {
