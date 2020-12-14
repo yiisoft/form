@@ -881,6 +881,10 @@ final class Field extends Widget
 
     public function labelOptions(array $options = []): void
     {
+        if ($this->data->isAttributeRequired($this->attribute)) {
+            Html::addCssClass($options, $this->requiredCssClass);
+        }
+
         $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_LABEL_OPTIONS['class']);
 
         if ($classFromOptions !== self::DEFAULT_LABEL_OPTIONS['class']) {

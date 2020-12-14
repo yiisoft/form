@@ -16,7 +16,7 @@ final class FieldTextInputTest extends TestCase
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">Name</label>
+<label class="control-label required" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -34,7 +34,7 @@ HTML;
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
-<label class="control-label customClass" for="personalform-name">Name:</label>
+<label class="control-label customClass required" for="personalform-name">Name:</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
