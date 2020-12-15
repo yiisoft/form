@@ -43,6 +43,13 @@ final class FormTest extends TestCase
         $this->assertStringMatchesFormat($expected, $actual);
     }
 
+    public function testFormEmptyBegin(): void
+    {
+        $expected = '<form action="" method="POST">';
+        $created = Form::widget()->begin();
+        $this->assertEquals($expected, $created);
+    }
+
     /**
      * Data provider for {@see testFormsBeginSimulateViaPost()}.
      *
