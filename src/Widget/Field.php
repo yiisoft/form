@@ -157,6 +157,10 @@ final class Field extends Widget
             $new->labelOptions['label'] = $label;
         }
 
+        if ($new->data->isAttributeRequired($new->attribute)) {
+            Html::addCssClass($options, $new->requiredCssClass);
+        }
+
         $new->labelOptions($options);
         $new->skipForInLabel();
 

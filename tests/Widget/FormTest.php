@@ -136,7 +136,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">Name</label>
+<label class="control-label required" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -152,7 +152,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">Name</label>
+<label class="control-label required" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
@@ -236,7 +236,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name has-error">
-<label class="control-label" for="personalform-name">Name</label>
+<label class="control-label required" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
@@ -266,7 +266,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
-<label class="control-label" for="personalform-name">Name</label>
+<label class="control-label required" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
@@ -346,7 +346,7 @@ HTML;
 
 <div class="help-block">This value is not a valid email address.</div>
 </div><div class="form-group field-personalform-name has-error">
-<label class="control-label" for="personalform-name">Name</label>
+<label class="control-label required" for="personalform-name">Name</label>
 <input type="text" id="personalform-name" class="form-control testMe" name="PersonalForm[name]" value="Jack Ryan" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
