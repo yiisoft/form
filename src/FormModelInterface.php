@@ -236,5 +236,5 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return bool
      */
-    public function isValidate(): bool;
+    public function isValidated(): bool;
 }

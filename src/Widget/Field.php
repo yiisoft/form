@@ -938,7 +938,7 @@ final class Field extends Widget
 
             if (
                 !$this->data->hasErrors($attributeName) &&
-                $this->data->isValidate() &&
+                $this->data->isValidated() &&
                 !empty($this->data->getAttributeValue($attributeName))
             ) {
                 /**

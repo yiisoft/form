@@ -439,7 +439,7 @@ abstract class FormModel implements FormModelInterface
         return [$attribute, $nested];
     }
 
-    public function isValidate(): bool
+    public function isValidated(): bool
     {
         return $this->isValidate;
     }
