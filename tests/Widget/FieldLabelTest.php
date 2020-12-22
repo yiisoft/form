@@ -17,7 +17,7 @@ final class FieldLabelTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 <label class="control-label" for="personalform-email">Email</label>
-<input type="text" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" placeholder="Email">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -35,7 +35,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 <label class="control-label labelTestMe" for="personalform-email">Email:</label>
-<input type="text" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" placeholder="Email">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>
@@ -54,7 +54,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-email">
 
-<input type="text" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" placeholder="Email">
+<input type="text" id="personalform-email" class="form-control" name="PersonalForm[email]" placeholder="Email">
 
 <div class="help-block"></div>
 </div>

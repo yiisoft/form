@@ -17,7 +17,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-success" name="PersonalForm[name]" placeholder="Name">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -32,7 +32,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-success" name="PersonalForm[name]" aria-required="true" placeholder="Name">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div>
@@ -66,7 +66,7 @@ HTML;
 
         $expected = <<<'HTML'
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-success" name="PersonalForm[name]" aria-required="true" placeholder="Name">
+<input type="text" id="personalform-name" class="form-control" name="PersonalForm[name]" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 HTML;
