@@ -100,7 +100,7 @@ final class FormTest extends TestCase
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-email">
-<input type="email" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
+<input type="email" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
 </div></form>
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
@@ -115,7 +115,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form class="formTestMe" action="/something" method="POST"><div class="form-group field-personalform-email fieldTestMe">
-<input type="email" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" value="admin@example.com" required placeholder="Email">
+<input type="email" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com" required placeholder="Email">
 </div></form>
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);

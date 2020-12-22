@@ -18,7 +18,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-address">
 <label class="control-label" for="personalform-address">Address</label>
-<textarea id="personalform-address" class="form-control has-success" name="PersonalForm[address]" placeholder="Address">San Petesburgo, Rusia</textarea>
+<textarea id="personalform-address" class="form-control" name="PersonalForm[address]" placeholder="Address">San Petesburgo, Rusia</textarea>
 
 <div class="help-block"></div>
 </div>
@@ -37,7 +37,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-address">
 <label class="control-label customClass" for="personalform-address">Address:</label>
-<textarea id="personalform-address" class="form-control has-success" name="PersonalForm[address]" placeholder="Address"></textarea>
+<textarea id="personalform-address" class="form-control" name="PersonalForm[address]" placeholder="Address"></textarea>
 
 <div class="help-block"></div>
 </div>
@@ -57,7 +57,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-address">
 
-<textarea id="personalform-address" class="form-control has-success" name="PersonalForm[address]" placeholder="Address"></textarea>
+<textarea id="personalform-address" class="form-control" name="PersonalForm[address]" placeholder="Address"></textarea>
 
 <div class="help-block"></div>
 </div>

@@ -31,7 +31,7 @@ final class FieldDropDownListTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 <label class="control-label" for="personalform-citybirth">City Birth</label>
-<select id="personalform-citybirth" class="form-control has-success" name="PersonalForm[cityBirth]">
+<select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth]">
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -53,7 +53,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 <label class="control-label customLabelClass" for="personalform-citybirth">City Birth:</label>
-<select id="personalform-citybirth" class="form-control has-success" name="PersonalForm[cityBirth]">
+<select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth]">
 <option value="0" selected="selected">Select City Birth</option>
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
@@ -99,7 +99,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 <label class="control-label" for="personalform-citybirth">City Birth</label>
-<select id="personalform-citybirth" class="form-control has-success" name="PersonalForm[cityBirth]">
+<select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth]">
 <option value="0" selected="selected">Select City Birth</option>
 <optgroup label="Chile">
 <option value="1">Santiago</option>
@@ -141,7 +141,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 
-<input type="hidden" name="PersonalForm[cityBirth]" value="0"><select id="personalform-citybirth" class="form-control has-success" name="PersonalForm[cityBirth][]" multiple size="5">
+<input type="hidden" name="PersonalForm[cityBirth]" value="0"><select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth][]" multiple size="5">
 <option value="0" selected="selected">Select City Birth</option>
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>

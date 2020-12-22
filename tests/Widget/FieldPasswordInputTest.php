@@ -39,7 +39,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 <label class="control-label customClass required" for="personalform-password">Password:</label>
-<input type="password" id="personalform-password" class="form-control has-success" name="PersonalForm[password]" aria-required="true" placeholder="Password">
+<input type="password" id="personalform-password" class="form-control" name="PersonalForm[password]" aria-required="true" placeholder="Password">
 
 <div class="help-block"></div>
 </div>
@@ -59,7 +59,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 
-<input type="password" id="personalform-password" class="form-control has-success" name="PersonalForm[password]" aria-required="true" placeholder="Password">
+<input type="password" id="personalform-password" class="form-control" name="PersonalForm[password]" aria-required="true" placeholder="Password">
 
 <div class="help-block"></div>
 </div>

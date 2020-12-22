@@ -230,4 +230,11 @@ interface FormModelInterface extends DataSetInterface
      * @param mixed $value value
      */
     public function setAttribute(string $name, $value): void;
+
+    /**
+     * This method allows to know if the validation was executed or not in the model.
+     *
+     * @return bool If the model was validated.
+     */
+    public function isValidated(): bool;
 }
