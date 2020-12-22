@@ -234,7 +234,7 @@ interface FormModelInterface extends DataSetInterface
     /**
      * This method allows to know if the validation was executed or not in the model.
      *
-     * @return bool
+     * @return bool If the model was validated.
      */
     public function isValidated(): bool;
 }

@@ -32,7 +32,7 @@ abstract class FormModel implements FormModelInterface
     private array $attributesLabels;
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
-    private bool $isValidate = false;
+    private bool $validated = false;
 
     public function __construct(ValidatorFactoryInterface $validatorFactory)
     {
@@ -232,7 +232,7 @@ abstract class FormModel implements FormModelInterface
             }
         }
 
-        $this->isValidate = true;
+        $this->validated = true;
 
         return !$this->hasErrors();
     }
@@ -333,7 +333,7 @@ abstract class FormModel implements FormModelInterface
             unset($this->attributesErrors[$attribute]);
         }
 
-        $this->isValidate = false;
+        $this->validated = false;
     }
 
     private function getInflector(): Inflector
@@ -441,6 +441,6 @@ abstract class FormModel implements FormModelInterface
 
     public function isValidated(): bool
     {
-        return $this->isValidate;
+        return $this->validated;
     }
 }
