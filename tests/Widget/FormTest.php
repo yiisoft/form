@@ -100,7 +100,7 @@ final class FormTest extends TestCase
 
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-email">
-<input type="email" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
+<input type="email" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" value="admin@example.com" placeholder="Email">
 </div></form>
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
@@ -115,7 +115,7 @@ HTML;
 
         $expected = <<<'HTML'
 <form class="formTestMe" action="/something" method="POST"><div class="form-group field-personalform-email fieldTestMe">
-<input type="email" id="personalform-email" class="form-control" name="PersonalForm[email]" value="admin@example.com" required placeholder="Email">
+<input type="email" id="personalform-email" class="form-control has-success" name="PersonalForm[email]" value="admin@example.com" required placeholder="Email">
 </div></form>
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
@@ -137,7 +137,7 @@ HTML;
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
+<input type="text" id="personalform-name" class="form-testme has-success" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div></form>
@@ -153,7 +153,7 @@ HTML;
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-testme" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
+<input type="text" id="personalform-name" class="form-testme has-success" name="PersonalForm[name]" value="yii test" aria-required="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block"></div>
 </div></form>

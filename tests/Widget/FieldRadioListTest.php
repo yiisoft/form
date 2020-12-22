@@ -18,7 +18,7 @@ final class FieldRadioListTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-sex">
 <label class="control-label" for="personalform-sex">Sex</label>
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="form-control" role="radiogroup"><label><input type="radio" name="PersonalForm[sex]" value="1"> Female</label>
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="form-control has-success" role="radiogroup"><label><input type="radio" name="PersonalForm[sex]" value="1"> Female</label>
 <label><input type="radio" name="PersonalForm[sex]" value="2"> Male</label></div>
 
 <div class="help-block"></div>
@@ -39,7 +39,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-sex">
 <label class="control-label customClass" for="personalform-sex">Sex:</label>
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="form-control" role="radiogroup"><label><input type="radio" name="PersonalForm[sex]" value="1"> Female</label>
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="form-control has-success" role="radiogroup"><label><input type="radio" name="PersonalForm[sex]" value="1"> Female</label>
 <label><input type="radio" name="PersonalForm[sex]" value="2"> Male</label></div>
 
 <div class="help-block"></div>
@@ -61,7 +61,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-sex">
 
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="form-control" role="radiogroup"><label><input type="radio" name="PersonalForm[sex]" value="1"> Female</label>
+<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="form-control has-success" role="radiogroup"><label><input type="radio" name="PersonalForm[sex]" value="1"> Female</label>
 <label><input type="radio" name="PersonalForm[sex]" value="2"> Male</label></div>
 
 <div class="help-block"></div>

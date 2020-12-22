@@ -280,6 +280,7 @@ final class Field extends Widget
         $new->setAriaAttributes($options);
         $new->inputOptions($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         unset($options['class']);
 
@@ -318,6 +319,7 @@ final class Field extends Widget
         $new->setAriaAttributes($options);
         $new->inputOptions($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         unset($options['class']);
 
@@ -392,6 +394,7 @@ final class Field extends Widget
         $new->setAriaAttributes($options);
         $new->inputOptions($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         unset($options['class']);
 
@@ -427,6 +430,7 @@ final class Field extends Widget
 
         $new->setAriaAttributes($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
         $new->inputOptions($options);
         $new->setForInLabel($options);
 
@@ -464,6 +468,7 @@ final class Field extends Widget
         $new->setAriaAttributes($options);
         $new->inputOptions($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         unset($options['class']);
 
@@ -524,6 +529,7 @@ final class Field extends Widget
 
         $new->setAriaAttributes($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         return $this;
     }
@@ -575,6 +581,7 @@ final class Field extends Widget
             ->run();
 
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         return $this;
     }
@@ -611,6 +618,7 @@ final class Field extends Widget
         $new->setAriaAttributes($options);
         $new->inputOptions($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
 
         unset($options['class']);
 
@@ -725,6 +733,7 @@ final class Field extends Widget
         $new->setForInLabel($options);
         $new->inputOptions($options);
         $new->addErrorCssClassToInput();
+        $new->addSuccessCssClassToInput();
         $new->setInputRole($options);
         $new->inputOptions = array_merge($options, $new->inputOptions);
         $new->skipForInLabel = true;
@@ -918,6 +927,20 @@ final class Field extends Widget
                  * @psalm-suppress PossiblyNullPropertyAssignmentValue
                  */
                 Html::addCssClass($this->inputOptions, $this->errorCssClass);
+            }
+        }
+    }
+
+    private function addSuccessCssClassToInput(): void
+    {
+        if ($this->validationStateOn === 'input') {
+            $attributeName = HtmlForm::getAttributeName($this->attribute);
+
+            if (!$this->data->hasErrors($attributeName)) {
+                /**
+                 * @psalm-suppress PossiblyNullPropertyAssignmentValue
+                 */
+                Html::addCssClass($this->inputOptions, $this->successCssClass);
             }
         }
     }
