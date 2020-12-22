@@ -936,7 +936,11 @@ final class Field extends Widget
         if ($this->validationStateOn === 'input') {
             $attributeName = HtmlForm::getAttributeName($this->attribute);
 
-            if (!$this->data->hasErrors($attributeName) && $this->data->isValidate()) {
+            if (
+                !$this->data->hasErrors($attributeName) &&
+                $this->data->isValidate() &&
+                !empty($this->data->getAttributeValue($attributeName))
+            ) {
                 /**
                  * @psalm-suppress PossiblyNullPropertyAssignmentValue
                  */
