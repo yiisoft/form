@@ -429,9 +429,9 @@ final class Field extends Widget
         $new = clone $this;
 
         $new->setAriaAttributes($options);
+        $new->inputOptions($options);
         $new->addErrorCssClassToInput();
         $new->addSuccessCssClassToInput();
-        $new->inputOptions($options);
         $new->setForInLabel($options);
 
         unset($options['class']);
