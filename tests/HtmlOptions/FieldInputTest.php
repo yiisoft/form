@@ -28,5 +28,4 @@ HTML;
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }
-
 }
