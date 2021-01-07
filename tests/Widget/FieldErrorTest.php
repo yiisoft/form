@@ -19,7 +19,7 @@ final class FieldErrorTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
+<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" required aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block">Is too short.</div>
 </div>
@@ -40,7 +40,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>
-<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" aria-required="true" aria-invalid="true" placeholder="Name">
+<input type="text" id="personalform-name" class="form-control has-error" name="PersonalForm[name]" value="yii" required aria-required="true" aria-invalid="true" placeholder="Name">
 <div class="hint-block">Write your first name.</div>
 <div class="help-block errorTestMe">Is too short.</div>
 </div>

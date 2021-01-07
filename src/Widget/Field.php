@@ -972,6 +972,7 @@ final class Field extends Widget
     {
         if ($this->ariaAttribute) {
             if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
+                $this->inputOptions['required'] = true;
                 $this->inputOptions['aria-required'] = 'true';
             }
 
