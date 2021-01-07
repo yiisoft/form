@@ -54,7 +54,7 @@ final class PersonalForm extends FormModel
         return '(&#10006;) This is custom error message.';
     }
 
-    protected function rules(): array
+    public function rules(): array
     {
         return [
             'name' => [new Required(), (new HasLength())->min(4)->tooShortMessage('Is too short.')],

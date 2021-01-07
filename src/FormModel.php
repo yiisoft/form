@@ -274,7 +274,7 @@ abstract class FormModel implements FormModelInterface
      *
      * @return array validation rules
      */
-    protected function rules(): array
+    public function rules(): array
     {
         return [];
     }

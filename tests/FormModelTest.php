@@ -351,7 +351,7 @@ final class FormWithNestedAttribute extends FormModel
         ];
     }
 
-    protected function rules(): array
+    public function rules(): array
     {
         return [
             'id' => new Required(),

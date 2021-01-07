@@ -208,6 +208,8 @@ interface FormModelInterface extends DataSetInterface
      */
     public function load(array $data, ?string $formName = null): bool;
 
+    public function rules(): array;
+
     /**
      * Performs the data validation.
      *
