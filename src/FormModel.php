@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Closure;
-use ReflectionClass;
 use InvalidArgumentException;
+use ReflectionClass;
+use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorFactoryInterface;
-
 use function array_key_exists;
 use function array_merge;
 use function explode;
@@ -48,6 +48,9 @@ abstract class FormModel implements FormModelInterface
 
         foreach ($validators as $validator) {
             if ($validator instanceof Required) {
+                return true;
+            }
+            if ($validator instanceof HtmlOptionsProvider && (bool)($validator->getHtmlOptions()['required'] ?? false)) {
                 return true;
             }
         }

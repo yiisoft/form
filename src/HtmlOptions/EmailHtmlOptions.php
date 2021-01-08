@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\Email;
+use Yiisoft\Validator\ValidatorRuleInterface;
 
-class EmailHtmlOptions implements HtmlOptionsProvider
+class EmailHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
 {
-    private Email $validator;
+    use ValidatorAwareTrait;
 
     public function __construct(Email $validator)
     {

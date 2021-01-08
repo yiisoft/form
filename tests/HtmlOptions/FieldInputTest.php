@@ -58,7 +58,7 @@ final class FieldInputTest extends TestCase
                 'required',
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-required">
-                <label class="control-label" for="htmloptionsform-required">Required</label>
+                <label class="control-label required" for="htmloptionsform-required">Required</label>
                 <input type="text" id="htmloptionsform-required" class="form-control" name="HtmlOptionsForm[required]" value="" required placeholder="Required">
 
                 <div class="help-block"></div>
@@ -91,7 +91,7 @@ final class FieldInputTest extends TestCase
                 'combined',
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-combined">
-                <label class="control-label" for="htmloptionsform-combined">Combined</label>
+                <label class="control-label required" for="htmloptionsform-combined">Combined</label>
                 <input type="number" id="htmloptionsform-combined" class="form-control" name="HtmlOptionsForm[combined]" value="" maxlength="5" min="4" max="5" minlength="4" required pattern="\w+" placeholder="Combined">
 
                 <div class="help-block"></div>

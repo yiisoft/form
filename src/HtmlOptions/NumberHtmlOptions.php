@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\Number;
+use Yiisoft\Validator\ValidatorRuleInterface;
 
-class NumberHtmlOptions implements HtmlOptionsProvider
+class NumberHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
 {
-    private Number $validator;
+    use ValidatorAwareTrait;
 
     public function __construct(Number $validator)
     {

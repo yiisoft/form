@@ -11,7 +11,6 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-
 use function array_merge;
 use function strtr;
 
@@ -971,10 +970,6 @@ final class Field extends Widget
     private function setAriaAttributes(array $options = []): void
     {
         if ($this->ariaAttribute) {
-            if (!isset($options['aria-required']) && $this->data->isAttributeRequired($this->attribute)) {
-                $this->inputOptions['aria-required'] = 'true';
-            }
-
             if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
                 $this->inputOptions['aria-invalid'] = 'true';
             }

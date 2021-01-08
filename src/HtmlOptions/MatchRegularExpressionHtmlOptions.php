@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\MatchRegularExpression;
+use Yiisoft\Validator\ValidatorRuleInterface;
 
-class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider
+class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
 {
-    private MatchRegularExpression $validator;
+    use ValidatorAwareTrait;
 
     public function __construct(MatchRegularExpression $validator)
     {

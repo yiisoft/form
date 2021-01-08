@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Stub;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\HtmlOptions\RequiredHtmlOptions;
 use Yiisoft\Form\Tests\ValidatorFactoryMock;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
@@ -60,7 +61,7 @@ final class PersonalForm extends FormModel
             'name' => [new Required(), (new HasLength())->min(4)->tooShortMessage('Is too short.')],
             'email' => [new Email()],
             'password' => [
-                new Required(),
+                (new RequiredHtmlOptions(new Required()))->withAriaAttribute(true),
                 (new MatchRegularExpression("/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/"))
                     ->message(
                         'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or ' .

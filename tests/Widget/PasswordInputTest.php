@@ -15,7 +15,7 @@ final class PasswordInputTest extends TestCase
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -28,7 +28,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" class="customClass" name="PersonalForm[password]" placeholder="Password">
+<input type="password" id="personalform-password" class="customClass" name="PersonalForm[password]" required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password', ['class' => 'customClass'])
@@ -41,7 +41,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" autofocus placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" autofocus placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -55,7 +55,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" disabled placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" disabled required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -69,7 +69,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" form="form-id" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" form="form-id" required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -83,7 +83,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" minlength="8" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" minlength="8" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -97,7 +97,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" maxlength="16" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" maxlength="16" required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -111,7 +111,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -125,7 +125,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." required aria-required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -141,7 +141,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" placeholder="Custom placeholder">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" placeholder="Custom placeholder">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -155,7 +155,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" readonly placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" readonly required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -169,7 +169,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" required placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')
@@ -183,7 +183,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" tabindex="2" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" tabindex="2" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')

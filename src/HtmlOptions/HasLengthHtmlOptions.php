@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\ValidatorRuleInterface;
 
-class HasLengthHtmlOptions implements HtmlOptionsProvider
+class HasLengthHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
 {
-    private HasLength $validator;
+    use ValidatorAwareTrait;
 
     public function __construct(HasLength $validator)
     {
