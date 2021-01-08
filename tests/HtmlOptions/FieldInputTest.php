@@ -22,7 +22,6 @@ final class FieldInputTest extends TestCase
 
         $actualHtml = Field::widget()
             ->config($data, $propertyName)
-            ->input($propertyName)
             ->run();
         $this->assertEqualsWithoutLE($expectedHtml, $actualHtml);
     }
@@ -35,7 +34,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-number">
                 <label class="control-label" for="htmloptionsform-number">Number</label>
-                <input type="number" id="htmloptionsform-number" class="form-control" name="HtmlOptionsForm[number]" value="" min="4" max="5" placeholder="Number">
+                <input type="text" id="htmloptionsform-number" class="form-control" name="HtmlOptionsForm[number]" value="" min="4" max="5" placeholder="Number">
 
                 <div class="help-block"></div>
                 </div>
@@ -46,7 +45,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-haslength">
                 <label class="control-label" for="htmloptionsform-haslength">Has Length</label>
-                <input type="hasLength" id="htmloptionsform-haslength" class="form-control" name="HtmlOptionsForm[hasLength]" value="" maxlength="5" minlength="4" placeholder="Has Length">
+                <input type="text" id="htmloptionsform-haslength" class="form-control" name="HtmlOptionsForm[hasLength]" value="" maxlength="5" minlength="4" placeholder="Has Length">
 
                 <div class="help-block"></div>
                 </div>
@@ -57,7 +56,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-required">
                 <label class="control-label" for="htmloptionsform-required">Required</label>
-                <input type="required" id="htmloptionsform-required" class="form-control" name="HtmlOptionsForm[required]" value="" required placeholder="Required">
+                <input type="text" id="htmloptionsform-required" class="form-control" name="HtmlOptionsForm[required]" value="" required placeholder="Required">
 
                 <div class="help-block"></div>
                 </div>
@@ -68,7 +67,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-pattern">
                 <label class="control-label" for="htmloptionsform-pattern">Pattern</label>
-                <input type="pattern" id="htmloptionsform-pattern" class="form-control" name="HtmlOptionsForm[pattern]" value="" pattern="\w+" placeholder="Pattern">
+                <input type="text" id="htmloptionsform-pattern" class="form-control" name="HtmlOptionsForm[pattern]" value="" pattern="\w+" placeholder="Pattern">
 
                 <div class="help-block"></div>
                 </div>
@@ -79,7 +78,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-combined">
                 <label class="control-label" for="htmloptionsform-combined">Combined</label>
-                <input type="combined" id="htmloptionsform-combined" class="form-control" name="HtmlOptionsForm[combined]" value="" maxlength="5" min="4" max="5" minlength="4" required pattern="\w+" placeholder="Combined">
+                <input type="text" id="htmloptionsform-combined" class="form-control" name="HtmlOptionsForm[combined]" value="" maxlength="5" min="4" max="5" minlength="4" required pattern="\w+" placeholder="Combined">
 
                 <div class="help-block"></div>
                 </div>
