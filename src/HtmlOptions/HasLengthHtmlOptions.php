@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\ValidatorRuleInterface;
+use Yiisoft\Validator\RuleInterface;
 
-class HasLengthHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
+class HasLengthHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
     use ValidatorAwareTrait;
 

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorRuleInterface;
+use Yiisoft\Validator\RuleInterface;
 
-class RequiredHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
+class RequiredHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
     use ValidatorAwareTrait;
 

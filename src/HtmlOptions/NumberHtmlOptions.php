@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\Number;
-use Yiisoft\Validator\ValidatorRuleInterface;
+use Yiisoft\Validator\RuleInterface;
 
-class NumberHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
+class NumberHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
     use ValidatorAwareTrait;
 

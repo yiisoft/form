@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\MatchRegularExpression;
-use Yiisoft\Validator\ValidatorRuleInterface;
+use Yiisoft\Validator\RuleInterface;
 
-class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, ValidatorRuleInterface
+class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
     use ValidatorAwareTrait;
 
