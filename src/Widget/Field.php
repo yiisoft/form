@@ -323,7 +323,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = TextInput::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -359,7 +359,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{label}'] = '';
         $this->parts['{hint}'] = '';
@@ -398,7 +398,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = PasswordInput::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -436,7 +436,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = FileInput::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -472,7 +472,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = TextArea::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -622,7 +622,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = DropDownList::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -663,7 +663,7 @@ final class Field extends Widget
 
         $new->setForInLabel($options);
         $new->setAriaAttributes($options);
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = ListBox::widget()
             ->config($new->data, $new->attribute, $new->inputOptions)
@@ -697,7 +697,7 @@ final class Field extends Widget
 
         $new->setForInLabel($options);
         $new->setAriaAttributes($options);
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
         $new->skipForInLabel = true;
 
         $this->parts['{input}'] = CheckBoxList::widget()
@@ -735,7 +735,7 @@ final class Field extends Widget
         $new->addErrorCssClassToInput();
         $new->addSuccessCssClassToInput();
         $new->setInputRole($options);
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
         $new->skipForInLabel = true;
 
         $this->parts['{input}'] = RadioList::widget()
