@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Stub;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\HtmlOptions\EmailHtmlOptions;
 use Yiisoft\Form\HtmlOptions\HasLengthHtmlOptions;
 use Yiisoft\Form\HtmlOptions\MatchRegularExpressionHtmlOptions;
 use Yiisoft\Form\HtmlOptions\NumberHtmlOptions;
 use Yiisoft\Form\HtmlOptions\RequiredHtmlOptions;
 use Yiisoft\Form\Tests\ValidatorFactoryMock;
+use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
@@ -21,6 +23,7 @@ final class HtmlOptionsForm extends FormModel
     private string $hasLength = '';
     private string $required = '';
     private string $pattern = '';
+    private string $email = '';
     private string $combined = '';
 
     public function __construct()
@@ -43,6 +46,9 @@ final class HtmlOptionsForm extends FormModel
             'pattern' => [
                 $this->getMatchRegularExpressionHtmlOptions(),
             ],
+            'email' => [
+                $this->getEmailHtmlOptions(),
+            ],
             'combined' => [
                 $this->getNumberHtmlOptions(),
                 $this->getHasLengthHtmlOptions(),
@@ -56,6 +62,13 @@ final class HtmlOptionsForm extends FormModel
     {
         return new MatchRegularExpressionHtmlOptions(
             new MatchRegularExpression('\w+')
+        );
+    }
+
+    private function getEmailHtmlOptions(): EmailHtmlOptions
+    {
+        return new EmailHtmlOptions(
+            new Email()
         );
     }
 

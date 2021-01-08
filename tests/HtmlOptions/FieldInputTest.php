@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\HtmlOptions;
 
+use Yiisoft\Factory\Exceptions\InvalidConfigException;
 use Yiisoft\Form\Tests\Stub\HtmlOptionsForm;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
@@ -16,7 +17,7 @@ final class FieldInputTest extends TestCase
      * @param string $propertyName
      * @param string $expectedHtml
      *
-     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function testFieldsInput(string $propertyName, string $expectedHtml): void
     {
@@ -70,6 +71,17 @@ final class FieldInputTest extends TestCase
                 <div class="form-group field-htmloptionsform-pattern">
                 <label class="control-label" for="htmloptionsform-pattern">Pattern</label>
                 <input type="text" id="htmloptionsform-pattern" class="form-control" name="HtmlOptionsForm[pattern]" value="" pattern="\w+" placeholder="Pattern">
+
+                <div class="help-block"></div>
+                </div>
+                HTML,
+            ],
+            'email' => [
+                'email',
+                <<<'HTML'
+                <div class="form-group field-htmloptionsform-email">
+                <label class="control-label" for="htmloptionsform-email">Email</label>
+                <input type="email" id="htmloptionsform-email" class="form-control" name="HtmlOptionsForm[email]" value="" placeholder="Email">
 
                 <div class="help-block"></div>
                 </div>
