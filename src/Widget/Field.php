@@ -284,7 +284,7 @@ final class Field extends Widget
 
         unset($options['class']);
 
-        $new->inputOptions = array_merge($options, $new->inputOptions);
+        $new->inputOptions = array_merge($new->inputOptions, $options);
 
         $this->parts['{input}'] = Input::widget()
             ->type($type)
