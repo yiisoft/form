@@ -10,23 +10,82 @@ use Yiisoft\Form\Widget\Field;
 
 final class FieldInputTest extends TestCase
 {
-    public function testFieldsInput(): void
+    /**
+     * @dataProvider htmlOptionsDataProvider
+     * @param string $propertyName
+     * @param string $expectedHtml
+     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     */
+    public function testFieldsInput(string $propertyName, string $expectedHtml): void
     {
         $data = new HtmlOptionsForm();
 
-        $expected = <<<'HTML'
-<div class="form-group field-htmloptionsform-name">
-<label class="control-label" for="htmloptionsform-name">Name</label>
-<input type="name" id="htmloptionsform-name" class="form-control" name="HtmlOptionsForm[name]" value="" min="4" max="5" placeholder="Name">
-
-<div class="help-block"></div>
-</div>
-HTML;
-        $html = Field::widget()
-            ->config($data, 'name')
-            ->input('name')
+        $actualHtml = Field::widget()
+            ->config($data, $propertyName)
+            ->input($propertyName)
             ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE($expectedHtml, $actualHtml);
+    }
+
+    public function htmlOptionsDataProvider(): array
+    {
+        return [
+            'number' => [
+                'number',
+                <<<'HTML'
+                <div class="form-group field-htmloptionsform-number">
+                <label class="control-label" for="htmloptionsform-number">Number</label>
+                <input type="number" id="htmloptionsform-number" class="form-control" name="HtmlOptionsForm[number]" value="" min="4" max="5" placeholder="Number">
+
+                <div class="help-block"></div>
+                </div>
+                HTML,
+            ],
+            'hasLength' => [
+                'hasLength',
+                <<<'HTML'
+                <div class="form-group field-htmloptionsform-haslength">
+                <label class="control-label" for="htmloptionsform-haslength">Has Length</label>
+                <input type="hasLength" id="htmloptionsform-haslength" class="form-control" name="HtmlOptionsForm[hasLength]" value="" maxlength="5" minlength="4" placeholder="Has Length">
+
+                <div class="help-block"></div>
+                </div>
+                HTML,
+            ],
+            'required' => [
+                'required',
+                <<<'HTML'
+                <div class="form-group field-htmloptionsform-required">
+                <label class="control-label" for="htmloptionsform-required">Required</label>
+                <input type="required" id="htmloptionsform-required" class="form-control" name="HtmlOptionsForm[required]" value="" required placeholder="Required">
+
+                <div class="help-block"></div>
+                </div>
+                HTML,
+            ],
+            'pattern' => [
+                'pattern',
+                <<<'HTML'
+                <div class="form-group field-htmloptionsform-pattern">
+                <label class="control-label" for="htmloptionsform-pattern">Pattern</label>
+                <input type="pattern" id="htmloptionsform-pattern" class="form-control" name="HtmlOptionsForm[pattern]" value="" pattern="\w+" placeholder="Pattern">
+
+                <div class="help-block"></div>
+                </div>
+                HTML,
+            ],
+            'combined' => [
+                'combined',
+                <<<'HTML'
+                <div class="form-group field-htmloptionsform-combined">
+                <label class="control-label" for="htmloptionsform-combined">Combined</label>
+                <input type="combined" id="htmloptionsform-combined" class="form-control" name="HtmlOptionsForm[combined]" value="" maxlength="5" min="4" max="5" minlength="4" required pattern="\w+" placeholder="Combined">
+
+                <div class="help-block"></div>
+                </div>
+                HTML,
+            ],
+        ];
     }
 
 }
