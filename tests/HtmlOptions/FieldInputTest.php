@@ -12,8 +12,10 @@ final class FieldInputTest extends TestCase
 {
     /**
      * @dataProvider htmlOptionsDataProvider
+     *
      * @param string $propertyName
      * @param string $expectedHtml
+     *
      * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
      */
     public function testFieldsInput(string $propertyName, string $expectedHtml): void
