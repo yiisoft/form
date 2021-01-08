@@ -86,5 +86,4 @@ final class FieldInputTest extends TestCase
             ],
         ];
     }
-
 }
