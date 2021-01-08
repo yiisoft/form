@@ -19,6 +19,7 @@ class NumberHtmlOptions implements HtmlOptionsProvider
     {
         $options = $this->validator->getOptions();
         return [
+            'type' => 'number',
             'min' => $options['min'],
             'max' => $options['max'],
         ];
