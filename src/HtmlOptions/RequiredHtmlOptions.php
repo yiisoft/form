@@ -6,7 +6,7 @@ namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\Required;
 
-class RequiredHtmlOptions implements HtmlOptionsProvider
+final class RequiredHtmlOptions implements HtmlOptionsProvider
 {
     private Required $validator;
 

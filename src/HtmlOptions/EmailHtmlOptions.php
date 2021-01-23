@@ -6,7 +6,7 @@ namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\Email;
 
-class EmailHtmlOptions implements HtmlOptionsProvider
+final class EmailHtmlOptions implements HtmlOptionsProvider
 {
     private Email $validator;
 

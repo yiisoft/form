@@ -6,7 +6,7 @@ namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 
-class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider
+final class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider
 {
     private MatchRegularExpression $validator;
 
