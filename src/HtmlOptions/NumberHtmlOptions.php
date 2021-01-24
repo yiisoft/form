@@ -9,16 +9,16 @@ use Yiisoft\Validator\RuleInterface;
 
 final class NumberHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
-    use ValidatorAwareTrait;
+    use RuleAwareTrait;
 
-    public function __construct(Number $validator)
+    public function __construct(Number $rule)
     {
-        $this->validator = $validator;
+        $this->rule = $rule;
     }
 
     public function getHtmlOptions(): array
     {
-        $options = $this->validator->getOptions();
+        $options = $this->rule->getOptions();
         return [
             'type' => 'number',
             'min' => $options['min'],

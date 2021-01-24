@@ -9,16 +9,16 @@ use Yiisoft\Validator\RuleInterface;
 
 final class HasLengthHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
-    use ValidatorAwareTrait;
+    use RuleAwareTrait;
 
-    public function __construct(HasLength $validator)
+    public function __construct(HasLength $rule)
     {
-        $this->validator = $validator;
+        $this->rule = $rule;
     }
 
     public function getHtmlOptions(): array
     {
-        $options = $this->validator->getOptions();
+        $options = $this->rule->getOptions();
         return [
             'minlength' => $options['min'],
             'maxlength' => $options['max'],

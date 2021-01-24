@@ -10,16 +10,16 @@ use Yiisoft\Validator\RuleInterface;
 
 final class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
-    use ValidatorAwareTrait;
+    use RuleAwareTrait;
 
-    public function __construct(MatchRegularExpression $validator)
+    public function __construct(MatchRegularExpression $rule)
     {
-        $this->validator = $validator;
+        $this->rule = $rule;
     }
 
     public function getHtmlOptions(): array
     {
-        $options = $this->validator->getOptions();
+        $options = $this->rule->getOptions();
         return [
             'pattern' => Html::normalizeRegexpPattern($options['pattern']),
         ];

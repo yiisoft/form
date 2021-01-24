@@ -8,12 +8,12 @@ use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RuleInterface;
 
-trait ValidatorAwareTrait
+trait RuleAwareTrait
 {
-    private RuleInterface $validator;
+    private RuleInterface $rule;
 
     public function validate($value, DataSetInterface $dataSet = null, bool $previousRulesErrored = false): Result
     {
-        return $this->validator->validate($value, $dataSet, $previousRulesErrored);
+        return $this->rule->validate($value, $dataSet, $previousRulesErrored);
     }
 }

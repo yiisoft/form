@@ -9,13 +9,13 @@ use Yiisoft\Validator\RuleInterface;
 
 final class RequiredHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
-    use ValidatorAwareTrait;
+    use RuleAwareTrait;
 
     private bool $ariaAttribute = false;
 
-    public function __construct(Required $validator)
+    public function __construct(Required $rule)
     {
-        $this->validator = $validator;
+        $this->rule = $rule;
     }
 
     public function withAriaAttribute(bool $value): self

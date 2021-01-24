@@ -9,11 +9,11 @@ use Yiisoft\Validator\RuleInterface;
 
 final class EmailHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
-    use ValidatorAwareTrait;
+    use RuleAwareTrait;
 
-    public function __construct(Email $validator)
+    public function __construct(Email $rule)
     {
-        $this->validator = $validator;
+        $this->rule = $rule;
     }
 
     public function getHtmlOptions(): array
