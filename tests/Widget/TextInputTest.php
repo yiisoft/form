@@ -195,6 +195,19 @@ HTML;
         $this->assertEquals($expected, $html);
     }
 
+    public function testAriaRequiredProvidedByRule(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+<input type="text" id="personalform-password" name="PersonalForm[password]" required aria-required="true" placeholder="Password">
+HTML;
+        $html = TextInput::widget()
+            ->config($data, 'password')
+            ->run();
+        $this->assertEquals($expected, $html);
+    }
+
     public function testTextInputTabIndex(): void
     {
         $data = new PersonalForm();

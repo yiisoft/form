@@ -22,7 +22,7 @@ final class FieldPasswordInputTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 <label class="control-label required" for="personalform-password">Password</label>
-<input type="password" id="personalform-password" class="form-control has-error" name="PersonalForm[password]" value="a7gh56ry" aria-required="true" aria-invalid="true" placeholder="Password">
+<input type="password" id="personalform-password" class="form-control has-error" name="PersonalForm[password]" value="a7gh56ry" required aria-required="true" aria-invalid="true" placeholder="Password">
 
 <div class="help-block">Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</div>
 </div>
@@ -41,7 +41,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 <label class="control-label customClass required" for="personalform-password">Password:</label>
-<input type="password" id="personalform-password" class="form-control" name="PersonalForm[password]" aria-required="true" placeholder="Password">
+<input type="password" id="personalform-password" class="form-control" name="PersonalForm[password]" required aria-required="true" placeholder="Password">
 
 <div class="help-block"></div>
 </div>
@@ -61,7 +61,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
 
-<input type="password" id="personalform-password" class="form-control" name="PersonalForm[password]" aria-required="true" placeholder="Password">
+<input type="password" id="personalform-password" class="form-control" name="PersonalForm[password]" required aria-required="true" placeholder="Password">
 
 <div class="help-block"></div>
 </div>

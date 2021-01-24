@@ -63,7 +63,7 @@ class LoginForm extends FormModel
         ];
     }
 
-    protected function rules(): array
+    public function rules(): array
     {
         return [
             'login' => $this->loginRules(),

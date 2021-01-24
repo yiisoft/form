@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Stub;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\HtmlOptions\RequiredHtmlOptions;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
@@ -48,13 +49,13 @@ final class PersonalForm extends FormModel
         return '(&#10006;) This is custom error message.';
     }
 
-    protected function rules(): array
+    public function rules(): array
     {
         return [
             'name' => [new Required(), (new HasLength())->min(4)->tooShortMessage('Is too short.')],
             'email' => [new Email()],
             'password' => [
-                new Required(),
+                (new RequiredHtmlOptions(new Required()))->withAriaAttribute(true),
                 (new MatchRegularExpression("/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/"))
                     ->message(
                         'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or ' .

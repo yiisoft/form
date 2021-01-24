@@ -7,9 +7,9 @@ namespace Yiisoft\Form\Widget;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-
 use function in_array;
 
 final class Input extends Widget
@@ -57,7 +57,13 @@ final class Input extends Widget
         $new = clone $this;
         $new->data = $data;
         $new->attribute = $attribute;
-        $new->options = $options;
+        $rules = $data->rules()[$attribute] ?? [];
+        foreach ($rules as $rule) {
+            if ($rule instanceof HtmlOptionsProvider) {
+                $new->options = array_merge($new->options, $rule->getHtmlOptions());
+            }
+        }
+        $new->options = array_merge($new->options, $options);
         return $new;
     }
 
