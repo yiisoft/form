@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\HtmlOptions;
 
+use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 
 final class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider
@@ -19,7 +20,7 @@ final class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider
     {
         $options = $this->validator->getOptions();
         return [
-            'pattern' => $options['pattern'],
+            'pattern' => Html::normalizeRegexpPattern($options['pattern']),
         ];
     }
 }
