@@ -10,7 +10,6 @@ use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
-
 use function in_array;
 
 final class Input extends Widget
@@ -61,10 +60,10 @@ final class Input extends Widget
         $rules = $data->rules()[$attribute] ?? [];
         foreach ($rules as $rule) {
             if ($rule instanceof HtmlOptionsProvider) {
-                $this->options = array_merge($this->options, $rule->getHtmlOptions());
+                $new->options = array_merge($new->options, $rule->getHtmlOptions());
             }
         }
-        $new->options = array_merge($this->options, $options);
+        $new->options = array_merge($new->options, $options);
         return $new;
     }
 

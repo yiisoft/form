@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Form\HtmlOptions;
 
 use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Validator\ParametrizedRuleInterface;
 use Yiisoft\Validator\Result;
-use Yiisoft\Validator\RuleInterface;
 
 trait RuleAwareTrait
 {
-    private RuleInterface $rule;
+    protected ParametrizedRuleInterface $rule;
 
     public function validate($value, DataSetInterface $dataSet = null, bool $previousRulesErrored = false): Result
     {
