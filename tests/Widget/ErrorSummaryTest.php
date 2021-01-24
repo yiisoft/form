@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\ErrorSummary;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class ErrorSummaryTest extends TestCase
 {
@@ -61,8 +63,13 @@ final class ErrorSummaryTest extends TestCase
         $data = new PersonalForm();
 
         $data->load($record);
-        $data->validate();
+        $data->validate($this->createValidatorMock());
         $html = ErrorSummary::widget()->config($data, $options)->run();
         $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
     }
 }

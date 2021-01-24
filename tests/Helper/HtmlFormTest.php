@@ -9,7 +9,6 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 use Yiisoft\Form\Tests\TestCase;
-use Yiisoft\Form\Tests\ValidatorFactoryMock;
 
 final class HtmlFormTest extends TestCase
 {
@@ -26,7 +25,7 @@ final class HtmlFormTest extends TestCase
     public function dataGetInputName(): array
     {
         $loginForm = new LoginForm();
-        $anonymousForm = new class(new ValidatorFactoryMock()) extends FormModel {
+        $anonymousForm = new class() extends FormModel {
         };
         return [
             [$loginForm, '[0]content', 'LoginForm[0][content]'],

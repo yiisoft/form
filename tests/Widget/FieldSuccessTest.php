@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class FieldSuccessTest extends TestCase
 {
@@ -14,7 +16,7 @@ final class FieldSuccessTest extends TestCase
     {
         $data = new PersonalForm();
         $data->name('samdark');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
@@ -35,7 +37,7 @@ HTML;
     {
         $data = new PersonalForm();
         $data->name('samdark');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
@@ -57,7 +59,7 @@ HTML;
     {
         $data = new PersonalForm();
         $data->name('yii');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-0-name">
@@ -72,5 +74,10 @@ HTML;
             ->label(true)
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
     }
 }

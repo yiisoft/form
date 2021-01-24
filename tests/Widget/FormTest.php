@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Form\Widget\Form;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class FormTest extends TestCase
 {
@@ -126,7 +128,7 @@ HTML;
         $data = new PersonalForm();
 
         $data->name('yii test');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
@@ -225,7 +227,7 @@ HTML;
         $data = new PersonalForm();
         $data->name('yii');
         $data->email('admin@example.com');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget($fieldConfig)
@@ -255,7 +257,7 @@ HTML;
         $data = new PersonalForm();
         $data->name('yii');
         $data->email('admin');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
@@ -308,7 +310,7 @@ HTML;
 
         $data = new PersonalForm();
         $data->load($record);
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget($fieldConfig)
@@ -379,5 +381,10 @@ HTML;
 </div></form>
 HTML;
         $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
     }
 }

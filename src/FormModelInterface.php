@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Validator\ValidatorInterface;
 
 /**
  * FormModelInterface model represents an HTML form: its data, validation and presentation.
@@ -255,7 +256,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return bool whether the validation is successful without any error.
      */
-    public function validate(): bool;
+    public function validate(ValidatorInterface $validator): bool;
 
     /**
      * Set specified attribute

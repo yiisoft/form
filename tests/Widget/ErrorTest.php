@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Error;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class ErrorTest extends TestCase
 {
@@ -29,7 +31,7 @@ final class ErrorTest extends TestCase
     public function testError(): void
     {
         $this->data->load($this->record);
-        $this->data->validate();
+        $this->data->validate($this->createValidatorMock());
 
         $expected = '<div>Value cannot be blank.</div>';
         $html = Error::widget()
@@ -41,7 +43,7 @@ final class ErrorTest extends TestCase
     public function testErrorOptions(): void
     {
         $this->data->load($this->record);
-        $this->data->validate();
+        $this->data->validate($this->createValidatorMock());
 
         $expected = '<div class="customClass">Value cannot be blank.</div>';
         $html = Error::widget()
@@ -53,7 +55,7 @@ final class ErrorTest extends TestCase
     public function testErrorErrorSource(): void
     {
         $this->data->load($this->record);
-        $this->data->validate();
+        $this->data->validate($this->createValidatorMock());
 
         $expected = '<div>This is custom error message.</div>';
         $html = Error::widget()
@@ -66,7 +68,7 @@ final class ErrorTest extends TestCase
     public function testErrorNoEncode(): void
     {
         $this->data->load($this->record);
-        $this->data->validate();
+        $this->data->validate($this->createValidatorMock());
 
         $expected = '<div>(&#10006;) This is custom error message.</div>';
         $html = Error::widget()
@@ -80,7 +82,7 @@ final class ErrorTest extends TestCase
     public function testErrorTag(): void
     {
         $this->data->load($this->record);
-        $this->data->validate();
+        $this->data->validate($this->createValidatorMock());
 
         $expected = 'Value cannot be blank.';
         $html = Error::widget()
@@ -95,5 +97,10 @@ final class ErrorTest extends TestCase
             ->tag('span')
             ->run();
         $this->assertEquals($expected, $html);
+    }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
     }
 }
