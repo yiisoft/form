@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\HtmlOptions;
 
+use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\RuleInterface;
 
-class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, RuleInterface
+final class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, RuleInterface
 {
     use ValidatorAwareTrait;
 
@@ -20,7 +21,7 @@ class MatchRegularExpressionHtmlOptions implements HtmlOptionsProvider, RuleInte
     {
         $options = $this->validator->getOptions();
         return [
-            'pattern' => $options['pattern'],
+            'pattern' => Html::normalizeRegexpPattern($options['pattern']),
         ];
     }
 }
