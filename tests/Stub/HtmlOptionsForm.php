@@ -10,7 +10,6 @@ use Yiisoft\Form\HtmlOptions\HasLengthHtmlOptions;
 use Yiisoft\Form\HtmlOptions\MatchRegularExpressionHtmlOptions;
 use Yiisoft\Form\HtmlOptions\NumberHtmlOptions;
 use Yiisoft\Form\HtmlOptions\RequiredHtmlOptions;
-use Yiisoft\Form\Tests\ValidatorFactoryMock;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
@@ -25,11 +24,6 @@ final class HtmlOptionsForm extends FormModel
     private string $pattern = '';
     private string $email = '';
     private string $combined = '';
-
-    public function __construct()
-    {
-        parent::__construct(new ValidatorFactoryMock());
-    }
 
     public function rules(): array
     {
