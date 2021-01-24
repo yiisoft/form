@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Validator\ValidatorInterface;
 
 final class FieldPasswordInputTest extends TestCase
 {
@@ -15,7 +17,7 @@ final class FieldPasswordInputTest extends TestCase
         $data = new PersonalForm();
 
         $data->password('a7gh56ry');
-        $data->validate();
+        $data->validate($this->createValidatorMock());
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">
@@ -70,5 +72,10 @@ HTML;
             ->passwordInput()
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
     }
 }

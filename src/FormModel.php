@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Closure;
-use ReflectionClass;
 use InvalidArgumentException;
+use ReflectionClass;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorFactoryInterface;
-
+use Yiisoft\Validator\ValidatorInterface;
 use function array_key_exists;
 use function array_merge;
 use function explode;
@@ -26,18 +25,14 @@ use function strpos;
  */
 abstract class FormModel implements FormModelInterface
 {
-    private ValidatorFactoryInterface $validatorFactory;
-
     private array $attributes;
     private array $attributesLabels;
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
-    public function __construct(ValidatorFactoryInterface $validatorFactory)
+    public function __construct()
     {
-        $this->validatorFactory = $validatorFactory;
-
         $this->attributes = $this->collectAttributes();
         $this->attributesLabels = $this->attributeLabels();
     }
@@ -214,16 +209,14 @@ abstract class FormModel implements FormModelInterface
         }
     }
 
-    public function validate(): bool
+    public function validate(ValidatorInterface $validator): bool
     {
         $this->clearErrors();
 
         $rules = $this->rules();
 
         if (!empty($rules)) {
-            $results = $this->validatorFactory
-                ->create($rules)
-                ->validate($this);
+            $results = $validator->validate($this, $rules);
 
             foreach ($results as $attribute => $result) {
                 if ($result->isValid() === false) {

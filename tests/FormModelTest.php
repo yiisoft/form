@@ -7,8 +7,9 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
+use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Validator\Rule\Required;
-
+use Yiisoft\Validator\ValidatorInterface;
 use function str_repeat;
 
 require __DIR__ . '/Stub/NonNamespacedForm.php';
@@ -17,7 +18,7 @@ final class FormModelTest extends TestCase
 {
     public function testAnonymousFormName(): void
     {
-        $form = new class(new ValidatorFactoryMock()) extends FormModel {};
+        $form = new class() extends FormModel {};
         $this->assertEquals('', $form->formName());
     }
 
@@ -46,7 +47,7 @@ final class FormModelTest extends TestCase
             '/You must specify the type hint for "%s" property in "([^"]+)" class./',
             'property',
         ));
-        $form = new class(new ValidatorFactoryMock()) extends FormModel {
+        $form = new class() extends FormModel {
             private $property;
         };
     }
@@ -138,7 +139,7 @@ final class FormModelTest extends TestCase
         ];
 
         $this->assertTrue($form->load($data));
-        $this->assertFalse($form->validate());
+        $this->assertFalse($form->validate($this->createValidatorMock()));
 
         $this->assertEquals(
             $expected,
@@ -208,7 +209,7 @@ final class FormModelTest extends TestCase
     public function testFailedLoadForm(): void
     {
         $form1 = new LoginForm();
-        $form2 = new class(new ValidatorFactoryMock()) extends FormModel {
+        $form2 = new class() extends FormModel {
         };
 
         $data1 = [
@@ -230,7 +231,7 @@ final class FormModelTest extends TestCase
 
     public function testLoadWithEmptyScope()
     {
-        $form = new class(new ValidatorFactoryMock()) extends FormModel {
+        $form = new class() extends FormModel {
             private int $int = 1;
             private string $string = 'string';
             private float $float = 3.14;
@@ -275,7 +276,7 @@ final class FormModelTest extends TestCase
         $form = new LoginForm();
 
         $form->login('');
-        $form->validate();
+        $form->validate($this->createValidatorMock());
 
         $this->assertEquals(
             ['Value cannot be blank.'],
@@ -283,43 +284,39 @@ final class FormModelTest extends TestCase
         );
 
         $form->login('x');
-        $form->validate();
+        $form->validate($this->createValidatorMock());
         $this->assertEquals(
             ['Is too short.'],
             $form->error('login')
         );
 
         $form->login(str_repeat('x', 60));
-        $form->validate();
+        $form->validate($this->createValidatorMock());
         $this->assertEquals(
             'Is too long.',
             $form->firstError('login')
         );
 
         $form->login('admin@.com');
-        $form->validate();
+        $form->validate($this->createValidatorMock());
         $this->assertEquals(
             'This value is not a valid email address.',
             $form->firstError('login')
         );
     }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
+    }
 }
 
 final class DefaultFormNameForm extends FormModel
 {
-    public function __construct()
-    {
-        parent::__construct(new ValidatorFactoryMock());
-    }
 }
 
 final class CustomFormNameForm extends FormModel
 {
-    public function __construct()
-    {
-        parent::__construct(new ValidatorFactoryMock());
-    }
-
     public function formName(): string
     {
         return 'my-best-form-name';
@@ -334,7 +331,7 @@ final class FormWithNestedAttribute extends FormModel
     public function __construct()
     {
         $this->user = new LoginForm();
-        parent::__construct(new ValidatorFactoryMock());
+        parent::__construct();
     }
 
     public function attributeLabels(): array
