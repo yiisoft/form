@@ -61,7 +61,7 @@ final class HtmlOptionsForm extends FormModel
     private function getMatchRegularExpressionHtmlOptions(): MatchRegularExpressionHtmlOptions
     {
         return new MatchRegularExpressionHtmlOptions(
-            new MatchRegularExpression('\w+')
+            new MatchRegularExpression('/\w+/')
         );
     }
 

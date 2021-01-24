@@ -70,7 +70,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-pattern">
                 <label class="control-label" for="htmloptionsform-pattern">Pattern</label>
-                <input type="text" id="htmloptionsform-pattern" class="form-control" name="HtmlOptionsForm[pattern]" value="" pattern="\w+" placeholder="Pattern">
+                <input type="text" id="htmloptionsform-pattern" class="form-control" name="HtmlOptionsForm[pattern]" value="" pattern="/\w+/" placeholder="Pattern">
 
                 <div class="help-block"></div>
                 </div>
@@ -92,7 +92,7 @@ final class FieldInputTest extends TestCase
                 <<<'HTML'
                 <div class="form-group field-htmloptionsform-combined">
                 <label class="control-label" for="htmloptionsform-combined">Combined</label>
-                <input type="number" id="htmloptionsform-combined" class="form-control" name="HtmlOptionsForm[combined]" value="" maxlength="5" min="4" max="5" minlength="4" required pattern="\w+" placeholder="Combined">
+                <input type="number" id="htmloptionsform-combined" class="form-control" name="HtmlOptionsForm[combined]" value="" maxlength="5" min="4" max="5" minlength="4" required pattern="/\w+/" placeholder="Combined">
 
                 <div class="help-block"></div>
                 </div>
