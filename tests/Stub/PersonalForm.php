@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Stub;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\Tests\ValidatorFactoryMock;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
@@ -26,11 +25,6 @@ final class PersonalForm extends FormModel
     private ?int $sex = null;
     private bool $terms = false;
     private ?string $attachFiles = null;
-
-    public function __construct()
-    {
-        parent::__construct(new ValidatorFactoryMock());
-    }
 
     public function attributeLabels(): array
     {
