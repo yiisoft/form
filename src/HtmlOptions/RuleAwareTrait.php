@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\HtmlOptions;
 
-use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\ParametrizedRuleInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\ValidationContext;
