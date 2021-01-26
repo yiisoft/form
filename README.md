@@ -21,7 +21,7 @@ The package helps with implementing data entry forms.
 
 The package could be installed via composer:
 
-```php
+```shell
 composer require yiisoft/form
 ```
 
@@ -94,13 +94,13 @@ class LoginForm extends FormModel
     }
 
     /** Define form name */
-    public function formName(): ?string
+    public function formName(): string
     {
         return 'LoginForm';
     }
 
     /** Add rules */
-    protected function rules(): array
+    public function rules(): array
     {
         return [
             'login' => $this->loginRules()
