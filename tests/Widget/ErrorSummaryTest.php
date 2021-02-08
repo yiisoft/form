@@ -60,10 +60,12 @@ final class ErrorSummaryTest extends TestCase
             ],
         ];
 
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
-
         $data->load($record);
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
+
         $html = ErrorSummary::widget()->config($data, $options)->run();
         $this->assertEqualsWithoutLE($expected, $html);
     }

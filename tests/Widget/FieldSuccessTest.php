@@ -14,9 +14,11 @@ final class FieldSuccessTest extends TestCase
 {
     public function testFieldSuccess(): void
     {
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->name('samdark');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
@@ -35,9 +37,11 @@ HTML;
 
     public function testFieldErrorOptions(): void
     {
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->name('samdark');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
@@ -57,9 +61,11 @@ HTML;
 
     public function testFieldsTabularInputErrors(): void
     {
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->name('yii');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-0-name">
