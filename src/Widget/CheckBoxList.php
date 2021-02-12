@@ -67,7 +67,7 @@ final class CheckBoxList extends Widget
     public function noEncode(bool $value = false): self
     {
         $new = clone $this;
-        $new->options['encode'] = $value;
+        $new->options['itemOptions'] = ['encode' => $value];
         return $new;
     }
 
