@@ -116,7 +116,7 @@ final class RadioList extends Widget
     public function noEncode(bool $value = false): self
     {
         $new = clone $this;
-        $new->options['itemOptions'] = ['encode' => $value];
+        $new->options['itemOptions']['encode'] = $value;
         return $new;
     }
 
