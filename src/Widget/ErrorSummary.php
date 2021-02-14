@@ -47,6 +47,7 @@ final class ErrorSummary extends Widget
             $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
         }
 
+        $new->options['encode'] = false;
         return Html::tag('div', $header . $content . $footer, $new->options);
     }
 

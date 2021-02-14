@@ -34,9 +34,8 @@ final class Error extends Widget
         }
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
-        $encode = ArrayHelper::remove($new->options, 'encode', true);
 
-        return Html::tag($tag, $encode ? Html::encode($error) : $error, $new->options);
+        return Html::tag($tag, $error, $new->options);
     }
 
     /**
