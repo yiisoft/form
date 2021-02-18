@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Widget;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\CheckBoxList;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 
 final class CheckBoxListTest extends TestCase
 {
@@ -88,9 +89,9 @@ HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
             ->items(['Female', 'Male'])
-            ->item(static function ($index, $label, $name, $checked, $value) {
-                $check = $checked == 1 ? 'checked' : '';
-                return "<div class='col-sm-12'><label><input tabindex='{$index}' class='book' type='checkbox' {$check} name='{$name}' value='{$value}'> {$label}</label></div>";
+            ->item(static function (CheckboxItem $item) {
+                $check = $item->checked ? 'checked' : '';
+                return "<div class='col-sm-12'><label><input tabindex='{$item->index}' class='book' type='checkbox' {$check} name='{$item->name}' value='{$item->value}'> {$item->label}</label></div>";
             })
             ->itemOptions(['class' => 'itemClass'])
             ->run();
@@ -120,8 +121,8 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="" disabled><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="" disabled><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked disabled> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1" disabled> Male</label></div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Closure;
+use RuntimeException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
+use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Widget\Widget;
 
 final class ListInput extends Widget
@@ -23,6 +27,11 @@ final class ListInput extends Widget
     private string $type;
 
     /**
+     * @psalm-var Closure(CheckboxItem):string|Closure(RadioItem):string|null
+     */
+    private ?Closure $itemFormatter = null;
+
+    /**
      * Generates a list of input fields.
      *
      * This method is mainly called by {@see ListBox()}, {@see RadioList()} and {@see CheckboxList()}.
@@ -32,17 +41,120 @@ final class ListInput extends Widget
     public function run(): string
     {
         $new = clone $this;
-        $type = $new->type;
+        $type = strtolower($new->type);
 
+        $uncheckValue = ArrayHelper::remove($new->options, 'unselect');
         if (!$new->noUnselect) {
-            $new->options['unselect'] ??= $new->unselect;
+            $uncheckValue ??= $new->unselect;
         }
 
         if (!empty($new->getId())) {
             $new->options['id'] = $new->getId();
         }
 
-        return Html::$type($new->getName(), $new->getValue(), $new->items, $new->options);
+        $containerTag = ArrayHelper::remove($new->options, 'tag', 'div');
+        $separator = ArrayHelper::remove($new->options, 'separator', "\n");
+        $encode = ArrayHelper::remove($new->options, 'encode', true);
+        $disabled = ArrayHelper::remove($new->options, 'disabled', false);
+
+        switch ($type) {
+            case 'checkboxlist':
+                $checkboxAttributes = ArrayHelper::remove($new->options, 'itemOptions', []);
+                $encodeLabels = ArrayHelper::remove($checkboxAttributes, 'encode', true);
+
+                /** @psalm-var Closure(CheckboxItem):string|null $itemFormatter */
+                $itemFormatter = $this->itemFormatter;
+
+                return Html::checkboxList($new->getName())
+                    ->value($new->getValue())
+                    ->uncheckValue($uncheckValue)
+                    ->items($new->items, $encodeLabels)
+                    ->itemFormatter($itemFormatter)
+                    ->separator($separator)
+                    ->containerTag($containerTag)
+                    ->containerAttributes($new->options)
+                    ->checkboxAttributes($checkboxAttributes)
+                    ->disabled($disabled)
+                    ->render();
+
+            case 'radiolist':
+                $radioAttributes = ArrayHelper::remove($new->options, 'itemOptions', []);
+                $encodeLabels = ArrayHelper::remove($radioAttributes, 'encode', true);
+
+                /** @psalm-var Closure(RadioItem):string|null $itemFormatter */
+                $itemFormatter = $this->itemFormatter;
+
+                return Html::radioList($new->getName())
+                    ->value($new->getValue())
+                    ->uncheckValue($uncheckValue)
+                    ->items($new->items, $encodeLabels)
+                    ->itemFormatter($itemFormatter)
+                    ->separator($separator)
+                    ->containerTag($containerTag)
+                    ->containerAttributes($new->options)
+                    ->radioAttributes($radioAttributes)
+                    ->disabled($disabled)
+                    ->render();
+
+            case 'listbox':
+            case 'dropdownlist':
+                $encodeSpaces = ArrayHelper::remove($new->options, 'encodeSpaces', false);
+                $groups = ArrayHelper::remove($new->options, 'groups', []);
+                $optionsAttributes = ArrayHelper::remove($new->options, 'options', []);
+
+                $items = [];
+                foreach ($new->items as $value => $content) {
+                    if (is_array($content)) {
+                        $groupAttrs = $groups[$value] ?? [];
+                        $groupAttrs['encode'] = false;
+                        if (!isset($groupAttrs['label'])) {
+                            $groupAttrs['label'] = $value;
+                        }
+                        $options = [];
+                        foreach ($content as $v => $c) {
+                            $options[] = Html::option($c, $v)
+                                ->attributes($optionsAttributes[$v] ?? [])
+                                ->encode($encode)
+                                ->encodeSpaces($encodeSpaces);
+                        }
+                        $items[] = Html::optgroup()
+                            ->options(...$options)
+                            ->attributes($groupAttrs);
+                    } else {
+                        $items[] = Html::option($content, $value)
+                            ->attributes($optionsAttributes[$value] ?? [])
+                            ->encode($encode)
+                            ->encodeSpaces($encodeSpaces);
+                    }
+                }
+
+                $promptOption = null;
+                $prompt = ArrayHelper::remove($new->options, 'prompt');
+                if ($prompt) {
+                    $promptText = $prompt['text'] ?? '';
+                    if ($promptText) {
+                        $promptOption = Html::option($promptText)
+                            ->attributes($prompt['options'] ?? [])
+                            ->encodeSpaces($encodeSpaces);
+                    }
+                }
+
+                if ($type === 'listbox') {
+                    $new->options['size'] ??= 4;
+                }
+
+                $value = $new->getValue();
+                return Html::select($new->getName())
+                    ->values(is_scalar($value) ? [$value] : $value)
+                    ->unselectValue($type === 'listbox' ? $uncheckValue : null)
+                    ->promptOption($promptOption)
+                    ->items(...$items)
+                    ->attributes($new->options)
+                    ->disabled($disabled)
+                    ->render();
+        }
+
+        throw new RuntimeException('Unknown type: ' . $type);
     }
 
     /**
@@ -102,14 +214,14 @@ final class ListInput extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param callable $value
+     * @param Closure|null $formatter
      *
      * @return self
      */
-    public function item(callable $value): self
+    public function item(?Closure $formatter): self
     {
         $new = clone $this;
-        $new->options['item'] = $value;
+        $new->itemFormatter = $formatter;
         return $new;
     }
 
@@ -215,7 +327,7 @@ final class ListInput extends Widget
             $id = HtmlForm::getInputId($this->data, $this->attribute, $this->charset);
         }
 
-        return $id !== false ? (string) $id : '';
+        return $id !== false ? (string)$id : '';
     }
 
     private function getName(): string

@@ -31,8 +31,15 @@ final class Hint extends Widget
         }
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
+        if (empty($tag)) {
+            return $hint;
+        }
 
-        return Html::tag($tag, $hint, $new->options);
+        $encode = ArrayHelper::remove($new->options, 'encode', true);
+
+        return Html::tag($tag, $hint, $new->options)
+            ->encode($encode)
+            ->render();
     }
 
     /**

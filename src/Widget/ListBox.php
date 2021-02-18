@@ -271,7 +271,7 @@ final class ListBox extends Widget
      *
      * @return self
      */
-    public function unselect(string $value = ''): self
+    public function unselect(string $value): self
     {
         $new = clone $this;
         $new->unselect = $value;

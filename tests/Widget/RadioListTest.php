@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Widget;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\RadioList;
+use Yiisoft\Html\Widget\RadioList\RadioItem;
 
 final class RadioListTest extends TestCase
 {
@@ -73,9 +74,9 @@ HTML;
         $html = RadioList::widget()
             ->config($this->data, 'cityBirth')
             ->items($this->cities)
-            ->item(static function ($index, $label, $name, $checked, $value) {
-                $check = $checked == 1 ? 'checked' : '';
-                return "<div class='col-sm-12'><label><input tabindex='{$index}' class='book' type='checkbox' {$check} name='{$name}' value='{$value}'> {$label}</label></div>";
+            ->item(static function (RadioItem $item) {
+                $check = $item->checked ? 'checked' : '';
+                return "<div class='col-sm-12'><label><input tabindex='{$item->index}' class='book' type='checkbox' {$check} name='{$item->name}' value='{$item->value}'> {$item->label}</label></div>";
             })
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);

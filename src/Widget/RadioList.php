@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Closure;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Widget\Widget;
 
 final class RadioList extends Widget
@@ -14,6 +16,11 @@ final class RadioList extends Widget
     private array $options = [];
     private array $items = [];
     private bool $noUnselect = false;
+
+    /**
+     * @psalm-var Closure(RadioItem):string|null
+     */
+    private ?Closure $itemFormatter = null;
 
     /**
      * Generates a list of radio buttons.
@@ -28,6 +35,7 @@ final class RadioList extends Widget
             ->type('radioList')
             ->config($this->data, $this->attribute, $this->options)
             ->items($this->items)
+            ->item($this->itemFormatter)
             ->noUnselect($this->noUnselect)
             ->run();
     }
@@ -61,14 +69,14 @@ final class RadioList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param callable $value
+     * @param Closure $formatter
      *
      * @return self
      */
-    public function item(callable $value): self
+    public function item(?Closure $formatter): self
     {
         $new = clone $this;
-        $new->options['item'] = $value;
+        $new->itemFormatter = $formatter;
         return $new;
     }
 

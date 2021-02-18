@@ -34,21 +34,32 @@ final class BooleanInput extends Widget
         $new = clone $this;
         $type = $new->type;
 
+        $tag = Html::$type($new->getName());
+
+        $label = ArrayHelper::remove($new->options, 'label');
         if ($new->enclosedByLabel) {
-            $new->options['label'] ??= $new->data->attributeLabel(HtmlForm::getAttributeName($new->attribute));
+            $label ??= $new->data->attributeLabel(HtmlForm::getAttributeName($new->attribute));
+        }
+        if ($label !== null) {
+            $labelAttributes = ArrayHelper::remove($new->options, 'labelOptions');
+            $tag = $tag->label($label, $labelAttributes ?? []);
         }
 
+        unset($new->options['uncheck']);
         if ($new->uncheck) {
-            $new->options['uncheck'] = '0';
+            $tag = $tag->uncheckValue('0');
         } else {
-            unset($new->options['uncheck']);
+            $uncheckValue = null;
         }
 
         if (!empty($new->getId())) {
             $new->options['id'] = $new->getId();
         }
 
-        return Html::$type($new->getName(), $new->getBooleanValue(), $new->options);
+        return $tag
+            ->checked($new->getBooleanValue())
+            ->attributes($new->options)
+            ->render();
     }
 
     /**
