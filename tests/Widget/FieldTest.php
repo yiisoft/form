@@ -45,8 +45,11 @@ HTML;
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
 
+        $validator = $this->createValidatorMock();
         $data->name('yii');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
+
         $expected = <<<'HTML'
 <div class="form-group field-personalform-name">
 <label class="control-label required" for="personalform-name">Name</label>

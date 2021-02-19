@@ -125,10 +125,11 @@ HTML;
 
     public function testFormsFieldsOptions(): void
     {
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
-
         $data->name('yii test');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
@@ -224,10 +225,12 @@ HTML;
             'validationStateOn()' => ['container'],
         ];
 
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->name('yii');
         $data->email('admin@example.com');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget($fieldConfig)
@@ -254,10 +257,12 @@ HTML;
 
     public function testFormsFieldsValidationOnInput(): void
     {
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->name('yii');
         $data->email('admin');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget()
@@ -308,9 +313,11 @@ HTML;
             ],
         ];
 
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->load($record);
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $html = Form::widget()->action('/something')->begin();
         $html .= Field::widget($fieldConfig)

@@ -19,7 +19,7 @@ final class ValidatorMock implements ValidatorInterface
         $this->validator = new Validator(new Formatter());
     }
 
-    public function validate(DataSetInterface $dataSet, iterable $rules): ResultSet
+    public function validate(DataSetInterface $dataSet, iterable $rules = []): ResultSet
     {
         return $this->validator->validate($dataSet, $rules);
     }
