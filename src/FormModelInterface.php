@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Validator\DataSetInterface;
-use Yiisoft\Validator\ValidatorInterface;
 
 /**
  * FormModelInterface model represents an HTML form: its data, validation and presentation.
@@ -242,21 +241,6 @@ interface FormModelInterface extends DataSetInterface
      * @return array Validation rules.
      */
     public function rules(): array;
-
-    /**
-     * Performs the data validation.
-     *
-     * This method executes the validation rules applicable.
-     * The following criteria are used to determine whether a rule is currently applicable:
-     *
-     * - the rule must be associated with the attributes.
-     *
-     * Errors found during the validation can be retrieved via {@see errors()}, {@see firstErrors()} and
-     * {@see firstError()}.
-     *
-     * @return bool whether the validation is successful without any error.
-     */
-    public function validate(ValidatorInterface $validator): bool;
 
     /**
      * Set specified attribute

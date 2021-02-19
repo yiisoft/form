@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Stub;
 
-use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\Formatter;
 use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\Validator;
@@ -19,7 +18,7 @@ final class ValidatorMock implements ValidatorInterface
         $this->validator = new Validator(new Formatter());
     }
 
-    public function validate(DataSetInterface $dataSet, iterable $rules): ResultSet
+    public function validate($dataSet, iterable $rules = []): ResultSet
     {
         return $this->validator->validate($dataSet, $rules);
     }

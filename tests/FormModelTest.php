@@ -138,8 +138,10 @@ final class FormModelTest extends TestCase
             'password' => 'Is too short.',
         ];
 
+        $validator = $this->createValidatorMock();
+
         $this->assertTrue($form->load($data));
-        $this->assertFalse($form->validate($this->createValidatorMock()));
+        $this->assertFalse($validator->validate($form)->isValid());
 
         $this->assertEquals(
             $expected,
@@ -273,10 +275,11 @@ final class FormModelTest extends TestCase
 
     public function testValidatorRules(): void
     {
+        $validator = $this->createValidatorMock();
         $form = new LoginForm();
 
         $form->login('');
-        $form->validate($this->createValidatorMock());
+        $validator->validate($form);
 
         $this->assertEquals(
             ['Value cannot be blank.'],
@@ -284,21 +287,21 @@ final class FormModelTest extends TestCase
         );
 
         $form->login('x');
-        $form->validate($this->createValidatorMock());
+        $validator->validate($form);
         $this->assertEquals(
             ['Is too short.'],
             $form->error('login')
         );
 
         $form->login(str_repeat('x', 60));
-        $form->validate($this->createValidatorMock());
+        $validator->validate($form);
         $this->assertEquals(
             'Is too long.',
             $form->firstError('login')
         );
 
         $form->login('admin@.com');
-        $form->validate($this->createValidatorMock());
+        $validator->validate($form);
         $this->assertEquals(
             'This value is not a valid email address.',
             $form->firstError('login')

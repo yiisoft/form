@@ -30,8 +30,10 @@ final class ErrorTest extends TestCase
 
     public function testError(): void
     {
+        $validator = $this->createValidatorMock();
         $this->data->load($this->record);
-        $this->data->validate($this->createValidatorMock());
+
+        $validator->validate($this->data);
 
         $expected = '<div>Value cannot be blank.</div>';
         $html = Error::widget()
@@ -42,8 +44,10 @@ final class ErrorTest extends TestCase
 
     public function testErrorOptions(): void
     {
+        $validator = $this->createValidatorMock();
         $this->data->load($this->record);
-        $this->data->validate($this->createValidatorMock());
+
+        $validator->validate($this->data);
 
         $expected = '<div class="customClass">Value cannot be blank.</div>';
         $html = Error::widget()
@@ -54,8 +58,10 @@ final class ErrorTest extends TestCase
 
     public function testErrorErrorSource(): void
     {
+        $validator = $this->createValidatorMock();
         $this->data->load($this->record);
-        $this->data->validate($this->createValidatorMock());
+
+        $validator->validate($this->data);
 
         $expected = '<div>This is custom error message.</div>';
         $html = Error::widget()
@@ -67,8 +73,10 @@ final class ErrorTest extends TestCase
 
     public function testErrorNoEncode(): void
     {
+        $validator = $this->createValidatorMock();
         $this->data->load($this->record);
-        $this->data->validate($this->createValidatorMock());
+
+        $validator->validate($this->data);
 
         $expected = '<div>(&#10006;) This is custom error message.</div>';
         $html = Error::widget()
@@ -81,8 +89,10 @@ final class ErrorTest extends TestCase
 
     public function testErrorTag(): void
     {
+        $validator = $this->createValidatorMock();
         $this->data->load($this->record);
-        $this->data->validate($this->createValidatorMock());
+
+        $validator->validate($this->data);
 
         $expected = 'Value cannot be blank.';
         $html = Error::widget()

@@ -14,10 +14,11 @@ final class FieldPasswordInputTest extends TestCase
 {
     public function testFieldsPasswordInput(): void
     {
+        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
-
         $data->password('a7gh56ry');
-        $data->validate($this->createValidatorMock());
+
+        $validator->validate($data);
 
         $expected = <<<'HTML'
 <div class="form-group field-personalform-password">

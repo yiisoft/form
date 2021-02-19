@@ -7,11 +7,14 @@ namespace Yiisoft\Form;
 use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionNamedType;
 use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
+use Yiisoft\Validator\PostValidationHookInterface;
+use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Validator\RulesProviderInterface;
 use function array_key_exists;
 use function array_merge;
 use function explode;
@@ -24,7 +27,7 @@ use function strpos;
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
-abstract class FormModel implements FormModelInterface
+abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
     private array $attributes;
     private array $attributesLabels;
@@ -213,25 +216,15 @@ abstract class FormModel implements FormModelInterface
         }
     }
 
-    public function validate(ValidatorInterface $validator): bool
+    public function processValidationResult(ResultSet $resultSet): void
     {
         $this->clearErrors();
-
-        $rules = $this->rules();
-
-        if (!empty($rules)) {
-            $results = $validator->validate($this, $rules);
-
-            foreach ($results as $attribute => $result) {
-                if ($result->isValid() === false) {
-                    $this->addErrors([$attribute => $result->getErrors()]);
-                }
+        foreach ($resultSet as $attribute => $result) {
+            if ($result->isValid() === false) {
+                $this->addErrors([$attribute => $result->getErrors()]);
             }
         }
-
         $this->validated = true;
-
-        return !$this->hasErrors();
     }
 
     public function addError(string $attribute, string $error): void
@@ -242,6 +235,11 @@ abstract class FormModel implements FormModelInterface
     public function rules(): array
     {
         return [];
+    }
+
+    public function getRules(): array
+    {
+        return $this->rules();
     }
 
     /**
@@ -275,6 +273,7 @@ abstract class FormModel implements FormModelInterface
                 continue;
             }
 
+            /** @var ReflectionNamedType $type */
             $type = $property->getType();
             if ($type === null) {
                 throw new InvalidArgumentException(sprintf(
