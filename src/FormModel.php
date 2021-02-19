@@ -7,6 +7,7 @@ namespace Yiisoft\Form;
 use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionNamedType;
 use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
@@ -272,6 +273,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 continue;
             }
 
+            /** @var ReflectionNamedType $type */
             $type = $property->getType();
             if ($type === null) {
                 throw new InvalidArgumentException(sprintf(
