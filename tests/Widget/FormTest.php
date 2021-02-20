@@ -379,8 +379,11 @@ HTML;
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-sex has-error">
 <label class="control-label" for="personalform-sex">Sex</label>
-<input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="0">
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
+</div>
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-terms has-error">
