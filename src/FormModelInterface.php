@@ -25,7 +25,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return array attribute labels (name => label)
      */
-    public function attributeLabels(): array;
+    public function getAttributeLabels(): array;
 
     /**
      * Returns the text label for the specified attribute.
@@ -34,9 +34,9 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return string the attribute label.
      *
-     * {@see attributeLabels()}
+     * {@see getAttributeLabels()}
      */
-    public function attributeLabel(string $attribute): string;
+    public function getAttributeLabel(string $attribute): string;
 
     /**
      * Returns the attribute hints.
@@ -52,7 +52,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return array attribute hints (name => hint)
      */
-    public function attributeHints(): array;
+    public function getAttributeHints(): array;
 
     /**
      * Returns the text hint for the specified attribute.
@@ -61,9 +61,9 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return string the attribute hint.
      *
-     * {@see attributeHints()}
+     * {@see getAttributeHints()}
      */
-    public function attributeHint(string $attribute): string;
+    public function getAttributeHint(string $attribute): string;
 
     /**
      * Returns a value indicating whether the attribute is required.
@@ -104,10 +104,10 @@ interface FormModelInterface extends DataSetInterface
      * ]
      * ```
      *
-     * {@see firstErrors()}
-     * {@see firstError()}
+     * {@see getFirstErrors()}
+     * {@see getFirstError()}
      */
-    public function errors(): array;
+    public function getErrors(): array;
 
     /**
      * Returns the errors for single attribute.
@@ -116,7 +116,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return array
      */
-    public function error(string $attribute): array;
+    public function getError(string $attribute): array;
 
     /**
      * Returns the errors for all attributes as a one-dimensional array.
@@ -126,10 +126,10 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return array errors for all attributes as a one-dimensional array. Empty array is returned if no error.
      *
-     * {@see errors()}
-     * {@see firstErrors(){}
+     * {@see getErrors()}
+     * {@see getFirstErrors(){}
      */
-    public function errorSummary(bool $showAllErrors): array;
+    public function getErrorSummary(bool $showAllErrors): array;
 
     /**
      * Returns a value indicating whether there is any validation error.
@@ -146,10 +146,10 @@ interface FormModelInterface extends DataSetInterface
      * @return array the first errors. The array keys are the attribute names, and the array values are the
      * corresponding error messages. An empty array will be returned if there is no error.
      *
-     * {@see errors()}
-     * {@see firstError()}
+     * {@see getErrors()}
+     * {@see getFirstError()}
      */
-    public function firstErrors(): array;
+    public function getFirstErrors(): array;
 
     /**
      * Returns the first error of the specified attribute.
@@ -158,10 +158,10 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return string the error message. Empty string is returned if there is no error.
      *
-     * {@see errors()}
-     * {@see firstErrors()}
+     * {@see getErrors()}
+     * {@see getFirstErrors()}
      */
-    public function firstError(string $attribute): string;
+    public function getFirstError(string $attribute): string;
 
     /**
      * Returns the form name that this model class should use.
@@ -181,7 +181,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * {@see load()}
      */
-    public function formName(): string;
+    public function getFormName(): string;
 
     /**
      * Populates the model with input data.
@@ -197,7 +197,7 @@ interface FormModelInterface extends DataSetInterface
      * }
      * ```
      *
-     * `load()` gets the `'FormName'` from the {@see formName()} method (which you may override), unless the
+     * `load()` gets the `'FormName'` from the {@see getFormName()} method (which you may override), unless the
      * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
      * `$data` instead of `$data['FormName']`.
      *
@@ -240,7 +240,7 @@ interface FormModelInterface extends DataSetInterface
      *
      * @return array Validation rules.
      */
-    public function rules(): array;
+    public function getRules(): array;
 
     /**
      * Set specified attribute

@@ -25,7 +25,7 @@ final class HtmlOptionsForm extends FormModel
     private string $email = '';
     private string $combined = '';
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'number' => [

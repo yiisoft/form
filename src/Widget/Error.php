@@ -30,7 +30,7 @@ final class Error extends Widget
         if ($errorSource !== null) {
             $error = $errorSource($new->data, $new->attribute);
         } else {
-            $error = $new->data->firstError(HtmlForm::getAttributeName($new->attribute));
+            $error = $new->data->getFirstError(HtmlForm::getAttributeName($new->attribute));
         }
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');

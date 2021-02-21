@@ -46,7 +46,7 @@ class LoginForm extends FormModel
         $this->rememberMe = $value;
     }
 
-    public function attributeHints(): array
+    public function getAttributeHints(): array
     {
         return [
             'login' => 'Write your id or email.',
@@ -54,7 +54,7 @@ class LoginForm extends FormModel
         ];
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'login' => 'Login:',
@@ -63,7 +63,7 @@ class LoginForm extends FormModel
         ];
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'login' => $this->loginRules(),

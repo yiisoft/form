@@ -19,25 +19,25 @@ final class FormModelTest extends TestCase
     public function testAnonymousFormName(): void
     {
         $form = new class() extends FormModel {};
-        $this->assertEquals('', $form->formName());
+        $this->assertEquals('', $form->getFormName());
     }
 
     public function testDefaultFormName(): void
     {
         $form = new DefaultFormNameForm();
-        $this->assertEquals('DefaultFormNameForm', $form->formName());
+        $this->assertEquals('DefaultFormNameForm', $form->getFormName());
     }
 
     public function testNonNamespacedFormName(): void
     {
         $form = new \NonNamespacedForm();
-        $this->assertEquals('NonNamespacedForm', $form->formName());
+        $this->assertEquals('NonNamespacedForm', $form->getFormName());
     }
 
     public function testCustomFormName(): void
     {
         $form = new CustomFormNameForm();
-        $this->assertEquals('my-best-form-name', $form->formName());
+        $this->assertEquals('my-best-form-name', $form->getFormName());
     }
 
     public function testUnknownPropertyType(): void
@@ -82,31 +82,31 @@ final class FormModelTest extends TestCase
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Write your id or email.', $form->attributeHint('login'));
-        $this->assertEquals('Write your password.', $form->attributeHint('password'));
-        $this->assertEmpty($form->attributeHint('noExist'));
+        $this->assertEquals('Write your id or email.', $form->getAttributeHint('login'));
+        $this->assertEquals('Write your password.', $form->getAttributeHint('password'));
+        $this->assertEmpty($form->getAttributeHint('noExist'));
     }
 
     public function testGetNestedAttributeHint(): void
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Write your id or email.', $form->attributeHint('user.login'));
+        $this->assertEquals('Write your id or email.', $form->getAttributeHint('user.login'));
     }
 
     public function testGetAttributeLabel(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Login:', $form->attributeLabel('login'));
-        $this->assertEquals('Testme', $form->attributeLabel('testme'));
+        $this->assertEquals('Login:', $form->getAttributeLabel('login'));
+        $this->assertEquals('Testme', $form->getAttributeLabel('testme'));
     }
 
     public function testGetNestedAttributeLabel(): void
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Login:', $form->attributeLabel('user.login'));
+        $this->assertEquals('Login:', $form->getAttributeLabel('user.login'));
     }
 
     public function testAttributesLabels(): void
@@ -119,7 +119,7 @@ final class FormModelTest extends TestCase
             'rememberMe' => 'remember Me:',
         ];
 
-        $this->assertEquals($expected, $form->attributeLabels());
+        $this->assertEquals($expected, $form->getAttributeLabels());
     }
 
     public function testErrorSummary(): void
@@ -145,7 +145,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->errorSummary(false)
+            $form->getErrorSummary(false)
         );
 
         $expected = [
@@ -155,7 +155,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->errorSummary(true)
+            $form->getErrorSummary(true)
         );
     }
 
@@ -259,7 +259,7 @@ final class FormModelTest extends TestCase
         $form->addError('password', $errorMessage);
 
         $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->firstError('password'));
+        $this->assertEquals($errorMessage, $form->getFirstError('password'));
     }
 
     public function testAddAndGetErrorForNonExistingAttribute(): void
@@ -270,7 +270,7 @@ final class FormModelTest extends TestCase
         $form->addError('form', $errorMessage);
 
         $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->firstError('form'));
+        $this->assertEquals($errorMessage, $form->getFirstError('form'));
     }
 
     public function testValidatorRules(): void
@@ -283,28 +283,28 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             ['Value cannot be blank.'],
-            $form->error('login')
+            $form->getError('login')
         );
 
         $form->login('x');
         $validator->validate($form);
         $this->assertEquals(
             ['Is too short.'],
-            $form->error('login')
+            $form->getError('login')
         );
 
         $form->login(str_repeat('x', 60));
         $validator->validate($form);
         $this->assertEquals(
             'Is too long.',
-            $form->firstError('login')
+            $form->getFirstError('login')
         );
 
         $form->login('admin@.com');
         $validator->validate($form);
         $this->assertEquals(
             'This value is not a valid email address.',
-            $form->firstError('login')
+            $form->getFirstError('login')
         );
     }
 
@@ -320,7 +320,7 @@ final class DefaultFormNameForm extends FormModel
 
 final class CustomFormNameForm extends FormModel
 {
-    public function formName(): string
+    public function getFormName(): string
     {
         return 'my-best-form-name';
     }
@@ -337,21 +337,21 @@ final class FormWithNestedAttribute extends FormModel
         parent::__construct();
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'id' => 'ID',
         ];
     }
 
-    public function attributeHints(): array
+    public function getAttributeHints(): array
     {
         return [
             'id' => 'Readonly ID',
         ];
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'id' => new Required(),

@@ -78,7 +78,7 @@ final class HtmlForm
      */
     public static function getInputName(FormModelInterface $form, string $attribute): string
     {
-        $formName = $form->formName();
+        $formName = $form->getFormName();
 
         $data = self::parseAttribute($attribute);
 
