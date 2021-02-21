@@ -27,12 +27,12 @@ final class PersonalForm extends FormModel
     private bool $terms = false;
     private ?string $attachFiles = null;
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [];
     }
 
-    public function attributeHints(): array
+    public function getAttributeHints(): array
     {
         return [
             'name' => 'Write your first name.',
@@ -49,7 +49,7 @@ final class PersonalForm extends FormModel
         return '(&#10006;) This is custom error message.';
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             'name' => [new Required(), (new HasLength())->min(4)->tooShortMessage('Is too short.')],
