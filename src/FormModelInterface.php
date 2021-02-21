@@ -82,7 +82,6 @@ interface FormModelInterface extends DataSetInterface
      */
     public function getErrors(): FormErrors;
 
-
     /**
      * Returns the form name that this model class should use.
      *

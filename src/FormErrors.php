@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Yiisoft\Form;
@@ -23,7 +24,6 @@ class FormErrors
     {
         return $this->attributesErrors[$attribute] ?? [];
     }
-
 
     /**
      * Returns the errors for all attributes as a one-dimensional array.

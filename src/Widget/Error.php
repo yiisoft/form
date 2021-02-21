@@ -19,8 +19,9 @@ final class Error extends Widget
     /**
      * Generates a tag that contains the first validation error of the specified form attribute.
      *
-     * @return string the generated label tag
      * @throws \JsonException
+     *
+     * @return string the generated label tag
      */
     public function run(): string
     {
