@@ -16,11 +16,9 @@ use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
 use function array_key_exists;
-use function array_merge;
 use function explode;
 use function get_object_vars;
 use function is_subclass_of;
-use function reset;
 use function sprintf;
 use function strpos;
 
@@ -31,7 +29,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 {
     private array $attributes;
     private array $attributesLabels;
-    private array $attributesErrors = [];
+    private FormErrors $errors;
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
@@ -39,6 +37,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $this->attributes = $this->collectAttributes();
         $this->attributesLabels = $this->getAttributeLabels();
+        $this->errors = new FormErrors();
     }
 
     public function isAttributeRequired(string $attribute): bool
@@ -119,57 +118,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return array_key_exists($attribute, $this->attributes);
     }
 
-    public function getError(string $attribute): array
+    public function getErrors(): FormErrors
     {
-        return $this->attributesErrors[$attribute] ?? [];
-    }
-
-    public function getErrors(): array
-    {
-        return $this->attributesErrors;
-    }
-
-    public function getErrorSummary(bool $showAllErrors): array
-    {
-        $lines = [];
-        $errors = $showAllErrors ? $this->getErrors() : [$this->getFirstErrors()];
-
-        foreach ($errors as $error) {
-            $lines = array_merge($lines, $error);
-        }
-
-        return $lines;
-    }
-
-    public function getFirstError(string $attribute): string
-    {
-        if (empty($this->attributesErrors[$attribute])) {
-            return '';
-        }
-
-        return reset($this->attributesErrors[$attribute]);
-    }
-
-    public function getFirstErrors(): array
-    {
-        if (empty($this->attributesErrors)) {
-            return [];
-        }
-
-        $errors = [];
-
-        foreach ($this->attributesErrors as $name => $es) {
-            if (!empty($es)) {
-                $errors[$name] = reset($es);
-            }
-        }
-
-        return $errors;
-    }
-
-    public function hasErrors(?string $attribute = null): bool
-    {
-        return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
+        return $this->errors;
     }
 
     /**
@@ -226,18 +177,16 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function processValidationResult(ResultSet $resultSet): void
     {
-        $this->clearErrors();
+        $this->errors->clear();
+        $this->validated = false;
+
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
                 $this->addErrors([$attribute => $result->getErrors()]);
             }
         }
-        $this->validated = true;
-    }
 
-    public function addError(string $attribute, string $error): void
-    {
-        $this->attributesErrors[$attribute][] = $error;
+        $this->validated = true;
     }
 
     public function getRules(): array
@@ -252,7 +201,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this->attributesErrors[$attribute][] = $error;
+                $this->errors->add($attribute, $error);
             }
         }
     }
@@ -290,17 +239,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return $attributes;
-    }
-
-    private function clearErrors(?string $attribute = null): void
-    {
-        if ($attribute === null) {
-            $this->attributesErrors = [];
-        } else {
-            unset($this->attributesErrors[$attribute]);
-        }
-
-        $this->validated = false;
     }
 
     private function getInflector(): Inflector

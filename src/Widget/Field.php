@@ -921,7 +921,7 @@ final class Field extends Widget
         if ($this->validationStateOn === 'input') {
             $attributeName = HtmlForm::getAttributeName($this->attribute);
 
-            if ($this->data->hasErrors($attributeName)) {
+            if ($this->data->getErrors()->hasErrors($attributeName)) {
                 /**
                  * @psalm-suppress PossiblyNullPropertyAssignmentValue
                  */
@@ -935,7 +935,7 @@ final class Field extends Widget
         if ($this->validationStateOn === 'input') {
             $attributeName = HtmlForm::getAttributeName($this->attribute);
 
-            if (!$this->data->hasErrors($attributeName) && $this->data->isValidated()) {
+            if (!$this->data->getErrors()->hasErrors($attributeName) && $this->data->isValidated()) {
                 /**
                  * @psalm-suppress PossiblyNullPropertyAssignmentValue
                  */
@@ -970,7 +970,7 @@ final class Field extends Widget
     private function setAriaAttributes(array $options = []): void
     {
         if ($this->ariaAttribute) {
-            if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
+            if (!isset($options['aria-invalid']) && $this->data->getErrors()->hasErrors($this->attribute)) {
                 $this->inputOptions['aria-invalid'] = 'true';
             }
         }

@@ -145,7 +145,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->getErrorSummary(false)
+            $form->getErrors()->getErrorSummary(false)
         );
 
         $expected = [
@@ -155,7 +155,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->getErrorSummary(true)
+            $form->getErrors()->getErrorSummary(true)
         );
     }
 
@@ -251,28 +251,6 @@ final class FormModelTest extends TestCase
         $this->assertIsString($form->getAttributeValue('string'));
     }
 
-    public function testAddError(): void
-    {
-        $form = new LoginForm();
-        $errorMessage = 'Invalid password.';
-
-        $form->addError('password', $errorMessage);
-
-        $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->getFirstError('password'));
-    }
-
-    public function testAddAndGetErrorForNonExistingAttribute(): void
-    {
-        $form = new LoginForm();
-        $errorMessage = 'Invalid username and/or password.';
-
-        $form->addError('form', $errorMessage);
-
-        $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->getFirstError('form'));
-    }
-
     public function testValidatorRules(): void
     {
         $validator = $this->createValidatorMock();
@@ -283,28 +261,28 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             ['Value cannot be blank.'],
-            $form->getError('login')
+            $form->getErrors()->getForAttribute('login')
         );
 
         $form->login('x');
         $validator->validate($form);
         $this->assertEquals(
             ['Is too short.'],
-            $form->getError('login')
+            $form->getErrors()->getForAttribute('login')
         );
 
         $form->login(str_repeat('x', 60));
         $validator->validate($form);
         $this->assertEquals(
             'Is too long.',
-            $form->getFirstError('login')
+            $form->getErrors()->getFirstError('login')
         );
 
         $form->login('admin@.com');
         $validator->validate($form);
         $this->assertEquals(
             'This value is not a valid email address.',
-            $form->getFirstError('login')
+            $form->getErrors()->getFirstError('login')
         );
     }
 
