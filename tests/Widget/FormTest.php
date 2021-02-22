@@ -186,7 +186,8 @@ HTML;
         /** https://github.com/yiisoft/yii2/issues/5356 */
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-citybirth">
-<input type="hidden" name="PersonalForm[cityBirth]" value="1"><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
+<input type="hidden" name="PersonalForm[cityBirth]" value="1">
+<select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -206,7 +207,8 @@ HTML;
         $expected = <<<'HTML'
 <form action="/something" method="POST"><div class="form-group field-personalform-citybirth">
 <label class="control-label" for="personalform-citybirth">City Birth</label>
-<input type="hidden" name="PersonalForm[cityBirth]" value="1"><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
+<input type="hidden" name="PersonalForm[cityBirth]" value="1">
+<select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -361,7 +363,8 @@ HTML;
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-citybirth has-error">
 <label class="control-label" for="personalform-citybirth">City Birth</label>
-<input type="hidden" name="PersonalForm[cityBirth]" value="1"><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
+<input type="hidden" name="PersonalForm[cityBirth]" value="1">
+<select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -376,8 +379,11 @@ HTML;
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-sex has-error">
 <label class="control-label" for="personalform-sex">Sex</label>
-<input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="0">
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
+</div>
 
 <div class="help-block"></div>
 </div><div class="form-group field-personalform-terms has-error">

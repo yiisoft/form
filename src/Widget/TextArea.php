@@ -36,7 +36,12 @@ final class TextArea extends Widget
             $new->options['id'] = $new->getId();
         }
 
-        return Html::textarea($new->getName(), $new->getValue(), $new->options);
+        $encode = ArrayHelper::remove($new->options, 'encode', true);
+
+        return Html::textarea($new->getName(), $new->getValue())
+            ->attributes($new->options)
+            ->encode($encode)
+            ->render();
     }
 
     /**

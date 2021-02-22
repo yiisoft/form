@@ -41,13 +41,15 @@ final class ErrorSummary extends Widget
             /** still render the placeholder for client-side validation use */
             $content = '<ul></ul>';
             $new->options['style'] = isset($new->options['style'])
-                ? rtrim((string) $new->options['style'], ';') . '; display:none' : 'display:none';
+                ? rtrim((string)$new->options['style'], ';') . '; display:none' : 'display:none';
         } else {
             $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
         }
 
-        $new->options['encode'] = false;
-        return Html::tag('div', $header . $content . $footer, $new->options);
+        return Html::tag('div', $header . $content . $footer)
+            ->attributes($new->options)
+            ->encode(false)
+            ->render();
     }
 
     /**
@@ -70,8 +72,8 @@ final class ErrorSummary extends Widget
     /**
      * Return array of the validation errors.
      *
-     * @param bool $encode, if set to false then the error messages won't be encoded.
-     * @param bool $showAllErrors, if set to true every error message for each attribute will be shown otherwise only
+     * @param bool $encode , if set to false then the error messages won't be encoded.
+     * @param bool $showAllErrors , if set to true every error message for each attribute will be shown otherwise only
      * the first error message for each attribute will be shown.
      *
      * @return array of the validation errors.

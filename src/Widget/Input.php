@@ -39,7 +39,9 @@ final class Input extends Widget
             $new->options['id'] = $new->getId();
         }
 
-        return Html::input($new->type, $new->getName(), $new->getValue(), $new->options);
+        return Html::input($new->type, $new->getName(), $new->getValue())
+            ->attributes($new->options)
+            ->render();
     }
 
     /**

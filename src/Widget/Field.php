@@ -114,7 +114,7 @@ final class Field extends Widget
 
         $tag = ArrayHelper::remove($new->options, 'tag', 'div');
 
-        return Html::beginTag($tag, $new->options);
+        return Html::openTag($tag, $new->options);
     }
 
     /**
@@ -124,7 +124,7 @@ final class Field extends Widget
      */
     private function renderEnd(): string
     {
-        return Html::endTag(ArrayHelper::keyExists($this->options, 'tag') ? $this->options['tag'] : 'div');
+        return Html::closeTag(ArrayHelper::keyExists($this->options, 'tag') ? $this->options['tag'] : 'div');
     }
 
     /**

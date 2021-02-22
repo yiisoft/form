@@ -169,7 +169,8 @@ HTML;
         $this->data->cityBirth(4);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value=""><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
+<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -196,7 +197,7 @@ HTML;
 
         $expected = <<<'HTML'
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]">
-<option value="0" selected="selected">Select City Birth</option>
+<option value="0" selected>Select City Birth</option>
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -234,7 +235,8 @@ HTML;
         $this->data->cityBirth(2);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value=""><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="3">
+<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="3">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -255,7 +257,8 @@ HTML;
         $this->data->cityBirth(2);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="0"><select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
+<input type="hidden" name="PersonalForm[cityBirth]" value="0">
+<select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
 <option value="3">Novosibirsk</option>

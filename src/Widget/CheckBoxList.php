@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Closure;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Widget\Widget;
 
 final class CheckBoxList extends Widget
@@ -15,6 +17,11 @@ final class CheckBoxList extends Widget
     private array $items = [];
     private bool $noUnselect = false;
     private string $unselect = '';
+
+    /**
+     * @psalm-var Closure(CheckboxItem):string|null
+     */
+    private ?Closure $itemFormatter = null;
 
     /**
      * Generates a list of checkboxes.
@@ -31,6 +38,7 @@ final class CheckBoxList extends Widget
             ->type('checkBoxList')
             ->config($this->data, $this->attribute, $this->options)
             ->items($this->items)
+            ->item($this->itemFormatter)
             ->noUnselect($this->noUnselect)
             ->unselect($this->unselect)
             ->run();
@@ -101,14 +109,14 @@ final class CheckBoxList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param callable $value
+     * @param Closure $formatter
      *
      * @return self
      */
-    public function item(callable $value): self
+    public function item(?Closure $formatter): self
     {
         $new = clone $this;
-        $new->options['item'] = $value;
+        $new->itemFormatter = $formatter;
         return $new;
     }
 

@@ -67,7 +67,7 @@ final class Form extends Widget
         $this->options['action'] = $this->action;
         $this->options['method'] = $this->method;
 
-        $form = Html::beginTag('form', $this->options);
+        $form = Html::openTag('form', $this->options);
 
         if (!empty($hiddenInputs)) {
             $form .= "\n" . implode("\n", $hiddenInputs);

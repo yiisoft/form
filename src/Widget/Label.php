@@ -38,7 +38,9 @@ final class Label extends Widget
             $new->data->getAttributeLabel(HtmlForm::getAttributeName($new->attribute))
         );
 
-        return Html::label($label, $for, $new->options);
+        return Html::label($label, $for)
+            ->attributes($new->options)
+            ->render();
     }
 
     /**

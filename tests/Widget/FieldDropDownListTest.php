@@ -54,7 +54,7 @@ HTML;
 <div class="form-group field-personalform-citybirth">
 <label class="control-label customLabelClass" for="personalform-citybirth">City Birth:</label>
 <select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth]">
-<option value="0" selected="selected">Select City Birth</option>
+<option value="0" selected>Select City Birth</option>
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
 <option value="3">Novosibirsk</option>
@@ -100,7 +100,7 @@ HTML;
 <div class="form-group field-personalform-citybirth">
 <label class="control-label" for="personalform-citybirth">City Birth</label>
 <select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth]">
-<option value="0" selected="selected">Select City Birth</option>
+<option value="0" selected>Select City Birth</option>
 <optgroup label="Chile">
 <option value="1">Santiago</option>
 <option value="2">Concepcion</option>
@@ -141,8 +141,9 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 
-<input type="hidden" name="PersonalForm[cityBirth]" value="0"><select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth][]" multiple size="5">
-<option value="0" selected="selected">Select City Birth</option>
+<input type="hidden" name="PersonalForm[cityBirth]" value="0">
+<select id="personalform-citybirth" class="form-control" name="PersonalForm[cityBirth][]" multiple size="5">
+<option value="0" selected>Select City Birth</option>
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
 <option value="3">Novosibirsk</option>

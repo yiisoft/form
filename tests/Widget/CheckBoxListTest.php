@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Widget;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\CheckBoxList;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 
 final class CheckBoxListTest extends TestCase
 {
@@ -16,8 +17,11 @@ final class CheckBoxListTest extends TestCase
         $data->sex(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -32,8 +36,11 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex" class="customClass"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<div id="personalform-sex" class="customClass">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex', ['class' => 'customClass'])
@@ -48,8 +55,11 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="0"><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="0">
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -65,8 +75,10 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -82,15 +94,18 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><div class='col-sm-12'><label><input tabindex='0' class='book' type='checkbox' checked name='PersonalForm[sex][]' value='0'> Female</label></div>
-<div class='col-sm-12'><label><input tabindex='1' class='book' type='checkbox'  name='PersonalForm[sex][]' value='1'> Male</label></div></div>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<div id="personalform-sex">
+<div class='col-sm-12'><label><input tabindex='0' class='book' type='checkbox' checked name='PersonalForm[sex][]' value='0'> Female</label></div>
+<div class='col-sm-12'><label><input tabindex='1' class='book' type='checkbox'  name='PersonalForm[sex][]' value='1'> Male</label></div>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
             ->items(['Female', 'Male'])
-            ->item(static function ($index, $label, $name, $checked, $value) {
-                $check = $checked == 1 ? 'checked' : '';
-                return "<div class='col-sm-12'><label><input tabindex='{$index}' class='book' type='checkbox' {$check} name='{$name}' value='{$value}'> {$label}</label></div>";
+            ->item(static function (CheckboxItem $item) {
+                $check = $item->checked ? 'checked' : '';
+                return "<div class='col-sm-12'><label><input tabindex='{$item->index}' class='book' type='checkbox' {$check} name='{$item->name}' value='{$item->value}'> {$item->label}</label></div>";
             })
             ->itemOptions(['class' => 'itemClass'])
             ->run();
@@ -103,8 +118,11 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<div id="personalform-sex">
+<label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="1"> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -120,8 +138,11 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="" disabled><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="" disabled>
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked disabled> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1" disabled> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -137,8 +158,11 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> &#9792;</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> &#9896;</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> &#9792;</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> &#9896;</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -154,7 +178,10 @@ HTML;
         $data->sex(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><div id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>&#9866;<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label></div>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<div id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>&#9866;<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
+</div>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
@@ -171,7 +198,8 @@ HTML;
 
         /** Without container */
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
 HTML;
         $html = CheckboxList::widget()
@@ -183,8 +211,11 @@ HTML;
 
         /** Custom container tag */
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value=""><span id="personalform-sex"><label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label></span>
+<input type="hidden" name="PersonalForm[sex]" value="">
+<span id="personalform-sex">
+<label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
+<label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
+</span>
 HTML;
         $html = CheckboxList::widget()
             ->config($data, 'sex')
