@@ -38,7 +38,7 @@ final class BooleanInput extends Widget
 
         $label = ArrayHelper::remove($new->options, 'label');
         if ($new->enclosedByLabel) {
-            $label ??= $new->data->attributeLabel(HtmlForm::getAttributeName($new->attribute));
+            $label ??= $new->data->getAttributeLabel(HtmlForm::getAttributeName($new->attribute));
         }
         if ($label !== null) {
             $labelAttributes = ArrayHelper::remove($new->options, 'labelOptions');
