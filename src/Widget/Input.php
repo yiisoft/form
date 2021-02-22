@@ -59,7 +59,7 @@ final class Input extends Widget
         $new = clone $this;
         $new->data = $data;
         $new->attribute = $attribute;
-        $rules = $data->rules()[$attribute] ?? [];
+        $rules = $data->getRules()[$attribute] ?? [];
         foreach ($rules as $rule) {
             if ($rule instanceof HtmlOptionsProvider) {
                 $new->options = array_merge($new->options, $rule->getHtmlOptions());
@@ -251,7 +251,7 @@ final class Input extends Widget
     {
         if (!isset($this->options['placeholder']) && !(in_array($this->type, ['date', 'file', 'hidden', 'color'], true))) {
             $attributeName = HtmlForm::getAttributeName($this->attribute);
-            $this->options['placeholder'] = $this->data->attributeLabel($attributeName);
+            $this->options['placeholder'] = $this->data->getAttributeLabel($attributeName);
         }
     }
 }

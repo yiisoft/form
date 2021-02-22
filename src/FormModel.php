@@ -38,12 +38,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
-        $this->attributesLabels = $this->attributeLabels();
+        $this->attributesLabels = $this->getAttributeLabels();
     }
 
     public function isAttributeRequired(string $attribute): bool
     {
-        $validators = $this->rules()[$attribute] ?? [];
+        $validators = $this->getRules()[$attribute] ?? [];
 
         foreach ($validators as $validator) {
             if ($validator instanceof Required) {
@@ -62,37 +62,45 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->readProperty($attribute);
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [];
     }
 
-    public function attributeHint(string $attribute): string
+    public function getAttributeHint(string $attribute): string
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
         if ($nested !== null) {
-            return $this->readProperty($attribute)->attributeHint($nested);
+            return $this->readProperty($attribute)->getAttributeHint($nested);
         }
 
-        $hints = $this->attributeHints();
+        $hints = $this->getAttributeHints();
 
         return $hints[$attribute] ?? '';
     }
 
-    public function attributeHints(): array
+    public function getAttributeHints(): array
     {
         return [];
     }
 
-    public function attributeLabel(string $attribute): string
+    public function getAttributeLabel(string $attribute): string
     {
-        return $this->attributesLabels[$attribute] ?? $this->getAttributeLabel($attribute);
+        if (array_key_exists($attribute, $this->attributesLabels)) {
+            return $this->attributesLabels[$attribute];
+        }
+
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        return $nested !== null
+            ? $this->readProperty($attribute)->getAttributeLabel($nested)
+            : $this->generateAttributeLabel($attribute);
     }
 
     /**
      * @return string Returns classname without a namespace part or empty string when class is anonymous
      */
-    public function formName(): string
+    public function getFormName(): string
     {
         if (strpos(static::class, '@anonymous') !== false) {
             return '';
@@ -111,20 +119,20 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return array_key_exists($attribute, $this->attributes);
     }
 
-    public function error(string $attribute): array
+    public function getError(string $attribute): array
     {
         return $this->attributesErrors[$attribute] ?? [];
     }
 
-    public function errors(): array
+    public function getErrors(): array
     {
         return $this->attributesErrors;
     }
 
-    public function errorSummary(bool $showAllErrors): array
+    public function getErrorSummary(bool $showAllErrors): array
     {
         $lines = [];
-        $errors = $showAllErrors ? $this->errors() : [$this->firstErrors()];
+        $errors = $showAllErrors ? $this->getErrors() : [$this->getFirstErrors()];
 
         foreach ($errors as $error) {
             $lines = array_merge($lines, $error);
@@ -133,7 +141,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $lines;
     }
 
-    public function firstError(string $attribute): string
+    public function getFirstError(string $attribute): string
     {
         if (empty($this->attributesErrors[$attribute])) {
             return '';
@@ -142,7 +150,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return reset($this->attributesErrors[$attribute]);
     }
 
-    public function firstErrors(): array
+    public function getFirstErrors(): array
     {
         if (empty($this->attributesErrors)) {
             return [];
@@ -172,7 +180,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function load(array $data, ?string $formName = null): bool
     {
-        $scope = $formName ?? $this->formName();
+        $scope = $formName ?? $this->getFormName();
 
         /**
          * @psalm-var array<string,mixed>
@@ -232,14 +240,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->attributesErrors[$attribute][] = $error;
     }
 
-    public function rules(): array
-    {
-        return [];
-    }
-
     public function getRules(): array
     {
-        return $this->rules();
+        return [];
     }
 
     /**
@@ -306,15 +309,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             $this->inflector = new Inflector();
         }
         return $this->inflector;
-    }
-
-    private function getAttributeLabel(string $attribute): string
-    {
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
-
-        return $nested !== null
-            ? $this->readProperty($attribute)->attributeLabel($nested)
-            : $this->generateAttributeLabel($attribute);
     }
 
     /**

@@ -24,7 +24,7 @@ final class Hint extends Widget
     {
         $new = clone $this;
 
-        $hint = ArrayHelper::remove($new->options, 'hint', $new->data->attributeHint($new->attribute));
+        $hint = ArrayHelper::remove($new->options, 'hint', $new->data->getAttributeHint($new->attribute));
 
         if (empty($hint)) {
             return '';
