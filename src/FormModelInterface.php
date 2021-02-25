@@ -78,14 +78,6 @@ interface FormModelInterface extends DataSetInterface
     public function isAttributeRequired(string $attribute): bool;
 
     /**
-     * Add error for the specified attribute.
-     *
-     * @param string $attribute attribute name.
-     * @param string $error attribute error message.
-     */
-    public function addError(string $attribute, string $error): void;
-
-    /**
      * Returns the errors for all attributes.
      *
      * @return array errors for all attributes or the specified attribute. null is returned if no error.

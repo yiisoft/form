@@ -235,11 +235,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->validated = true;
     }
 
-    public function addError(string $attribute, string $error): void
-    {
-        $this->attributesErrors[$attribute][] = $error;
-    }
-
     public function getRules(): array
     {
         return [];
