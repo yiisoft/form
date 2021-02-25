@@ -102,7 +102,7 @@ final class Field extends Widget
     {
         $new = clone $this;
 
-        $inputId = $new->addInputId();
+        $inputId = $new->getInputId();
 
         $class = [];
         $class[] = "field-$inputId";
@@ -745,7 +745,7 @@ final class Field extends Widget
         return $this;
     }
 
-    private function addInputId(): string
+    private function getInputId(): string
     {
         return $this->inputId ?: HtmlForm::getInputId($this->data, $this->attribute);
     }
