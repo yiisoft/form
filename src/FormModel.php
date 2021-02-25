@@ -126,7 +126,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function getErrors(): array
     {
-        return array_values(array_map(fn(FormAttribute $attribute) => $attribute->getErrors(), $this->attributes));
+        $result = [];
+        foreach ($this->attributes as $attributeName => $attribute) {
+            $errors = $attribute->getErrors();
+            if ($errors !== []){
+                $result[$attributeName] = $errors;
+            }
+        }
+
+        return $result;
     }
 
     public function getErrorSummary(bool $showAllErrors): array
