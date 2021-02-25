@@ -970,7 +970,8 @@ final class Field extends Widget
     private function setAriaAttributes(array $options = []): void
     {
         if ($this->ariaAttribute) {
-            if (!isset($options['aria-invalid']) && $this->data->isValidated() && $this->data->hasErrors($this->attribute)) {
+            $attributeName = HtmlForm::getAttributeName($this->attribute);
+            if (!isset($options['aria-invalid']) && $this->data->isValidated() && $this->data->hasErrors($attributeName)) {
                 $this->inputOptions['aria-invalid'] = 'true';
             }
         }
