@@ -114,10 +114,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return substr($className, 1);
     }
 
-    private function getAttribute(string $attribute): FormAttribute
+    public function getAttribute(string $attribute): FormAttribute
     {
         if (!$this->hasAttribute($attribute)) {
-            throw new InvalidArgumentException('Attribute ' . $attribute . ' does not exist.');
+            throw new InvalidArgumentException("Attribute \"{$attribute}\" does not exist.");
         }
         return $this->attributes[$attribute];
     }
