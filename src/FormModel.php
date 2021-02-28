@@ -137,7 +137,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $result = [];
         foreach ($this->attributes as $attributeName => $attribute) {
             $errors = $attribute->getErrors();
-            if ($errors !== []){
+            if ($errors !== []) {
                 $result[$attributeName] = $errors;
             }
         }
