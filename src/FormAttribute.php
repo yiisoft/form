@@ -9,7 +9,7 @@ class FormAttribute
     private string $name;
     private ?string $type;
     private string $hint;
-    private ?string $label;
+    private string $label;
     private array $errors;
 
     public function __construct(string $name, ?string $type, string $hint, string $label)
