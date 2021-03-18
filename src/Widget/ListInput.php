@@ -65,8 +65,9 @@ final class ListInput extends Widget
                 /** @psalm-var Closure(CheckboxItem):string|null $itemFormatter */
                 $itemFormatter = $this->itemFormatter;
 
+                $value = $new->getValue();
                 return Html::checkboxList($new->getName())
-                    ->value($new->getValue())
+                    ->values(!is_iterable($value) ? [$value] : $value)
                     ->uncheckValue($uncheckValue)
                     ->items($new->items, $encodeLabels)
                     ->itemFormatter($itemFormatter)
@@ -84,8 +85,9 @@ final class ListInput extends Widget
                 /** @psalm-var Closure(RadioItem):string|null $itemFormatter */
                 $itemFormatter = $this->itemFormatter;
 
+                $value = $new->getValue();
                 return Html::radioList($new->getName())
-                    ->value($new->getValue())
+                    ->values(!is_iterable($value) ? [$value] : $value)
                     ->uncheckValue($uncheckValue)
                     ->items($new->items, $encodeLabels)
                     ->itemFormatter($itemFormatter)
@@ -145,7 +147,7 @@ final class ListInput extends Widget
 
                 $value = $new->getValue();
                 return Html::select($new->getName())
-                    ->values(is_scalar($value) ? [$value] : $value)
+                    ->values(!is_iterable($value) ? [$value] : $value)
                     ->unselectValue($type === 'listbox' ? $uncheckValue : null)
                     ->promptOption($promptOption)
                     ->items(...$items)
