@@ -85,20 +85,6 @@ final class DropDownList extends Widget
     }
 
     /**
-     * Whether to encode spaces in option prompt and option value with &nbsp; character. Defaults to false.
-     *
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function encodeSpaces(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->options['encodeSpaces'] = $value;
-        return $new;
-    }
-
-    /**
      * The attributes for the optgroup tags.
      *
      * The structure of this is similar to that of 'options', except that the array keys represent the optgroup labels

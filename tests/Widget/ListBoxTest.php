@@ -225,7 +225,7 @@ HTML;
 HTML;
         /** disabled encode  */
         $html = ListBox::widget()
-            ->config($this->data, 'cityBirth', ['encodeSpaces' => true, 'required' => false])
+            ->config($this->data, 'cityBirth', ['required' => false])
             ->items($this->getDataItems2())
             ->noEncode()
             ->run();
@@ -240,51 +240,6 @@ HTML;
 HTML;
         $html = ListBox::widget()
             ->config($this->data, 'cityBirth', ['encode' => false])
-            ->items($this->getDataItems2())
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testListBoxEncodeSpaces(): void
-    {
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
-<select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
-<option value="value1&lt;&gt;">text1&lt;&gt;</option>
-<option value="value  2">text&nbsp;&nbsp;2</option>
-</select>
-HTML;
-        $html = ListBox::widget()
-            ->config($this->data, 'cityBirth')
-            ->encodeSpaces()
-            ->items($this->getDataItems2())
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
-<select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
-<option value="value1&lt;&gt;">text1&lt;&gt;</option>
-<option value="value  2">text&nbsp;&nbsp;2</option>
-</select>
-HTML;
-        $html = ListBox::widget()
-            ->config($this->data, 'cityBirth', ['encodeSpaces' => true])
-            ->items($this->getDataItems2())
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
-<select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
-<option value="value1&lt;&gt;">text1<></option>
-<option value="value  2">text&nbsp;&nbsp;2</option>
-</select>
-HTML;
-        $html = ListBox::widget()
-            ->config($this->data, 'cityBirth')
-            ->noEncode()
-            ->encodeSpaces()
             ->items($this->getDataItems2())
             ->run();
         $this->assertEqualsWithoutLE($expected, $html);
