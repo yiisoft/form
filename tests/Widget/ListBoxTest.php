@@ -220,7 +220,7 @@ HTML;
 <input type="hidden" name="PersonalForm[cityBirth]" value="">
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="value1&lt;&gt;">text1<></option>
-<option value="value  2">text&nbsp;&nbsp;2</option>
+<option value="value  2">text  2</option>
 </select>
 HTML;
         /** disabled encode  */
