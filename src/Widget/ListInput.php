@@ -87,7 +87,7 @@ final class ListInput extends Widget
 
                 $value = $new->getValue();
                 return Html::radioList($new->getName())
-                    ->values(!is_iterable($value) ? [$value] : $value)
+                    ->value($value)
                     ->uncheckValue($uncheckValue)
                     ->items($new->items, $encodeLabels)
                     ->itemFormatter($itemFormatter)
