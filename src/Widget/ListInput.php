@@ -100,7 +100,6 @@ final class ListInput extends Widget
 
             case 'listbox':
             case 'dropdownlist':
-                $encodeSpaces = ArrayHelper::remove($new->options, 'encodeSpaces', false);
                 $groups = ArrayHelper::remove($new->options, 'groups', []);
                 $optionsAttributes = ArrayHelper::remove($new->options, 'options', []);
 
@@ -116,8 +115,7 @@ final class ListInput extends Widget
                         foreach ($content as $v => $c) {
                             $options[] = Html::option($c, $v)
                                 ->attributes($optionsAttributes[$v] ?? [])
-                                ->encode($encode)
-                                ->encodeSpaces($encodeSpaces);
+                                ->encode($encode);
                         }
                         $items[] = Html::optgroup()
                             ->options(...$options)
@@ -125,8 +123,7 @@ final class ListInput extends Widget
                     } else {
                         $items[] = Html::option($content, $value)
                             ->attributes($optionsAttributes[$value] ?? [])
-                            ->encode($encode)
-                            ->encodeSpaces($encodeSpaces);
+                            ->encode($encode);
                     }
                 }
 
@@ -136,8 +133,7 @@ final class ListInput extends Widget
                     $promptText = $prompt['text'] ?? '';
                     if ($promptText) {
                         $promptOption = Html::option($promptText)
-                            ->attributes($prompt['options'] ?? [])
-                            ->encodeSpaces($encodeSpaces);
+                            ->attributes($prompt['options'] ?? []);
                     }
                 }
 
