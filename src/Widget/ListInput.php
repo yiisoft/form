@@ -66,6 +66,7 @@ final class ListInput extends Widget
                 $itemFormatter = $this->itemFormatter;
 
                 $value = $new->getValue();
+                /** @psalm-suppress PossiblyInvalidArgument */
                 return Html::checkboxList($new->getName())
                     ->values(!is_iterable($value) ? [$value] : $value)
                     ->uncheckValue($uncheckValue)
@@ -142,6 +143,7 @@ final class ListInput extends Widget
                 }
 
                 $value = $new->getValue();
+                /** @psalm-suppress PossiblyInvalidArgument */
                 return Html::select($new->getName())
                     ->values(!is_iterable($value) ? [$value] : $value)
                     ->unselectValue($type === 'listbox' ? $uncheckValue : null)
