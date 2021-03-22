@@ -91,33 +91,6 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testDropDownListEncodeSpaces(): void
-    {
-        $this->cities = [
-            '1' => ' Moscu',
-            '2' => ' San Petersburgo',
-            '3' => ' Novosibirsk',
-            '4' => ' Ekaterinburgo',
-        ];
-
-        $this->data->cityBirth(1);
-
-        $expected = <<<'HTML'
-<select id="personalform-citybirth" name="PersonalForm[cityBirth]">
-<option value="1" selected>&nbsp;Moscu</option>
-<option value="2">&nbsp;San&nbsp;Petersburgo</option>
-<option value="3">&nbsp;Novosibirsk</option>
-<option value="4">&nbsp;Ekaterinburgo</option>
-</select>
-HTML;
-        $html = DropDownList::widget()
-            ->config($this->data, 'cityBirth')
-            ->encodeSpaces()
-            ->items($this->cities)
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
     public function testDropDownListGroups(): void
     {
         $groups = [
