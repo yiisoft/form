@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\HtmlOptions;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Form\Tests\Stub\HtmlOptionsForm;
 use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
