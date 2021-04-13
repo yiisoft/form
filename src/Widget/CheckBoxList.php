@@ -28,7 +28,7 @@ final class CheckBoxList extends Widget
      *
      * A checkbox list allows multiple selection, like {@see ListBox}.
      *
-     * @throws \Yiisoft\Factory\Exceptions\InvalidConfigException
+     * @throws \Yiisoft\Factory\Exception\InvalidConfigException
      *
      * @return string the generated checkbox list.
      */
