@@ -354,7 +354,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return string|FormAttribute|FormModel
+     * @return FormAttribute|FormModel|string
      */
     private function readProperty(string $attribute)
     {
