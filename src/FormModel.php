@@ -70,7 +70,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
         if ($nested !== null) {
-            return $this->readProperty($attribute)->getAttributeHint($nested);
+            $property = $this->readProperty($attribute);
+            if ($property instanceof self) {
+                return $property->getAttributeHint($nested);
+            }
+
+            return $property;
         }
 
         $hints = $this->getAttributeHints();
@@ -91,9 +96,16 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return $nested !== null
-            ? $this->readProperty($attribute)->getAttributeLabel($nested)
-            : $this->generateAttributeLabel($attribute);
+        if ($nested !== null) {
+            $property = $this->readProperty($attribute);
+            if ($property instanceof self) {
+                return $property->getAttributeLabel($nested);
+            }
+
+            return $property;
+        }
+
+        return $this->generateAttributeLabel($attribute);
     }
 
     /**
@@ -342,7 +354,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return string|FormAttribute
+     * @return string|FormAttribute|FormModel
      */
     private function readProperty(string $attribute)
     {
@@ -364,7 +376,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $getter = Closure::bind($getter, null, $this);
 
         /**
-         * @psalm-var Closure $getter
+         * @psalm-var Closure<string|FormAttribute|FormModel> $getter
          */
         return $getter($this, $attribute);
     }
