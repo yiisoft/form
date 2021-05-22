@@ -65,8 +65,10 @@ final class ListInput extends Widget
                 /** @psalm-var Closure(CheckboxItem):string|null $itemFormatter */
                 $itemFormatter = $this->itemFormatter;
 
+                $value = $new->getValue();
+                /** @psalm-suppress PossiblyInvalidArgument */
                 return Html::checkboxList($new->getName())
-                    ->value($new->getValue())
+                    ->values(!is_iterable($value) ? [$value] : $value)
                     ->uncheckValue($uncheckValue)
                     ->items($new->items, $encodeLabels)
                     ->itemFormatter($itemFormatter)
@@ -84,8 +86,9 @@ final class ListInput extends Widget
                 /** @psalm-var Closure(RadioItem):string|null $itemFormatter */
                 $itemFormatter = $this->itemFormatter;
 
+                $value = $new->getValue();
                 return Html::radioList($new->getName())
-                    ->value($new->getValue())
+                    ->value($value)
                     ->uncheckValue($uncheckValue)
                     ->items($new->items, $encodeLabels)
                     ->itemFormatter($itemFormatter)
@@ -98,7 +101,6 @@ final class ListInput extends Widget
 
             case 'listbox':
             case 'dropdownlist':
-                $encodeSpaces = ArrayHelper::remove($new->options, 'encodeSpaces', false);
                 $groups = ArrayHelper::remove($new->options, 'groups', []);
                 $optionsAttributes = ArrayHelper::remove($new->options, 'options', []);
 
@@ -114,8 +116,7 @@ final class ListInput extends Widget
                         foreach ($content as $v => $c) {
                             $options[] = Html::option($c, $v)
                                 ->attributes($optionsAttributes[$v] ?? [])
-                                ->encode($encode)
-                                ->encodeSpaces($encodeSpaces);
+                                ->encode($encode);
                         }
                         $items[] = Html::optgroup()
                             ->options(...$options)
@@ -123,8 +124,7 @@ final class ListInput extends Widget
                     } else {
                         $items[] = Html::option($content, $value)
                             ->attributes($optionsAttributes[$value] ?? [])
-                            ->encode($encode)
-                            ->encodeSpaces($encodeSpaces);
+                            ->encode($encode);
                     }
                 }
 
@@ -134,8 +134,7 @@ final class ListInput extends Widget
                     $promptText = $prompt['text'] ?? '';
                     if ($promptText) {
                         $promptOption = Html::option($promptText)
-                            ->attributes($prompt['options'] ?? [])
-                            ->encodeSpaces($encodeSpaces);
+                            ->attributes($prompt['options'] ?? []);
                     }
                 }
 
@@ -144,8 +143,9 @@ final class ListInput extends Widget
                 }
 
                 $value = $new->getValue();
+                /** @psalm-suppress PossiblyInvalidArgument */
                 return Html::select($new->getName())
-                    ->values(is_scalar($value) ? [$value] : $value)
+                    ->values(!is_iterable($value) ? [$value] : $value)
                     ->unselectValue($type === 'listbox' ? $uncheckValue : null)
                     ->promptOption($promptOption)
                     ->items(...$items)

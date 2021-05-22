@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Factory\Exceptions\InvalidConfigException;
+use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
 
@@ -81,20 +81,6 @@ final class DropDownList extends Widget
     {
         $new = clone $this;
         $new->options['encode'] = $value;
-        return $new;
-    }
-
-    /**
-     * Whether to encode spaces in option prompt and option value with &nbsp; character. Defaults to false.
-     *
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function encodeSpaces(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->options['encodeSpaces'] = $value;
         return $new;
     }
 
