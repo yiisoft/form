@@ -19,7 +19,6 @@ use function array_key_exists;
 use function array_merge;
 use function explode;
 use function get_object_vars;
-use function is_subclass_of;
 use function reset;
 use function sprintf;
 use function strpos;
@@ -342,6 +341,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         );
     }
 
+    /**
+     * @return string|FormAttribute
+     */
     private function readProperty(string $attribute)
     {
         $class = static::class;
@@ -356,7 +358,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             return $nested === null ? $this->$attribute : $this->$attribute->getAttributeValue($nested);
         }
 
-        $getter = fn (FormModel $class, $attribute) => $nested === null
+        $getter = static fn (FormModel $class, $attribute) => $nested === null
             ? $class->$attribute
             : $class->$attribute->getAttributeValue($nested);
         $getter = Closure::bind($getter, null, $this);
@@ -402,8 +404,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         [$attribute, $nested] = explode('.', $attribute, 2);
 
-        if (!is_subclass_of($this->getAttribute($attribute), FormAttribute::class)) {
-            throw new InvalidArgumentException('Nested attribute can only be of ' . self::class . ' type.');
+        $nestedAttribute = $this->getAttribute($attribute);
+        if (!($nestedAttribute instanceof FormAttribute)) {
+            throw new InvalidArgumentException(sprintf(
+                'Nested attribute can only be of %s or %s types, type %s got.',
+                FormAttribute::class,
+                self::class,
+                is_object($nestedAttribute) ? get_class($nestedAttribute) : gettype($nestedAttribute)
+            ));
         }
 
         return [$attribute, $nested];
