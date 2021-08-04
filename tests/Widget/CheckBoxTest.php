@@ -4,169 +4,118 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\CheckBox;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\WidgetFactory;
 
-final class CheckBoxTest extends TestCase
+final class CheckboxTest extends TestCase
 {
-    public function testCheckBox(): void
+    protected function setUp(): void
     {
-        $data = new PersonalForm();
-
-        $data->terms(true);
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->uncheck(true)
-            ->run();
-        $this->assertEquals($expected, $html);
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
     }
 
-    public function testCheckBoxOptions(): void
+    public function testAutofocus(): void
     {
         $data = new PersonalForm();
         $data->terms(true);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" class="customClass" name="PersonalForm[terms]" value="1" checked> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms', ['class' => 'customClass'])
-            ->run();
-        $this->assertEquals($expected, $html);
+        <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked autofocus> Terms</label>
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->autofocus()->render());
     }
 
-    public function testCheckBoxUnClosedByLabel(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1">
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->enclosedByLabel(false)
-            ->run();
-        $this->assertEquals($expected, $html);
-    }
-
-    public function testCheckBoxUncheck(): void
+    public function testDisabled(): void
     {
         $data = new PersonalForm();
         $data->terms(true);
 
         $expected = <<<'HTML'
-<label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->uncheck(false)
-            ->run();
-        $this->assertEquals($expected, $html);
+        <input type="hidden" name="PersonalForm[terms]" value="0" disabled><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked disabled> Terms</label>
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->disabled()->render());
     }
 
-    public function testCheckBoxLabelWithLabelOptions(): void
+    public function testForm(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="PersonalForm[terms]" value="0" form="form-id"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="form-id"> Terms</label>
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->form('form-id')->render());
+    }
+
+    public function testLabelWithLabelAttributes(): void
     {
         $data = new PersonalForm();
         $data->terms(true);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label class="labelClass"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> customLabel</label>
-HTML;
+        <input type="hidden" name="PersonalForm[terms]" value="0"><label class="labelClass"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> customLabel</label>
+        HTML;
         $html = CheckBox::widget()
             ->config($data, 'terms')
             ->label('customLabel')
-            ->labelOptions(['class' => 'labelClass'])
-            ->run();
+            ->labelAttributes(['class' => 'labelClass'])
+            ->render();
         $this->assertEquals($expected, $html);
     }
 
-    public function testCheckBoxAutofocus(): void
+    public function testRequired(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->required()->render());
+    }
+
+
+    public function testRender(): void
     {
         $data = new PersonalForm();
         $data->terms(true);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked autofocus> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->autofocus()
-            ->run();
-        $this->assertEquals($expected, $html);
+        <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->render());
     }
 
-    public function testCheckBoxDisabled(): void
+    public function testUnclosedByLabel(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="PersonalForm[terms]" value="0"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1">
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->unclosedByLabel()->render());
+    }
+
+    public function testUncheckValue(): void
     {
         $data = new PersonalForm();
         $data->terms(true);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" disabled><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked disabled> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->disabled()
-            ->run();
-        $this->assertEquals($expected, $html);
+        <label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
+        HTML;
+        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->uncheckvalue(false)->render());
     }
 
-    public function testCheckBoxForm(): void
+    public function testValueException(): void
     {
         $data = new PersonalForm();
 
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0" form="form-id"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="form-id"> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->form('form-id')
-            ->run();
-        $this->assertEquals($expected, $html);
-    }
-
-    public function testCheckBoxId(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="custom-id" name="PersonalForm[terms]" value="1"> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->id('custom-id')
-            ->config($data, 'terms')
-            ->run();
-        $this->assertEquals($expected, $html);
-    }
-
-    public function testCheckBoxRequired(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'terms')
-            ->required(true)
-            ->run();
-        $this->assertEquals($expected, $html);
-    }
-
-    public function testCheckBoxCharset(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[имя]" value="0"><label><input type="checkbox" id="personalform-имя" name="PersonalForm[имя]" value="1"> Имя</label>
-HTML;
-        $html = CheckBox::widget()
-            ->config($data, 'имя')
-            ->charset('UTF-8')
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The value must be a bool|float|int|string|Stringable|null.');
+        $html = CheckBox::widget()->config($data, 'citiesVisited')->render();
     }
 }

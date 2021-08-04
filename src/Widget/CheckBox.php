@@ -4,56 +4,20 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Widget\Widget;
+use InvalidArgumentException;
+use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 
-final class CheckBox extends Widget
+/**
+ * Generates a checkbox tag together with a label for the given form attribute.
+ *
+ * This method will generate the "checked" tag attribute according to the form attribute value.
+ *
+ * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox
+ */
+final class Checkbox extends Widget
 {
-    private ?string $id = null;
-    private FormModelInterface $data;
-    private string $attribute;
-    private array $options = [];
-    private string $charset = 'UTF-8';
-    private bool $enclosedByLabel = true;
-    private bool $uncheck = true;
-
-    /**
-     * Generates a checkbox tag together with a label for the given form attribute.
-     *
-     * This method will generate the "checked" tag attribute according to the form attribute value.
-     *
-     * @return string the generated checkbox tag.
-     */
-    public function run(): string
-    {
-        return BooleanInput::widget()
-            ->type('checkbox')
-            ->id($this->id)
-            ->charset($this->charset)
-            ->config($this->data, $this->attribute, $this->options)
-            ->enclosedByLabel($this->enclosedByLabel)
-            ->uncheck($this->uncheck)
-            ->run();
-    }
-
-    /**
-     * Set form model, name and options for the widget.
-     *
-     * @param FormModelInterface $data Form model.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     *
-     * @return self
-     */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
-    {
-        $new = clone $this;
-        $new->data = $data;
-        $new->attribute = $attribute;
-        $new->options = $options;
-        return $new;
-    }
+    private bool $unclosedByLabel = false;
+    private bool $uncheckValue = true;
 
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -66,21 +30,7 @@ final class CheckBox extends Widget
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['autofocus'] = $value;
-        return $new;
-    }
-
-    /**
-     * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
-     *
-     * @param string $value
-     *
-     * @return self
-     */
-    public function charset(string $value): self
-    {
-        $new = clone $this;
-        $new->charset = $value;
+        $new->attributes['autofocus'] = $value;
         return $new;
     }
 
@@ -100,7 +50,7 @@ final class CheckBox extends Widget
     public function disabled(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['disabled'] = $value;
+        $new->attributes['disabled'] = $value;
         return $new;
     }
 
@@ -115,21 +65,7 @@ final class CheckBox extends Widget
     public function form(string $value): self
     {
         $new = clone $this;
-        $new->options['form'] = $value;
-        return $new;
-    }
-
-    /**
-     * Set the Id of the widget.
-     *
-     * @param string|null $value
-     *
-     * @return self
-     */
-    public function id(?string $value): self
-    {
-        $new = clone $this;
-        $new->id = $value;
+        $new->attributes['form'] = $value;
         return $new;
     }
 
@@ -143,42 +79,28 @@ final class CheckBox extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
      */
     public function label(string $value): self
     {
         $new = clone $this;
-        $new->options['label'] = $value;
+        $new->attributes['label'] = $value;
         return $new;
     }
 
     /**
      * HTML attributes for the label tag.
      *
-     * Do not set this option unless you set the "label" option.
+     * Do not set this option unless you set the "label" attributes.
      *
      * @param array $value
      *
-     * @return self
+     * @return static
      */
-    public function labelOptions(array $value = []): self
+    public function labelAttributes(array $value = []): self
     {
         $new = clone $this;
-        $new->options['labelOptions'] = $value;
-        return $new;
-    }
-
-    /**
-     * If the widget should be enclosed by label.
-     *
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function enclosedByLabel(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->enclosedByLabel = $value;
+        $new->attributes['labelAttributes'] = $value;
         return $new;
     }
 
@@ -192,7 +114,19 @@ final class CheckBox extends Widget
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['required'] = $value;
+        $new->attributes['required'] = $value;
+        return $new;
+    }
+
+    /**
+     * If the widget should be unclosed by label.
+     *
+     * @return static
+     */
+    public function unclosedByLabel(): self
+    {
+        $new = clone $this;
+        $new->unclosedByLabel = true;
         return $new;
     }
 
@@ -202,14 +136,55 @@ final class CheckBox extends Widget
      * When this attribute is present, a hidden input will be generated so that if the checkbox is not checked and
      * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
      *
-     * @param bool $value
-     *
-     * @return self
+     * @return static
      */
-    public function uncheck(bool $value = true): self
+    public function uncheckValue(): self
     {
         $new = clone $this;
-        $new->uncheck = $value;
+        $new->uncheckValue = false;
         return $new;
+    }
+
+    /**
+     * @return string the generated checkbox tag.
+     */
+    protected function run(): string
+    {
+        $new = clone $this;
+
+        $checkbox = CheckboxTag::tag();
+
+        if ($new->unclosedByLabel === false) {
+            /** @var string */
+            $label = $new->attributes['label'] ?? $new->getLabel();
+
+            /** @var array */
+            $labelAttributes = $new->attributes['labelAttributes'] ?? [];
+
+            unset($new->attributes['label'], $new->attributes['labelAttributes']);
+
+            $checkbox = $checkbox->label($label, $labelAttributes);
+        }
+
+        if ($new->uncheckValue) {
+            $checkbox = $checkbox->uncheckValue('0');
+        }
+
+        $value = $new->getValue();
+
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
+        }
+
+        if (!array_key_exists('value', $new->attributes)) {
+            $new->attributes['value'] = '1';
+        }
+
+        return $checkbox
+            ->attributes($new->attributes)
+            ->checked((bool) $value)
+            ->id($new->getId())
+            ->name($new->getInputName())
+            ->render();
     }
 }

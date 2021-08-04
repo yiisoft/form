@@ -2,19 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests;
+namespace Yiisoft\Form\Tests\TestSupport;
 
-use Yiisoft\Di\Container;
-use Yiisoft\Widget\WidgetFactory;
+use ReflectionObject;
 
-abstract class TestCase extends \PHPUnit\Framework\TestCase
+trait TestTrait
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        WidgetFactory::initialize(new Container(), []);
-    }
-
     /**
      * Asserting two strings equality ignoring line endings.
      *
