@@ -4,47 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Widget\Widget;
-
 final class DatePicker extends Widget
 {
-    private FormModelInterface $data;
-    private string $attribute;
-    private array $options = [];
-
-    /**
-     * Generates a datepicker tag together with a label for the given form attribute.
-     *
-     * @return string the generated checkbox tag.
-     */
-    public function run(): string
-    {
-        return Input::widget()
-            ->type('date')
-            ->config($this->data, $this->attribute, $this->options)
-            ->run();
-    }
-
-    /**
-     * Set form model, name and options for the widget.
-     *
-     * @param FormModelInterface $data Form model.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     *
-     * @return self
-     */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
-    {
-        $new = clone $this;
-        $new->data = $data;
-        $new->attribute = $attribute;
-        $new->options = $options;
-        return $new;
-    }
-
     /**
      * Focus on the control (put cursor into it) when the page loads.
      * Only one form element could be in focus at the same time.
@@ -56,7 +17,7 @@ final class DatePicker extends Widget
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['autofocus'] = $value;
+        $new->attributes['autofocus'] = $value;
         return $new;
     }
 
@@ -76,7 +37,7 @@ final class DatePicker extends Widget
     public function disabled(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['disabled'] = $value;
+        $new->attributes['disabled'] = $value;
         return $new;
     }
 
@@ -90,7 +51,7 @@ final class DatePicker extends Widget
     public function min(string $value): self
     {
         $new = clone $this;
-        $new->options['min'] = $value;
+        $new->attributes['min'] = $value;
         return $new;
     }
 
@@ -104,7 +65,7 @@ final class DatePicker extends Widget
     public function max(string $value): self
     {
         $new = clone $this;
-        $new->options['max'] = $value;
+        $new->attributes['max'] = $value;
         return $new;
     }
 
@@ -118,7 +79,7 @@ final class DatePicker extends Widget
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['required'] = $value;
+        $new->attributes['required'] = $value;
         return $new;
     }
 
@@ -143,7 +104,20 @@ final class DatePicker extends Widget
     public function tabIndex(int $value = 0): self
     {
         $new = clone $this;
-        $new->options['tabindex'] = $value;
+        $new->attributes['tabindex'] = $value;
         return $new;
+    }
+
+    /**
+     * Generates a datepicker tag together with a label for the given form attribute.
+     *
+     * @return string the generated checkbox tag.
+     */
+    protected function run(): string
+    {
+        return Input::widget()
+            ->type('date')
+            ->config($this->getFormModel(), $this->getAttribute(), $this->attributes)
+            ->render();
     }
 }
