@@ -66,6 +66,26 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
     }
 
     /**
+     * Return the attribute form model.
+     *
+     * @return string
+     */
+    protected function getAttribute(): string
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * Return the model interface.
+     *
+     * @return FormModelInterface
+     */
+    protected function getFormModel(): FormModelInterface
+    {
+        return $this->formModel;
+    }
+
+    /**
      * Return the imput id.
      *
      * @return string
