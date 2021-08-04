@@ -87,7 +87,7 @@ final class HtmlForm
         }
 
         if ($formName !== '') {
-            return $formName . $data['prefix'] . '[' . $data['name'] . ']' . $data['suffix'];
+            return "{$formName}{$data['prefix']}[{$data['name']}]{$data['suffix']}";
         }
 
         throw new InvalidArgumentException(get_class($form) . '::formName() cannot be empty for tabular inputs.');
@@ -128,9 +128,9 @@ final class HtmlForm
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
      *
-     * @return array
+     * @return strings[] the attribute name, prefix and suffix.
      */
-    private static function parseAttribute(string $attribute)
+    private static function parseAttribute(string $attribute): array
     {
         if (!preg_match('/(^|.*\])([\w\.\+]+)(\[.*|$)/u', $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
