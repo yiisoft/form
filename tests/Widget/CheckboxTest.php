@@ -21,7 +21,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked autofocus> Terms</label>
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->autofocus()->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->autofocus()->render());
     }
 
     public function testDisabled(): void
@@ -32,7 +32,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="PersonalForm[terms]" value="0" disabled><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked disabled> Terms</label>
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->disabled()->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->disabled()->render());
     }
 
     public function testForm(): void
@@ -42,7 +42,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="PersonalForm[terms]" value="0" form="form-id"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" form="form-id"> Terms</label>
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->form('form-id')->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->form('form-id')->render());
     }
 
     public function testLabelWithLabelAttributes(): void
@@ -58,7 +58,7 @@ final class CheckboxTest extends TestCase
             ->label('customLabel')
             ->labelAttributes(['class' => 'test-class'])
             ->render();
-        $this->assertEquals($expected, $html);
+        $this->assertSame($expected, $html);
     }
 
     public function testRequired(): void
@@ -68,7 +68,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->required()->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->required()->render());
     }
 
 
@@ -80,7 +80,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->render());
     }
 
     public function testUnclosedByLabel(): void
@@ -90,7 +90,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="PersonalForm[terms]" value="0"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1">
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->unclosedByLabel()->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->unclosedByLabel()->render());
     }
 
     public function testUncheckValue(): void
@@ -101,7 +101,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<'HTML'
         <label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
         HTML;
-        $this->assertEquals($expected, CheckBox::widget()->config($data, 'terms')->uncheckvalue(false)->render());
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->uncheckvalue(false)->render());
     }
 
     public function testValueException(): void
