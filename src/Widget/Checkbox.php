@@ -16,8 +16,8 @@ use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
  */
 final class Checkbox extends Widget
 {
-    private bool $unclosedByLabel = false;
-    private bool $uncheckValue = true;
+    private bool $enclosedByLabel = true;
+    private bool $forceUncheckedValue = true;
 
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -51,6 +51,37 @@ final class Checkbox extends Widget
     {
         $new = clone $this;
         $new->attributes['disabled'] = $value;
+        return $new;
+    }
+
+    /**
+     * If the widget should be enclosed by label.
+     *
+     * @param bool $value If the widget should be en closed by label.
+     *
+     * @return static
+     */
+    public function enclosedByLabel(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->enclosedByLabel = $value;
+        return $new;
+    }
+
+    /**
+     * Whether to generate hidden input for uncheck state of the checkbox.
+     *
+     * When this attribute is present, a hidden input will be generated so that if the checkbox is not checked and
+     * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
+     *
+     * @param bool $value The value associated with the uncheck state of the checkbox.
+     *
+     * @return static
+     */
+    public function forceUncheckedValue(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->forceUncheckedValue = $value;
         return $new;
     }
 
@@ -119,33 +150,6 @@ final class Checkbox extends Widget
     }
 
     /**
-     * If the widget should be unclosed by label.
-     *
-     * @return static
-     */
-    public function unclosedByLabel(): self
-    {
-        $new = clone $this;
-        $new->unclosedByLabel = true;
-        return $new;
-    }
-
-    /**
-     * The value associated with the uncheck state of the checkbox.
-     *
-     * When this attribute is present, a hidden input will be generated so that if the checkbox is not checked and
-     * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
-     *
-     * @return static
-     */
-    public function uncheckValue(): self
-    {
-        $new = clone $this;
-        $new->uncheckValue = false;
-        return $new;
-    }
-
-    /**
      * @return string the generated checkbox tag.
      */
     protected function run(): string
@@ -154,7 +158,7 @@ final class Checkbox extends Widget
 
         $checkbox = CheckboxTag::tag();
 
-        if ($new->unclosedByLabel === false) {
+        if ($new->enclosedByLabel === true) {
             /** @var string */
             $label = $new->attributes['label'] ?? $new->getLabel();
 
@@ -166,7 +170,7 @@ final class Checkbox extends Widget
             $checkbox = $checkbox->label($label, $labelAttributes);
         }
 
-        if ($new->uncheckValue) {
+        if ($new->forceUncheckedValue) {
             $checkbox = $checkbox->uncheckValue('0');
         }
 

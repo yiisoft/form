@@ -128,7 +128,7 @@ final class HtmlForm
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
      *
-     * @return strings[] the attribute name, prefix and suffix.
+     * @return string[] the attribute name, prefix and suffix.
      */
     private static function parseAttribute(string $attribute): array
     {

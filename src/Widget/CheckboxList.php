@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Closure;
 use Stringable;
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListWidget;
 
@@ -18,13 +19,13 @@ final class CheckboxList extends Widget
 {
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
+    /** @var bool|float|int|string|Stringable|null */
+    private $forceUncheckedValue = false;
     /** @psalm-var Closure(CheckboxItem):string|null */
     private ?Closure $itemFormatter = null;
     /** @var array<array-key, string> */
     private array $items = [];
     private array $itemsAttributes = [];
-    /** @var bool|float|int|string|Stringable|null */
-    private $uncheckValue = false;
     private string $unselect = '';
 
     /**
@@ -72,6 +73,23 @@ final class CheckboxList extends Widget
     {
         $new = clone $this;
         $new->itemsAttributes['disabled'] = $value;
+        return $new;
+    }
+
+    /**
+     * The value associated with the uncheck state of the checkboxlist.
+     *
+     * When this attribute is present, a hidden input will be generated so that if the checkboxlist is not checked and
+     * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
+     *
+     * @param bool|float|int|string|Stringable|null $value
+     *
+     * @return static
+     */
+    public function forceUncheckedValue($value): self
+    {
+        $new = clone $this;
+        $new->forceUncheckedValue = $value;
         return $new;
     }
 
@@ -129,23 +147,6 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * The value associated with the uncheck state of the checkboxlist.
-     *
-     * When this attribute is present, a hidden input will be generated so that if the checkboxlist is not checked and
-     * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
-     *
-     * @param bool|float|int|string|Stringable|null $value
-     *
-     * @return static
-     */
-    public function uncheckValue($value): self
-    {
-        $new = clone $this;
-        $new->uncheckValue = $value;
-        return $new;
-    }
-
-    /**
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-readonly-attribute
      *
      * @return static
@@ -187,16 +188,17 @@ final class CheckboxList extends Widget
 
         $checkboxList = ChecboxListWidget::create($new->getInputName());
 
+        /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
+
+        /** @var bool|float|int|string|Stringable|null */
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', $new->forceUncheckedValue);
 
         /** @var null|scalar|Stringable|iterable<int, Stringable|scalar> */
         $values = $new->getValue();
 
         /** @var string */
         $separator = $new->attributes['separator'] ?? '';
-
-        /** @var string|null */
-        $uncheckValue = $new->attributes['uncheckValue'] ?? $new->uncheckValue;
 
         unset($new->attributes['itemsAttributes'], $new->attributes['separator']);
 
@@ -217,7 +219,7 @@ final class CheckboxList extends Widget
             ->itemFormatter($new->itemFormatter)
             ->items($new->items)
             ->replaceCheckboxAttributes($new->itemsAttributes)
-            ->uncheckValue($uncheckValue)
+            ->uncheckValue($forceUncheckedValue)
             ->render();
     }
 }

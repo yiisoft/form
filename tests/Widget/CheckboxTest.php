@@ -35,6 +35,27 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->disabled()->render());
     }
 
+    public function testEnclosedByLabel(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="PersonalForm[terms]" value="0"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1">
+        HTML;
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->enclosedByLabel(false)->render());
+    }
+
+    public function testForceUncheckedValue(): void
+    {
+        $data = new PersonalForm();
+        $data->terms(true);
+
+        $expected = <<<'HTML'
+        <label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
+        HTML;
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->forceUncheckedValue(false)->render());
+    }
+
     public function testForm(): void
     {
         $data = new PersonalForm();
@@ -80,27 +101,6 @@ final class CheckboxTest extends TestCase
         <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
         HTML;
         $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->required()->render());
-    }
-
-    public function testUnclosedByLabel(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[terms]" value="0"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1">
-        HTML;
-        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->unclosedByLabel()->render());
-    }
-
-    public function testUncheckValue(): void
-    {
-        $data = new PersonalForm();
-        $data->terms(true);
-
-        $expected = <<<'HTML'
-        <label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
-        HTML;
-        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->uncheckvalue(false)->render());
     }
 
     public function testValueException(): void

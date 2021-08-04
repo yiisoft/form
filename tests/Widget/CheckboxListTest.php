@@ -72,6 +72,25 @@ final class CheckboxListTest extends TestCase
         );
     }
 
+    public function testForceUncheckedValueWithNull(): void
+    {
+        $data = new PersonalForm();
+        $data->terms(true);
+
+        $html = CheckBoxList::widget()
+            ->config($data, 'terms')
+            ->forceUncheckedValue(null)
+            ->items(['Female', 'Male'])
+            ->render();
+        $expected = <<<'HTML'
+        <div id="personalform-terms">
+        <label><input type="checkbox" name="PersonalForm[terms][]" value="0"> Female</label>
+        <label><input type="checkbox" name="PersonalForm[terms][]" value="1" checked> Male</label>
+        </div>
+        HTML;
+        $this->assertSame($expected, $html);
+    }
+
     public function testItemsAttributes(): void
     {
         $data = new PersonalForm();
@@ -192,9 +211,8 @@ final class CheckboxListTest extends TestCase
         $data->sex(1);
 
         $html = CheckboxList::widget()
-            ->config($data, 'sex')
+            ->config($data, 'sex', ['forceUncheckedValue' => null])
             ->items(['Female', 'Male'])
-            ->uncheckValue(null)
             ->withoutContainer()
             ->render();
         $expected = <<<'HTML'
