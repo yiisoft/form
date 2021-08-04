@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
+use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Stub\PersonalForm;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
-use Yiisoft\Form\Tests\TestCase;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ErrorSummary;
+use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorSummaryTest extends TestCase
 {
+    use TestTrait;
+
     public function dataProviderErrorSummary(): array
     {
         return [
@@ -47,11 +52,16 @@ final class ErrorSummaryTest extends TestCase
      * @param string $name
      * @param string $email
      * @param string $password
-     * @param array $options
+     * @param array $attributes
      * @param string $expected
      */
-    public function testErrorSummary(string $name, string $email, string $password, array $options, string $expected): void
-    {
+    public function testErrorSummary(
+        string $name,
+        string $email,
+        string $password,
+        array $attributes,
+        string $expected
+    ): void {
         $record = [
             'PersonalForm' => [
                 'name' => $name,
@@ -60,14 +70,21 @@ final class ErrorSummaryTest extends TestCase
             ],
         ];
 
-        $validator = $this->createValidatorMock();
         $data = new PersonalForm();
         $data->load($record);
 
+        $validator = $this->createValidatorMock();
         $validator->validate($data);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            ErrorSummary::widget()->attributes($attributes)->model($data)->render(),
+        );
+    }
 
-        $html = ErrorSummary::widget()->config($data, $options)->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+    protected function setUp(): void
+    {
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
     }
 
     private function createValidatorMock(): ValidatorInterface
