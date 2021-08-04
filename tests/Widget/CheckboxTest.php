@@ -51,12 +51,12 @@ final class CheckboxTest extends TestCase
         $data->terms(true);
 
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[terms]" value="0"><label class="labelClass"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> customLabel</label>
+        <input type="hidden" name="PersonalForm[terms]" value="0"><label class="test-class"><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> customLabel</label>
         HTML;
         $html = CheckBox::widget()
             ->config($data, 'terms')
             ->label('customLabel')
-            ->labelAttributes(['class' => 'labelClass'])
+            ->labelAttributes(['class' => 'test-class'])
             ->render();
         $this->assertEquals($expected, $html);
     }
