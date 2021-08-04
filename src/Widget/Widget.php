@@ -76,6 +76,16 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
     }
 
     /**
+     * Return the attribute first error message.
+     *
+     * @return string
+     */
+    protected function getFirstError(): string
+    {
+        return $this->formModel->getFirstError($this->getAttributeName());
+    }
+
+    /**
      * Return the model interface.
      *
      * @return FormModelInterface
