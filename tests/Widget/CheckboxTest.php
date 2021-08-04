@@ -13,12 +13,6 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class CheckboxTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
-    }
-
     public function testAutofocus(): void
     {
         $data = new PersonalForm();
@@ -117,5 +111,11 @@ final class CheckboxTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value must be a bool|float|int|string|Stringable|null.');
         $html = CheckBox::widget()->config($data, 'citiesVisited')->render();
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
     }
 }
