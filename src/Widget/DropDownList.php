@@ -4,85 +4,28 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Factory\Exception\InvalidConfigException;
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Widget\Widget;
+use InvalidArgumentException;
+use Yiisoft\Html\Tag\Optgroup;
+use Yiisoft\Html\Tag\Option;
+use Yiisoft\Html\Tag\Select;
 
+/**
+ * Generates a drop-down list for the given form attribute.
+ *
+ * The selection of the drop-down list is taken from the value of the form attribute.
+ *
+ * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/select.html
+ */
 final class DropDownList extends Widget
 {
-    private FormModelInterface $data;
-    private string $attribute;
-    private array $options = [];
+    private bool $encode = false;
     private array $items = [];
-    private bool $noUnselect = false;
-    private string $unselect = '';
-
-    /**
-     * Generates a drop-down list for the given form attribute.
-     *
-     * The selection of the drop-down list is taken from the value of the form attribute.
-     *
-     * @throws InvalidConfigException
-     *
-     * @return string the generated drop-down list tag.
-     */
-    public function run(): string
-    {
-        $multiple = $this->options['multiple'] ?? false;
-
-        if (!$multiple) {
-            return ListInput::widget()
-                ->type('dropDownList')
-                ->config($this->data, $this->attribute, $this->options)
-                ->items($this->items)
-                ->noUnselect($this->noUnselect)
-                ->unselect($this->unselect)
-                ->run();
-        }
-
-        return ListBox::widget()
-            ->type('dropDownList')
-            ->config($this->data, $this->attribute, $this->options)
-            ->items($this->items)
-            ->noUnselect($this->noUnselect)
-            ->unselect($this->unselect)
-            ->run();
-    }
-
-    /**
-     * Set form model, name and options for the widget.
-     *
-     * @param FormModelInterface $data Form model.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     *
-     * @return self
-     */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
-    {
-        $new = clone $this;
-        $new->data = $data;
-        $new->attribute = $attribute;
-        $new->options = $options;
-        return $new;
-    }
-
-    /**
-     * Whether to HTML-encode the dropdownlist labels.
-     *
-     * Defaults to true. This option is ignored if item option is set.
-     *
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function noEncode(bool $value = false): self
-    {
-        $new = clone $this;
-        $new->options['encode'] = $value;
-        return $new;
-    }
+    private array $itemsAttributes = [];
+    private array $groups = [];
+    /** @var string[] */
+    private array $optionsData = [];
+    private array $prompt = [];
+    private ?string $unselectValue = null;
 
     /**
      * The attributes for the optgroup tags.
@@ -101,12 +44,14 @@ final class DropDownList extends Widget
      *
      * @param array $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/optgroup.html#optgroup
      */
     public function groups(array $value = []): self
     {
         $new = clone $this;
-        $new->options['groups'] = $value;
+        $new->groups = $value;
         return $new;
     }
 
@@ -115,7 +60,7 @@ final class DropDownList extends Widget
      *
      * The array keys are option values, and the array values are the corresponding option labels. The array can also
      * be nested (i.e. some array values are arrays too). For each sub-array, an option group will be generated whose
-     * label is the key associated with the sub-array. If you have a list of data {@see FormModel}, you may convert
+     * label is the key associated with the sub-array. If you have a list of data {@see Widget}, you may convert
      * them into the format described above using {@see \Yiisoft\Arrays\ArrayHelper::map()}
      *
      * Example:
@@ -150,12 +95,26 @@ final class DropDownList extends Widget
      *
      * @param array $value
      *
-     * @return self
+     * @return static
      */
     public function items(array $value = []): self
     {
         $new = clone $this;
         $new->items = $value;
+        return $new;
+    }
+
+    /**
+     * The HTML attributes for items. The following special options are recognized.
+     *
+     * @param array $value
+     *
+     * @return static
+     */
+    public function itemsAttributes(array $value = []): self
+    {
+        $new = clone $this;
+        $new->itemsAttributes = $value;
         return $new;
     }
 
@@ -167,12 +126,28 @@ final class DropDownList extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-select-multiple
      */
     public function multiple(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['multiple'] = $value;
+        $new->attributes['multiple'] = $value;
+        return $new;
+    }
+
+    /**
+     * @param string[] $data
+     * @param bool $encode Whether option content should be HTML-encoded.
+     *
+     * @return static
+     */
+    public function optionsData(array $data, bool $encode): self
+    {
+        $new = clone $this;
+        $new->optionsData = $data;
+        $new->encode = $encode;
         return $new;
     }
 
@@ -194,12 +169,12 @@ final class DropDownList extends Widget
      *
      * @param array $value
      *
-     * @return self
+     * @return static
      */
     public function prompt(array $value = []): self
     {
         $new = clone $this;
-        $new->options['prompt'] = $value;
+        $new->prompt = $value;
         return $new;
     }
 
@@ -213,7 +188,7 @@ final class DropDownList extends Widget
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['required'] = $value;
+        $new->attributes['required'] = $value;
         return $new;
     }
 
@@ -224,12 +199,14 @@ final class DropDownList extends Widget
      *
      * @param int $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-select-size
      */
     public function size(int $value = 4): self
     {
         $new = clone $this;
-        $new->options['size'] = $value;
+        $new->attributes['size'] = $value;
         return $new;
     }
 
@@ -239,14 +216,95 @@ final class DropDownList extends Widget
      * You may set this option to be null to prevent default value submission. If this option is not set, an empty
      * string will be submitted.
      *
-     * @param string $value
+     * @param string|null $value
      *
-     * @return self
+     * @return static
      */
-    public function unselect(string $value): self
+    public function unselectValue(?string $value): self
     {
         $new = clone $this;
-        $new->unselect = $value;
+        $new->unselectValue = $value;
         return $new;
+    }
+
+    /**
+     * @return Option[]|Optgroup[]
+     */
+    private function renderItems(array $values = []): array
+    {
+        $new = clone $this;
+        $items = [];
+
+        /** @var array|string $content */
+        foreach ($values as $value => $content) {
+            if (is_array($content)) {
+                /** @var array */
+                $groupAttrs = $new->groups[$value] ?? [];
+                $options = [];
+
+                /** @var string $c */
+                foreach ($content as $v => $c) {
+                    /** @var array */
+                    $attributes = $new->itemsAttributes[$v] ?? [];
+                    $options[] = Option::tag()->attributes($attributes)->content($c)->value($v);
+                }
+
+                $items[] = Optgroup::tag()->attributes($groupAttrs)->options(...$options);
+            } else {
+                /** @var array */
+                $attributes = isset($new->itemsAttributes[$value]) ? $new->itemsAttributes[$value] : [];
+                $items[] = Option::tag()->attributes($attributes)->content($content)->value($value);
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     *
+     * @return string the generated drop-down list tag.
+     */
+    protected function run(): string
+    {
+        $new = clone $this;
+
+        $select = Select::tag();
+
+        if (isset($new->attributes['multiple']) && !isset($new->attributes['size'])) {
+            $new = $new->size();
+        }
+
+        $promptOption = null;
+
+        if ($new->prompt !== []) {
+            /** @var string */
+            $promptText = $new->prompt['text'] ?? '';
+
+            /** @var array */
+            $promptAttributes = $new->prompt['attributes'] ?? [];
+
+            $promptOption = Option::tag()->attributes($promptAttributes)->content($promptText);
+        }
+
+        if ($new->items !== []) {
+            $select = $select->items(...$new->renderItems($new->items));
+        } elseif ($new->optionsData !== []) {
+            $select = $select->optionsData($new->optionsData, $new->encode);
+        }
+
+        $value = $new->getValue() ?? '';
+
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
+        }
+
+        return $select
+            ->attributes($new->attributes)
+            ->id($new->getId())
+            ->name($new->getInputName())
+            ->promptOption($promptOption)
+            ->unselectValue($new->unselectValue)
+            ->value($value)
+            ->render();
     }
 }
