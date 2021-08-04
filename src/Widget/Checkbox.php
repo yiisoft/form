@@ -25,7 +25,7 @@ final class Checkbox extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function autofocus(bool $value = true): self
     {
@@ -45,7 +45,7 @@ final class Checkbox extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function disabled(bool $value = true): self
     {
@@ -60,7 +60,7 @@ final class Checkbox extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
      */
     public function form(string $value): self
     {
@@ -109,7 +109,7 @@ final class Checkbox extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function required(bool $value = true): self
     {
