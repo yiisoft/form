@@ -20,7 +20,7 @@ final class Error extends Widget
      *
      * @param array $value
      *
-     * @return self
+     * @return static
      */
     public function errorSource(array $value = []): self
     {
@@ -36,7 +36,7 @@ final class Error extends Widget
      *
      * @param string|null $value
      *
-     * @return self
+     * @return static
      */
     public function tag(?string $value = null): self
     {

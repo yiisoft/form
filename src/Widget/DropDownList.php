@@ -183,7 +183,7 @@ final class DropDownList extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function required(bool $value = true): self
     {

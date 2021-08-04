@@ -12,7 +12,7 @@ final class DatePicker extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function autofocus(bool $value = true): self
     {
@@ -32,7 +32,7 @@ final class DatePicker extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function disabled(bool $value = true): self
     {
@@ -46,7 +46,7 @@ final class DatePicker extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
      */
     public function min(string $value): self
     {
@@ -60,7 +60,7 @@ final class DatePicker extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
      */
     public function max(string $value): self
     {
@@ -74,7 +74,7 @@ final class DatePicker extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
      */
     public function required(bool $value = true): self
     {
@@ -99,7 +99,7 @@ final class DatePicker extends Widget
      *
      * @param int $value
      *
-     * @return self
+     * @return static
      */
     public function tabIndex(int $value = 0): self
     {
