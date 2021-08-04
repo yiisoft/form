@@ -61,17 +61,6 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
-    public function testRequired(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
-        HTML;
-        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->required()->render());
-    }
-
-
     public function testRender(): void
     {
         $data = new PersonalForm();
@@ -81,6 +70,16 @@ final class CheckboxTest extends TestCase
         <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" checked> Terms</label>
         HTML;
         $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->render());
+    }
+
+    public function testRequired(): void
+    {
+        $data = new PersonalForm();
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="PersonalForm[terms]" value="0"><label><input type="checkbox" id="personalform-terms" name="PersonalForm[terms]" value="1" required> Terms</label>
+        HTML;
+        $this->assertSame($expected, CheckBox::widget()->config($data, 'terms')->required()->render());
     }
 
     public function testUnclosedByLabel(): void

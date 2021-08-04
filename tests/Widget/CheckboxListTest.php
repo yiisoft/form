@@ -115,6 +115,24 @@ final class CheckboxListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
+    public function testReadOnly(): void
+    {
+        $data = new PersonalForm();
+        $data->sex(1);
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="PersonalForm[sex]" value="">
+        <div id="personalform-sex">
+        <label><input type="checkbox" name="PersonalForm[sex][]" value="0" readonly> Female</label>
+        <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked readonly> Male</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->readOnly()->render(),
+        );
+    }
+
     public function testRender(): void
     {
         $data = new PersonalForm();
@@ -147,24 +165,6 @@ final class CheckboxListTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->separator('&#9866;')->render(),
-        );
-    }
-
-    public function testReadOnly(): void
-    {
-        $data = new PersonalForm();
-        $data->sex(1);
-
-        $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0" readonly> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked readonly> Male</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->readOnly()->render(),
         );
     }
 
