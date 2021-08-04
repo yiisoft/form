@@ -15,6 +15,7 @@ use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
+
 use function array_key_exists;
 use function array_merge;
 use function explode;
@@ -30,7 +31,6 @@ use function strpos;
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
     private array $attributes;
-    private array $attributesLabels;
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
     private bool $validated = false;
@@ -38,7 +38,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
-        $this->attributesLabels = $this->getAttributeLabels();
     }
 
     public function isAttributeRequired(string $attribute): bool
@@ -62,32 +61,32 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->readProperty($attribute);
     }
 
-    public function getAttributeLabels(): array
-    {
-        return [];
-    }
-
     public function getAttributeHint(string $attribute): string
     {
+        /** @var array */
+        $attributeHints = method_exists($this, 'getAttributeHints') ? $this->getAttributeHints() : [];
+
+        /** @var string */
+        $hint = $attributeHints[$attribute] ?? '';
+
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
         if ($nested !== null) {
-            return $this->readProperty($attribute)->getAttributeHint($nested);
+            /** @var ModelInterface $attributeNestedValue */
+            $attributeNestedValue = $this->getAttributeValue($attribute);
+            $hint = $attributeNestedValue->getAttributeHint($nested);
         }
 
-        $hints = $this->getAttributeHints();
-
-        return $hints[$attribute] ?? '';
-    }
-
-    public function getAttributeHints(): array
-    {
-        return [];
+        return $hint;
     }
 
     public function getAttributeLabel(string $attribute): string
     {
-        if (array_key_exists($attribute, $this->attributesLabels)) {
-            return $this->attributesLabels[$attribute];
+        /** @var array */
+        $labels = method_exists($this, 'getAttributeLabels') ? $this->getAttributeLabels() : [];
+
+        if (array_key_exists($attribute, $labels)) {
+            return $labels[$attribute];
         }
 
         [$attribute, $nested] = $this->getNestedAttribute($attribute);

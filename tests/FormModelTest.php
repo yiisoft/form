@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Stub\LoginForm;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorInterface;
+
 use function str_repeat;
 
 require __DIR__ . '/Stub/NonNamespacedForm.php';
