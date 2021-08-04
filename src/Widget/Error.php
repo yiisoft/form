@@ -32,13 +32,13 @@ final class Error extends Widget
     /**
      * The tag name of the container element.
      *
-     * Null to render error messages without container {@see Html::tag()}.
+     * Empty to render error messages without container {@see Html::tag()}.
      *
-     * @param string|null $value
+     * @param null $value
      *
      * @return static
      */
-    public function tag(?string $value = null): self
+    public function tag(string $value = ''): self
     {
         $new = clone $this;
         $new->attributes['tag'] = $value;
@@ -54,7 +54,13 @@ final class Error extends Widget
     {
         $new = clone $this;
 
-        $errorSource = ArrayHelper::remove($new->attributes, 'errorSource');
+        /** @var bool */
+        $encode = $new->attributes['encode'] ?? true;
+
+        /** @var null|array */
+        $errorSource = $new->attributes['errorSource'] ?? null;
+
+        $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
 
         if ($errorSource !== null) {
             $error = $errorSource($new->getFormModel(), $new->getAttribute());
@@ -62,14 +68,10 @@ final class Error extends Widget
             $error = $new->getFirstError();
         }
 
-        $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
+        unset($new->attributes['errorSource']);
 
-        if (empty($tag)) {
-            return $error;
-        }
-
-        $encode = ArrayHelper::remove($new->attributes, 'encode', true);
-
-        return CustomTag::name($tag)->attributes($new->attributes)->content($error)->encode($encode)->render();
+        return $tag !== ''
+            ? CustomTag::name($tag)->attributes($new->attributes)->content($error)->encode($encode)->render()
+            : $error;
     }
 }
