@@ -25,7 +25,6 @@ final class DropDownList extends Widget
     /** @var string[] */
     private array $optionsData = [];
     private array $prompt = [];
-    private ?string $unselectValue = null;
 
     /**
      * The attributes for the optgroup tags.
@@ -110,6 +109,8 @@ final class DropDownList extends Widget
      * @param array $value
      *
      * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function itemsAttributes(array $value = []): self
     {
@@ -184,6 +185,8 @@ final class DropDownList extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
     public function required(bool $value = true): self
     {
@@ -207,23 +210,6 @@ final class DropDownList extends Widget
     {
         $new = clone $this;
         $new->attributes['size'] = $value;
-        return $new;
-    }
-
-    /**
-     * The value that should be submitted when none of the dropdown list is selected.
-     *
-     * You may set this option to be null to prevent default value submission. If this option is not set, an empty
-     * string will be submitted.
-     *
-     * @param string|null $value
-     *
-     * @return static
-     */
-    public function unselectValue(?string $value): self
-    {
-        $new = clone $this;
-        $new->unselectValue = $value;
         return $new;
     }
 
@@ -294,8 +280,19 @@ final class DropDownList extends Widget
 
         $value = $new->getValue() ?? '';
 
-        if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
+        if (is_object($value)) {
+            throw new InvalidArgumentException('The value must be a bool|float|int|iterable|string|Stringable|null.');
+        }
+
+        /** @var null|string */
+        $unselectValue = $new->attributes['unselectValue'] ?? null;
+
+        unset($new->attributes['unselectValue']);
+
+        if (is_array($value)) {
+            $select = $select->value(...$value);
+        } else {
+            $select = $select->value($value);
         }
 
         return $select
@@ -303,8 +300,7 @@ final class DropDownList extends Widget
             ->id($new->getId())
             ->name($new->getInputName())
             ->promptOption($promptOption)
-            ->unselectValue($new->unselectValue)
-            ->value($value)
+            ->unselectValue($unselectValue)
             ->render();
     }
 }

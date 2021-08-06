@@ -158,6 +158,12 @@ final class Checkbox extends Widget
 
         unset($new->attributes['forceUncheckedValue']);
 
+        $value = $new->getValue();
+
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
+        }
+
         if ($new->enclosedByLabel === true) {
             /** @var string */
             $label = $new->attributes['label'] ?? $new->getLabel();
@@ -168,12 +174,6 @@ final class Checkbox extends Widget
             unset($new->attributes['label'], $new->attributes['labelAttributes']);
 
             $checkbox = $checkbox->label($label, $labelAttributes);
-        }
-
-        $value = $new->getValue();
-
-        if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
         }
 
         return $checkbox

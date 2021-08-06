@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Closure;
+use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
@@ -175,7 +176,11 @@ final class CheckboxList extends Widget
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         /** @var null|scalar|Stringable|iterable<int, Stringable|scalar> */
-        $values = $new->getValue();
+        $value = $new->getValue();
+
+        if (is_object($value)) {
+            throw new InvalidArgumentException('The value must be a bool|float|int|iterable|string|Stringable|null.');
+        }
 
         /** @var string */
         $separator = $new->attributes['separator'] ?? '';
@@ -189,10 +194,10 @@ final class CheckboxList extends Widget
             $checkboxList = $checkboxList->separator($separator);
         }
 
-        if (is_iterable($values)) {
-            $checkboxList = $checkboxList->values($values);
-        } elseif (is_scalar($values)) {
-            $checkboxList = $checkboxList->value($values);
+        if (is_iterable($value)) {
+            $checkboxList = $checkboxList->values($value);
+        } elseif (is_scalar($value)) {
+            $checkboxList = $checkboxList->value($value);
         }
 
         return $checkboxList
