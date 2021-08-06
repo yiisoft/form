@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\CheckBoxList;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
@@ -16,209 +17,271 @@ final class CheckboxListTest extends TestCase
 {
     use TestTrait;
 
+    private FormModelInterface $formModel;
+
     public function testContainerAttributes(): void
     {
-        $data = new PersonalForm();
-        $data->sex(0);
-
+        $this->formModel->setAttribute('int', 1);
+        $expected = <<<'HTML'
+        <div id="typeform-int" class="test-class">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
+        </div>
+        HTML;
         $html = CheckboxList::widget()
-            ->config($data, 'sex')
+            ->config($this->formModel, 'int')
             ->containerAttributes(['class' => 'test-class'])
             ->items(['Female', 'Male'])
             ->render();
-        $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex" class="test-class">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
-        </div>
-        HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testContainerTag(): void
     {
-        $data = new PersonalForm();
-        $data->sex(0);
-
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <tag-test id="personalform-sex">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
+        <tag-test id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0" checked> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1"> Male</label>
         </tag-test>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            CheckboxList::widget()->config($data, 'sex')->containerTag('tag-test')->items(['Female', 'Male'])->render(),
-        );
+        $html = CheckboxList::widget()
+            ->config($this->formModel, 'int')
+            ->containerTag('tag-test')
+            ->items(['Female', 'Male'])
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testDisabled(): void
     {
-        $data = new PersonalForm();
-        $data->sex(0);
-
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="" disabled>
-        <div id="personalform-sex">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked disabled> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1" disabled> Male</label>
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0" checked disabled> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" disabled> Male</label>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->disabled()->render(),
-        );
+        $html = CheckboxList::widget()
+            ->config($this->formModel, 'int')
+            ->disabled()
+            ->items(['Female', 'Male'])
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testForceUncheckedValueWithNull(): void
+    public function testForceUncheckedValue(): void
     {
-        $data = new PersonalForm();
-        $data->terms(true);
-
-        $html = CheckBoxList::widget()
-            ->config($data, 'terms')
-            ->forceUncheckedValue(null)
+        $this->formModel->setAttribute('int', 1);
+        $html = CheckboxList::widget()
+            ->config($this->formModel, 'int', ['forceUncheckedValue' => '0'])
             ->items(['Female', 'Male'])
             ->render();
         $expected = <<<'HTML'
-        <div id="personalform-terms">
-        <label><input type="checkbox" name="PersonalForm[terms][]" value="0"> Female</label>
-        <label><input type="checkbox" name="PersonalForm[terms][]" value="1" checked> Male</label>
+        <input type="hidden" name="TypeForm[int]" value="0">
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
         </div>
         HTML;
-        $this->assertSame($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testImmutability(): void
+    {
+        $checkboxList = CheckBoxList::widget();
+        $this->assertNotSame($checkboxList, $checkboxList->containerAttributes([]));
+        $this->assertNotSame($checkboxList, $checkboxList->containerTag(null));
+        $this->assertNotSame($checkboxList, $checkboxList->disabled());
+        $this->assertNotSame(
+            $checkboxList,
+            $checkboxList->itemFormater(
+                static function (CheckboxItem $item): string {
+                    return '';
+                }
+            ),
+        );
+        $this->assertNotSame($checkboxList, $checkboxList->items());
+        $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
+        $this->assertNotSame($checkboxList, $checkboxList->readOnly());
+        $this->assertNotSame($checkboxList, $checkboxList->separator(''));
+        $this->assertNotSame($checkboxList, $checkboxList->withoutContainer());
     }
 
     public function testItemsAttributes(): void
     {
-        $data = new PersonalForm();
-        $data->sex(0);
-
-        $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex">
-        <label><input type="checkbox" class="test-class" name="PersonalForm[sex][]" value="0" checked> Female</label>
-        <label><input type="checkbox" class="test-class" name="PersonalForm[sex][]" value="1"> Male</label>
-        </div>
-        HTML;
+        $this->formModel->setAttribute('int', 1);
         $html = CheckboxList::widget()
-            ->config($data, 'sex')
+            ->config($this->formModel, 'int')
             ->items(['Female', 'Male'])
             ->itemsAttributes(['class' => 'test-class'])
             ->render();
+        $expected = <<<'HTML'
+        <div id="typeform-int">
+        <label><input type="checkbox" class="test-class" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" class="test-class" name="TypeForm[int][]" value="1" checked> Male</label>
+        </div>
+        HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testItemFormater(): void
     {
-        $data = new PersonalForm();
-        $data->sex(0);
-
-        $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex">
-        <div class='test-class'><label><input tabindex='0' class='test-class' type='checkbox' checked name='PersonalForm[sex][]' value='0'> Female</label></div>
-        <div class='test-class'><label><input tabindex='1' class='test-class' type='checkbox'  name='PersonalForm[sex][]' value='1'> Male</label></div>
-        </div>
-        HTML;
         $html = CheckboxList::widget()
-            ->config($data, 'sex')
+            ->config($this->formModel, 'int')
             ->items(['Female', 'Male'])
             ->itemFormater(static function (CheckboxItem $item) {
-                $check = $item->checked ? 'checked' : '';
-                return "<div class='test-class'><label><input tabindex='{$item->index}' class='test-class' type='checkbox' {$check} name='{$item->name}' value='{$item->value}'> {$item->label}</label></div>";
+                return $item->checked
+                    ? "<div class='test-class'><label><input tabindex='{$item->index}' class='test-class' type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label></div>"
+                    : "<div class='test-class'><label><input tabindex='{$item->index}' class='test-class' type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label></div>";
             })
             ->render();
+        $expected = <<<'HTML'
+        <div id="typeform-int">
+        <div class='test-class'><label><input tabindex='0' class='test-class' type='checkbox' name='TypeForm[int][]' value='0' checked> Female</label></div>
+        <div class='test-class'><label><input tabindex='1' class='test-class' type='checkbox' name='TypeForm[int][]' value='1'> Male</label></div>
+        </div>
+        HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testReadOnly(): void
     {
-        $data = new PersonalForm();
-        $data->sex(1);
-
+        $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0" readonly> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked readonly> Male</label>
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0" readonly> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked readonly> Male</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->readOnly()->render(),
+            CheckboxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->readOnly()->render(),
         );
     }
 
     public function testRender(): void
     {
-        $data = new PersonalForm();
-        $data->sex(1);
-
+        $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
         );
     }
 
     public function testSeparator(): void
     {
-        $data = new PersonalForm();
-        $data->sex(1);
-
+        $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[sex]" value="">
-        <div id="personalform-sex">
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>&#9866;<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>&#9866;<label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            CheckboxList::widget()->config($data, 'sex')->items(['Female', 'Male'])->separator('&#9866;')->render(),
-        );
+        $html = CheckboxList::widget()
+            ->config($this->formModel, 'int')
+            ->items(['Female', 'Male'])
+            ->separator('&#9866;')
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testValueIterable(): void
+    public function testValues(): void
     {
-        $data = new PersonalForm();
-        $data->setAttribute('citiesVisited', [0, 1]);
-
+        // value int 0
+        $this->formModel->setAttribute('int', 0);
         $expected = <<<'HTML'
-        <input type="hidden" name="PersonalForm[citiesVisited]" value="">
-        <div id="personalform-citiesvisited">
-        <label><input type="checkbox" name="PersonalForm[citiesVisited][]" value="0" checked> Moscu</label>
-        <label><input type="checkbox" name="PersonalForm[citiesVisited][]" value="1" checked> San Petesburgo</label>
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0" checked> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1"> Male</label>
+        </div>
+        HTML;
+        $this->assertSame(
+            $expected,
+            CheckBoxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
+        );
+
+        // value int 1
+        $this->formModel->setAttribute('int', 1);
+        $expected = <<<'HTML'
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
+        </div>
+        HTML;
+        $this->assertSame(
+            $expected,
+            CheckBoxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
+        );
+
+        // value iterable
+        $this->formModel->setAttribute('array', [0, 1]);
+        $expected = <<<'HTML'
+        <div id="typeform-array">
+        <label><input type="checkbox" name="TypeForm[array][]" value="0" checked> Moscu</label>
+        <label><input type="checkbox" name="TypeForm[array][]" value="1" checked> San Petesburgo</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($data, 'citiesVisited')->items(['Moscu', 'San Petesburgo'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'array')->items(['Moscu', 'San Petesburgo'])->render(),
+        );
+
+        // value string '0'
+        $this->formModel->setAttribute('string', 0);
+        $expected = <<<'HTML'
+        <div id="typeform-string">
+        <label><input type="checkbox" name="TypeForm[string][]" value="0" checked> Female</label>
+        <label><input type="checkbox" name="TypeForm[string][]" value="1"> Male</label>
+        </div>
+        HTML;
+        $this->assertSame(
+            $expected,
+            CheckBoxList::widget()->config($this->formModel, 'string')->items(['Female', 'Male'])->render(),
+        );
+
+        // value string '1'
+        $this->formModel->setAttribute('string', 1);
+        $expected = <<<'HTML'
+        <div id="typeform-string">
+        <label><input type="checkbox" name="TypeForm[string][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[string][]" value="1" checked> Male</label>
+        </div>
+        HTML;
+        $this->assertSame(
+            $expected,
+            CheckBoxList::widget()->config($this->formModel, 'string')->items(['Female', 'Male'])->render(),
+        );
+
+        // value null
+        $this->formModel->setAttribute('toNull', null);
+        $expected = <<<'HTML'
+        <div id="typeform-tonull">
+        <label><input type="checkbox" name="TypeForm[toNull][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[toNull][]" value="1"> Male</label>
+        </div>
+        HTML;
+        $this->assertSame(
+            $expected,
+            CheckBoxList::widget()->config($this->formModel, 'toNull')->items(['Female', 'Male'])->render(),
         );
     }
 
     public function testWithoutContainer(): void
     {
-        $data = new PersonalForm();
-        $data->sex(1);
-
+        $this->formModel->setAttribute('int', 1);
+        $expected = <<<'HTML'
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
+        HTML;
         $html = CheckboxList::widget()
-            ->config($data, 'sex', ['forceUncheckedValue' => null])
+            ->config($this->formModel, 'int')
             ->items(['Female', 'Male'])
             ->withoutContainer()
             ->render();
-        $expected = <<<'HTML'
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
-        <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
-        HTML;
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
@@ -226,5 +289,6 @@ final class CheckboxListTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
+        $this->formModel = new TypeForm();
     }
 }

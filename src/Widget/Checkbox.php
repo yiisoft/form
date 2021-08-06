@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 
 /**
@@ -17,7 +18,6 @@ use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 final class Checkbox extends Widget
 {
     private bool $enclosedByLabel = true;
-    private bool $forceUncheckedValue = true;
 
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -65,23 +65,6 @@ final class Checkbox extends Widget
     {
         $new = clone $this;
         $new->enclosedByLabel = $value;
-        return $new;
-    }
-
-    /**
-     * Whether to generate hidden input for uncheck state of the checkbox.
-     *
-     * When this attribute is present, a hidden input will be generated so that if the checkbox is not checked and
-     * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
-     *
-     * @param bool $value The value associated with the uncheck state of the checkbox.
-     *
-     * @return static
-     */
-    public function forceUncheckedValue(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->forceUncheckedValue = $value;
         return $new;
     }
 
@@ -158,6 +141,11 @@ final class Checkbox extends Widget
 
         $checkbox = CheckboxTag::tag();
 
+        /** @var bool|float|int|string|Stringable|null  */
+        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
+
+        unset($new->attributes['forceUncheckedValue']);
+
         if ($new->enclosedByLabel === true) {
             /** @var string */
             $label = $new->attributes['label'] ?? $new->getLabel();
@@ -170,18 +158,10 @@ final class Checkbox extends Widget
             $checkbox = $checkbox->label($label, $labelAttributes);
         }
 
-        if ($new->forceUncheckedValue) {
-            $checkbox = $checkbox->uncheckValue('0');
-        }
-
         $value = $new->getValue();
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
-        }
-
-        if (!array_key_exists('value', $new->attributes)) {
-            $new->attributes['value'] = '1';
         }
 
         return $checkbox
@@ -189,6 +169,8 @@ final class Checkbox extends Widget
             ->checked((bool) $value)
             ->id($new->getId())
             ->name($new->getInputName())
+            ->uncheckValue($forceUncheckedValue)
+            ->value((int) $new->getValue())
             ->render();
     }
 }

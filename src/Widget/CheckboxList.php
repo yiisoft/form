@@ -19,8 +19,6 @@ final class CheckboxList extends Widget
 {
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
-    /** @var bool|float|int|string|Stringable|null */
-    private $forceUncheckedValue = false;
     /** @psalm-var Closure(CheckboxItem):string|null */
     private ?Closure $itemFormatter = null;
     /** @var array<array-key, string> */
@@ -45,7 +43,7 @@ final class CheckboxList extends Widget
     /**
      * The tag name for the container element.
      *
-     * @param string $value tag name.
+     * @param string|null $value tag name.
      *
      * @return static
      */
@@ -73,23 +71,6 @@ final class CheckboxList extends Widget
     {
         $new = clone $this;
         $new->itemsAttributes['disabled'] = $value;
-        return $new;
-    }
-
-    /**
-     * The value associated with the uncheck state of the checkboxlist.
-     *
-     * When this attribute is present, a hidden input will be generated so that if the checkboxlist is not checked and
-     * is submitted, the value of this attribute will still be submitted to the server via the hidden input.
-     *
-     * @param bool|float|int|string|Stringable|null $value
-     *
-     * @return static
-     */
-    public function forceUncheckedValue($value): self
-    {
-        $new = clone $this;
-        $new->forceUncheckedValue = $value;
         return $new;
     }
 
@@ -188,11 +169,8 @@ final class CheckboxList extends Widget
 
         $checkboxList = ChecboxListWidget::create($new->getInputName());
 
-        /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
         /** @var bool|float|int|string|Stringable|null */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', $new->forceUncheckedValue);
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         /** @var null|scalar|Stringable|iterable<int, Stringable|scalar> */
         $values = $new->getValue();
@@ -201,6 +179,9 @@ final class CheckboxList extends Widget
         $separator = $new->attributes['separator'] ?? '';
 
         unset($new->attributes['itemsAttributes'], $new->attributes['separator']);
+
+        /** @var string */
+        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         if ($separator !== '') {
             $checkboxList = $checkboxList->separator($separator);
