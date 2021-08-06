@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Widget\CheckBoxList;
+use Yiisoft\Form\Widget\CheckboxList;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -102,7 +102,7 @@ final class CheckboxListTest extends TestCase
 
     public function testImmutability(): void
     {
-        $checkboxList = CheckBoxList::widget();
+        $checkboxList = CheckboxList::widget();
         $this->assertNotSame($checkboxList, $checkboxList->containerAttributes([]));
         $this->assertNotSame($checkboxList, $checkboxList->containerTag(null));
         $this->assertNotSame($checkboxList, $checkboxList->disabled());
@@ -215,7 +215,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            CheckBoxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
         );
 
         // value int 1
@@ -228,7 +228,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            CheckBoxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'int')->items(['Female', 'Male'])->render(),
         );
 
         // value iterable
@@ -254,7 +254,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            CheckBoxList::widget()->config($this->formModel, 'string')->items(['Female', 'Male'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'string')->items(['Female', 'Male'])->render(),
         );
 
         // value string '1'
@@ -267,7 +267,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            CheckBoxList::widget()->config($this->formModel, 'string')->items(['Female', 'Male'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'string')->items(['Female', 'Male'])->render(),
         );
 
         // value null
@@ -280,7 +280,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            CheckBoxList::widget()->config($this->formModel, 'toNull')->items(['Female', 'Male'])->render(),
+            CheckboxList::widget()->config($this->formModel, 'toNull')->items(['Female', 'Male'])->render(),
         );
     }
 
