@@ -32,6 +32,8 @@ final class CheckboxList extends Widget
      * @param array $value
      *
      * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function containerAttributes(array $value): self
     {
@@ -43,7 +45,7 @@ final class CheckboxList extends Widget
     /**
      * The tag name for the container element.
      *
-     * @param string|null $value tag name.
+     * @param string|null $value tag name. if `null` disabled rendering.
      *
      * @return static
      */
@@ -66,6 +68,8 @@ final class CheckboxList extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
      */
     public function disabled(bool $value = true): self
     {
@@ -119,6 +123,8 @@ final class CheckboxList extends Widget
      * @param array $value
      *
      * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function itemsAttributes(array $value = []): self
     {
@@ -128,9 +134,12 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * @link https://www.w3.org/TR/html52/sec-forms.html#the-readonly-attribute
+     * The readonly attribute is a boolean attribute that controls whether or not the user can edit the form control.
+     * When specified, the element is not mutable.
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#the-readonly-attribute
      */
     public function readonly(): self
     {
@@ -150,13 +159,6 @@ final class CheckboxList extends Widget
     {
         $new = clone $this;
         $new->attributes['separator'] = $value;
-        return $new;
-    }
-
-    public function withoutContainer(): self
-    {
-        $new = clone $this;
-        $new->containerTag = null;
         return $new;
     }
 

@@ -26,6 +26,8 @@ final class Checkbox extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
      */
     public function autofocus(bool $value = true): self
     {
@@ -46,6 +48,8 @@ final class Checkbox extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
      */
     public function disabled(bool $value = true): self
     {
@@ -75,6 +79,8 @@ final class Checkbox extends Widget
      * @param string $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-formelements-form
      */
     public function form(string $value): self
     {
@@ -94,6 +100,8 @@ final class Checkbox extends Widget
      * @param string $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
     public function label(string $value): self
     {
@@ -110,6 +118,8 @@ final class Checkbox extends Widget
      * @param array $value
      *
      * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function labelAttributes(array $value = []): self
     {
@@ -124,6 +134,8 @@ final class Checkbox extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
     public function required(bool $value = true): self
     {

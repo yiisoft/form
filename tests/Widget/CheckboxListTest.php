@@ -52,6 +52,21 @@ final class CheckboxListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
+    public function testContainerWithNull(): void
+    {
+        $this->formModel->setAttribute('int', 1);
+        $expected = <<<'HTML'
+        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
+        HTML;
+        $html = CheckboxList::widget()
+            ->config($this->formModel, 'int')
+            ->containerTag(null)
+            ->items(['Female', 'Male'])
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
     public function testDisabled(): void
     {
         $expected = <<<'HTML'
@@ -103,7 +118,6 @@ final class CheckboxListTest extends TestCase
         $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
         $this->assertNotSame($checkboxList, $checkboxList->readOnly());
         $this->assertNotSame($checkboxList, $checkboxList->separator(''));
-        $this->assertNotSame($checkboxList, $checkboxList->withoutContainer());
     }
 
     public function testItemsAttributes(): void
@@ -268,21 +282,6 @@ final class CheckboxListTest extends TestCase
             $expected,
             CheckBoxList::widget()->config($this->formModel, 'toNull')->items(['Female', 'Male'])->render(),
         );
-    }
-
-    public function testWithoutContainer(): void
-    {
-        $this->formModel->setAttribute('int', 1);
-        $expected = <<<'HTML'
-        <label><input type="checkbox" name="TypeForm[int][]" value="0"> Female</label>
-        <label><input type="checkbox" name="TypeForm[int][]" value="1" checked> Male</label>
-        HTML;
-        $html = CheckboxList::widget()
-            ->config($this->formModel, 'int')
-            ->items(['Female', 'Male'])
-            ->withoutContainer()
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     protected function setUp(): void
