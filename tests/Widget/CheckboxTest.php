@@ -16,24 +16,6 @@ final class CheckboxTest extends TestCase
 {
     private FormModelInterface $formModel;
 
-    public function testAutofocus(): void
-    {
-        $this->formModel->setAttribute('bool', true);
-        $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked autofocus> Bool</label>
-        HTML;
-        $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'bool')->autofocus()->render());
-    }
-
-    public function testDisabled(): void
-    {
-        $this->formModel->setAttribute('bool', true);
-        $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked disabled> Bool</label>
-        HTML;
-        $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'bool')->disabled()->render());
-    }
-
     public function testEnclosedByLabel(): void
     {
         $this->assertSame(
@@ -97,14 +79,6 @@ final class CheckboxTest extends TestCase
         <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
         HTML;
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'bool')->render());
-    }
-
-    public function testRequired(): void
-    {
-        $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0" required> Bool</label>
-        HTML;
-        $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'bool')->required()->render());
     }
 
     public function testValues(): void

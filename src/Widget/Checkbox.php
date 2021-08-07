@@ -6,10 +6,11 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Stringable;
+use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 
 /**
- * Generates a checkbox tag together with a label for the given form attribute.
+ * The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.
  *
  * This method will generate the "checked" tag attribute according to the form attribute value.
  *
@@ -17,46 +18,9 @@ use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
  */
 final class Checkbox extends Widget
 {
+    use CommonAttribute;
+
     private bool $enclosedByLabel = true;
-
-    /**
-     * Focus on the control (put cursor into it) when the page loads.
-     * Only one form element could be in focus at the same time.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
-     */
-    public function autofocus(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['autofocus'] = $value;
-        return $new;
-    }
-
-    /**
-     * Set whether the element is disabled or not.
-     *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
-     * text.
-     * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
-     * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to false to enable the element again, which is not the case.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
-     */
-    public function disabled(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['disabled'] = $value;
-        return $new;
-    }
 
     /**
      * If the widget should be enclosed by label.
@@ -80,7 +44,7 @@ final class Checkbox extends Widget
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-formelements-form
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
      */
     public function form(string $value): self
     {
@@ -125,22 +89,6 @@ final class Checkbox extends Widget
     {
         $new = clone $this;
         $new->attributes['labelAttributes'] = $value;
-        return $new;
-    }
-
-    /**
-     * If it is required to fill in a value in order to submit the form.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
-     */
-    public function required(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['required'] = $value;
         return $new;
     }
 

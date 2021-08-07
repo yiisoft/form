@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\TestSupport;
 
-use ReflectionObject;
-
 trait TestTrait
 {
     /**

@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListWidget;
 
@@ -18,6 +19,8 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListWidget;
  */
 final class CheckboxList extends Widget
 {
+    use CommonAttribute;
+
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
     /** @psalm-var Closure(CheckboxItem):string|null */
@@ -140,7 +143,7 @@ final class CheckboxList extends Widget
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#the-readonly-attribute
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
      */
     public function readonly(): self
     {

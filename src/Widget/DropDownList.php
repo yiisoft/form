@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select;
@@ -18,6 +19,8 @@ use Yiisoft\Html\Tag\Select;
  */
 final class DropDownList extends Widget
 {
+    use CommonAttribute;
+
     private bool $encode = false;
     private array $items = [];
     private array $itemsAttributes = [];
@@ -176,22 +179,6 @@ final class DropDownList extends Widget
     {
         $new = clone $this;
         $new->prompt = $value;
-        return $new;
-    }
-
-    /**
-     * If it is required to fill in a value in order to submit the form.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
-     */
-    public function required(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['required'] = $value;
         return $new;
     }
 

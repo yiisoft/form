@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Form\Widget\Attribute;
 
-final class DatePicker extends Widget
+trait CommonAttribute
 {
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -13,6 +13,8 @@ final class DatePicker extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
      */
     public function autofocus(bool $value = true): self
     {
@@ -33,6 +35,8 @@ final class DatePicker extends Widget
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
      */
     public function disabled(bool $value = true): self
     {
@@ -42,39 +46,13 @@ final class DatePicker extends Widget
     }
 
     /**
-     * The earliest acceptable date.
-     *
-     * @param string $value
-     *
-     * @return static
-     */
-    public function min(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['min'] = $value;
-        return $new;
-    }
-
-    /**
-     * The latest acceptable date.
-     *
-     * @param string $value
-     *
-     * @return static
-     */
-    public function max(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['max'] = $value;
-        return $new;
-    }
-
-    /**
      * If it is required to fill in a value in order to submit the form.
      *
      * @param bool $value
      *
      * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
     public function required(bool $value = true): self
     {
@@ -99,7 +77,9 @@ final class DatePicker extends Widget
      *
      * @param int $value
      *
-     * @return static
+     * @return self
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
      */
     public function tabIndex(int $value = 0): self
     {
@@ -108,16 +88,4 @@ final class DatePicker extends Widget
         return $new;
     }
 
-    /**
-     * Generates a datepicker tag together with a label for the given form attribute.
-     *
-     * @return string the generated checkbox tag.
-     */
-    protected function run(): string
-    {
-        return Input::widget()
-            ->type('date')
-            ->config($this->getFormModel(), $this->getAttribute(), $this->attributes)
-            ->render();
-    }
 }

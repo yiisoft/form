@@ -57,6 +57,8 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
      * @param string $value
      *
      * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
     final public function id(string $value): self
     {

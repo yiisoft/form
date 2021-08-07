@@ -195,22 +195,6 @@ final class DropDownListTest extends TestCase
         );
     }
 
-    public function testRequired(): void
-    {
-        $expected = <<<'HTML'
-        <select id="typeform-int" name="TypeForm[int]" required>
-        <option value="1">Moscu</option>
-        <option value="2">San Petersburgo</option>
-        <option value="3">Novosibirsk</option>
-        <option value="4">Ekaterinburgo</option>
-        </select>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            DropDownList::widget()->config($this->formModel, 'int')->items($this->cities)->required()->render(),
-        );
-    }
-
     public function testSizeWithMultiple(): void
     {
         $this->formModel->setAttribute('int', 2);
@@ -337,14 +321,12 @@ final class DropDownListTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-
         $this->cities = [
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
             '4' => 'Ekaterinburgo',
         ];
-
         $this->citiesGroups = [
             '1' => [
                 '2' => ' Moscu',
@@ -358,12 +340,10 @@ final class DropDownListTest extends TestCase
                 '8' => 'Chillan',
             ],
         ];
-
         $this->groups = [
             '1' => ['label' => 'Russia'],
             '2' => ['label' => 'Chile'],
         ];
-
         $this->formModel = new TypeForm();
     }
 }

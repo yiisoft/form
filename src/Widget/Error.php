@@ -7,8 +7,13 @@ namespace Yiisoft\Form\Widget;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Tag\CustomTag;
 
+/**
+ * The Error widget displays an error message.
+ */
 final class Error extends Widget
 {
+    private string $message = '';
+
     /**
      * Callback that will be called to obtain an error message.
      *
@@ -22,10 +27,22 @@ final class Error extends Widget
      *
      * @return static
      */
-    public function errorSource(array $value = []): self
+    public function messageCallback(array $value = []): self
     {
         $new = clone $this;
-        $new->attributes['errorSource'] = $value;
+        $new->attributes['messageCallback'] = $value;
+        return $new;
+    }
+
+    /**
+     * Error message to display.
+     *
+     * @return static
+     */
+    public function message(string $value): self
+    {
+        $new = clone $this;
+        $new->message = $value;
         return $new;
     }
 
@@ -57,18 +74,18 @@ final class Error extends Widget
         /** @var bool */
         $encode = $new->attributes['encode'] ?? true;
 
-        /** @var null|array */
-        $errorSource = $new->attributes['errorSource'] ?? null;
+        $error = $new->message !== '' ? $new->message : $new->getFirstError();
 
         $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
 
-        if ($errorSource !== null) {
-            $error = $errorSource($new->getFormModel(), $new->getAttribute());
-        } else {
-            $error = $new->getFirstError();
+        /** @var null|array */
+        $messageCallback = $new->attributes['messageCallback'] ?? null;
+
+        if ($messageCallback !== null) {
+            $error = $messageCallback($new->getFormModel(), $new->getAttribute());
         }
 
-        unset($new->attributes['errorSource']);
+        unset($new->attributes['messageCallback']);
 
         return $tag !== ''
             ? CustomTag::name($tag)->attributes($new->attributes)->content($error)->encode($encode)->render()
