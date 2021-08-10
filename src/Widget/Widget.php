@@ -145,7 +145,7 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
     /**
      * Return the attribute value.
      *
-     * @return scalar|iterable|object|Stringable|null
+     * @return iterable|object|scalar|Stringable|null
      */
     protected function getValue()
     {

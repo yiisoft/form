@@ -201,7 +201,7 @@ final class Select extends Widget
     }
 
     /**
-     * @return Option[]|Optgroup[]
+     * @return Optgroup[]|Option[]
      */
     private function renderItems(array $values = []): array
     {
@@ -225,7 +225,7 @@ final class Select extends Widget
                 $items[] = Optgroup::tag()->attributes($groupAttrs)->options(...$options);
             } else {
                 /** @var array */
-                $attributes = isset($new->itemsAttributes[$value]) ? $new->itemsAttributes[$value] : [];
+                $attributes = $new->itemsAttributes[$value] ?? [];
                 $items[] = Option::tag()->attributes($attributes)->content($content)->value($value);
             }
         }
@@ -234,7 +234,6 @@ final class Select extends Widget
     }
 
     /**
-     *
      * @return string the generated drop-down list tag.
      */
     protected function run(): string
@@ -271,7 +270,7 @@ final class Select extends Widget
             throw new InvalidArgumentException('The value must be a bool|float|int|iterable|string|Stringable|null.');
         }
 
-        /** @var null|string */
+        /** @var string|null */
         $unselectValue = $new->attributes['unselectValue'] ?? null;
 
         unset($new->attributes['unselectValue']);

@@ -78,7 +78,7 @@ final class Error extends Widget
 
         $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
 
-        /** @var null|array */
+        /** @var array|null */
         $messageCallback = $new->attributes['messageCallback'] ?? null;
 
         if ($messageCallback !== null) {
