@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Tag\Input;
 
 /**

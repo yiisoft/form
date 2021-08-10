@@ -178,7 +178,7 @@ final class CheckboxList extends Widget
         /** @var bool|float|int|string|Stringable|null */
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
-        /** @var null|scalar|Stringable|iterable<int, Stringable|scalar> */
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = $new->getValue();
 
         if (is_object($value)) {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Input;
 

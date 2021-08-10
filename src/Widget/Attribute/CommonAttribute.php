@@ -87,5 +87,4 @@ trait CommonAttribute
         $new->attributes['tabindex'] = $value;
         return $new;
     }
-
 }
