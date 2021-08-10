@@ -7,11 +7,11 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
-use Yiisoft\Form\Widget\HiddenInput;
+use Yiisoft\Form\Widget\Hidden;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
-final class HiddenInputTest extends TestCase
+final class HiddenTest extends TestCase
 {
     private TypeForm $formModel;
 
@@ -19,7 +19,7 @@ final class HiddenInputTest extends TestCase
     {
         $this->assertEquals(
             '<input type="hidden" name="typeform-string" value="" disabled>',
-            HiddenInput::widget()->config($this->formModel, 'string')->disabled()->render(),
+            Hidden::widget()->config($this->formModel, 'string')->disabled()->render(),
         );
     }
 
@@ -27,13 +27,13 @@ final class HiddenInputTest extends TestCase
     {
         $this->assertEquals(
             '<input type="hidden" name="typeform-string" value="" form="form-id">',
-            HiddenInput::widget()->config($this->formModel, 'string')->form('form-id')->render(),
+            Hidden::widget()->config($this->formModel, 'string')->form('form-id')->render(),
         );
     }
 
     public function testImmutability(): void
     {
-        $hiddenInput = HiddenInput::widget();
+        $hiddenInput = Hidden::widget();
         $this->assertNotSame($hiddenInput, $hiddenInput->disabled());
         $this->assertNotSame($hiddenInput, $hiddenInput->form(''));
     }
@@ -42,15 +42,15 @@ final class HiddenInputTest extends TestCase
     {
         $this->assertEquals(
             '<input type="hidden" name="typeform-string" value="">',
-            HiddenInput::widget()->config($this->formModel, 'string')->render(),
+            Hidden::widget()->config($this->formModel, 'string')->render(),
         );
     }
 
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('HiddenInput widget requires a string value.');
-        $html = HiddenInput::widget()->config($this->formModel, 'array')->render();
+        $this->expectExceptionMessage('Hidden widget requires a string value.');
+        $html = Hidden::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

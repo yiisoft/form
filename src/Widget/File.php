@@ -14,7 +14,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file
  */
-final class FileInput extends Widget
+final class File extends Widget
 {
     use CommonAttribute;
 

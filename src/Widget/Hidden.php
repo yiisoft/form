@@ -14,7 +14,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.hidden.html#input.hidden
  */
-final class HiddenInput extends Widget
+final class Hidden extends Widget
 {
     /**
      * Set whether the element is disabled or not.
@@ -68,7 +68,7 @@ final class HiddenInput extends Widget
         $value = $new->getValue();
 
         if (!is_string($value)) {
-            throw new InvalidArgumentException('HiddenInput widget requires a string value.');
+            throw new InvalidArgumentException('Hidden widget requires a string value.');
         }
 
         return Input::hidden($new->getId(), $new->getValue())->attributes($new->attributes)->render();
