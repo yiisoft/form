@@ -15,6 +15,9 @@ use function array_merge;
 use function array_unique;
 use function array_values;
 
+/**
+ * The error summary widget displays a summary of the errors in a form.
+ */
 final class ErrorSummary extends Widget
 {
     private array $attributes = [];

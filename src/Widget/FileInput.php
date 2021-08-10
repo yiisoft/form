@@ -5,79 +5,18 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Widget\Widget;
+use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Html\Tag\Input;
 
+/**
+ * The input element with a type attribute whose value is "file" represents a list of file items, each consisting of a
+ * file name, a file type, and a file body (the contents of the file).
+ *
+ * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file
+ */
 final class FileInput extends Widget
 {
-    private FormModelInterface $data;
-    private string $attribute;
-    private array $options = [];
-    private bool $withoutHiddenInput = false;
-
-    /**
-     * Generates a file input tag for the given form attribute.
-     *
-     * @return string the generated input tag.
-     */
-    public function run(): string
-    {
-        $new = clone $this;
-
-        $hiddenOptions = ['id' => false, 'value' => ''];
-
-        if (isset($new->options['name'])) {
-            $hiddenOptions['name'] = $new->options['name'];
-        }
-
-        /** make sure disabled input is not sending any value */
-        if (!empty($new->options['disabled'])) {
-            $hiddenOptions['disabled'] = $new->options['disabled'];
-        }
-
-        $hiddenOptions = ArrayHelper::merge($hiddenOptions, ArrayHelper::remove($new->options, 'hiddenOptions', []));
-
-        /**
-         * Add a hidden field so that if a form only has a file field, we can still use isset($body[$formClass]) to
-         * detect if the input is submitted.
-         * The hidden input will be assigned its own set of html options via `$hiddenOptions`.
-         * This provides the possibility to interact with the hidden field via client script.
-         *
-         * Note: For file-field-only form with `disabled` option set to `true` input submitting detection won't work.
-         */
-        $hiddenInput = '';
-
-        if ($new->withoutHiddenInput === false) {
-            $hiddenInput = HiddenInput::widget()->config($new->data, $new->attribute, $hiddenOptions)->run();
-        }
-
-        $new->options['value'] = false;
-        return
-            $hiddenInput .
-            Input::widget()
-                ->type('file')
-                ->config($new->data, $new->attribute, $new->options)
-                ->run();
-    }
-
-    /**
-     * Set form model, name and options for the widget.
-     *
-     * @param FormModelInterface $data Form model.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     *
-     * @return self
-     */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
-    {
-        $new = clone $this;
-        $new->data = $data;
-        $new->attribute = $attribute;
-        $new->options = $options;
-        return $new;
-    }
+    use CommonAttribute;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -86,61 +25,31 @@ final class FileInput extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
      */
     public function accept(string $value): self
     {
         $new = clone $this;
-        $new->options['accept'] = $value;
+        $new->attributes['accept'] = $value;
         return $new;
     }
 
     /**
-     * Focus on the control (put cursor into it) when the page loads.
-     * Only one form element could be in focus at the same time.
+     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
+     * attribute of a {@see Form} element in the same document.
      *
-     * @param bool $value
+     * @param string $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
      */
-    public function autofocus(bool $value = true): self
+    public function form(string $value): self
     {
         $new = clone $this;
-        $new->options['autofocus'] = $value;
-        return $new;
-    }
-
-    /**
-     * Set whether the element is disabled or not.
-     *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
-     * text.
-     * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
-     * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to false to enable the element again, which is not the case.
-     *
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function disabled(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->options['disabled'] = $value;
-        return $new;
-    }
-
-    /**
-     * HiddenOptions parameter which is another set of HTML options array is defined, to be used for the hidden input.
-     *
-     * @param array $value
-     *
-     * @return self
-     */
-    public function hiddenOptions(array $value = []): self
-    {
-        $new = clone $this;
-        $new->options['hiddenOptions'] = $value;
+        $new->attributes['form'] = $value;
         return $new;
     }
 
@@ -149,65 +58,58 @@ final class FileInput extends Widget
      *
      * @param bool $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple
      */
     public function multiple(bool $value = true): self
     {
         $new = clone $this;
-        $new->options['multiple'] = $value;
+        $new->attributes['multiple'] = $value;
         return $new;
     }
 
     /**
-     * If it is required to fill in a value in order to submit the form.
+     * Generates a file input tag for the given form attribute.
      *
-     * @param bool $value
-     *
-     * @return self
+     * @return string the generated input tag.
      */
-    public function required(bool $value = true): self
+    protected function run(): string
     {
         $new = clone $this;
-        $new->options['required'] = $value;
-        return $new;
-    }
 
-    /**
-     * The tabindex global attribute indicates that its element can be focused, and where it participates in sequential
-     * keyboard navigation (usually with the Tab key, hence the name).
-     *
-     * It accepts an integer as a value, with different results depending on the integer's value:
-     *
-     * - A negative value (usually tabindex="-1") means that the element is not reachable via sequential keyboard
-     * navigation, but could be focused with Javascript or visually. It's mostly useful to create accessible widgets
-     * with JavaScript.
-     * - tabindex="0" means that the element should be focusable in sequential keyboard navigation, but its order is
-     * defined by the document's source order.
-     * - A positive value means the element should be focusable in sequential keyboard navigation, with its order
-     * defined by the value of the number. That is, tabindex="4" is focused before tabindex="5", but after tabindex="3".
-     *
-     * @param int $value
-     *
-     * @return self
-     */
-    public function tabIndex(int $value = 0): self
-    {
-        $new = clone $this;
-        $new->options['tabindex'] = $value;
-        return $new;
-    }
+        $name = $new->getInputName();
 
-    /**
-     * Allows you to disable hidden input widget.
-     *
-     * @param bool $value
-     *
-     * @return self
-     */
-    public function withoutHiddenInput(bool $value): self
-    {
-        $new = clone $this;
-        $new->withoutHiddenInput = $value;
-        return $new;
+        /** @var string|null  */
+        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
+
+        $hiddenInput = '';
+
+        /** @var array */
+        $hiddenAttributes = $new->attributes['hiddenAttributes'] ?? [];
+
+        unset($new->attributes['forceUncheckedValue'], $new->attributes['hiddenAttributes']);
+
+        /**
+         * Add a hidden field so that if a form only has a file field, we can still use isset($body[$formClass]) to
+         * detect if the input is submitted.
+         * The hidden input will be assigned its own set of html attributes via `$hiddenAttributes`.
+         * This provides the possibility to interact with the hidden field via client script.
+         *
+         * Note: For file-field-only form with `disabled` option set to `true` input submitting detection won't work.
+         */
+        if ($forceUncheckedValue !== null) {
+            $hiddenInput = Input::hidden($name, $forceUncheckedValue)->attributes($hiddenAttributes)->render();
+        }
+
+        $new->attributes['value'] = false;
+        return
+            $hiddenInput .
+            Input::tag()
+                ->type('file')
+                ->attributes($new->attributes)
+                ->id($new->getId())
+                ->name($name)
+                ->render();
     }
 }

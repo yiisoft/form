@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\Checkbox;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -14,7 +13,7 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class CheckboxTest extends TestCase
 {
-    private FormModelInterface $formModel;
+    private TypeForm $formModel;
 
     public function testEnclosedByLabel(): void
     {
@@ -49,13 +48,10 @@ final class CheckboxTest extends TestCase
     public function testImmutability(): void
     {
         $checkbox = Checkbox::widget();
-        $this->assertNotSame($checkbox, $checkbox->autofocus());
-        $this->assertNotSame($checkbox, $checkbox->disabled());
         $this->assertNotSame($checkbox, $checkbox->enclosedByLabel());
         $this->assertNotSame($checkbox, $checkbox->form(''));
         $this->assertNotSame($checkbox, $checkbox->label(''));
         $this->assertNotSame($checkbox, $checkbox->labelAttributes([]));
-        $this->assertNotSame($checkbox, $checkbox->required());
     }
 
     public function testLabelWithLabelAttributes(): void

@@ -4,147 +4,84 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Tests\TestCase;
+use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\FileInput;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\WidgetFactory;
 
 final class FileInputTest extends TestCase
 {
-    public function testFileInput(): void
-    {
-        $data = new PersonalForm();
+    private TypeForm $formModel;
 
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+    public function testAccept(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="typeform-string" name="TypeForm[string]" accept="image/*">',
+            FileInput::widget()->config($this->formModel, 'string')->accept('image/*')->render(),
+        );
     }
 
-    public function testFileInputOptions(): void
+    public function testForceUncheckedValue(): void
     {
-        $data = new PersonalForm();
-
         $expected = <<<'HTML'
-<input type="hidden" name="fileName" value=""><input type="file" id="personalform-attachfiles" class="customClass" name="fileName">
-HTML;
+        <input type="hidden" name="TypeForm[string]" value=""><input type="file" id="typeform-string" name="TypeForm[string]">
+        HTML;
         $html = FileInput::widget()
-            ->config($data, 'attachFiles', ['class' => 'customClass', 'name' => 'fileName'])
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+            ->config($this->formModel, 'string', ['forceUncheckedValue' => ''])
+            ->render();
+        $this->assertSame(
+            $expected,
+            $html,
+        );
     }
 
-    public function testFileInputAccept(): void
+    public function testHiddenAttributes(): void
     {
-        $data = new PersonalForm();
-
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" accept="image/*">
-HTML;
+        <input type="hidden" id="test-id" name="TypeForm[string]" value=""><input type="file" id="typeform-string" name="TypeForm[string]">
+        HTML;
         $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->accept('image/*')
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+            ->config($this->formModel, 'string', [
+                'forceUncheckedValue' => '',
+                'hiddenAttributes' => ['id' => 'test-id']
+            ])
+            ->render();
+        $this->assertSame(
+            $expected,
+            $html,
+        );
     }
 
-    public function testFileInputAutoFocus(): void
+    public function testImmutability(): void
     {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" autofocus>
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->autofocus()
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $fileInput = FileInput::widget();
+        $this->assertNotSame($fileInput, $fileInput->accept(''));
+        $this->assertNotSame($fileInput, $fileInput->form(''));
+        $this->assertNotSame($fileInput, $fileInput->multiple());
     }
 
-    public function testFileInputDisabled(): void
+    public function testMultiple(): void
     {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value="" disabled><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" disabled>
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->disabled()
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertSame(
+            '<input type="file" id="typeform-string" name="TypeForm[string]" multiple>',
+            FileInput::widget()->config($this->formModel, 'string')->multiple()->render(),
+        );
     }
 
-    public function testFileInputhiddenOptions(): void
+    public function testRender(): void
     {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" id="specific-id" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->hiddenOptions(['id' => 'specific-id'])
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertSame(
+            '<input type="file" id="typeform-tonull" name="TypeForm[toNull]">',
+            FileInput::widget()->config($this->formModel, 'toNull')->render(),
+        );
     }
 
-    public function testFileInputMultiple(): void
+    protected function setUp(): void
     {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" multiple>
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->multiple()
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testFileInputRequired(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" required>
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->required()
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testFileInputTabIndex(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[attachFiles]" value=""><input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]" tabindex="0">
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->tabIndex()
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testFileInputWithoutHiddenInput(): void
-    {
-        $data = new PersonalForm();
-
-        $expected = <<<'HTML'
-<input type="file" id="personalform-attachfiles" name="PersonalForm[attachFiles]">
-HTML;
-        $html = FileInput::widget()
-            ->config($data, 'attachFiles')
-            ->withoutHiddenInput(true)
-            ->run();
-        $this->assertEqualsWithoutLE($expected, $html);
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
+        $this->formModel = new TypeForm();
     }
 }

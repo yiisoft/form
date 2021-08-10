@@ -78,6 +78,16 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
     }
 
     /**
+     * Return the attribute hint for the model.
+     *
+     * @return string
+     */
+    protected function getAttributeHint(): string
+    {
+        return $this->formModel->getAttributeHint($this->getAttributeName());
+    }
+
+    /**
      * Return the attribute first error message.
      *
      * @return string

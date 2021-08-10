@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use StdClass;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\CheckboxList;
@@ -20,7 +19,7 @@ final class CheckboxListTest extends TestCase
     use TestTrait;
 
     private array $sex = ['Female', 'Male'];
-    private FormModelInterface $formModel;
+    private TypeForm $formModel;
 
     public function testContainerAttributes(): void
     {

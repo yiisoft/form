@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use StdClass;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\DropDownList;
@@ -21,7 +20,7 @@ final class DropDownListTest extends TestCase
     private array $cities = [];
     private array $citiesGroups = [];
     private array $groups = [];
-    private FormModelInterface $formModel;
+    private TypeForm $formModel;
 
     public function testForceUnselectValueWithMultiple(): void
     {
@@ -52,7 +51,6 @@ final class DropDownListTest extends TestCase
         $this->assertNotSame($dropdownList, $dropdownList->multiple());
         $this->assertNotSame($dropdownList, $dropdownList->optionsData([], false));
         $this->assertNotSame($dropdownList, $dropdownList->prompt());
-        $this->assertNotSame($dropdownList, $dropdownList->required());
         $this->assertNotSame($dropdownList, $dropdownList->size());
     }
 

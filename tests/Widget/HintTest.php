@@ -4,62 +4,44 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use Yiisoft\Form\Tests\Stub\PersonalForm;
-use Yiisoft\Form\Tests\TestCase;
+use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\Hint;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\WidgetFactory;
 
 final class HintTest extends TestCase
 {
-    public function testHint(): void
-    {
-        $data = new PersonalForm();
+    private TypeForm $formModel;
 
-        $expected = '<div>Write your first name.</div>';
-        $html = Hint::widget()
-            ->config($data, 'name')
-            ->run();
-        $this->assertEquals($expected, $html);
+    public function testContent(): void
+    {
+        $this->assertSame(
+            '<div>Write your text.</div>',
+            Hint::widget()->config($this->formModel, 'string', ['hint' => 'Write your text.'])->render(),
+        );
     }
 
-    public function testHintOptions(): void
+    public function testRender(): void
     {
-        $data = new PersonalForm();
-
-        $expected = '<div class="customClass">Write your first name.</div>';
-        $html = Hint::widget()
-            ->config($data, 'name', ['class' => 'customClass'])
-            ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertSame(
+            '<div>Write your text string.</div>',
+            Hint::widget()->config($this->formModel, 'string')->render(),
+        );
     }
 
-    public function testHintCustomHint(): void
+    public function testTag(): void
     {
-        $data = new PersonalForm();
-
-        $expected = '<div>Custom hint text.</div>';
-        $html = Hint::widget()
-            ->config($data, 'name')
-            ->hint('Custom hint text.')
-            ->run();
-        $this->assertEquals($expected, $html);
+        $this->assertSame(
+            '<span>Write your text string.</span>',
+            Hint::widget()->config($this->formModel, 'string', ['tag' => 'span'])->render(),
+        );
     }
 
-    public function testHintTag(): void
+    protected function setUp(): void
     {
-        $data = new PersonalForm();
-
-        $expected = 'Write your first name.';
-        $html = Hint::widget()
-            ->config($data, 'name')
-            ->tag()
-            ->run();
-        $this->assertEquals($expected, $html);
-
-        $expected = '<span>Write your first name.</span>';
-        $html = Hint::widget()
-            ->config($data, 'name')
-            ->tag('span')
-            ->run();
-        $this->assertEquals($expected, $html);
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
+        $this->formModel = new TypeForm();
     }
 }

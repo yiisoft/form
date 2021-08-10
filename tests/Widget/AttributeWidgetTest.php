@@ -20,6 +20,19 @@ final class AttributeWidgetTest extends TestCase
     {
         $this->assertSame('<test disabled>', AttributeWidget::widget()->disabled()->render());
     }
+
+    public function testImmutability(): void
+    {
+        $attributeWidget = AttributeWidget::widget();
+        $this->assertNotSame($attributeWidget, $attributeWidget->autofocus());
+        $this->assertNotSame($attributeWidget, $attributeWidget->disabled());
+        $this->assertNotSame($attributeWidget, $attributeWidget->min(''));
+        $this->assertNotSame($attributeWidget, $attributeWidget->max(''));
+        $this->assertNotSame($attributeWidget, $attributeWidget->readOnly());
+        $this->assertNotSame($attributeWidget, $attributeWidget->required());
+        $this->assertNotSame($attributeWidget, $attributeWidget->tabIndex());
+    }
+
     public function testMin(): void
     {
         $this->assertSame(

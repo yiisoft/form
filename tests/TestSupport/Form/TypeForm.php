@@ -28,6 +28,13 @@ final class TypeForm extends FormModel
         return '(&#10006;) This is custom error message.';
     }
 
+    public function getAttributeHints(): array
+    {
+        return [
+            'string' => 'Write your text string.',
+        ];
+    }
+
     public function getRules(): array
     {
         return [

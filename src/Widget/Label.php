@@ -4,77 +4,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Html\Html;
-use Yiisoft\Widget\Widget;
+use Yiisoft\Html\Tag\Label as LabelTag;
 
+/**
+ * Generates a label tag for the given form attribute.
+ *
+ * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/label.html
+ */
 final class Label extends Widget
 {
-    private FormModelInterface $data;
-    private string $attribute;
-    private array $options = [];
-    private string $charset = 'UTF-8';
-
-    /**
-     * Generates a label tag for the given form attribute.
-     *
-     * @return string the generated label tag.
-     */
-    public function run(): string
-    {
-        $new = clone $this;
-
-        $for = ArrayHelper::remove(
-            $new->options,
-            'for',
-            HtmlForm::getInputId($new->data, $new->attribute, $new->charset)
-        );
-
-        $label = ArrayHelper::remove(
-            $new->options,
-            'label',
-            $new->data->getAttributeLabel(HtmlForm::getAttributeName($new->attribute))
-        );
-
-        return Html::label($label, $for)
-            ->attributes($new->options)
-            ->render();
-    }
-
-    /**
-     * Set form model, name and options for the widget.
-     *
-     * @param FormModelInterface $data Form model.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $options The HTML attributes for the widget container tag.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     *
-     * @return self
-     */
-    public function config(FormModelInterface $data, string $attribute, array $options = []): self
-    {
-        $new = clone $this;
-        $new->data = $data;
-        $new->attribute = $attribute;
-        $new->options = $options;
-        return $new;
-    }
-
-    /**
-     * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
-     *
-     * @param string $value
-     *
-     * @return self
-     */
-    public function charset(string $value): self
-    {
-        $new = clone $this;
-        $new->charset = $value;
-        return $new;
-    }
+    private string $label = '';
 
     /**
      * The id of a labelable form-related element in the same document as the tag label element.
@@ -84,12 +23,14 @@ final class Label extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/label.html#label.attrs.for
      */
     public function for(string $value): self
     {
         $new = clone $this;
-        $new->options['for'] = $value;
+        $new->attributes['for'] = $value;
         return $new;
     }
 
@@ -98,16 +39,31 @@ final class Label extends Widget
      *
      * @param string $value
      *
-     * @return self
+     * @return static
      *
      * Note that this will NOT be encoded.
-     * - If this is not set, {@see \Yiisoft\Form\FormModel::getAttributeLabel() will be called to get the label for
-     * display (after encoding).
+     * - If this is not set, {@see \Yii\Extension\Simple\Forms\BaseModel::getAttributeLabel() will be called to get the
+     * label for display (after encoding).
      */
     public function label(string $value): self
     {
         $new = clone $this;
-        $new->options['label'] = $value;
+        $new->label = $value;
         return $new;
+    }
+
+    /**
+     * @return string the generated label tag.
+     */
+    protected function run(): string
+    {
+        $new = clone $this;
+
+        /** @var string */
+        $for = $new->attributes['for'] ?? $new->getId();
+
+        $label = $new->label === '' ? $new->getLabel() : $new->label;
+
+        return LabelTag::tag()->attributes($new->attributes)->content($label)->forId($for)->render();
     }
 }

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Tests\Stub\PersonalForm;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
+use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ErrorSummary;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -16,6 +17,8 @@ use Yiisoft\Widget\WidgetFactory;
 final class ErrorSummaryTest extends TestCase
 {
     use TestTrait;
+
+    private PersonalForm $formModel;
 
     public function dataProviderErrorSummary(): array
     {
@@ -44,6 +47,13 @@ final class ErrorSummaryTest extends TestCase
                 '<li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li></ul></div>',
             ],
         ];
+    }
+
+    public function testImmutability(): void
+    {
+        $errorSummary = ErrorSummary::widget();
+        $this->assertNotSame($errorSummary, $errorSummary->attributes([]));
+        $this->assertNotSame($errorSummary, $errorSummary->model($this->formModel));
     }
 
     /**
@@ -85,6 +95,7 @@ final class ErrorSummaryTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
+        $this->formModel = new PersonalForm();
     }
 
     private function createValidatorMock(): ValidatorInterface
