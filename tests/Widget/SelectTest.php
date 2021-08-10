@@ -9,11 +9,11 @@ use PHPUnit\Framework\TestCase;
 use StdClass;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Widget\DropDownList;
+use Yiisoft\Form\Widget\Select;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
-final class DropDownListTest extends TestCase
+final class SelectTest extends TestCase
 {
     use TestTrait;
 
@@ -34,7 +34,7 @@ final class DropDownListTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $html = DropDownList::widget()
+        $html = Select::widget()
             ->config($this->formModel, 'array', ['unselectValue' => 0])
             ->items($this->cities)
             ->multiple()
@@ -44,14 +44,14 @@ final class DropDownListTest extends TestCase
 
     public function testImmutability(): void
     {
-        $dropdownList = DropdownList::widget();
-        $this->assertNotSame($dropdownList, $dropdownList->groups());
-        $this->assertNotSame($dropdownList, $dropdownList->items());
-        $this->assertNotSame($dropdownList, $dropdownList->itemsAttributes());
-        $this->assertNotSame($dropdownList, $dropdownList->multiple());
-        $this->assertNotSame($dropdownList, $dropdownList->optionsData([], false));
-        $this->assertNotSame($dropdownList, $dropdownList->prompt());
-        $this->assertNotSame($dropdownList, $dropdownList->size());
+        $select = Select::widget();
+        $this->assertNotSame($select, $select->groups());
+        $this->assertNotSame($select, $select->items());
+        $this->assertNotSame($select, $select->itemsAttributes());
+        $this->assertNotSame($select, $select->multiple());
+        $this->assertNotSame($select, $select->optionsData([], false));
+        $this->assertNotSame($select, $select->prompt());
+        $this->assertNotSame($select, $select->size());
     }
 
     public function testGroups(): void
@@ -72,7 +72,7 @@ final class DropDownListTest extends TestCase
         </optgroup>
         </select>
         HTML;
-        $html = DropDownList::widget()
+        $html = Select::widget()
             ->config($this->formModel, 'int')
             ->groups($this->groups)
             ->items($this->citiesGroups)
@@ -98,7 +98,7 @@ final class DropDownListTest extends TestCase
         </optgroup>
         </select>
         HTML;
-        $html = DropDownList::widget()
+        $html = Select::widget()
             ->config($this->formModel, 'int')
             ->items($this->citiesGroups)
             ->itemsAttributes(['2' => ['disabled' => true]])
@@ -119,7 +119,7 @@ final class DropDownListTest extends TestCase
         <option value="4" selected>Ekaterinburgo</option>
         </select>
         HTML;
-        $html = DropDownList::widget()
+        $html = Select::widget()
             ->config($this->formModel, 'array', ['unselectValue' => 0])
             ->items($this->cities)
             ->multiple()
@@ -146,7 +146,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            DropDownList::widget()->config($this->formModel, 'int')->optionsData($cities, true)->render(),
+            Select::widget()->config($this->formModel, 'int')->optionsData($cities, true)->render(),
         );
     }
 
@@ -168,7 +168,7 @@ final class DropDownListTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $html = DropDownList::widget()
+        $html = Select::widget()
             ->config($this->formModel, 'int')
             ->items($this->cities)
             ->prompt($prompt)
@@ -189,7 +189,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            DropDownList::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
         );
     }
 
@@ -205,7 +205,7 @@ final class DropDownListTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $html = DropDownList::widget()
+        $html = Select::widget()
             ->config($this->formModel, 'int')
             ->items($this->cities)
             ->multiple()
@@ -228,7 +228,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            DropdownList::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
         );
 
         // value int 1
@@ -243,7 +243,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            DropdownList::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
         );
 
         // value iterable
@@ -258,7 +258,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            DropdownList::widget()->config($this->formModel, 'array')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'array')->items($this->cities)->render(),
         );
 
         // value string '0'
@@ -273,7 +273,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            DropdownList::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
         );
 
         // value string '1'
@@ -288,7 +288,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            DropdownList::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
         );
 
         // value null
@@ -303,7 +303,7 @@ final class DropDownListTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            DropdownList::widget()->config($this->formModel, 'toNull')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'toNull')->items($this->cities)->render(),
         );
     }
 
@@ -312,7 +312,7 @@ final class DropDownListTest extends TestCase
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value must be a bool|float|int|iterable|string|Stringable|null.');
-        $html = DropdownList::widget()->config($this->formModel, 'object')->render();
+        $html = Select::widget()->config($this->formModel, 'object')->render();
     }
 
     protected function setUp(): void

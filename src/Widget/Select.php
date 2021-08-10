@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
-use Yiisoft\Html\Tag\Select;
+use Yiisoft\Html\Tag\Select as SelectTag;
 
 /**
  * Generates a drop-down list for the given form attribute.
@@ -17,7 +17,7 @@ use Yiisoft\Html\Tag\Select;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/select.html
  */
-final class DropDownList extends Widget
+final class Select extends Widget
 {
     use CommonAttribute;
 
@@ -241,7 +241,7 @@ final class DropDownList extends Widget
     {
         $new = clone $this;
 
-        $select = Select::tag();
+        $select = SelectTag::tag();
 
         if (isset($new->attributes['multiple']) && !isset($new->attributes['size'])) {
             $new = $new->size();
