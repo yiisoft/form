@@ -10,12 +10,12 @@ use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
-use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListWidget;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
 
 /*
  * Generates a list of checkboxes.
  *
- * A checkbox list allows multiple selection, like {@see ListBox}.
+ * A checkbox list allows multiple selection.
  */
 final class CheckboxList extends Widget
 {
@@ -23,12 +23,11 @@ final class CheckboxList extends Widget
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
-    /** @psalm-var Closure(CheckboxItem):string|null */
-    private ?Closure $itemFormatter = null;
     /** @var array<array-key, string> */
     private array $items = [];
     private array $itemsAttributes = [];
-    private string $unselect = '';
+    /** @psalm-var Closure(CheckboxItem):string|null */
+    private ?Closure $itemsFormatter = null;
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -83,27 +82,6 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * Callable, a callback that can be used to customize the generation of the HTML code corresponding to a single
-     * item in $items.
-     *
-     * The signature of this callback must be:
-     *
-     * ```php
-     * function ($index, $label, $name, $checked, $value)
-     * ```
-     *
-     * @param Closure(CheckboxItem):string|null $formatter
-     *
-     * @return static
-     */
-    public function itemFormater(?Closure $formatter): self
-    {
-        $new = clone $this;
-        $new->itemFormatter = $formatter;
-        return $new;
-    }
-
-    /**
      * The data used to generate the list of checkboxes.
      *
      * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
@@ -134,6 +112,27 @@ final class CheckboxList extends Widget
     {
         $new = clone $this;
         $new->itemsAttributes = $value;
+        return $new;
+    }
+
+    /**
+     * Callable, a callback that can be used to customize the generation of the HTML code corresponding to a single
+     * item in $items.
+     *
+     * The signature of this callback must be:
+     *
+     * ```php
+     * function ($index, $label, $name, $checked, $value)
+     * ```
+     *
+     * @param Closure $formatter
+     *
+     * @return static
+     */
+    public function itemsFormatter(?Closure $formatter): self
+    {
+        $new = clone $this;
+        $new->itemsFormatter = $formatter;
         return $new;
     }
 
@@ -173,7 +172,7 @@ final class CheckboxList extends Widget
     {
         $new = clone $this;
 
-        $checkboxList = ChecboxListWidget::create($new->getInputName());
+        $checkboxList = ChecboxListTag::create($new->getInputName());
 
         /** @var bool|float|int|string|Stringable|null */
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
@@ -207,7 +206,7 @@ final class CheckboxList extends Widget
             ->checkboxAttributes($new->attributes)
             ->containerAttributes($new->containerAttributes)
             ->containerTag($new->containerTag)
-            ->itemFormatter($new->itemFormatter)
+            ->itemFormatter($new->itemsFormatter)
             ->items($new->items)
             ->replaceCheckboxAttributes($new->itemsAttributes)
             ->uncheckValue($forceUncheckedValue)

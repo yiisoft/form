@@ -54,7 +54,7 @@ final class CheckboxListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testContainerWithNull(): void
+    public function testContainerTagWithNull(): void
     {
         $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
@@ -104,16 +104,16 @@ final class CheckboxListTest extends TestCase
         $this->assertNotSame($checkboxList, $checkboxList->containerAttributes([]));
         $this->assertNotSame($checkboxList, $checkboxList->containerTag(null));
         $this->assertNotSame($checkboxList, $checkboxList->disabled());
+        $this->assertNotSame($checkboxList, $checkboxList->items());
+        $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
         $this->assertNotSame(
             $checkboxList,
-            $checkboxList->itemFormater(
+            $checkboxList->itemsFormatter(
                 static function (CheckboxItem $item): string {
                     return '';
                 }
             ),
         );
-        $this->assertNotSame($checkboxList, $checkboxList->items());
-        $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
         $this->assertNotSame($checkboxList, $checkboxList->readOnly());
         $this->assertNotSame($checkboxList, $checkboxList->separator(''));
     }
@@ -146,7 +146,7 @@ final class CheckboxListTest extends TestCase
         $html = CheckboxList::widget()
             ->config($this->formModel, 'int')
             ->items($this->sex)
-            ->itemFormater(static function (CheckboxItem $item) {
+            ->itemsFormatter(static function (CheckboxItem $item) {
                 return $item->checked
                     ? "<div class='test-class'><label><input tabindex='{$item->index}' class='test-class' type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label></div>"
                     : "<div class='test-class'><label><input tabindex='{$item->index}' class='test-class' type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label></div>";
