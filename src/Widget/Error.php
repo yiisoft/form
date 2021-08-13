@@ -51,7 +51,7 @@ final class Error extends Widget
      *
      * Empty to render error messages without container {@see Html::tag()}.
      *
-     * @param null $value
+     * @param string $value
      *
      * @return static
      */
@@ -87,8 +87,10 @@ final class Error extends Widget
 
         unset($new->attributes['messageCallback']);
 
-        return $tag !== ''
+        $html = $tag !== ''
             ? CustomTag::name($tag)->attributes($new->attributes)->content($error)->encode($encode)->render()
             : $error;
+
+        return $error !== '' ? $html : '';
     }
 }

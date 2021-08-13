@@ -72,7 +72,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
         if ($nested !== null) {
-            /** @var ModelInterface $attributeNestedValue */
+            /** @var FormModelInterface $attributeNestedValue */
             $attributeNestedValue = $this->getAttributeValue($attribute);
             $hint = $attributeNestedValue->getAttributeHint($nested);
         }

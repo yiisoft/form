@@ -132,7 +132,7 @@ final class CheckboxTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The value must be a bool|float|int|string|Stringable|null.');
+        $this->expectExceptionMessage('Checkbox widget requires a bool|float|int|string|null value.');
         $html = Checkbox::widget()->config($this->formModel, 'array')->render();
     }
 

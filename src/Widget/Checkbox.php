@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Stringable;
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 
@@ -21,6 +21,8 @@ final class Checkbox extends Widget
     use CommonAttribute;
 
     private bool $enclosedByLabel = true;
+    private string $label = '';
+    private array $labelAttributes = [];
 
     /**
      * If the widget should be enclosed by label.
@@ -70,7 +72,7 @@ final class Checkbox extends Widget
     public function label(string $value): self
     {
         $new = clone $this;
-        $new->attributes['label'] = $value;
+        $new->label = $value;
         return $new;
     }
 
@@ -88,7 +90,7 @@ final class Checkbox extends Widget
     public function labelAttributes(array $value = []): self
     {
         $new = clone $this;
-        $new->attributes['labelAttributes'] = $value;
+        $new->labelAttributes = $value;
         return $new;
     }
 
@@ -101,27 +103,19 @@ final class Checkbox extends Widget
 
         $checkbox = CheckboxTag::tag();
 
-        /** @var bool|float|int|string|Stringable|null  */
-        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
-
-        unset($new->attributes['forceUncheckedValue']);
+        /** @var bool|float|int|string|null  */
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         $value = $new->getValue();
 
         if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
+            throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
         }
 
         if ($new->enclosedByLabel === true) {
             /** @var string */
-            $label = $new->attributes['label'] ?? $new->getLabel();
-
-            /** @var array */
-            $labelAttributes = $new->attributes['labelAttributes'] ?? [];
-
-            unset($new->attributes['label'], $new->attributes['labelAttributes']);
-
-            $checkbox = $checkbox->label($label, $labelAttributes);
+            $label = $new->label !== '' ? $new->label : $new->getLabel();
+            $checkbox = $checkbox->label($label, $new->labelAttributes);
         }
 
         return $checkbox

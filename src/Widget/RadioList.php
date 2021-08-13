@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Closure;
 use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Widget\RadioList\RadioItem;

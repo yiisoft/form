@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Input;
 
@@ -129,8 +130,6 @@ final class Password extends Widget
     {
         $new = clone $this;
 
-        $value = $new->getValue();
-
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.value */
         $value = $new->getValue();
 
@@ -138,6 +137,6 @@ final class Password extends Widget
             throw new InvalidArgumentException('Password widget requires a string value.');
         }
 
-        return Input::password($new->getId(), $new->getValue())->attributes($new->attributes)->render();
+        return Input::password($new->getId(), $value)->attributes($new->attributes)->render();
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Tag\Label as LabelTag;
 
 /**
@@ -37,7 +38,7 @@ final class Label extends Widget
     /**
      * This specifies the label to be displayed.
      *
-     * @param string $value
+     * @param string $value The label to be displayed.
      *
      * @return static
      *
@@ -60,10 +61,20 @@ final class Label extends Widget
         $new = clone $this;
 
         /** @var string */
+        $label = $new->label !== '' ? $new->label : $new->getLabel();
+
+        /** @var bool|string */
+        $attributeLabel =  ArrayHelper::remove($new->attributes, 'label', '');
+
+        if (is_string($attributeLabel) && $attributeLabel !== '') {
+            $label = $attributeLabel;
+        }
+
+        /** @var string */
         $for = $new->attributes['for'] ?? $new->getId();
 
-        $label = $new->label === '' ? $new->getLabel() : $new->label;
-
-        return LabelTag::tag()->attributes($new->attributes)->content($label)->forId($for)->render();
+        return $attributeLabel !== false
+            ? LabelTag::tag()->attributes($new->attributes)->content($label)->forId($for)->render()
+            : '';
     }
 }

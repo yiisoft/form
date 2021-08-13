@@ -109,7 +109,7 @@ final class ErrorSummary extends Widget
         /** @var bool */
         $showAllErrors = $new->attributes['showAllErrors'] ?? false;
 
-        /** @var string */
+        /** @psalm-var non-empty-string */
         $tag = $new->attributes['tag'] ?? 'div';
 
         unset(

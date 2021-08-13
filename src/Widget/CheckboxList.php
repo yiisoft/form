@@ -28,6 +28,7 @@ final class CheckboxList extends Widget
     private array $itemsAttributes = [];
     /** @psalm-var Closure(CheckboxItem):string|null */
     private ?Closure $itemsFormatter = null;
+    private string $separator = '';
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -48,14 +49,14 @@ final class CheckboxList extends Widget
     /**
      * The tag name for the container element.
      *
-     * @param string|null $value tag name. if `null` disabled rendering.
+     * @param string|null $tag tag name. if `null` disabled rendering.
      *
      * @return static
      */
-    public function containerTag(?string $name): self
+    public function containerTag(?string $tag = null): self
     {
         $new = clone $this;
-        $new->containerTag = $name;
+        $new->containerTag = $tag;
         return $new;
     }
 
@@ -161,7 +162,7 @@ final class CheckboxList extends Widget
     public function separator(string $value): self
     {
         $new = clone $this;
-        $new->attributes['separator'] = $value;
+        $new->separator = $value;
         return $new;
     }
 
@@ -174,6 +175,9 @@ final class CheckboxList extends Widget
 
         $checkboxList = ChecboxListTag::create($new->getInputName());
 
+        /** @var string */
+        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
+
         /** @var bool|float|int|string|Stringable|null */
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
@@ -181,25 +185,17 @@ final class CheckboxList extends Widget
         $value = $new->getValue();
 
         if (is_object($value)) {
-            throw new InvalidArgumentException('The value must be a bool|float|int|iterable|string|Stringable|null.');
-        }
-
-        /** @var string */
-        $separator = $new->attributes['separator'] ?? '';
-
-        unset($new->attributes['itemsAttributes'], $new->attributes['separator']);
-
-        /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
-        if ($separator !== '') {
-            $checkboxList = $checkboxList->separator($separator);
+            throw new InvalidArgumentException('CheckboxList widget requires a int|string|iterable|null value.');
         }
 
         if (is_iterable($value)) {
             $checkboxList = $checkboxList->values($value);
         } elseif (is_scalar($value)) {
             $checkboxList = $checkboxList->value($value);
+        }
+
+        if ($new->separator !== '') {
+            $checkboxList = $checkboxList->separator($new->separator);
         }
 
         return $checkboxList

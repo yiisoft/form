@@ -23,7 +23,7 @@ final class Hint extends Widget
         /** @var string */
         $hint = $new->attributes['hint'] ?? $new->getAttributeHint();
 
-        /** @var string */
+        /** @psalm-var non-empty-string */
         $tag = $new->attributes['tag'] ?? 'div';
 
         unset($new->attributes['hint'], $new->attributes['tag']);
