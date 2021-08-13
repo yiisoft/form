@@ -41,7 +41,7 @@ final class Form extends Widget
         $hiddenInputs = [];
 
         /** @var string */
-        $new->attributes['id'] = isset($new->attributes['id']) ? $new->attributes['id'] : $new->id;
+        $new->attributes['id'] = $new->attributes['id'] ?? $new->id;
 
         if ($new->attributes['id'] === '') {
             unset($new->attributes['id']);

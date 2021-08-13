@@ -64,7 +64,7 @@ final class Label extends Widget
         $label = $new->label !== '' ? $new->label : $new->getLabel();
 
         /** @var bool|string */
-        $attributeLabel =  ArrayHelper::remove($new->attributes, 'label', '');
+        $attributeLabel = ArrayHelper::remove($new->attributes, 'label', '');
 
         if (is_string($attributeLabel) && $attributeLabel !== '') {
             $label = $attributeLabel;

@@ -88,7 +88,7 @@ final class FormTest extends TestCase
                 '<form action="/foo" method="POST" _csrf="tokenCsrf">' . PHP_EOL .
                 '<input type="hidden" name="_csrf" value="tokenCsrf">',
                 'POST',
-                '_csrf' => 'tokenCsrf'
+                '_csrf' => 'tokenCsrf',
             ],
         ];
     }
