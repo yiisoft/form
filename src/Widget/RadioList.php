@@ -8,7 +8,6 @@ use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
 
@@ -184,7 +183,7 @@ final class RadioList extends Widget
 
         unset($new->attributes['itemsAttributes'], $new->attributes['separator']);
 
-        /** @var null|scalar|Stringable|iterable<int, Stringable|scalar> */
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = $new->getValue();
 
         if (!is_scalar($value)) {

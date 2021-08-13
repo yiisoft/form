@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\File;
@@ -45,7 +44,7 @@ final class FileTest extends TestCase
         $html = File::widget()
             ->config($this->formModel, 'string', [
                 'forceUncheckedValue' => '',
-                'hiddenAttributes' => ['id' => 'test-id']
+                'hiddenAttributes' => ['id' => 'test-id'],
             ])
             ->render();
         $this->assertSame(
