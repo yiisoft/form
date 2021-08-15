@@ -16,6 +16,7 @@ final class TypeForm extends FormModel
     private ?object $object = null;
     private string $string = '';
     private string $toCamelCase = '';
+    private string $toDate = '';
     private ?string $toNull = null;
 
     public function customError(): string

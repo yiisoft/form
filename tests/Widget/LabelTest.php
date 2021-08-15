@@ -14,6 +14,17 @@ final class LabelTest extends TestCase
 {
     private TypeForm $formModel;
 
+    /**
+     * @link https://github.com/yiisoft/form/issues/85
+     */
+    public function testEncodeFalse(): void
+    {
+        $this->assertEquals(
+            '<label for="typeform-string">My&nbsp;Field</label>',
+            Label::widget()->config($this->formModel, 'string', ['encode' => false])->label('My&nbsp;Field')->render(),
+        );
+    }
+
     public function testFor(): void
     {
         $this->assertSame(

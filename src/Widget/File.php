@@ -36,23 +36,6 @@ final class File extends Widget
     }
 
     /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
-        return $new;
-    }
-
-    /**
      * When the multiple Boolean attribute is specified, the file input allows the user to select more than one file.
      *
      * @param bool $value
@@ -102,13 +85,7 @@ final class File extends Widget
         }
 
         $new->attributes['value'] = false;
-        return
-            $hiddenInput .
-            Input::tag()
-                ->type('file')
-                ->attributes($new->attributes)
-                ->id($new->getId())
-                ->name($name)
-                ->render();
+
+        return $hiddenInput . Input::file($name)->attributes($new->attributes)->id($new->getId())->render();
     }
 }

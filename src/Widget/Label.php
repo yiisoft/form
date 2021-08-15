@@ -66,6 +66,9 @@ final class Label extends Widget
         /** @var bool|string */
         $attributeLabel = ArrayHelper::remove($new->attributes, 'label', '');
 
+        /** @var bool */
+        $encode = $new->attributes['encode'] ?? false;
+
         if (is_string($attributeLabel) && $attributeLabel !== '') {
             $label = $attributeLabel;
         }
@@ -74,7 +77,7 @@ final class Label extends Widget
         $for = $new->attributes['for'] ?? $new->getId();
 
         return $attributeLabel !== false
-            ? LabelTag::tag()->attributes($new->attributes)->content($label)->forId($for)->render()
+            ? LabelTag::tag()->attributes($new->attributes)->content($label)->encode($encode)->forId($for)->render()
             : '';
     }
 }

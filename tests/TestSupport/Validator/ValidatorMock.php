@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Stub;
+namespace Yiisoft\Form\Tests\TestSupport\Validator;
 
 use Yiisoft\Validator\Formatter;
 use Yiisoft\Validator\ResultSet;

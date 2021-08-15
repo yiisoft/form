@@ -37,7 +37,7 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('DateTime Local widget requires a string value.');
+        $this->expectExceptionMessage('DateTimeLocal widget requires a string value.');
         $html = DateTimeLocal::widget()->config($this->formModel, 'array')->render();
     }
 

@@ -41,7 +41,24 @@ trait CommonAttribute
     public function disabled(bool $value = true): self
     {
         $new = clone $this;
-        $new->attributes['disabled'] = $value;
+        $new->disabled = $value;
+        return $new;
+    }
+
+    /**
+     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
+     * attribute of a {@see Form} element in the same document.
+     *
+     * @param string $value
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
+     */
+    public function form(string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['form'] = $value;
         return $new;
     }
 
@@ -57,7 +74,22 @@ trait CommonAttribute
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->attributes['required'] = $value;
+        $new->attributes['required'] = true;
+        return $new;
+    }
+
+    /**
+     * The readonly attribute is a boolean attribute that controls whether or not the user can edit the form control.
+     * When specified, the element is not mutable.
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
+     */
+    public function readonly(): self
+    {
+        $new = clone $this;
+        $new->attributes['readonly'] = true;
         return $new;
     }
 

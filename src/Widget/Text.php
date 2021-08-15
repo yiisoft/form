@@ -17,6 +17,8 @@ final class Text extends Widget
 {
     use CommonAttribute;
 
+    private string $dirname = '';
+
     /**
      * Enables submission of a value for the directionality of the element, and gives the name of the field that
      * contains that value.
@@ -34,24 +36,7 @@ final class Text extends Widget
         }
 
         $new = clone $this;
-        $new->attributes['dirname'] = $value;
-        return $new;
-    }
-
-    /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.form
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
+        $new->dirname = $value;
         return $new;
     }
 
@@ -109,24 +94,6 @@ final class Text extends Widget
     }
 
     /**
-     * A Boolean attribute which, if present, means this field cannot be edited by the user.
-     * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
-     * property.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.readonly
-     */
-    public function readonly(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = $value;
-        return $new;
-    }
-
-    /**
      * The height of the <select> with multiple is true.
      *
      * Default value is 4.
@@ -156,6 +123,10 @@ final class Text extends Widget
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Text widget must be a string.');
+        }
+
+        if ($new->dirname !== '') {
+            $new->attributes['dirname'] = $new->dirname;
         }
 
         return Input::text()

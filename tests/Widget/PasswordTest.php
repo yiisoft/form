@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\Password;
@@ -88,6 +89,13 @@ final class PasswordTest extends TestCase
             '<input type="password" name="typeform-string" value="">',
             $html = Password::widget()->config($this->formModel, 'string')->render(),
         );
+    }
+
+    public function testValueException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Password widget must be a string.');
+        Password::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

@@ -32,8 +32,8 @@ final class Select extends Widget
     /**
      * The attributes for the optgroup tags.
      *
-     * The structure of this is similar to that of 'options', except that the array keys represent the optgroup labels
-     * specified in $items.
+     * The structure of this is similar to that of 'attributes', except that the array keys represent the optgroup
+     * labels specified in $items.
      *
      * ```php
      * [
@@ -267,7 +267,7 @@ final class Select extends Widget
         $value = $new->getValue() ?? '';
 
         if (is_object($value)) {
-            throw new InvalidArgumentException('The value must be a bool|float|int|iterable|string|Stringable|null.');
+            throw new InvalidArgumentException('Select widget required bool|float|int|iterable|string|null.');
         }
 
         /** @var string|null */

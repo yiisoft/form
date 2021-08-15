@@ -39,23 +39,6 @@ final class Checkbox extends Widget
     }
 
     /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
-        return $new;
-    }
-
-    /**
      * Label displayed next to the checkbox.
      *
      * It will NOT be HTML-encoded, therefore you can pass in HTML code such as an image tag. If this is is coming from

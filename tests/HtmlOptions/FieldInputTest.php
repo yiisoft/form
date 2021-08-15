@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\HtmlOptions;
 
+use PHPUnit\Framework\TestCase;
 use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Form\Tests\Stub\HtmlOptionsForm;
-use Yiisoft\Form\Tests\TestCase;
 use Yiisoft\Form\Widget\Field;
 
 final class FieldInputTest extends TestCase

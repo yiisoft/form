@@ -4,174 +4,268 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use InvalidArgumentException;
+use ReflectionException;
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Factory\Exception\InvalidConfigException;
 use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Form\Widget\Attribute\FieldAttribute;
 use Yiisoft\Html\Html;
+use Yiisoft\Html\Tag\Div;
 use Yiisoft\Widget\Widget;
-use function array_merge;
+
 use function strtr;
 
 /**
- * Renders the field widget along with label, error tag and hint tag (if any) according to template.
+ * Renders the field widget along with label and hint tag (if any) according to template.
  */
 final class Field extends Widget
 {
-    private const DEFAULT_CONTAINER_OPTIONS = ['class' => 'form-group'];
-    private const DEFAULT_ERROR_OPTIONS = ['class' => 'help-block'];
-    private const DEFAULT_HINT_OPTIONS = ['class' => 'hint-block'];
-    private const DEFAULT_LABEL_OPTIONS = ['class' => 'control-label'];
+    use FieldAttribute;
 
-    private FormModelInterface $data;
-    private string $attribute;
-    private array $options = [];
-    private array $inputOptions = [];
-    private array $errorOptions = [];
-    private array $hintOptions = [];
-    private array $labelOptions = [];
-    private bool $ariaAttribute = true;
-    private string $errorCssClass = 'has-error';
-    private string $errorSummaryCssClass = 'error-summary';
-    private string $inputCssClass = 'form-control';
-    private string $requiredCssClass = 'required';
-    private string $successCssClass = 'has-success';
-    private string $template = "{label}\n{input}\n{hint}\n{error}";
-    private string $validatingCssClass = 'validating';
-    private string $validationStateOn = 'input';
-    private ?string $inputId = null;
+    private bool $ariaDescribedBy = false;
+    private string $attribute = '';
+    private array $attributes = [];
+    private string $containerClass = '';
+    private string $errorClass = '';
+    private string $errorMessage = '';
+    private string $hintClass = '';
+    private string $id = '';
+    private string $inputClass = '';
+    private string $labelClass = '';
+    private string $invalidClass = '';
+    private string $validClass = '';
     private array $parts = [];
-    private bool $skipForInLabel = false;
-    private bool $containerEnabled = true;
+    private string $template = "{label}\n{input}\n{hint}\n{error}";
+    private FormModelInterface $formModel;
 
     /**
-     * Renders the whole field.
+     * Renders a checkbox.
      *
-     * This method will generate the label, error tag, input tag and hint tag (if any), and assemble them into HTML
-     * according to {@see template}.
+     * This method will generate the `checked` tag attribute according to the model attribute value.
      *
-     * @param string|null $content the content within the field container.
+     * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
+     * handled:
+     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see Checkbox}.
+     * This attribute will render a hidden input so that if the {@see Checkbox} is not checked and is submitted,
+     * the value of this attribute will still be submitted to the server via the hidden input. If you do not want any
+     * hidden input, you should explicitly no set.
+     * - `label`: string, a label displayed next to the checkbox. It will NOT be HTML-encoded. Therefore you can pass
+     * in HTML code such as an image tag. If this is coming from end users, you should
+     * {@see \Yiisoft\Html\Html::encode()|encode} it to prevent XSS attacks.
+     * When this option is specified, the checkbox will be enclosed by a label tag.
+     * - `labelAttributes`: array, the HTML attributes for the label tag. This is only used when the `label` attributes
+     * is specified.
      *
-     * If `null` (not set), the default methods will be called to generate the label, error tag and input tag, and use
-     * them as the content.
+     * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
+     * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
      *
-     * @throws InvalidConfigException
+     * @param bool $enclosedByLabel whether to enclose the checkbox with the label.
      *
-     * @return string the rendering result.
+     * @return static the field object itself.
      */
-    public function run(?string $content = null): string
-    {
-        if ($content === null) {
-            if (!isset($this->parts['{input}'])) {
-                $this->textInput();
-            }
-
-            if (!isset($this->parts['{label}'])) {
-                $this->label();
-            }
-
-            if (!isset($this->parts['{error}'])) {
-                $this->error();
-            }
-
-            if (!isset($this->parts['{hint}'])) {
-                $this->hint();
-            }
-
-            $content = strtr($this->template, $this->parts);
-        } else {
-            $content = $content($this);
-        }
-
-        if ($this->containerEnabled) {
-            return $this->renderBegin() . "\n" . $content . "\n" . $this->renderEnd();
-        }
-
-        return $content;
-    }
-
-    /**
-     * Renders the opening tag of the field container.
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return string the rendering result.
-     */
-    private function renderBegin(): string
+    public function checkbox(array $attributes = [], bool $enclosedByLabel = true): self
     {
         $new = clone $this;
+        $checkbox = Checkbox::widget();
+        $new->setInputAttributes($attributes);
 
-        $inputId = $new->addInputId();
-
-        $class = [];
-        $class[] = "field-$inputId";
-        $class[] = $new->options['class'] ?? '';
-
-        $new->options['class'] = trim(implode(' ', array_merge(self::DEFAULT_CONTAINER_OPTIONS, $class)));
-
-        $new->addErrorCssClassToContainer();
-
-        $tag = ArrayHelper::remove($new->options, 'tag', 'div');
-
-        return Html::openTag($tag, $new->options);
-    }
-
-    /**
-     * Renders the closing tag of the field container.
-     *
-     * @return string the rendering result.
-     */
-    private function renderEnd(): string
-    {
-        return Html::closeTag(ArrayHelper::keyExists($this->options, 'tag') ? $this->options['tag'] : 'div');
-    }
-
-    /**
-     * Generates a label tag for {@see attribute}.
-     *
-     * @param bool $enabledLabel enabled/disable <label>.
-     * @param array $options the tag options in terms of name-value pairs. It will be merged with {@see labelOptions}.
-     * The options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded using
-     * {@see \Yiisoft\Html\Html::encode()}. If a value is `null`, the corresponding attribute will not be rendered.
-     * @param string|null $label the label to use.
-     * If `null`, the label will be generated via {@see FormModel::getAttributeLabel()}.
-     * Note that this will NOT be {@see \Yiisoft\Html\Html::encode()|encoded}.
-     *
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function label(bool $enabledLabel = true, array $options = [], ?string $label = null): self
-    {
-        if ($enabledLabel === false) {
-            $this->parts['{label}'] = '';
-
-            return $this;
+        if ($enclosedByLabel === true) {
+            $new->parts['{label}'] = '';
         }
 
+        if (isset($attributes['label'])) {
+            $checkbox = $checkbox->label($attributes['label']);
+        }
+
+        if (isset($attributes['labelAttributes'])) {
+            $checkbox = $checkbox->labelAttributes($attributes['labelAttributes']);
+        }
+
+        unset($attributes['label'], $attributes['labelAttributes']);
+
+        $new->parts['{input}'] = $checkbox
+            ->config($new->formModel, $new->attribute, $attributes)
+            ->enclosedByLabel($enclosedByLabel)
+            ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a list of checkboxes.
+     *
+     * A checkbox list allows multiple selection, As a result, the corresponding submitted value is an array.
+     * The selection of the checkbox list is taken from the value of the model attribute.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
+     * handled:
+     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see CheckboxList}.
+     * This attribute will render a hidden input so that if the {@see CheckboxList} is not checked and is submitted, the
+     * value of this attribute will still be submitted to the server via the hidden input. If you do not want any hidden
+     * input, you should explicitly no set.
+     * - `itemsAttributes`: array, the HTML attributes for the items checkboxlist. This is only used when the `items`
+     * attribute is specified.
+     * - `separator`: string, the HTML code that separates items.
+     *
+     * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
+     * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
+     *
+     * @param array $items the data item used to generate the checkbox list. The array values are the labels,
+     * while the array keys are the corresponding checkbox values.
+     *
+     * @return static the field object itself.
+     */
+    public function checkboxList(array $attributes = [], array $items = []): self
+    {
         $new = clone $this;
+        $checkboxList = CheckboxList::widget();
+        $new->setInputAttributes($attributes);
+        $containerTag = ArrayHelper::remove($attributes, 'containerTag', '');
 
-        if ($label !== null) {
-            $new->labelOptions['label'] = $label;
+        if (isset($attributes['containerAttributes'])) {
+            $checkboxList = $checkboxList->containerAttributes($attributes['containerAttributes']);
         }
 
-        if ($new->data->isAttributeRequired($new->attribute)) {
-            Html::addCssClass($options, $new->requiredCssClass);
+        if ($containerTag === false) {
+            $checkboxList = $checkboxList->containerTag();
+        } elseif ($containerTag !== '') {
+            $checkboxList = $checkboxList->containerTag($containerTag);
         }
 
-        $new->labelOptions($options);
-        $new->skipForInLabel();
+        if (isset($attributes['disabled'])) {
+            $checkboxList = $checkboxList->disabled();
+        }
 
-        unset($options['class']);
+        if (isset($attributes['itemsAttributes'])) {
+            $checkboxList = $checkboxList->itemsAttributes($attributes['itemsAttributes']);
+        }
 
-        $new->labelOptions = array_merge($new->labelOptions, $options);
+        if (isset($attributes['itemsFormatter'])) {
+            $checkboxList = $checkboxList->itemsFormatter($attributes['itemsFormatter']);
+        }
 
-        $this->parts['{label}'] = Label::widget()
-            ->config($new->data, $new->attribute, $new->labelOptions)
-            ->run();
+        if (isset($attributes['readonly'])) {
+            $checkboxList = $checkboxList->readOnly();
+        }
 
-        return $this;
+        if (isset($attributes['separator'])) {
+            $checkboxList = $checkboxList->separator($attributes['separator']);
+        }
+
+        unset(
+            $attributes['disabled'],
+            $attributes['itemsAttributes'],
+            $attributes['itemsFormatter'],
+            $attributes['readonly'],
+            $attributes['separator'],
+        );
+
+        $new->parts['{input}'] = $checkboxList
+            ->config($new->formModel, $new->attribute, $attributes)
+            ->items($items)
+            ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a date widget
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs.
+     *
+     * @return static the field object itself.
+     */
+    public function date(array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = Date::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a datetime widget
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs.
+     *
+     * @return static the field object itself.
+     */
+    public function datetime(array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = DateTime::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a datetimelocal widget
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs.
+     *
+     * @return static the field object itself.
+     */
+    public function datetimelocal(array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = DateTimeLocal::widget()
+            ->config($new->formModel, $new->attribute, $attributes)
+            ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a file widget.
+     *
+     * This method will generate the `name` tag attribute automatically for the model attribute unless they are
+     * explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag options in terms of name-value pairs. These will be rendered as the attributes
+     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function file(array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = File::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a hidden widget.
+     *
+     * Note that this method is provided for completeness. In most cases because you do not need to validate a hidden
+     * widget, you should not need to use this method.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag options in terms of name-value pairs. These will be rendered as the attributes
+     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function hidden(array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->setInputAttributes($attributes);
+
+        $new->parts['{label}'] = '';
+        $new->parts['{hint}'] = '';
+        $new->parts['{error}'] = '';
+        $new->parts['{input}'] = Hidden::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
     }
 
     /**
@@ -179,800 +273,373 @@ final class Field extends Widget
      *
      * Note that even if there is no validation error, this method will still return an empty error tag.
      *
-     * @param array $options the tag options in terms of name-value pairs. It will be merged with
-     * {@see DEFAULT_ERROR_OPTIONS}.
-     * The options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded using
-     * {@see \Yiisoft\Html\Html::encode()}. If this parameter is `false`, no error tag will be rendered.
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the hint tag. The values will be HTML-encoded using {@see Html::encode()}. The following options
+     * are specially handled:
+     * - `encode`: boolean, whether to encode the error. If `false`, the error will be left as is.
+     * - `errorMessage`: string, the error message to be displayed. If this is not set, a default error message will be
+     * displayed.
+     * - `messageCallback`: callback, a PHP callback that returns the error message to be displayed.
+     * - `tag`: string, the tag name of the container. if not set, `div` will be used. if `null`, no container tag will
+     * be rendered.
      *
-     * The following options are specially handled:
-     *
-     * - `tag`: this specifies the tag name. If not set, `div` will be used. See also {@see \Yiisoft\Html\Html::tag()}.
-     *
-     * If you set a custom `id` for the error element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     *@throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     *
-     * {@see DEFAULT_ERROR_OPTIONS}
+     * @return static the field object itself.
      */
-    public function error(array $options = []): self
+    public function error(array $attributes = []): self
     {
         $new = clone $this;
+        $errorMessage = $attributes['errorMessage'] ?? '';
 
-        $new->errorOptions($options);
+        if ($new->errorClass !== '') {
+            Html::addCssClass($attributes, $new->errorClass);
+        }
 
-        unset($options['class']);
+        $new->parts['{error}'] = Error::widget()
+            ->config($new->formModel, $new->attribute, $attributes)
+            ->message($errorMessage)
+            ->render();
 
-        $new->errorOptions = array_merge($new->errorOptions, $options);
-
-        $this->parts['{error}'] = Error::widget()
-            ->config($new->data, $new->attribute, $new->errorOptions)
-            ->run();
-
-        return $this;
+        return $new;
     }
 
     /**
      * Renders the hint tag.
      *
-     * @param string|null $content the hint content. If `null`, the hint will be generated via
-     * {@see FormModel::getAttributeHint()}.
-     * @param bool $typeHint If `false`, the generated field will not contain the hint part. Note that this will NOT be
-     * {@see \Yiisoft\Html\Html::encode()|encoded}.
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the hint tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the hint tag. The values will be HTML-encoded using {@see Html::encode()}. The following options
+     * are specially handled:
+     * - `id`: string, the hint tag id. If not set, an id will be generated from the hint content.
+     * - `hint`: string, the content of the hint tag. Note that it will NOT be HTML-encoded. If no set, the hint will be
+     * generated via {@see \Yiisoft\Form\FormModel::getAttributeHint()}. if `null` it will not be rendered.
+     * - `tag`: string, the tag name of the hint tag. if not set, `div` will be used. if `null` no tag will be used.
      *
+     * @return static
+     */
+    public function hint(array $attributes = []): self
+    {
+        $new = clone $this;
+
+        if ($new->ariaDescribedBy === true) {
+            $attributes['id'] = $new->getId();
+        }
+
+        if ($new->hintClass !== '') {
+            Html::addCssClass($attributes, $new->hintClass);
+        }
+
+        $new->parts['{hint}'] = Hint::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Generates a label tag for {@see attribute}.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the label tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
      * The following options are specially handled:
-     *
-     * - `tag`: this specifies the tag name. If not set, `div` will be used. See also {@see \Yiisoft\Html\Html::tag()}.
-     *
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function hint(?string $content = null, bool $typeHint = true, array $options = []): self
-    {
-        if ($typeHint === false) {
-            $this->parts['{hint}'] = '';
-
-            return $this;
-        }
-
-        $new = clone $this;
-
-        $new->hintOptions($options);
-
-        unset($options['class']);
-
-        if ($content !== null) {
-            $new->hintOptions['hint'] = $content;
-        }
-
-        $new->hintOptions = array_merge($new->hintOptions, $options);
-
-        $this->parts['{hint}'] = Hint::widget()
-            ->config($new->data, $new->attribute, $new->hintOptions)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders an input tag.
-     *
-     * @param string $type the input type (e.g. `text`, `password`).
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function input(string $type, array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setAriaAttributes($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = Input::widget()
-            ->type($type)
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a text input.
-     *
-     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
-     * they are explicitly specified in `$options`.
-     *
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes
-     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     *
-     * The following special options are recognized:
-     *
-     * Note that if you set a custom `id` for the input element, you may need to adjust the value of {@see selectors}
-     * accordingly.
-     *
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function textInput(array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setAriaAttributes($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = TextInput::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a hidden input.
-     *
-     * Note that this method is provided for completeness. In most cases because you do not need to validate a hidden
-     * input, you should not need to use this method. Instead, you should use
-     * {@see \Yiisoft\Html\Html::activeHiddenInput()}.
-     *
-     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
-     * they are explicitly specified in `$options`.
-     *
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function hiddenInput(array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->inputOptions($options);
-
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{label}'] = '';
-        $this->parts['{hint}'] = '';
-        $this->parts['{error}'] = '';
-        $this->parts['{input}'] = HiddenInput::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a password input.
-     *
-     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
-     * they are explicitly specified in `$options`.
-     *
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function passwordInput(array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setAriaAttributes($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = PasswordInput::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a file input.
-     *
-     * This method will generate the `name` tag attribute automatically for the model attribute unless
-     * they are explicitly specified in `$options`.
-     *
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     * @param bool $withoutHiddenInput enable/disable hidden input field.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function fileInput(array $options = [], bool $withoutHiddenInput = false): self
-    {
-        $new = clone $this;
-
-        $new->setAriaAttributes($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-        $new->setForInLabel($options);
-
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = FileInput::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->withoutHiddenInput($withoutHiddenInput)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a text area.
-     *
-     * The model attribute value will be used as the content in the textarea.
-     *
-     * @param array $options the tag options in terms of name-value pairs. These will be rendered as the attributes of
-     * the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     *
-     * If you set a custom `id` for the textarea element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function textArea(array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setAriaAttributes($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = TextArea::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a radio button.
-     *
-     * This method will generate the `checked` tag attribute according to the model attribute value.
-     *
-     * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
-     *
-     * - `uncheck`: string, the value associated with the uncheck state of the radio button. If not set, it will take
-     * the default value `0`. This method will render a hidden input so that if the radio button is not checked and is
-     * submitted, the value of this attribute will still be submitted to the server via the hidden input. If you do not
-     * want any hidden input, you should explicitly set this option as `null`.
-     * - `label`: string, a label displayed next to the radio button. It will NOT be HTML-encoded. Therefore you can
-     * pass in HTML code such as an image tag. If this is coming from end users, you should
-     * {@see \Yiisoft\Html\Html::encode()|encode} it to prevent XSS attacks.
-     * When this option is specified, the radio button will be enclosed by a label tag. If you do not want any label,
-     * you should explicitly set this option as `null`.
-     * - `labelOptions`: array, the HTML attributes for the label tag. This is only used when the `label` option is
+     * - `for`: string, the ID of the input element the label is associated with.
+     * - `label`: string, the content of the label tag. Note that it will NOT be HTML-encoded. If no set, the hint will
+     * be generated via {@see \Yiisoft\Form\FormModel::getAttributeLabel()}. if `null` it will not be rendered.
+     * - `labelAttribute`: array, the HTML attributes for the label tag. This is only used when the `label` attribute is
      * specified.
      *
-     * The rest of the options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded
-     * using {@see \Yiisoft\Html\Html::encode()}. If a value is `null`, the corresponding attribute will not be
-     * rendered.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     * @param bool $enclosedByLabel whether to enclose the radio within the label.
-     * If `true`, the method will still use {@see template} to layout the radio button and the error message except
-     * that the radio is enclosed by the label tag.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
+     * @return static the field object itself.
      */
-    public function radio(array $options = [], bool $enclosedByLabel = true): self
+    public function label(array $attributes = []): self
     {
         $new = clone $this;
 
-        if ($enclosedByLabel) {
-            $this->parts['{label}'] = '';
+        if ($new->labelClass !== '') {
+            Html::addCssClass($attributes, $new->labelClass);
         }
 
-        $this->parts['{input}'] = Radio::widget()
-            ->config($new->data, $new->attribute, $options)
-            ->enclosedByLabel($enclosedByLabel)
-            ->run();
+        $new->parts['{label}'] = Label::widget()->config($new->formModel, $new->attribute, $attributes)->render();
 
-        $new->setAriaAttributes($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-
-        return $this;
+        return $new;
     }
 
     /**
-     * Renders a checkbox.
+     * Renders a password widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function password(array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = Password::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a radio button widget.
      *
      * This method will generate the `checked` tag attribute according to the model attribute value.
      *
-     * @param array $options the tag options in terms of name-value pairs. The following options are specially handled:
-     *
-     * - `uncheck`: string, the value associated with the uncheck state of the radio button. If not set, it will take
-     * the default value `0`. This method will render a hidden input so that if the radio button is not checked and is
-     * submitted, the value of this attribute will still be submitted to the server via the hidden input. If you do not
-     * want any hidden input, you should explicitly set this option as `null`.
+     * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
+     * handled:
+     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see Radio}.
+     * This attribute will render a hidden input so that if the {@see Radio} is not checked and is submitted,
+     * the value of this attribute will still be submitted to the server via the hidden input. If you do not want any
+     * hidden input, you should explicitly no set.
      * - `label`: string, a label displayed next to the checkbox. It will NOT be HTML-encoded. Therefore you can pass
      * in HTML code such as an image tag. If this is coming from end users, you should
      * {@see \Yiisoft\Html\Html::encode()|encode} it to prevent XSS attacks.
-     * When this option is specified, the checkbox will be enclosed by a label tag. If you do not want any label, you
-     * should explicitly set this option as `null`.
-     * - `labelOptions`: array, the HTML attributes for the label tag. This is only used when the `label` option is
-     * specified.
+     * When this option is specified, the radio will be enclosed by a label tag.
+     * - `labelAttributes`: array, the HTML attributes for the label tag. This is only used when the `label` attributes
+     * is specified.
      *
-     * The rest of the options will be rendered as the attributes of the resulting tag. The values will be HTML-encoded
-     * using {@see \Yiisoft\Html\Html::encode()}. If a value is `null`, the corresponding attribute will not be
-     * rendered.
+     * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
+     * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
      *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     * @param bool $enclosedByLabel whether to enclose the checkbox within the label.
-     * If `true`, the method will still use [[template]] to layout the checkbox and the error message except that the
-     * checkbox is enclosed by the label tag.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
+     * @param bool $enclosedByLabel whether to enclose the checkbox with the label.
      *
      * @return self the field object itself.
      */
-    public function checkbox(array $options = [], bool $enclosedByLabel = true): self
+    public function radio(array $attributes = [], bool $enclosedByLabel = true): self
     {
         $new = clone $this;
+        $radio = Radio::widget();
+        $new->setInputAttributes($attributes);
 
-        if ($enclosedByLabel) {
-            $this->parts['{label}'] = '';
+        if ($enclosedByLabel === true) {
+            $new->parts['{label}'] = '';
         }
 
-        $this->parts['{input}'] = CheckBox::widget()
-            ->config($new->data, $new->attribute, $options)
+        if (isset($attributes['label'])) {
+            $radio = $radio->label($attributes['label']);
+        }
+
+        if (isset($attributes['labelAttributes'])) {
+            $radio = $radio->labelAttributes($attributes['labelAttributes']);
+        }
+
+        unset($attributes['label'], $attributes['labelAttributes']);
+
+        $new->parts['{input}'] = $radio
+            ->config($new->formModel, $new->attribute, $attributes)
             ->enclosedByLabel($enclosedByLabel)
-            ->run();
+            ->render();
 
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-
-        return $this;
+        return $new;
     }
 
     /**
-     * Renders a drop-down list.
+     * Renders a list of radios.
+     *
+     * A radio list allows multiple selection, As a result, the corresponding submitted value is an array.
+     * The selection of the radio list is taken from the value of the model attribute.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
+     * handled:
+     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see RadioList}.
+     * This attribute will render a hidden input so that if the {@see RadioList} is not checked and is submitted, the
+     * value of this attribute will still be submitted to the server via the hidden input. If you do not want any hidden
+     * input, you should explicitly no set.
+     * - `itemsAttributes`: array, the HTML attributes for the items checkboxlist. This is only used when the `items`
+     * attribute is specified.
+     * - `separator`: string, the HTML code that separates items.
+     *
+     * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
+     * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
+     *
+     * @param array $items the data item used to generate the radio list. The array values are the labels,
+     * while the array keys are the corresponding radio values.
+     *
+     * @return static the field object itself.
+     */
+    public function radioList(array $attributes = [], array $items = []): self
+    {
+        $new = clone $this;
+        $radioList = RadioList::widget();
+        $new->setInputAttributes($attributes);
+        $containerTag = ArrayHelper::remove($attributes, 'containerTag', '');
+
+        if (isset($attributes['containerAttributes'])) {
+            $radioList = $radioList->containerAttributes($attributes['containerAttributes']);
+        }
+
+        if ($containerTag === false) {
+            $radioList = $radioList->containerTag();
+        } elseif ($containerTag !== '') {
+            $radioList = $radioList->containerTag($containerTag);
+        }
+
+        if (isset($attributes['disabled'])) {
+            $radioList = $radioList->disabled();
+        }
+
+        if (isset($attributes['itemsAttributes'])) {
+            $radioList = $radioList->itemsAttributes($attributes['itemsAttributes']);
+        }
+
+        if (isset($attributes['itemsFormatter'])) {
+            $radioList = $radioList->itemsFormatter($attributes['itemsFormatter']);
+        }
+
+        if (isset($attributes['readonly'])) {
+            $radioList = $radioList->readOnly();
+        }
+
+        if (isset($attributes['separator'])) {
+            $radioList = $radioList->separator($attributes['separator']);
+        }
+
+        unset(
+            $attributes['disabled'],
+            $attributes['itemsAttributes'],
+            $attributes['itemsFormatter'],
+            $attributes['readonly'],
+            $attributes['separator'],
+        );
+
+        $new->parts['{input}'] = $radioList
+            ->config($new->formModel, $new->attribute, $attributes)
+            ->items($items)
+            ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a select widget..
      *
      * The selection of the drop-down list is taken from the value of the model attribute.
      *
-     * @param array $items the option data items. The array keys are option values, and the array values are the
-     * corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
-     * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
-     * If you have a list of data models, you may convert them into the format described above using
-     * {@see \Yiisoft\Arrays\ArrayHelper::map()}.
+     * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
+     * handled:
+     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see RadioList}.
+     * This attribute will render a hidden input so that if the {@see RadioList} is not checked and is submitted, the
+     * value of this attribute will still be submitted to the server via the hidden input. If you do not want any hidden
+     * input, you should explicitly no set.
+     * - `itemsAttributes`: array, the HTML attributes for the items checkboxlist. This is only used when the `items`
+     * attribute is specified.
+     * - `separator`: string, the HTML code that separates items.
      *
-     * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in the
-     * labels will also be HTML-encoded.
-     * @param array $options the tag options in terms of name-value pairs.
+     * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
+     * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
      *
-     * For the list of available options please refer to the `$options` parameter of
-     * {@see \Yiisoft\Html\Html::activeDropDownList()}.
+     * @param array $items the data item used to generate the radio list. The array values are the labels,
+     * while the array keys are the corresponding radio values.
      *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
+     * @param array $groups The attributes for the optgroup tags.
      *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
+     * The structure of this is similar to that of 'attributes', except that the array keys represent the optgroup
+     * labels specified in $items.
      *
-     * @return self the field object itself.
+     * ```php
+     * [
+     *     'groups' => [
+     *         '1' => ['label' => 'Chile'],
+     *         '2' => ['label' => 'Russia']
+     *     ],
+     * ];
+     * ```
+     *
+     * @param array $itemsAttributes The HTML attributes for items. The following special options are recognized.
+     *
+     * @param array $optionsData The data used to generate the options.
+     *
+     * @return static the field object itself.
      */
-    public function dropDownList(array $items, array $options = []): self
+    public function select(array $attributes = [], array $items = [], array $groups = [], array $itemsAttributes = []): self
     {
         $new = clone $this;
+        $new->setInputAttributes($attributes);
+        $encode = $attributes['encode'] ?? false;
+        $optionsData = $attributes['optionsData'] ?? [];
+        $prompt = $attributes['prompt'] ?? [];
 
-        $new->setAriaAttributes($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
+        unset($attributes['encode'], $attributes['optionsData'], $attributes['prompt']);
 
-        unset($options['class']);
-
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = DropDownList::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
+        $new->parts['{input}'] = Select::widget()
+            ->config($new->formModel, $new->attribute, $attributes)
+            ->groups($groups)
             ->items($items)
-            ->run();
+            ->itemsAttributes($itemsAttributes)
+            ->optionsData($optionsData, $encode)
+            ->prompt($prompt)
+            ->render();
 
-        return $this;
-    }
-
-    /**
-     * Renders a list box.
-     *
-     * The selection of the list box is taken from the value of the model attribute.
-     *
-     * @param array $items the option data items. The array keys are option values, and the array values are the
-     * corresponding option labels. The array can also be nested (i.e. some array values are arrays too).
-     * For each sub-array, an option group will be generated whose label is the key associated with the sub-array.
-     * If you have a list of data models, you may convert them into the format described above using
-     * {@see \Yiisoft\Arrays\ArrayHelper::map()}.
-     *
-     * Note, the values and labels will be automatically HTML-encoded by this method, and the blank spaces in the
-     * labels will also be HTML-encoded.
-     * @param array $options the tag options in terms of name-value pairs.
-     *
-     * For the list of available options please refer to the `$options` parameter of
-     * {@see \Yiisoft\Html\Html::activeListBox()}.
-     *
-     * If you set a custom `id` for the input element, you may need to adjust the {@see $selectors} accordingly.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function listBox(array $items, array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setForInLabel($options);
-        $new->setAriaAttributes($options);
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-
-        $this->parts['{input}'] = ListBox::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->items($items)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a list of checkboxes.
-     *
-     * A checkbox list allows multiple selection, like {@see listBox()}.
-     * As a result, the corresponding submitted value is an array.
-     * The selection of the checkbox list is taken from the value of the model attribute.
-     *
-     * @param array $items the data item used to generate the checkboxes.
-     * The array values are the labels, while the array keys are the corresponding checkbox values.
-     * @param array $options options (name => config) for the checkbox list.
-     * For the list of available options please refer to the `$options` parameter of
-     * {@see \Yiisoft\Html\Html::activeCheckboxList()}.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function checkboxList(array $items, array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setForInLabel($options);
-        $new->setAriaAttributes($options);
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-        $new->skipForInLabel = true;
-
-        $this->parts['{input}'] = CheckBoxList::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->items($items)
-            ->run();
-
-        return $this;
-    }
-
-    /**
-     * Renders a list of radio buttons.
-     *
-     * A radio button list is like a checkbox list, except that it only allows single selection.
-     * The selection of the radio buttons is taken from the value of the model attribute.
-     *
-     * @param array $items the data item used to generate the radio buttons.
-     * The array values are the labels, while the array keys are the corresponding radio values.
-     * @param array $options options (name => config) for the radio button list.
-     * For the list of available options please refer to the `$options` parameter of
-     * {@see \Yiisoft\Html\Html::activeRadioList()}.
-     *
-     * @throws InvalidArgumentException
-     * @throws InvalidConfigException
-     *
-     * @return self the field object itself.
-     */
-    public function radioList(array $items, array $options = []): self
-    {
-        $new = clone $this;
-
-        $new->setAriaAttributes($options);
-        $new->setForInLabel($options);
-        $new->inputOptions($options);
-        $new->addErrorCssClassToInput();
-        $new->addSuccessCssClassToInput();
-        $new->setInputRole($options);
-        $new->inputOptions = array_merge($new->inputOptions, $options);
-        $new->skipForInLabel = true;
-
-        $this->parts['{input}'] = RadioList::widget()
-            ->config($new->data, $new->attribute, $new->inputOptions)
-            ->items($items)
-            ->run();
-
-        return $this;
-    }
-
-    private function addInputId(): string
-    {
-        return $this->inputId ?: HtmlForm::getInputId($this->data, $this->attribute);
-    }
-
-    /**
-     * Set form model and name for the widget.
-     *
-     * @param FormModelInterface $data Form model.
-     * @param string $attribute Form model property this widget is rendered for.
-     *
-     * @return self
-     */
-    public function config(FormModelInterface $data, string $attribute): self
-    {
-        $new = clone $this;
-        $new->data = $data;
-        $new->attribute = $attribute;
         return $new;
     }
 
     /**
-     * Generate a container tag for {@see attribute}.
+     * Renders a text widget.
      *
-     * @param bool $containerEnabled enabled/disable container for the widget.
-     * @param array $options The HTML attributes for the widget container tag if it is enabled.
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
      *
-     * @return self
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
      */
-    public function enclosedByContainer(bool $containerEnabled, array $options = []): self
+    public function text(array $attributes = []): self
     {
         $new = clone $this;
-        $new->options = $options;
-        $new->containerEnabled = $containerEnabled;
+        $text = Text::widget();
+        $new->setInputAttributes($attributes);
+
+        if (isset($attributes['dirname'])) {
+            $text = $text->dirname($attributes['dirname']);
+        }
+
+        unset($attributes['dirname']);
+
+        $new->parts['{input}'] = $text->config($new->formModel, $new->attribute, $attributes)->render();
+
         return $new;
     }
 
-    public function ariaAttribute(bool $value): self
+    /**
+     * Renders the whole field.
+     *
+     * This method will generate the label, input tag and hint tag (if any), and assemble them into HTML according to
+     * {@see template}.
+     *
+     * If (not set), the default methods will be called to generate the label and input tag, and use them as the
+     * content.
+     *
+     * @throws ReflectionException
+     *
+     * @return string the rendering result.
+     */
+    protected function run(): string
     {
         $new = clone $this;
-        $new->ariaAttribute = $value;
-        return $new;
-    }
 
-    public function errorCssClass(string $value): self
-    {
-        $new = clone $this;
-        $new->errorCssClass = $value;
-        return $new;
-    }
+        $div = Div::tag();
 
-    public function errorSummaryCssClass(string $value): self
-    {
-        $new = clone $this;
-        $new->errorSummaryCssClass = $value;
-        return $new;
-    }
-
-    public function inputCssClass(string $value): self
-    {
-        $new = clone $this;
-        $new->inputCssClass = $value;
-        return $new;
-    }
-
-    public function requiredCssClass(string $value): self
-    {
-        $new = clone $this;
-        $new->requiredCssClass = $value;
-        return $new;
-    }
-
-    public function successCssClass(string $value): self
-    {
-        $new = clone $this;
-        $new->successCssClass = $value;
-        return $new;
-    }
-
-    public function template(string $value): self
-    {
-        $new = clone $this;
-        $new->template = $value;
-        return $new;
-    }
-
-    public function validatingCssClass(string $value): self
-    {
-        $new = clone $this;
-        $new->validatingCssClass = $value;
-        return $new;
-    }
-
-    public function validationStateOn(string $value): self
-    {
-        $new = clone $this;
-        $new->validationStateOn = $value;
-        return $new;
-    }
-
-    public function errorOptions(array $options = []): void
-    {
-        $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_ERROR_OPTIONS['class']);
-
-        if ($classFromOptions !== self::DEFAULT_ERROR_OPTIONS['class']) {
-            $classFromOptions = self::DEFAULT_ERROR_OPTIONS['class'] . ' ' . $classFromOptions;
+        if (!isset($new->parts['{label}'])) {
+            $new = $new->label();
         }
 
-        $this->errorOptions = array_merge($this->errorOptions, $options);
-        /**
-         * @psalm-suppress PossiblyNullPropertyAssignmentValue
-         */
-        Html::addCssClass($this->errorOptions, $classFromOptions);
-    }
-
-    public function hintOptions(array $options = []): void
-    {
-        $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_HINT_OPTIONS['class']);
-
-        if ($classFromOptions !== self::DEFAULT_HINT_OPTIONS['class']) {
-            $classFromOptions = self::DEFAULT_HINT_OPTIONS['class'] . ' ' . $classFromOptions;
+        if (!isset($new->parts['{input}'])) {
+            $new = $new->text();
         }
 
-        $this->hintOptions = array_merge($this->hintOptions, $options);
-        /**
-         * @psalm-suppress PossiblyNullPropertyAssignmentValue
-         */
-        Html::addCssClass($this->hintOptions, $classFromOptions);
-    }
-
-    public function inputOptions(array $options = []): void
-    {
-        $classFromOptions = ArrayHelper::remove($options, 'class', $this->inputCssClass);
-
-        if ($classFromOptions !== $this->inputCssClass) {
-            $classFromOptions = $this->inputCssClass . ' ' . $classFromOptions;
+        if (!isset($new->parts['{hint}'])) {
+            $new = $new->hint();
         }
 
-        $this->inputOptions = array_merge($this->inputOptions, $options);
-        /**
-         * @psalm-suppress PossiblyNullPropertyAssignmentValue
-         */
-        Html::addCssClass($this->inputOptions, $classFromOptions);
-    }
-
-    public function labelOptions(array $options = []): void
-    {
-        $classFromOptions = ArrayHelper::remove($options, 'class', self::DEFAULT_LABEL_OPTIONS['class']);
-
-        if ($classFromOptions !== self::DEFAULT_LABEL_OPTIONS['class']) {
-            $classFromOptions = self::DEFAULT_LABEL_OPTIONS['class'] . ' ' . $classFromOptions;
+        if (!isset($this->parts['{error}'])) {
+            $new = $new->error();
         }
 
-        $this->labelOptions = array_merge($this->labelOptions, $options);
-        /**
-         * @psalm-suppress PossiblyNullPropertyAssignmentValue
-         */
-        Html::addCssClass($this->labelOptions, $classFromOptions);
-    }
-
-    private function addErrorCssClassToContainer(): void
-    {
-        if ($this->validationStateOn === 'container') {
-            /**
-             * @psalm-suppress PossiblyNullPropertyAssignmentValue
-             */
-            Html::addCssClass($this->options, $this->errorCssClass);
+        if ($new->containerClass !== '') {
+            $div = $div->class($new->containerClass);
         }
-    }
 
-    private function addErrorCssClassToInput(): void
-    {
-        if ($this->validationStateOn === 'input') {
-            $attributeName = HtmlForm::getAttributeName($this->attribute);
-
-            if ($this->data->hasErrors($attributeName)) {
-                /**
-                 * @psalm-suppress PossiblyNullPropertyAssignmentValue
-                 */
-                Html::addCssClass($this->inputOptions, $this->errorCssClass);
-            }
-        }
-    }
-
-    private function addSuccessCssClassToInput(): void
-    {
-        if ($this->validationStateOn === 'input') {
-            $attributeName = HtmlForm::getAttributeName($this->attribute);
-
-            if (!$this->data->hasErrors($attributeName) && $this->data->isValidated()) {
-                /**
-                 * @psalm-suppress PossiblyNullPropertyAssignmentValue
-                 */
-                Html::addCssClass($this->inputOptions, $this->successCssClass);
-            }
-        }
-    }
-
-    private function setInputRole(array $options = []): void
-    {
-        $this->inputOptions['role'] = $options['role'] ?? 'radiogroup';
-    }
-
-    private function skipForInLabel(): void
-    {
-        if ($this->skipForInLabel) {
-            $this->labelOptions['for'] = null;
-        }
-    }
-
-    private function setForInLabel(array $options = []): void
-    {
-        if (isset($options['id'])) {
-            $this->inputId = $options['id'];
-
-            if (!isset($this->labelOptions['for'])) {
-                $this->labelOptions['for'] = $options['id'];
-            }
-        }
-    }
-
-    private function setAriaAttributes(array $options = []): void
-    {
-        if ($this->ariaAttribute) {
-            if (!isset($options['aria-invalid']) && $this->data->hasErrors($this->attribute)) {
-                $this->inputOptions['aria-invalid'] = 'true';
-            }
-        }
+        return $div->content(PHP_EOL . trim(strtr($new->template, $new->parts)) . PHP_EOL)->encode(false)->render();
     }
 }

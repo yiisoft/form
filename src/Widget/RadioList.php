@@ -22,6 +22,7 @@ final class RadioList extends Widget
     private array $itemsAttributes = [];
     /** @psalm-var Closure(RadioItem):string|null */
     private ?Closure $itemsFormatter = null;
+    private string $separator = '';
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -46,7 +47,7 @@ final class RadioList extends Widget
      *
      * @return static
      */
-    public function containerTag(?string $name): self
+    public function containerTag(?string $name = null): self
     {
         $new = clone $this;
         $new->containerTag = $name;
@@ -103,7 +104,7 @@ final class RadioList extends Widget
     public function itemsAttributes(array $value = []): self
     {
         $new = clone $this;
-        $new->attributes['itemsAttributes'] = $value;
+        $new->itemsAttributes = $value;
         return $new;
     }
 
@@ -121,7 +122,7 @@ final class RadioList extends Widget
      *
      * @return static
      */
-    public function itemsFormater(?Closure $formatter): self
+    public function itemsFormatter(?Closure $formatter): self
     {
         $new = clone $this;
         $new->itemsFormatter = $formatter;
@@ -153,7 +154,7 @@ final class RadioList extends Widget
     public function separator(string $value = ''): self
     {
         $new = clone $this;
-        $new->attributes['separator'] = $value;
+        $new->separator = $value;
         return $new;
     }
 
@@ -176,22 +177,15 @@ final class RadioList extends Widget
         /** @var bool|float|int|string|Stringable|null */
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
-        $itemsAttributes = $new->attributes['itemsAttributes'] ?? [];
-
-        /** @var string */
-        $separator = $new->attributes['separator'] ?? '';
-
-        unset($new->attributes['itemsAttributes'], $new->attributes['separator']);
-
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = $new->getValue();
 
         if (!is_scalar($value)) {
-            throw new InvalidArgumentException('Radio list widget required bool|float|int|string|null.');
+            throw new InvalidArgumentException('RadioList widget required bool|float|int|string|null.');
         }
 
-        if ($separator !== '') {
-            $radioList = $radioList->separator($separator);
+        if ($new->separator !== '') {
+            $radioList = $radioList->separator($new->separator);
         }
 
         return $radioList
@@ -200,9 +194,9 @@ final class RadioList extends Widget
             ->itemFormatter($new->itemsFormatter)
             ->items($new->items)
             ->radioAttributes($new->attributes)
-            ->replaceRadioAttributes($itemsAttributes)
+            ->replaceRadioAttributes($new->itemsAttributes)
             ->uncheckValue($forceUncheckedValue)
-            ->value($value)
+            ->value((int) $value)
             ->render();
     }
 }

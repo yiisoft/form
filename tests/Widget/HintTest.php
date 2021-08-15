@@ -22,6 +22,14 @@ final class HintTest extends TestCase
         );
     }
 
+    public function testEncodeFalse(): void
+    {
+        $html = Hint::widget()
+            ->config($this->formModel, 'string', ['hint' => 'Write&nbsp;your&nbsp;text.', 'encode' => false])
+            ->render();
+        $this->assertEquals('<div>Write&nbsp;your&nbsp;text.</div>', $html);
+    }
+
     public function testRender(): void
     {
         $this->assertSame(

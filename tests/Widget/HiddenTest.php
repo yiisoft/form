@@ -15,29 +15,6 @@ final class HiddenTest extends TestCase
 {
     private TypeForm $formModel;
 
-    public function testDisabled(): void
-    {
-        $this->assertEquals(
-            '<input type="hidden" name="typeform-string" value="" disabled>',
-            Hidden::widget()->config($this->formModel, 'string')->disabled()->render(),
-        );
-    }
-
-    public function testForm(): void
-    {
-        $this->assertEquals(
-            '<input type="hidden" name="typeform-string" value="" form="form-id">',
-            Hidden::widget()->config($this->formModel, 'string')->form('form-id')->render(),
-        );
-    }
-
-    public function testImmutability(): void
-    {
-        $hiddenInput = Hidden::widget();
-        $this->assertNotSame($hiddenInput, $hiddenInput->disabled());
-        $this->assertNotSame($hiddenInput, $hiddenInput->form(''));
-    }
-
     public function testRender(): void
     {
         $this->assertEquals(

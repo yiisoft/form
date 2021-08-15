@@ -125,7 +125,7 @@ final class RadioTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The value must be a bool|float|int|string|Stringable|null.');
+        $this->expectExceptionMessage('Radio widget requires a bool|float|int|string|null value.');
         $html = Radio::widget()->config($this->formModel, 'array')->render();
     }
 

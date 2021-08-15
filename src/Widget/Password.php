@@ -134,7 +134,7 @@ final class Password extends Widget
         $value = $new->getValue();
 
         if (!is_string($value)) {
-            throw new InvalidArgumentException('Password widget requires a string value.');
+            throw new InvalidArgumentException('Password widget must be a string.');
         }
 
         return Input::password($new->getId(), $value)->attributes($new->attributes)->render();

@@ -33,7 +33,7 @@ final class DateTimeLocal extends Widget
         $value = $new->getValue();
 
         if (!is_string($value)) {
-            throw new InvalidArgumentException('DateTime Local widget requires a string value.');
+            throw new InvalidArgumentException('DateTimeLocal widget requires a string value.');
         }
 
         return Input::tag()

@@ -70,14 +70,6 @@ final class TextTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
-    public function testRender(): void
-    {
-        $this->assertSame(
-            '<input type="text" id="typeform-string" name="TypeForm[string]" value="">',
-            Text::widget()->config($this->formModel, 'string')->render(),
-        );
-    }
-
     public function testPlaceholder(): void
     {
         $this->assertSame(
@@ -91,6 +83,14 @@ final class TextTest extends TestCase
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" value="" readonly>',
             Text::widget()->config($this->formModel, 'string')->readOnly()->render(),
+        );
+    }
+
+    public function testRender(): void
+    {
+        $this->assertSame(
+            '<input type="text" id="typeform-string" name="TypeForm[string]" value="">',
+            Text::widget()->config($this->formModel, 'string')->render(),
         );
     }
 

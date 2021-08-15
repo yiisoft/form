@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Tag\CustomTag;
 
 /**
@@ -20,16 +21,19 @@ final class Hint extends Widget
     {
         $new = clone $this;
 
-        /** @var string */
-        $hint = $new->attributes['hint'] ?? $new->getAttributeHint();
+        /** @var bool */
+        $encode = $new->attributes['encode'] ?? false;
+
+        /** @var bool|string */
+        $hint = ArrayHelper::remove($new->attributes, 'hint', $new->getAttributeHint());
 
         /** @psalm-var non-empty-string */
         $tag = $new->attributes['tag'] ?? 'div';
 
         unset($new->attributes['hint'], $new->attributes['tag']);
 
-        return $hint !== ''
-            ? CustomTag::name($tag)->attributes($new->attributes)->content($hint)->render()
+        return ($hint !== false && $hint !== '')
+            ? CustomTag::name($tag)->attributes($new->attributes)->content($hint)->encode($encode)->render()
             : '';
     }
 }

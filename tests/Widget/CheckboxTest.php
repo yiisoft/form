@@ -108,14 +108,14 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'int')->render());
 
         // value string '0'
-        $this->formModel->setAttribute('string', 0);
+        $this->formModel->setAttribute('string', '0');
         $expected = <<<'HTML'
         <label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
         HTML;
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'string')->render());
 
         // value string '1'
-        $this->formModel->setAttribute('string', 1);
+        $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
         HTML;

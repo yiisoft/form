@@ -16,6 +16,13 @@ final class PersonalForm extends FormModel
     private string $name = '';
     private string $password = '';
 
+    public function getAttributeHints(): array
+    {
+        return [
+            'name' => 'Write your first name.',
+        ];
+    }
+
     public function getRules(): array
     {
         return [

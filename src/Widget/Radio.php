@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Stringable;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Input\Radio as RadioTag;
 
@@ -20,6 +19,8 @@ final class Radio extends Widget
     use CommonAttribute;
 
     private bool $enclosedByLabel = true;
+    private string $label = '';
+    private array $labelAttributes = [];
 
     /**
      * If the widget should be enclosed by label.
@@ -32,23 +33,6 @@ final class Radio extends Widget
     {
         $new = clone $this;
         $new->enclosedByLabel = $value;
-        return $new;
-    }
-
-    /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
         return $new;
     }
 
@@ -67,7 +51,7 @@ final class Radio extends Widget
     public function label(string $value): self
     {
         $new = clone $this;
-        $new->attributes['label'] = $value;
+        $new->label = $value;
         return $new;
     }
 
@@ -83,7 +67,7 @@ final class Radio extends Widget
     public function labelAttributes(array $value = []): self
     {
         $new = clone $this;
-        $new->attributes['labelAttributes'] = $value;
+        $new->labelAttributes = $value;
         return $new;
     }
 
@@ -98,7 +82,7 @@ final class Radio extends Widget
 
         $radio = RadioTag::tag();
 
-        /** @var bool|float|int|string|Stringable|null  */
+        /** @var bool|float|int|string|null  */
         $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
 
         unset($new->attributes['forceUncheckedValue']);
@@ -106,19 +90,13 @@ final class Radio extends Widget
         $value = $new->getValue();
 
         if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('The value must be a bool|float|int|string|Stringable|null.');
+            throw new InvalidArgumentException('Radio widget requires a bool|float|int|string|null value.');
         }
 
         if ($new->enclosedByLabel === true) {
             /** @var string */
-            $label = $new->attributes['label'] ?? $new->getLabel();
-
-            /** @var array */
-            $labelAttributes = $new->attributes['labelAttributes'] ?? [];
-
-            unset($new->attributes['label'], $new->attributes['labelAttributes']);
-
-            $radio = $radio->label($label, $labelAttributes);
+            $label = $new->label !== '' ? $new->label : $new->getLabel();
+            $radio = $radio->label($label, $new->labelAttributes);
         }
 
         return $radio

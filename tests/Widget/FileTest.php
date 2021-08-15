@@ -17,40 +17,38 @@ final class FileTest extends TestCase
     public function testAccept(): void
     {
         $this->assertSame(
-            '<input type="file" id="typeform-string" name="TypeForm[string]" accept="image/*">',
-            File::widget()->config($this->formModel, 'string')->accept('image/*')->render(),
+            '<input type="file" id="typeform-tonull" name="TypeForm[toNull]" accept="image/*">',
+            File::widget()->config($this->formModel, 'toNull')->accept('image/*')->render(),
         );
     }
 
     public function testForceUncheckedValue(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[string]" value=""><input type="file" id="typeform-string" name="TypeForm[string]">
+        <input type="hidden" name="TypeForm[toNull]" value=""><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
         HTML;
         $html = File::widget()
-            ->config($this->formModel, 'string', ['forceUncheckedValue' => ''])
+            ->config($this->formModel, 'toNull', ['forceUncheckedValue' => ''])
             ->render();
-        $this->assertSame(
-            $expected,
-            $html,
-        );
+        $this->assertSame($expected, $html);
     }
 
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" id="test-id" name="TypeForm[string]" value=""><input type="file" id="typeform-string" name="TypeForm[string]">
+        <input type="hidden" id="test-id" name="TypeForm[toNull]" value=""><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
         HTML;
         $html = File::widget()
-            ->config($this->formModel, 'string', [
-                'forceUncheckedValue' => '',
-                'hiddenAttributes' => ['id' => 'test-id'],
-            ])
+            ->config(
+                $this->formModel,
+                'toNull',
+                [
+                    'forceUncheckedValue' => '',
+                    'hiddenAttributes' => ['id' => 'test-id'],
+                ]
+            )
             ->render();
-        $this->assertSame(
-            $expected,
-            $html,
-        );
+        $this->assertSame($expected, $html);
     }
 
     public function testImmutability(): void
@@ -64,8 +62,8 @@ final class FileTest extends TestCase
     public function testMultiple(): void
     {
         $this->assertSame(
-            '<input type="file" id="typeform-string" name="TypeForm[string]" multiple>',
-            File::widget()->config($this->formModel, 'string')->multiple()->render(),
+            '<input type="file" id="typeform-tonull" name="TypeForm[toNull]" multiple>',
+            File::widget()->config($this->formModel, 'toNull')->multiple()->render(),
         );
     }
 
