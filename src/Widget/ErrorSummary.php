@@ -16,6 +16,7 @@ use function array_values;
 
 /**
  * The error summary widget displays a summary of the errors in a form.
+ * @psalm-suppress MissingConstructor
  */
 final class ErrorSummary extends Widget
 {

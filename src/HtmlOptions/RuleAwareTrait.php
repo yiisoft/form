@@ -12,6 +12,9 @@ trait RuleAwareTrait
 {
     protected ParametrizedRuleInterface $rule;
 
+    /**
+     * @param mixed $value
+     */
     public function validate($value, ValidationContext $context = null): Result
     {
         return $this->rule->validate($value, $context);

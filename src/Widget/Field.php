@@ -16,6 +16,8 @@ use function strtr;
 
 /**
  * Renders the field widget along with label and hint tag (if any) according to template.
+ *
+ * @psalm-suppress MissingConstructor
  */
 final class Field extends Widget
 {
