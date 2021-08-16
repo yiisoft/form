@@ -13,7 +13,7 @@ use Yiisoft\Form\Widget\Field;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
-final class FieldCheckboxTest extends TestCase
+final class FieldCheckBoxTest extends TestCase
 {
     use TestTrait;
 

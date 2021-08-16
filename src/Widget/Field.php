@@ -57,7 +57,6 @@ final class Field extends Widget
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     *
      * @param bool $enclosedByLabel whether to enclose the checkbox with the label.
      *
      * @return static the field object itself.
@@ -108,7 +107,6 @@ final class Field extends Widget
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     *
      * @param array $items the data item used to generate the checkbox list. The array values are the labels,
      * while the array keys are the corresponding checkbox values.
      *
@@ -442,7 +440,6 @@ final class Field extends Widget
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     *
      * @param bool $enclosedByLabel whether to enclose the checkbox with the label.
      *
      * @return self the field object itself.
@@ -493,7 +490,6 @@ final class Field extends Widget
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     *
      * @param array $items the data item used to generate the radio list. The array values are the labels,
      * while the array keys are the corresponding radio values.
      *
@@ -569,10 +565,8 @@ final class Field extends Widget
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     *
      * @param array $items the data item used to generate the radio list. The array values are the labels,
      * while the array keys are the corresponding radio values.
-     *
      * @param array $groups The attributes for the optgroup tags.
      *
      * The structure of this is similar to that of 'attributes', except that the array keys represent the optgroup
