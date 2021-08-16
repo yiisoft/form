@@ -58,7 +58,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return null|object|scalar|Stringable|iterable
+     * @return iterable|object|scalar|Stringable|null
      */
     public function getAttributeValue(string $attribute)
     {
@@ -341,7 +341,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return null|scalar|Stringable|iterable
+     * @return iterable|scalar|Stringable|null
      *
      * @psalm-suppress MixedReturnStatement
      * @psalm-suppress MixedInferredReturnType
@@ -373,7 +373,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     /**
      * @param string $attribute
-     * @param null|object|scalar|Stringable|iterable $value
+     * @param iterable|object|scalar|Stringable|null $value
      *
      * @psalm-suppress MissingClosureReturnType
      */
