@@ -112,7 +112,7 @@ final class FormTest extends TestCase
     public function testEnd(): void
     {
         Form::widget()->begin();
-        $this->assertEquals('</form>', Form::end());
+        $this->assertSame('</form>', Form::end());
     }
 
     public function testEnctype(): void

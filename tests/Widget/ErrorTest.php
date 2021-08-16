@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Tests\Stub\ValidatorMock;
-use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Error;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
@@ -16,7 +15,7 @@ use Yiisoft\Widget\WidgetFactory;
 final class ErrorTest extends TestCase
 {
     private array $record = [];
-    private FormModelInterface $formModel;
+    private PersonalForm $formModel;
 
     public function testMessage(): void
     {
@@ -27,7 +26,7 @@ final class ErrorTest extends TestCase
     public function testMessageCallback(): void
     {
         $html = Error::widget()
-            ->config($this->formModel, 'string')
+            ->config($this->formModel, 'name')
             ->messageCallback([$this->formModel, 'customError'])
             ->render();
         $this->assertSame('<div>This is custom error message.</div>', $html);
@@ -46,7 +45,7 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             '<div>Value cannot be blank.</div>',
-            Error::widget()->config($this->formModel, 'string')->render(),
+            Error::widget()->config($this->formModel, 'name')->render(),
         );
     }
 
@@ -54,11 +53,11 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             'Value cannot be blank.',
-            Error::widget()->config($this->formModel, 'string')->tag()->render(),
+            Error::widget()->config($this->formModel, 'name')->tag()->render(),
         );
         $this->assertSame(
             '<span>Value cannot be blank.</span>',
-            Error::widget()->config($this->formModel, 'string')->tag('span')->render(),
+            Error::widget()->config($this->formModel, 'name')->tag('span')->render(),
         );
     }
 
@@ -66,8 +65,8 @@ final class ErrorTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new TypeForm();
-        $this->formModel->load(['TypeForm' => ['string' => null]]);
+        $this->formModel = new PersonalForm();
+        $this->formModel->load(['PersonalForm' => ['name' => '']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
     }

@@ -27,7 +27,7 @@ final class HintTest extends TestCase
         $html = Hint::widget()
             ->config($this->formModel, 'string', ['hint' => 'Write&nbsp;your&nbsp;text.', 'encode' => false])
             ->render();
-        $this->assertEquals('<div>Write&nbsp;your&nbsp;text.</div>', $html);
+        $this->assertSame('<div>Write&nbsp;your&nbsp;text.</div>', $html);
     }
 
     public function testRender(): void

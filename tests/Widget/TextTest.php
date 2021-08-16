@@ -32,7 +32,7 @@ final class TextTest extends TestCase
 
     public function testForm(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" value="" form="form-id">',
             Text::widget()->config($this->formModel, 'string')->form('form-id')->render(),
         );

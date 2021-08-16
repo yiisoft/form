@@ -41,7 +41,7 @@ trait CommonAttribute
     public function disabled(bool $value = true): self
     {
         $new = clone $this;
-        $new->disabled = $value;
+        $new->attributes['disabled'] = $value;
         return $new;
     }
 

@@ -92,7 +92,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $html = Field::widget()
             ->config($this->formModel, 'int')
-            ->select([], $this->citiesGroups, $this->groups, ['2' => ['disabled' => true]])
+            ->select(['itemsAttributes' => ['2' => ['disabled' => true]]], $this->citiesGroups, $this->groups)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }

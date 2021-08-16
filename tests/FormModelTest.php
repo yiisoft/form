@@ -7,14 +7,14 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\Tests\Stub\LoginForm;
-use Yiisoft\Form\Tests\Stub\ValidatorMock;
+use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\ValidatorInterface;
 
 use function str_repeat;
 
-require __DIR__ . '/Stub/NonNamespacedForm.php';
+require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
 final class FormModelTest extends TestCase
 {
@@ -68,7 +68,7 @@ final class FormModelTest extends TestCase
         $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\Stub\LoginForm::noExist".');
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".');
         $form->getAttributeValue('noExist');
     }
 

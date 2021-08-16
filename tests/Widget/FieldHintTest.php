@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -16,19 +16,19 @@ final class FieldHintTest extends TestCase
 {
     use TestTrait;
 
-    private PersonalForm $formModel;
+    private TypeForm $formModel;
 
     public function testAnyHint(): void
     {
         $expected = <<<'HTML'
         <div>
-        <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" value="">
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value="">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'name')->hint(['hint' => false])->render(),
+            Field::widget()->config($this->formModel, 'string')->hint(['hint' => false])->render(),
         );
     }
 
@@ -36,13 +36,13 @@ final class FieldHintTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" value="">
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value="">
         <div class="test-class">Custom hint text.</div>
         </div>
         HTML;
         $html = Field::widget()
-            ->config($this->formModel, 'name')
+            ->config($this->formModel, 'string')
             ->hint(['class' => 'test-class', 'hint' => 'Custom hint text.'])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -52,14 +52,14 @@ final class FieldHintTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" value="">
-        <div>Write your first name.</div>
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value="">
+        <div>Write your text string.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'name')->render(),
+            Field::widget()->config($this->formModel, 'string')->render(),
         );
     }
 
@@ -67,6 +67,6 @@ final class FieldHintTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new PersonalForm();
+        $this->formModel = new TypeForm();
     }
 }

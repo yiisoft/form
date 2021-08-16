@@ -216,22 +216,7 @@ final class SelectTest extends TestCase
 
     public function testValues(): void
     {
-        // value int 0
-        $this->formModel->setAttribute('int', 0);
-        $expected = <<<'HTML'
-        <select id="typeform-int" name="TypeForm[int]">
-        <option value="1">Moscu</option>
-        <option value="2">San Petersburgo</option>
-        <option value="3">Novosibirsk</option>
-        <option value="4">Ekaterinburgo</option>
-        </select>
-        HTML;
-        $this->assertSame(
-            $expected,
-            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
-        );
-
-        // value int 1
+        // value int 1.
         $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
@@ -241,12 +226,27 @@ final class SelectTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
         );
 
-        // value iterable
+        // value int 2.
+        $this->formModel->setAttribute('int', 2);
+        $expected = <<<'HTML'
+        <select id="typeform-int" name="TypeForm[int]">
+        <option value="1">Moscu</option>
+        <option value="2" selected>San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+        );
+
+        // value iterable [2, 3].
         $this->formModel->setAttribute('array', [2, 3]);
         $expected = <<<'HTML'
         <select id="typeform-array" name="TypeForm[array]">
@@ -261,23 +261,8 @@ final class SelectTest extends TestCase
             Select::widget()->config($this->formModel, 'array')->items($this->cities)->render(),
         );
 
-        // value string '0'
-        $this->formModel->setAttribute('string', 0);
-        $expected = <<<'HTML'
-        <select id="typeform-string" name="TypeForm[string]">
-        <option value="1">Moscu</option>
-        <option value="2">San Petersburgo</option>
-        <option value="3">Novosibirsk</option>
-        <option value="4">Ekaterinburgo</option>
-        </select>
-        HTML;
-        $this->assertSame(
-            $expected,
-            Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
-        );
-
-        // value string '1'
-        $this->formModel->setAttribute('string', 1);
+        // value string '1'.
+        $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <select id="typeform-string" name="TypeForm[string]">
         <option value="1" selected>Moscu</option>
@@ -286,12 +271,27 @@ final class SelectTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
         );
 
-        // value null
+        // value string '2'
+        $this->formModel->setAttribute('string', 2);
+        $expected = <<<'HTML'
+        <select id="typeform-string" name="TypeForm[string]">
+        <option value="1">Moscu</option>
+        <option value="2" selected>San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+        );
+
+        // value null.
         $this->formModel->setAttribute('toNull', null);
         $expected = <<<'HTML'
         <select id="typeform-tonull" name="TypeForm[toNull]">
@@ -301,7 +301,7 @@ final class SelectTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()->config($this->formModel, 'toNull')->items($this->cities)->render(),
         );
@@ -311,7 +311,7 @@ final class SelectTest extends TestCase
     {
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The value must be a bool|float|int|iterable|string|Stringable|null.');
+        $this->expectExceptionMessage('Select widget required bool|float|int|iterable|string|null.');
         $html = Select::widget()->config($this->formModel, 'object')->render();
     }
 

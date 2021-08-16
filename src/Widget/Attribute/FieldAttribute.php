@@ -7,6 +7,8 @@ namespace Yiisoft\Form\Widget\Attribute;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\Rule\Number;
+use Yiisoft\Validator\Rule\Required;
 
 trait FieldAttribute
 {
@@ -171,9 +173,31 @@ trait FieldAttribute
         return $new;
     }
 
-    protected function setInputAttributes(array $attributes): void
+    private function addValidatorAttributeHtml(
+        FormModelInterface $formModel,
+        string $attribute,
+        array $attributes
+    ): array {
+        $rules = $formModel->getRules()[$attribute] ?? [];
+
+        foreach ($rules as $rule) {
+            if ($rule instanceof Number) {
+                $attributes['max'] = $rule->getOptions()['max'];
+                $attributes['min'] = $rule->getOptions()['min'];
+            }
+            if ($rule instanceof Required) {
+                $attributes['required'] = true;
+            }
+        }
+
+        return $attributes;
+    }
+
+    private function setInputAttributes(array $attributes): array
     {
         $new = clone $this;
+
+        $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes);
 
         if ($new->ariaDescribedBy === true) {
             $attributes['aria-describedby'] = $new->getId();
@@ -182,5 +206,7 @@ trait FieldAttribute
         if ($new->inputClass !== '') {
             Html::addCssClass($attributes, $new->inputClass);
         }
+
+        return $attributes;
     }
 }

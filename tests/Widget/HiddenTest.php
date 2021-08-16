@@ -17,7 +17,7 @@ final class HiddenTest extends TestCase
 
     public function testRender(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<input type="hidden" name="typeform-string" value="">',
             Hidden::widget()->config($this->formModel, 'string')->render(),
         );

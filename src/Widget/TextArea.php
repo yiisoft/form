@@ -17,6 +17,9 @@ final class TextArea extends Widget
 {
     use CommonAttribute;
 
+    private string $dirname = '';
+    private string $wrap = '';
+
     /**
      * The expected maximum number of characters per line of text for the UA to show.
      *
@@ -50,7 +53,7 @@ final class TextArea extends Widget
         }
 
         $new = clone $this;
-        $new->attributes['dirname'] = $value;
+        $new->dirname = $value;
         return $new;
     }
 
@@ -158,7 +161,7 @@ final class TextArea extends Widget
         }
 
         $new = clone $this;
-        $new->attributes['wrap'] = $value;
+        $new->wrap = $value;
         return $new;
     }
 
@@ -173,6 +176,14 @@ final class TextArea extends Widget
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('TextArea widget must be a string.');
+        }
+
+        if ($new->dirname !== '') {
+            $new->attributes['dirname'] = $new->dirname;
+        }
+
+        if ($new->wrap !== '') {
+            $new->attributes['wrap'] = $new->wrap;
         }
 
         return TextAreaTag::tag()

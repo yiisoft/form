@@ -30,7 +30,7 @@ final class FieldErrorTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam">
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" required>
         <div>Write your first name.</div>
         <div>Is too short.</div>
         </div>
@@ -50,7 +50,7 @@ final class FieldErrorTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam">
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" required>
         <div>Write your first name.</div>
         <div class="test-class">Is too short.</div>
         </div>

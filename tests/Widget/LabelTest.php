@@ -19,7 +19,7 @@ final class LabelTest extends TestCase
      */
     public function testEncodeFalse(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<label for="typeform-string">My&nbsp;Field</label>',
             Label::widget()->config($this->formModel, 'string', ['encode' => false])->label('My&nbsp;Field')->render(),
         );
@@ -42,7 +42,7 @@ final class LabelTest extends TestCase
 
     public function testLabel(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<label for="typeform-string">Label:</label>',
             Label::widget()->config($this->formModel, 'string')->label('Label:')->render(),
         );

@@ -32,7 +32,7 @@ final class Hint extends Widget
 
         unset($new->attributes['hint'], $new->attributes['tag']);
 
-        return ($hint !== false && $hint !== '')
+        return (!is_bool($hint) && $hint !== '')
             ? CustomTag::name($tag)->attributes($new->attributes)->content($hint)->encode($encode)->render()
             : '';
     }

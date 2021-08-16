@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Tests\Stub\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 
 final class HtmlFormTest extends TestCase
 {

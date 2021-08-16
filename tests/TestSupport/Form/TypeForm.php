@@ -19,27 +19,10 @@ final class TypeForm extends FormModel
     private string $toDate = '';
     private ?string $toNull = null;
 
-    public function customError(): string
-    {
-        return 'This is custom error message.';
-    }
-
-    public function customErrorWithIcon(): string
-    {
-        return '(&#10006;) This is custom error message.';
-    }
-
     public function getAttributeHints(): array
     {
         return [
             'string' => 'Write your text string.',
-        ];
-    }
-
-    public function getRules(): array
-    {
-        return [
-            'string' => [Required::rule()],
         ];
     }
 }

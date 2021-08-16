@@ -66,7 +66,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $checkbox = Checkbox::widget();
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         if ($enclosedByLabel === true) {
             $new->parts['{label}'] = '';
@@ -118,7 +118,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $checkboxList = CheckboxList::widget();
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
         $containerTag = ArrayHelper::remove($attributes, 'containerTag', '');
 
         if (isset($attributes['containerAttributes'])) {
@@ -177,7 +177,7 @@ final class Field extends Widget
     public function date(array $attributes = []): self
     {
         $new = clone $this;
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Date::widget()->config($new->formModel, $new->attribute, $attributes)->render();
 
@@ -194,7 +194,7 @@ final class Field extends Widget
     public function datetime(array $attributes = []): self
     {
         $new = clone $this;
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = DateTime::widget()->config($new->formModel, $new->attribute, $attributes)->render();
 
@@ -211,7 +211,7 @@ final class Field extends Widget
     public function datetimelocal(array $attributes = []): self
     {
         $new = clone $this;
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = DateTimeLocal::widget()
             ->config($new->formModel, $new->attribute, $attributes)
@@ -221,49 +221,22 @@ final class Field extends Widget
     }
 
     /**
-     * Renders a file widget.
-     *
-     * This method will generate the `name` tag attribute automatically for the model attribute unless they are
-     * explicitly specified in `$attributes`.
-     *
-     * @param array $attributes the tag options in terms of name-value pairs. These will be rendered as the attributes
-     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
-     *
-     * @return static the field object itself.
-     */
-    public function file(array $attributes = []): self
-    {
-        $new = clone $this;
-        $new->setInputAttributes($attributes);
-
-        $new->parts['{input}'] = File::widget()->config($new->formModel, $new->attribute, $attributes)->render();
-
-        return $new;
-    }
-
-    /**
-     * Renders a hidden widget.
-     *
-     * Note that this method is provided for completeness. In most cases because you do not need to validate a hidden
-     * widget, you should not need to use this method.
+     * Renders a email widget.
      *
      * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
      * they are explicitly specified in `$attributes`.
      *
-     * @param array $attributes the tag options in terms of name-value pairs. These will be rendered as the attributes
-     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
      *
      * @return static the field object itself.
      */
-    public function hidden(array $attributes = []): self
+    public function email(array $attributes = []): self
     {
         $new = clone $this;
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{label}'] = '';
-        $new->parts['{hint}'] = '';
-        $new->parts['{error}'] = '';
-        $new->parts['{input}'] = Hidden::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Email::widget()->config($new->formModel, $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -298,6 +271,54 @@ final class Field extends Widget
             ->config($new->formModel, $new->attribute, $attributes)
             ->message($errorMessage)
             ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a file widget.
+     *
+     * This method will generate the `name` tag attribute automatically for the model attribute unless they are
+     * explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag options in terms of name-value pairs. These will be rendered as the attributes
+     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function file(array $attributes = []): self
+    {
+        $new = clone $this;
+        $attributes = $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = File::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a hidden widget.
+     *
+     * Note that this method is provided for completeness. In most cases because you do not need to validate a hidden
+     * widget, you should not need to use this method.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag options in terms of name-value pairs. These will be rendered as the attributes
+     * of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function hidden(array $attributes = []): self
+    {
+        $new = clone $this;
+        $attributes = $new->setInputAttributes($attributes);
+
+        $new->parts['{label}'] = '';
+        $new->parts['{hint}'] = '';
+        $new->parts['{error}'] = '';
+        $new->parts['{input}'] = Hidden::widget()->config($new->formModel, $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -360,6 +381,27 @@ final class Field extends Widget
     }
 
     /**
+     * Renders a number widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function number(array $attributes = []): self
+    {
+        $new = clone $this;
+        $attributes = $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = Number::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
      * Renders a password widget.
      *
      * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
@@ -373,7 +415,7 @@ final class Field extends Widget
     public function password(array $attributes = []): self
     {
         $new = clone $this;
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Password::widget()->config($new->formModel, $new->attribute, $attributes)->render();
 
@@ -409,7 +451,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $radio = Radio::widget();
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         if ($enclosedByLabel === true) {
             $new->parts['{label}'] = '';
@@ -461,7 +503,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $radioList = RadioList::widget();
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
         $containerTag = ArrayHelper::remove($attributes, 'containerTag', '');
 
         if (isset($attributes['containerAttributes'])) {
@@ -545,21 +587,18 @@ final class Field extends Widget
      * ];
      * ```
      *
-     * @param array $itemsAttributes The HTML attributes for items. The following special options are recognized.
-     *
-     * @param array $optionsData The data used to generate the options.
-     *
      * @return static the field object itself.
      */
-    public function select(array $attributes = [], array $items = [], array $groups = [], array $itemsAttributes = []): self
+    public function select(array $attributes = [], array $items = [], array $groups = []): self
     {
         $new = clone $this;
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
         $encode = $attributes['encode'] ?? false;
+        $itemsAttributes = $attributes['itemsAttributes'] ?? [];
         $optionsData = $attributes['optionsData'] ?? [];
         $prompt = $attributes['prompt'] ?? [];
 
-        unset($attributes['encode'], $attributes['optionsData'], $attributes['prompt']);
+        unset($attributes['encode'], $attributes['itemsAttributes'], $attributes['optionsData'], $attributes['prompt']);
 
         $new->parts['{input}'] = Select::widget()
             ->config($new->formModel, $new->attribute, $attributes)
@@ -588,7 +627,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $text = Text::widget();
-        $new->setInputAttributes($attributes);
+        $attributes = $new->setInputAttributes($attributes);
 
         if (isset($attributes['dirname'])) {
             $text = $text->dirname($attributes['dirname']);
@@ -597,6 +636,37 @@ final class Field extends Widget
         unset($attributes['dirname']);
 
         $new->parts['{input}'] = $text->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a text area.
+     *
+     * The model attribute value will be used as the content in the textarea.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function textArea(array $attributes = []): self
+    {
+        $new = clone $this;
+        $textArea = TextArea::widget();
+        $attributes = $new->setInputAttributes($attributes);
+
+        if (isset($attributes['dirname'])) {
+            $textArea = $textArea->dirname($attributes['dirname']);
+        }
+
+        if (isset($attributes['wrap'])) {
+            $textArea = $textArea->wrap($attributes['wrap']);
+        }
+
+        unset($attributes['dirname'], $attributes['wrap']);
+
+        $new->parts['{input}'] = $textArea->config($new->formModel, $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -640,6 +710,8 @@ final class Field extends Widget
             $div = $div->class($new->containerClass);
         }
 
-        return $div->content(PHP_EOL . trim(strtr($new->template, $new->parts)) . PHP_EOL)->encode(false)->render();
+        $content = preg_replace('/^\h*\v+/m', '', trim(strtr($new->template, $new->parts)));
+
+        return $div->content(PHP_EOL . $content . PHP_EOL)->encode(false)->render();
     }
 }

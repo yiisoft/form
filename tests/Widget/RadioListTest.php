@@ -120,7 +120,7 @@ final class RadioListTest extends TestCase
         $this->assertNotSame($radioList, $radioList->itemsAttributes());
         $this->assertNotSame(
             $radioList,
-            $radioList->itemsFormater(
+            $radioList->itemsFormatter(
                 static function (RadioItem $item): string {
                     return '';
                 }
@@ -163,7 +163,7 @@ final class RadioListTest extends TestCase
         $html = RadioList::widget()
             ->config($this->formModel, 'int')
             ->items($this->cities)
-            ->itemsFormater(static function (RadioItem $item) {
+            ->itemsFormatter(static function (RadioItem $item) {
                 $check = $item->checked ? 'checked' : '';
                 return $item->checked
                     ? "<div class='col-sm-12'><label><input type='radio' name='{$item->name}' class='test-class' value='{$item->value}' tabindex='{$item->index}' checked> {$item->label}</label></div>"

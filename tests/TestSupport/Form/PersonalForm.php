@@ -16,6 +16,16 @@ final class PersonalForm extends FormModel
     private string $name = '';
     private string $password = '';
 
+    public function customError(): string
+    {
+        return 'This is custom error message.';
+    }
+
+    public function customErrorWithIcon(): string
+    {
+        return '(&#10006;) This is custom error message.';
+    }
+
     public function getAttributeHints(): array
     {
         return [

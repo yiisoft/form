@@ -15,6 +15,14 @@ final class TextAreaTest extends TestCase
 {
     private TypeForm $formModel;
 
+    public function testCols(): void
+    {
+        $this->assertSame(
+            '<textarea id="typeform-string" name="TypeForm[string]" cols="50"></textarea>',
+            TextArea::widget()->config($this->formModel, 'string')->cols(50)->render(),
+        );
+    }
+
     public function testDirname(): void
     {
         $this->assertSame(
@@ -53,7 +61,7 @@ final class TextAreaTest extends TestCase
 
     public function testMaxLength(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" maxlength="100"></textarea>',
             TextArea::widget()->config($this->formModel, 'string')->maxLength(100)->render(),
         );
@@ -61,7 +69,7 @@ final class TextAreaTest extends TestCase
 
     public function testPlaceholder(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text"></textarea>',
             TextArea::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
@@ -77,7 +85,7 @@ final class TextAreaTest extends TestCase
 
     public function testTextAreaReadOnly(): void
     {
-        $this->assertEquals(
+        $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" readonly></textarea>',
             TextArea::widget()->config($this->formModel, 'string')->readOnly()->render(),
         );

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\ErrorSummary;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
