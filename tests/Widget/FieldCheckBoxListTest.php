@@ -152,7 +152,7 @@ final class FieldCheckBoxListTest extends TestCase
                         return $item->checked
                             ? "<label><input type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label>"
                             : "<label><input type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label>";
-                    }
+                    },
                 ],
                 $this->sex
             )
