@@ -10,7 +10,6 @@ use Yiisoft\Form\HtmlOptions\MatchRegularExpressionHtmlOptions;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
-use Yiisoft\Validator\Rule\Required;
 
 final class AttributesValidatorForm extends FormModel
 {
