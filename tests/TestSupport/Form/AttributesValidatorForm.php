@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\HtmlOptions\HasLengthHtmlOptions;
 use Yiisoft\Form\HtmlOptions\MatchRegularExpressionHtmlOptions;
-use Yiisoft\Form\HtmlOptions\NumberHtmlOptions;
 use Yiisoft\Form\HtmlOptions\RequiredHtmlOptions;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;

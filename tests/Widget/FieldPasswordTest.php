@@ -82,7 +82,7 @@ final class FieldPasswordTest extends TestCase
                 ]
             )
             ->render();
-            $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testPlaceholder(): void

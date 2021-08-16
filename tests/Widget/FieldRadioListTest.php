@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -152,7 +151,7 @@ final class FieldRadioListTest extends TestCase
                         return $item->checked
                             ? "<label><input type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label>"
                             : "<label><input type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label>";
-                    }
+                    },
                 ],
                 $this->sex
             )
