@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
+use Stringable;
 use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
@@ -56,6 +57,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return false;
     }
 
+    /**
+     * @return null|object|scalar|Stringable|iterable
+     */
     public function getAttributeValue(string $attribute)
     {
         return $this->readProperty($attribute);
@@ -82,18 +86,25 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function getAttributeLabel(string $attribute): string
     {
+        $label = $this->generateAttributeLabel($attribute);
+
         /** @var array */
         $labels = method_exists($this, 'getAttributeLabels') ? $this->getAttributeLabels() : [];
 
         if (array_key_exists($attribute, $labels)) {
-            return $labels[$attribute];
+            /** @var string */
+            $label = $labels[$attribute];
         }
 
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return $nested !== null
-            ? $this->readProperty($attribute)->getAttributeLabel($nested)
-            : $this->generateAttributeLabel($attribute);
+        if ($nested !== null) {
+            /** @var FormModelInterface $attributeNestedValue */
+            $attributeNestedValue = $this->getAttributeValue($attribute);
+            $label = $attributeNestedValue->getAttributeLabel($nested);
+        }
+
+        return $label;
     }
 
     /**
@@ -329,6 +340,13 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         );
     }
 
+    /**
+     * @return null|scalar|Stringable|iterable
+     *
+     * @psalm-suppress MixedReturnStatement
+     * @psalm-suppress MixedInferredReturnType
+     * @psalm-suppress MissingClosureReturnType
+     */
     private function readProperty(string $attribute)
     {
         $class = static::class;
@@ -343,20 +361,30 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             return $nested === null ? $this->$attribute : $this->$attribute->getAttributeValue($nested);
         }
 
-        $getter = fn (FormModel $class, $attribute) => $nested === null
+        /** @psalm-suppress MixedMethodCall */
+        $getter = fn (FormModel $class, string $attribute) => $nested === null
             ? $class->$attribute
             : $class->$attribute->getAttributeValue($nested);
         $getter = Closure::bind($getter, null, $this);
 
-        /**
-         * @psalm-var Closure $getter
-         */
+        /** @var Closure $getter */
         return $getter($this, $attribute);
     }
 
+    /**
+     * @param string $attribute
+     * @param null|object|scalar|Stringable|iterable $value
+     *
+     * @psalm-suppress MissingClosureReturnType
+     */
     private function writeProperty(string $attribute, $value): void
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        /**
+         * @psalm-suppress MissingClosureParamType
+         * @psalm-suppress MixedMethodCall
+         */
         if ($this->isPublicAttribute($attribute)) {
             if ($nested === null) {
                 $this->$attribute = $value;
@@ -367,11 +395,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             $setter = fn (FormModel $class, $attribute, $value) => $nested === null
                 ? $class->$attribute = $value
                 : $class->$attribute->setAttribute($nested, $value);
+
             $setter = Closure::bind($setter, null, $this);
 
-            /**
-             * @psalm-var Closure $setter
-             */
+            /** @var Closure $setter */
             $setter($this, $attribute, $value);
         }
     }
