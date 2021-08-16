@@ -214,7 +214,7 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[int][]" value="2"> Male</label>
         </div>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             CheckboxList::widget()->config($this->formModel, 'int')->items($this->sex)->render(),
         );
@@ -227,7 +227,7 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[int][]" value="2" checked> Male</label>
         </div>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             CheckboxList::widget()->config($this->formModel, 'int')->items($this->sex)->render(),
         );
@@ -253,7 +253,7 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[string][]" value="2"> Male</label>
         </div>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             CheckboxList::widget()->config($this->formModel, 'string')->items($this->sex)->render(),
         );
@@ -266,7 +266,7 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[string][]" value="2" checked> Male</label>
         </div>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             CheckboxList::widget()->config($this->formModel, 'string')->items($this->sex)->render(),
         );
@@ -279,7 +279,7 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[toNull][]" value="2"> Male</label>
         </div>
         HTML;
-        $this->assertSame(
+        $this->assertEqualsWithoutLE(
             $expected,
             CheckboxList::widget()->config($this->formModel, 'toNull')->items($this->sex)->render(),
         );
