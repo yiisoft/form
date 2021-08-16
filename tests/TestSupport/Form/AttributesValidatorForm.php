@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\HtmlOptions\HasLengthHtmlOptions;
 use Yiisoft\Form\HtmlOptions\MatchRegularExpressionHtmlOptions;
-use Yiisoft\Form\HtmlOptions\RequiredHtmlOptions;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
@@ -30,9 +29,6 @@ final class AttributesValidatorForm extends FormModel
             'hasLength' => [
                 $this->getHasLengthHtmlOptions(),
             ],
-            'required' => [
-                $this->getRequiredHtmlOptions(),
-            ],
             'pattern' => [
                 $this->getMatchRegularExpressionHtmlOptions(),
             ],
@@ -42,11 +38,6 @@ final class AttributesValidatorForm extends FormModel
     private function getMatchRegularExpressionHtmlOptions(): MatchRegularExpressionHtmlOptions
     {
         return new MatchRegularExpressionHtmlOptions(MatchRegularExpression::rule('/\w+/'));
-    }
-
-    private function getRequiredHtmlOptions(): RequiredHtmlOptions
-    {
-        return new RequiredHtmlOptions(Required::rule());
     }
 
     private function getHasLengthHtmlOptions(): HasLengthHtmlOptions
