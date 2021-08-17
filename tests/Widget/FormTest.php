@@ -68,7 +68,7 @@ final class FormTest extends TestCase
             Form::widget()->action('/example?id=1&title=%3C')->method('GET')->begin()
         );
         $this->assertStringMatchesFormat(
-            '<form action="/foo" method="GET">%A<input type="hidden" name="p" value="">',
+            '<form action="/foo" method="GET">%A<input type="hidden" name="p" value>',
             Form::widget()->action('/foo?p')->method('GET')->begin(),
         );
     }

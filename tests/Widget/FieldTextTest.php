@@ -25,7 +25,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" dirname="test.dir">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value dirname="test.dir">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -47,7 +47,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" form="form-id">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value form="form-id">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -62,7 +62,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" maxlength="10">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value maxlength="10">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -77,7 +77,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" minlength="4">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value minlength="4">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -92,7 +92,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -108,7 +108,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" placeholder="PlaceHolder Text">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -123,7 +123,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" readOnly>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value readOnly>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -138,7 +138,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -153,7 +153,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value="" size="10">
+        <input type="text" id="typeform-string" name="TypeForm[string]" value size="10">
         <div>Write your text string.</div>
         </div>
         HTML;

@@ -25,7 +25,7 @@ final class FileTest extends TestCase
     public function testForceUncheckedValue(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[toNull]" value=""><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <input type="hidden" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
         HTML;
         $html = File::widget()
             ->config($this->formModel, 'toNull', ['forceUncheckedValue' => ''])
@@ -36,7 +36,7 @@ final class FileTest extends TestCase
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" id="test-id" name="TypeForm[toNull]" value=""><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <input type="hidden" id="test-id" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
         HTML;
         $html = File::widget()
             ->config(

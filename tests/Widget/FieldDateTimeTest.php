@@ -23,7 +23,7 @@ final class FieldDateTimeTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="typeform-todate">To Date</label>
-        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" value="">
+        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" value>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -39,7 +39,7 @@ final class FieldDateTimeTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="typeform-todate">To Date</label>
-        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" value="">
+        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" value>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

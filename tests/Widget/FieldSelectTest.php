@@ -225,7 +225,7 @@ final class FieldSelectTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="hidden" name="TypeForm[int]" value="">
+        <input type="hidden" name="TypeForm[int]" value>
         <select id="typeform-int" name="TypeForm[int][]" multiple size="4">
         <option value="1">Moscu</option>
         <option value="2" selected>San Petersburgo</option>

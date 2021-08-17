@@ -18,7 +18,7 @@ final class DateTimeTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="datetime" id="typeform-string" name="TypeForm[string]" value="">',
+            '<input type="datetime" id="typeform-string" name="TypeForm[string]" value>',
             DateTime::widget()->config($this->formModel, 'string')->render(),
         );
     }

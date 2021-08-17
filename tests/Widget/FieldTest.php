@@ -33,7 +33,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
-        <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value="" maxlength="20" minlength="8" required>
+        <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value maxlength="20" minlength="8" required>
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
@@ -165,7 +165,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
-        <input type="password" class="is-invalid" name="attributesvalidatorform-password" value="" maxlength="8" minlength="4" required pattern="^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$">
+        <input type="password" class="is-invalid" name="attributesvalidatorform-password" value maxlength="8" minlength="4" required pattern="^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
@@ -247,7 +247,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
-        <input type="tel" id="attributesvalidatorform-telephone" class="is-invalid" name="AttributesValidatorForm[telephone]" value="" maxlength="16" minlength="8" required pattern="[^0-9+\(\)-]">
+        <input type="tel" id="attributesvalidatorform-telephone" class="is-invalid" name="AttributesValidatorForm[telephone]" value maxlength="16" minlength="8" required pattern="[^0-9+\(\)-]">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
@@ -313,7 +313,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
-        <input type="text" id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" value="" maxlength="6" minlength="3" required>
+        <input type="text" id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" value maxlength="6" minlength="3" required>
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;

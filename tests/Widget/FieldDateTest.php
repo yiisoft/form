@@ -23,7 +23,7 @@ final class FieldDateTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="typeform-todate">To Date</label>
-        <input type="date" id="typeform-todate" name="TypeForm[toDate]" value="">
+        <input type="date" id="typeform-todate" name="TypeForm[toDate]" value>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -38,7 +38,7 @@ final class FieldDateTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="typeform-todate">To Date</label>
-        <input type="date" id="typeform-todate" name="TypeForm[toDate]" value="">
+        <input type="date" id="typeform-todate" name="TypeForm[toDate]" value>
         </div>
         HTML;
         $this->formModel->setAttribute('string', '2021-09-18');

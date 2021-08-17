@@ -18,7 +18,7 @@ final class EmailTest extends TestCase
     public function testMaxLength(): void
     {
         $this->assertSame(
-            '<input type="email" id="typeform-string" name="TypeForm[string]" value="" maxlength="10">',
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value maxlength="10">',
             Email::widget()->config($this->formModel, 'string')->maxlength(10)->render(),
         );
     }
@@ -26,7 +26,7 @@ final class EmailTest extends TestCase
     public function testMinLength(): void
     {
         $this->assertSame(
-            '<input type="email" id="typeform-string" name="TypeForm[string]" value="" minlength="4">',
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value minlength="4">',
             Email::widget()->config($this->formModel, 'string')->minlength(4)->render(),
         );
     }
@@ -43,7 +43,7 @@ final class EmailTest extends TestCase
     public function testPattern(): void
     {
         $expected = <<<'HTML'
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}">
         HTML;
         $html = Email::widget()
             ->config($this->formModel, 'string')
@@ -55,7 +55,7 @@ final class EmailTest extends TestCase
     public function testPlaceholder(): void
     {
         $this->assertSame(
-            '<input type="email" id="typeform-string" name="TypeForm[string]" value="" placeholder="PlaceHolder Text">',
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">',
             Email::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
@@ -63,7 +63,7 @@ final class EmailTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="email" id="typeform-string" name="TypeForm[string]" value="">',
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value>',
             Email::widget()->config($this->formModel, 'string')->render(),
         );
     }
@@ -71,7 +71,7 @@ final class EmailTest extends TestCase
     public function testSize(): void
     {
         $this->assertSame(
-            '<input type="email" id="typeform-string" name="TypeForm[string]" value="" size="20">',
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value size="20">',
             Email::widget()->config($this->formModel, 'string')->size(20)->render(),
         );
     }

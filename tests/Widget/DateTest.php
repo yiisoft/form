@@ -18,7 +18,7 @@ final class DateTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="date" id="typeform-string" name="TypeForm[string]" value="">',
+            '<input type="date" id="typeform-string" name="TypeForm[string]" value>',
             Date::widget()->config($this->formModel, 'string')->render(),
         );
     }

@@ -23,7 +23,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="" form="form-id">
+        <input type="password" name="typeform-string" value form="form-id">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="" maxlength="16">
+        <input type="password" name="typeform-string" value maxlength="16">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +53,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="" minlength="8">
+        <input type="password" name="typeform-string" value minlength="8">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -68,7 +68,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+        <input type="password" name="typeform-string" value title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -90,7 +90,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="" placeholder="PlaceHolder Text">
+        <input type="password" name="typeform-string" value placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -109,7 +109,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="" readonly>
+        <input type="password" name="typeform-string" value readonly>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -124,7 +124,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" name="typeform-string" value="">
+        <input type="password" name="typeform-string" value>
         <div>Write your text string.</div>
         </div>
         HTML;

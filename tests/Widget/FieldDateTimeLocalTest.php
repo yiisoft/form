@@ -23,7 +23,7 @@ final class FieldDateTimeLocalTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="typeform-todate">To Date</label>
-        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value="">
+        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -39,7 +39,7 @@ final class FieldDateTimeLocalTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="typeform-todate">To Date</label>
-        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value="">
+        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value>
         </div>
         HTML;
         $this->formModel->setAttribute('string', '2021-09-18T23:59:00');

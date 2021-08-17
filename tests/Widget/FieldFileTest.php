@@ -36,7 +36,7 @@ final class FieldFileTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-tonull">To Null</label>
-        <input type="hidden" name="TypeForm[toNull]" value=""><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <input type="hidden" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -50,7 +50,7 @@ final class FieldFileTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-tonull">To Null</label>
-        <input type="hidden" id="test-id" name="TypeForm[toNull]" value=""><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <input type="hidden" id="test-id" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
         </div>
         HTML;
         $html = Field::widget()

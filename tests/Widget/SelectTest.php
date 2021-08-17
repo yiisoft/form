@@ -197,7 +197,7 @@ final class SelectTest extends TestCase
     {
         $this->formModel->setAttribute('int', 2);
         $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[int]" value="">
+        <input type="hidden" name="TypeForm[int]" value>
         <select id="typeform-int" name="TypeForm[int][]" multiple size="3">
         <option value="1">Moscu</option>
         <option value="2" selected>San Petersburgo</option>

@@ -18,7 +18,7 @@ final class DateTimeLocalTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="datetime-local" id="typeform-string" name="TypeForm[string]" value="">',
+            '<input type="datetime-local" id="typeform-string" name="TypeForm[string]" value>',
             DateTimeLocal::widget()->config($this->formModel, 'string')->render(),
         );
     }

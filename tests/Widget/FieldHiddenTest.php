@@ -21,7 +21,7 @@ final class FieldHiddenTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="hidden" name="typeform-string" value="">
+        <input type="hidden" name="typeform-string" value>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

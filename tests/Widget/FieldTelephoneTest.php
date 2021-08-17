@@ -23,7 +23,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value="" maxlength="10">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value maxlength="10">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value="" minlength="4">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value minlength="4">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +53,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value="" pattern="[789][0-9]{9}">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value pattern="[789][0-9]{9}">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -68,7 +68,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value="" placeholder="PlaceHolder Text">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -84,7 +84,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value="">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value>
         <div>Write your text string.</div>
         </div>
         HTML;

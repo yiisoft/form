@@ -23,7 +23,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="" maxlength="10">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value maxlength="10">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="" minlength="4">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value minlength="4">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -69,7 +69,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -85,7 +85,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="" placeholder="PlaceHolder Text">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -100,7 +100,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -115,7 +115,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value="" size="20">
+        <input type="email" id="typeform-string" name="TypeForm[string]" value size="20">
         <div>Write your text string.</div>
         </div>
         HTML;
