@@ -49,7 +49,7 @@ final class AttributesValidatorForm extends FormModel
             'text' => [
                 Required::rule(),
                 HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(6)->tooLongMessage('Is too long.'),
-            ]
+            ],
         ];
     }
 }
