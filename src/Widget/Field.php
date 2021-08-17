@@ -37,6 +37,7 @@ final class Field extends Widget
     private string $validClass = '';
     private array $parts = [];
     private string $template = "{label}\n{input}\n{hint}\n{error}";
+    private string $validationStateOn = 'input';
     private FormModelInterface $formModel;
 
     /**
@@ -234,6 +235,7 @@ final class Field extends Widget
     public function email(array $attributes = []): self
     {
         $new = clone $this;
+        $attributes['type'] = 'email';
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Email::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -394,6 +396,7 @@ final class Field extends Widget
     public function number(array $attributes = []): self
     {
         $new = clone $this;
+        $attributes['type'] = 'number';
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Number::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -415,6 +418,7 @@ final class Field extends Widget
     public function password(array $attributes = []): self
     {
         $new = clone $this;
+        $attributes['type'] = 'password';
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Password::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -609,6 +613,28 @@ final class Field extends Widget
     }
 
     /**
+     * Renders a telephone widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function telephone(array $attributes = []): self
+    {
+        $new = clone $this;
+        $attributes['type'] = 'tel';
+        $attributes = $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = Telephone::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
      * Renders a text widget.
      *
      * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
@@ -622,8 +648,9 @@ final class Field extends Widget
     public function text(array $attributes = []): self
     {
         $new = clone $this;
-        $text = Text::widget();
+        $attributes['type'] = 'text';
         $attributes = $new->setInputAttributes($attributes);
+        $text = Text::widget();
 
         if (isset($attributes['dirname'])) {
             $text = $text->dirname($attributes['dirname']);

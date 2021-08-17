@@ -61,6 +61,8 @@ final class Password extends Widget
      * @param int $value
      *
      * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
      */
     public function minlength(int $value): self
     {
@@ -68,6 +70,7 @@ final class Password extends Widget
         $new->attributes['minlength'] = $value;
         return $new;
     }
+
 
     /**
      * The pattern attribute, when specified, is a regular expression that the input's value must match in order for

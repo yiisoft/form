@@ -5,44 +5,51 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\HtmlOptions\HasLengthHtmlOptions;
-use Yiisoft\Form\HtmlOptions\MatchRegularExpressionHtmlOptions;
+use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
+use Yiisoft\Validator\Rule\Required;
 
 final class AttributesValidatorForm extends FormModel
 {
+    private string $email = '';
     private string $number = '';
-    private string $hasLength = '';
-    private string $required = '';
+    private string $password = '';
     private string $pattern = '';
-    private string $combined = '';
+    private string $required = '';
+    private string $telephone = '';
+    private string $text = '';
 
     public function getRules(): array
     {
         return [
+            'email' => [
+                Required::rule(),
+                Email::rule(),
+                HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
+            ],
             'number' => [
+                Required::rule(),
                 Number::rule()->min(3)->tooSmallMessage('Is too small.')->max(5)->tooBigMessage('Is too big.'),
             ],
-            'hasLength' => [
-                $this->getHasLengthHtmlOptions(),
-            ],
             'pattern' => [
-                $this->getMatchRegularExpressionHtmlOptions(),
+                MatchRegularExpression::rule('/\w+/'),
             ],
+            'password' => [
+                Required::rule(),
+                HasLength::rule()->min(4)->tooShortMessage('Is too short.')->max(8)->tooLongMessage('Is too long.'),
+                MatchRegularExpression::rule('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/'),
+            ],
+            'telephone' => [
+                Required::rule(),
+                HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(16)->tooLongMessage('Is too long.'),
+                MatchRegularExpression::rule('/[^0-9+\(\)-]/'),
+            ],
+            'text' => [
+                Required::rule(),
+                HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(6)->tooLongMessage('Is too long.'),
+            ]
         ];
-    }
-
-    private function getMatchRegularExpressionHtmlOptions(): MatchRegularExpressionHtmlOptions
-    {
-        return new MatchRegularExpressionHtmlOptions(MatchRegularExpression::rule('/\w+/'));
-    }
-
-    private function getHasLengthHtmlOptions(): HasLengthHtmlOptions
-    {
-        return new HasLengthHtmlOptions(
-            HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(5)->tooLongMessage('Is too long.')
-        );
     }
 }

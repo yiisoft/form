@@ -58,6 +58,14 @@ final class TextTest extends TestCase
         );
     }
 
+    public function testMinLength(): void
+    {
+        $this->assertSame(
+            '<input type="text" id="typeform-string" name="TypeForm[string]" value="" minlength="4">',
+            Text::widget()->config($this->formModel, 'string')->minlength(4)->render(),
+        );
+    }
+
     public function testPattern(): void
     {
         $expected = <<<'HTML'

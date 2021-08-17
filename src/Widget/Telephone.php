@@ -9,36 +9,14 @@ use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Input;
 
 /**
- * Generates an text input tag for the given form attribute.
+ * The input element with a type attribute whose value is "tel" represents a one-line plain-text edit control for
+ * entering a telephone number.
  *
- * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
+ * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel
  */
-final class Text extends Widget
+final class Telephone extends Widget
 {
     use CommonAttribute;
-
-    private string $dirname = '';
-
-    /**
-     * Enables submission of a value for the directionality of the element, and gives the name of the field that
-     * contains that value.
-     *
-     * @param string $value Any string that is not empty.
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.dirname
-     */
-    public function dirname(string $value): self
-    {
-        if (empty($value)) {
-            throw new InvalidArgumentException('The value cannot be empty.');
-        }
-
-        $new = clone $this;
-        $new->dirname = $value;
-        return $new;
-    }
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
@@ -50,7 +28,7 @@ final class Text extends Widget
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.maxlength
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.maxlength
      */
     public function maxlength(int $value): self
     {
@@ -79,22 +57,6 @@ final class Text extends Widget
     }
 
     /**
-     * It allows defining placeholder.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.placeholder
-     */
-    public function placeholder(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['placeholder'] = $value;
-        return $new;
-    }
-
-    /**
      * The pattern attribute, when specified, is a regular expression that the input's value must match in order for
      * the value to pass constraint validation. It must be a valid JavaScript regular expression, as used by the
      * RegExp type.
@@ -103,12 +65,28 @@ final class Text extends Widget
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.pattern
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.pattern
      */
     public function pattern(string $value): self
     {
         $new = clone $this;
         $new->attributes['pattern'] = $value;
+        return $new;
+    }
+
+    /**
+     * It allows defining placeholder.
+     *
+     * @param string $value
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.placeholder
+     */
+    public function placeholder(string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['placeholder'] = $value;
         return $new;
     }
 
@@ -121,7 +99,7 @@ final class Text extends Widget
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.size
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.size
      */
     public function size(int $value = 4): self
     {
@@ -137,18 +115,17 @@ final class Text extends Widget
     {
         $new = clone $this;
 
-        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.value */
+        /**
+         * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.value
+         */
         $value = $new->getValue();
 
         if (!is_string($value)) {
-            throw new InvalidArgumentException('Text widget must be a string.');
+            throw new InvalidArgumentException('Telephone widget must be a string.');
         }
 
-        if ($new->dirname !== '') {
-            $new->attributes['dirname'] = $new->dirname;
-        }
-
-        return Input::text()
+        return Input::tag()
+            ->type('tel')
             ->attributes($new->attributes)
             ->id($new->getId())
             ->name($new->getInputName())

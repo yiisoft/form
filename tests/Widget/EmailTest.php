@@ -23,6 +23,14 @@ final class EmailTest extends TestCase
         );
     }
 
+    public function testMinLength(): void
+    {
+        $this->assertSame(
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value="" minlength="4">',
+            Email::widget()->config($this->formModel, 'string')->minlength(4)->render(),
+        );
+    }
+
     public function testMultiple(): void
     {
         $this->formModel->setAttribute('string', 'email1@example.com;email2@example.com;');

@@ -6,73 +6,17 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Tests\TestSupport\Form\AttributesValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldNumberTest extends TestCase
 {
     use TestTrait;
 
-    private AttributesValidatorForm $attributeValidatorForm;
     private TypeForm $formModel;
-
-    public function testAddAttributesValidatorHtml(): void
-    {
-        $formModel = new AttributesValidatorForm();
-
-        // Validation error value.
-        $formModel->setAttribute('number', '1');
-        $validator = $this->createValidatorMock();
-        $validator->validate($formModel);
-        $expected = <<<'HTML'
-        <div>
-        <label for="attributesvalidatorform-number">Number</label>
-        <input type="number" id="attributesvalidatorform-number" name="AttributesValidatorForm[number]" value="1" max="5" min="3">
-        <div>Is too small.</div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($formModel, 'number')->number()->render(),
-        );
-
-        // Validation error value.
-        $formModel->setAttribute('number', '6');
-        $validator = $this->createValidatorMock();
-        $validator->validate($formModel);
-        $expected = <<<'HTML'
-        <div>
-        <label for="attributesvalidatorform-number">Number</label>
-        <input type="number" id="attributesvalidatorform-number" name="AttributesValidatorForm[number]" value="6" max="5" min="3">
-        <div>Is too big.</div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($formModel, 'number')->number()->render(),
-        );
-
-        // Validation success value.
-        $formModel->setAttribute('number', '4');
-        $validator = $this->createValidatorMock();
-        $validator->validate($formModel);
-        $expected = <<<'HTML'
-        <div>
-        <label for="attributesvalidatorform-number">Number</label>
-        <input type="number" id="attributesvalidatorform-number" name="AttributesValidatorForm[number]" value="4" max="5" min="3">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($formModel, 'number')->number()->render(),
-        );
-    }
 
     public function testMax(): void
     {
@@ -142,10 +86,5 @@ final class FieldNumberTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->formModel = new TypeForm();
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 }

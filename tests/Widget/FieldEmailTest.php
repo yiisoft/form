@@ -33,6 +33,21 @@ final class FieldEmailTest extends TestCase
         );
     }
 
+    public function testMinLength(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="email" id="typeform-string" name="TypeForm[string]" value="" minlength="4">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->email(['minlength' => 4])->render(),
+        );
+    }
+
     public function testMultiple(): void
     {
         $this->formModel->setAttribute('string', 'email1@example.com;email2@example.com;');

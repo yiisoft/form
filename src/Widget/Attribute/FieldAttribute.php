@@ -7,6 +7,8 @@ namespace Yiisoft\Form\Widget\Attribute;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
 
@@ -37,7 +39,7 @@ trait FieldAttribute
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    final public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
     {
         $new = clone $this;
         $new->formModel = $formModel;
@@ -68,33 +70,6 @@ trait FieldAttribute
         $new = clone $this;
         $new->errorClass = $value;
         return $new;
-    }
-
-    /**
-     * Set error description message.
-     *
-     * @return static
-     */
-    public function errorMessage(string $value): self
-    {
-        $new = clone $this;
-        $new->errorMessage = $value;
-        return $new;
-    }
-
-    /**
-     * Return the imput id.
-     *
-     * @return string
-     */
-    protected function getId(): string
-    {
-        $new = clone $this;
-
-        /** @var string */
-        $id = $new->attributes['id'] ?? $new->id;
-
-        return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute) : $id;
     }
 
     /**
@@ -179,18 +154,42 @@ trait FieldAttribute
         array $attributes
     ): array {
         $rules = $formModel->getRules()[$attribute] ?? [];
+        $type = $attributes['type'] ?? '';
+        unset($attributes['type']);
 
         foreach ($rules as $rule) {
-            if ($rule instanceof Number) {
-                $attributes['max'] = $rule->getOptions()['max'];
-                $attributes['min'] = $rule->getOptions()['min'];
-            }
             if ($rule instanceof Required) {
                 $attributes['required'] = true;
+            }
+            if ($rule instanceof HasLength && in_array($type, ['email', 'password', 'tel', 'text', 'url'], true)) {
+                $attributes['maxlength'] = $rule->getOptions()['max'];
+                $attributes['minlength'] = $rule->getOptions()['min'];
+            }
+            if ($rule instanceof MatchRegularExpression) {
+                $attributes['pattern'] = Html::normalizeRegexpPattern($rule->getOptions()['pattern']);
+            }
+            if ($rule instanceof Number && $type === 'number') {
+                $attributes['max'] = $rule->getOptions()['max'];
+                $attributes['min'] = $rule->getOptions()['min'];
             }
         }
 
         return $attributes;
+    }
+
+    /**
+     * Return the imput id.
+     *
+     * @return string
+     */
+    private function getId(): string
+    {
+        $new = clone $this;
+
+        /** @var string */
+        $id = $new->attributes['id'] ?? $new->id;
+
+        return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute) : $id;
     }
 
     private function setInputAttributes(array $attributes): array
@@ -198,6 +197,7 @@ trait FieldAttribute
         $new = clone $this;
 
         $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes);
+        $attributeName = HtmlForm::getAttributeName($new->attribute);
 
         if ($new->ariaDescribedBy === true) {
             $attributes['aria-describedby'] = $new->getId();
@@ -205,6 +205,12 @@ trait FieldAttribute
 
         if ($new->inputClass !== '') {
             Html::addCssClass($attributes, $new->inputClass);
+        }
+
+        if ($new->formModel->hasErrors($attributeName) && $new->errorClass !== '') {
+            Html::addCssClass($attributes, $new->invalidClass);
+        } elseif ($new->formModel->isValidated() && $new->validClass !== '') {
+            Html::addCssClass($attributes, $new->validClass);
         }
 
         return $attributes;

@@ -72,6 +72,21 @@ final class FieldTextTest extends TestCase
         );
     }
 
+    public function testMinLength(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value="" minlength="4">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->text(['minlength' => 4])->render(),
+        );
+    }
+
     public function testPattern(): void
     {
         $expected = <<<'HTML'
