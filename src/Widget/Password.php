@@ -71,7 +71,6 @@ final class Password extends Widget
         return $new;
     }
 
-
     /**
      * The pattern attribute, when specified, is a regular expression that the input's value must match in order for
      * the value to pass constraint validation. It must be a valid JavaScript regular expression, as used by the
