@@ -9,12 +9,10 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
 use Stringable;
-use Yiisoft\Form\HtmlOptions\HtmlOptionsProvider;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\ResultSet;
-use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
@@ -39,22 +37,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
-    }
-
-    public function isAttributeRequired(string $attribute): bool
-    {
-        $validators = $this->getRules()[$attribute] ?? [];
-
-        foreach ($validators as $validator) {
-            if ($validator instanceof Required) {
-                return true;
-            }
-            if ($validator instanceof HtmlOptionsProvider && (bool)($validator->getHtmlOptions()['required'] ?? false)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
