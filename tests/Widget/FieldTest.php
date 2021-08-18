@@ -370,6 +370,72 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testAddAttributesTextAreaValidator(): void
+    {
+        // Validation error value.
+        $this->formModel->setAttribute('text', '');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-text">Text</label>
+        <textarea id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" required></textarea>
+        <div class="hasError">Value cannot be blank.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+        );
+
+        // Validation error value.
+        $this->formModel->setAttribute('text', 'a');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-text">Text</label>
+        <textarea id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" required>a</textarea>
+        <div class="hasError">Is too short.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+        );
+
+        // Validation error value.
+        $this->formModel->setAttribute('text', 'testsme');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-text">Text</label>
+        <textarea id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" required>testsme</textarea>
+        <div class="hasError">Is too long.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+        );
+
+        // Validation success value.
+        $this->formModel->setAttribute('text', 'tests');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-text">Text</label>
+        <textarea id="attributesvalidatorform-text" class="is-valid" name="AttributesValidatorForm[text]" required>tests</textarea>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+        );
+    }
+
     public function testAddAttributesUrlValidator(): void
     {
         // Validation error value.

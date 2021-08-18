@@ -154,6 +154,7 @@ trait FieldAttribute
         string $attribute,
         array $attributes
     ): array {
+        $haslengthTypes = ['email', 'password', 'tel', 'text', 'textarea', 'url'];
         $rules = $formModel->getRules()[$attribute] ?? [];
         $type = $attributes['type'] ?? '';
         unset($attributes['type']);
@@ -162,7 +163,7 @@ trait FieldAttribute
             if ($rule instanceof Required) {
                 $attributes['required'] = true;
             }
-            if ($rule instanceof HasLength && in_array($type, ['email', 'password', 'tel', 'text', 'url'], true)) {
+            if ($rule instanceof HasLength && in_array($type, $haslengthTypes, true)) {
                 $attributes['maxlength'] = $rule->getOptions()['max'];
                 $attributes['minlength'] = $rule->getOptions()['min'];
             }
