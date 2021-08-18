@@ -155,6 +155,7 @@ trait FieldAttribute
         array $attributes
     ): array {
         $haslengthTypes = ['email', 'password', 'tel', 'text', 'textarea', 'url'];
+        $matchRegularExpressionTypes = ['email', 'password', 'tel', 'text', 'url'];
         $rules = $formModel->getRules()[$attribute] ?? [];
         $type = $attributes['type'] ?? '';
         unset($attributes['type']);
@@ -167,7 +168,7 @@ trait FieldAttribute
                 $attributes['maxlength'] = $rule->getOptions()['max'];
                 $attributes['minlength'] = $rule->getOptions()['min'];
             }
-            if ($rule instanceof MatchRegularExpression) {
+            if ($rule instanceof MatchRegularExpression && in_array($type, $matchRegularExpressionTypes, true)) {
                 $attributes['pattern'] = Html::normalizeRegexpPattern($rule->getOptions()['pattern']);
             }
             if ($rule instanceof Number && $type === 'number') {

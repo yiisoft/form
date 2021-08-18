@@ -28,8 +28,10 @@ final class AttributesValidatorForm extends FormModel
         return [
             'email' => [
                 Required::rule(),
-                Email::rule(),
                 HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
+                MatchRegularExpression::rule('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/')
+                    ->message('Is not a valid email address.'),
+                Email::rule(),
             ],
             'number' => [
                 Required::rule(),
@@ -41,20 +43,25 @@ final class AttributesValidatorForm extends FormModel
             'password' => [
                 Required::rule(),
                 HasLength::rule()->min(4)->tooShortMessage('Is too short.')->max(8)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/'),
+                MatchRegularExpression::rule('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/')
+                    ->message('Is not a valid password.'),
             ],
             'telephone' => [
                 Required::rule(),
                 HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(16)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/[^0-9+\(\)-]/'),
+                MatchRegularExpression::rule('/[^0-9+\(\)-]/')->message('Is not a valid telephone number.'),
             ],
             'text' => [
                 Required::rule(),
                 HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(6)->tooLongMessage('Is too long.'),
+                MatchRegularExpression::rule('/^[a-zA-Z0-9_.-]+$/')->message('Is not a valid text.'),
             ],
             'url' => [
                 Required::rule(),
                 HasLength::rule()->min(15)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
+                MatchRegularExpression::rule(
+                    '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/'
+                )->message('Is not a valid URL.'),
                 Url::rule(),
             ],
         ];
