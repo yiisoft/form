@@ -11,6 +11,7 @@ use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\Url;
 
 trait FieldAttribute
 {
@@ -171,6 +172,12 @@ trait FieldAttribute
             if ($rule instanceof Number && $type === 'number') {
                 $attributes['max'] = $rule->getOptions()['max'];
                 $attributes['min'] = $rule->getOptions()['min'];
+            }
+            if ($rule instanceof Url && $type === 'url') {
+                $schemes = $rule->getOptions()['validSchemes'];
+                $pattern = $rule->getOptions()['pattern'];
+                $normalizePattern = str_replace('{schemes}', '(' . implode('|', $schemes) . ')', $pattern);
+                $attributes['pattern'] = Html::normalizeRegexpPattern($normalizePattern);
             }
         }
 

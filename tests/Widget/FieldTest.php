@@ -370,6 +370,88 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testAddAttributesUrlValidator(): void
+    {
+        // Validation error value.
+        $this->formModel->setAttribute('url', '');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-url">Url</label>
+        <input type="url" id="attributesvalidatorform-url" class="is-invalid" name="AttributesValidatorForm[url]" value maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
+        <div class="hasError">Value cannot be blank.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+        );
+
+        // Validation error value.
+        $this->formModel->setAttribute('url', 'http://a.com');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-url">Url</label>
+        <input type="url" id="attributesvalidatorform-url" class="is-invalid" name="AttributesValidatorForm[url]" value="http://a.com" maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
+        <div class="hasError">Is too short.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+        );
+
+        // Validation error value.
+        $this->formModel->setAttribute('url', 'http://awesomexample.com');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-url">Url</label>
+        <input type="url" id="attributesvalidatorform-url" class="is-invalid" name="AttributesValidatorForm[url]" value="http://awesomexample.com" maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
+        <div class="hasError">Is too long.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+        );
+
+        // Validation error value.
+        $this->formModel->setAttribute('url', 'awesomexample.com');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-url">Url</label>
+        <input type="url" id="attributesvalidatorform-url" class="is-invalid" name="AttributesValidatorForm[url]" value="awesomexample.com" maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
+        <div class="hasError">This value is not a valid URL.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+        );
+
+        // Validation success value.
+        $this->formModel->setAttribute('url', 'http://example.com');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-url">Url</label>
+        <input type="url" id="attributesvalidatorform-url" class="is-valid" name="AttributesValidatorForm[url]" value="http://example.com" maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+        );
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

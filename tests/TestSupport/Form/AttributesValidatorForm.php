@@ -10,6 +10,7 @@ use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\Url;
 
 final class AttributesValidatorForm extends FormModel
 {
@@ -20,6 +21,7 @@ final class AttributesValidatorForm extends FormModel
     private string $required = '';
     private string $telephone = '';
     private string $text = '';
+    private string $url = '';
 
     public function getRules(): array
     {
@@ -49,6 +51,11 @@ final class AttributesValidatorForm extends FormModel
             'text' => [
                 Required::rule(),
                 HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(6)->tooLongMessage('Is too long.'),
+            ],
+            'url' => [
+                Required::rule(),
+                HasLength::rule()->min(15)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
+                Url::rule(),
             ],
         ];
     }

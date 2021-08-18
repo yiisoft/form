@@ -695,6 +695,28 @@ final class Field extends Widget
     }
 
     /**
+     * Renders a Url widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function url(array $attributes = []): self
+    {
+        $new = clone $this;
+        $attributes['type'] = 'url';
+        $attributes = $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = Url::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+
+        return $new;
+    }
+
+    /**
      * Renders the whole field.
      *
      * This method will generate the label, input tag and hint tag (if any), and assemble them into HTML according to
