@@ -24,4 +24,11 @@ final class TypeForm extends FormModel
             'string' => 'Write your text string.',
         ];
     }
+
+    public function getAttributePlaceHolders(): array
+    {
+        return [
+            'string' => 'Typed your text string.',
+        ];
+    }
 }

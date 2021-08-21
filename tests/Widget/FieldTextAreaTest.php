@@ -23,7 +23,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" dirname="test.dir"></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string." dirname="test.dir"></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -45,7 +45,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" form="form-id"></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" form="form-id" placeholder="Typed your text string."></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -60,7 +60,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" maxLength="100"></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" maxLength="100" placeholder="Typed your text string."></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -91,7 +91,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]"></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string."></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -106,7 +106,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" readonly></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" readonly placeholder="Typed your text string."></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -129,7 +129,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" wrap="hard"></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string." wrap="hard"></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -142,7 +142,7 @@ final class FieldTextAreaTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" wrap="soft"></textarea>
+        <textarea id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string." wrap="soft"></textarea>
         <div>Write your text string.</div>
         </div>
         HTML;

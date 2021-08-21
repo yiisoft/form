@@ -63,6 +63,14 @@ class LoginForm extends FormModel
         ];
     }
 
+    public function getAttributePlaceHolders(): array
+    {
+        return [
+            'login' => 'Type Usernamer or Email.',
+            'password' => 'Type Password.',
+        ];
+    }
+
     public function getRules(): array
     {
         return [

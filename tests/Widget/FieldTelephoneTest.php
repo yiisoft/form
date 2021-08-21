@@ -23,7 +23,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value maxlength="10">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value maxlength="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value minlength="4">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value minlength="4" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +53,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value pattern="[789][0-9]{9}">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value pattern="[789][0-9]{9}" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -84,7 +84,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value>
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;

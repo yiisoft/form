@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\Rule\Required;
@@ -122,6 +123,22 @@ final class FormModelTest extends TestCase
         ];
 
         $this->assertEquals($expected, $form->getAttributeLabels());
+    }
+
+    public function testGetAttributePlaceHolder(): void
+    {
+        $form = new LoginForm();
+
+        $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
+        $this->assertEquals('Type Password.', $form->getAttributePlaceHolder('password'));
+        $this->assertEmpty($form->getAttributePlaceHolder('noExist'));
+    }
+
+    public function testGetNestedAttributePlaceHolder(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
     }
 
     public function testErrorSummary(): void
@@ -325,48 +342,5 @@ final class CustomFormNameForm extends FormModel
     public function getFormName(): string
     {
         return 'my-best-form-name';
-    }
-}
-
-final class FormWithNestedAttribute extends FormModel
-{
-    private ?int $id = null;
-    private ?LoginForm $user = null;
-
-    public function __construct()
-    {
-        $this->user = new LoginForm();
-        parent::__construct();
-    }
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'id' => 'ID',
-        ];
-    }
-
-    public function getAttributeHints(): array
-    {
-        return [
-            'id' => 'Readonly ID',
-        ];
-    }
-
-    public function getRules(): array
-    {
-        return [
-            'id' => new Required(),
-        ];
-    }
-
-    public function setUserLogin(string $login): void
-    {
-        $this->user->login('admin');
-    }
-
-    public function getUserLogin(): ?string
-    {
-        return $this->user->getLogin();
     }
 }

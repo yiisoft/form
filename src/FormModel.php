@@ -39,18 +39,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->attributes = $this->collectAttributes();
     }
 
-    /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeValue(string $attribute)
-    {
-        return $this->readProperty($attribute);
-    }
-
     public function getAttributeHint(string $attribute): string
     {
         /** @var array */
-        $attributeHints = method_exists($this, 'getAttributeHints') ? $this->getAttributeHints() : [];
+        $attributeHints = $this->getAttributeHints();
 
         /** @var string */
         $hint = $attributeHints[$attribute] ?? '';
@@ -66,12 +58,17 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $hint;
     }
 
+    public function getAttributeHints(): array
+    {
+        return [];
+    }
+
     public function getAttributeLabel(string $attribute): string
     {
         $label = $this->generateAttributeLabel($attribute);
 
         /** @var array */
-        $labels = method_exists($this, 'getAttributeLabels') ? $this->getAttributeLabels() : [];
+        $labels = $this->getAttributeLabels();
 
         if (array_key_exists($attribute, $labels)) {
             /** @var string */
@@ -87,6 +84,43 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return $label;
+    }
+
+    public function getAttributeLabels(): array
+    {
+        return [];
+    }
+
+    public function getAttributePlaceHolder(string $attribute): string
+    {
+        /** @var array */
+        $attributePlaceHolders = $this->getAttributePlaceHolders();
+
+        /** @var string */
+        $placeHolder = $attributePlaceHolders[$attribute] ?? '';
+
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        if ($nested !== null) {
+            /** @var FormModelInterface $attributeNestedValue */
+            $attributeNestedValue = $this->getAttributeValue($attribute);
+            $placeHolder = $attributeNestedValue->getAttributePlaceHolder($nested);
+        }
+
+        return $placeHolder;
+    }
+
+    public function getAttributePlaceHolders(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return iterable|object|scalar|Stringable|null
+     */
+    public function getAttributeValue(string $attribute)
+    {
+        return $this->readProperty($attribute);
     }
 
     /**

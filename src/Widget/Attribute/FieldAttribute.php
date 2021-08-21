@@ -152,11 +152,10 @@ trait FieldAttribute
     private function addValidatorAttributeHtml(
         FormModelInterface $formModel,
         string $attribute,
-        array $attributes
+        array $attributes,
+        string $type
     ): array {
         $rules = $formModel->getRules()[$attribute] ?? [];
-        $type = $attributes['type'] ?? '';
-        unset($attributes['type']);
 
         foreach ($rules as $rule) {
             if ($rule instanceof Required) {
@@ -202,8 +201,10 @@ trait FieldAttribute
     private function setInputAttributes(array $attributes): array
     {
         $new = clone $this;
-
-        $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes);
+        $placeHolder = '';
+        $type = $attributes['type'] ?? '';
+        unset($attributes['type']);
+        $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes, $type);
         $attributeName = HtmlForm::getAttributeName($new->attribute);
 
         if ($new->ariaDescribedBy === true) {
@@ -218,6 +219,14 @@ trait FieldAttribute
             Html::addCssClass($attributes, $new->invalidClass);
         } elseif ($new->formModel->isValidated() && $new->validClass !== '') {
             Html::addCssClass($attributes, $new->validClass);
+        }
+
+        if (!in_array($type, self::NO_PLACEHOLDER_TYPES, true)) {
+            $placeHolder = $new->formModel->getAttributePlaceHolder($new->attribute);
+        }
+
+        if (!isset($attributes['placeholder']) && $placeHolder !== '') {
+            $attributes['placeholder'] = $placeHolder;
         }
 
         return $attributes;

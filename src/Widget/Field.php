@@ -23,9 +23,13 @@ final class Field extends Widget
 {
     use FieldAttribute;
 
+    public const TYPE_CHECKBOX = 'checkbox';
+    public const TYPE_HIDDEN = 'hidden';
     public const TYPE_EMAIL = 'email';
     public const TYPE_NUMBER = 'number';
     public const TYPE_PASSWORD = 'password';
+    public const TYPE_RADIO = 'radio';
+    public const TYPE_SELECT = 'select';
     public const TYPE_TEL = 'tel';
     public const TYPE_TEXT = 'text';
     public const TYPE_TEXTAREA = 'textarea';
@@ -44,6 +48,12 @@ final class Field extends Widget
         self::TYPE_TEL,
         self::TYPE_TEXT,
         self::TYPE_URL,
+    ];
+    public const NO_PLACEHOLDER_TYPES = [
+        self::TYPE_CHECKBOX,
+        self::TYPE_HIDDEN,
+        self::TYPE_RADIO,
+        self::TYPE_SELECT,
     ];
 
     private bool $ariaDescribedBy = false;
@@ -91,6 +101,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $checkbox = Checkbox::widget();
+        $attributes['type'] = self::TYPE_CHECKBOX;
         $attributes = $new->setInputAttributes($attributes);
 
         if ($enclosedByLabel === true) {
@@ -343,6 +354,7 @@ final class Field extends Widget
     public function hidden(array $attributes = []): self
     {
         $new = clone $this;
+        $attributes['type'] = self::TYPE_HIDDEN;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{label}'] = '';
@@ -482,6 +494,7 @@ final class Field extends Widget
     {
         $new = clone $this;
         $radio = Radio::widget();
+        $attributes['type'] = self::TYPE_RADIO;
         $attributes = $new->setInputAttributes($attributes);
 
         if ($enclosedByLabel === true) {
@@ -625,6 +638,7 @@ final class Field extends Widget
     public function select(array $attributes = [], array $items = [], array $groups = []): self
     {
         $new = clone $this;
+        $attributes['type'] = self::TYPE_SELECT;
         $attributes = $new->setInputAttributes($attributes);
         $encode = $attributes['encode'] ?? false;
         $itemsAttributes = $attributes['itemsAttributes'] ?? [];

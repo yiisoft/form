@@ -9,7 +9,7 @@ use Yiisoft\Validator\DataSetInterface;
 /**
  * FormModelInterface model represents an HTML form: its data, validation and presentation.
  */
-interface FormModelInterface extends DataSetInterface
+interface FormModelInterface extends DataSetInterface, FormMetadataInterface
 {
     /**
      * Returns the text label for the specified attribute.
