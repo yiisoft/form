@@ -154,8 +154,6 @@ trait FieldAttribute
         string $attribute,
         array $attributes
     ): array {
-        $haslengthTypes = ['email', 'password', 'tel', 'text', 'textarea', 'url'];
-        $matchRegularExpressionTypes = ['email', 'password', 'tel', 'text', 'url'];
         $rules = $formModel->getRules()[$attribute] ?? [];
         $type = $attributes['type'] ?? '';
         unset($attributes['type']);
@@ -164,18 +162,18 @@ trait FieldAttribute
             if ($rule instanceof Required) {
                 $attributes['required'] = true;
             }
-            if ($rule instanceof HasLength && in_array($type, $haslengthTypes, true)) {
+            if ($rule instanceof HasLength && in_array($type, self::HAS_LENGTH_TYPES, true)) {
                 $attributes['maxlength'] = $rule->getOptions()['max'];
                 $attributes['minlength'] = $rule->getOptions()['min'];
             }
-            if ($rule instanceof MatchRegularExpression && in_array($type, $matchRegularExpressionTypes, true)) {
+            if ($rule instanceof MatchRegularExpression && in_array($type, self::MATCH_REGULAR_EXPRESSION_TYPES, true)) {
                 $attributes['pattern'] = Html::normalizeRegexpPattern($rule->getOptions()['pattern']);
             }
-            if ($rule instanceof Number && $type === 'number') {
+            if ($rule instanceof Number && $type === self::TYPE_NUMBER) {
                 $attributes['max'] = $rule->getOptions()['max'];
                 $attributes['min'] = $rule->getOptions()['min'];
             }
-            if ($rule instanceof Url && $type === 'url') {
+            if ($rule instanceof Url && $type === self::TYPE_URL) {
                 $schemes = $rule->getOptions()['validSchemes'];
                 $pattern = $rule->getOptions()['pattern'];
                 $normalizePattern = str_replace('{schemes}', '(' . implode('|', $schemes) . ')', $pattern);

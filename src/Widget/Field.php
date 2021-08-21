@@ -23,6 +23,29 @@ final class Field extends Widget
 {
     use FieldAttribute;
 
+    public const TYPE_EMAIL = 'email';
+    public const TYPE_NUMBER = 'number';
+    public const TYPE_PASSWORD = 'password';
+    public const TYPE_TEL = 'tel';
+    public const TYPE_TEXT = 'text';
+    public const TYPE_TEXTAREA = 'textarea';
+    public const TYPE_URL = 'url';
+    public const HAS_LENGTH_TYPES = [
+        self::TYPE_EMAIL,
+        self::TYPE_PASSWORD,
+        self::TYPE_TEL,
+        self::TYPE_TEXT,
+        self::TYPE_TEXTAREA,
+        self::TYPE_URL,
+    ];
+    public const MATCH_REGULAR_EXPRESSION_TYPES = [
+        self::TYPE_EMAIL,
+        self::TYPE_PASSWORD,
+        self::TYPE_TEL,
+        self::TYPE_TEXT,
+        self::TYPE_URL,
+    ];
+
     private bool $ariaDescribedBy = false;
     private string $attribute = '';
     private array $attributes = [];
@@ -235,7 +258,7 @@ final class Field extends Widget
     public function email(array $attributes = []): self
     {
         $new = clone $this;
-        $attributes['type'] = 'email';
+        $attributes['type'] = self::TYPE_EMAIL;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Email::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -396,7 +419,7 @@ final class Field extends Widget
     public function number(array $attributes = []): self
     {
         $new = clone $this;
-        $attributes['type'] = 'number';
+        $attributes['type'] = self::TYPE_NUMBER;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Number::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -418,7 +441,7 @@ final class Field extends Widget
     public function password(array $attributes = []): self
     {
         $new = clone $this;
-        $attributes['type'] = 'password';
+        $attributes['type'] = self::TYPE_PASSWORD;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Password::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -626,7 +649,7 @@ final class Field extends Widget
     public function telephone(array $attributes = []): self
     {
         $new = clone $this;
-        $attributes['type'] = 'tel';
+        $attributes['type'] = self::TYPE_TEL;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Telephone::widget()->config($new->formModel, $new->attribute, $attributes)->render();
@@ -648,7 +671,7 @@ final class Field extends Widget
     public function text(array $attributes = []): self
     {
         $new = clone $this;
-        $attributes['type'] = 'text';
+        $attributes['type'] = self::TYPE_TEXT;
         $attributes = $new->setInputAttributes($attributes);
         $text = Text::widget();
 
@@ -708,7 +731,7 @@ final class Field extends Widget
     public function url(array $attributes = []): self
     {
         $new = clone $this;
-        $attributes['type'] = 'url';
+        $attributes['type'] = self::TYPE_URL;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Url::widget()->config($new->formModel, $new->attribute, $attributes)->render();
