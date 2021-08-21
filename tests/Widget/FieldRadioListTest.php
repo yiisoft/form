@@ -128,7 +128,7 @@ final class FieldRadioListTest extends TestCase
             ->config($this->formModel, 'int')
             ->radioList(
                 [
-                    'individualItemsAttributes' => [1 => ['disabled' => true], 2 => ['class' => 'test-class']]
+                    'individualItemsAttributes' => [1 => ['disabled' => true], 2 => ['class' => 'test-class']],
                 ],
                 $this->sex,
             )
