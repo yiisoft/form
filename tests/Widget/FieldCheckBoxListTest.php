@@ -129,7 +129,7 @@ final class FieldCheckBoxListTest extends TestCase
             ->config($this->formModel, 'int')
             ->checkboxList(
                 [
-                    'individualItemsAttributes' => [1 => ['disabled' => true], 2 => ['class' => 'test-class']]
+                    'individualItemsAttributes' => [1 => ['disabled' => true], 2 => ['class' => 'test-class']],
                 ],
                 $this->sex,
             )
