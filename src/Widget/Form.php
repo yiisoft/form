@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use InvalidArgumentException;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
 use Yiisoft\Widget\Widget;
