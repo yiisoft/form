@@ -112,6 +112,30 @@ final class FieldRadioListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
+    public function testIndividualItemsAttributes(): void
+    {
+        $this->formModel->setAttribute('int', 2);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-int">Int</label>
+        <div id="typeform-int">
+        <label><input type="radio" name="TypeForm[int]" value="1" disabled> Female</label>
+        <label><input type="radio" class="test-class" name="TypeForm[int]" value="2" checked> Male</label>
+        </div>
+        </div>
+        HTML;
+        $html = Field::widget()
+            ->config($this->formModel, 'int')
+            ->radioList(
+                [
+                    'individualItemsAttributes' => [1 => ['disabled' => true], 2 => ['class' => 'test-class']]
+                ],
+                $this->sex,
+            )
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
     public function testItemsAttributes(): void
     {
         $this->formModel->setAttribute('int', 2);

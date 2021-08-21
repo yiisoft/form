@@ -23,6 +23,7 @@ final class CheckboxList extends Widget
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
+    private array $individualItemsAttributes = [];
     /** @var array<array-key, string> */
     private array $items = [];
     private array $itemsAttributes = [];
@@ -83,6 +84,20 @@ final class CheckboxList extends Widget
     }
 
     /**
+     * The specified attributes for items.
+     *
+     * @param array $value
+     *
+     * @return static
+     */
+    public function individualItemsAttributes(array $value = []): self
+    {
+        $new = clone $this;
+        $new->individualItemsAttributes = $value;
+        return $new;
+    }
+
+    /**
      * The data used to generate the list of checkboxes.
      *
      * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
@@ -101,7 +116,7 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * The items atrributes for generating the list of checkboxes tag using {@see CheckBoxList}.
+     * The items attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
      *
      * @param array $value
      *
@@ -202,6 +217,7 @@ final class CheckboxList extends Widget
             ->checkboxAttributes($new->attributes)
             ->containerAttributes($new->containerAttributes)
             ->containerTag($new->containerTag)
+            ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
             ->items($new->items)
             ->replaceCheckboxAttributes($new->itemsAttributes)

@@ -159,6 +159,10 @@ final class Field extends Widget
             $checkboxList = $checkboxList->disabled();
         }
 
+        if (isset($attributes['individualItemsAttributes'])) {
+            $checkboxList = $checkboxList->individualItemsAttributes($attributes['individualItemsAttributes']);
+        }
+
         if (isset($attributes['itemsAttributes'])) {
             $checkboxList = $checkboxList->itemsAttributes($attributes['itemsAttributes']);
         }
@@ -177,6 +181,7 @@ final class Field extends Widget
 
         unset(
             $attributes['disabled'],
+            $attributes['individualItemsAttributes'],
             $attributes['itemsAttributes'],
             $attributes['itemsFormatter'],
             $attributes['readonly'],
@@ -545,6 +550,10 @@ final class Field extends Widget
             $radioList = $radioList->disabled();
         }
 
+        if (isset($attributes['individualItemsAttributes'])) {
+            $radioList = $radioList->individualItemsAttributes($attributes['individualItemsAttributes']);
+        }
+
         if (isset($attributes['itemsAttributes'])) {
             $radioList = $radioList->itemsAttributes($attributes['itemsAttributes']);
         }
@@ -563,6 +572,7 @@ final class Field extends Widget
 
         unset(
             $attributes['disabled'],
+            $attributes['individualItemsAttributes'],
             $attributes['itemsAttributes'],
             $attributes['itemsFormatter'],
             $attributes['readonly'],

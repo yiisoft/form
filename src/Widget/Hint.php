@@ -25,7 +25,7 @@ final class Hint extends Widget
         $encode = $new->attributes['encode'] ?? false;
 
         /** @var bool|string */
-        $hint = ArrayHelper::remove($new->attributes, 'hint', $new->getAttributeHint());
+        $hint = ArrayHelper::remove($new->attributes, 'hint', $new->getHint());
 
         /** @psalm-var non-empty-string */
         $tag = $new->attributes['tag'] ?? 'div';

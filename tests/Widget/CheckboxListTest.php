@@ -100,12 +100,30 @@ final class CheckboxListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
+    public function testIndividualItemsAttributes(): void
+    {
+        $this->formModel->setAttribute('int', 2);
+        $expected = <<<'HTML'
+        <div id="typeform-int">
+        <label><input type="checkbox" name="TypeForm[int][]" value="1" disabled> Female</label>
+        <label><input type="checkbox" class="test-class" name="TypeForm[int][]" value="2" checked> Male</label>
+        </div>
+        HTML;
+        $html = CheckboxList::widget()
+            ->config($this->formModel, 'int')
+            ->individualItemsAttributes([1 => ['disabled' => true], 2 => ['class' => 'test-class']])
+            ->items($this->sex)
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
     public function testImmutability(): void
     {
         $checkboxList = CheckboxList::widget();
         $this->assertNotSame($checkboxList, $checkboxList->containerAttributes([]));
         $this->assertNotSame($checkboxList, $checkboxList->containerTag(null));
         $this->assertNotSame($checkboxList, $checkboxList->disabled());
+        $this->assertNotSame($checkboxList, $checkboxList->individualItemsAttributes());
         $this->assertNotSame($checkboxList, $checkboxList->items());
         $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
         $this->assertNotSame(

@@ -110,6 +110,25 @@ final class RadioListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
+    public function testIndividualItemsAttributes(): void
+    {
+        $this->formModel->setAttribute('int', 2);
+        $expected = <<<'HTML'
+        <div id="typeform-int">
+        <label><input type="radio" name="TypeForm[int]" value="1" disabled> Moscu</label>
+        <label><input type="radio" class="test-class" name="TypeForm[int]" value="2" checked> San Petersburgo</label>
+        <label><input type="radio" name="TypeForm[int]" value="3"> Novosibirsk</label>
+        <label><input type="radio" name="TypeForm[int]" value="4"> Ekaterinburgo</label>
+        </div>
+        HTML;
+        $html = RadioList::widget()
+            ->config($this->formModel, 'int')
+            ->individualItemsAttributes([1 => ['disabled' => true], 2 => ['class' => 'test-class']])
+            ->items($this->cities)
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
     public function testImmutability(): void
     {
         $radioList = RadioList::widget();

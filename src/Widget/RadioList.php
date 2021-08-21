@@ -18,6 +18,7 @@ final class RadioList extends Widget
 {
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
+    private array $individualItemsAttributes = [];
     private array $items = [];
     private array $itemsAttributes = [];
     /** @psalm-var Closure(RadioItem):string|null */
@@ -73,6 +74,20 @@ final class RadioList extends Widget
     {
         $new = clone $this;
         $new->itemsAttributes['disabled'] = $value;
+        return $new;
+    }
+
+    /**
+     * The specified attributes for items.
+     *
+     * @param array $value
+     *
+     * @return static
+     */
+    public function individualItemsAttributes(array $value = []): self
+    {
+        $new = clone $this;
+        $new->individualItemsAttributes = $value;
         return $new;
     }
 
@@ -191,6 +206,7 @@ final class RadioList extends Widget
         return $radioList
             ->containerAttributes($new->containerAttributes)
             ->containerTag($new->containerTag)
+            ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
             ->items($new->items)
             ->radioAttributes($new->attributes)
