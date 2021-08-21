@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Yiisoft\Validator\DataSetInterface;
-
 /**
  * FormModelInterface model represents an HTML form: its data, validation and presentation.
  */
