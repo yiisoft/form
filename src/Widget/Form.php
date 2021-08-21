@@ -144,20 +144,16 @@ final class Form extends Widget
      * Specifies whether the element represents an input control for which a UA is meant to store the value entered by
      * the user (so that the UA can prefill the form later).
      *
-     * @param string $value The value must be `on`,` off`.
+     * @param bool $value
      *
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete
      */
-    public function autocomplete(string $value = 'on'): self
+    public function autocomplete(bool $value = true): self
     {
-        if ($value !== 'on' && $value !== 'off') {
-            throw new InvalidArgumentException('The value must be `on`,` off`.');
-        }
-
         $new = clone $this;
-        $new->attributes['autocomplete'] = $value;
+        $new->attributes['autocomplete'] = $value ? 'on' : 'off';
         return $new;
     }
 
@@ -229,7 +225,7 @@ final class Form extends Widget
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-novalidate
      */
-    public function noValidateHtml(): self
+    public function noHtmlValidatation(): self
     {
         $new = clone $this;
         $new->attributes['novalidate'] = true;
@@ -246,7 +242,7 @@ final class Form extends Widget
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-target
      */
-    public function target(string $value = '_blank'): self
+    public function target(string $value): self
     {
         $new = clone $this;
         $new->attributes['target'] = $value;

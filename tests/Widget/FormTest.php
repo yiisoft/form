@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Widget\Form;
@@ -45,15 +44,8 @@ final class FormTest extends TestCase
         /** off value */
         $this->assertSame(
             '<form method="POST" autocomplete="off">',
-            Form::widget()->autocomplete('off')->begin(),
+            Form::widget()->autocomplete(false)->begin(),
         );
-    }
-
-    public function testAutocompleteException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The value must be `on`,` off`.');
-        Form::widget()->autocomplete('exception')->begin();
     }
 
     public function testBegin(): void
@@ -138,13 +130,13 @@ final class FormTest extends TestCase
         $this->assertNotSame($form, $form->acceptCharset(''));
         $this->assertNotSame($form, $form->action(''));
         $this->assertNotSame($form, $form->attributes([]));
-        $this->assertNotSame($form, $form->autocomplete('on'));
+        $this->assertNotSame($form, $form->autocomplete());
         $this->assertNotSame($form, $form->csrf(''));
         $this->assertNotSame($form, $form->enctype(''));
         $this->assertNotSame($form, $form->id(''));
         $this->assertNotSame($form, $form->method(''));
-        $this->assertNotSame($form, $form->noValidateHtml());
-        $this->assertNotSame($form, $form->target());
+        $this->assertNotSame($form, $form->noHtmlValidatation());
+        $this->assertNotSame($form, $form->target(''));
     }
 
     public function testMethod(): void
@@ -153,14 +145,14 @@ final class FormTest extends TestCase
         $this->assertSame('<form method="POST">', Form::widget()->method('post')->begin());
     }
 
-    public function testNoValidateHtml(): void
+    public function testNoHtmlValidatation(): void
     {
-        $this->assertSame('<form method="POST" novalidate>', Form::widget()->noValidateHtml()->begin());
+        $this->assertSame('<form method="POST" novalidate>', Form::widget()->noHtmlValidatation()->begin());
     }
 
     public function testTarget(): void
     {
-        $this->assertSame('<form method="POST" target="_blank">', Form::widget()->target()->begin());
+        $this->assertSame('<form method="POST" target="_blank">', Form::widget()->target('_blank')->begin());
     }
 
     protected function setUp(): void
