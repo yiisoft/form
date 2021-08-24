@@ -17,7 +17,7 @@ final class CheckBoxListTest extends TestCase
         $data->sex(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
@@ -36,7 +36,7 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex" class="customClass">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
@@ -94,7 +94,7 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex">
 <div class='col-sm-12'><label><input tabindex='0' class='book' type='checkbox' checked name='PersonalForm[sex][]' value='0'> Female</label></div>
 <div class='col-sm-12'><label><input tabindex='1' class='book' type='checkbox'  name='PersonalForm[sex][]' value='1'> Male</label></div>
@@ -118,7 +118,7 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex">
 <label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="0" checked> Female</label>
 <label><input type="checkbox" class="itemClass" name="PersonalForm[sex][]" value="1"> Male</label>
@@ -138,7 +138,7 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="" disabled>
+<input type="hidden" name="PersonalForm[sex]" value disabled>
 <div id="personalform-sex">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked disabled> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1" disabled> Male</label>
@@ -158,7 +158,7 @@ HTML;
         $data->sex(0);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> &#9792;</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> &#9896;</label>
@@ -178,7 +178,7 @@ HTML;
         $data->sex(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>&#9866;<label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>
 </div>
@@ -198,7 +198,7 @@ HTML;
 
         /** Without container */
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>
 HTML;
@@ -211,7 +211,7 @@ HTML;
 
         /** Custom container tag */
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <span id="personalform-sex">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0" checked> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1"> Male</label>

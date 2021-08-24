@@ -32,7 +32,7 @@ final class RadioListTest extends TestCase
         $this->data->cityBirth(2);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <div id="personalform-citybirth">
 <label><input type="radio" name="PersonalForm[cityBirth]" value="1"> Moscu</label>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="2" checked> San Petersburgo</label>
@@ -52,7 +52,7 @@ HTML;
         $this->data->cityBirth(4);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <div id="personalform-citybirth" class="customClass">
 <label><input type="radio" name="PersonalForm[cityBirth]" value="1"> Moscu</label>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="2"> San Petersburgo</label>
@@ -72,7 +72,7 @@ HTML;
         $this->data->cityBirth(3);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <div id="personalform-citybirth">
 <div class='col-sm-12'><label><input tabindex='0' class='book' type='checkbox'  name='PersonalForm[cityBirth]' value='1'> Moscu</label></div>
 <div class='col-sm-12'><label><input tabindex='1' class='book' type='checkbox'  name='PersonalForm[cityBirth]' value='2'> San Petersburgo</label></div>
@@ -96,7 +96,7 @@ HTML;
         $this->data->cityBirth(3);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <div id="personalform-citybirth">
 <label><input type="radio" class="itemClass" name="PersonalForm[cityBirth]" value="1"> Moscu</label>
 <label><input type="radio" class="itemClass" name="PersonalForm[cityBirth]" value="2"> San Petersburgo</label>
@@ -123,7 +123,7 @@ HTML;
         ];
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <div id="personalform-citybirth">
 <label><input type="radio" name="PersonalForm[cityBirth]" value="1"> &#127961; Moscu</label>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="2"> &#127961; San Petersburgo</label>
@@ -164,7 +164,7 @@ HTML;
         $this->data->cityBirth(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <div id="personalform-citybirth">
 <label><input type="radio" name="PersonalForm[cityBirth]" value="1" checked> Moscu</label>&#9866;<label><input type="radio" name="PersonalForm[cityBirth]" value="2"> San Petersburgo</label>&#9866;<label><input type="radio" name="PersonalForm[cityBirth]" value="3"> Novosibirsk</label>&#9866;<label><input type="radio" name="PersonalForm[cityBirth]" value="4"> Ekaterinburgo</label>
 </div>
@@ -182,7 +182,7 @@ HTML;
         $this->data->cityBirth(1);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="1" checked> Moscu</label>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="2"> San Petersburgo</label>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="3"> Novosibirsk</label>
@@ -196,7 +196,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <span id="personalform-citybirth">
 <label><input type="radio" name="PersonalForm[cityBirth]" value="1" checked> Moscu</label>
 <label><input type="radio" name="PersonalForm[cityBirth]" value="2"> San Petersburgo</label>

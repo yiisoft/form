@@ -83,7 +83,7 @@ HTML;
         $data = new PersonalForm();
 
         $expected = <<<'HTML'
-<input type="password" id="personalform-password" name="PersonalForm[password]" required aria-required="true" minlength="8" placeholder="Password">
+<input type="password" id="personalform-password" name="PersonalForm[password]" minlength="8" required aria-required="true" placeholder="Password">
 HTML;
         $html = PasswordInput::widget()
             ->config($data, 'password')

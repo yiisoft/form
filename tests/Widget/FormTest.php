@@ -37,7 +37,7 @@ final class FormTest extends TestCase
             Form::widget()->action('/example?id=1&title=%3C')->method('GET')->begin()
         );
 
-        $expected = '<form action="/foo" method="GET">%A<input type="hidden" name="p" value="">';
+        $expected = '<form action="/foo" method="GET">%A<input type="hidden" name="p" value>';
         $actual = Form::widget()
             ->action('/foo?p')
             ->method('GET')
@@ -47,7 +47,7 @@ final class FormTest extends TestCase
 
     public function testFormEmptyBegin(): void
     {
-        $expected = '<form action="" method="POST">';
+        $expected = '<form action method="POST">';
         $created = Form::widget()->begin();
         $this->assertEquals($expected, $created);
     }

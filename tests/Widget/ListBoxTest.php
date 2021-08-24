@@ -22,7 +22,7 @@ final class ListBoxTest extends TestCase
     public function testListBox(): void
     {
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4"></select>
 HTML;
         $html = ListBox::widget()
@@ -34,7 +34,7 @@ HTML;
     public function testListBoxOptions(): void
     {
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" class="customClass" name="PersonalForm[cityBirth]" size="4">
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
@@ -53,7 +53,7 @@ HTML;
     {
         $this->data->cityBirth(2);
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -72,7 +72,7 @@ HTML;
     {
         $this->data->citiesVisited([2, 4]);
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[citiesVisited]" value="">
+<input type="hidden" name="PersonalForm[citiesVisited]" value>
 <select id="personalform-citiesvisited" name="PersonalForm[citiesVisited]" size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -92,7 +92,7 @@ HTML;
         $this->data->cityBirth(2);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -113,7 +113,7 @@ HTML;
         $this->data->citiesVisited([2, 4]);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[citiesVisited]" value="">
+<input type="hidden" name="PersonalForm[citiesVisited]" value>
 <select id="personalform-citiesvisited" name="PersonalForm[citiesVisited][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -132,7 +132,7 @@ HTML;
     public function testListBoxSelectedMultipleObject(): void
     {
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cities]" value="">
+<input type="hidden" name="PersonalForm[cities]" value>
 <select id="personalform-cities" name="PersonalForm[cities]" size="4">
 <option value="1" selected>Moscu</option>
 <option value="2">San Petersburgo</option>
@@ -153,7 +153,7 @@ HTML;
         $this->data->citiesVisited(['value3']);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[citiesVisited]" value="">
+<input type="hidden" name="PersonalForm[citiesVisited]" value>
 <select id="personalform-citiesvisited" name="PersonalForm[citiesVisited][]" multiple size="4">
 <option value="0">zero</option>
 <option value="1">one</option>
@@ -170,7 +170,7 @@ HTML;
         $this->data->cities(new \ArrayObject([0, 1]));
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cities]" value="">
+<input type="hidden" name="PersonalForm[cities]" value>
 <select id="personalform-cities" name="PersonalForm[cities]" size="4">
 <option value="0" selected>zero</option>
 <option value="1" selected>one</option>
@@ -186,7 +186,7 @@ HTML;
         $this->data->citiesVisited(['1', 'value3']);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[citiesVisited]" value="">
+<input type="hidden" name="PersonalForm[citiesVisited]" value>
 <select id="personalform-citiesvisited" name="PersonalForm[citiesVisited]" size="4">
 <option value="0">zero</option>
 <option value="1" selected>one</option>
@@ -204,7 +204,7 @@ HTML;
     {
         /** default encode  */
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="value1&lt;&gt;">text1&lt;&gt;</option>
 <option value="value  2">text  2</option>
@@ -217,7 +217,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="value1&lt;&gt;">text1<></option>
 <option value="value  2">text  2</option>
@@ -232,7 +232,7 @@ HTML;
         $this->assertEqualsWithoutLE($expected, $html);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="value1&lt;&gt;">text1<></option>
 <option value="value  2">text  2</option>
@@ -253,7 +253,7 @@ HTML;
         ];
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <optgroup label="Russia">
 <option value="2"> Moscu</option>
@@ -305,7 +305,7 @@ HTML;
         ];
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="0" selected>Select City Birth</option>
 <option value="1">Moscu</option>
@@ -325,7 +325,7 @@ HTML;
     public function testListBoxRequired(): void
     {
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4" required>
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
@@ -352,7 +352,7 @@ HTML;
         ];
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="1">
 <option value="0" selected>Select City Birth</option>
 <option value="1">Moscu</option>

@@ -74,21 +74,21 @@ class LoginForm extends FormModel
     private function loginRules(): array
     {
         return [
-            new Required(),
-            (new HasLength())
+            Required::rule(),
+            HasLength::rule()
             ->min(4)
             ->max(40)
             ->tooShortMessage('Is too short.')
             ->tooLongMessage('Is too long.'),
-            new Email(),
+            Email::rule(),
         ];
     }
 
     private function passwordRules(): array
     {
         return [
-            new Required(),
-            (new HasLength())
+            Required::rule(),
+            HasLength::rule()
             ->min(8)
             ->tooShortMessage('Is too short.'),
         ];

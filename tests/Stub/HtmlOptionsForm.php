@@ -55,28 +55,28 @@ final class HtmlOptionsForm extends FormModel
     private function getMatchRegularExpressionHtmlOptions(): MatchRegularExpressionHtmlOptions
     {
         return new MatchRegularExpressionHtmlOptions(
-            new MatchRegularExpression('/\w+/')
+            MatchRegularExpression::rule('/\w+/')
         );
     }
 
     private function getEmailHtmlOptions(): EmailHtmlOptions
     {
         return new EmailHtmlOptions(
-            new Email()
+            Email::rule()
         );
     }
 
     private function getRequiredHtmlOptions(): RequiredHtmlOptions
     {
         return new RequiredHtmlOptions(
-            new Required()
+            Required::rule()
         );
     }
 
     private function getHasLengthHtmlOptions(): HasLengthHtmlOptions
     {
         return new HasLengthHtmlOptions(
-            (new HasLength())
+            HasLength::rule()
                 ->min(4)->tooShortMessage('Is too short.')
                 ->max(5)->tooLongMessage('Is too long.')
         );
@@ -85,7 +85,7 @@ final class HtmlOptionsForm extends FormModel
     private function getNumberHtmlOptions(): NumberHtmlOptions
     {
         return new NumberHtmlOptions(
-            (new Number())
+            Number::rule()
                 ->min(4)->tooSmallMessage('Is too small.')
                 ->max(5)->tooBigMessage('Is too big.')
         );

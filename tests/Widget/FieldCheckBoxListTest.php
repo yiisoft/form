@@ -18,7 +18,7 @@ final class FieldCheckBoxListTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-sex">
 <label class="control-label" for="personalform-sex">Sex</label>
-<input type="hidden" name="PersonalForm[sex]" value="">
+<input type="hidden" name="PersonalForm[sex]" value>
 <div id="personalform-sex">
 <label><input type="checkbox" name="PersonalForm[sex][]" value="0"> Female</label>
 <label><input type="checkbox" name="PersonalForm[sex][]" value="1" checked> Male</label>

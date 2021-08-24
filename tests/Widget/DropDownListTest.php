@@ -142,7 +142,7 @@ HTML;
         $this->data->cityBirth(4);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="4">
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
@@ -208,7 +208,7 @@ HTML;
         $this->data->cityBirth(2);
 
         $expected = <<<'HTML'
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth][]" multiple size="3">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>

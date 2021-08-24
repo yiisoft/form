@@ -33,7 +33,7 @@ final class FieldListBoxTest extends TestCase
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 <label class="control-label" for="personalform-citybirth">City Birth</label>
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="1">Moscu</option>
 <option value="2">San Petersburgo</option>
@@ -58,7 +58,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 <label class="control-label customCssLabel" for="personalform-citybirth">customLabel:</label>
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>
@@ -84,7 +84,7 @@ HTML;
         $expected = <<<'HTML'
 <div class="form-group field-personalform-citybirth">
 
-<input type="hidden" name="PersonalForm[cityBirth]" value="">
+<input type="hidden" name="PersonalForm[cityBirth]" value>
 <select id="personalform-citybirth" name="PersonalForm[cityBirth]" size="4">
 <option value="1">Moscu</option>
 <option value="2" selected>San Petersburgo</option>

@@ -354,7 +354,7 @@ final class FormWithNestedAttribute extends FormModel
     public function getRules(): array
     {
         return [
-            'id' => new Required(),
+            'id' => Required::rule(),
         ];
     }
 
