@@ -601,6 +601,48 @@ final class Field extends Widget
     }
 
     /**
+     * Renders a reset button widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function resetButton(array $attributes = []): self
+    {
+        $new = clone $this;
+        $reset = ResetButton::widget();
+        $new->parts['{error}'] = '';
+        $new->parts['{hint}'] = '';
+        $new->parts['{label}'] = '';
+
+        if (isset($attributes['autoIdPrefix'])) {
+            $reset = $reset->autoIdPrefix($attributes['autoIdPrefix']);
+        }
+
+        if (isset($attributes['id'])) {
+            $reset = $reset->id($attributes['id']);
+        }
+
+        if (isset($attributes['name'])) {
+            $reset = $reset->name($attributes['name']);
+        }
+
+        if (isset($attributes['value'])) {
+            $reset = $reset->value($attributes['value']);
+        }
+
+        unset($attributes['autoIdPrefix'], $attributes['id'], $attributes['name'], $attributes['value']);
+
+        $new->parts['{input}'] = $reset->attributes($attributes)->render();
+
+        return $new;
+    }
+
+    /**
      * Renders a select widget..
      *
      * The selection of the drop-down list is taken from the value of the model attribute.
@@ -655,6 +697,48 @@ final class Field extends Widget
             ->optionsData($optionsData, $encode)
             ->prompt($prompt)
             ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a submit button widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function submitButton(array $attributes = []): self
+    {
+        $new = clone $this;
+        $submit = SubmitButton::widget();
+        $new->parts['{error}'] = '';
+        $new->parts['{hint}'] = '';
+        $new->parts['{label}'] = '';
+
+        if (isset($attributes['autoIdPrefix'])) {
+            $submit = $submit->autoIdPrefix($attributes['autoIdPrefix']);
+        }
+
+        if (isset($attributes['id'])) {
+            $submit = $submit->id($attributes['id']);
+        }
+
+        if (isset($attributes['name'])) {
+            $submit = $submit->name($attributes['name']);
+        }
+
+        if (isset($attributes['value'])) {
+            $submit = $submit->value($attributes['value']);
+        }
+
+        unset($attributes['autoIdPrefix'], $attributes['id'], $attributes['name'], $attributes['value']);
+
+        $new->parts['{input}'] = $submit->attributes($attributes)->render();
 
         return $new;
     }
