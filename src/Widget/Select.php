@@ -279,7 +279,7 @@ final class Select extends Widget
 
         if (is_iterable($value)) {
             $select = $select->values($value);
-        } elseif (!is_null($value)) {
+        } elseif (null !== $value) {
             $select = $select->value($value);
         }
 
