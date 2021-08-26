@@ -76,12 +76,14 @@ final class Error extends Widget
 
         $error = $new->message !== '' ? $new->message : $new->getFirstError();
 
+        /** @var string */
         $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
 
         /** @var array|null */
         $messageCallback = $new->attributes['messageCallback'] ?? null;
 
         if ($messageCallback !== null) {
+            /** @var string */
             $error = $messageCallback($new->getFormModel(), $new->getAttribute());
         }
 

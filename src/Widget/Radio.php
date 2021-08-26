@@ -94,7 +94,6 @@ final class Radio extends Widget
         }
 
         if ($new->enclosedByLabel === true) {
-            /** @var string */
             $label = $new->label !== '' ? $new->label : $new->getLabel();
             $radio = $radio->label($label, $new->labelAttributes);
         }

@@ -60,7 +60,6 @@ final class Label extends Widget
     {
         $new = clone $this;
 
-        /** @var string */
         $label = $new->label !== '' ? $new->label : $new->getLabel();
 
         /** @var bool|string */

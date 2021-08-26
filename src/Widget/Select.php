@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
@@ -264,6 +265,7 @@ final class Select extends Widget
             $select = $select->optionsData($new->optionsData, $new->encode);
         }
 
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = $new->getValue() ?? '';
 
         if (is_object($value)) {
@@ -275,9 +277,9 @@ final class Select extends Widget
 
         unset($new->attributes['unselectValue']);
 
-        if (is_array($value)) {
-            $select = $select->value(...$value);
-        } else {
+        if (is_iterable($value)) {
+            $select = $select->values($value);
+        } elseif (!is_null($value)) {
             $select = $select->value($value);
         }
 

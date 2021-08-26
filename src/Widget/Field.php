@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Closure;
 use ReflectionException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Attribute\FieldAttribute;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Div;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
+use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Widget\Widget;
 
 use function strtr;
@@ -108,11 +111,11 @@ final class Field extends Widget
             $new->parts['{label}'] = '';
         }
 
-        if (isset($attributes['label'])) {
+        if (isset($attributes['label']) && is_string($attributes['label'])) {
             $checkbox = $checkbox->label($attributes['label']);
         }
 
-        if (isset($attributes['labelAttributes'])) {
+        if (isset($attributes['labelAttributes']) && is_array($attributes['labelAttributes'])) {
             $checkbox = $checkbox->labelAttributes($attributes['labelAttributes']);
         }
 
@@ -148,21 +151,24 @@ final class Field extends Widget
      * while the array keys are the corresponding checkbox values.
      *
      * @return static the field object itself.
+     *
+     * @psalm-param array<array-key, string> $items
      */
     public function checkboxList(array $attributes = [], array $items = []): self
     {
         $new = clone $this;
         $checkboxList = CheckboxList::widget();
         $attributes = $new->setInputAttributes($attributes);
+        /** @var bool|string|null */
         $containerTag = ArrayHelper::remove($attributes, 'containerTag', '');
 
-        if (isset($attributes['containerAttributes'])) {
+        if (isset($attributes['containerAttributes']) && is_array($attributes['containerAttributes'])) {
             $checkboxList = $checkboxList->containerAttributes($attributes['containerAttributes']);
         }
 
         if ($containerTag === false) {
             $checkboxList = $checkboxList->containerTag();
-        } elseif ($containerTag !== '') {
+        } elseif (is_string($containerTag) && $containerTag !== '') {
             $checkboxList = $checkboxList->containerTag($containerTag);
         }
 
@@ -170,23 +176,27 @@ final class Field extends Widget
             $checkboxList = $checkboxList->disabled();
         }
 
-        if (isset($attributes['individualItemsAttributes'])) {
-            $checkboxList = $checkboxList->individualItemsAttributes($attributes['individualItemsAttributes']);
+        if (isset($attributes['individualItemsAttributes']) && is_array($attributes['individualItemsAttributes'])) {
+            /** @var array<array-key, array<array-key, mixed>> */
+            $individualItemsAttributes = $attributes['individualItemsAttributes'];
+            $checkboxList = $checkboxList->individualItemsAttributes($individualItemsAttributes);
         }
 
-        if (isset($attributes['itemsAttributes'])) {
+        if (isset($attributes['itemsAttributes']) && is_array($attributes['itemsAttributes'])) {
             $checkboxList = $checkboxList->itemsAttributes($attributes['itemsAttributes']);
         }
 
-        if (isset($attributes['itemsFormatter'])) {
-            $checkboxList = $checkboxList->itemsFormatter($attributes['itemsFormatter']);
+        if (isset($attributes['itemsFormatter']) && ($attributes['itemsFormatter'] instanceof Closure)) {
+            /** @var Closure(CheckboxItem):string|null */
+            $formatter = $attributes['itemsFormatter'];
+            $checkboxList = $checkboxList->itemsFormatter($formatter);
         }
 
         if (isset($attributes['readonly'])) {
             $checkboxList = $checkboxList->readOnly();
         }
 
-        if (isset($attributes['separator'])) {
+        if (isset($attributes['separator']) && is_string($attributes['separator'])) {
             $checkboxList = $checkboxList->separator($attributes['separator']);
         }
 
@@ -302,6 +312,7 @@ final class Field extends Widget
     public function error(array $attributes = []): self
     {
         $new = clone $this;
+        /** @var string */
         $errorMessage = $attributes['errorMessage'] ?? '';
 
         if ($new->errorClass !== '') {
@@ -501,11 +512,11 @@ final class Field extends Widget
             $new->parts['{label}'] = '';
         }
 
-        if (isset($attributes['label'])) {
+        if (isset($attributes['label']) && is_string($attributes['label'])) {
             $radio = $radio->label($attributes['label']);
         }
 
-        if (isset($attributes['labelAttributes'])) {
+        if (isset($attributes['labelAttributes']) && is_array($attributes['labelAttributes'])) {
             $radio = $radio->labelAttributes($attributes['labelAttributes']);
         }
 
@@ -541,21 +552,24 @@ final class Field extends Widget
      * while the array keys are the corresponding radio values.
      *
      * @return static the field object itself.
+     *
+     * @psalm-param array<array-key, string> $items
      */
     public function radioList(array $attributes = [], array $items = []): self
     {
         $new = clone $this;
         $radioList = RadioList::widget();
         $attributes = $new->setInputAttributes($attributes);
+        /** @var bool|string|null */
         $containerTag = ArrayHelper::remove($attributes, 'containerTag', '');
 
-        if (isset($attributes['containerAttributes'])) {
+        if (isset($attributes['containerAttributes']) && is_array($attributes['containerAttributes'])) {
             $radioList = $radioList->containerAttributes($attributes['containerAttributes']);
         }
 
         if ($containerTag === false) {
             $radioList = $radioList->containerTag();
-        } elseif ($containerTag !== '') {
+        } elseif (is_string($containerTag) && $containerTag !== '') {
             $radioList = $radioList->containerTag($containerTag);
         }
 
@@ -563,23 +577,27 @@ final class Field extends Widget
             $radioList = $radioList->disabled();
         }
 
-        if (isset($attributes['individualItemsAttributes'])) {
-            $radioList = $radioList->individualItemsAttributes($attributes['individualItemsAttributes']);
+        if (isset($attributes['individualItemsAttributes']) && is_array($attributes['individualItemsAttributes'])) {
+            /** @var array<array-key, array<array-key, mixed>> */
+            $individualItemsAttributes = $attributes['individualItemsAttributes'];
+            $radioList = $radioList->individualItemsAttributes($individualItemsAttributes);
         }
 
-        if (isset($attributes['itemsAttributes'])) {
+        if (isset($attributes['itemsAttributes']) && is_array($attributes['itemsAttributes'])) {
             $radioList = $radioList->itemsAttributes($attributes['itemsAttributes']);
         }
 
-        if (isset($attributes['itemsFormatter'])) {
-            $radioList = $radioList->itemsFormatter($attributes['itemsFormatter']);
+        if (isset($attributes['itemsFormatter']) && ($attributes['itemsFormatter'] instanceof Closure)) {
+            /** @var Closure(RadioItem):string|null */
+            $formatter = $attributes['itemsFormatter'];
+            $radioList = $radioList->itemsFormatter($formatter);
         }
 
         if (isset($attributes['readonly'])) {
             $radioList = $radioList->readOnly();
         }
 
-        if (isset($attributes['separator'])) {
+        if (isset($attributes['separator']) && is_string($attributes['separator'])) {
             $radioList = $radioList->separator($attributes['separator']);
         }
 
@@ -619,19 +637,19 @@ final class Field extends Widget
         $new->parts['{hint}'] = '';
         $new->parts['{label}'] = '';
 
-        if (isset($attributes['autoIdPrefix'])) {
+        if (isset($attributes['autoIdPrefix']) && is_string($attributes['autoIdPrefix'])) {
             $reset = $reset->autoIdPrefix($attributes['autoIdPrefix']);
         }
 
-        if (isset($attributes['id'])) {
+        if (isset($attributes['id']) && is_string($attributes['id'])) {
             $reset = $reset->id($attributes['id']);
         }
 
-        if (isset($attributes['name'])) {
+        if (isset($attributes['name']) && is_string($attributes['name'])) {
             $reset = $reset->name($attributes['name']);
         }
 
-        if (isset($attributes['value'])) {
+        if (isset($attributes['value']) && is_string($attributes['value'])) {
             $reset = $reset->value($attributes['value']);
         }
 
@@ -682,9 +700,13 @@ final class Field extends Widget
         $new = clone $this;
         $attributes['type'] = self::TYPE_SELECT;
         $attributes = $new->setInputAttributes($attributes);
+        /** @var bool */
         $encode = $attributes['encode'] ?? false;
+        /** @var array<array-key, string> */
         $itemsAttributes = $attributes['itemsAttributes'] ?? [];
+        /** @var array<array-key, string> */
         $optionsData = $attributes['optionsData'] ?? [];
+        /** @var array<array-key, mixed> */
         $prompt = $attributes['prompt'] ?? [];
 
         unset($attributes['encode'], $attributes['itemsAttributes'], $attributes['optionsData'], $attributes['prompt']);
@@ -720,19 +742,19 @@ final class Field extends Widget
         $new->parts['{hint}'] = '';
         $new->parts['{label}'] = '';
 
-        if (isset($attributes['autoIdPrefix'])) {
+        if (isset($attributes['autoIdPrefix']) && is_string($attributes['autoIdPrefix'])) {
             $submit = $submit->autoIdPrefix($attributes['autoIdPrefix']);
         }
 
-        if (isset($attributes['id'])) {
+        if (isset($attributes['id']) && is_string($attributes['id'])) {
             $submit = $submit->id($attributes['id']);
         }
 
-        if (isset($attributes['name'])) {
+        if (isset($attributes['name']) && is_string($attributes['name'])) {
             $submit = $submit->name($attributes['name']);
         }
 
-        if (isset($attributes['value'])) {
+        if (isset($attributes['value']) && is_string($attributes['value'])) {
             $submit = $submit->value($attributes['value']);
         }
 
@@ -783,7 +805,7 @@ final class Field extends Widget
         $attributes = $new->setInputAttributes($attributes);
         $text = Text::widget();
 
-        if (isset($attributes['dirname'])) {
+        if (isset($attributes['dirname']) && is_string($attributes['dirname'])) {
             $text = $text->dirname($attributes['dirname']);
         }
 
@@ -810,11 +832,11 @@ final class Field extends Widget
         $textArea = TextArea::widget();
         $attributes = $new->setInputAttributes($attributes);
 
-        if (isset($attributes['dirname'])) {
+        if (isset($attributes['dirname']) && is_string($attributes['dirname'])) {
             $textArea = $textArea->dirname($attributes['dirname']);
         }
 
-        if (isset($attributes['wrap'])) {
+        if (isset($attributes['wrap']) && is_string($attributes['wrap'])) {
             $textArea = $textArea->wrap($attributes['wrap']);
         }
 

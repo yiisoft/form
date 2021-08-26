@@ -18,7 +18,9 @@ final class RadioList extends Widget
 {
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
+    /** @psalm-var array<array-key, array<array-key, mixed>> */
     private array $individualItemsAttributes = [];
+    /** @psalm-var array<array-key, string> */
     private array $items = [];
     private array $itemsAttributes = [];
     /** @psalm-var Closure(RadioItem):string|null */
@@ -83,6 +85,8 @@ final class RadioList extends Widget
      * @param array $value
      *
      * @return static
+     *
+     * @psalm-param array<array-key, array<array-key, mixed>> $value
      */
     public function individualItemsAttributes(array $value = []): self
     {
@@ -101,6 +105,8 @@ final class RadioList extends Widget
      * @param array $value
      *
      * @return static
+     *
+     * @psalm-param array<array-key, string> $value
      */
     public function items(array $value = []): self
     {
@@ -133,14 +139,16 @@ final class RadioList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param Closure $formatter
+     * @param Closure $value
      *
      * @return static
+     *
+     * @psalm-param Closure(RadioItem):string|null $value
      */
-    public function itemsFormatter(?Closure $formatter): self
+    public function itemsFormatter(?Closure $value): self
     {
         $new = clone $this;
-        $new->itemsFormatter = $formatter;
+        $new->itemsFormatter = $value;
         return $new;
     }
 

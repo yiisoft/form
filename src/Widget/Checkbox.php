@@ -96,7 +96,6 @@ final class Checkbox extends Widget
         }
 
         if ($new->enclosedByLabel === true) {
-            /** @var string */
             $label = $new->label !== '' ? $new->label : $new->getLabel();
             $checkbox = $checkbox->label($label, $new->labelAttributes);
         }

@@ -12,6 +12,14 @@ use Yiisoft\Validator\DataSetInterface;
 interface FormModelInterface extends DataSetInterface, FormMetadataInterface
 {
     /**
+     * Add error for the specified attribute.
+     *
+     * @param string $attribute attribute name.
+     * @param string $error attribute error message.
+     */
+    public function addError(string $attribute, string $error): void;
+
+    /**
      * Returns the text label for the specified attribute.
      *
      * @param string $attribute the attribute name.
@@ -34,12 +42,33 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function getAttributeHint(string $attribute): string;
 
     /**
-     * Add error for the specified attribute.
+     * Returns the text placeholder for the specified attribute.
      *
-     * @param string $attribute attribute name.
-     * @param string $error attribute error message.
+     * @param string $attribute the attribute name.
+     *
+     * @return string the attribute placeholder.
+     *
+     * {@see getAttributePlaceHolders()}
      */
-    public function addError(string $attribute, string $error): void;
+    public function getAttributePlaceHolder(string $attribute): string;
+
+    /**
+     * Returns the errors for single attribute.
+     *
+     * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
+     *
+     * @return array
+     */
+    public function getError(string $attribute): array;
+
+    /**
+     * Returns the value for the specified attribute.
+     *
+     * @param string $attribute
+     *
+     * @return null|object|scalar|Stringable|iterable
+     */
+    public function getAttributeValue(string $attribute);
 
     /**
      * Returns the errors for all attributes.
@@ -66,15 +95,6 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function getErrors(): array;
 
     /**
-     * Returns the errors for single attribute.
-     *
-     * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
-     *
-     * @return array
-     */
-    public function getError(string $attribute): array;
-
-    /**
      * Returns the errors for all attributes as a one-dimensional array.
      *
      * @param bool $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
@@ -88,13 +108,16 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function getErrorSummary(bool $showAllErrors): array;
 
     /**
-     * Returns a value indicating whether there is any validation error.
+     * Returns the first error of the specified attribute.
      *
-     * @param string|null $attribute attribute name. Use null to check all attributes.
+     * @param string $attribute attribute name.
      *
-     * @return bool whether there is any error.
+     * @return string the error message. Empty string is returned if there is no error.
+     *
+     * {@see getErrors()}
+     * {@see getFirstErrors()}
      */
-    public function hasErrors(?string $attribute = null): bool;
+    public function getFirstError(string $attribute): string;
 
     /**
      * Returns the first error of every attribute in the model.
@@ -106,18 +129,6 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * {@see getFirstError()}
      */
     public function getFirstErrors(): array;
-
-    /**
-     * Returns the first error of the specified attribute.
-     *
-     * @param string $attribute attribute name.
-     *
-     * @return string the error message. Empty string is returned if there is no error.
-     *
-     * {@see getErrors()}
-     * {@see getFirstErrors()}
-     */
-    public function getFirstError(string $attribute): string;
 
     /**
      * Returns the form name that this model class should use.
@@ -138,31 +149,6 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * {@see load()}
      */
     public function getFormName(): string;
-
-    /**
-     * Populates the model with input data.
-     *
-     * which, with `load()` can be written as:
-     *
-     * ```php
-     * $body = $request->getParsedBody();
-     * $method = $request->getMethod();
-     *
-     * if ($method === Method::POST && $loginForm->load($body)) {
-     *     // handle success
-     * }
-     * ```
-     *
-     * `load()` gets the `'FormName'` from the {@see getFormName()} method (which you may override), unless the
-     * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
-     * `$data` instead of `$data['FormName']`.
-     *
-     * @param array $data the data array to load, typically server request attributes.
-     * @param string|null $formName scope from which to get data
-     *
-     * @return bool whether `load()` found the expected form in `$data`.
-     */
-    public function load(array $data, ?string $formName = null): bool;
 
     /**
      * Returns the validation rules for attributes.
@@ -199,12 +185,13 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function getRules(): array;
 
     /**
-     * Set specified attribute
+     * Returns a value indicating whether there is any validation error.
      *
-     * @param string $name of the attribute to set
-     * @param mixed $value value
+     * @param string|null $attribute attribute name. Use null to check all attributes.
+     *
+     * @return bool whether there is any error.
      */
-    public function setAttribute(string $name, $value): void;
+    public function hasErrors(?string $attribute = null): bool;
 
     /**
      * This method allows to know if the validation was executed or not in the model.
@@ -212,4 +199,37 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * @return bool If the model was validated.
      */
     public function isValidated(): bool;
+
+    /**
+     * Populates the model with input data.
+     *
+     * which, with `load()` can be written as:
+     *
+     * ```php
+     * $body = $request->getParsedBody();
+     * $method = $request->getMethod();
+     *
+     * if ($method === Method::POST && $loginForm->load($body)) {
+     *     // handle success
+     * }
+     * ```
+     *
+     * `load()` gets the `'FormName'` from the {@see getFormName()} method (which you may override), unless the
+     * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
+     * `$data` instead of `$data['FormName']`.
+     *
+     * @param array $data the data array to load, typically server request attributes.
+     * @param string|null $formName scope from which to get data
+     *
+     * @return bool whether `load()` found the expected form in `$data`.
+     */
+    public function load(array $data, ?string $formName = null): bool;
+
+    /**
+     * Set specified attribute
+     *
+     * @param string $name of the attribute to set
+     * @param null|object|scalar|Stringable|iterable $value
+     */
+    public function setAttribute(string $name, $value): void;
 }

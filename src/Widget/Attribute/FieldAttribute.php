@@ -155,25 +155,35 @@ trait FieldAttribute
         array $attributes,
         string $type
     ): array {
+        /** @var array */
         $rules = $formModel->getRules()[$attribute] ?? [];
 
+        /** @var object $rule */
         foreach ($rules as $rule) {
             if ($rule instanceof Required) {
                 $attributes['required'] = true;
             }
             if ($rule instanceof HasLength && in_array($type, self::HAS_LENGTH_TYPES, true)) {
+                /** @var string */
                 $attributes['maxlength'] = $rule->getOptions()['max'];
+                /** @var string */
                 $attributes['minlength'] = $rule->getOptions()['min'];
             }
             if ($rule instanceof MatchRegularExpression && in_array($type, self::MATCH_REGULAR_EXPRESSION_TYPES, true)) {
-                $attributes['pattern'] = Html::normalizeRegexpPattern($rule->getOptions()['pattern']);
+                /** @var string */
+                $pattern = $rule->getOptions()['pattern'];
+                $attributes['pattern'] = Html::normalizeRegexpPattern($pattern);
             }
             if ($rule instanceof Number && $type === self::TYPE_NUMBER) {
+                /** @var string */
                 $attributes['max'] = $rule->getOptions()['max'];
+                /** @var string */
                 $attributes['min'] = $rule->getOptions()['min'];
             }
             if ($rule instanceof Url && $type === self::TYPE_URL) {
+                /** @var array<array-key, string> */
                 $schemes = $rule->getOptions()['validSchemes'];
+                /** @var array<array-key, float|int|string>|string */
                 $pattern = $rule->getOptions()['pattern'];
                 $normalizePattern = str_replace('{schemes}', '(' . implode('|', $schemes) . ')', $pattern);
                 $attributes['pattern'] = Html::normalizeRegexpPattern($normalizePattern);
@@ -202,6 +212,7 @@ trait FieldAttribute
     {
         $new = clone $this;
         $placeHolder = '';
+        /** @var string */
         $type = $attributes['type'] ?? '';
         unset($attributes['type']);
         $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes, $type);

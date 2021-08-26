@@ -80,6 +80,7 @@ final class ErrorSummary extends Widget
         $lines = array_values($lines);
 
         if ($encode) {
+            /** @var string $line */
             foreach ($lines as &$line) {
                 $line = Html::encode($line);
             }
@@ -122,6 +123,7 @@ final class ErrorSummary extends Widget
             $new->attributes['tag'],
         );
 
+        /** @var array<string, string> */
         $lines = $new->collectErrors($encode, $showAllErrors);
 
         if (empty($lines)) {
