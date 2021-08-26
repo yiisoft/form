@@ -219,7 +219,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             $values = $data[$scope];
         }
 
-        /** @var array<string, null|scalar|Stringable> $values */
+        /** @var array<string, scalar|Stringable|null> $values */
         foreach ($values as $name => $value) {
             $this->setAttribute($name, $value);
         }
@@ -228,7 +228,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @param null|object|scalar|Stringable|iterable $value
+     * @param iterable|object|scalar|Stringable|null $value
      *
      * @psalm-suppress PossiblyInvalidCast
      */
