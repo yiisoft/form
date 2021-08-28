@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
-use Yiisoft\Html\NoEncodeStringableInterface;
 
 trait ModelAttribute
 {
