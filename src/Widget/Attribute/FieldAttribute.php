@@ -15,6 +15,23 @@ use Yiisoft\Validator\Rule\Url;
 
 trait FieldAttribute
 {
+    private bool $ariaDescribedBy = false;
+    private string $attribute = '';
+    private array $attributes = [];
+    private string $containerClass = '';
+    private string $errorClass = '';
+    private string $errorMessage = '';
+    private string $hintClass = '';
+    private string $id = '';
+    private string $inputClass = '';
+    private string $labelClass = '';
+    private string $invalidClass = '';
+    private string $validClass = '';
+    private array $parts = [];
+    private string $template = "{label}\n{input}\n{hint}\n{error}";
+    private string $validationStateOn = 'input';
+    private FormModelInterface $formModel;
+
     /**
      * Set aria-describedby attribute.
      *

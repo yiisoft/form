@@ -88,7 +88,7 @@ final class Error extends Widget
 
         if ($messageCallback !== null) {
             /** @var string */
-            $error = $messageCallback($new->getFormModel(), $new->getAttribute());
+            $error = $messageCallback($new->formModel, $new->attribute);
         }
 
         unset($new->attributes['messageCallback']);

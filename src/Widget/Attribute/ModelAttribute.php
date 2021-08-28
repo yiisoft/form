@@ -67,15 +67,6 @@ trait ModelAttribute
         $new->id = $value;
         return $new;
     }
-    /**
-     * Return the attribute form model.
-     *
-     * @return string
-     */
-    protected function getAttribute(): string
-    {
-        return $this->attribute;
-    }
 
     /**
      * Return the attribute first error message.
@@ -84,17 +75,7 @@ trait ModelAttribute
      */
     protected function getFirstError(): string
     {
-        return $this->formModel->getFirstError($this->getAttributeName());
-    }
-
-    /**
-     * Return the model interface.
-     *
-     * @return FormModelInterface
-     */
-    protected function getFormModel(): FormModelInterface
-    {
-        return $this->formModel;
+        return $this->formModel !== null ? $this->formModel->getFirstError($this->getAttributeName()) : '';
     }
 
     /**
@@ -104,7 +85,7 @@ trait ModelAttribute
      */
     protected function getHint(): string
     {
-        return $this->formModel->getAttributeHint($this->getAttributeName());
+        return $this->formModel !== null ? $this->formModel->getAttributeHint($this->getAttributeName()) : '';
     }
 
     /**
@@ -129,7 +110,7 @@ trait ModelAttribute
      */
     protected function getInputName(): string
     {
-        return HtmlForm::getInputName($this->formModel, $this->attribute);
+        return $this->formModel !== null ? HtmlForm::getInputName($this->formModel, $this->attribute) : '';
     }
 
     /**
@@ -139,7 +120,7 @@ trait ModelAttribute
      */
     protected function getLabel(): string
     {
-        return $this->formModel->getAttributeLabel($this->getAttributeName());
+        return $this->formModel !== null ? $this->formModel->getAttributeLabel($this->getAttributeName()) : '';
     }
 
     /**
@@ -149,7 +130,7 @@ trait ModelAttribute
      */
     protected function getValue()
     {
-        return $this->formModel->getAttributeValue($this->getAttributeName());
+        return $this->formModel !== null ? $this->formModel->getAttributeValue($this->getAttributeName()) : null;
     }
 
     /**

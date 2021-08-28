@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use ReflectionException;
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Attribute\FieldAttribute;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Div;
@@ -58,23 +57,6 @@ final class Field extends Widget
         self::TYPE_RADIO,
         self::TYPE_SELECT,
     ];
-
-    private bool $ariaDescribedBy = false;
-    private string $attribute = '';
-    private array $attributes = [];
-    private string $containerClass = '';
-    private string $errorClass = '';
-    private string $errorMessage = '';
-    private string $hintClass = '';
-    private string $id = '';
-    private string $inputClass = '';
-    private string $labelClass = '';
-    private string $invalidClass = '';
-    private string $validClass = '';
-    private array $parts = [];
-    private string $template = "{label}\n{input}\n{hint}\n{error}";
-    private string $validationStateOn = 'input';
-    private FormModelInterface $formModel;
 
     /**
      * Renders a checkbox.
