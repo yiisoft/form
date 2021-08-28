@@ -79,6 +79,6 @@ trait ModelAttribute
         /** @var string */
         $id = $new->attributes['id'] ?? $new->id;
 
-        return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute) : $id;
+        return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute, $new->charset) : $id;
     }
 }
