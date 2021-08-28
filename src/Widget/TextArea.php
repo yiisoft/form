@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
@@ -175,7 +176,7 @@ final class TextArea extends Widget
     {
         $new = clone $this;
 
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('TextArea widget must be a string.');
@@ -192,7 +193,7 @@ final class TextArea extends Widget
         return TextAreaTag::tag()
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name($new->getInputName())
+            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
             ->value($value)
             ->render();
     }

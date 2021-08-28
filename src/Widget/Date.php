@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\DateAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
@@ -33,7 +34,7 @@ final class Date extends Widget
         $new = clone $this;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.date.html#input.date.attrs.value */
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Date widget requires a string value.');
@@ -43,7 +44,7 @@ final class Date extends Widget
             ->type('date')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name($new->getInputName())
+            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
             ->value($value)
             ->render();
     }

@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
@@ -195,8 +196,7 @@ final class RadioList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-
-        $radioList = RadioListTag::create($new->getInputName());
+        $radioList = RadioListTag::create(HtmlForm::getInputName($new->formModel, $new->attribute));
 
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
@@ -205,7 +205,7 @@ final class RadioList extends Widget
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (!is_scalar($value)) {
             throw new InvalidArgumentException('RadioList widget required bool|float|int|string|null.');

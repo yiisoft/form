@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Label as LabelTag;
 use Yiisoft\Widget\Widget;
@@ -64,7 +65,7 @@ final class Label extends Widget
     {
         $new = clone $this;
 
-        $label = $new->label !== '' ? $new->label : $new->getLabel();
+        $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
 
         /** @var bool|string */
         $attributeLabel = ArrayHelper::remove($new->attributes, 'label', '');

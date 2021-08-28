@@ -8,9 +8,10 @@ use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
 use Yiisoft\Widget\Widget;
 
@@ -195,8 +196,7 @@ final class CheckboxList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-
-        $checkboxList = ChecboxListTag::create($new->getInputName());
+        $checkboxList = ChecboxListTag::create(HtmlForm::getInputName($new->formModel, $new->attribute));
 
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
@@ -205,7 +205,7 @@ final class CheckboxList extends Widget
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (is_object($value)) {
             throw new InvalidArgumentException('CheckboxList widget requires a int|string|iterable|null value.');

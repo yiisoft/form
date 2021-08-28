@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
@@ -29,7 +30,11 @@ final class Hint extends Widget
         $encode = $new->attributes['encode'] ?? false;
 
         /** @var bool|string */
-        $hint = ArrayHelper::remove($new->attributes, 'hint', $new->getHint());
+        $hint = ArrayHelper::remove(
+            $new->attributes,
+            'hint',
+            HtmlForm::getAttributeHint($new->formModel, $new->attribute),
+        );
 
         /** @psalm-var non-empty-string */
         $tag = $new->attributes['tag'] ?? 'div';

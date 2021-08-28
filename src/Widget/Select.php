@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Stringable;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Optgroup;
@@ -243,7 +244,6 @@ final class Select extends Widget
     protected function run(): string
     {
         $new = clone $this;
-
         $select = SelectTag::tag();
 
         if (isset($new->attributes['multiple']) && !isset($new->attributes['size'])) {
@@ -269,7 +269,7 @@ final class Select extends Widget
         }
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = $new->getValue() ?? '';
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute) ?? '';
 
         if (is_object($value)) {
             throw new InvalidArgumentException('Select widget required bool|float|int|iterable|string|null.');
@@ -289,7 +289,7 @@ final class Select extends Widget
         return $select
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name($new->getInputName())
+            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
             ->promptOption($promptOption)
             ->unselectValue($unselectValue)
             ->render();

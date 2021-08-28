@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
@@ -29,7 +30,7 @@ final class Hidden extends Widget
         $new = clone $this;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.hidden.html#input.hidden.attrs.value */
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Hidden widget requires a string value.');

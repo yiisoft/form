@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
@@ -78,7 +79,7 @@ final class Error extends Widget
         /** @var bool */
         $encode = $new->attributes['encode'] ?? true;
 
-        $error = $new->message !== '' ? $new->message : $new->getFirstError();
+        $error = $new->message !== '' ? $new->message : HtmlForm::getFirstError($new->formModel, $new->attribute);
 
         /** @var string */
         $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');

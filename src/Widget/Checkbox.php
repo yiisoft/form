@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
@@ -92,14 +93,14 @@ final class Checkbox extends Widget
         /** @var bool|float|int|string|null  */
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
         }
 
         if ($new->enclosedByLabel === true) {
-            $label = $new->label !== '' ? $new->label : $new->getLabel();
+            $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
             $checkbox = $checkbox->label($label, $new->labelAttributes);
         }
 
@@ -107,9 +108,9 @@ final class Checkbox extends Widget
             ->attributes($new->attributes)
             ->checked((bool) $value)
             ->id($new->getId())
-            ->name($new->getInputName())
+            ->name(HtmlForm::getInputName($this->formModel, $this->attribute))
             ->uncheckValue($forceUncheckedValue)
-            ->value((int) $new->getValue())
+            ->value((int) $value)
             ->render();
     }
 }

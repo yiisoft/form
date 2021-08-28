@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
@@ -63,7 +64,7 @@ final class File extends Widget
     {
         $new = clone $this;
 
-        $name = $new->getInputName();
+        $name = HtmlForm::getInputName($new->formModel, $new->attribute);
 
         /** @var string|null  */
         $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;

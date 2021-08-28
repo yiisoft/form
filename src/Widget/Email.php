@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
@@ -138,7 +139,7 @@ final class Email extends Widget
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.value.single
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.value.multiple
          */
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Email widget must be a string.');
@@ -148,7 +149,7 @@ final class Email extends Widget
             ->type('email')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name($new->getInputName())
+            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
             ->value($value)
             ->render();
     }

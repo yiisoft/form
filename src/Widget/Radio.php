@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input\Radio as RadioTag;
@@ -82,7 +83,6 @@ final class Radio extends Widget
     protected function run(): string
     {
         $new = clone $this;
-
         $radio = RadioTag::tag();
 
         /** @var bool|float|int|string|null  */
@@ -90,22 +90,22 @@ final class Radio extends Widget
 
         unset($new->attributes['forceUncheckedValue']);
 
-        $value = $new->getValue();
+        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Radio widget requires a bool|float|int|string|null value.');
         }
 
         if ($new->enclosedByLabel === true) {
-            $label = $new->label !== '' ? $new->label : $new->getLabel();
+            $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
             $radio = $radio->label($label, $new->labelAttributes);
         }
 
         return $radio
             ->attributes($new->attributes)
-            ->checked((bool) $new->getValue())
+            ->checked((bool) $value)
             ->id($new->getId())
-            ->name($new->getInputName())
+            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
             ->uncheckValue($forceUncheckedValue)
             ->value((int) $value)
             ->render();

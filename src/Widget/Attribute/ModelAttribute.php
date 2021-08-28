@@ -69,26 +69,6 @@ trait ModelAttribute
     }
 
     /**
-     * Return the attribute first error message.
-     *
-     * @return string
-     */
-    protected function getFirstError(): string
-    {
-        return $this->formModel !== null ? $this->formModel->getFirstError($this->getAttributeName()) : '';
-    }
-
-    /**
-     * Return the attribute hint for the model.
-     *
-     * @return string
-     */
-    protected function getHint(): string
-    {
-        return $this->formModel !== null ? $this->formModel->getAttributeHint($this->getAttributeName()) : '';
-    }
-
-    /**
      * Return the imput id.
      *
      * @return string
@@ -101,51 +81,5 @@ trait ModelAttribute
         $id = $new->attributes['id'] ?? $new->id;
 
         return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute) : $id;
-    }
-
-    /**
-     * Return the input name.
-     *
-     * @return string the generated input name.
-     */
-    protected function getInputName(): string
-    {
-        return $this->formModel !== null ? HtmlForm::getInputName($this->formModel, $this->attribute) : '';
-    }
-
-    /**
-     * Return the attribute label.
-     *
-     * @return string
-     */
-    protected function getLabel(): string
-    {
-        return $this->formModel !== null ? $this->formModel->getAttributeLabel($this->getAttributeName()) : '';
-    }
-
-    /**
-     * Return the attribute value.
-     *
-     * @return iterable|object|scalar|Stringable|null
-     */
-    protected function getValue()
-    {
-        return $this->formModel !== null ? $this->formModel->getAttributeValue($this->getAttributeName()) : null;
-    }
-
-    /**
-     * Returns the real attribute name from the given attribute expression.
-     *
-     * If `$attribute` has neither prefix nor suffix, it will be returned back without change.
-     *
-     * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
-     * @return string the attribute name without prefix and suffix.
-     *
-     * {@see parseAttribute()}
-     */
-    private function getAttributeName(): string
-    {
-        return HtmlForm::getAttributeName($this->attribute);
     }
 }
