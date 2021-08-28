@@ -6,7 +6,9 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "tel" represents a one-line plain-text edit control for
@@ -17,6 +19,7 @@ use Yiisoft\Html\Tag\Input;
 final class Telephone extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into

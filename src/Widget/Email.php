@@ -6,7 +6,9 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "email" represents a control for editing a list of e-mail
@@ -17,6 +19,7 @@ use Yiisoft\Html\Tag\Input;
 final class Email extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into

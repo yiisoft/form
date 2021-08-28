@@ -6,7 +6,9 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "number" represents a precise control for setting the
@@ -17,6 +19,7 @@ use Yiisoft\Html\Tag\Input;
 final class Number extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     /**
      * The expected upper bound for the element’s value.

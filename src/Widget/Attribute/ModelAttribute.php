@@ -2,21 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Widget;
+namespace Yiisoft\Form\Widget\Attribute;
 
 use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
 use Yiisoft\Html\NoEncodeStringableInterface;
-use Yiisoft\Widget\Widget as AbstractWidget;
 
-abstract class Widget extends AbstractWidget implements NoEncodeStringableInterface
+trait ModelAttribute
 {
-    protected array $attributes = [];
+    private array $attributes = [];
     private string $attribute = '';
     private string $charset = 'UTF-8';
     private string $id = '';
-    private FormModelInterface $formModel;
+    private ?FormModelInterface $formModel = null;
+
+    /**
+     * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
+     *
+     * @param string $value
+     *
+     * @return static
+     */
+    public function charset(string $value): self
+    {
+        $new = clone $this;
+        $new->charset = $value;
+        return $new;
+    }
 
     /**
      * Set form interface, attribute name and attributes, and attributes for the widget.
@@ -29,26 +43,12 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    final public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
     {
         $new = clone $this;
         $new->formModel = $formModel;
         $new->attribute = $attribute;
         $new->attributes = $attributes;
-        return $new;
-    }
-
-    /**
-     * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
-     *
-     * @param string $value
-     *
-     * @return static
-     */
-    final public function charset(string $value): self
-    {
-        $new = clone $this;
-        $new->charset = $value;
         return $new;
     }
 
@@ -61,13 +61,12 @@ abstract class Widget extends AbstractWidget implements NoEncodeStringableInterf
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
-    final public function id(string $value): self
+    public function id(string $value): self
     {
         $new = clone $this;
         $new->id = $value;
         return $new;
     }
-
     /**
      * Return the attribute form model.
      *

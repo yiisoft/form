@@ -6,7 +6,9 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input\Radio as RadioTag;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "radio" represents a selection of one item from a list of
@@ -17,6 +19,7 @@ use Yiisoft\Html\Tag\Input\Radio as RadioTag;
 final class Radio extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     private bool $enclosedByLabel = true;
     private string $label = '';

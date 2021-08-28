@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\CustomTag;
+use Yiisoft\Widget\Widget;
 
 /**
  * The widget for hint form.
  */
 final class Hint extends Widget
 {
+    use ModelAttribute;
+
     /**
      * Generates a hint tag for the given form attribute.
      *

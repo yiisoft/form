@@ -6,7 +6,9 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /**
  * Generates an text input tag for the given form attribute.
@@ -16,6 +18,7 @@ use Yiisoft\Html\Tag\Input;
 final class Text extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     private string $dirname = '';
 

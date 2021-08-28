@@ -10,7 +10,7 @@ use Yiisoft\Form\Widget\ResetButton;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
-final class ResetTest extends TestCase
+final class ResetButtonTest extends TestCase
 {
     private TypeForm $formModel;
 

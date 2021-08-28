@@ -6,8 +6,8 @@ namespace Yiisoft\Form\Tests\TestSupport\Widget;
 
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\DateAttribute;
-use Yiisoft\Form\Widget\Widget;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
 final class AttributeWidget extends Widget
 {

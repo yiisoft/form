@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "file" represents a list of file items, each consisting of a
@@ -16,6 +18,7 @@ use Yiisoft\Html\Tag\Input;
 final class File extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is

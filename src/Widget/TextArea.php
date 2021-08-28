@@ -6,7 +6,9 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
+use Yiisoft\Widget\Widget;
 
 /**
  * Generates a textarea tag for the given form attribute.
@@ -16,6 +18,7 @@ use Yiisoft\Html\Tag\Textarea as TextAreaTag;
 final class TextArea extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     private string $dirname = '';
     private string $wrap = '';

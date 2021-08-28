@@ -7,7 +7,9 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.
@@ -19,6 +21,7 @@ use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 final class Checkbox extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     private bool $enclosedByLabel = true;
     private string $label = '';

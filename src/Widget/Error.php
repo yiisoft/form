@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\CustomTag;
+use Yiisoft\Widget\Widget;
 
 /**
  * The Error widget displays an error message.
  */
 final class Error extends Widget
 {
+    use ModelAttribute;
+
     private string $message = '';
 
     /**

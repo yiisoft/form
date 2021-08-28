@@ -7,7 +7,9 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\DateAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /*
  * The input element with a type attribute whose value is "datetime-local" represents a control for setting the
@@ -19,6 +21,7 @@ final class DateTimeLocal extends Widget
 {
     use CommonAttribute;
     use DateAttribute;
+    use ModelAttribute;
 
     /**
      * Generates a datepicker tag together with a label for the given form attribute.

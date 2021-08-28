@@ -7,9 +7,11 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
+use Yiisoft\Widget\Widget;
 
 /**
  * Generates a drop-down list for the given form attribute.
@@ -21,6 +23,7 @@ use Yiisoft\Html\Tag\Select as SelectTag;
 final class Select extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     private bool $encode = false;
     private array $items = [];

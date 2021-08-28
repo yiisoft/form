@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "hidden" represents a value that is not intended to be
@@ -15,6 +17,8 @@ use Yiisoft\Html\Tag\Input;
  */
 final class Hidden extends Widget
 {
+    use ModelAttribute;
+
     /**
      * Generates a hidden input tag for the given form attribute.
      *

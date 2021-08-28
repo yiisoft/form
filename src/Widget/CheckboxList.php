@@ -10,7 +10,9 @@ use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
+use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
+use Yiisoft\Widget\Widget;
 
 /*
  * Generates a list of checkboxes.
@@ -20,6 +22,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
 final class CheckboxList extends Widget
 {
     use CommonAttribute;
+    use ModelAttribute;
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
