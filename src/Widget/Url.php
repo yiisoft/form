@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Widget\Attribute\CommonAttribute;
 use Yiisoft\Form\Widget\Attribute\ModelAttribute;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
