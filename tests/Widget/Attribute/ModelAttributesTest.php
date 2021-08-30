@@ -25,7 +25,6 @@ final class ModelAttributesTest extends TestCase
         $this->invokeMethod(ModelAttributesWidget::widget(), 'getFormModel');
     }
 
-
     public function testImmutability(): void
     {
         $modelAttributes = ModelAttributesWidget::widget();
