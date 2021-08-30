@@ -448,15 +448,18 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     private function getNestedAttributeValue(string $method, string $attribute): string
     {
+        $result = '';
+
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
         if ($nested !== null) {
             /** @var FormModelInterface $attributeNestedValue */
             $attributeNestedValue = $this->getAttributeValue($attribute);
+            /** @var string */
             $result = $attributeNestedValue->$method($nested);
         }
 
-        return $nested !== null ? $result : '';
+        return $result;
     }
 
     public function isValidated(): bool
