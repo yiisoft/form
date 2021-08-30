@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
+use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
@@ -14,7 +15,7 @@ trait ModelAttributes
     private string $attribute = '';
     private string $charset = 'UTF-8';
     private string $id = '';
-    private FormModelInterface $formModel;
+    private ?FormModelInterface $formModel = null;
 
     /**
      * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
