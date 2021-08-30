@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
@@ -22,7 +22,7 @@ use Yiisoft\Widget\Widget;
  */
 final class CheckboxList extends Widget
 {
-    use CommonAttribute;
+    use CommonAttributes;
     use ModelAttributes;
 
     private array $containerAttributes = [];

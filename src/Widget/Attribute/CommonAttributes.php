@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-trait CommonAttribute
+trait CommonAttributes
 {
     /**
      * Focus on the control (put cursor into it) when the page loads.

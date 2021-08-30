@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input\Radio as RadioTag;
 use Yiisoft\Widget\Widget;
@@ -19,7 +19,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Radio extends Widget
 {
-    use CommonAttribute;
+    use CommonAttributes;
     use ModelAttributes;
 
     private bool $enclosedByLabel = true;

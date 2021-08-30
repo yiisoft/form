@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\WithoutModelAttribute;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
@@ -16,7 +16,7 @@ use Yiisoft\Widget\Widget;
  */
 final class ResetButton extends Widget
 {
-    use CommonAttribute;
+    use CommonAttributes;
     use WithoutModelAttribute;
 
     /**

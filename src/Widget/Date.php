@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttribute;
+use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\DateAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
@@ -20,7 +20,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Date extends Widget
 {
-    use CommonAttribute;
+    use CommonAttributes;
     use DateAttributes;
     use ModelAttributes;
 
