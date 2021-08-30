@@ -122,7 +122,7 @@ final class Telephone extends Widget
         /**
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.value
          */
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Telephone widget must be a string.');
@@ -132,7 +132,7 @@ final class Telephone extends Widget
             ->type('tel')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
+            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value)
             ->render();
     }

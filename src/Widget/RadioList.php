@@ -196,7 +196,7 @@ final class RadioList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $radioList = RadioListTag::create(HtmlForm::getInputName($new->formModel, $new->attribute));
+        $radioList = RadioListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
@@ -205,7 +205,7 @@ final class RadioList extends Widget
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (!is_scalar($value)) {
             throw new InvalidArgumentException('RadioList widget required bool|float|int|string|null.');

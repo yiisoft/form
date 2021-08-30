@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
+use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
@@ -66,6 +67,15 @@ trait ModelAttributes
         return $new;
     }
 
+    protected function getFormModel(): FormModelInterface
+    {
+        if ($this->formModel === null) {
+            throw new InvalidArgumentException('Form model is not set.');
+        }
+
+        return $this->formModel;
+    }
+
     /**
      * Return the imput id.
      *
@@ -78,6 +88,6 @@ trait ModelAttributes
         /** @var string */
         $id = $new->attributes['id'] ?? $new->id;
 
-        return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute, $new->charset) : $id;
+        return $id === '' ? HtmlForm::getInputId($new->getFormModel(), $new->attribute, $new->charset) : $id;
     }
 }

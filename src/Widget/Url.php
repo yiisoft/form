@@ -120,7 +120,7 @@ final class Url extends Widget
         /**
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html#input.url.attrs.value
          */
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Url widget must be a string.');
@@ -130,7 +130,7 @@ final class Url extends Widget
             ->type('url')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
+            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value)
             ->render();
     }

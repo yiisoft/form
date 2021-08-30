@@ -64,7 +64,7 @@ final class File extends Widget
     {
         $new = clone $this;
 
-        $name = HtmlForm::getInputName($new->formModel, $new->attribute);
+        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
 
         /** @var string|null  */
         $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;

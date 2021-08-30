@@ -196,7 +196,7 @@ final class CheckboxList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $checkboxList = ChecboxListTag::create(HtmlForm::getInputName($new->formModel, $new->attribute));
+        $checkboxList = ChecboxListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
@@ -205,7 +205,7 @@ final class CheckboxList extends Widget
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_object($value)) {
             throw new InvalidArgumentException('CheckboxList widget requires a int|string|iterable|null value.');

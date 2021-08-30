@@ -33,7 +33,7 @@ final class Hint extends Widget
         $hint = ArrayHelper::remove(
             $new->attributes,
             'hint',
-            HtmlForm::getAttributeHint($new->formModel, $new->attribute),
+            HtmlForm::getAttributeHint($new->getFormModel(), $new->attribute),
         );
 
         /** @psalm-var non-empty-string */

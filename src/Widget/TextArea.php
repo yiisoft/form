@@ -176,7 +176,7 @@ final class TextArea extends Widget
     {
         $new = clone $this;
 
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('TextArea widget must be a string.');
@@ -193,7 +193,7 @@ final class TextArea extends Widget
         return TextAreaTag::tag()
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
+            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value)
             ->render();
     }

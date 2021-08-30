@@ -104,7 +104,7 @@ final class Field extends Widget
         unset($attributes['label'], $attributes['labelAttributes']);
 
         $new->parts['{input}'] = $checkbox
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->enclosedByLabel($enclosedByLabel)
             ->render();
 
@@ -192,7 +192,7 @@ final class Field extends Widget
         );
 
         $new->parts['{input}'] = $checkboxList
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->items($items)
             ->render();
 
@@ -211,7 +211,7 @@ final class Field extends Widget
         $new = clone $this;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Date::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Date::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -228,7 +228,7 @@ final class Field extends Widget
         $new = clone $this;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = DateTime::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = DateTime::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -246,7 +246,7 @@ final class Field extends Widget
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = DateTimeLocal::widget()
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->render();
 
         return $new;
@@ -269,7 +269,7 @@ final class Field extends Widget
         $attributes['type'] = self::TYPE_EMAIL;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Email::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Email::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -302,7 +302,7 @@ final class Field extends Widget
         }
 
         $new->parts['{error}'] = Error::widget()
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->message($errorMessage)
             ->render();
 
@@ -325,7 +325,7 @@ final class Field extends Widget
         $new = clone $this;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = File::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = File::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -353,7 +353,7 @@ final class Field extends Widget
         $new->parts['{label}'] = '';
         $new->parts['{hint}'] = '';
         $new->parts['{error}'] = '';
-        $new->parts['{input}'] = Hidden::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Hidden::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -383,7 +383,7 @@ final class Field extends Widget
             Html::addCssClass($attributes, $new->hintClass);
         }
 
-        $new->parts['{hint}'] = Hint::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{hint}'] = Hint::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -410,7 +410,7 @@ final class Field extends Widget
             Html::addCssClass($attributes, $new->labelClass);
         }
 
-        $new->parts['{label}'] = Label::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{label}'] = Label::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -432,7 +432,7 @@ final class Field extends Widget
         $attributes['type'] = self::TYPE_NUMBER;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Number::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Number::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -454,7 +454,7 @@ final class Field extends Widget
         $attributes['type'] = self::TYPE_PASSWORD;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Password::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Password::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -505,7 +505,7 @@ final class Field extends Widget
         unset($attributes['label'], $attributes['labelAttributes']);
 
         $new->parts['{input}'] = $radio
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->enclosedByLabel($enclosedByLabel)
             ->render();
 
@@ -593,7 +593,7 @@ final class Field extends Widget
         );
 
         $new->parts['{input}'] = $radioList
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->items($items)
             ->render();
 
@@ -694,7 +694,7 @@ final class Field extends Widget
         unset($attributes['encode'], $attributes['itemsAttributes'], $attributes['optionsData'], $attributes['prompt']);
 
         $new->parts['{input}'] = Select::widget()
-            ->config($new->formModel, $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute, $attributes)
             ->groups($groups)
             ->items($items)
             ->itemsAttributes($itemsAttributes)
@@ -764,7 +764,7 @@ final class Field extends Widget
         $attributes['type'] = self::TYPE_TEL;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Telephone::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Telephone::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -793,7 +793,7 @@ final class Field extends Widget
 
         unset($attributes['dirname']);
 
-        $new->parts['{input}'] = $text->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = $text->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -824,7 +824,7 @@ final class Field extends Widget
 
         unset($attributes['dirname'], $attributes['wrap']);
 
-        $new->parts['{input}'] = $textArea->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = $textArea->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
@@ -846,7 +846,7 @@ final class Field extends Widget
         $attributes['type'] = self::TYPE_URL;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Url::widget()->config($new->formModel, $new->attribute, $attributes)->render();
+        $new->parts['{input}'] = Url::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }

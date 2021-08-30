@@ -269,7 +269,7 @@ final class Select extends Widget
         }
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute) ?? '';
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute) ?? '';
 
         if (is_object($value)) {
             throw new InvalidArgumentException('Select widget required bool|float|int|iterable|string|null.');
@@ -289,7 +289,7 @@ final class Select extends Widget
         return $select
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
+            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->promptOption($promptOption)
             ->unselectValue($unselectValue)
             ->render();

@@ -65,7 +65,7 @@ final class Label extends Widget
     {
         $new = clone $this;
 
-        $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
+        $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
 
         /** @var bool|string */
         $attributeLabel = ArrayHelper::remove($new->attributes, 'label', '');

@@ -90,14 +90,14 @@ final class Radio extends Widget
 
         unset($new->attributes['forceUncheckedValue']);
 
-        $value = HtmlForm::getAttributeValue($new->formModel, $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Radio widget requires a bool|float|int|string|null value.');
         }
 
         if ($new->enclosedByLabel === true) {
-            $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
+            $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
             $radio = $radio->label($label, $new->labelAttributes);
         }
 
@@ -105,7 +105,7 @@ final class Radio extends Widget
             ->attributes($new->attributes)
             ->checked((bool) $value)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->formModel, $new->attribute))
+            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->uncheckValue($forceUncheckedValue)
             ->value((int) $value)
             ->render();

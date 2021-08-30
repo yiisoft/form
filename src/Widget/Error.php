@@ -79,7 +79,7 @@ final class Error extends Widget
         /** @var bool */
         $encode = $new->attributes['encode'] ?? true;
 
-        $error = $new->message !== '' ? $new->message : HtmlForm::getFirstError($new->formModel, $new->attribute);
+        $error = $new->message !== '' ? $new->message : HtmlForm::getFirstError($new->getFormModel(), $new->attribute);
 
         /** @var string */
         $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
@@ -89,7 +89,7 @@ final class Error extends Widget
 
         if ($messageCallback !== null) {
             /** @var string */
-            $error = $messageCallback($new->formModel, $new->attribute);
+            $error = $messageCallback($new->getFormModel(), $new->attribute);
         }
 
         unset($new->attributes['messageCallback']);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
+use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
@@ -30,7 +31,7 @@ trait FieldAttributes
     private array $parts = [];
     private string $template = "{label}\n{input}\n{hint}\n{error}";
     private string $validationStateOn = 'input';
-    private FormModelInterface $formModel;
+    private ?FormModelInterface $formModel = null;
 
     /**
      * Set aria-describedby attribute.
@@ -166,6 +167,15 @@ trait FieldAttributes
         return $new;
     }
 
+    protected function getFormModel(): FormModelInterface
+    {
+        if ($this->formModel === null) {
+            throw new InvalidArgumentException('Form model is not set.');
+        }
+
+        return $this->formModel;
+    }
+
     private function addValidatorAttributeHtml(
         FormModelInterface $formModel,
         string $attribute,
@@ -222,7 +232,7 @@ trait FieldAttributes
         /** @var string */
         $id = $new->attributes['id'] ?? $new->id;
 
-        return $id === '' ? HtmlForm::getInputId($new->formModel, $new->attribute) : $id;
+        return $id === '' ? HtmlForm::getInputId($new->getFormModel(), $new->attribute) : $id;
     }
 
     private function setInputAttributes(array $attributes): array
@@ -232,8 +242,8 @@ trait FieldAttributes
         /** @var string */
         $type = $attributes['type'] ?? '';
         unset($attributes['type']);
-        $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes, $type);
-        $attributeName = HtmlForm::getAttributeName($new->formModel, $new->attribute);
+        $attributes = $new->addValidatorAttributeHtml($new->getFormModel(), $new->attribute, $attributes, $type);
+        $attributeName = HtmlForm::getAttributeName($new->getFormModel(), $new->attribute);
 
         if ($new->ariaDescribedBy === true) {
             $attributes['aria-describedby'] = $new->getId();
@@ -243,14 +253,14 @@ trait FieldAttributes
             Html::addCssClass($attributes, $new->inputClass);
         }
 
-        if ($new->formModel->hasErrors($attributeName) && $new->errorClass !== '') {
+        if ($new->getFormModel()->hasErrors($attributeName) && $new->errorClass !== '') {
             Html::addCssClass($attributes, $new->invalidClass);
-        } elseif ($new->formModel->isValidated() && $new->validClass !== '') {
+        } elseif ($new->getFormModel()->isValidated() && $new->validClass !== '') {
             Html::addCssClass($attributes, $new->validClass);
         }
 
         if (!in_array($type, self::NO_PLACEHOLDER_TYPES, true)) {
-            $placeHolder = $new->formModel->getAttributePlaceHolder($new->attribute);
+            $placeHolder = $new->getFormModel()->getAttributePlaceHolder($new->attribute);
         }
 
         if (!isset($attributes['placeholder']) && $placeHolder !== '') {
