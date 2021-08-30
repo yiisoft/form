@@ -51,7 +51,6 @@ trait TestTrait
     }
 }
 
-
 namespace Yiisoft\Html;
 
 function hrtime(bool $getAsNumber = false)
