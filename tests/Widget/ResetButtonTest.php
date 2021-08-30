@@ -6,12 +6,16 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ResetButton;
+use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ResetButtonTest extends TestCase
 {
+    use TestTrait;
+
     private TypeForm $formModel;
 
     public function testAutoIdPrefix(): void
@@ -41,7 +45,7 @@ final class ResetButtonTest extends TestCase
     public function testName(): void
     {
         $this->assertSame(
-            '<input type="reset" id="reset-2" name="test-name">',
+            '<input type="reset" id="reset-1" name="test-name">',
             ResetButton::widget()->name('test-name')->render(),
         );
     }
@@ -49,7 +53,7 @@ final class ResetButtonTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="reset" id="reset-3" name="reset-3">',
+            '<input type="reset" id="reset-1" name="reset-1">',
             ResetButton::widget()->render(),
         );
     }
@@ -57,7 +61,7 @@ final class ResetButtonTest extends TestCase
     public function testValue(): void
     {
         $this->assertSame(
-            '<input type="reset" id="reset-4" name="reset-4" value="Reseteable">',
+            '<input type="reset" id="reset-1" name="reset-1" value="Reseteable">',
             ResetButton::widget()->value('Reseteable')->render(),
         );
     }
@@ -67,5 +71,6 @@ final class ResetButtonTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->formModel = new TypeForm();
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
     }
 }

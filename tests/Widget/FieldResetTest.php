@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Widget;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -57,7 +58,7 @@ final class FieldResetTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-2" name="test-name">
+        <input type="reset" id="reset-1" name="test-name">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -70,7 +71,7 @@ final class FieldResetTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-3" name="reset-3">
+        <input type="reset" id="reset-1" name="reset-1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -83,7 +84,7 @@ final class FieldResetTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-4" name="reset-4" value="Reseteable">
+        <input type="reset" id="reset-1" name="reset-1" value="Reseteable">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -96,5 +97,6 @@ final class FieldResetTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
     }
 }

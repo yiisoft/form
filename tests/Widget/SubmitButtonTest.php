@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\SubmitButton;
+use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -44,7 +45,7 @@ final class SubmitButtonTest extends TestCase
     public function testName(): void
     {
         $this->assertSame(
-            '<input type="submit" id="submit-2" name="test-name">',
+            '<input type="submit" id="submit-1" name="test-name">',
             SubmitButton::widget()->name('test-name')->render(),
         );
     }
@@ -52,7 +53,7 @@ final class SubmitButtonTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="submit" id="submit-3" name="submit-3">',
+            '<input type="submit" id="submit-1" name="submit-1">',
             SubmitButton::widget()->render(),
         );
     }
@@ -60,7 +61,7 @@ final class SubmitButtonTest extends TestCase
     public function testValue(): void
     {
         $this->assertSame(
-            '<input type="submit" id="submit-4" name="submit-4" value="Submit">',
+            '<input type="submit" id="submit-1" name="submit-1" value="Submit">',
             SubmitButton::widget()->value('Submit')->render(),
         );
     }
@@ -70,5 +71,6 @@ final class SubmitButtonTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->formModel = new TypeForm();
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
     }
 }
