@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\TestSupport\Widget;
 
-use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\DateAttributes;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
-final class AttributeWidget extends Widget
+final class ModelAttributesWidget extends Widget
 {
-    use CommonAttribute;
-    use DateAttributes;
+    use ModelAttributes;
 
     protected function run(): string
     {
