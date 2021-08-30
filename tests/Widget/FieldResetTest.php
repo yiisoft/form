@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\Widget;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Form\Widget\ResetButton;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 

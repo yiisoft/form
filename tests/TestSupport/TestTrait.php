@@ -26,5 +26,4 @@ namespace Yiisoft\Html;
 
 function hrtime(bool $getAsNumber = false)
 {
-    return ;
 }
