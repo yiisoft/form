@@ -15,7 +15,7 @@ trait DateAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-min
      */
-    public function min(string $value): self
+    public function min(?string $value): self
     {
         $new = clone $this;
         $new->attributes['min'] = $value;
@@ -31,7 +31,7 @@ trait DateAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-max
      */
-    public function max(string $value): self
+    public function max(?string $value): self
     {
         $new = clone $this;
         $new->attributes['max'] = $value;
