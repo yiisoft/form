@@ -31,10 +31,8 @@ final class DateTime extends Widget
      */
     protected function run(): string
     {
-        $new = clone $this;
-
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.date.html#input.date.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getAttributeValue($this->getFormModel(), $this->attribute);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('DateTime widget requires a string value.');
@@ -42,9 +40,9 @@ final class DateTime extends Widget
 
         return Input::tag()
             ->type('datetime')
-            ->attributes($new->attributes)
-            ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->attributes($this->attributes)
+            ->id($this->getId())
+            ->name(HtmlForm::getInputName($this->getFormModel(), $this->attribute))
             ->value($value)
             ->render();
     }
