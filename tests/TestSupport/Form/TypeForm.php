@@ -25,7 +25,7 @@ final class TypeForm extends FormModel
         ];
     }
 
-    public function getAttributePlaceHolders(): array
+    public function getAttributePlaceholders(): array
     {
         return [
             'string' => 'Typed your text string.',

@@ -31,7 +31,7 @@ final class FormWithNestedAttribute extends FormModel
         ];
     }
 
-    public function getAttributePlaceHolders(): array
+    public function getAttributePlaceholders(): array
     {
         return [
             'id' => 'Type ID.',

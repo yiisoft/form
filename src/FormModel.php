@@ -91,16 +91,16 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return [];
     }
 
-    public function getAttributePlaceHolder(string $attribute): string
+    public function getAttributePlaceholder(string $attribute): string
     {
-        $attributePlaceHolders = $this->getAttributePlaceHolders();
+        $attributePlaceHolders = $this->getAttributePlaceholders();
         $placeHolder = $attributePlaceHolders[$attribute] ?? '';
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
         if ($nested !== null) {
             /** @var FormModelInterface $attributeNestedValue */
             $attributeNestedValue = $this->getAttributeValue($attribute);
-            $placeHolder = $attributeNestedValue->getAttributePlaceHolder($nested);
+            $placeHolder = $attributeNestedValue->getAttributePlaceholder($nested);
         }
 
         return $placeHolder;
@@ -109,7 +109,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     /**
      * @return string[]
      */
-    public function getAttributePlaceHolders(): array
+    public function getAttributePlaceholders(): array
     {
         return [];
     }

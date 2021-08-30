@@ -68,12 +68,12 @@ interface FormMetadataInterface
      *
      * @return string the attribute placeholder.
      */
-    public function getAttributePlaceHolder(string $attribute): string;
+    public function getAttributePlaceholder(string $attribute): string;
 
     /**
      * Returns the attribute placeholders.
      *
      * @return array attribute placeholder (name => placeholder)
      */
-    public function getAttributePlaceHolders(): array;
+    public function getAttributePlaceholders(): array;
 }

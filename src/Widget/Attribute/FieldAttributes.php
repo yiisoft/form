@@ -260,7 +260,7 @@ trait FieldAttributes
         }
 
         if (!in_array($type, self::NO_PLACEHOLDER_TYPES, true)) {
-            $placeHolder = $new->getFormModel()->getAttributePlaceHolder($new->attribute);
+            $placeHolder = $new->getFormModel()->getAttributePlaceholder($new->attribute);
         }
 
         if (!isset($attributes['placeholder']) && $placeHolder !== '') {
