@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Factory\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Widget\Widget;
 
