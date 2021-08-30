@@ -44,7 +44,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $attributeHints = $this->getAttributeHints();
         $hint = $attributeHints[$attribute] ?? '';
-        $nestedAttributeHint =  $this->getNestedAttributeValue('getAttributeHint', $attribute);
+        $nestedAttributeHint = $this->getNestedAttributeValue('getAttributeHint', $attribute);
 
         return $nestedAttributeHint !== '' ? $nestedAttributeHint : $hint;
     }
@@ -66,7 +66,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             $label = $labels[$attribute];
         }
 
-        $nestedAttributeLabel =  $this->getNestedAttributeValue('getAttributeLabel', $attribute);
+        $nestedAttributeLabel = $this->getNestedAttributeValue('getAttributeLabel', $attribute);
 
         return $nestedAttributeLabel !== '' ? $nestedAttributeLabel : $label;
     }
@@ -83,7 +83,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $attributePlaceHolders = $this->getAttributePlaceholders();
         $placeholder = $attributePlaceHolders[$attribute] ?? '';
-        $nestedAttributePlaceholder =  $this->getNestedAttributeValue('getAttributePlaceholder', $attribute);
+        $nestedAttributePlaceholder = $this->getNestedAttributeValue('getAttributePlaceholder', $attribute);
 
         return $nestedAttributePlaceholder !== '' ? $nestedAttributePlaceholder : $placeholder;
     }
