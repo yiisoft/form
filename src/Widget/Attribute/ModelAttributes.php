@@ -15,7 +15,7 @@ trait ModelAttributes
     private string $attribute = '';
     private string $charset = 'UTF-8';
     private string $id = '';
-    private ?FormModelInterface $formModel = null;
+    private FormModelInterface $formModel;
 
     /**
      * Set the character set used to generate the widget id. See {@see HtmlForm::getInputId()}.
