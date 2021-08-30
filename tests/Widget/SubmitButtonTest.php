@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\SubmitButton;
-use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -36,7 +35,6 @@ final class SubmitButtonTest extends TestCase
 
     public function testId(): void
     {
-
         $this->assertSame(
             '<input type="submit" id="test-id" name="test-id">',
             SubmitButton::widget()->id('test-id')->render(),

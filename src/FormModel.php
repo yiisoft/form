@@ -144,7 +144,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return array_key_exists($attribute, $this->attributes);
     }
 
-
     /**
      * @return string[]
      */
