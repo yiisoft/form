@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 use Yiisoft\Widget\Widget;
 
@@ -22,7 +22,7 @@ use Yiisoft\Widget\Widget;
 final class Checkbox extends Widget
 {
     use CommonAttribute;
-    use ModelAttribute;
+    use ModelAttributes;
 
     private bool $enclosedByLabel = true;
     private string $label = '';
@@ -68,16 +68,16 @@ final class Checkbox extends Widget
      *
      * Do not set this option unless you set the "label" attributes.
      *
-     * @param array $value
+     * @param array $attributes
      *
      * @return static
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function labelAttributes(array $value = []): self
+    public function labelAttributes(array $attributes = []): self
     {
         $new = clone $this;
-        $new->labelAttributes = $value;
+        $new->labelAttributes = $attributes;
         return $new;
     }
 

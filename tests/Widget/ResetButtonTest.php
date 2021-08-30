@@ -16,25 +16,22 @@ final class ResetButtonTest extends TestCase
 
     public function testAutoIdPrefix(): void
     {
-        ResetButton::counter(0);
         $this->assertSame(
-            '<input type="reset" id="w0" name="w0">',
-            ResetButton::widget()->autoIdPrefix('w')->render(),
+            '<input type="reset" id="r-1" name="r-1">',
+            ResetButton::widget()->autoIdPrefix('r-')->render(),
         );
     }
 
     public function testAttributes(): void
     {
-        ResetButton::counter(0);
         $this->assertSame(
-            '<input type="reset" id="reset-0" name="reset-0" disabled>',
+            '<input type="reset" id="reset-1" name="reset-1" disabled>',
             ResetButton::widget()->attributes(['disabled' => true])->render(),
         );
     }
 
     public function testId(): void
     {
-        ResetButton::counter(0);
         $this->assertSame(
             '<input type="reset" id="test-id" name="test-id">',
             ResetButton::widget()->id('test-id')->render(),
@@ -43,27 +40,24 @@ final class ResetButtonTest extends TestCase
 
     public function testName(): void
     {
-        ResetButton::counter(0);
         $this->assertSame(
-            '<input type="reset" id="reset-0" name="test-name">',
+            '<input type="reset" id="reset-2" name="test-name">',
             ResetButton::widget()->name('test-name')->render(),
         );
     }
 
     public function testRender(): void
     {
-        ResetButton::counter(0);
         $this->assertSame(
-            '<input type="reset" id="reset-0" name="reset-0">',
+            '<input type="reset" id="reset-3" name="reset-3">',
             ResetButton::widget()->render(),
         );
     }
 
     public function testValue(): void
     {
-        ResetButton::counter(0);
         $this->assertSame(
-            '<input type="reset" id="reset-0" name="reset-0" value="Reseteable">',
+            '<input type="reset" id="reset-4" name="reset-4" value="Reseteable">',
             ResetButton::widget()->value('Reseteable')->render(),
         );
     }

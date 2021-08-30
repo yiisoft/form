@@ -14,12 +14,13 @@ final class HtmlFormTest extends TestCase
 {
     public function testGetAttributeName(): void
     {
-        $this->assertSame('content', HtmlForm::getAttributeName('[0]content'));
-        $this->assertSame('dates', HtmlForm::getAttributeName('dates[0]'));
-        $this->assertSame('dates', HtmlForm::getAttributeName('[0]dates[0]'));
+        $formModel = new LoginForm();
+        $this->assertSame('login', HtmlForm::getAttributeName($formModel, '[0]login'));
+        $this->assertSame('login', HtmlForm::getAttributeName($formModel, 'login[0]'));
+        $this->assertSame('login', HtmlForm::getAttributeName($formModel, '[0]login[0]'));
 
         $this->expectExceptionMessage('Attribute name must contain word characters only.');
-        HtmlForm::getAttributeName('content body');
+        HtmlForm::getAttributeName($formModel, 'content body');
     }
 
     public function dataGetInputName(): array

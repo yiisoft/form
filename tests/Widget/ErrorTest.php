@@ -35,7 +35,7 @@ final class ErrorTest extends TestCase
     public function testMessageCallbackWithNoEncode(): void
     {
         $html = Error::widget()
-            ->config($this->formModel, 'string', ['encode' => false])
+            ->config($this->formModel, 'name', ['encode' => false])
             ->messageCallback([$this->formModel, 'customErrorWithIcon'])
             ->render();
         $this->assertSame('<div>(&#10006;) This is custom error message.</div>', $html);

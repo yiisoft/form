@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -20,7 +20,7 @@ use Yiisoft\Widget\Widget;
 final class Password extends Widget
 {
     use CommonAttribute;
-    use ModelAttribute;
+    use ModelAttributes;
 
     /**
      * Specifies the form element the tag input element belongs to. The value of this attribute must be the id

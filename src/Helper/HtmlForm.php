@@ -23,7 +23,7 @@ final class HtmlForm
      */
     public static function getAttributeHint(?FormModelInterface $formModel, string $attribute): string
     {
-        return $formModel !== null ? $formModel->getAttributeHint(self::getAttributeName($attribute)) : '';
+        return $formModel !== null ? $formModel->getAttributeHint(self::getAttributeName($formModel, $attribute)) : '';
     }
 
     /**
@@ -38,13 +38,14 @@ final class HtmlForm
      */
     public static function getAttributeLabel(?FormModelInterface $formModel, string $attribute): string
     {
-        return $formModel !== null ? $formModel->getAttributeLabel(self::getAttributeName($attribute)) : '';
+        return $formModel !== null ? $formModel->getAttributeLabel(self::getAttributeName($formModel, $attribute)) : '';
     }
 
     /**
      * Returns the real attribute name from the given attribute expression.
      * If `$attribute` has neither prefix nor suffix, it will be returned back without change.
      *
+     * @param FormModelInterface|null $form the form object.
      * @param string $attribute the attribute name or expression
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
@@ -53,9 +54,15 @@ final class HtmlForm
      *
      * @see static::parseAttribute()
      */
-    public static function getAttributeName(string $attribute): string
+    public static function getAttributeName(?FormModelInterface $formModel, string $attribute): string
     {
-        return self::parseAttribute($attribute)['name'];
+        $attribute = self::parseAttribute($attribute)['name'];
+
+        if ($formModel !== null && !$formModel->hasAttribute($attribute)) {
+            throw new invalidArgumentException("Attribute '$attribute' does not exist.");
+        }
+
+        return $attribute;
     }
 
     /**
@@ -76,7 +83,7 @@ final class HtmlForm
      */
     public static function getAttributeValue(?FormModelInterface $formModel, string $attribute)
     {
-        return $formModel !== null ? $formModel->getAttributeValue(self::getAttributeName($attribute)) : null;
+        return $formModel !== null ? $formModel->getAttributeValue(self::getAttributeName($formModel, $attribute)) : null;
     }
 
     /**
@@ -89,7 +96,7 @@ final class HtmlForm
      */
     public static function getFirstError(?FormModelInterface $formModel, string $attribute): string
     {
-        return $formModel !== null ? $formModel->getFirstError(self::getAttributeName($attribute)) : '';
+        return $formModel !== null ? $formModel->getFirstError(self::getAttributeName($formModel, $attribute)) : '';
     }
 
     /**

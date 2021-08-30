@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
+use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 
-trait ModelAttribute
+trait ModelAttributes
 {
     private array $attributes = [];
     private string $attribute = '';

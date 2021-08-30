@@ -21,3 +21,10 @@ trait TestTrait
         $this->assertEquals($expected, $actual, $message);
     }
 }
+
+namespace Yiisoft\Html;
+
+function hrtime(bool $getAsNumber = false)
+{
+    return ;
+}

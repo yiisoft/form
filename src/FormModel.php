@@ -30,7 +30,7 @@ use function strpos;
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
     private array $attributes;
-    /** @var array<string, array<array-key, string>> */
+    /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
     private bool $validated = false;
@@ -43,10 +43,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getAttributeHint(string $attribute): string
     {
         $attributeHints = $this->getAttributeHints();
-
-        /** @var string */
         $hint = $attributeHints[$attribute] ?? '';
-
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
         if ($nested !== null) {
@@ -58,6 +55,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $hint;
     }
 
+    /**
+     * @return string[]
+     */
     public function getAttributeHints(): array
     {
         return [];
@@ -66,11 +66,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getAttributeLabel(string $attribute): string
     {
         $label = $this->generateAttributeLabel($attribute);
-
         $labels = $this->getAttributeLabels();
 
         if (array_key_exists($attribute, $labels)) {
-            /** @var string */
             $label = $labels[$attribute];
         }
 
@@ -85,6 +83,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $label;
     }
 
+    /**
+     * @return string[]
+     */
     public function getAttributeLabels(): array
     {
         return [];
@@ -93,10 +94,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getAttributePlaceHolder(string $attribute): string
     {
         $attributePlaceHolders = $this->getAttributePlaceHolders();
-
-        /** @var string */
         $placeHolder = $attributePlaceHolders[$attribute] ?? '';
-
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
         if ($nested !== null) {
@@ -108,6 +106,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $placeHolder;
     }
 
+    /**
+     * @return string[]
+     */
     public function getAttributePlaceHolders(): array
     {
         return [];
@@ -143,11 +144,20 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return array_key_exists($attribute, $this->attributes);
     }
 
+
+    /**
+     * @return string[]
+     */
     public function getError(string $attribute): array
     {
         return $this->attributesErrors[$attribute] ?? [];
     }
 
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array<string, array<string>>
+     */
     public function getErrors(): array
     {
         return $this->attributesErrors;
@@ -158,7 +168,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $lines = [];
         $errors = $showAllErrors ? $this->getErrors() : [$this->getFirstErrors()];
 
-        /** @var array $error */
         foreach ($errors as $error) {
             $lines = array_merge($lines, $error);
         }
@@ -208,7 +217,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $scope = $formName ?? $this->getFormName();
 
         /**
-         * @psalm-var array<string,mixed>
+         * @psalm-var array<string, scalar|Stringable|null>
          */
         $values = [];
 
@@ -262,6 +271,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         /** @var array<array-key, Resultset> $resultSet */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
+                /** @psalm-suppress InvalidArgument */
                 $this->addErrors([$attribute => $result->getErrors()]);
             }
         }
@@ -278,9 +288,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return [];
     }
 
+    /**
+     * @psalm-param array<string, array<array-key, string>> $items
+     */
     private function addErrors(array $items): void
     {
-        /** @var array<string, array<array-key, string>> $items */
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
                 $this->attributesErrors[$attribute][] = $error;

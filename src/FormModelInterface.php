@@ -20,39 +20,6 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function addError(string $attribute, string $error): void;
 
     /**
-     * Returns the text label for the specified attribute.
-     *
-     * @param string $attribute the attribute name.
-     *
-     * @return string the attribute label.
-     *
-     * {@see getAttributeLabels()}
-     */
-    public function getAttributeLabel(string $attribute): string;
-
-    /**
-     * Returns the text hint for the specified attribute.
-     *
-     * @param string $attribute the attribute name.
-     *
-     * @return string the attribute hint.
-     *
-     * {@see getAttributeHints()}
-     */
-    public function getAttributeHint(string $attribute): string;
-
-    /**
-     * Returns the text placeholder for the specified attribute.
-     *
-     * @param string $attribute the attribute name.
-     *
-     * @return string the attribute placeholder.
-     *
-     * {@see getAttributePlaceHolders()}
-     */
-    public function getAttributePlaceHolder(string $attribute): string;
-
-    /**
      * Returns the errors for single attribute.
      *
      * @param string $attribute attribute name. Use null to retrieve errors for all attributes.

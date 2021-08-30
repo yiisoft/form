@@ -13,7 +13,7 @@ use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\Url;
 
-trait FieldAttribute
+trait FieldAttributes
 {
     private bool $ariaDescribedBy = false;
     private string $attribute = '';
@@ -233,7 +233,7 @@ trait FieldAttribute
         $type = $attributes['type'] ?? '';
         unset($attributes['type']);
         $attributes = $new->addValidatorAttributeHtml($new->formModel, $new->attribute, $attributes, $type);
-        $attributeName = HtmlForm::getAttributeName($new->attribute);
+        $attributeName = HtmlForm::getAttributeName($new->formModel, $new->attribute);
 
         if ($new->ariaDescribedBy === true) {
             $attributes['aria-describedby'] = $new->getId();

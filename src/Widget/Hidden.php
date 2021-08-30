@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -18,7 +18,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Hidden extends Widget
 {
-    use ModelAttribute;
+    use ModelAttributes;
 
     /**
      * Generates a hidden input tag for the given form attribute.

@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use ReflectionException;
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\Widget\Attribute\FieldAttribute;
+use Yiisoft\Form\Widget\Attribute\FieldAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Div;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
@@ -23,7 +23,7 @@ use function strtr;
  */
 final class Field extends Widget
 {
-    use FieldAttribute;
+    use FieldAttributes;
 
     public const TYPE_CHECKBOX = 'checkbox';
     public const TYPE_HIDDEN = 'hidden';

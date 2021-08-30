@@ -17,24 +17,22 @@ final class FieldSubmitTest extends TestCase
 
     public function testAutoIdPrefix(): void
     {
-        SubmitButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="w0" name="w0">
+        <input type="submit" id="s-1" name="s-1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->submitButton(['autoIdPrefix' => 'w'])->render(),
+            Field::widget()->submitButton(['autoIdPrefix' => 's-'])->render(),
         );
     }
 
     public function testAttributes(): void
     {
-        SubmitButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-0" name="submit-0" disabled>
+        <input type="submit" id="submit-1" name="submit-1" disabled>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -45,7 +43,6 @@ final class FieldSubmitTest extends TestCase
 
     public function testId(): void
     {
-        SubmitButton::counter(0);
         $expected = <<<'HTML'
         <div>
         <input type="submit" id="test-id" name="test-id">
@@ -59,10 +56,9 @@ final class FieldSubmitTest extends TestCase
 
     public function testName(): void
     {
-        SubmitButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-0" name="test-name">
+        <input type="submit" id="submit-2" name="test-name">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -73,10 +69,9 @@ final class FieldSubmitTest extends TestCase
 
     public function testRender(): void
     {
-        SubmitButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-0" name="submit-0">
+        <input type="submit" id="submit-3" name="submit-3">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -87,10 +82,9 @@ final class FieldSubmitTest extends TestCase
 
     public function testValue(): void
     {
-        SubmitButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-0" name="submit-0" value="Save">
+        <input type="submit" id="submit-4" name="submit-4" value="Save">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

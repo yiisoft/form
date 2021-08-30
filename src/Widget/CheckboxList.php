@@ -10,7 +10,7 @@ use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
 use Yiisoft\Widget\Widget;
@@ -23,7 +23,7 @@ use Yiisoft\Widget\Widget;
 final class CheckboxList extends Widget
 {
     use CommonAttribute;
-    use ModelAttribute;
+    use ModelAttributes;
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
@@ -39,16 +39,16 @@ final class CheckboxList extends Widget
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
      *
-     * @param array $value
+     * @param array $attributes
      *
      * @return static
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function containerAttributes(array $value): self
+    public function containerAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->containerAttributes = $value;
+        $new->containerAttributes = $attributes;
         return $new;
     }
 
@@ -95,12 +95,12 @@ final class CheckboxList extends Widget
      *
      * @return static
      *
-     * @psalm-param array<array-key, array<array-key, mixed>> $value
+     * @psalm-param array<array-key, array<array-key, mixed>> $attributes
      */
-    public function individualItemsAttributes(array $value = []): self
+    public function individualItemsAttributes(array $attributes = []): self
     {
         $new = clone $this;
-        $new->individualItemsAttributes = $value;
+        $new->individualItemsAttributes = $attributes;
         return $new;
     }
 
@@ -111,30 +111,30 @@ final class CheckboxList extends Widget
      *
      * Note that the labels will NOT be HTML-encoded, while the values will.
      *
-     * @param array<array-key, string> $value
+     * @param array<array-key, string> $items
      *
      * @return static
      */
-    public function items(array $value = []): self
+    public function items(array $items = []): self
     {
         $new = clone $this;
-        $new->items = $value;
+        $new->items = $items;
         return $new;
     }
 
     /**
      * The items attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
      *
-     * @param array $value
+     * @param array $attributes
      *
      * @return static
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function itemsAttributes(array $value = []): self
+    public function itemsAttributes(array $attributes = []): self
     {
         $new = clone $this;
-        $new->itemsAttributes = $value;
+        $new->itemsAttributes = $attributes;
         return $new;
     }
 
@@ -148,16 +148,16 @@ final class CheckboxList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param Closure $value
+     * @param Closure $formatter
      *
      * @return static
      *
-     * @psalm-param Closure(CheckboxItem):string|null $value
+     * @psalm-param Closure(CheckboxItem):string|null $formatter
      */
-    public function itemsFormatter(?Closure $value): self
+    public function itemsFormatter(?Closure $formatter): self
     {
         $new = clone $this;
-        $new->itemsFormatter = $value;
+        $new->itemsFormatter = $formatter;
         return $new;
     }
 
@@ -179,14 +179,14 @@ final class CheckboxList extends Widget
     /**
      * The HTML code that separates items.
      *
-     * @param string $value
+     * @param string $seperator
      *
      * @return static
      */
-    public function separator(string $value): self
+    public function separator(string $separator): self
     {
         $new = clone $this;
-        $new->separator = $value;
+        $new->separator = $separator;
         return $new;
     }
 

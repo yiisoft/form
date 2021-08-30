@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Label as LabelTag;
 use Yiisoft\Widget\Widget;
 
@@ -17,7 +17,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Label extends Widget
 {
-    use ModelAttribute;
+    use ModelAttributes;
 
     private string $label = '';
 

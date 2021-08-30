@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
 use Yiisoft\Widget\Widget;
@@ -19,7 +19,7 @@ use Yiisoft\Widget\Widget;
  */
 final class RadioList extends Widget
 {
-    use ModelAttribute;
+    use ModelAttributes;
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';

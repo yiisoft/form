@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-trait DateAttribute
+trait DateAttributes
 {
     /**
      * The earliest acceptable date.

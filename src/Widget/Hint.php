@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
@@ -15,7 +15,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Hint extends Widget
 {
-    use ModelAttribute;
+    use ModelAttributes;
 
     /**
      * Generates a hint tag for the given form attribute.

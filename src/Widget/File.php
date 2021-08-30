@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -19,7 +19,7 @@ use Yiisoft\Widget\Widget;
 final class File extends Widget
 {
     use CommonAttribute;
-    use ModelAttribute;
+    use ModelAttributes;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is

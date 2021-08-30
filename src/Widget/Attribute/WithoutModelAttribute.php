@@ -13,7 +13,6 @@ trait WithoutModelAttribute
     private string $id = '';
     private string $name = '';
     private string $value = '';
-    private static int $counter = 0;
 
     /**
      * The prefix to the automatically generated widget IDs.
@@ -93,23 +92,13 @@ trait WithoutModelAttribute
         return $new;
     }
 
-    /**
-     * Counter used to generate {@see id} for widgets.
-     *
-     * @param int $value
-     */
-    public static function counter(int $value): void
-    {
-        self::$counter = $value;
-    }
-
     protected function getId(): string
     {
-        return $this->id = $this->id !== '' ? $this->id : $this->autoIdPrefix . self::$counter++;
+        return $this->id = $this->id !== '' ? $this->id : Html::generateId($this->autoIdPrefix);
     }
 
     protected function getName(): string
     {
-        return $this->name = $this->name !== '' ? $this->name : $this->id;
+        return $this->name = $this->name !== '' ? $this->name : $this->getId();
     }
 }

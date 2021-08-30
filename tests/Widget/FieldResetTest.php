@@ -17,24 +17,22 @@ final class FieldResetTest extends TestCase
 
     public function testAutoIdPrefix(): void
     {
-        ResetButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="w0" name="w0">
+        <input type="reset" id="s-1" name="s-1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->resetButton(['autoIdPrefix' => 'w'])->render(),
+            Field::widget()->resetButton(['autoIdPrefix' => 's-'])->render(),
         );
     }
 
     public function testAttributes(): void
     {
-        ResetButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-0" name="reset-0" disabled>
+        <input type="reset" id="reset-1" name="reset-1" disabled>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -45,7 +43,6 @@ final class FieldResetTest extends TestCase
 
     public function testId(): void
     {
-        ResetButton::counter(0);
         $expected = <<<'HTML'
         <div>
         <input type="reset" id="test-id" name="test-id">
@@ -59,10 +56,9 @@ final class FieldResetTest extends TestCase
 
     public function testName(): void
     {
-        ResetButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-0" name="test-name">
+        <input type="reset" id="reset-2" name="test-name">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -73,10 +69,9 @@ final class FieldResetTest extends TestCase
 
     public function testRender(): void
     {
-        ResetButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-0" name="reset-0">
+        <input type="reset" id="reset-3" name="reset-3">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -87,10 +82,9 @@ final class FieldResetTest extends TestCase
 
     public function testValue(): void
     {
-        ResetButton::counter(0);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-0" name="reset-0" value="Reseteable">
+        <input type="reset" id="reset-4" name="reset-4" value="Reseteable">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

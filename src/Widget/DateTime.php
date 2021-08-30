@@ -7,8 +7,8 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\DateAttribute;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\DateAttributes;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -21,8 +21,8 @@ use Yiisoft\Widget\Widget;
 final class DateTime extends Widget
 {
     use CommonAttribute;
-    use DateAttribute;
-    use ModelAttribute;
+    use DateAttributes;
+    use ModelAttributes;
 
     /**
      * Generates a datepicker tag together with a label for the given form attribute.

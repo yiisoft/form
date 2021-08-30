@@ -10,6 +10,15 @@ namespace Yiisoft\Form;
 interface FormMetadataInterface
 {
     /**
+     * Returns the text label for the specified attribute.
+     *
+     * @param string $attribute the attribute name.
+     *
+     * @return string the attribute label.
+     */
+    public function getAttributeLabel(string $attribute): string;
+
+    /**
      * Returns the attribute labels.
      *
      * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
@@ -23,7 +32,7 @@ interface FormMetadataInterface
      *
      * @return array attribute labels (name => label)
      *
-     * {@see getAttributeLabel()}
+     * {@see \Yiisoft\Form\FormModel::getAttributeLabel()}
      */
     public function getAttributeLabels(): array;
 
@@ -33,10 +42,24 @@ interface FormMetadataInterface
      * @param string $attribute the attribute name.
      *
      * @return string the attribute hint.
-     *
-     * {@see getAttributeHint()}
      */
     public function getAttributeHint(string $attribute): string;
+
+    /**
+     * Returns the attribute hints.
+     *
+     * Attribute hints are mainly used for display purpose. For example, given an attribute `isPublic`, we can declare
+     * a hint `Whether the post should be visible for not logged in users`, which provides user-friendly description of
+     * the attribute meaning and can be displayed to end users.
+     *
+     * Unlike label hint will not be generated, if its explicit declaration is omitted.
+     *
+     * Note, in order to inherit hints defined in the parent class, a child class needs to merge the parent hints with
+     * child hints using functions such as `array_merge()`.
+     *
+     * @return array attribute hints (name => hint)
+     */
+    public function getAttributeHints(): array;
 
     /**
      * Returns the text placeholder for the specified attribute.
@@ -44,8 +67,13 @@ interface FormMetadataInterface
      * @param string $attribute the attribute name.
      *
      * @return string the attribute placeholder.
-     *
-     * {@see getAttributePlaceholder()}
      */
     public function getAttributePlaceHolder(string $attribute): string;
+
+    /**
+     * Returns the attribute placeholders.
+     *
+     * @return array attribute placeholder (name => placeholder)
+     */
+    public function getAttributePlaceHolders(): array;
 }

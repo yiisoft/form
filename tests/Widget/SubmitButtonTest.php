@@ -6,37 +6,36 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\SubmitButton;
+use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class SubmitButtonTest extends TestCase
 {
+    use TestTrait;
+
     private TypeForm $formModel;
 
     public function testAutoIdPrefix(): void
     {
-        SubmitButton::counter(0);
-
         $this->assertSame(
-            '<input type="submit" id="s0" name="s0">',
-            SubmitButton::widget()->autoIdPrefix('s')->render(),
+            '<input type="submit" id="s-1" name="s-1">',
+            SubmitButton::widget()->autoIdPrefix('s-')->render(),
         );
     }
 
     public function testAttributes(): void
     {
-        SubmitButton::counter(0);
-
         $this->assertSame(
-            '<input type="submit" id="submit-0" name="submit-0" tabindex="5">',
+            '<input type="submit" id="submit-1" name="submit-1" tabindex="5">',
             SubmitButton::widget()->attributes(['tabindex' => 5])->render(),
         );
     }
 
     public function testId(): void
     {
-        SubmitButton::counter(0);
 
         $this->assertSame(
             '<input type="submit" id="test-id" name="test-id">',
@@ -46,30 +45,24 @@ final class SubmitButtonTest extends TestCase
 
     public function testName(): void
     {
-        SubmitButton::counter(0);
-
         $this->assertSame(
-            '<input type="submit" id="submit-0" name="test-name">',
+            '<input type="submit" id="submit-2" name="test-name">',
             SubmitButton::widget()->name('test-name')->render(),
         );
     }
 
     public function testRender(): void
     {
-        SubmitButton::counter(0);
-
         $this->assertSame(
-            '<input type="submit" id="submit-0" name="submit-0">',
+            '<input type="submit" id="submit-3" name="submit-3">',
             SubmitButton::widget()->render(),
         );
     }
 
     public function testValue(): void
     {
-        SubmitButton::counter(0);
-
         $this->assertSame(
-            '<input type="submit" id="submit-0" name="submit-0" value="Submit">',
+            '<input type="submit" id="submit-4" name="submit-4" value="Submit">',
             SubmitButton::widget()->value('Submit')->render(),
         );
     }

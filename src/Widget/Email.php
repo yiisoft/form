@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttribute;
-use Yiisoft\Form\Widget\Attribute\ModelAttribute;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -20,7 +20,7 @@ use Yiisoft\Widget\Widget;
 final class Email extends Widget
 {
     use CommonAttribute;
-    use ModelAttribute;
+    use ModelAttributes;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
@@ -28,16 +28,16 @@ final class Email extends Widget
      *
      * If no maxlength is specified, or an invalid value is specified, the tag input has no maximum length.
      *
-     * @param int $value Positive integer.
+     * @param int $length Positive integer.
      *
      * @return static
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.maxlength
      */
-    public function maxlength(int $value): self
+    public function maxlength(int $length): self
     {
         $new = clone $this;
-        $new->attributes['maxlength'] = $value;
+        $new->attributes['maxlength'] = $length;
         return $new;
     }
 
@@ -47,16 +47,16 @@ final class Email extends Widget
      * This must be an non-negative integer value smaller than or equal to the value specified by maxlength.
      * If no minlength is specified, or an invalid value is specified, the text input has no minimum length.
      *
-     * @param int $value
+     * @param int $length
      *
      * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
      */
-    public function minlength(int $value): self
+    public function minlength(int $length): self
     {
         $new = clone $this;
-        $new->attributes['minlength'] = $value;
+        $new->attributes['minlength'] = $length;
         return $new;
     }
 
@@ -113,18 +113,16 @@ final class Email extends Widget
     /**
      * The height of the <select> with multiple is true.
      *
-     * Default value is 4.
-     *
-     * @param int $value
+     * @param int $size
      *
      * @return static
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.size
      */
-    public function size(int $value = 4): self
+    public function size(int $size): self
     {
         $new = clone $this;
-        $new->attributes['size'] = $value;
+        $new->attributes['size'] = $size;
         return $new;
     }
 
