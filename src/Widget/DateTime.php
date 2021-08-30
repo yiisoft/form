@@ -12,7 +12,7 @@ use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
-/*
+/**
  * The input element with a type attribute whose value is "datetime" represents a control for setting the element’s
  * value to a string representing a global date and time (with timezone information).
  *
