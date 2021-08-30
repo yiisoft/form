@@ -44,15 +44,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $attributeHints = $this->getAttributeHints();
         $hint = $attributeHints[$attribute] ?? '';
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+        $nestedAttributeHint =  $this->getNestedAttributeValue('getAttributeHint', $attribute);
 
-        if ($nested !== null) {
-            /** @var FormModelInterface $attributeNestedValue */
-            $attributeNestedValue = $this->getAttributeValue($attribute);
-            $hint = $attributeNestedValue->getAttributeHint($nested);
-        }
-
-        return $hint;
+        return $nestedAttributeHint !== '' ? $nestedAttributeHint : $hint;
     }
 
     /**
@@ -72,15 +66,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             $label = $labels[$attribute];
         }
 
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+        $nestedAttributeLabel =  $this->getNestedAttributeValue('getAttributeLabel', $attribute);
 
-        if ($nested !== null) {
-            /** @var FormModelInterface $attributeNestedValue */
-            $attributeNestedValue = $this->getAttributeValue($attribute);
-            $label = $attributeNestedValue->getAttributeLabel($nested);
-        }
-
-        return $label;
+        return $nestedAttributeLabel !== '' ? $nestedAttributeLabel : $label;
     }
 
     /**
@@ -94,16 +82,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getAttributePlaceholder(string $attribute): string
     {
         $attributePlaceHolders = $this->getAttributePlaceholders();
-        $placeHolder = $attributePlaceHolders[$attribute] ?? '';
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+        $placeholder = $attributePlaceHolders[$attribute] ?? '';
+        $nestedAttributePlaceholder =  $this->getNestedAttributeValue('getAttributePlaceholder', $attribute);
 
-        if ($nested !== null) {
-            /** @var FormModelInterface $attributeNestedValue */
-            $attributeNestedValue = $this->getAttributeValue($attribute);
-            $placeHolder = $attributeNestedValue->getAttributePlaceholder($nested);
-        }
-
-        return $placeHolder;
+        return $nestedAttributePlaceholder !== '' ? $nestedAttributePlaceholder : $placeholder;
     }
 
     /**
@@ -462,6 +444,19 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return [$attribute, $nested];
+    }
+
+    private function getNestedAttributeValue(string $method, string $attribute): string
+    {
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        if ($nested !== null) {
+            /** @var FormModelInterface $attributeNestedValue */
+            $attributeNestedValue = $this->getAttributeValue($attribute);
+            $result = $attributeNestedValue->$method($nested);
+        }
+
+        return $nested !== null ? $result : '';
     }
 
     public function isValidated(): bool
