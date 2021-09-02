@@ -407,22 +407,6 @@ final class Field extends Widget
         $new->parts['{hint}'] = '';
         $new->parts['{label}'] = '';
 
-        if (isset($attributes['alt']) && is_string($attributes['alt'])) {
-            $image = $image->alt($attributes['alt']);
-        }
-
-        if (isset($attributes['height']) && is_string($attributes['height'])) {
-            $image = $image->height($attributes['height']);
-        }
-
-        if (isset($attributes['src']) && is_string($attributes['src'])) {
-            $image = $image->src($attributes['src']);
-        }
-
-        if (isset($attributes['width']) && is_string($attributes['width'])) {
-            $image = $image->width($attributes['width']);
-        }
-
         $new->parts['{input}'] = $image->attributes($attributes)->render();
 
         return $new;
@@ -636,6 +620,28 @@ final class Field extends Widget
             ->config($new->getFormModel(), $new->attribute, $attributes)
             ->items($items)
             ->render();
+
+        return $new;
+    }
+
+    /**
+     * Renders a number widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function range(array $attributes = []): self
+    {
+        $new = clone $this;
+        $attributes['type'] = self::TYPE_NUMBER;
+        $attributes = $new->setInputAttributes($attributes);
+
+        $new->parts['{input}'] = Range::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }

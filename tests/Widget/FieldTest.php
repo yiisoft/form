@@ -244,6 +244,56 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testAddAttributesRangeValidator(): void
+    {
+        // add attributes html validator `Required::rule()`.
+        $this->formModel->setAttribute('number', '1');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-number">Number</label>
+        <input type="range" id="attributesvalidatorform-number" class="is-invalid" name="AttributesValidatorForm[number]" value="1" required max="5" min="3">
+        <div class="hasError">Is too small.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->range()->render(),
+        );
+
+        // add attributes html validator `Number::rule()`.
+        $this->formModel->setAttribute('number', '6');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-number">Number</label>
+        <input type="range" id="attributesvalidatorform-number" class="is-invalid" name="AttributesValidatorForm[number]" value="6" required max="5" min="3">
+        <div class="hasError">Is too big.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->range()->render(),
+        );
+
+        // passed all rules for validation number.
+        $this->formModel->setAttribute('number', '4');
+        $validator = $this->createValidatorMock();
+        $validator->validate($this->formModel);
+        $expected = <<<'HTML'
+        <div>
+        <label for="attributesvalidatorform-number">Number</label>
+        <input type="range" id="attributesvalidatorform-number" class="is-valid" name="AttributesValidatorForm[number]" value="4" required max="5" min="3">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->range()->render(),
+        );
+    }
+
     public function testAddAttributesTelephoneValidator(): void
     {
         // add attributes html validator `Required::rule()`.
