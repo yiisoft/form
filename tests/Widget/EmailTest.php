@@ -15,6 +15,17 @@ final class EmailTest extends TestCase
 {
     private TypeForm $formModel;
 
+    public function testImmutability(): void
+    {
+        $email = Email::widget();
+        $this->assertNotSame($email, $email->maxlength(0));
+        $this->assertNotSame($email, $email->minlength(0));
+        $this->assertNotSame($email, $email->multiple());
+        $this->assertNotSame($email, $email->pattern(''));
+        $this->assertNotSame($email, $email->placeholder(''));
+        $this->assertNotSame($email, $email->size(0));
+    }
+
     public function testMaxLength(): void
     {
         $this->assertSame(

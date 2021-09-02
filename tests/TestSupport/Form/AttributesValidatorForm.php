@@ -66,4 +66,9 @@ final class AttributesValidatorForm extends FormModel
             ],
         ];
     }
+
+    public function getAttributeHints(): array
+    {
+        return ['email' => 'Write your email.'];
+    }
 }

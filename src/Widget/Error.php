@@ -20,6 +20,18 @@ final class Error extends Widget
     private string $message = '';
 
     /**
+     * Error message to display.
+     *
+     * @return static
+     */
+    public function message(string $value): self
+    {
+        $new = clone $this;
+        $new->message = $value;
+        return $new;
+    }
+
+    /**
      * Callback that will be called to obtain an error message.
      *
      * The signature of the callback must be:
@@ -36,18 +48,6 @@ final class Error extends Widget
     {
         $new = clone $this;
         $new->attributes['messageCallback'] = $value;
-        return $new;
-    }
-
-    /**
-     * Error message to display.
-     *
-     * @return static
-     */
-    public function message(string $value): self
-    {
-        $new = clone $this;
-        $new->message = $value;
         return $new;
     }
 

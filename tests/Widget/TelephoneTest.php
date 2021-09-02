@@ -15,6 +15,16 @@ final class TelephoneTest extends TestCase
 {
     private TypeForm $formModel;
 
+    public function testImmutability(): void
+    {
+        $telephone = Telephone::widget();
+        $this->assertNotSame($telephone, $telephone->maxlength(0));
+        $this->assertNotSame($telephone, $telephone->minlength(0));
+        $this->assertNotSame($telephone, $telephone->pattern(''));
+        $this->assertNotSame($telephone, $telephone->placeholder(''));
+        $this->assertNotSame($telephone, $telephone->size(0));
+    }
+
     public function testMaxLength(): void
     {
         $this->assertSame(

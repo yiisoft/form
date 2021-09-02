@@ -15,6 +15,16 @@ final class UrlTest extends TestCase
 {
     private TypeForm $formModel;
 
+    public function testImmutability(): void
+    {
+        $url = Url::widget();
+        $this->assertNotSame($url, $url->maxlength(0));
+        $this->assertNotSame($url, $url->minlength(0));
+        $this->assertNotSame($url, $url->pattern(''));
+        $this->assertNotSame($url, $url->placeholder(''));
+        $this->assertNotSame($url, $url->size(0));
+    }
+
     public function testMaxLength(): void
     {
         $this->assertSame(

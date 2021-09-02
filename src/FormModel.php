@@ -316,14 +316,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $attributes;
     }
 
-    private function clearErrors(?string $attribute = null): void
+    private function clearErrors(): void
     {
-        if ($attribute === null) {
-            $this->attributesErrors = [];
-        } else {
-            unset($this->attributesErrors[$attribute]);
-        }
-
+        $this->attributesErrors = [];
         $this->validated = false;
     }
 

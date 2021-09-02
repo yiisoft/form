@@ -15,6 +15,14 @@ final class NumberTest extends TestCase
 {
     private TypeForm $formModel;
 
+    public function testImmutability(): void
+    {
+        $number = Number::widget();
+        $this->assertNotSame($number, $number->max(0));
+        $this->assertNotSame($number, $number->min(0));
+        $this->assertNotSame($number, $number->placeholder(''));
+    }
+
     public function testMax(): void
     {
         $this->assertSame(

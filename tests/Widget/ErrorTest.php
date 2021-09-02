@@ -17,6 +17,14 @@ final class ErrorTest extends TestCase
     private array $record = [];
     private PersonalForm $formModel;
 
+    public function testImmutability(): void
+    {
+        $error = Error::widget();
+        $this->assertNotSame($error, $error->message(''));
+        $this->assertNotSame($error, $error->messageCallback([]));
+        $this->assertNotSame($error, $error->tag());
+    }
+
     public function testMessage(): void
     {
         $html = Error::widget()->config($this->formModel, 'name')->message('This is custom error message.')->render();

@@ -19,6 +19,7 @@ final class FieldTest extends TestCase
 
     private array $fieldConfig = [
         'errorClass()' => ['hasError'],
+        'hintClass()' => ['info-class'],
         'invalidClass()' => ['is-invalid'],
         'validClass()' => ['is-valid'],
     ];
@@ -34,6 +35,7 @@ final class FieldTest extends TestCase
         <div>
         <label for="attributesvalidatorform-email">Email</label>
         <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <div class="info-class">Write your email.</div>
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
@@ -50,6 +52,7 @@ final class FieldTest extends TestCase
         <div>
         <label for="attributesvalidatorform-email">Email</label>
         <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value="a@a.com" maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <div class="info-class">Write your email.</div>
         <div class="hasError">Is too short.</div>
         </div>
         HTML;
@@ -66,6 +69,7 @@ final class FieldTest extends TestCase
         <div>
         <label for="attributesvalidatorform-email">Email</label>
         <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value="awesomexample@example.com" maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <div class="info-class">Write your email.</div>
         <div class="hasError">Is too long.</div>
         </div>
         HTML;
@@ -82,6 +86,7 @@ final class FieldTest extends TestCase
         <div>
         <label for="attributesvalidatorform-email">Email</label>
         <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value="awesome.com" maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <div class="info-class">Write your email.</div>
         <div class="hasError">Is not a valid email address.</div>
         </div>
         HTML;
@@ -98,6 +103,7 @@ final class FieldTest extends TestCase
         <div>
         <label for="attributesvalidatorform-email">Email</label>
         <input type="email" id="attributesvalidatorform-email" class="is-valid" name="AttributesValidatorForm[email]" value="test@example.com" maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <div class="info-class">Write your email.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

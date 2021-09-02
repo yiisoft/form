@@ -12,13 +12,36 @@ use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 
 final class HtmlFormTest extends TestCase
 {
+    public function testGetAttributeHint(): void
+    {
+        //$formModel = new LoginForm();
+        //$this->assertSame('Write your id or email.', HtmlForm::getAttributeHint($formModel, 'login'));
+
+        $anonymousForm = new class() extends FormModel {
+            private string $age = '';
+        };
+        $this->assertEmpty(HtmlForm::getAttributeHint($anonymousForm, 'age'));
+    }
+
     public function testGetAttributeName(): void
     {
         $formModel = new LoginForm();
         $this->assertSame('login', HtmlForm::getAttributeName($formModel, '[0]login'));
         $this->assertSame('login', HtmlForm::getAttributeName($formModel, 'login[0]'));
         $this->assertSame('login', HtmlForm::getAttributeName($formModel, '[0]login[0]'));
+    }
 
+    public function testGetAttributeNameException(): void
+    {
+        $formModel = new LoginForm();
+
+        $this->expectExceptionMessage("Attribute 'noExist' does not exist.");
+        HtmlForm::getAttributeName($formModel, 'noExist');
+    }
+
+    public function testGetAttributeNameInvalid(): void
+    {
+        $formModel = new LoginForm();
         $this->expectExceptionMessage('Attribute name must contain word characters only.');
         HtmlForm::getAttributeName($formModel, 'content body');
     }
@@ -50,16 +73,12 @@ final class HtmlFormTest extends TestCase
         $this->assertSame($expected, HtmlForm::getInputName($form, $attribute));
     }
 
-    public function t1estWrapAttributeNameInvalid(): void
+    public function testGetInputNameException(): void
     {
-        $this->expectExceptionMessage('Attribute name must contain word characters only.');
-        Html::wrapAttributeName('form', 'content body');
-    }
+        $anonymousForm = new class() extends FormModel {
+        };
 
-    public function t1estWrapAttributeNameEmptyWrapName(): void
-    {
-        $this->expectException(EmptyWrapNameException::class);
-        $this->expectExceptionMessage('Wrap name cannot be empty for tabluar attribute names.');
-        Html::wrapAttributeName('', '[0]content');
+        $this->expectExceptionMessage('formName() cannot be empty for tabular inputs.');
+        HtmlForm::getInputName($anonymousForm, '[0]dates[0]');
     }
 }

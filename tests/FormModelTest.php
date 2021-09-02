@@ -326,6 +326,18 @@ final class FormModelTest extends TestCase
         );
     }
 
+    public function testPublicAttributes()
+    {
+        $form = new class() extends FormModel {
+            public int $int = 1;
+        };
+        $form->load(['int' => '2']);
+        $this->assertSame(2, $form->getAttributeValue('int'));
+
+        $form->setAttribute('int', 1);
+        $this->assertSame(1, $form->getAttributeValue('int'));
+    }
+
     private function createValidatorMock(): ValidatorInterface
     {
         return new ValidatorMock();
