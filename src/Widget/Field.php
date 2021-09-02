@@ -389,6 +389,46 @@ final class Field extends Widget
     }
 
     /**
+     * Renders a image widget.
+     *
+     * This method will generate the `name` and `value` tag attributes automatically for the model attribute unless
+     * they are explicitly specified in `$attributes`.
+     *
+     * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the
+     * attributes of the resulting tag. The values will be HTML-encoded using {@see \Yiisoft\Html\Html::encode()}.
+     *
+     * @return static the field object itself.
+     */
+    public function image(array $attributes = []): self
+    {
+        $new = clone $this;
+        $image = Image::widget();
+        $new->parts['{error}'] = '';
+        $new->parts['{hint}'] = '';
+        $new->parts['{label}'] = '';
+
+        if (isset($attributes['alt']) && is_string($attributes['alt'])) {
+            $image = $image->alt($attributes['alt']);
+        }
+
+        if (isset($attributes['height']) && is_string($attributes['height'])) {
+            $image = $image->height($attributes['height']);
+        }
+
+        if (isset($attributes['src']) && is_string($attributes['src'])) {
+            $image = $image->src($attributes['src']);
+        }
+
+        if (isset($attributes['width']) && is_string($attributes['width'])) {
+            $image = $image->width($attributes['width']);
+        }
+
+        $new->parts['{input}'] = $image->attributes($attributes)->render();
+
+        return $new;
+    }
+
+    /**
      * Generates a label tag for {@see attribute}.
      *
      * @param array $attributes the tag attributes in terms of name-value pairs. These will be rendered as the

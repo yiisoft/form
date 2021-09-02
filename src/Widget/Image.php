@@ -42,43 +42,16 @@ final class Image extends Widget
     /**
      * The height of the image, in CSS pixels.
      *
-     * @param int $value
+     * @param string $value
      *
      * @return static
      *
      *  @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image.attrs.height
      */
-    public function height(int $value): self
+    public function height(string $value): self
     {
-        if ($value < 0) {
-            throw new InvalidArgumentException('Height must be greater than or equal to 0.');
-        }
-
         $new = clone $this;
         $new->attributes['height'] = $value;
-        return $new;
-    }
-
-    /**
-     * A list of one or more strings separated by commas indicating the size of the font.
-     *
-     * @param array<array-key, string> $value
-     *
-     * ```php
-     * [
-     *    '(max-width: 320px) 280px',
-     *    '(max-width: 480px) 480px',
-     *    '800px', // default size
-     * ]
-     *
-     * @return static
-     *
-     * @link https://developer.mozilla.org/es/docs/Web/HTML/Element/img#attr-sizes
-     */
-    public function sizes(array $value): self
-    {
-        $new = clone $this;
-        $new->attributes['sizes'] = implode(',', $value);
         return $new;
     }
 
@@ -99,46 +72,16 @@ final class Image extends Widget
     }
 
     /**
-     * A list of one or more strings separated by commas indicating the possible fonts to use.
-     *
-     * @param array $value
-     *
-     * ```php
-     * [
-     *     '100w' => '/example-100w',
-     *     '500w' => '/example-500w',
-     *     '1500w' => '/example-1500w',
-     * ]
-     * ```
-     *
-     * @return static
-     *
-     * @link https://developer.mozilla.org/es/docs/Web/HTML/Element/img#attr-srcset
-     *
-     * {@see size}
-     */
-    public function srcset(array $value): self
-    {
-        $new = clone $this;
-        $new->attributes['srcset'] = $value;
-        return $new;
-    }
-
-    /**
      * The width of the image, in CSS pixels.
      *
-     * @param int $value
+     * @param string $value
      *
      * @return static
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image.attrs.width
      */
-    public function width(int $value): self
+    public function width(string $value): self
     {
-        if ($value < 0) {
-            throw new InvalidArgumentException('Width must be greater than or equal to 0.');
-        }
-
         $new = clone $this;
         $new->attributes['width'] = $value;
         return $new;
