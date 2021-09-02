@@ -18,7 +18,6 @@ use Yiisoft\Validator\RulesProviderInterface;
 use function array_key_exists;
 use function array_merge;
 use function explode;
-use function get_object_vars;
 use function is_subclass_of;
 use function reset;
 use function sprintf;
@@ -367,7 +366,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         /** @psalm-suppress MixedMethodCall */
-        $getter = static fn(FormModelInterface $class, string $attribute) => $nested === null
+        $getter = static fn (FormModelInterface $class, string $attribute) => $nested === null
             ? $class->$attribute
             : $class->$attribute->getAttributeValue($nested);
 
@@ -391,7 +390,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
          * @psalm-suppress MissingClosureParamType
          * @psalm-suppress MixedMethodCall
          */
-        $setter = static fn(FormModelInterface $class, string $attribute, $value) => $nested === null
+        $setter = static fn (FormModelInterface $class, string $attribute, $value) => $nested === null
             ? $class->$attribute = $value
             : $class->$attribute->setAttribute($nested, $value);
 
