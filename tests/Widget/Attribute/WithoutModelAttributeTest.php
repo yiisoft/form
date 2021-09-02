@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget\Attribute;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Tests\TestSupport\Widget\WithoutModelAttributeWidget;
