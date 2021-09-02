@@ -366,15 +366,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
         }
 
-        if ($this->isPublicAttribute($attribute)) {
-            /** @psalm-suppress MixedMethodCall */
-            return $nested === null ? $this->$attribute : $this->$attribute->getAttributeValue($nested);
-        }
-
         /** @psalm-suppress MixedMethodCall */
-        $getter = fn (FormModel $class, string $attribute) => $nested === null
+        $getter = static fn(FormModelInterface $class, string $attribute) => $nested === null
             ? $class->$attribute
             : $class->$attribute->getAttributeValue($nested);
+
         $getter = Closure::bind($getter, null, $this);
 
         /** @var Closure $getter */
@@ -395,27 +391,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
          * @psalm-suppress MissingClosureParamType
          * @psalm-suppress MixedMethodCall
          */
-        if ($this->isPublicAttribute($attribute)) {
-            if ($nested === null) {
-                $this->$attribute = $value;
-            } else {
-                $this->$attribute->setAttribute($attribute, $value);
-            }
-        } else {
-            $setter = fn (FormModel $class, $attribute, $value) => $nested === null
-                ? $class->$attribute = $value
-                : $class->$attribute->setAttribute($nested, $value);
+        $setter = static fn(FormModelInterface $class, string $attribute, $value) => $nested === null
+            ? $class->$attribute = $value
+            : $class->$attribute->setAttribute($nested, $value);
 
-            $setter = Closure::bind($setter, null, $this);
+        $setter = Closure::bind($setter, null, $this);
 
-            /** @var Closure $setter */
-            $setter($this, $attribute, $value);
-        }
-    }
-
-    private function isPublicAttribute(string $attribute): bool
-    {
-        return array_key_exists($attribute, get_object_vars($this));
+        /** @var Closure $setter */
+        $setter($this, $attribute, $value);
     }
 
     /**
