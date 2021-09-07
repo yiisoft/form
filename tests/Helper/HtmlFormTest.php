@@ -25,7 +25,7 @@ final class HtmlFormTest extends TestCase
     public function dataGetInputName(): array
     {
         $loginForm = new LoginForm();
-        $anonymousForm = new class() extends FormModel {
+        $anonymousForm = new class () extends FormModel {
         };
         return [
             [$loginForm, '[0]content', 'LoginForm[0][content]'],
