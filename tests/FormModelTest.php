@@ -20,7 +20,7 @@ final class FormModelTest extends TestCase
 {
     public function testAnonymousFormName(): void
     {
-        $form = new class() extends FormModel {};
+        $form = new class () extends FormModel {};
         $this->assertEquals('', $form->getFormName());
     }
 
@@ -49,7 +49,7 @@ final class FormModelTest extends TestCase
             '/You must specify the type hint for "%s" property in "([^"]+)" class./',
             'property',
         ));
-        $form = new class() extends FormModel {
+        $form = new class () extends FormModel {
             private $property;
         };
     }
@@ -229,7 +229,7 @@ final class FormModelTest extends TestCase
     public function testFailedLoadForm(): void
     {
         $form1 = new LoginForm();
-        $form2 = new class() extends FormModel {
+        $form2 = new class () extends FormModel {
         };
 
         $data1 = [
@@ -251,7 +251,7 @@ final class FormModelTest extends TestCase
 
     public function testLoadWithEmptyScope()
     {
-        $form = new class() extends FormModel {
+        $form = new class () extends FormModel {
             private int $int = 1;
             private string $string = 'string';
             private float $float = 3.14;
@@ -328,7 +328,7 @@ final class FormModelTest extends TestCase
 
     public function testPublicAttributes()
     {
-        $form = new class() extends FormModel {
+        $form = new class () extends FormModel {
             public int $int = 1;
         };
         $form->load(['int' => '2']);
