@@ -14,10 +14,10 @@ final class HtmlFormTest extends TestCase
 {
     public function testGetAttributeHint(): void
     {
-        //$formModel = new LoginForm();
-        //$this->assertSame('Write your id or email.', HtmlForm::getAttributeHint($formModel, 'login'));
+        $formModel = new LoginForm();
+        $this->assertSame('Write your id or email.', HtmlForm::getAttributeHint($formModel, 'login'));
 
-        $anonymousForm = new class() extends FormModel {
+        $anonymousForm = new class () extends FormModel {
             private string $age = '';
         };
         $this->assertEmpty(HtmlForm::getAttributeHint($anonymousForm, 'age'));
@@ -49,7 +49,7 @@ final class HtmlFormTest extends TestCase
     public function dataGetInputName(): array
     {
         $loginForm = new LoginForm();
-        $anonymousForm = new class() extends FormModel {
+        $anonymousForm = new class () extends FormModel {
         };
         return [
             [$loginForm, '[0]content', 'LoginForm[0][content]'],
@@ -75,7 +75,7 @@ final class HtmlFormTest extends TestCase
 
     public function testGetInputNameException(): void
     {
-        $anonymousForm = new class() extends FormModel {
+        $anonymousForm = new class () extends FormModel {
         };
 
         $this->expectExceptionMessage('formName() cannot be empty for tabular inputs.');
