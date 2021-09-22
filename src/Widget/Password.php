@@ -143,6 +143,8 @@ final class Password extends Widget
             throw new InvalidArgumentException('Password widget must be a string.');
         }
 
-        return Input::password($new->getId(), $value)->attributes($new->attributes)->render();
+        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
+
+        return Input::password($name, $value)->attributes($new->attributes)->id($new->getId())->render();
     }
 }

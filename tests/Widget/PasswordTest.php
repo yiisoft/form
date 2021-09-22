@@ -18,7 +18,7 @@ final class PasswordTest extends TestCase
     public function testForm(): void
     {
         $this->assertSame(
-            '<input type="password" name="typeform-string" value form="form-id">',
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value form="form-id">',
             Password::widget()->config($this->formModel, 'string')->form('form-id')->render(),
         );
     }
@@ -37,7 +37,7 @@ final class PasswordTest extends TestCase
     public function testMaxLength(): void
     {
         $this->assertSame(
-            '<input type="password" name="typeform-string" value maxlength="16">',
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value maxlength="16">',
             Password::widget()->config($this->formModel, 'string')->maxlength(16)->render(),
         );
     }
@@ -45,7 +45,7 @@ final class PasswordTest extends TestCase
     public function testMinLength(): void
     {
         $this->assertSame(
-            '<input type="password" name="typeform-string" value minlength="8">',
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value minlength="8">',
             Password::widget()->config($this->formModel, 'string')->minlength(8)->render(),
         );
     }
@@ -53,7 +53,7 @@ final class PasswordTest extends TestCase
     public function testPattern(): void
     {
         $expected = <<<'HTML'
-        <input type="password" name="typeform-string" value title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+        <input type="password" id="typeform-string" name="TypeForm[string]" value title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
         HTML;
         $html = Password::widget()
             ->config($this->formModel, 'string', [
@@ -70,7 +70,7 @@ final class PasswordTest extends TestCase
         $expected = <<<'HTML'
         HTML;
         $this->assertSame(
-            '<input type="password" name="typeform-string" value placeholder="PlaceHolder Text">',
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">',
             Password::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
@@ -78,7 +78,7 @@ final class PasswordTest extends TestCase
     public function testReadOnly(): void
     {
         $this->assertSame(
-            '<input type="password" name="typeform-string" value readonly>',
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value readonly>',
             Password::widget()->config($this->formModel, 'string')->readOnly()->render(),
         );
     }
@@ -86,7 +86,7 @@ final class PasswordTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="password" name="typeform-string" value>',
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value>',
             $html = Password::widget()->config($this->formModel, 'string')->render(),
         );
     }
