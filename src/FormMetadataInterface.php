@@ -24,7 +24,7 @@ interface FormMetadataInterface
      * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
      * declare a label `First Name` which is more user-friendly and can be displayed to end users.
      *
-     * By default an attribute label is generated automatically. This method allows you to
+     * By default, an attribute label is generated automatically. This method allows you to
      * explicitly specify attribute labels.
      *
      * Note, in order to inherit labels defined in the parent class, a child class needs to merge the parent labels
