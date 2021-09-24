@@ -16,7 +16,7 @@ final class HtmlForm
     /**
      * Return the attribute hint for the model.
      *
-     * @param FormModelInterface $form the form object.
+     * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
      * @return string
@@ -29,7 +29,7 @@ final class HtmlForm
     /**
      * Returns the label of the specified attribute name.
      *
-     * @param FormModelInterface $form the form object.
+     * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
@@ -43,9 +43,9 @@ final class HtmlForm
 
     /**
      * Returns the real attribute name from the given attribute expression.
-     * If `$attribute` has neither prefix nor suffix, it will be returned back without change.
+     * If `$attribute` has neither prefix nor suffix, it will be returned without change.
      *
-     * @param FormModelInterface $form the form object.
+     * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
@@ -74,7 +74,7 @@ final class HtmlForm
      * If an attribute value an array of such instances, the primary value(s) of the AR instance(s) will be returned
      * instead.
      *
-     * @param FormModelInterface $form the form object.
+     * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
@@ -89,7 +89,7 @@ final class HtmlForm
     /**
      * Return the attribute first error message.
      *
-     * @param FormModelInterface $form the form object.
+     * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
      * @return string
@@ -135,7 +135,7 @@ final class HtmlForm
      *
      * See {@see getAttributeName()} for explanation of attribute expression.
      *
-     * @param FormModelInterface $form the form object.
+     * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters

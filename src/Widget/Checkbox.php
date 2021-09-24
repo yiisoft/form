@@ -45,7 +45,7 @@ final class Checkbox extends Widget
     /**
      * Label displayed next to the checkbox.
      *
-     * It will NOT be HTML-encoded, therefore you can pass in HTML code such as an image tag. If this is is coming from
+     * It will NOT be HTML-encoded, therefore you can pass in HTML code such as an image tag. If this is coming from
      * end users, you should {@see encode()} it to prevent XSS attacks.
      *
      * When this option is specified, the checkbox will be enclosed by a label tag.
@@ -91,7 +91,7 @@ final class Checkbox extends Widget
         $checkbox = CheckboxTag::tag();
 
         /** @var bool|float|int|string|null  */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
 
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 

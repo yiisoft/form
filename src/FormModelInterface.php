@@ -161,7 +161,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function hasErrors(?string $attribute = null): bool;
 
     /**
-     * This method allows to know if the validation was executed or not in the model.
+     * This method allows knowing if the validation was executed or not in the model.
      *
      * @return bool If the model was validated.
      */

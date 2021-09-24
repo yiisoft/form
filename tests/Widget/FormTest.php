@@ -135,7 +135,7 @@ final class FormTest extends TestCase
         $this->assertNotSame($form, $form->enctype(''));
         $this->assertNotSame($form, $form->id(''));
         $this->assertNotSame($form, $form->method(''));
-        $this->assertNotSame($form, $form->noHtmlValidatation());
+        $this->assertNotSame($form, $form->noHtmlValidation());
         $this->assertNotSame($form, $form->target(''));
     }
 
@@ -147,7 +147,7 @@ final class FormTest extends TestCase
 
     public function testNoHtmlValidatation(): void
     {
-        $this->assertSame('<form method="POST" novalidate>', Form::widget()->noHtmlValidatation()->begin());
+        $this->assertSame('<form method="POST" novalidate>', Form::widget()->noHtmlValidation()->begin());
     }
 
     public function testTarget(): void

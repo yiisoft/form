@@ -30,7 +30,7 @@ trait CommonAttributes
      * text.
      * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to false to enable the element again, which is not the case.
+     * this will suggest you can set it to `false` to enable the element again, which is not the case.
      *
      * @param bool $value
      *
@@ -79,7 +79,7 @@ trait CommonAttributes
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether or not the user can edit the form control.
+     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
      * When specified, the element is not mutable.
      *
      * @return static

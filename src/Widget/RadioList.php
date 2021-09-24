@@ -51,7 +51,7 @@ final class RadioList extends Widget
     /**
      * The tag name for the container element.
      *
-     * @param string|null $value tag name. if `null` disabled rendering.
+     * @param string|null $name tag name. if `null` disabled rendering.
      *
      * @return static
      */
@@ -144,11 +144,10 @@ final class RadioList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param Closure $value
+     * @param Closure|null $value
      *
      * @return static
      *
-     * @psalm-param Closure(RadioItem):string|null $value
      */
     public function itemsFormatter(?Closure $value): self
     {
@@ -158,7 +157,7 @@ final class RadioList extends Widget
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether or not the user can edit the form control.
+     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
      * When specified, the element is not mutable.
      *
      * @return static
@@ -202,7 +201,7 @@ final class RadioList extends Widget
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         /** @var bool|float|int|string|Stringable|null */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);

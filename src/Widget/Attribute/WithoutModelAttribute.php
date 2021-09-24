@@ -45,9 +45,9 @@ trait WithoutModelAttribute
     }
 
     /**
-     * Set the Id of the widget.
+     * Set the ID of the widget.
      *
-     * @param string $value
+     * @param string $id
      *
      * @return static
      *

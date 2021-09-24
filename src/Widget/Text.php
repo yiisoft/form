@@ -12,7 +12,7 @@ use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
 /**
- * Generates an text input tag for the given form attribute.
+ * Generates a text input tag for the given form attribute.
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
  */
@@ -46,7 +46,7 @@ final class Text extends Widget
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
-     * an tag input.
+     * a tag input.
      *
      * If no maxlength is specified, or an invalid value is specified, the tag input has no maximum length.
      *
@@ -66,7 +66,7 @@ final class Text extends Widget
     /**
      * The minimum number of characters (as UTF-16 code units) the user can enter into the text input.
      *
-     * This must be an non-negative integer value smaller than or equal to the value specified by maxlength.
+     * This must be a non-negative integer value smaller than or equal to the value specified by maxlength.
      * If no minlength is specified, or an invalid value is specified, the text input has no minimum length.
      *
      * @param int $value

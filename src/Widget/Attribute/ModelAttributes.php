@@ -52,7 +52,7 @@ trait ModelAttributes
     }
 
     /**
-     * Set the Id of the widget.
+     * Set the ID of the widget.
      *
      * @param string $value
      *
@@ -77,7 +77,7 @@ trait ModelAttributes
     }
 
     /**
-     * Return the imput id.
+     * Return the input id.
      *
      * @return string
      */

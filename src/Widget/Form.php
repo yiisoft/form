@@ -112,7 +112,7 @@ final class Form extends Widget
      * The action and formaction content attributes, if specified, must have a value that is a valid non-empty URL
      * potentially surrounded by spaces.
      *
-     * @param string $action the action attribute value.
+     * @param string $value the action attribute value.
      *
      * @return static
      *
@@ -224,7 +224,7 @@ final class Form extends Widget
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-novalidate
      */
-    public function noHtmlValidatation(): self
+    public function noHtmlValidation(): self
     {
         $new = clone $this;
         $new->attributes['novalidate'] = true;

@@ -9,7 +9,7 @@ trait DateAttributes
     /**
      * The earliest acceptable date.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return static
      *
@@ -25,7 +25,7 @@ trait DateAttributes
     /**
      * The latest acceptable date.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return static
      *

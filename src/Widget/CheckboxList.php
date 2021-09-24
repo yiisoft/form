@@ -12,7 +12,7 @@ use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
-use Yiisoft\Html\Widget\CheckboxList\CheckboxList as ChecboxListTag;
+use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListTag;
 use Yiisoft\Widget\Widget;
 
 /*
@@ -91,7 +91,7 @@ final class CheckboxList extends Widget
     /**
      * The specified attributes for items.
      *
-     * @param array $value
+     * @param array $attributes
      *
      * @return static
      *
@@ -148,11 +148,10 @@ final class CheckboxList extends Widget
      * function ($index, $label, $name, $checked, $value)
      * ```
      *
-     * @param Closure $formatter
+     * @param Closure|null $formatter
      *
      * @return static
      *
-     * @psalm-param Closure(CheckboxItem):string|null $formatter
      */
     public function itemsFormatter(?Closure $formatter): self
     {
@@ -162,7 +161,7 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether or not the user can edit the form control.
+     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
      * When specified, the element is not mutable.
      *
      * @return static
@@ -179,7 +178,7 @@ final class CheckboxList extends Widget
     /**
      * The HTML code that separates items.
      *
-     * @param string $seperator
+     * @param string $separator
      *
      * @return static
      */
@@ -196,13 +195,13 @@ final class CheckboxList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $checkboxList = ChecboxListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
+        $checkboxList = CheckboxListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         /** @var bool|float|int|string|Stringable|null */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', null);
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);

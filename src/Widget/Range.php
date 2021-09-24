@@ -25,7 +25,7 @@ final class Range extends Widget
     /**
      * The expected upper bound for the element’s value.
      *
-     * @param int $max
+     * @param int $value
      *
      * @return static
      *
@@ -41,7 +41,7 @@ final class Range extends Widget
     /**
      * The expected lower bound for the element’s value.
      *
-     * @param int $min
+     * @param int $value
      *
      * @return static
      *

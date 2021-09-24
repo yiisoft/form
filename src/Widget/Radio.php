@@ -43,7 +43,7 @@ final class Radio extends Widget
     /**
      * Label displayed next to the radio.
      *
-     * It will NOT be HTML-encoded, therefore you can pass in HTML code such as an image tag. If this is is coming from
+     * It will NOT be HTML-encoded, therefore you can pass in HTML code such as an image tag. If this is coming from
      * end users, you should {@see encode()} it to prevent XSS attacks.
      *
      * When this option is specified, the radio will be enclosed by a label tag.

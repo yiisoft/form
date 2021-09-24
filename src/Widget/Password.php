@@ -23,23 +23,8 @@ final class Password extends Widget
     use ModelAttributes;
 
     /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
-        return $new;
-    }
-
-    /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
-     * an tag input.
+     * a tag input.
      *
      * If no maxlength is specified, or an invalid value is specified, the tag input has no maximum length.
      *
@@ -59,7 +44,7 @@ final class Password extends Widget
     /**
      * The minimum number of characters (as UTF-16 code units) the user can enter into the text input.
      *
-     * This must be an non-negative integer value smaller than or equal to the value specified by maxlength.
+     * This must be a non-negative integer value smaller than or equal to the value specified by maxlength.
      * If no minlength is specified, or an invalid value is specified, the text input has no minimum length.
      *
      * @param int $value

@@ -49,7 +49,7 @@ interface FormMetadataInterface
      * Returns the attribute hints.
      *
      * Attribute hints are mainly used for display purpose. For example, given an attribute `isPublic`, we can declare
-     * a hint `Whether the post should be visible for not logged in users`, which provides user-friendly description of
+     * a hint `Whether the post should be visible for not logged-in users`, which provides user-friendly description of
      * the attribute meaning and can be displayed to end users.
      *
      * Unlike label hint will not be generated, if its explicit declaration is omitted.

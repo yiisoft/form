@@ -35,6 +35,6 @@ final class ResetButton extends Widget
             $input = $input->value($new->value);
         }
 
-        return $input ->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
+        return $input->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
     }
 }

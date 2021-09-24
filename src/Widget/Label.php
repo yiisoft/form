@@ -48,7 +48,7 @@ final class Label extends Widget
      * @return static
      *
      * Note that this will NOT be encoded.
-     * - If this is not set, {@see \Yiisoft\Forms\FormModel::getAttributeLabel() will be called to get the label for
+     * - If this is not set, {@see \Yiisoft\Form\FormModel::getAttributeLabel() will be called to get the label for
      * display (after encoding).
      */
     public function label(string $value): self

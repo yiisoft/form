@@ -62,25 +62,8 @@ final class TextArea extends Widget
     }
 
     /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.form
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
-        return $new;
-    }
-
-    /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
-     * an tag input.
+     * a tag input.
      *
      * If no maxlength is specified, or an invalid value is specified, the tag input has no maximum length.
      *

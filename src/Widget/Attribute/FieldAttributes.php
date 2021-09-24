@@ -142,7 +142,7 @@ trait FieldAttributes
     /**
      * Set layout template for render a field.
      *
-     * @param string $template
+     * @param string $value
      *
      * @return static
      */
@@ -221,7 +221,7 @@ trait FieldAttributes
     }
 
     /**
-     * Return the imput id.
+     * Return the input id.
      *
      * @return string
      */
@@ -253,9 +253,9 @@ trait FieldAttributes
             Html::addCssClass($attributes, $new->inputClass);
         }
 
-        if ($new->getFormModel()->hasErrors($attributeName) && $new->errorClass !== '') {
+        if ($new->errorClass !== '' && $new->getFormModel()->hasErrors($attributeName)) {
             Html::addCssClass($attributes, $new->invalidClass);
-        } elseif ($new->getFormModel()->isValidated() && $new->validClass !== '') {
+        } elseif ($new->validClass !== '' && $new->getFormModel()->isValidated()) {
             Html::addCssClass($attributes, $new->validClass);
         }
 
