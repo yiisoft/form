@@ -74,7 +74,7 @@ trait CommonAttributes
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->attributes['required'] = true;
+        $new->attributes['required'] = $value;
         return $new;
     }
 

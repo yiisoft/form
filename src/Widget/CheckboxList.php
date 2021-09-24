@@ -152,6 +152,7 @@ final class CheckboxList extends Widget
      *
      * @return static
      *
+     * @psalm-param Closure(CheckboxItem):string|null $formatter
      */
     public function itemsFormatter(?Closure $formatter): self
     {

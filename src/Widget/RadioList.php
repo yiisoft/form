@@ -148,6 +148,7 @@ final class RadioList extends Widget
      *
      * @return static
      *
+     * @psalm-param Closure(RadioItem):string|null $value
      */
     public function itemsFormatter(?Closure $value): self
     {
