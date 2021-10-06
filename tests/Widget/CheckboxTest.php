@@ -141,7 +141,7 @@ final class CheckboxTest extends TestCase
             ['float', 20.0],
             ['float', -10],
             ['array', []],
-            ['object', new StdClass()]
+            ['object', new StdClass()],
         ];
     }
 
