@@ -134,7 +134,7 @@ final class CheckboxTest extends TestCase
     {
         return [
             ['array', []],
-            ['object', new StdClass()]
+            ['object', new StdClass()],
         ];
     }
 
