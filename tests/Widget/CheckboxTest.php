@@ -129,11 +129,31 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'toNull')->render());
     }
 
-    public function testValueException(): void
+    public function valueDataProviderException(): array
     {
+        return [
+            ['int', 20],
+            ['int', -1],
+            ['string', '20'],
+            ['string', 'xbz'],
+            ['string', 'toNull'],
+            ['float', 20.0],
+            ['float', -10],
+        ];
+    }
+
+    /**
+     * @dataProvider valueDataProviderException
+     *
+     * @param string $attribute
+     * @param mixed $value
+     */
+    public function testValueException(string $attribute, $value): void
+    {
+        $this->formModel->setAttribute($attribute, $value);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox widget requires a bool|float|int|string|null value.');
-        $html = Checkbox::widget()->config($this->formModel, 'array')->render();
+        $html = Checkbox::widget()->config($this->formModel, $attribute)->render();
     }
 
     protected function setUp(): void
