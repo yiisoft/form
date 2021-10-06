@@ -91,20 +91,20 @@ final class Checkbox extends Widget
 
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        /** @var bool|float|int|string|null  */
-        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
+        }
 
         if ((bool) $value) {
             $checkbox = $checkbox->value(1);
         }
 
+        /** @var bool|float|int|string|null  */
+        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
+
         if ($forceUncheckedValue !== null) {
             $checkbox = $checkbox->uncheckValue($forceUncheckedValue);
             unset($new->attributes['forceUncheckedValue']);
-        }
-
-        if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
         }
 
         if ($new->enclosedByLabel === true) {
