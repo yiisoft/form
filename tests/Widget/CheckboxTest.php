@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use StdClass;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\Checkbox;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -139,6 +140,8 @@ final class CheckboxTest extends TestCase
             ['string', 'toNull'],
             ['float', 20.0],
             ['float', -10],
+            ['array', []],
+            ['object', new StdClass()]
         ];
     }
 
