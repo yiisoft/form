@@ -133,13 +133,6 @@ final class CheckboxTest extends TestCase
     public function valueDataProviderException(): array
     {
         return [
-            ['int', 20],
-            ['int', -1],
-            ['string', '20'],
-            ['string', 'xbz'],
-            ['string', 'toNull'],
-            ['float', 20.0],
-            ['float', -10],
             ['array', []],
             ['object', new StdClass()]
         ];
@@ -155,7 +148,7 @@ final class CheckboxTest extends TestCase
     {
         $this->formModel->setAttribute($attribute, $value);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Checkbox widget requires a bool|float|int|string|null value.');
+        $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
         $html = Checkbox::widget()->config($this->formModel, $attribute)->render();
     }
 

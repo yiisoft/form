@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use StdClass;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -245,11 +246,26 @@ final class FieldCheckBoxTest extends TestCase
         );
     }
 
-    public function testValueException(): void
+    public function valueDataProviderException(): array
     {
+        return [
+            ['array', []],
+            ['object', new StdClass()]
+        ];
+    }
+
+    /**
+     * @dataProvider valueDataProviderException
+     *
+     * @param string $attribute
+     * @param mixed $value
+     */
+    public function testValueException(string $attribute, $value): void
+    {
+        $this->formModel->setAttribute($attribute, $value);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Checkbox widget requires a bool|float|int|string|null value.');
-        Field::widget()->config($this->formModel, 'array')->checkbox()->render();
+        $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
+        Field::widget()->config($this->formModel, $attribute)->checkbox()->render();
     }
 
     protected function setUp(): void

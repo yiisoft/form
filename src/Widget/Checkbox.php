@@ -91,12 +91,14 @@ final class Checkbox extends Widget
 
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (is_iterable($value) || is_object($value) || !preg_match('/^[01]$|^$/', (string) $value)) {
-            throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');
         }
 
-        if ((bool) $value) {
-            $checkbox = $checkbox->value(1);
+        $value = (int) $value;
+
+        if ($value === 1) {
+            $checkbox = $checkbox->value($value);
         }
 
         /** @var bool|float|int|string|null  */
