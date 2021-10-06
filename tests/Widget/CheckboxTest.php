@@ -18,7 +18,7 @@ final class CheckboxTest extends TestCase
     public function testEnclosedByLabel(): void
     {
         $this->assertSame(
-            '<input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0">',
+            '<input type="checkbox" id="typeform-bool" name="TypeForm[bool]">',
             Checkbox::widget()->config($this->formModel, 'bool')->enclosedByLabel(false)->render(),
         );
     }
@@ -26,7 +26,7 @@ final class CheckboxTest extends TestCase
     public function testForceUncheckedValue(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]"> Bool</label>
         HTML;
         $this->assertSame(
             $expected,
@@ -37,7 +37,7 @@ final class CheckboxTest extends TestCase
     public function testForm(): void
     {
         $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0" form="form-id"> Bool</label>
+        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" form="form-id"> Bool</label>
         HTML;
         $this->assertSame(
             $expected,
@@ -82,7 +82,7 @@ final class CheckboxTest extends TestCase
         // value bool false
         $this->formModel->setAttribute('bool', false);
         $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]"> Bool</label>
         HTML;
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'bool')->render());
 
@@ -96,7 +96,7 @@ final class CheckboxTest extends TestCase
         // value int 0
         $this->formModel->setAttribute('int', 0);
         $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
+        <label><input type="checkbox" id="typeform-int" name="TypeForm[int]"> Int</label>
         HTML;
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'int')->render());
 
@@ -110,7 +110,7 @@ final class CheckboxTest extends TestCase
         // value string '0'
         $this->formModel->setAttribute('string', '0');
         $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
+        <label><input type="checkbox" id="typeform-string" name="TypeForm[string]"> String</label>
         HTML;
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'string')->render());
 
@@ -124,7 +124,7 @@ final class CheckboxTest extends TestCase
         // value null
         $this->formModel->setAttribute('toNull', null);
         $expected = <<<'HTML'
-        <label><input type="checkbox" id="typeform-tonull" name="TypeForm[toNull]" value="0"> To Null</label>
+        <label><input type="checkbox" id="typeform-tonull" name="TypeForm[toNull]"> To Null</label>
         HTML;
         $this->assertSame($expected, Checkbox::widget()->config($this->formModel, 'toNull')->render());
     }

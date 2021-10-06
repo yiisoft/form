@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
@@ -90,21 +89,27 @@ final class Checkbox extends Widget
 
         $checkbox = CheckboxTag::tag();
 
-        /** @var bool|float|int|string|null  */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
-
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+
+        /** @var bool|float|int|string|null  */
+        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
+
+        if ((bool) $value) {
+            $checkbox = $checkbox->value(1);
+        }
+
+        if ($forceUncheckedValue !== null) {
+            $checkbox = $checkbox->uncheckValue($forceUncheckedValue);
+            unset($new->attributes['forceUncheckedValue']);
+        }
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
         }
 
-        if (!array_key_exists('value', $new->attributes)) {
-            $checkbox = $checkbox->value(1);
-        }
-
         if ($new->enclosedByLabel === true) {
-            $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
+            $label = $new->label !== ''
+                ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
             $checkbox = $checkbox->label($label, $new->labelAttributes);
         }
 
@@ -113,8 +118,6 @@ final class Checkbox extends Widget
             ->checked((bool) $value)
             ->id($new->getId())
             ->name(HtmlForm::getInputName($this->getFormModel(), $this->attribute))
-            ->uncheckValue($forceUncheckedValue)
-            ->value((int) $value)
             ->render();
     }
 }
