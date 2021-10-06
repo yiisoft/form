@@ -250,7 +250,7 @@ final class FieldCheckBoxTest extends TestCase
     {
         return [
             ['array', []],
-            ['object', new StdClass()]
+            ['object', new StdClass()],
         ];
     }
 
