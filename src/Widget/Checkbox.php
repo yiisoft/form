@@ -99,6 +99,10 @@ final class Checkbox extends Widget
             throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
         }
 
+        if (!array_key_exists('value', $new->attributes)) {
+            $checkbox = $checkbox->value(1);
+        }
+
         if ($new->enclosedByLabel === true) {
             $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
             $checkbox = $checkbox->label($label, $new->labelAttributes);
