@@ -172,4 +172,27 @@ use Yiisoft\Form\Widget\Label;
 </form>
 ```
 
-As we can see in the code we have the value `inactive` for the hidden input and `active` for the input checkbox tag, correctly.
+As we can see in the code we have the value `inactive` for the hidden input and `active` for the input checkbox tag, correctly. 
+
+`Checkbox::class` methods: 
+
+Method | Description | Default
+-------|-------------|---------
+`enclosedByLabel(bool $value = true)` | If the widget should be enclosed by label. | `true`
+`label(string $value)` | The label text. | `''`
+`labelAttributes(array $attributes = [])` | The HTML attributes for the label tag. | `[]`
+
+# Common attributes
+
+Method | Description | Default
+-------|-------------|---------
+`charset(string $value)` | Sets the charset attribute | `UTF-8`
+`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
+`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
+`disabled(bool $value = true)` | Sets the disabled attribute | `false`
+`form(string $value)` | Sets the form attribute | ``
+`id(string $value)` | Sets the id attribute | `''`
+`required(bool $value = true)` | Sets the required attribute | `false`
+`readonly()` | Sets the readonly attribute | `false`
+`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+
