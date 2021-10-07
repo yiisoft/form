@@ -1,10 +1,10 @@
 # Checkbox widget
 
-The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled [Checkbox](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox).
+[Checkbox](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox) is an input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.
 
 ## Usage
 
-The `Checkbox::class` widget is designed to return the status of the checkbox, generally it returns two values, by default it is configured to return the values `0` for when no value is selected, and` 1` for when we select the checkbox.
+The `Checkbox::class` widget is designed to return the status of the checkbox. Generally it returns two values, by default it is `0` when no value is selected, and` 1` otherwise.
 
 You can also configure the widget to return the value only when the check box is selected.
 

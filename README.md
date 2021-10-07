@@ -125,7 +125,7 @@ class LoginForm extends FormModel
 
 ## Widgets usage
 
-We will quickly and easily describe how to use widgets with PHP:
+The following documentation describes how to use widgets with PHP:
 
 - [Checkbox](docs/checkbox.md)
 
