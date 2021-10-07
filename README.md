@@ -123,6 +123,13 @@ class LoginForm extends FormModel
 }
 ```
 
+## Widgets usage
+
+We will quickly and easily describe how to use widgets, and be able to use all the power of
+the Bulma CSS framework with PHP:
+
+- [Checkbox](docs/checkbox.md)
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
