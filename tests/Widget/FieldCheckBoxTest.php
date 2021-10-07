@@ -248,7 +248,7 @@ final class FieldCheckBoxTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Checkbox widget explicitly requires 0, 1 or null values.');
+        $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->checkbox()->render();
     }
 

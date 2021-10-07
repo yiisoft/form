@@ -93,7 +93,7 @@ final class Checkbox extends Widget
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('Checkbox widget explicitly requires 0, 1 or null values.');
+            throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');
         }
 
         $new->attributes['value'] = array_key_exists('value', $new->attributes) ? $new->attributes['value'] : '1';
