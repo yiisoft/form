@@ -90,14 +90,18 @@ final class Checkbox extends Widget
 
         $checkbox = CheckboxTag::tag();
 
-        /** @var bool|float|int|string|null  */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
-
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
-            throw new InvalidArgumentException('Checkbox widget requires a bool|float|int|string|null value.');
+            throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');
         }
+
+        $new->attributes['value'] = array_key_exists('value', $new->attributes) ? $new->attributes['value'] : '1';
+
+        /** @var bool|float|int|string|null  */
+        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', '0');
+
+        unset($new->attributes['forceUncheckedValue']);
 
         if ($new->enclosedByLabel === true) {
             $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
@@ -105,12 +109,11 @@ final class Checkbox extends Widget
         }
 
         return $checkbox
+            ->checked("$value" === "{$new->attributes['value']}")
             ->attributes($new->attributes)
-            ->checked((bool) $value)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($this->getFormModel(), $this->attribute))
+            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->uncheckValue($forceUncheckedValue)
-            ->value((int) $value)
             ->render();
     }
 }

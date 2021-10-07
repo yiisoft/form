@@ -23,7 +23,7 @@ final class FieldCheckBoxTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
@@ -40,7 +40,7 @@ final class FieldCheckBoxTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">Bool</label>
-        <input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -51,7 +51,7 @@ final class FieldCheckBoxTest extends TestCase
         // Enclosed by label `true`
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -66,7 +66,7 @@ final class FieldCheckBoxTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label class="test-class" for="typeform-bool">Bool</label>
-        <input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
@@ -79,7 +79,7 @@ final class FieldCheckBoxTest extends TestCase
         // Enclosed by label `true` with label attributes
         $expected = <<<'HTML'
         <div>
-        <label class="test-class"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label class="test-class"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $html = Field::widget()
@@ -95,7 +95,7 @@ final class FieldCheckBoxTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">test-text-label</label>
-        <input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
@@ -108,7 +108,7 @@ final class FieldCheckBoxTest extends TestCase
         // Enclosed by label `true` with custom text
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> test-text-label</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> test-text-label</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -121,7 +121,7 @@ final class FieldCheckBoxTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -134,7 +134,7 @@ final class FieldCheckBoxTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0" form="form-id"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0" form="form-id"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" form="form-id"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -147,7 +147,7 @@ final class FieldCheckBoxTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -162,7 +162,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('bool', false);
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -174,7 +174,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('bool', true);
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -186,7 +186,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('int', 0);
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
+        <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -198,7 +198,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
+        <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -210,7 +210,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('string', '0');
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
+        <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1"> String</label>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -223,7 +223,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
+        <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -236,7 +236,7 @@ final class FieldCheckBoxTest extends TestCase
         $this->formModel->setAttribute('toNull', null);
         $expected = <<<'HTML'
         <div>
-        <label><input type="checkbox" id="typeform-tonull" name="TypeForm[toNull]" value="0"> To Null</label>
+        <input type="hidden" name="TypeForm[toNull]" value="0"><label><input type="checkbox" id="typeform-tonull" name="TypeForm[toNull]" value="1"> To Null</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -248,7 +248,7 @@ final class FieldCheckBoxTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Checkbox widget requires a bool|float|int|string|null value.');
+        $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->checkbox()->render();
     }
 

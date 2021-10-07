@@ -123,6 +123,12 @@ class LoginForm extends FormModel
 }
 ```
 
+## Widgets usage
+
+The following documentation describes how to use widgets with PHP:
+
+- [Checkbox](docs/checkbox.md)
+
 ### Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
