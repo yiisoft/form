@@ -114,7 +114,7 @@ use Yiisoft\Form\Widget\Label;
     <div>
         <input type="submit" id="submit-186398933261001" class="button is-block is-info is-fullwidth" name="submit-186398933261001" value="Save">
     </div>
-    </form>
+</form>
 ```
 
 As we can see there is no hidden input, only `1` for the input checkbox tag, correctly. 
