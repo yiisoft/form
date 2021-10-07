@@ -269,18 +269,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @psalm-param array<string, array<array-key, string>> $items
-     */
-    private function addErrors(array $items): void
-    {
-        foreach ($items as $attribute => $errors) {
-            foreach ($errors as $error) {
-                $this->attributesErrors[$attribute][] = $error;
-            }
-        }
-    }
-
-    /**
      * Returns the list of attribute types indexed by attribute names.
      *
      * By default, this method returns all non-static properties of the class.
@@ -289,7 +277,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      *
      * @return array list of attribute types indexed by attribute names.
      */
-    private function collectAttributes(): array
+    protected function collectAttributes(): array
     {
         $class = new ReflectionClass($this);
         $attributes = [];
@@ -313,6 +301,18 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return $attributes;
+    }
+
+    /**
+     * @psalm-param array<string, array<array-key, string>> $items
+     */
+    private function addErrors(array $items): void
+    {
+        foreach ($items as $attribute => $errors) {
+            foreach ($errors as $error) {
+                $this->attributesErrors[$attribute][] = $error;
+            }
+        }
     }
 
     private function clearErrors(): void
