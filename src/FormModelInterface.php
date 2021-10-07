@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Stringable;
 use Yiisoft\Validator\DataSetInterface;
 
 /**
@@ -27,6 +28,15 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * @return array
      */
     public function getError(string $attribute): array;
+
+    /**
+     * Returns the default value for the specified attribute.
+     *
+     * @param string $attribute
+     *
+     * @return mixed
+     */
+    public function getAttributeDefaultValue(string $attribute);
 
     /**
      * Returns the value for the specified attribute.

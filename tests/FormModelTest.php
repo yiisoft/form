@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\ValidatorInterface;
 
@@ -52,6 +53,15 @@ final class FormModelTest extends TestCase
         $form = new class () extends FormModel {
             private $property;
         };
+    }
+
+    public function testGetAttributeDefaultValue(): void
+    {
+        $form = new TypeForm();
+        $this->assertSame([], $form->getAttributeDefaultValue('array'));
+
+        $form->setAttribute('array', ['test']);
+        $this->assertNotSame($form->getAttributeDefaultValue('array'), $form->getAttributeValue('array'));
     }
 
     public function testGetAttributeValue(): void

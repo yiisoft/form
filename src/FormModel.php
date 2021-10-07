@@ -29,6 +29,7 @@ use function strpos;
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
     private array $attributes;
+    private array $attributesValues;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
@@ -37,6 +38,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
+        $this->attributesValues = $this->collectAttributesValues();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttributeDefaultValue(string $attribute)
+    {
+        return $this->attributesValues[$attribute] ?? null;
     }
 
     public function getAttributeHint(string $attribute): string
@@ -285,8 +295,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      *
      * By default, this method returns all non-static properties of the class.
      *
-     * @throws \ReflectionException
-     *
      * @return array list of attribute types indexed by attribute names.
      */
     private function collectAttributes(): array
@@ -313,6 +321,29 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return $attributes;
+    }
+
+    /**
+     * Returns the list of attribute values indexed by attribute names.
+     *
+     * By default, this method returns all non-static properties of the class.
+     *
+     * @return array list of attribute values indexed by attribute names.
+     */
+    private function collectAttributesValues(): array
+    {
+        $class = new ReflectionClass($this);
+        $attributesValues = [];
+
+        $defaultPropierties = $class->getDefaultProperties();
+
+        /** @var mixed $value */
+        foreach ($defaultPropierties as $name => $value) {
+            /** @var mixed */
+            $attributesValues[$name] = $value;
+        }
+
+        return $attributesValues;
     }
 
     private function clearErrors(): void
