@@ -13,10 +13,15 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class RadioTest extends TestCase
 {
+    private TypeForm $formModel;
+
     public function testEnClosedByLabelWithFalse(): void
     {
+        $expected = <<<'HTML'
+        <input type="radio" id="typeform-int" name="TypeForm[int]" value="1">
+        HTML;
         $this->assertSame(
-            '<input type="radio" id="typeform-int" name="TypeForm[int]" value="0">',
+            $expected,
             Radio::widget()->config($this->formModel, 'int')->enclosedByLabel(false)->render(),
         );
     }
@@ -24,7 +29,7 @@ final class RadioTest extends TestCase
     public function testForceUncheckedValue(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[int]" value="0"><label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
+        <input type="hidden" name="TypeForm[int]" value="0"><label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
         HTML;
         $this->assertSame(
             $expected,
@@ -34,10 +39,10 @@ final class RadioTest extends TestCase
 
     public function testForm(): void
     {
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0" form="form-id"> Int</label>',
-            Radio::widget()->config($this->formModel, 'int')->form('form-id')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1" form="form-id"> Int</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'int')->form('form-id')->render());
     }
 
     public function testImmutability(): void
@@ -52,7 +57,7 @@ final class RadioTest extends TestCase
     public function testLabelWithLabelAttributes(): void
     {
         $expected = <<<'HTML'
-        <label class="test-class"><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Label:</label>
+        <label class="test-class"><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Label:</label>
         HTML;
         $html = Radio::widget()
             ->config($this->formModel, 'int')
@@ -64,69 +69,69 @@ final class RadioTest extends TestCase
 
     public function testRender(): void
     {
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>',
-            Radio::widget()->config($this->formModel, 'int')->render()
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'int')->render());
     }
 
     public function testValues(): void
     {
         // value bool false
         $this->formModel->setAttribute('bool', false);
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>',
-            Radio::widget()->config($this->formModel, 'bool')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'bool')->render());
 
         // value bool true
         $this->formModel->setAttribute('bool', true);
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>',
-            Radio::widget()->config($this->formModel, 'bool')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
+        HTML;
+        $this->assertSame($expected,  Radio::widget()->config($this->formModel, 'bool')->render());
 
         // value int 0
         $this->formModel->setAttribute('int', 0);
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>',
-            Radio::widget()->config($this->formModel, 'int')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'int')->render());
 
         // value int 1
         $this->formModel->setAttribute('int', 1);
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>',
-            Radio::widget()->config($this->formModel, 'int')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'int')->render());
 
         // value string '0'
         $this->formModel->setAttribute('string', '0');
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-string" name="TypeForm[string]" value="0"> String</label>',
-            Radio::widget()->config($this->formModel, 'string')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="1"> String</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'string')->render());
 
         // value string '1'
         $this->formModel->setAttribute('string', '1');
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>',
-            Radio::widget()->config($this->formModel, 'string')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'string')->render());
 
         // value null
         $this->formModel->setAttribute('toNull', null);
-        $this->assertSame(
-            '<label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" value="0"> To Null</label>',
-            Radio::widget()->config($this->formModel, 'toNull')->render(),
-        );
+        $expected = <<<'HTML'
+        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" value="1"> To Null</label>
+        HTML;
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'toNull')->render());
     }
 
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Radio widget requires a bool|float|int|string|null value.');
-        $html = Radio::widget()->config($this->formModel, 'array')->render();
+        $this->expectExceptionMessage('Radio widget value can not be an iterable or an object.');
+        Radio::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

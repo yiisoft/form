@@ -22,7 +22,7 @@ final class FieldRadioTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
@@ -39,7 +39,7 @@ final class FieldRadioTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">Bool</label>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -50,7 +50,7 @@ final class FieldRadioTest extends TestCase
         // Enclosed by label `true`
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -65,7 +65,7 @@ final class FieldRadioTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label class="test-class" for="typeform-bool">Bool</label>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
@@ -78,7 +78,7 @@ final class FieldRadioTest extends TestCase
         // Enclosed by label `true` with label attributes
         $expected = <<<'HTML'
         <div>
-        <label class="test-class"><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <label class="test-class"><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $html = Field::widget()
@@ -94,7 +94,7 @@ final class FieldRadioTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">test-text-label</label>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
@@ -107,7 +107,7 @@ final class FieldRadioTest extends TestCase
         // Enclosed by label `true` with custom text
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> test-text-label</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> test-text-label</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -120,7 +120,7 @@ final class FieldRadioTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -133,7 +133,7 @@ final class FieldRadioTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0" form="form-id"> Bool</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" form="form-id"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -146,7 +146,7 @@ final class FieldRadioTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -161,7 +161,7 @@ final class FieldRadioTest extends TestCase
         $this->formModel->setAttribute('bool', false);
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -185,7 +185,7 @@ final class FieldRadioTest extends TestCase
         $this->formModel->setAttribute('int', 0);
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -209,7 +209,7 @@ final class FieldRadioTest extends TestCase
         $this->formModel->setAttribute('string', '0');
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
+        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="1"> String</label>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -235,7 +235,7 @@ final class FieldRadioTest extends TestCase
         $this->formModel->setAttribute('toNull', null);
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" value="0"> To Null</label>
+        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" value="1"> To Null</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -247,7 +247,7 @@ final class FieldRadioTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Radio widget requires a bool|float|int|string|null value.');
+        $this->expectExceptionMessage('Radio widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->radio()->render();
     }
 
