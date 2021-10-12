@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Closure;
 use ReflectionException;
+use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\FieldAttributes;
 use Yiisoft\Html\Html;
@@ -129,14 +130,15 @@ final class Field extends Widget
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     * @param array $items the data item used to generate the checkbox list. The array values are the labels,
+     * @param string[] $items the data item used to generate the checkbox list. The array values are the labels,
      * while the array keys are the corresponding checkbox values.
-     *
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsAsValues the data item used to generate the checkbox
+     * list. The array values are the labels, while the array values are the corresponding checkbox values.
      * @return static the field object itself.
      *
      * @psalm-param array<array-key, string> $items
      */
-    public function checkboxList(array $attributes = [], array $items = []): self
+    public function checkboxList(array $attributes = [], array $items = [], array $itemsAsValues = []): self
     {
         $new = clone $this;
         $checkboxList = CheckboxList::widget();
@@ -148,7 +150,7 @@ final class Field extends Widget
             $checkboxList = $checkboxList->containerAttributes($attributes['containerAttributes']);
         }
 
-        if ($containerTag === false) {
+        if ($containerTag === null) {
             $checkboxList = $checkboxList->containerTag();
         } elseif (is_string($containerTag) && $containerTag !== '') {
             $checkboxList = $checkboxList->containerTag($containerTag);
@@ -194,6 +196,7 @@ final class Field extends Widget
         $new->parts['{input}'] = $checkboxList
             ->config($new->getFormModel(), $new->attribute, $attributes)
             ->items($items)
+            ->itemsAsValues($itemsAsValues)
             ->render();
 
         return $new;

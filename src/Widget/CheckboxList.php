@@ -29,8 +29,10 @@ final class CheckboxList extends Widget
     private ?string $containerTag = 'div';
     /** @psalm-var array<array-key, array<array-key, mixed>> $value */
     private array $individualItemsAttributes = [];
-    /** @var array<array-key, string> */
+    /** @var string[] */
     private array $items = [];
+    /** @var bool[]|float[]|int[]|string[]|Stringable[] */
+    private array $itemsAsValues = [];
     private array $itemsAttributes = [];
     /** @psalm-var Closure(CheckboxItem):string|null */
     private ?Closure $itemsFormatter = null;
@@ -107,11 +109,9 @@ final class CheckboxList extends Widget
     /**
      * The data used to generate the list of checkboxes.
      *
-     * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
+     * The array keys are the list of checkboxes values, and the array key values are the corresponding labels.
      *
-     * Note that the labels will NOT be HTML-encoded, while the values will.
-     *
-     * @param array<array-key, string> $items
+     * @param string[] $items
      *
      * @return static
      */
@@ -119,6 +119,22 @@ final class CheckboxList extends Widget
     {
         $new = clone $this;
         $new->items = $items;
+        return $new;
+    }
+
+    /**
+     * The data used to generate the list of checkboxes.
+     *
+     * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
+     *
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsAsValues
+     *
+     * @return static
+     */
+    public function itemsAsValues(array $itemsAsValues = []): self
+    {
+        $new = clone $this;
+        $new->itemsAsValues = $itemsAsValues;
         return $new;
     }
 
@@ -207,14 +223,20 @@ final class CheckboxList extends Widget
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (is_object($value)) {
-            throw new InvalidArgumentException('CheckboxList widget requires a int|string|iterable|null value.');
+        /** @var bool */
+        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
+
+        /** @var bool */
+        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
+
+        if (!is_iterable($value)) {
+            throw new InvalidArgumentException('CheckboxList widget value must always be an array.');
         }
 
-        if (is_iterable($value)) {
-            $checkboxList = $checkboxList->values($value);
-        } elseif (is_scalar($value)) {
-            $checkboxList = $checkboxList->value($value);
+        if ($new->items !== []) {
+            $checkboxList = $checkboxList->items($new->items, $itemsEncodeLabels);
+        } elseif ($new->itemsAsValues !== []) {
+            $checkboxList = $checkboxList->itemsAsValues($new->itemsAsValues, $itemsAsEncodeLabels);
         }
 
         if ($new->separator !== '') {
@@ -227,9 +249,9 @@ final class CheckboxList extends Widget
             ->containerTag($new->containerTag)
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
-            ->items($new->items)
             ->replaceCheckboxAttributes($new->itemsAttributes)
             ->uncheckValue($forceUncheckedValue)
+            ->values($value)
             ->render();
     }
 }
