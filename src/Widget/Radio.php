@@ -102,7 +102,7 @@ final class Radio extends Widget
         if ($new->enclosedByLabel === true) {
             $label = $new->label !== ''
                 ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
-                $radio = $radio->label($label, $new->labelAttributes);
+            $radio = $radio->label($label, $new->labelAttributes);
         }
 
         return $radio

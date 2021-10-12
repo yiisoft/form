@@ -89,7 +89,7 @@ final class RadioTest extends TestCase
         $expected = <<<'HTML'
         <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
         HTML;
-        $this->assertSame($expected,  Radio::widget()->config($this->formModel, 'bool')->render());
+        $this->assertSame($expected, Radio::widget()->config($this->formModel, 'bool')->render());
 
         // value int 0
         $this->formModel->setAttribute('int', 0);
