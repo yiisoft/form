@@ -134,6 +134,7 @@ final class Field extends Widget
      * while the array keys are the corresponding checkbox values.
      * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsAsValues the data item used to generate the checkbox
      * list. The array values are the labels, while the array values are the corresponding checkbox values.
+     *
      * @return static the field object itself.
      *
      * @psalm-param array<array-key, string> $items
