@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
@@ -217,9 +216,6 @@ final class CheckboxList extends Widget
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
-        /** @var bool|float|int|string|Stringable|null */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
-
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
@@ -250,7 +246,6 @@ final class CheckboxList extends Widget
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
             ->replaceCheckboxAttributes($new->itemsAttributes)
-            ->uncheckValue($forceUncheckedValue)
             ->values($value)
             ->render();
     }
