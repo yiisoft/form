@@ -351,7 +351,7 @@ final class RadioListTest extends TestCase
     {
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('RadioList widget required bool|float|int|string|null.');
+        $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
         $html = RadioList::widget()->config($this->formModel, 'array')->render();
     }
 

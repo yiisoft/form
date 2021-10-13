@@ -27,6 +27,8 @@ final class RadioList extends Widget
     private array $individualItemsAttributes = [];
     /** @psalm-var array<array-key, string> */
     private array $items = [];
+    /** @var bool[]|float[]|int[]|string[]|Stringable[] */
+    private array $itemsAsValues = [];
     private array $itemsAttributes = [];
     /** @psalm-var Closure(RadioItem):string|null */
     private ?Closure $itemsFormatter = null;
@@ -121,6 +123,22 @@ final class RadioList extends Widget
     }
 
     /**
+     * The data used to generate the list of checkboxes.
+     *
+     * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
+     *
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsAsValues
+     *
+     * @return static
+     */
+    public function itemsAsValues(array $itemsAsValues = []): self
+    {
+        $new = clone $this;
+        $new->itemsAsValues = $itemsAsValues;
+        return $new;
+    }
+
+    /**
      * The attributes for generating the list of radio tag using {@see RadioList}.
      *
      * @param array $value
@@ -198,17 +216,30 @@ final class RadioList extends Widget
         $new = clone $this;
         $radioList = RadioListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = is_bool($value) ? (int) $value : $value;
+
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('RadioList widget value can not be an iterable or an object.');
+        }
+
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         /** @var bool|float|int|string|Stringable|null */
         $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
 
-        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @var bool */
+        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
 
-        if (!is_scalar($value)) {
-            throw new InvalidArgumentException('RadioList widget required bool|float|int|string|null.');
+        /** @var bool */
+        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
+
+        if ($new->items !== []) {
+            $radioList = $radioList->items($new->items, $itemsEncodeLabels);
+        } elseif ($new->itemsAsValues !== []) {
+            $radioList = $radioList->itemsAsValues($new->itemsAsValues, $itemsAsEncodeLabels);
         }
 
         if ($new->separator !== '') {
@@ -220,11 +251,10 @@ final class RadioList extends Widget
             ->containerTag($new->containerTag)
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
-            ->items($new->items)
             ->radioAttributes($new->attributes)
             ->replaceRadioAttributes($new->itemsAttributes)
             ->uncheckValue($forceUncheckedValue)
-            ->value((int) $value)
+            ->value($value)
             ->render();
     }
 }
