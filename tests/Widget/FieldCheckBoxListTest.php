@@ -94,25 +94,6 @@ final class FieldCheckBoxListTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $html);
     }
 
-    public function testForceUncheckedValue(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-array">Array</label>
-        <input type="hidden" name="TypeForm[array]" value="0">
-        <div id="typeform-array">
-        <label><input type="checkbox" name="TypeForm[array][]" value="1"> Female</label>
-        <label><input type="checkbox" name="TypeForm[array][]" value="2"> Male</label>
-        </div>
-        </div>
-        HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'array')
-            ->checkboxList(['forceUncheckedValue' => '0'], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
     public function testIndividualItemsAttributes(): void
     {
         $this->formModel->setAttribute('array', [2]);
