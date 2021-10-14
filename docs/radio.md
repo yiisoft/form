@@ -8,7 +8,7 @@ The `Radio::class` widget is designed to return the value of the input element r
 
 ### Example simple radio values `true` for checked.
 
-TestForm form:
+TestForm class:
 
 ```php
 <?php
@@ -25,7 +25,7 @@ final class TestForm extends FormModel
 }
 ```
 
-Widgets view:
+Widget view:
 
 ```php
 <?php
@@ -62,7 +62,7 @@ As we can see in the code we have the value `1` the input radio tag, correctly.
 
 ### Example `Radio` with value `5` when the radio is checked and `0` when the radio is not checked:
 
-TestForm form:
+TestForm class:
 
 ```php
 <?php
@@ -86,7 +86,7 @@ final class TestForm extends FormModel
 }
 ```
 
-Widgets view:
+Widget view:
 
 ```php
 <?php
@@ -124,7 +124,7 @@ As we can see in the code we have the value `0` for the hidden input and `5` for
 
 ### Example `Radio` with two values for checking (`inactive`, `active`) and `empty string` when the radio is not checked:
 
-TestForm form:
+TestForm class:
 
 ```php
 <?php
@@ -141,7 +141,7 @@ final class TestForm extends FormModel
 }
 ```
 
-Widgets view:
+Widget view:
 
 ```php
 <?php
