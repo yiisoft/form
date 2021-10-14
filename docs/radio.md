@@ -60,7 +60,7 @@ use Yiisoft\Form\Widget\Radio;
 
 As we can see in the code we have the value `1` the input radio tag, correctly.
 
-### Example Radio `5` when the radio is checked and `0` when the radio is not checked:
+### Example `Radio` with value `5` when the radio is checked and `0` when the radio is not checked:
 
 TestForm form:
 
@@ -80,7 +80,7 @@ final class TestForm extends FormModel
     public function getAttributeLabels(): array
     {
         return [
-            'number' => '5',
+            'number' => 'Five',
         ];
     }
 }
@@ -112,7 +112,7 @@ use Yiisoft\Form\Widget\Radio;
 <form action="widgets" method="POST" _csrf="IDEx9Sx5fPBG67ECy2YOA5pTBDfOl9WVnivOQMzTsOpXcH2xAUE7pnK62jOgMmhu8jU1brTZvPPMTb8mtpL0kw==">
     <input type="hidden" name="_csrf" value="IDEx9Sx5fPBG67ECy2YOA5pTBDfOl9WVnivOQMzTsOpXcH2xAUE7pnK62jOgMmhu8jU1brTZvPPMTb8mtpL0kw==">
     <input type="hidden" name="TestForm[number]" value="0">
-    <label><input type="radio" id="testform-number" name="TestForm[number]" value="5"> 5</label>
+    <label><input type="radio" id="testform-number" name="TestForm[number]" value="5"> Five</label>
     <hr class="mt-3">
     <div>
         <input type="submit" id="submit-32411106659001" class="button is-block is-info is-fullwidth" name="submit-32411106659001" value="Save">
@@ -122,7 +122,7 @@ use Yiisoft\Form\Widget\Radio;
 
 As we can see in the code we have the value `0` for the hidden input and `5` for the input radio tag, correctly.
 
-### Example Radio with two values is checked `inactive`, `active`, and `empty string` when the radio is not checked:
+### Example `Radio` with two values for checking (`inactive`, `active`) and `empty string` when the radio is not checked:
 
 TestForm form:
 
@@ -177,7 +177,7 @@ use Yiisoft\Form\Widget\Radio;
 </form>
 ```
 
-As we can see in the code we have the value `empty string` for the hidden input and `inactive` and `active` for the input radios tag, correctly. 
+As we can see in the code we have the empty string value for the hidden input and `inactive` and `active` for the input radios tag, correctly. 
 
 ### `Radio::class` methods: 
 
