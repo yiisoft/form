@@ -32,10 +32,16 @@ Widget view:
 
 declare(strict_types=1);
 
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Form\Widget\Label;
 use Yiisoft\Form\Widget\Radio;
+
+/**
+ *  @var $data FormModelInterface
+ *  @var $csrf string
+ */
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
@@ -93,10 +99,16 @@ Widget view:
 
 declare(strict_types=1);
 
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Form\Widget\Label;
 use Yiisoft\Form\Widget\Radio;
+
+/**
+ *  @var $data FormModelInterface
+ *  @var $csrf string
+ */
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
@@ -148,10 +160,16 @@ Widget view:
 
 declare(strict_types=1);
 
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Form\Widget\Label;
 use Yiisoft\Form\Widget\Radio;
+
+/**
+ *  @var $data FormModelInterface
+ *  @var $csrf string
+ */
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
