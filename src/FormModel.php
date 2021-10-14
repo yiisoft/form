@@ -20,7 +20,6 @@ use function array_merge;
 use function explode;
 use function is_subclass_of;
 use function reset;
-use function sprintf;
 use function strpos;
 
 /**
