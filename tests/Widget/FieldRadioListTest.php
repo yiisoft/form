@@ -18,6 +18,7 @@ final class FieldRadioListTest extends TestCase
     use TestTrait;
 
     private array $sex = [1 => 'Female', 2 => 'Male'];
+    private array $mobileOs = ['android' => 'Android', 'ios' => 'iOS', 'pureos' => 'PureOS'];
     private TypeForm $formModel;
 
     public function testContainerAttributes(): void
@@ -336,6 +337,24 @@ final class FieldRadioListTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->config($this->formModel, 'string')->radioList([], $this->sex)->render(),
+        );
+
+        // value string 'ios'
+        $this->formModel->setAttribute('string', 'ios');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <div id="typeform-string">
+        <label><input type="radio" name="TypeForm[string]" value="android"> Android</label>
+        <label><input type="radio" name="TypeForm[string]" value="ios" checked> iOS</label>
+        <label><input type="radio" name="TypeForm[string]" value="pureos"> PureOS</label>
+        </div>
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->radioList([], $this->mobileOs)->render(),
         );
 
         // value null

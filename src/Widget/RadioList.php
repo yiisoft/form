@@ -211,6 +211,11 @@ final class RadioList extends Widget
             throw new InvalidArgumentException('RadioList widget required bool|float|int|string|null.');
         }
 
+        $_value = (int) $value;
+        if (is_string($value) && $value !== '0' && $_value === 0) {
+            $_value = $value;
+        }
+
         if ($new->separator !== '') {
             $radioList = $radioList->separator($new->separator);
         }
@@ -224,7 +229,7 @@ final class RadioList extends Widget
             ->radioAttributes($new->attributes)
             ->replaceRadioAttributes($new->itemsAttributes)
             ->uncheckValue($forceUncheckedValue)
-            ->value((int) $value)
+            ->value($_value)
             ->render();
     }
 }
