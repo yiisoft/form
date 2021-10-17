@@ -21,6 +21,7 @@ use function urldecode;
  */
 final class Form extends Widget
 {
+    private const CSRF_NAME = '_csrf';
     private string $action = '';
     private array $attributes = [];
     private string $id = '';
@@ -47,14 +48,14 @@ final class Form extends Widget
         }
 
         /** @var string */
-        $csrfToken = $new->attributes['_csrf'] ?? '';
+        $csrfToken = $new->attributes[self::CSRF_NAME] ?? '';
 
         if ($csrfToken === '') {
-            unset($new->attributes['_csrf']);
+            unset($new->attributes[self::CSRF_NAME]);
         }
 
         if ($csrfToken !== '' && $new->method === Method::POST) {
-            $hiddenInputs[] = Html::hiddenInput('_csrf', $csrfToken);
+            $hiddenInputs[] = Html::hiddenInput(self::CSRF_NAME, $csrfToken);
         }
 
         if ($new->method === Method::GET && ($pos = strpos($new->action, '?')) !== false) {
@@ -157,16 +158,17 @@ final class Form extends Widget
     }
 
     /**
-     * The csrf-token content attribute is a space-separated list of tokens that are known to be safe to use for.
+     * The csrf-token content attribute token that are known to be safe to use for.
      *
-     * @param string $value the csrf-token attribute value.
+     * @param string $csrfToken the csrf-token attribute value.
+     * @param string $csrfName the csrf-token attribute name.
      *
      * @return static
      */
-    public function csrf(string $value): self
+    public function csrf(string $csrfToken, string $csrfName = self::CSRF_NAME): self
     {
         $new = clone $this;
-        $new->attributes['_csrf'] = $value;
+        $new->attributes[$csrfName] = $csrfToken;
         return $new;
     }
 
