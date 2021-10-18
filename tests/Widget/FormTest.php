@@ -116,6 +116,14 @@ final class FormTest extends TestCase
         );
     }
 
+    public function testCsrfWithTokenValue(): void
+    {
+        $this->assertSame(
+            '<form action="/foo" method="POST" _csrf="tokenCsrf">',
+            Form::widget()->action('/foo')->method('POST')->csrf('tokenCsrf')->begin(),
+        );
+    }
+
     public function testEnd(): void
     {
         Form::widget()->begin();
