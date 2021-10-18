@@ -7,19 +7,21 @@ namespace Yiisoft\Form;
 use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionNamedType;
+use ReflectionType;
 use Stringable;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\RulesProviderInterface;
-
 use function array_key_exists;
 use function array_merge;
 use function explode;
 use function is_subclass_of;
 use function reset;
+use function Safe\substr;
 use function sprintf;
 use function strpos;
 
@@ -28,6 +30,16 @@ use function strpos;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
+    private const TYPE_MAP = [
+        'boolean' => 'bool',
+        'string' => 'string',
+        'integer' => 'int',
+        'array' => 'array',
+        'object' => 'object',
+        'double' => 'float',
+        'NULL' => 'NULL'
+    ];
+
     private array $attributes;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
@@ -216,6 +228,28 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $values !== [];
     }
 
+
+    protected function typeCast(string $name, $value): mixed
+    {
+        $types = $this->attributes[$name];
+        $currentType = self::TYPE_MAP[gettype($value)];
+
+        if (in_array($currentType, $types, true) || !is_scalar($value)) {
+            return $value;
+        }
+
+        foreach ($types as $type) {
+            $constant = 'FILTER_VALIDATE_' . mb_strtoupper($type);
+            $val = defined($constant) ? filter_var($value, constant($constant), FILTER_NULL_ON_FAILURE) : null;
+
+            if ($val !== null) {
+                return $val;
+            }
+        }
+
+        return $value;
+    }
+
     /**
      * @param iterable|object|scalar|Stringable|null $value
      *
@@ -225,23 +259,26 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$realName] = $this->getNestedAttribute($name);
         if (isset($this->attributes[$realName])) {
-            switch ($this->attributes[$realName]) {
-                case 'bool':
-                    $this->writeProperty($name, (bool) $value);
-                    break;
-                case 'float':
-                    $this->writeProperty($name, (float) $value);
-                    break;
-                case 'int':
-                    $this->writeProperty($name, (int) $value);
-                    break;
-                case 'string':
-                    $this->writeProperty($name, (string) $value);
-                    break;
-                default:
-                    $this->writeProperty($name, $value);
-                    break;
-            }
+            $value = $this->typeCast($realName, $value);
+            $this->writeProperty($name, $this->typeCast($realName, $value));
+            /*
+                        switch ($this->attributes[$realName]) {
+                            case 'bool':
+                                $this->writeProperty($name, (bool) $value);
+                                break;
+                            case 'float':
+                                $this->writeProperty($name, (float) $value);
+                                break;
+                            case 'int':
+                                $this->writeProperty($name, (int) $value);
+                                break;
+                            case 'string':
+                                $this->writeProperty($name, (string) $value);
+                                break;
+                            default:
+                                $this->writeProperty($name, $value);
+                                break;
+                        } */
         }
     }
 
@@ -273,7 +310,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      *
      * By default, this method returns all non-static properties of the class.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      *
      * @return array list of attribute types indexed by attribute names.
      */
@@ -297,7 +334,19 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 ));
             }
 
-            $attributes[$property->getName()] = $type->getName();
+            if ($type instanceof ReflectionType) {
+                $attributes[$property->getName()] = [$type->getName()];
+            } else {
+                $attributes[$property->getName()] = [];
+
+                foreach ($type->getTypes() as $unionType) {
+                    $attributes[$property->getName()][] = $unionType->getName();
+                }
+            }
+
+            if ($type->allowsNull()) {
+                $attributes[$property->getName()][] = 'NULL';
+            }
         }
 
         return $attributes;
