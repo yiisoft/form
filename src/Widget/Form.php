@@ -48,7 +48,7 @@ final class Form extends Widget
         }
 
         /** @var string */
-        $csrfName = $new->attributes['csrfName'] ?? static::CSRF_NAME;
+        $csrfName = $new->attributes['csrfName'] ?? self::CSRF_NAME;
         unset($new->attributes['csrfName']);
 
         /** @var string */
