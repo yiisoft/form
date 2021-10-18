@@ -79,7 +79,7 @@ final class FormTest extends TestCase
             ['<form action="/foo" method="POST">', 'POST', ['csrfName' => '']],
             // empty csrf token
             ['<form action="/foo" method="POST">', 'POST', ['csrfToken' => '']],
-            // empty csrg name and token
+            // empty csrf name and token
             ['<form action="/foo" method="POST">', 'POST', ['csrfName' => '', 'csrfToken' => '']],
             // only csrf token value
             ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET',  ['csrfToken' => 'tokenCsrf']],
