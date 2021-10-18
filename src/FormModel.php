@@ -258,6 +258,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function setAttribute(string $name, $value): void
     {
         [$realName] = $this->getNestedAttribute($name);
+
         if (isset($this->attributes[$realName])) {
             $value = $this->typeCast($realName, $value);
             $this->writeProperty($name, $this->typeCast($realName, $value));
@@ -326,13 +327,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
             /** @var ReflectionNamedType|null $type */
             $type = $property->getType();
-            if ($type === null) {
-                throw new InvalidArgumentException(sprintf(
-                    'You must specify the type hint for "%s" property in "%s" class.',
-                    $property->getName(),
-                    $property->getDeclaringClass()->getName(),
-                ));
-            }
 
             if ($type instanceof ReflectionType) {
                 $attributes[$property->getName()] = [$type->getName()];
