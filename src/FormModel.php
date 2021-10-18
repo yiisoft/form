@@ -262,24 +262,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         if (isset($this->attributes[$realName])) {
             $value = $this->typeCast($realName, $value);
             $this->writeProperty($name, $this->typeCast($realName, $value));
-            /*
-                        switch ($this->attributes[$realName]) {
-                            case 'bool':
-                                $this->writeProperty($name, (bool) $value);
-                                break;
-                            case 'float':
-                                $this->writeProperty($name, (float) $value);
-                                break;
-                            case 'int':
-                                $this->writeProperty($name, (int) $value);
-                                break;
-                            case 'string':
-                                $this->writeProperty($name, (string) $value);
-                                break;
-                            default:
-                                $this->writeProperty($name, $value);
-                                break;
-                        } */
         }
     }
 
