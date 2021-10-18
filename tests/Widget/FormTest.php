@@ -73,14 +73,22 @@ final class FormTest extends TestCase
     public function dataProviderCsrf(): array
     {
         return [
-            ['<form action="/foo" method="GET">', 'GET',  ''],
-            ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET',  'tokenCsrf'],
-            ['<form action="/foo" method="POST">', 'POST', '_csrf' => ''],
+            // empty csrf
+            ['<form action="/foo" method="GET">', 'GET', []],
+            // empty csrf name
+            ['<form action="/foo" method="POST">', 'POST', ['csrfName' => '']],
+            // empty csrf token
+            ['<form action="/foo" method="POST">', 'POST', ['csrfToken' => '']],
+            // empty csrg name and token
+            ['<form action="/foo" method="POST">', 'POST', ['csrfName' => '', 'csrfToken' => '']],
+            // only csrf token value
+            ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET',  ['csrfToken' => 'tokenCsrf']],
+            // only csrf custom name
             [
-                '<form action="/foo" method="POST" _csrf="tokenCsrf">' . PHP_EOL .
-                '<input type="hidden" name="_csrf" value="tokenCsrf">',
+                '<form action="/foo" method="POST" csrf="tokenCsrf">' . PHP_EOL .
+                '<input type="hidden" name="csrf" value="tokenCsrf">',
                 'POST',
-                '_csrf' => 'tokenCsrf',
+                ['csrfName' => 'csrf', 'csrfToken' => 'tokenCsrf'],
             ],
         ];
     }
@@ -90,14 +98,13 @@ final class FormTest extends TestCase
      *
      * @param string $expected
      * @param string $method
-     * @param array $options
+     * @param array $attributes
      */
-    public function testCsrf(string $expected, string $method, string $csrf): void
+    public function testCsrf(string $expected, string $method, array $attributes): void
     {
-        $this->assertSame($expected, Form::widget()->action('/foo')->method($method)->csrf($csrf)->begin());
         $this->assertSame(
             $expected,
-            Form::widget()->action('/foo')->attributes(['_csrf' => $csrf])->method($method)->begin(),
+            Form::widget()->action('/foo')->attributes($attributes)->method($method)->begin(),
         );
     }
 

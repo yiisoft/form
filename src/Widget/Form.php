@@ -48,14 +48,19 @@ final class Form extends Widget
         }
 
         /** @var string */
-        $csrfToken = $new->attributes[self::CSRF_NAME] ?? '';
+        $csrfName = $new->attributes['csrfName'] ?? static::CSRF_NAME;
+        unset($new->attributes['csrfName']);
 
-        if ($csrfToken === '') {
-            unset($new->attributes[self::CSRF_NAME]);
+        /** @var string */
+        $csrfToken = $new->attributes['csrfToken'] ?? '';
+        unset($new->attributes['csrfToken']);
+
+        if ($csrfToken !== '') {
+            $new = $new->csrf($csrfToken, $csrfName);
         }
 
         if ($csrfToken !== '' && $new->method === Method::POST) {
-            $hiddenInputs[] = Html::hiddenInput(self::CSRF_NAME, $csrfToken);
+            $hiddenInputs[] = Html::hiddenInput($csrfName, $csrfToken);
         }
 
         if ($new->method === Method::GET && ($pos = strpos($new->action, '?')) !== false) {
