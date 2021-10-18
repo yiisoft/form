@@ -21,9 +21,10 @@ use function urldecode;
  */
 final class Form extends Widget
 {
-    private const CSRF_NAME = '_csrf';
     private string $action = '';
     private array $attributes = [];
+    private string $csrfName = '_csrf';
+    private string $csrfToken = '';
     private string $id = '';
     private string $method = Method::POST;
 
@@ -48,19 +49,15 @@ final class Form extends Widget
         }
 
         /** @var string */
-        $csrfName = $new->attributes['csrfName'] ?? self::CSRF_NAME;
+        $new->csrfName = $new->attributes['csrfName'] ?? $new->csrfName;
         unset($new->attributes['csrfName']);
 
         /** @var string */
-        $csrfToken = $new->attributes['csrfToken'] ?? '';
+        $new->csrfToken = $new->attributes['csrfToken'] ?? $new->csrfToken;
         unset($new->attributes['csrfToken']);
 
-        if ($csrfToken !== '') {
-            $new = $new->csrf($csrfToken, $csrfName);
-        }
-
-        if ($csrfToken !== '' && $new->method === Method::POST) {
-            $hiddenInputs[] = Html::hiddenInput($csrfName, $csrfToken);
+        if ($new->csrfToken !== '' && $new->method === Method::POST) {
+            $hiddenInputs[] = Html::hiddenInput($new->csrfName, $new->csrfToken);
         }
 
         if ($new->method === Method::GET && ($pos = strpos($new->action, '?')) !== false) {
@@ -86,6 +83,10 @@ final class Form extends Widget
         }
 
         $new->attributes['method'] = $new->method;
+
+        if ($new->csrfToken !== '') {
+            $new->attributes[$new->csrfName] = $new->csrfToken;
+        }
 
         $form = Html::openTag('form', $new->attributes);
 
@@ -170,10 +171,11 @@ final class Form extends Widget
      *
      * @return static
      */
-    public function csrf(string $csrfToken, string $csrfName = self::CSRF_NAME): self
+    public function csrf(string $csrfToken, string $csrfName = '_csrf'): self
     {
         $new = clone $this;
-        $new->attributes[$csrfName] = $csrfToken;
+        $new->csrfToken = $csrfToken;
+        $new->csrfName = $csrfName;
         return $new;
     }
 

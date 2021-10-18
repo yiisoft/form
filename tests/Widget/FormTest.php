@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
@@ -13,6 +14,8 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class FormTest extends TestCase
 {
+    use TestTrait;
+
     public function testAcceptCharset(): void
     {
         $this->assertSame(
@@ -110,16 +113,24 @@ final class FormTest extends TestCase
 
     public function testCsrfWithCustomName(): void
     {
-        $this->assertSame(
-            '<form action="/foo" method="POST" myToken="tokenCsrf">',
+        $expected = <<<'HTML'
+        <form action="/foo" method="POST" myToken="tokenCsrf">
+        <input type="hidden" name="myToken" value="tokenCsrf">
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
             Form::widget()->action('/foo')->method('POST')->csrf('tokenCsrf', 'myToken')->begin(),
         );
     }
 
     public function testCsrfWithTokenValue(): void
     {
-        $this->assertSame(
-            '<form action="/foo" method="POST" _csrf="tokenCsrf">',
+        $expected = <<<'HTML'
+        <form action="/foo" method="POST" _csrf="tokenCsrf">
+        <input type="hidden" name="_csrf" value="tokenCsrf">
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
             Form::widget()->action('/foo')->method('POST')->csrf('tokenCsrf')->begin(),
         );
     }
