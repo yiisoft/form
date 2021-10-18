@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
@@ -44,14 +43,24 @@ final class FormModelTest extends TestCase
 
     public function testUnknownPropertyType(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageMatches(sprintf(
-            '/You must specify the type hint for "%s" property in "([^"]+)" class./',
-            'property',
-        ));
         $form = new class () extends FormModel {
             private $property;
         };
+
+        $form->setAttribute('property', true);
+        $this->assertSame(true, $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', 'string');
+        $this->assertSame('string', $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', 0);
+        $this->assertSame(0, $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', 1.2563);
+        $this->assertSame(1.2563, $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', []);
+        $this->assertSame([], $form->getAttributeValue('property'));
     }
 
     public function testGetAttributeValue(): void
@@ -66,10 +75,6 @@ final class FormModelTest extends TestCase
 
         $form->rememberMe(true);
         $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".');
-        $form->getAttributeValue('noExist');
     }
 
     public function testGetAttributeValueWithNestedAttribute(): void

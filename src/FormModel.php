@@ -20,7 +20,6 @@ use function array_merge;
 use function explode;
 use function is_subclass_of;
 use function reset;
-use function sprintf;
 use function strpos;
 
 /**
@@ -224,6 +223,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function setAttribute(string $name, $value): void
     {
         [$realName] = $this->getNestedAttribute($name);
+
         if (isset($this->attributes[$realName])) {
             switch ($this->attributes[$realName]) {
                 case 'bool':
@@ -289,15 +289,8 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
             /** @var ReflectionNamedType|null $type */
             $type = $property->getType();
-            if ($type === null) {
-                throw new InvalidArgumentException(sprintf(
-                    'You must specify the type hint for "%s" property in "%s" class.',
-                    $property->getName(),
-                    $property->getDeclaringClass()->getName(),
-                ));
-            }
 
-            $attributes[$property->getName()] = $type->getName();
+            $attributes[$property->getName()] = $type !== null ? $type->getName() : '';
         }
 
         return $attributes;
