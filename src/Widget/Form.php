@@ -48,14 +48,6 @@ final class Form extends Widget
             unset($new->attributes['id']);
         }
 
-        /** @var string */
-        $new->csrfName = $new->attributes['csrfName'] ?? $new->csrfName;
-        unset($new->attributes['csrfName']);
-
-        /** @var string */
-        $new->csrfToken = $new->attributes['csrfToken'] ?? $new->csrfToken;
-        unset($new->attributes['csrfToken']);
-
         if ($new->csrfToken !== '' && $new->method === Method::POST) {
             $hiddenInputs[] = Html::hiddenInput($new->csrfName, $new->csrfToken);
         }

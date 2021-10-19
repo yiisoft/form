@@ -76,22 +76,19 @@ final class FormTest extends TestCase
     public function dataProviderCsrf(): array
     {
         return [
-            // empty csrf
-            ['<form action="/foo" method="GET">', 'GET', []],
-            // empty csrf name
-            ['<form action="/foo" method="POST">', 'POST', ['csrfName' => '']],
-            // empty csrf token
-            ['<form action="/foo" method="POST">', 'POST', ['csrfToken' => '']],
             // empty csrf name and token
-            ['<form action="/foo" method="POST">', 'POST', ['csrfName' => '', 'csrfToken' => '']],
+            ['<form action="/foo" method="POST">', 'POST', '', ''],
+            // empty csrf token
+            ['<form action="/foo" method="POST">', 'POST', '', 'myToken'],
             // only csrf token value
-            ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET',  ['csrfToken' => 'tokenCsrf']],
+            ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET', 'tokenCsrf', ''],
             // only csrf custom name
             [
-                '<form action="/foo" method="POST" csrf="tokenCsrf">' . PHP_EOL .
-                '<input type="hidden" name="csrf" value="tokenCsrf">',
+                '<form action="/foo" method="POST" myToken="tokenCsrf">' . PHP_EOL .
+                '<input type="hidden" name="myToken" value="tokenCsrf">',
                 'POST',
-                ['csrfName' => 'csrf', 'csrfToken' => 'tokenCsrf'],
+                'tokenCsrf',
+                'myToken',
             ],
         ];
     }
@@ -103,36 +100,12 @@ final class FormTest extends TestCase
      * @param string $method
      * @param array $attributes
      */
-    public function testCsrf(string $expected, string $method, array $attributes): void
+    public function testCsrf(string $expected, string $method, string $csrfToken, string $csrfName): void
     {
-        $this->assertSame(
-            $expected,
-            Form::widget()->action('/foo')->attributes($attributes)->method($method)->begin(),
-        );
-    }
-
-    public function testCsrfWithCustomName(): void
-    {
-        $expected = <<<'HTML'
-        <form action="/foo" method="POST" myToken="tokenCsrf">
-        <input type="hidden" name="myToken" value="tokenCsrf">
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Form::widget()->action('/foo')->method('POST')->csrf('tokenCsrf', 'myToken')->begin(),
-        );
-    }
-
-    public function testCsrfWithTokenValue(): void
-    {
-        $expected = <<<'HTML'
-        <form action="/foo" method="POST" _csrf="tokenCsrf">
-        <input type="hidden" name="_csrf" value="tokenCsrf">
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Form::widget()->action('/foo')->method('POST')->csrf('tokenCsrf')->begin(),
-        );
+        $formWidget = $csrfName !== ''
+            ? Form::widget()->action('/foo')->csrf($csrfToken, $csrfName)->method($method)->begin()
+            : Form::widget()->action('/foo')->csrf($csrfToken)->method($method)->begin();
+        $this->assertSame($expected, $formWidget);
     }
 
     public function testEnd(): void
