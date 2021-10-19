@@ -23,6 +23,8 @@ final class Form extends Widget
 {
     private string $action = '';
     private array $attributes = [];
+    private string $csrfName = '';
+    private string $csrfToken = '';
     private string $id = '';
     private string $method = Method::POST;
 
@@ -46,15 +48,8 @@ final class Form extends Widget
             unset($new->attributes['id']);
         }
 
-        /** @var string */
-        $csrfToken = $new->attributes['_csrf'] ?? '';
-
-        if ($csrfToken === '') {
-            unset($new->attributes['_csrf']);
-        }
-
-        if ($csrfToken !== '' && $new->method === Method::POST) {
-            $hiddenInputs[] = Html::hiddenInput('_csrf', $csrfToken);
+        if ($new->csrfToken !== '' && $new->method === Method::POST) {
+            $hiddenInputs[] = Html::hiddenInput($new->csrfName, $new->csrfToken);
         }
 
         if ($new->method === Method::GET && ($pos = strpos($new->action, '?')) !== false) {
@@ -80,6 +75,10 @@ final class Form extends Widget
         }
 
         $new->attributes['method'] = $new->method;
+
+        if ($new->csrfToken !== '') {
+            $new->attributes[$new->csrfName] = $new->csrfToken;
+        }
 
         $form = Html::openTag('form', $new->attributes);
 
@@ -157,16 +156,18 @@ final class Form extends Widget
     }
 
     /**
-     * The csrf-token content attribute is a space-separated list of tokens that are known to be safe to use for.
+     * The csrf-token content attribute token that are known to be safe to use for.
      *
-     * @param string $value the csrf-token attribute value.
+     * @param string $csrfToken the csrf-token attribute value.
+     * @param string $csrfName the csrf-token attribute name.
      *
      * @return static
      */
-    public function csrf(string $value): self
+    public function csrf(string $csrfToken, string $csrfName = '_csrf'): self
     {
         $new = clone $this;
-        $new->attributes['_csrf'] = $value;
+        $new->csrfToken = $csrfToken;
+        $new->csrfName = $csrfName;
         return $new;
     }
 

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
@@ -13,6 +14,8 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class FormTest extends TestCase
 {
+    use TestTrait;
+
     public function testAcceptCharset(): void
     {
         $this->assertSame(
@@ -73,14 +76,19 @@ final class FormTest extends TestCase
     public function dataProviderCsrf(): array
     {
         return [
-            ['<form action="/foo" method="GET">', 'GET',  ''],
-            ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET',  'tokenCsrf'],
-            ['<form action="/foo" method="POST">', 'POST', '_csrf' => ''],
+            // empty csrf name and token
+            ['<form action="/foo" method="POST">', 'POST', '', ''],
+            // empty csrf token
+            ['<form action="/foo" method="POST">', 'POST', '', 'myToken'],
+            // only csrf token value
+            ['<form action="/foo" method="GET" _csrf="tokenCsrf">', 'GET', 'tokenCsrf', ''],
+            // only csrf custom name
             [
-                '<form action="/foo" method="POST" _csrf="tokenCsrf">' . PHP_EOL .
-                '<input type="hidden" name="_csrf" value="tokenCsrf">',
+                '<form action="/foo" method="POST" myToken="tokenCsrf">' . PHP_EOL .
+                '<input type="hidden" name="myToken" value="tokenCsrf">',
                 'POST',
-                '_csrf' => 'tokenCsrf',
+                'tokenCsrf',
+                'myToken',
             ],
         ];
     }
@@ -90,15 +98,14 @@ final class FormTest extends TestCase
      *
      * @param string $expected
      * @param string $method
-     * @param array $options
+     * @param array $attributes
      */
-    public function testCsrf(string $expected, string $method, string $csrf): void
+    public function testCsrf(string $expected, string $method, string $csrfToken, string $csrfName): void
     {
-        $this->assertSame($expected, Form::widget()->action('/foo')->method($method)->csrf($csrf)->begin());
-        $this->assertSame(
-            $expected,
-            Form::widget()->action('/foo')->attributes(['_csrf' => $csrf])->method($method)->begin(),
-        );
+        $formWidget = $csrfName !== ''
+            ? Form::widget()->action('/foo')->csrf($csrfToken, $csrfName)->method($method)->begin()
+            : Form::widget()->action('/foo')->csrf($csrfToken)->method($method)->begin();
+        $this->assertSame($expected, $formWidget);
     }
 
     public function testEnd(): void
