@@ -23,7 +23,7 @@ final class Form extends Widget
 {
     private string $action = '';
     private array $attributes = [];
-    private string $csrfName = '_csrf';
+    private string $csrfName = '';
     private string $csrfToken = '';
     private string $id = '';
     private string $method = Method::POST;
