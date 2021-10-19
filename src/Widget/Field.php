@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Closure;
 use ReflectionException;
+use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\FieldAttributes;
 use Yiisoft\Html\Html;
@@ -518,6 +519,13 @@ final class Field extends Widget
             $new->parts['{label}'] = '';
         }
 
+        if (
+            isset($attributes['uncheckValue']) &&
+            ((is_scalar($attributes['uncheckValue'])) || $attributes['uncheckValue'] instanceof Stringable)
+        ) {
+            $radio = $radio->uncheckValue($attributes['uncheckValue']);
+        }
+
         if (isset($attributes['label']) && is_string($attributes['label'])) {
             $radio = $radio->label($attributes['label']);
         }
@@ -526,7 +534,7 @@ final class Field extends Widget
             $radio = $radio->labelAttributes($attributes['labelAttributes']);
         }
 
-        unset($attributes['label'], $attributes['labelAttributes']);
+        unset($attributes['label'], $attributes['labelAttributes'], $attributes['uncheckValue']);
 
         $new->parts['{input}'] = $radio
             ->config($new->getFormModel(), $new->attribute, $attributes)
