@@ -4,7 +4,7 @@
 
 ## Usage
 
-The `Checkbox` widget is designed to return the status of the checkbox. Generally it returns two values, by default it is `0` when no value is selected, and` 1` otherwise.
+The `Checkbox` widget is designed to return the status of the checkbox. Generally it returns two values, by default it is `0` when no value is selected, and `1` otherwise.
 
 You can also configure the widget to return the value only when the checkbox is selected.
 
