@@ -19,7 +19,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4|^8.0",
-        "yiisoft/html": "dev-items-as-values as 2.0",
+        "yiisoft/html": "^2.2",
         "yiisoft/http": "^1.0",
         "yiisoft/strings": "^2.0",
         "yiisoft/validator": "^3.0@dev",
