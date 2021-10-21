@@ -22,12 +22,12 @@ final class FieldRadioTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
             ->config($this->formModel, 'bool')
-            ->radio([], false)
+            ->radio(['value' => true], false)
             ->label(['label' => false])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -39,23 +39,23 @@ final class FieldRadioTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">Bool</label>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio([], false)->render(),
+            Field::widget()->config($this->formModel, 'bool')->radio(['value' => true], false)->render(),
         );
 
         // Enclosed by label `true`
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio([], true)->render(),
+            Field::widget()->config($this->formModel, 'bool')->radio(['value' => true], true)->render(),
         );
     }
 
@@ -65,12 +65,12 @@ final class FieldRadioTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label class="test-class" for="typeform-bool">Bool</label>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
             ->config($this->formModel, 'bool')
-            ->radio([], false)
+            ->radio(['value' => true], false)
             ->label(['class' => 'test-class'])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -78,12 +78,12 @@ final class FieldRadioTest extends TestCase
         // Enclosed by label `true` with label attributes
         $expected = <<<'HTML'
         <div>
-        <label class="test-class"><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
+        <label class="test-class"><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
         $html = Field::widget()
             ->config($this->formModel, 'bool')
-            ->radio(['labelAttributes' => ['class' => 'test-class']])
+            ->radio(['labelAttributes' => ['class' => 'test-class'], 'value' => true])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -94,12 +94,12 @@ final class FieldRadioTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">test-text-label</label>
-        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0">
+        <input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
         $html = Field::widget()
             ->config($this->formModel, 'bool')
-            ->radio([], false)
+            ->radio(['value' => true], false)
             ->label(['label' => 'test-text-label'])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -107,38 +107,26 @@ final class FieldRadioTest extends TestCase
         // Enclosed by label `true` with custom text
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> test-text-label</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> test-text-label</label>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio(['label' => 'test-text-label'])->render(),
-        );
-    }
-
-    public function testForceUncheckedValue(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio(['forceUncheckedValue' => '0'])->render(),
-        );
+        $html = Field::widget()
+            ->config($this->formModel, 'bool')
+            ->radio(['label' => 'test-text-label', 'value' => true])
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testForm(): void
     {
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0" form="form-id"> Bool</label>
+        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" form="form-id"> Bool</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio(['form' => 'form-id'])->render(),
+            Field::widget()->config($this->formModel, 'bool')->radio(['form' => 'form-id', 'value' => true])->render(),
         );
     }
 
@@ -146,19 +134,33 @@ final class FieldRadioTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radio()->render()
+            Field::widget()->config($this->formModel, 'int')->radio(['value' => 1])->render()
         );
+    }
+
+    public function testUncheckValue(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
+        </div>
+        HTML;
+        $html = Field::widget()
+            ->config($this->formModel, 'bool')
+            ->radio(['uncheckValue' => '0', 'value' => true])
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
     }
 
     public function testValues(): void
     {
         // value bool false
-        $this->formModel->setAttribute('bool', false);
+        $this->formModel->setAttribute('bool', true);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
@@ -166,11 +168,10 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio()->render(),
+            Field::widget()->config($this->formModel, 'bool')->radio(['value' => false])->render(),
         );
 
         // value bool true
-        $this->formModel->setAttribute('bool', true);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
@@ -178,11 +179,11 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radio()->render(),
+            Field::widget()->config($this->formModel, 'bool')->radio(['value' => true])->render(),
         );
 
         // value int 0
-        $this->formModel->setAttribute('int', 0);
+        $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
@@ -190,11 +191,10 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radio()->render(),
+            Field::widget()->config($this->formModel, 'int')->radio(['value' => 0])->render(),
         );
 
         // value int 1
-        $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
@@ -202,52 +202,51 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radio()->render(),
+            Field::widget()->config($this->formModel, 'int')->radio(['value' => 1])->render(),
         );
 
-        // value string '0'
-        $this->formModel->setAttribute('string', '0');
+        // value string 'inactive'
+        $this->formModel->setAttribute('string', 'active');
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
+        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="inactive"> String</label>
         <div>Write your text string.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->radio()->render(),
+            Field::widget()->config($this->formModel, 'string')->radio(['value' => 'inactive'])->render(),
         );
 
-        // value string '1'
-        $this->formModel->setAttribute('string', '1');
+        // value string 'active'
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
+        <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="active" checked> String</label>
         <div>Write your text string.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->radio()->render(),
+            Field::widget()->config($this->formModel, 'string')->radio(['value' => 'active'])->render(),
         );
 
         // value null
         $this->formModel->setAttribute('toNull', null);
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" value="0"> To Null</label>
+        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" checked> To Null</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->radio()->render(),
+            Field::widget()->config($this->formModel, 'toNull')->radio(['value' => null])->render(),
         );
     }
 
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Radio widget requires a bool|float|int|string|null value.');
+        $this->expectExceptionMessage('Radio widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->radio()->render();
     }
 
