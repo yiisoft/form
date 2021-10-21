@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
@@ -30,7 +29,10 @@ final class RadioList extends Widget
     private array $itemsAttributes = [];
     /** @psalm-var Closure(RadioItem):string|null */
     private ?Closure $itemsFormatter = null;
+    /** @var bool[]|float[]|int[]|string[]|Stringable[] */
+    private array $itemsFromValues = [];
     private string $separator = '';
+    private ?string $uncheckValue = null;
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -158,6 +160,22 @@ final class RadioList extends Widget
     }
 
     /**
+     * The data used to generate the list of checkboxes.
+     *
+     * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
+     *
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsFromValues
+     *
+     * @return static
+     */
+    public function itemsFromValues(array $itemsFromValues = []): self
+    {
+        $new = clone $this;
+        $new->itemsFromValues = $itemsFromValues;
+        return $new;
+    }
+
+    /**
      * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
      * When specified, the element is not mutable.
      *
@@ -187,6 +205,18 @@ final class RadioList extends Widget
     }
 
     /**
+     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
+     *
+     * @return static
+     */
+    public function uncheckValue($value): self
+    {
+        $new = clone $this;
+        $new->uncheckValue = $value === null ? null : (string) $value;
+        return $new;
+    }
+
+    /**
      * Generates a list of radio buttons.
      *
      * A radio button list is like a checkbox list, except that it only allows single selection.
@@ -198,17 +228,26 @@ final class RadioList extends Widget
         $new = clone $this;
         $radioList = RadioListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
-        /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
-        /** @var bool|float|int|string|Stringable|null */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
-
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_scalar($value)) {
-            throw new InvalidArgumentException('RadioList widget required bool|float|int|string|null.');
+        if (is_iterable($value) || is_object($value)) {
+            throw new InvalidArgumentException('RadioList widget value can not be an iterable or an object.');
+        }
+
+        /** @var string */
+        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
+
+        /** @var bool */
+        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
+
+        /** @var bool */
+        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
+
+        if ($new->items !== []) {
+            $radioList = $radioList->items($new->items, $itemsEncodeLabels);
+        } elseif ($new->itemsFromValues !== []) {
+            $radioList = $radioList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
         }
 
         if ($new->separator !== '') {
@@ -220,11 +259,10 @@ final class RadioList extends Widget
             ->containerTag($new->containerTag)
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
-            ->items($new->items)
             ->radioAttributes($new->attributes)
             ->replaceRadioAttributes($new->itemsAttributes)
-            ->uncheckValue($forceUncheckedValue)
-            ->value((int) $value)
+            ->uncheckValue($new->uncheckValue)
+            ->value(is_bool($value) ? (int) $value : $value)
             ->render();
     }
 }

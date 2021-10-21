@@ -129,6 +129,7 @@ The following documentation describes how to use widgets with PHP:
 
 - [Checkbox](docs/checkbox.md)
 - [Radio](docs/radio.md)
+- [RadioList](docs/radiolist.md)
 
 ### Unit testing
 
