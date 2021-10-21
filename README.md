@@ -128,6 +128,7 @@ class LoginForm extends FormModel
 The following documentation describes how to use widgets with PHP:
 
 - [Checkbox](docs/checkbox.md)
+- [CheckboxList](docs/checkboxlist.md)
 - [Radio](docs/radio.md)
 
 ### Unit testing

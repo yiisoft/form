@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
@@ -29,11 +28,15 @@ final class CheckboxList extends Widget
     private ?string $containerTag = 'div';
     /** @psalm-var array<array-key, array<array-key, mixed>> $value */
     private array $individualItemsAttributes = [];
-    /** @var array<array-key, string> */
+    /** @var string[] */
     private array $items = [];
+    /** @var bool[]|float[]|int[]|string[]|Stringable[] */
+    private array $itemsAsValues = [];
     private array $itemsAttributes = [];
     /** @psalm-var Closure(CheckboxItem):string|null */
     private ?Closure $itemsFormatter = null;
+    /** @var bool[]|float[]|int[]|string[]|Stringable[] */
+    private array $itemsFromValues = [];
     private string $separator = '';
 
     /**
@@ -107,11 +110,9 @@ final class CheckboxList extends Widget
     /**
      * The data used to generate the list of checkboxes.
      *
-     * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
+     * The array keys are the list of checkboxes values, and the array key values are the corresponding labels.
      *
-     * Note that the labels will NOT be HTML-encoded, while the values will.
-     *
-     * @param array<array-key, string> $items
+     * @param string[] $items
      *
      * @return static
      */
@@ -162,6 +163,22 @@ final class CheckboxList extends Widget
     }
 
     /**
+     * The data used to generate the list of checkboxes.
+     *
+     * The array keys are the list of checkboxes values, and the array values are the corresponding labels.
+     *
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsFromValues
+     *
+     * @return static
+     */
+    public function itemsFromValues(array $itemsFromValues = []): self
+    {
+        $new = clone $this;
+        $new->itemsFromValues = $itemsFromValues;
+        return $new;
+    }
+
+    /**
      * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
      * When specified, the element is not mutable.
      *
@@ -198,23 +215,26 @@ final class CheckboxList extends Widget
         $new = clone $this;
         $checkboxList = CheckboxListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
-        /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
-        /** @var bool|float|int|string|Stringable|null */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue');
-
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (is_object($value)) {
-            throw new InvalidArgumentException('CheckboxList widget requires a int|string|iterable|null value.');
+        if (!is_iterable($value)) {
+            throw new InvalidArgumentException('CheckboxList widget value must always be an array.');
         }
 
-        if (is_iterable($value)) {
-            $checkboxList = $checkboxList->values($value);
-        } elseif (is_scalar($value)) {
-            $checkboxList = $checkboxList->value($value);
+        /** @var string */
+        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
+
+        /** @var bool */
+        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
+
+        /** @var bool */
+        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
+
+        if ($new->items !== []) {
+            $checkboxList = $checkboxList->items($new->items, $itemsEncodeLabels);
+        } elseif ($new->itemsFromValues !== []) {
+            $checkboxList = $checkboxList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
         }
 
         if ($new->separator !== '') {
@@ -227,9 +247,8 @@ final class CheckboxList extends Widget
             ->containerTag($new->containerTag)
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
-            ->items($new->items)
             ->replaceCheckboxAttributes($new->itemsAttributes)
-            ->uncheckValue($forceUncheckedValue)
+            ->values($value)
             ->render();
     }
 }
