@@ -206,7 +206,7 @@ final class FormModelTest extends TestCase
             'LoginForm' => [
                 'login' => 'admin',
                 'password' => '123456',
-                'rememberMe' => true,
+                'rememberMe' => '1',
                 'noExist' => 'noExist',
             ],
         ];
@@ -220,6 +220,29 @@ final class FormModelTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".');
         $this->assertNull($form->getAttributeValue('noExist'));
+    }
+
+    public function testLoadRawData(): void
+    {
+        $form = new LoginForm();
+
+        $this->assertNull($form->getAttributeRowdataValue('login'));
+        $this->assertNull($form->getAttributeRowdataValue('password'));
+        $this->assertNull($form->getAttributeRowdataValue('password'));
+
+        $data = [
+            'LoginForm' => [
+                'login' => 'admin',
+                'password' => '123456',
+                'rememberMe' => '1',
+            ],
+        ];
+
+        $this->assertTrue($form->load($data));
+
+        $this->assertSame('admin', $form->getAttributeRowdataValue('login'));
+        $this->assertSame('123456', $form->getAttributeRowdataValue('password'));
+        $this->assertSame('1', $form->getAttributeRowdataValue('rememberMe'));
     }
 
     public function testLoadWithNestedAttribute(): void
@@ -246,7 +269,7 @@ final class FormModelTest extends TestCase
             'LoginForm2' => [
                 'login' => 'admin',
                 'password' => '123456',
-                'rememberMe' => true,
+                'rememberMe' => '1',
                 'noExist' => 'noExist',
             ],
         ];
