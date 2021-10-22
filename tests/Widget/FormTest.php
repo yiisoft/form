@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use StdClass;
 use Yiisoft\Form\Tests\Stub\ValidatorMock;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Form;
@@ -96,7 +97,7 @@ final class FormTest extends TestCase
                 '<form action="/foo" method="POST" myToken="tokenCsrf">' . PHP_EOL .
                 '<input type="hidden" name="myToken" value="tokenCsrf">',
                 'POST',
-                new class() {
+                new class () {
                     public function __toString(): string
                     {
                         return 'tokenCsrf';
@@ -123,11 +124,18 @@ final class FormTest extends TestCase
         $this->assertSame($expected, $formWidget);
     }
 
-    public function testCsrfException(): void
+    public function testCsrfExceptionNotString(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('csrfToken must be a string or Stringable object.');
         Form::widget()->action('/foo')->csrf(1)->begin();
+    }
+
+    public function testCsrfExceptionNotStringable(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('csrfToken must be a string or Stringable object.');
+        Form::widget()->action('/foo')->csrf(new StdClass())->begin();
     }
 
     public function testEnd(): void

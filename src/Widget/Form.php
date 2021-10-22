@@ -166,11 +166,14 @@ final class Form extends Widget
      */
     public function csrf($csrfToken, string $csrfName = '_csrf'): self
     {
-        if (is_object($csrfToken) && !method_exists($csrfToken, '__toString') && !is_string($csrfToken)) {
+        $new = clone $this;
+
+        if (is_string($csrfToken) || (is_object($csrfToken) && method_exists($csrfToken, '__toString'))) {
+            $new->csrfToken = (string) $csrfToken;
+        } else {
             throw new InvalidArgumentException('csrfToken must be a string or Stringable object.');
         }
-        $new = clone $this;
-        $new->csrfToken = (string) $csrfToken;
+
         $new->csrfName = $csrfName;
         return $new;
     }
