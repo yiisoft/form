@@ -9,10 +9,8 @@ use PHPUnit\Framework\TestCase;
 use StdClass;
 use Stringable;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FormTest extends TestCase
@@ -98,7 +96,7 @@ final class FormTest extends TestCase
                 '<form action="/foo" method="POST" myToken="tokenCsrf">' . PHP_EOL .
                 '<input type="hidden" name="myToken" value="tokenCsrf">',
                 'POST',
-                new class () {
+                new class() {
                     public function __toString(): string
                     {
                         return 'tokenCsrf';
@@ -197,10 +195,5 @@ final class FormTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 }
