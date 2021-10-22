@@ -7,8 +7,9 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use StdClass;
-use Yiisoft\Form\Tests\Stub\ValidatorMock;
+use Stringable;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Form;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
@@ -113,7 +114,7 @@ final class FormTest extends TestCase
      *
      * @param string $expected
      * @param string $method
-     * @param $csrfToken
+     * @param string|Stringable $csrfToken
      * @param string $csrfName
      */
     public function testCsrf(string $expected, string $method, $csrfToken, string $csrfName): void
