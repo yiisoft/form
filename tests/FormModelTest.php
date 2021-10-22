@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
@@ -206,14 +207,19 @@ final class FormModelTest extends TestCase
                 'login' => 'admin',
                 'password' => '123456',
                 'rememberMe' => true,
+                'noExist' => 'noExist',
             ],
         ];
 
         $this->assertTrue($form->load($data));
 
-        $this->assertSame('admin', $form->getAttributeRowdataValue('login'));
-        $this->assertSame('123456', $form->getAttributeRowdataValue('password'));
-        $this->assertSame(true, $form->getAttributeRowdataValue('rememberMe'));
+        $this->assertSame('admin', $form->getLogin());
+        $this->assertSame('123456', $form->getPassword());
+        $this->assertSame(true, $form->getRememberMe());
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".');
+        $this->assertNull($form->getAttributeValue('noExist'));
     }
 
     public function testLoadWithNestedAttribute(): void
@@ -227,7 +233,7 @@ final class FormModelTest extends TestCase
         ];
 
         $this->assertTrue($form->load($data));
-        $this->assertSame('admin', $form->getAttributeRowdataValue('user.login'));
+        $this->assertSame('admin', $form->getUserLogin());
     }
 
     public function testFailedLoadForm(): void
@@ -336,7 +342,7 @@ final class FormModelTest extends TestCase
             public int $int = 1;
         };
         $form->load(['int' => '2']);
-        $this->assertSame('2', $form->getAttributeRowdataValue('int'));
+        $this->assertSame(2, $form->getAttributeValue('int'));
 
         $form->setAttribute('int', 1);
         $this->assertSame(1, $form->getAttributeValue('int'));

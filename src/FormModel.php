@@ -215,6 +215,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             $this->rawdata = $data[$scope];
         }
 
+        foreach ($this->rawdata as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+
         return $this->rawdata !== [];
     }
 
@@ -259,8 +263,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             if ($result->isValid() === false) {
                 /** @psalm-suppress InvalidArgument */
                 $this->addErrors([$attribute => $result->getErrors()]);
-            } elseif (!empty($this->$attribute)) {
-                $this->setAttribute($attribute, $this->rawdata[$attribute]);
             }
         }
 
