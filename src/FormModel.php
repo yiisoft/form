@@ -200,6 +200,8 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      * @param string|null $formName
      *
      * @return bool
+     *
+     * @psalm-param array<string, string> $data
      */
     public function load(array $data, ?string $formName = null): bool
     {
@@ -209,7 +211,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         if ($scope === '' && !empty($data)) {
             $this->rawdata = $data;
         } elseif (isset($data[$scope])) {
-            /** @var mixed */
+            /** @var array<string, string> */
             $this->rawdata = $data[$scope];
         }
 
@@ -250,7 +252,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $this->clearErrors();
 
-        /** @var array<array-key, Resultset> $resultSet */
+        /**
+         * @var array<string, ResultSet> $resultSet
+         */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
                 /** @psalm-suppress InvalidArgument */

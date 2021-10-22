@@ -198,6 +198,8 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * @param string|null $formName scope from which to get data
      *
      * @return bool whether `load()` found the expected form in `$data`.
+     *
+     * @psalm-param array<string, string> $data
      */
     public function load(array $data, ?string $formName = null): bool;
 
