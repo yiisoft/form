@@ -31,6 +31,8 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
+    /** @psalm-var array<string, scalar|Stringable|null> */
+    private array $rawdata = [];
     private bool $validated = false;
 
     public function __construct()
@@ -100,6 +102,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getAttributeValue(string $attribute)
     {
         return $this->readProperty($attribute);
+    }
+
+    /**
+     * @return iterable|object|scalar|Stringable|null
+     */
+    public function getAttributeRowdataValue(string $attribute)
+    {
+        return $this->rawdata[$attribute] ?? null;
     }
 
     /**
@@ -193,26 +203,17 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function load(array $data, ?string $formName = null): bool
     {
+        $this->rawdata = [];
         $scope = $formName ?? $this->getFormName();
 
-        /**
-         * @psalm-var array<string, scalar|Stringable|null>
-         */
-        $values = [];
-
         if ($scope === '' && !empty($data)) {
-            $values = $data;
+            $this->rawdata = $data;
         } elseif (isset($data[$scope])) {
             /** @var mixed */
-            $values = $data[$scope];
+            $this->rawdata = $data[$scope];
         }
 
-        /** @var array<string, scalar|Stringable|null> $values */
-        foreach ($values as $name => $value) {
-            $this->setAttribute($name, $value);
-        }
-
-        return $values !== [];
+        return $this->rawdata !== [];
     }
 
     /**
@@ -248,13 +249,17 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function processValidationResult(ResultSet $resultSet): void
     {
         $this->clearErrors();
+
         /** @var array<array-key, Resultset> $resultSet */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
                 /** @psalm-suppress InvalidArgument */
                 $this->addErrors([$attribute => $result->getErrors()]);
+            } elseif (!empty($this->$attribute)) {
+                $this->setAttribute($attribute, $this->rawdata[$attribute]);
             }
         }
+
         $this->validated = true;
     }
 

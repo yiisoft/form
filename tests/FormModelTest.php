@@ -206,15 +206,14 @@ final class FormModelTest extends TestCase
                 'login' => 'admin',
                 'password' => '123456',
                 'rememberMe' => true,
-                'noExist' => 'noExist',
             ],
         ];
 
         $this->assertTrue($form->load($data));
 
-        $this->assertEquals('admin', $form->getLogin());
-        $this->assertEquals('123456', $form->getPassword());
-        $this->assertEquals(true, $form->getRememberMe());
+        $this->assertEquals('admin', $form->getAttributeRowdataValue('login'));
+        $this->assertEquals('123456', $form->getAttributeRowdataValue('password'));
+        $this->assertEquals(true, $form->getAttributeRowdataValue('rememberMe'));
     }
 
     public function testLoadWithNestedAttribute(): void
@@ -228,7 +227,7 @@ final class FormModelTest extends TestCase
         ];
 
         $this->assertTrue($form->load($data));
-        $this->assertEquals('admin', $form->getUserLogin());
+        $this->assertEquals('admin', $form->getAttributeRowdataValue('user.login'));
     }
 
     public function testFailedLoadForm(): void
@@ -337,7 +336,7 @@ final class FormModelTest extends TestCase
             public int $int = 1;
         };
         $form->load(['int' => '2']);
-        $this->assertSame(2, $form->getAttributeValue('int'));
+        $this->assertSame('2', $form->getAttributeRowdataValue('int'));
 
         $form->setAttribute('int', 1);
         $this->assertSame(1, $form->getAttributeValue('int'));
