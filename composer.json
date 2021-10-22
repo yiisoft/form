@@ -22,7 +22,7 @@
         "yiisoft/html": "^2.0",
         "yiisoft/http": "^1.0",
         "yiisoft/strings": "^2.0",
-        "yiisoft/validator": "^3.0@dev",
+        "yiisoft/validator": "dev-add-getAttributeRawdataValue as 3.0@dev",
         "yiisoft/widget": "^3.0@dev"
     },
     "require-dev": {
@@ -53,5 +53,11 @@
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
         "test-watch": "phpunit-watcher watch"
-    }
+    },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/terabytesoftw/validator"
+        }
+    ]
 }
