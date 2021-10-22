@@ -20,25 +20,25 @@ final class FormModelTest extends TestCase
     public function testAnonymousFormName(): void
     {
         $form = new class () extends FormModel {};
-        $this->assertEquals('', $form->getFormName());
+        $this->assertSame('', $form->getFormName());
     }
 
     public function testDefaultFormName(): void
     {
         $form = new DefaultFormNameForm();
-        $this->assertEquals('DefaultFormNameForm', $form->getFormName());
+        $this->assertSame('DefaultFormNameForm', $form->getFormName());
     }
 
     public function testNonNamespacedFormName(): void
     {
         $form = new \NonNamespacedForm();
-        $this->assertEquals('NonNamespacedForm', $form->getFormName());
+        $this->assertSame('NonNamespacedForm', $form->getFormName());
     }
 
     public function testCustomFormName(): void
     {
         $form = new CustomFormNameForm();
-        $this->assertEquals('my-best-form-name', $form->getFormName());
+        $this->assertSame('my-best-form-name', $form->getFormName());
     }
 
     public function testUnknownPropertyType(): void
@@ -68,13 +68,13 @@ final class FormModelTest extends TestCase
         $form = new LoginForm();
 
         $form->login('admin');
-        $this->assertEquals('admin', $form->getAttributeValue('login'));
+        $this->assertSame('admin', $form->getAttributeValue('login'));
 
         $form->password('123456');
-        $this->assertEquals('123456', $form->getAttributeValue('password'));
+        $this->assertSame('123456', $form->getAttributeValue('password'));
 
         $form->rememberMe(true);
-        $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
+        $this->assertSame(true, $form->getAttributeValue('rememberMe'));
     }
 
     public function testGetAttributeValueWithNestedAttribute(): void
@@ -82,15 +82,15 @@ final class FormModelTest extends TestCase
         $form = new FormWithNestedAttribute();
 
         $form->setUserLogin('admin');
-        $this->assertEquals('admin', $form->getAttributeValue('user.login'));
+        $this->assertSame('admin', $form->getAttributeValue('user.login'));
     }
 
     public function testGetAttributeHint(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Write your id or email.', $form->getAttributeHint('login'));
-        $this->assertEquals('Write your password.', $form->getAttributeHint('password'));
+        $this->assertSame('Write your id or email.', $form->getAttributeHint('login'));
+        $this->assertSame('Write your password.', $form->getAttributeHint('password'));
         $this->assertEmpty($form->getAttributeHint('noExist'));
     }
 
@@ -98,22 +98,22 @@ final class FormModelTest extends TestCase
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Write your id or email.', $form->getAttributeHint('user.login'));
+        $this->assertSame('Write your id or email.', $form->getAttributeHint('user.login'));
     }
 
     public function testGetAttributeLabel(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Login:', $form->getAttributeLabel('login'));
-        $this->assertEquals('Testme', $form->getAttributeLabel('testme'));
+        $this->assertSame('Login:', $form->getAttributeLabel('login'));
+        $this->assertSame('Testme', $form->getAttributeLabel('testme'));
     }
 
     public function testGetNestedAttributeLabel(): void
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Login:', $form->getAttributeLabel('user.login'));
+        $this->assertSame('Login:', $form->getAttributeLabel('user.login'));
     }
 
     public function testAttributesLabels(): void
@@ -126,15 +126,15 @@ final class FormModelTest extends TestCase
             'rememberMe' => 'remember Me:',
         ];
 
-        $this->assertEquals($expected, $form->getAttributeLabels());
+        $this->assertSame($expected, $form->getAttributeLabels());
     }
 
     public function testGetAttributePlaceHolder(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
-        $this->assertEquals('Type Password.', $form->getAttributePlaceHolder('password'));
+        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
+        $this->assertSame('Type Password.', $form->getAttributePlaceHolder('password'));
         $this->assertEmpty($form->getAttributePlaceHolder('noExist'));
     }
 
@@ -142,7 +142,7 @@ final class FormModelTest extends TestCase
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
+        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
     }
 
     public function testErrorSummary(): void
@@ -166,7 +166,7 @@ final class FormModelTest extends TestCase
         $this->assertTrue($form->load($data));
         $this->assertFalse($validator->validate($form)->isValid());
 
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             $form->getErrorSummary(false)
         );
@@ -176,7 +176,7 @@ final class FormModelTest extends TestCase
             'Is too short.',
         ];
 
-        $this->assertEquals(
+        $this->assertSame(
             $expected,
             $form->getErrorSummary(true)
         );
@@ -211,9 +211,9 @@ final class FormModelTest extends TestCase
 
         $this->assertTrue($form->load($data));
 
-        $this->assertEquals('admin', $form->getAttributeRowdataValue('login'));
-        $this->assertEquals('123456', $form->getAttributeRowdataValue('password'));
-        $this->assertEquals(true, $form->getAttributeRowdataValue('rememberMe'));
+        $this->assertSame('admin', $form->getAttributeRowdataValue('login'));
+        $this->assertSame('123456', $form->getAttributeRowdataValue('password'));
+        $this->assertSame(true, $form->getAttributeRowdataValue('rememberMe'));
     }
 
     public function testLoadWithNestedAttribute(): void
@@ -227,7 +227,7 @@ final class FormModelTest extends TestCase
         ];
 
         $this->assertTrue($form->load($data));
-        $this->assertEquals('admin', $form->getAttributeRowdataValue('user.login'));
+        $this->assertSame('admin', $form->getAttributeRowdataValue('user.login'));
     }
 
     public function testFailedLoadForm(): void
@@ -281,7 +281,7 @@ final class FormModelTest extends TestCase
         $form->addError('password', $errorMessage);
 
         $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->getFirstError('password'));
+        $this->assertSame($errorMessage, $form->getFirstError('password'));
     }
 
     public function testAddAndGetErrorForNonExistingAttribute(): void
@@ -292,7 +292,7 @@ final class FormModelTest extends TestCase
         $form->addError('form', $errorMessage);
 
         $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->getFirstError('form'));
+        $this->assertSame($errorMessage, $form->getFirstError('form'));
     }
 
     public function testValidatorRules(): void
@@ -303,28 +303,28 @@ final class FormModelTest extends TestCase
         $form->login('');
         $validator->validate($form);
 
-        $this->assertEquals(
+        $this->assertSame(
             ['Value cannot be blank.'],
             $form->getError('login')
         );
 
         $form->login('x');
         $validator->validate($form);
-        $this->assertEquals(
+        $this->assertSame(
             ['Is too short.'],
             $form->getError('login')
         );
 
         $form->login(str_repeat('x', 60));
         $validator->validate($form);
-        $this->assertEquals(
+        $this->assertSame(
             'Is too long.',
             $form->getFirstError('login')
         );
 
         $form->login('admin@.com');
         $validator->validate($form);
-        $this->assertEquals(
+        $this->assertSame(
             'This value is not a valid email address.',
             $form->getFirstError('login')
         );
