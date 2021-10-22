@@ -96,7 +96,7 @@ final class FormTest extends TestCase
                 '<form action="/foo" method="POST" myToken="tokenCsrf">' . PHP_EOL .
                 '<input type="hidden" name="myToken" value="tokenCsrf">',
                 'POST',
-                new class() {
+                new class () {
                     public function __toString(): string
                     {
                         return 'tokenCsrf';
