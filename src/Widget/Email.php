@@ -137,10 +137,10 @@ final class Email extends Widget
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.value.single
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.value.multiple
          */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('Email widget must be a string.');
+        if (!is_string($value) && null !== $value) {
+            throw new InvalidArgumentException('Email widget must be a string or null value.');
         }
 
         return Input::tag()

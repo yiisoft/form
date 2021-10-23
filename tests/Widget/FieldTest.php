@@ -27,14 +27,16 @@ final class FieldTest extends TestCase
 
     public function testAddAttributesEmailValidator(): void
     {
-        // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('email', '');
+        // create validator
         $validator = $this->createValidatorMock();
+
+        // add attributes html validator `Required::rule()`.
+        $this->formModel->load(['AttributesValidatorForm' => ['string' => '']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
-        <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
         <div class="info-class">Write your email.</div>
         <div class="hasError">Value cannot be blank.</div>
         </div>
@@ -45,8 +47,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('email', 'a@a.com');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['email' => 'a@a.com']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -62,8 +63,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('email', 'awesomexample@example.com');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['email' => 'awesomexample@example.com']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -79,8 +79,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `MatchRegularExpression::class`.
-        $this->formModel->setAttribute('email', 'awesome.com');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['email' => 'awesome.com']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -96,8 +95,7 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation email.
-        $this->formModel->setAttribute('email', 'test@example.com');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['email' => 'test@example.com']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
