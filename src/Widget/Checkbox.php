@@ -90,7 +90,8 @@ final class Checkbox extends Widget
 
         $checkbox = CheckboxTag::tag();
 
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @var mixed */
+        $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');

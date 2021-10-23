@@ -159,7 +159,7 @@ final class FieldCheckBoxTest extends TestCase
     public function testValues(): void
     {
         // value bool false
-        $this->formModel->setAttribute('bool', false);
+        $this->formModel->load(['TypeForm' => ['bool' => '0']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
@@ -171,7 +171,7 @@ final class FieldCheckBoxTest extends TestCase
         );
 
         // value bool true
-        $this->formModel->setAttribute('bool', true);
+        $this->formModel->load(['TypeForm' => ['bool' => '1']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
@@ -183,7 +183,7 @@ final class FieldCheckBoxTest extends TestCase
         );
 
         // value int 0
-        $this->formModel->setAttribute('int', 0);
+        $this->formModel->load(['TypeForm' => ['int' => '0']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
@@ -195,7 +195,7 @@ final class FieldCheckBoxTest extends TestCase
         );
 
         // value int 1
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
@@ -207,7 +207,7 @@ final class FieldCheckBoxTest extends TestCase
         );
 
         // value string '0'
-        $this->formModel->setAttribute('string', '0');
+        $this->formModel->load(['TypeForm' => ['string' => '0']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1"> String</label>
@@ -220,7 +220,7 @@ final class FieldCheckBoxTest extends TestCase
         );
 
         // value string '1'
-        $this->formModel->setAttribute('string', '1');
+        $this->formModel->load(['TypeForm' => ['string' => '1']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
@@ -233,7 +233,7 @@ final class FieldCheckBoxTest extends TestCase
         );
 
         // value null
-        $this->formModel->setAttribute('toNull', null);
+        $this->formModel->load(['TypeForm' => ['toNull' => '']]);
         $expected = <<<'HTML'
         <div>
         <input type="hidden" name="TypeForm[toNull]" value="0"><label><input type="checkbox" id="typeform-tonull" name="TypeForm[toNull]" value="1"> To Null</label>
@@ -247,6 +247,7 @@ final class FieldCheckBoxTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->checkbox()->render();
