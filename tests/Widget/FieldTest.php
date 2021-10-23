@@ -436,7 +436,7 @@ final class FieldTest extends TestCase
     public function testAddAttributesTextAreaValidator(): void
     {
         // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('text', '');
+        $this->formModel->load(['AttributesValidatorForm' => ['text' => '']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -451,7 +451,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('text', 'a');
+        $this->formModel->load(['AttributesValidatorForm' => ['text' => 'a']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -466,7 +466,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('text', 'testsme');
+        $this->formModel->load(['AttributesValidatorForm' => ['text' => 'testsme']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -481,7 +481,7 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation textarea.
-        $this->formModel->setAttribute('text', 'tests');
+        $this->formModel->load(['AttributesValidatorForm' => ['text' => 'tests']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>

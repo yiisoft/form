@@ -93,8 +93,9 @@ final class TextAreaTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('TextArea widget must be a string.');
+        $this->expectExceptionMessage('TextArea widget must be a string or null value.');
         TextArea::widget()->config($this->formModel, 'array')->render();
     }
 
