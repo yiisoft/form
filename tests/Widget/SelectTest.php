@@ -312,7 +312,7 @@ final class SelectTest extends TestCase
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select widget required bool|float|int|iterable|string|null.');
-        $html = Select::widget()->config($this->formModel, 'object')->render();
+        Select::widget()->config($this->formModel, 'object')->render();
     }
 
     protected function setUp(): void

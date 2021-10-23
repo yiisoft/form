@@ -17,8 +17,13 @@ final class FieldSelectTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    /** @var string[] */
     private array $cities = [];
+    /** @var string[][] */
+    private array $citiesGroups = [];
+    private TypeForm $formModel;
+    /** @var string[][] */
+    private array $groups = [];
 
     public function testForceUnselectValueWithMultiple(): void
     {
