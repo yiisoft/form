@@ -18,7 +18,7 @@ final class DateTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="date" id="typeform-string" name="TypeForm[string]" value>',
+            '<input type="date" id="typeform-string" name="TypeForm[string]">',
             Date::widget()->config($this->formModel, 'string')->render(),
         );
     }
@@ -26,7 +26,7 @@ final class DateTest extends TestCase
     public function testValue(): void
     {
         // string '2021-09-18'
-        $this->formModel->setAttribute('string', '2021-09-18');
+        $this->formModel->load(['TypeForm' => ['string' => '2021-09-18']]);
         $this->assertSame(
             '<input type="date" id="typeform-string" name="TypeForm[string]" value="2021-09-18">',
             Date::widget()->config($this->formModel, 'string')->render(),
@@ -35,9 +35,9 @@ final class DateTest extends TestCase
 
     public function testValueException(): void
     {
-        $this->formModel->setAttribute('array', []);
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Date widget requires a string value.');
+        $this->expectExceptionMessage('Date widget requires a string or null value.');
         Date::widget()->config($this->formModel, 'array')->render();
     }
 
