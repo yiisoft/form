@@ -329,34 +329,21 @@ final class FormModelTest extends TestCase
         $validator = $this->createValidatorMock();
         $form = new LoginForm();
 
-        $form->login('');
+        $form->load(['LoginForm' => ['login' => '']]);
         $validator->validate($form);
+        $this->assertSame(['Value cannot be blank.'], $form->getError('login'));
 
-        $this->assertSame(
-            ['Value cannot be blank.'],
-            $form->getError('login')
-        );
-
-        $form->login('x');
+        $form->load(['LoginForm' => ['login' => 'x']]);
         $validator->validate($form);
-        $this->assertSame(
-            ['Is too short.'],
-            $form->getError('login')
-        );
+        $this->assertSame(['Is too short.'], $form->getError('login'));
 
-        $form->login(str_repeat('x', 60));
+        $form->load(['LoginForm' => ['login' => str_repeat('x', 60)]]);
         $validator->validate($form);
-        $this->assertSame(
-            'Is too long.',
-            $form->getFirstError('login')
-        );
+        $this->assertSame('Is too long.', $form->getFirstError('login'));
 
-        $form->login('admin@.com');
+        $form->load(['LoginForm' => ['login' => 'admin@.com']]);
         $validator->validate($form);
-        $this->assertSame(
-            'This value is not a valid email address.',
-            $form->getFirstError('login')
-        );
+        $this->assertSame('This value is not a valid email address.', $form->getFirstError('login'));
     }
 
     public function testPublicAttributes(): void
