@@ -23,7 +23,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value form="form-id" placeholder="Typed your text string.">
+        <input type="password" id="typeform-string" name="TypeForm[string]" form="form-id" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -35,10 +35,11 @@ final class FieldPasswordTest extends TestCase
 
     public function testMaxLength(): void
     {
+        $this->formModel->load(['TypeForm' => ['string' => 'test1234']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value maxlength="16" placeholder="Typed your text string.">
+        <input type="password" id="typeform-string" name="TypeForm[string]" value="test1234" maxlength="16" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +54,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value minlength="8" placeholder="Typed your text string.">
+        <input type="password" id="typeform-string" name="TypeForm[string]" minlength="8" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -68,7 +69,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Typed your text string.">
+        <input type="password" id="typeform-string" name="TypeForm[string]" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -90,7 +91,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
+        <input type="password" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -109,7 +110,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value readonly placeholder="Typed your text string.">
+        <input type="password" id="typeform-string" name="TypeForm[string]" readonly placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -124,7 +125,7 @@ final class FieldPasswordTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="password" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="password" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -136,8 +137,9 @@ final class FieldPasswordTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Password widget must be a string.');
+        $this->expectExceptionMessage('Password widget must be a string or null value.');
         Field::widget()->config($this->formModel, 'array')->password()->render();
     }
 

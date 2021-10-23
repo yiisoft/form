@@ -162,9 +162,11 @@ final class FieldTest extends TestCase
 
     public function testAddAttributesPasswordValidator(): void
     {
-        // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('password', '');
+        // create validator
         $validator = $this->createValidatorMock();
+
+        // add attributes html validator `Required::rule()`.
+        $this->formModel->load(['AttributesValidatorForm' => ['password' => '']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -179,8 +181,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('password', 't');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['password' => 't']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -195,8 +196,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('password', '012345678');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['password' => '012345678']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -211,8 +211,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
-        $this->formModel->setAttribute('password', '12345');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['password' => '12345']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -227,7 +226,7 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation password.
-        $this->formModel->setAttribute('password', 'test1234');
+        $this->formModel->load(['AttributesValidatorForm' => ['password' => 'test1234']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
