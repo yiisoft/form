@@ -4,7 +4,7 @@
 
 ## Usage
 
-You can also configure the widget to return the index of the checked item.
+You can configure the widget to return the index of the checked item.
 
 ```php
 <?php
@@ -65,7 +65,7 @@ That would generate the following code:
 
 ### Custom values 
 
-Custom values could be set as well. In this example we use two values for selection states (`Inactive`, `Active`), and `Undefined` when the radio is not checked.
+Custom values could be set as well. In this example we use two values for selection states (`Inactive`, `Active`), and `Undefined` when the radio is not selected.
 
 ```php
 <?php
@@ -134,17 +134,17 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`containerAttributes(array $attributes)` | The HTML attributes for the container tag. | `[]`
-`containerTag(?string $name = null)` | The tag name of the container element. | `div`
+`containerAttributes(array $attributes)` | HTML attributes for a container tag. | `[]`
+`containerTag(?string $name = null)` | Tag name of the container element. | `div`
 `disabled(bool $value = true)` | Set whether the element is disabled or not. | `false`
-`individualItemsAttributes(array $attributes = [])` | The HTML attributes for the individual checkbox elements. | `[]`
-`items(array $items = [])` | The list of checkbox items for array keys. | `[]`
-`itemsAttributes(array $attributes = [])` | The HTML attributes for the checkbox elements. | `[]`
-`itemsFormatter(?Closure $formatter)` | The formatter for the checkbox items. | `null`
-`itemsFromValues(array $values = [])` | The list of checkbox items for array values. | `[]`
+`individualItemsAttributes(array $attributes = [])` | HTML attributes for individual checkbox elements. | `[]`
+`items(array $items = [])` | A list of checkbox items for array keys. | `[]`
+`itemsAttributes(array $attributes = [])` | HTML attributes for checkbox elements. | `[]`
+`itemsFormatter(?Closure $formatter)` | Formatter for checkbox items. | `null`
+`itemsFromValues(array $values = [])` | List of checkbox items for array values. | `[]`
 `readonly()` | Set whether the element is readonly or not. | `false`
-`separator(string $separator)` | The HTML between each checkbox element. | `&nbsp;`
-`uncheckValue($value):` | The value for the uncheck option. | `null`
+`separator(string $separator)` | HTML to insert between each checkbox element. | `&nbsp;`
+`uncheckValue($value):` | A value for uncheck option. | `null`
 
 ### `Common` methods:
 

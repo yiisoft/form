@@ -556,7 +556,7 @@ final class Field extends Widget
      * This attribute will render a hidden input so that if the {@see RadioList} is not checked and is submitted, the
      * value of this attribute will still be submitted to the server via the hidden input. If you do not want any hidden
      * input, you should explicitly no set.
-     * - `itemsAttributes`: array, the HTML attributes for the items radio list. This is only used when the `items`
+     * - `itemsAttributes`: array, the HTML attributes for the items of radio list. This is only used when the `items`
      * attribute is specified.
      * - `separator`: string, the HTML code that separates items.
      *
