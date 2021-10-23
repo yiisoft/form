@@ -157,10 +157,10 @@ final class Form extends Widget
     }
 
     /**
-     * The csrf-token content attribute token that are known to be safe to use for.
+     * The CSRF-token content attribute token that are known to be safe to use for.
      *
-     * @param string|\Stringable|mixed $csrfToken the csrf-token attribute value.
-     * @param string $csrfName the csrf-token attribute name.
+     * @param string|\Stringable|mixed $csrfToken the CSRF-token attribute value.
+     * @param string $csrfName the CSRF-token attribute name.
      *
      * @return static
      */
