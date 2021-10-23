@@ -24,7 +24,7 @@ final class SelectTest extends TestCase
 
     public function testForceUnselectValueWithMultiple(): void
     {
-        $this->formModel->setAttribute('array', [1, 3]);
+        $this->formModel->load(['TypeForm' => ['array' => [1, 3]]]);
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[array]" value="0">
         <select id="typeform-array" name="TypeForm[array][]" multiple size="4">
@@ -56,7 +56,7 @@ final class SelectTest extends TestCase
 
     public function testGroups(): void
     {
-        $this->formModel->setAttribute('int', 8);
+        $this->formModel->load(['TypeForm' => ['int' => '8']]);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <optgroup label="Russia">
@@ -82,7 +82,7 @@ final class SelectTest extends TestCase
 
     public function testGroupsItemsAttributes(): void
     {
-        $this->formModel->setAttribute('int', 7);
+        $this->formModel->load(['TypeForm' => ['int' => '7']]);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <optgroup label="Russia">
@@ -109,7 +109,7 @@ final class SelectTest extends TestCase
 
     public function testMultiple(): void
     {
-        $this->formModel->setAttribute('array', [1, 4]);
+        $this->formModel->load(['TypeForm' => ['array' => [1, 4]]]);
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[array]" value="0">
         <select id="typeform-array" name="TypeForm[array][]" multiple size="4">
@@ -152,6 +152,7 @@ final class SelectTest extends TestCase
 
     public function testPrompt(): void
     {
+        $this->formModel->load(['TypeForm' => ['int' => '0']]);
         $prompt = [
             'text' => 'Select City Birth',
             'attributes' => [
@@ -178,7 +179,7 @@ final class SelectTest extends TestCase
 
     public function testRender(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1">Moscu</option>
@@ -195,7 +196,7 @@ final class SelectTest extends TestCase
 
     public function testSizeWithMultiple(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[int]" value>
         <select id="typeform-int" name="TypeForm[int][]" multiple size="3">
@@ -217,6 +218,7 @@ final class SelectTest extends TestCase
     public function testValues(): void
     {
         // value int 1.
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $this->formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
@@ -232,7 +234,7 @@ final class SelectTest extends TestCase
         );
 
         // value int 2.
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1">Moscu</option>
@@ -247,7 +249,7 @@ final class SelectTest extends TestCase
         );
 
         // value iterable [2, 3].
-        $this->formModel->setAttribute('array', [2, 3]);
+        $this->formModel->load(['TypeForm' => ['array' => [2, 3]]]);
         $expected = <<<'HTML'
         <select id="typeform-array" name="TypeForm[array]">
         <option value="1">Moscu</option>
@@ -262,6 +264,7 @@ final class SelectTest extends TestCase
         );
 
         // value string '1'.
+        $this->formModel->load(['TypeForm' => ['string' => '1']]);
         $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <select id="typeform-string" name="TypeForm[string]">
@@ -277,7 +280,7 @@ final class SelectTest extends TestCase
         );
 
         // value string '2'
-        $this->formModel->setAttribute('string', 2);
+        $this->formModel->load(['TypeForm' => ['string' => '2']]);
         $expected = <<<'HTML'
         <select id="typeform-string" name="TypeForm[string]">
         <option value="1">Moscu</option>
@@ -292,7 +295,7 @@ final class SelectTest extends TestCase
         );
 
         // value null.
-        $this->formModel->setAttribute('toNull', null);
+        $this->formModel->load(['TypeForm' => ['toNull' => '']]);
         $expected = <<<'HTML'
         <select id="typeform-tonull" name="TypeForm[toNull]">
         <option value="1">Moscu</option>
@@ -309,9 +312,9 @@ final class SelectTest extends TestCase
 
     public function testValueException(): void
     {
-        $this->formModel->setAttribute('object', new StdClass());
+        $this->formModel->load(['TypeForm' => ['object' => new StdClass()]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Select widget required bool|float|int|iterable|string|null.');
+        $this->expectExceptionMessage('Select widget value can not be an object.');
         Select::widget()->config($this->formModel, 'object')->render();
     }
 
