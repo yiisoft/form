@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use InvalidArgumentException;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
 use Yiisoft\Widget\Widget;
@@ -156,17 +157,23 @@ final class Form extends Widget
     }
 
     /**
-     * The csrf-token content attribute token that are known to be safe to use for.
+     * The CSRF-token content attribute token that are known to be safe to use for.
      *
-     * @param string $csrfToken the csrf-token attribute value.
-     * @param string $csrfName the csrf-token attribute name.
+     * @param mixed|string|\Stringable $csrfToken the CSRF-token attribute value.
+     * @param string $csrfName the CSRF-token attribute name.
      *
      * @return static
      */
-    public function csrf(string $csrfToken, string $csrfName = '_csrf'): self
+    public function csrf($csrfToken, string $csrfName = '_csrf'): self
     {
         $new = clone $this;
-        $new->csrfToken = $csrfToken;
+
+        if (is_string($csrfToken) || (is_object($csrfToken) && method_exists($csrfToken, '__toString'))) {
+            $new->csrfToken = (string) $csrfToken;
+        } else {
+            throw new InvalidArgumentException('$csrfToken must be a string or \Stringable object.');
+        }
+
         $new->csrfName = $csrfName;
         return $new;
     }
