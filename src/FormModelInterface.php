@@ -38,15 +38,6 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function getAttributeValue(string $attribute);
 
     /**
-     * Returns the value for the specified attribute of the row data.
-     *
-     * @param string $attribute
-     *
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeRowdataValue(string $attribute);
-
-    /**
      * Returns the errors for all attributes.
      *
      * @return array errors for all attributes or the specified attribute. null is returned if no error.
@@ -125,6 +116,15 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * {@see load()}
      */
     public function getFormName(): string;
+
+    /**
+     * Returns the value for the specified attribute of the row data.
+     *
+     * @param string $attribute
+     *
+     * @return mixed Raw attribute value that is set to the form with no type-casting performed.
+     */
+    public function getRawAttributeValue(string $attribute);
 
     /**
      * Returns the validation rules for attributes.

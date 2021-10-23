@@ -32,7 +32,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
     /** @psalm-var array<string, scalar|Stringable|null> */
-    private array $rawdata = [];
+    private array $rawData = [];
     private bool $validated = false;
 
     public function __construct()
@@ -105,14 +105,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeRowdataValue(string $attribute)
-    {
-        return $this->rawdata[$attribute] ?? null;
-    }
-
-    /**
      * @return string Returns classname without a namespace part or empty string when class is anonymous
      */
     public function getFormName(): string
@@ -127,6 +119,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return substr($className, 1);
+    }
+
+    /**
+     * @return mixed Raw attribute value that is set to the form with no type-casting performed.
+     */
+    public function getRawAttributeValue(string $attribute)
+    {
+        return $this->rawData[$attribute] ?? null;
     }
 
     public function hasAttribute(string $attribute): bool
@@ -205,21 +205,21 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function load(array $data, ?string $formName = null): bool
     {
-        $this->rawdata = [];
+        $this->rawData = [];
         $scope = $formName ?? $this->getFormName();
 
         if ($scope === '' && !empty($data)) {
-            $this->rawdata = $data;
+            $this->rawData = $data;
         } elseif (isset($data[$scope])) {
             /** @var array<string, string> */
-            $this->rawdata = $data[$scope];
+            $this->rawData = $data[$scope];
         }
 
-        foreach ($this->rawdata as $name => $value) {
+        foreach ($this->rawData as $name => $value) {
             $this->setAttribute($name, $value);
         }
 
-        return $this->rawdata !== [];
+        return $this->rawData !== [];
     }
 
     /**
