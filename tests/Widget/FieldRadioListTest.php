@@ -23,7 +23,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testContainerAttributes(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -42,7 +42,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testContainerTag(): void
     {
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -61,7 +61,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testContainerTagWithFalse(): void
     {
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -96,7 +96,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testIndividualItemsAttributes(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -120,7 +120,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testItemsAttributes(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -139,7 +139,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testItemFormater(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -167,7 +167,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testItemsFromValues(): void
     {
-        $this->formModel->setAttribute('string', 'Male');
+        $this->formModel->load(['TypeForm' => ['string' => 'Male']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
@@ -186,7 +186,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testReadOnly(): void
     {
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -204,7 +204,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testRender(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -222,7 +222,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testSeparator(): void
     {
-        $this->formModel->setAttribute('int', 2);
+        $this->formModel->load(['TypeForm' => ['int' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -261,7 +261,7 @@ final class FieldRadioListTest extends TestCase
     public function testValue(): void
     {
         // value bool false
-        $this->formModel->setAttribute('bool', false);
+        $this->formModel->load(['TypeForm' => ['bool' => '0']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">Bool</label>
@@ -277,7 +277,7 @@ final class FieldRadioListTest extends TestCase
         );
 
         // value bool true
-        $this->formModel->setAttribute('bool', true);
+        $this->formModel->load(['TypeForm' => ['bool' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-bool">Bool</label>
@@ -293,7 +293,23 @@ final class FieldRadioListTest extends TestCase
         );
 
         // value int 0
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '0']]);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-int">Int</label>
+        <div id="typeform-int">
+        <label><input type="radio" name="TypeForm[int]" value="1"> Female</label>
+        <label><input type="radio" name="TypeForm[int]" value="2"> Male</label>
+        </div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'int')->radioList([], $this->sex)->render(),
+        );
+
+        // value int 1
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -308,24 +324,8 @@ final class FieldRadioListTest extends TestCase
             Field::widget()->config($this->formModel, 'int')->radioList([], $this->sex)->render(),
         );
 
-        // value int 1
-        $this->formModel->setAttribute('int', 2);
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-int">Int</label>
-        <div id="typeform-int">
-        <label><input type="radio" name="TypeForm[int]" value="1"> Female</label>
-        <label><input type="radio" name="TypeForm[int]" value="2" checked> Male</label>
-        </div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'int')->radioList([], $this->sex)->render(),
-        );
-
         // value string '1'
-        $this->formModel->setAttribute('string', '1');
+        $this->formModel->load(['TypeForm' => ['string' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
@@ -342,7 +342,7 @@ final class FieldRadioListTest extends TestCase
         );
 
         // value string '2'
-        $this->formModel->setAttribute('string', '2');
+        $this->formModel->load(['TypeForm' => ['string' => '2']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
@@ -359,7 +359,7 @@ final class FieldRadioListTest extends TestCase
         );
 
         // value null
-        $this->formModel->setAttribute('toNull', null);
+        $this->formModel->load(['TypeForm' => ['toNull' => '']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-tonull">To Null</label>
@@ -377,7 +377,7 @@ final class FieldRadioListTest extends TestCase
 
     public function testValueException(): void
     {
-        $this->formModel->setAttribute('array', []);
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->radioList()->render();

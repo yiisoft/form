@@ -229,7 +229,7 @@ final class RadioList extends Widget
         $radioList = RadioListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('RadioList widget value can not be an iterable or an object.');
