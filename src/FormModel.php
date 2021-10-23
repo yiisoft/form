@@ -31,7 +31,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
     private ?Inflector $inflector = null;
-    /** @psalm-var array<string, scalar|Stringable|null> */
+    /** @psalm-var array<string, scalar|Stringable|null|array> */
     private array $rawData = [];
     private bool $validated = false;
 
@@ -201,7 +201,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      *
      * @return bool
      *
-     * @psalm-param array<string, string> $data
+     * @psalm-param array<string, string|array> $data
      */
     public function load(array $data, ?string $formName = null): bool
     {
