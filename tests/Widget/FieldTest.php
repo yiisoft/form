@@ -498,7 +498,7 @@ final class FieldTest extends TestCase
     public function testAddAttributesUrlValidator(): void
     {
         // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('url', '');
+        $this->formModel->load(['AttributesValidatorForm' => ['url' => '']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -513,7 +513,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('url', 'http://a.com');
+        $this->formModel->load(['AttributesValidatorForm' => ['url' => 'http://a.com']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -528,7 +528,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('url', 'http://awesomexample.com');
+        $this->formModel->load(['AttributesValidatorForm' => ['url' => 'http://awesomexample.com']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -543,7 +543,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
-        $this->formModel->setAttribute('url', 'awesomexample.com');
+        $this->formModel->load(['AttributesValidatorForm' => ['url' => 'awesomexample.com']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -558,7 +558,7 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation url.
-        $this->formModel->setAttribute('url', 'http://example.com');
+        $this->formModel->load(['AttributesValidatorForm' => ['url' => 'http://example.com']]);
         $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>

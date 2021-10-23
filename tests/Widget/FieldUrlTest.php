@@ -23,7 +23,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value maxlength="10" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" maxlength="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value minlength="4" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" minlength="4" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +53,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -69,7 +69,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
+        <input type="url" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -84,7 +84,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -99,7 +99,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value size="20" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" size="20" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -111,9 +111,10 @@ final class FieldUrlTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Url widget must be a string.');
-        Field::widget()->config($this->formModel, 'int')->url()->render();
+        $this->expectExceptionMessage('Url widget must be a string or null value.');
+        Field::widget()->config($this->formModel, 'array')->url()->render();
     }
 
     protected function setUp(): void

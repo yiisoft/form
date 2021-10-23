@@ -28,7 +28,7 @@ final class UrlTest extends TestCase
     public function testMaxLength(): void
     {
         $this->assertSame(
-            '<input type="url" id="typeform-string" name="TypeForm[string]" value maxlength="10">',
+            '<input type="url" id="typeform-string" name="TypeForm[string]" maxlength="10">',
             Url::widget()->config($this->formModel, 'string')->maxlength(10)->render(),
         );
     }
@@ -36,7 +36,7 @@ final class UrlTest extends TestCase
     public function testMinLength(): void
     {
         $this->assertSame(
-            '<input type="url" id="typeform-string" name="TypeForm[string]" value minlength="4">',
+            '<input type="url" id="typeform-string" name="TypeForm[string]" minlength="4">',
             Url::widget()->config($this->formModel, 'string')->minlength(4)->render(),
         );
     }
@@ -44,7 +44,7 @@ final class UrlTest extends TestCase
     public function testPattern(): void
     {
         $expected = <<<'HTML'
-        <input type="url" id="typeform-string" name="TypeForm[string]" value pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$">
+        <input type="url" id="typeform-string" name="TypeForm[string]" pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$">
         HTML;
         $html = Url::widget()
             ->config($this->formModel, 'string')
@@ -56,7 +56,7 @@ final class UrlTest extends TestCase
     public function testPlaceholder(): void
     {
         $this->assertSame(
-            '<input type="url" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">',
+            '<input type="url" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
             Url::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
@@ -64,7 +64,7 @@ final class UrlTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="url" id="typeform-string" name="TypeForm[string]" value>',
+            '<input type="url" id="typeform-string" name="TypeForm[string]">',
             Url::widget()->config($this->formModel, 'string')->render(),
         );
     }
@@ -72,16 +72,17 @@ final class UrlTest extends TestCase
     public function testSize(): void
     {
         $this->assertSame(
-            '<input type="url" id="typeform-string" name="TypeForm[string]" value size="20">',
+            '<input type="url" id="typeform-string" name="TypeForm[string]" size="20">',
             Url::widget()->config($this->formModel, 'string')->size(20)->render(),
         );
     }
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Url widget must be a string.');
-        Url::widget()->config($this->formModel, 'int')->render();
+        $this->expectExceptionMessage('Url widget must be a string or null value.');
+        Url::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void
