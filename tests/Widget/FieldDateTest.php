@@ -52,7 +52,7 @@ final class FieldDateTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Date widget requires a string value.');
-        $html = Field::widget()->config($this->formModel, 'array')->date()->render();
+        Field::widget()->config($this->formModel, 'array')->date()->render();
     }
 
     protected function setUp(): void

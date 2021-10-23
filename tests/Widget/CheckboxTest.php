@@ -136,7 +136,7 @@ final class CheckboxTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
-        $html = Checkbox::widget()->config($this->formModel, 'array')->render();
+        Checkbox::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

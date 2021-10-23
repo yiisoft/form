@@ -18,6 +18,7 @@ final class FieldCheckBoxListTest extends TestCase
 {
     use TestTrait;
 
+    /** @var string[]  */
     private array $sex = [1 => 'Female', 2 => 'Male'];
     private TypeForm $formModel;
 
@@ -174,8 +175,8 @@ final class FieldCheckBoxListTest extends TestCase
                 [
                     'itemsFormatter' => static function (CheckboxItem $item) {
                         return $item->checked
-                            ? "<label><input type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label>"
-                            : "<label><input type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label>";
+                            ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
+                            : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
                     },
                 ],
                 $this->sex
@@ -344,7 +345,7 @@ final class FieldCheckBoxListTest extends TestCase
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('CheckboxList widget requires a int|string|iterable|null value.');
-        $html = Field::widget()->config($this->formModel, 'object')->checkboxList()->render();
+        Field::widget()->config($this->formModel, 'object')->checkboxList()->render();
     }
 
     protected function setUp(): void

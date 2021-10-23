@@ -15,8 +15,6 @@ final class ImageTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testAlt(): void
     {
         $this->assertSame(
