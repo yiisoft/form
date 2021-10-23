@@ -171,7 +171,7 @@ final class Form extends Widget
         if (is_string($csrfToken) || (is_object($csrfToken) && method_exists($csrfToken, '__toString'))) {
             $new->csrfToken = (string) $csrfToken;
         } else {
-            throw new InvalidArgumentException('csrfToken must be a string or Stringable object.');
+            throw new InvalidArgumentException('$csrfToken must be a string or \Stringable object.');
         }
 
         $new->csrfName = $csrfName;
