@@ -24,7 +24,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testContainerAttributes(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -43,7 +43,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testContainerTag(): void
     {
-        $this->formModel->setAttribute('array', [1]);
+        $this->formModel->load(['TypeForm' => ['array' => [1]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -62,7 +62,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testContainerTagWithNull(): void
     {
-        $this->formModel->setAttribute('array', [1]);
+        $this->formModel->load(['TypeForm' => ['array' => [1]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -97,7 +97,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testIndividualItemsAttributes(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -121,7 +121,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testItemsAttributes(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -140,7 +140,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testItemFormater(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -168,7 +168,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testItemsFromValues(): void
     {
-        $this->formModel->setAttribute('array', ['Male']);
+        $this->formModel->load(['TypeForm' => ['array' => ['Male']]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -187,7 +187,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testReadOnly(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -208,7 +208,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testRender(): void
     {
-        $this->formModel->setAttribute('array', [1]);
+        $this->formModel->load(['TypeForm' => ['array' => [1]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -226,7 +226,7 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testSeparator(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -245,7 +245,7 @@ final class FieldCheckBoxListTest extends TestCase
     public function testValue(): void
     {
         // value iterable
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
@@ -263,10 +263,10 @@ final class FieldCheckBoxListTest extends TestCase
 
     public function testValueException(): void
     {
-        $this->formModel->setAttribute('object', new StdClass());
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('CheckboxList widget value must always be an array');
-        Field::widget()->config($this->formModel, 'object')->checkboxList()->render();
+        $this->expectExceptionMessage('CheckboxList widget value must be an array or null.');
+        Field::widget()->config($this->formModel, 'int')->checkboxList()->render();
     }
 
     protected function setUp(): void

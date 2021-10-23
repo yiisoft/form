@@ -23,7 +23,7 @@ final class CheckboxListTest extends TestCase
 
     public function testContainerAttributes(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array" class="test-class">
         <label><input type="checkbox" name="TypeForm[array][]" value="1"> Female</label>
@@ -40,7 +40,7 @@ final class CheckboxListTest extends TestCase
 
     public function testContainerTag(): void
     {
-        $this->formModel->setAttribute('array', [1]);
+        $this->formModel->load(['TypeForm' => ['array' => [1]]]);
         $expected = <<<'HTML'
         <span id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1" checked> Female</label>
@@ -57,7 +57,7 @@ final class CheckboxListTest extends TestCase
 
     public function testContainerTagWithNull(): void
     {
-        $this->formModel->setAttribute('array', [1]);
+        $this->formModel->load(['TypeForm' => ['array' => [1]]]);
         $expected = <<<'HTML'
         <label><input type="checkbox" name="TypeForm[array][]" value="1" checked> Female</label>
         <label><input type="checkbox" name="TypeForm[array][]" value="2"> Male</label>
@@ -84,7 +84,7 @@ final class CheckboxListTest extends TestCase
 
     public function testIndividualItemsAttributes(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1" disabled> Female</label>
@@ -101,7 +101,7 @@ final class CheckboxListTest extends TestCase
 
     public function testItemsAttributes(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" class="test-class" name="TypeForm[array][]" value="1"> Female</label>
@@ -118,7 +118,7 @@ final class CheckboxListTest extends TestCase
 
     public function testItemFormater(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type='checkbox' name='TypeForm[array][]' value='1'> Female</label>
@@ -155,7 +155,7 @@ final class CheckboxListTest extends TestCase
 
     public function testItemsFromValues(): void
     {
-        $this->formModel->setAttribute('array', ['Male']);
+        $this->formModel->load(['TypeForm' => ['array' => ['Male']]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="Female"> Female</label>
@@ -171,7 +171,7 @@ final class CheckboxListTest extends TestCase
 
     public function testReadOnly(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1" readonly> Female</label>
@@ -180,13 +180,13 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($this->formModel, 'array')->items($this->sex)->readonly(true)->render(),
+            CheckboxList::widget()->config($this->formModel, 'array')->items($this->sex)->readonly()->render(),
         );
     }
 
     public function testRender(): void
     {
-        $this->formModel->setAttribute('array', [1]);
+        $this->formModel->load(['TypeForm' => ['array' => [1]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1" checked> Female</label>
@@ -201,7 +201,7 @@ final class CheckboxListTest extends TestCase
 
     public function testSeparator(): void
     {
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1"> Female</label>&#9866;<label><input type="checkbox" name="TypeForm[array][]" value="2" checked> Male</label>
@@ -218,7 +218,7 @@ final class CheckboxListTest extends TestCase
     public function testValue(): void
     {
         // value iterable
-        $this->formModel->setAttribute('array', [2]);
+        $this->formModel->load(['TypeForm' => ['array' => [2]]]);
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1"> Female</label>
@@ -233,9 +233,9 @@ final class CheckboxListTest extends TestCase
 
     public function testValueException(): void
     {
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('CheckboxList widget value must always be an array');
+        $this->expectExceptionMessage('CheckboxList widget value must be an array or null.');
         CheckboxList::widget()->config($this->formModel, 'int')->render();
     }
 
