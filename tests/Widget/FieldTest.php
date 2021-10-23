@@ -24,15 +24,13 @@ final class FieldTest extends TestCase
         'validClass()' => ['is-valid'],
     ];
     private AttributesValidatorForm $formModel;
+    private ValidatorInterface $validator;
 
     public function testAddAttributesEmailValidator(): void
     {
-        // create validator
-        $validator = $this->createValidatorMock();
-
         // add attributes html validator `Required::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['string' => '']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
@@ -48,7 +46,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['email' => 'a@a.com']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
@@ -64,7 +62,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['email' => 'awesomexample@example.com']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
@@ -80,7 +78,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `MatchRegularExpression::class`.
         $this->formModel->load(['AttributesValidatorForm' => ['email' => 'awesome.com']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
@@ -96,7 +94,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation email.
         $this->formModel->load(['AttributesValidatorForm' => ['email' => 'test@example.com']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
@@ -112,12 +110,9 @@ final class FieldTest extends TestCase
 
     public function testAddAttributesNumberValidator(): void
     {
-        // create validator
-        $validator = $this->createValidatorMock();
-
         // add attributes html validator `Required::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['number' => '1']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
@@ -132,7 +127,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `Number::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['number' => '6']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
@@ -147,7 +142,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation number.
         $this->formModel->load(['AttributesValidatorForm' => ['number' => '4']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
@@ -162,12 +157,9 @@ final class FieldTest extends TestCase
 
     public function testAddAttributesPasswordValidator(): void
     {
-        // create validator
-        $validator = $this->createValidatorMock();
-
         // add attributes html validator `Required::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['password' => '']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
@@ -182,7 +174,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['password' => 't']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
@@ -197,7 +189,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['password' => '012345678']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
@@ -212,7 +204,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `MatchRegularExpression::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['password' => '12345']]);
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
@@ -227,8 +219,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation password.
         $this->formModel->load(['AttributesValidatorForm' => ['password' => 'test1234']]);
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
@@ -245,8 +236,7 @@ final class FieldTest extends TestCase
     {
         // add attributes html validator `Required::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['number' => '1']]);
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
@@ -261,8 +251,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `Number::rule()`.
         $this->formModel->load(['AttributesValidatorForm' => ['number' => '6']]);
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
@@ -277,8 +266,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation number.
         $this->formModel->load(['AttributesValidatorForm' => ['number' => '4']]);
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
@@ -294,9 +282,8 @@ final class FieldTest extends TestCase
     public function testAddAttributesTelephoneValidator(): void
     {
         // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('telephone', '');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->formModel->load(['AttributesValidatorForm' => ['telephone' => '']]);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
@@ -310,9 +297,8 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('telephone', '+56');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->formModel->load(['AttributesValidatorForm' => ['telephone' => '+56']]);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
@@ -326,9 +312,8 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('telephone', '+56(999-999-99999)');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->formModel->load(['AttributesValidatorForm' => ['telephone' => '+56(999-999-99999)']]);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
@@ -342,9 +327,8 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
-        $this->formModel->setAttribute('telephone', '+1(999-999-999)');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->formModel->load(['AttributesValidatorForm' => ['telephone' => '+1(999-999-999)']]);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
@@ -358,9 +342,8 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation telephone.
-        $this->formModel->setAttribute('telephone', '+1 (999-999-999)');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->formModel->load(['AttributesValidatorForm' => ['telephone' => '+1 (999-999-999)']]);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
@@ -377,8 +360,7 @@ final class FieldTest extends TestCase
     {
         // add attributes html validator `Required::rule()`.
         $this->formModel->setAttribute('text', '');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -393,8 +375,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->setAttribute('text', 'a');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -409,8 +390,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->setAttribute('text', 'testsme');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -425,8 +405,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `MatchRegularExpression::rule()`.
         $this->formModel->setAttribute('text', '????');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -441,8 +420,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation text.
         $this->formModel->setAttribute('text', 'tests');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -459,8 +437,7 @@ final class FieldTest extends TestCase
     {
         // add attributes html validator `Required::rule()`.
         $this->formModel->setAttribute('text', '');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -475,8 +452,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->setAttribute('text', 'a');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -491,8 +467,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->setAttribute('text', 'testsme');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -507,8 +482,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation textarea.
         $this->formModel->setAttribute('text', 'tests');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
@@ -525,8 +499,7 @@ final class FieldTest extends TestCase
     {
         // add attributes html validator `Required::rule()`.
         $this->formModel->setAttribute('url', '');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-url">Url</label>
@@ -541,8 +514,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->setAttribute('url', 'http://a.com');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-url">Url</label>
@@ -557,8 +529,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `HasLength::rule()`.
         $this->formModel->setAttribute('url', 'http://awesomexample.com');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-url">Url</label>
@@ -573,8 +544,7 @@ final class FieldTest extends TestCase
 
         // add attributes html validator `MatchRegularExpression::rule()`.
         $this->formModel->setAttribute('url', 'awesomexample.com');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-url">Url</label>
@@ -589,8 +559,7 @@ final class FieldTest extends TestCase
 
         // passed all rules for validation url.
         $this->formModel->setAttribute('url', 'http://example.com');
-        $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $this->validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-url">Url</label>
@@ -608,10 +577,6 @@ final class FieldTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->formModel = new AttributesValidatorForm();
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
+        $this->validator = new ValidatorMock();
     }
 }

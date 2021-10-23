@@ -28,7 +28,7 @@ final class TelephoneTest extends TestCase
     public function testMaxLength(): void
     {
         $this->assertSame(
-            '<input type="tel" id="typeform-string" name="TypeForm[string]" value maxlength="10">',
+            '<input type="tel" id="typeform-string" name="TypeForm[string]" maxlength="10">',
             Telephone::widget()->config($this->formModel, 'string')->maxlength(10)->render(),
         );
     }
@@ -36,7 +36,7 @@ final class TelephoneTest extends TestCase
     public function testMinLength(): void
     {
         $this->assertSame(
-            '<input type="tel" id="typeform-string" name="TypeForm[string]" value minlength="4">',
+            '<input type="tel" id="typeform-string" name="TypeForm[string]" minlength="4">',
             Telephone::widget()->config($this->formModel, 'string')->minlength(4)->render(),
         );
     }
@@ -44,7 +44,7 @@ final class TelephoneTest extends TestCase
     public function testPattern(): void
     {
         $this->assertSame(
-            '<input type="tel" id="typeform-string" name="TypeForm[string]" value pattern="[789][0-9]{9}">',
+            '<input type="tel" id="typeform-string" name="TypeForm[string]" pattern="[789][0-9]{9}">',
             Telephone::widget()->config($this->formModel, 'string')->pattern('[789][0-9]{9}')->render(),
         );
     }
@@ -52,7 +52,7 @@ final class TelephoneTest extends TestCase
     public function testPlaceholder(): void
     {
         $this->assertSame(
-            '<input type="tel" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">',
+            '<input type="tel" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
             Telephone::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
@@ -60,7 +60,7 @@ final class TelephoneTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="tel" id="typeform-string" name="TypeForm[string]" value>',
+            '<input type="tel" id="typeform-string" name="TypeForm[string]">',
             Telephone::widget()->config($this->formModel, 'string')->render(),
         );
     }
@@ -68,16 +68,17 @@ final class TelephoneTest extends TestCase
     public function testSize(): void
     {
         $this->assertSame(
-            '<input type="tel" id="typeform-string" name="TypeForm[string]" value size="20">',
+            '<input type="tel" id="typeform-string" name="TypeForm[string]" size="20">',
             Telephone::widget()->config($this->formModel, 'string')->size(20)->render(),
         );
     }
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Telephone widget must be a string.');
-        Telephone::widget()->config($this->formModel, 'int')->render();
+        $this->expectExceptionMessage('Telephone widget must be a string or null value.');
+        Telephone::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void
