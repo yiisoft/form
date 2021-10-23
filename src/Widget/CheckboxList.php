@@ -26,7 +26,7 @@ final class CheckboxList extends Widget
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
-    /** @psalm-var array<array-key, array<array-key, mixed>> $value */
+    /** @psalm-var array[] $value */
     private array $individualItemsAttributes = [];
     /** @var string[] */
     private array $items = [];
@@ -98,7 +98,7 @@ final class CheckboxList extends Widget
      *
      * @return static
      *
-     * @psalm-param array<array-key, array<array-key, mixed>> $attributes
+     * @psalm-param array[] $attributes
      */
     public function individualItemsAttributes(array $attributes = []): self
     {

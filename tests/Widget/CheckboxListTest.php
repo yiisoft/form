@@ -17,6 +17,7 @@ final class CheckboxListTest extends TestCase
 {
     use TestTrait;
 
+    /** @var string[] */
     private array $sex = [1 => 'Female', 2 => 'Male'];
     private TypeForm $formModel;
 
@@ -129,8 +130,8 @@ final class CheckboxListTest extends TestCase
             ->itemsFormatter(
                 static function (CheckboxItem $item) {
                     return $item->checked
-                        ? "<label><input type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label>"
-                        : "<label><input type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label>";
+                        ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
+                        : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
                 }
             )
             ->items($this->sex)
