@@ -226,9 +226,9 @@ final class FormModelTest extends TestCase
     {
         $form = new LoginForm();
 
-        $this->assertNull($form->getAttributeRowdataValue('login'));
-        $this->assertNull($form->getAttributeRowdataValue('password'));
-        $this->assertNull($form->getAttributeRowdataValue('password'));
+        $this->assertNull($form->getRawAttributeValue('login'));
+        $this->assertNull($form->getRawAttributeValue('password'));
+        $this->assertNull($form->getRawAttributeValue('password'));
 
         $data = [
             'LoginForm' => [
@@ -240,9 +240,9 @@ final class FormModelTest extends TestCase
 
         $this->assertTrue($form->load($data));
 
-        $this->assertSame('admin', $form->getAttributeRowdataValue('login'));
-        $this->assertSame('123456', $form->getAttributeRowdataValue('password'));
-        $this->assertSame('1', $form->getAttributeRowdataValue('rememberMe'));
+        $this->assertSame('admin', $form->getRawAttributeValue('login'));
+        $this->assertSame('123456', $form->getRawAttributeValue('password'));
+        $this->assertSame('1', $form->getRawAttributeValue('rememberMe'));
     }
 
     public function testLoadWithNestedAttribute(): void
