@@ -18,7 +18,7 @@ final class FieldCheckBoxListTest extends TestCase
 {
     use TestTrait;
 
-    /** @var string[] */
+    /** @var string[]  */
     private array $sex = [1 => 'Female', 2 => 'Male'];
     private TypeForm $formModel;
 

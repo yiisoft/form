@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\Rule\Required;
 
 final class FormWithNestedAttribute extends FormModel
 {
     private ?int $id = null;
-    private ?LoginForm $user = null;
+    private LoginForm $user;
 
     public function __construct()
     {
@@ -41,13 +42,13 @@ final class FormWithNestedAttribute extends FormModel
     public function getRules(): array
     {
         return [
-            'id' => new Required(),
+            'id' => Required::rule(),
         ];
     }
 
     public function setUserLogin(string $login): void
     {
-        $this->user->login('admin');
+        $this->user->login($login);
     }
 
     public function getUserLogin(): ?string

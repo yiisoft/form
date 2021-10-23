@@ -12,6 +12,8 @@ final class DateAttributesWidget extends Widget
 {
     use DateAttributes;
 
+    private array $attributes = [];
+
     protected function run(): string
     {
         $new = clone $this;
