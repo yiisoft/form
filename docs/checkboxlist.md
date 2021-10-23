@@ -122,16 +122,16 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`containerAttributes(array $attributes)` | The HTML attributes for the container tag. | `[]`
-`containerTag(?string $tag = null)` | The tag name of the container element. | `div`
+`containerAttributes(array $attributes)` | HTML attributes for the container tag. | `[]`
+`containerTag(?string $tag = null)` | Tag name of the container element. | `div`
 `disabled(bool $value = true)` | Set whether the element is disabled or not. | `false`
-`individualItemsAttributes(array $attributes = [])` | The HTML attributes for the individual checkbox elements. | `[]`
-`items(array $items = [])` | The list of checkbox items for array keys. | `[]`
-`itemsAttributes(array $attributes = [])` | The HTML attributes for the checkbox elements. | `[]`
-`itemsFormatter(?Closure $formatter)` | The formatter for the checkbox items. | `null`
-`itemsFromValues(array $itemsFromValues = [])` | The list of checkbox items for array values. | `[]`
+`individualItemsAttributes(array $attributes = [])` | HTML attributes for individual checkbox elements. | `[]`
+`items(array $items = [])` | List of checkbox items for array keys. | `[]`
+`itemsAttributes(array $attributes = [])` | HTML attributes for checkbox elements. | `[]`
+`itemsFormatter(?Closure $formatter)` | Formatter for the checkbox items. | `null`
+`itemsFromValues(array $itemsFromValues = [])` | List of checkbox items for array values. | `[]`
 `readonly()` | Set whether the element is readonly or not. | `false`
-`separator(string $separator)` | The HTML between each checkbox element. | `&nbsp;`
+`separator(string $separator)` | HTML to add between each checkbox element. | `&nbsp;`
 
 ### `Common` methods:
 
