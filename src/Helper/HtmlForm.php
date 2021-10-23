@@ -160,6 +160,19 @@ final class HtmlForm
     }
 
     /**
+     * Returns the value of the specified attribute name or expression from raw data.
+     *
+     * @param FormModelInterface $formModel the form object.
+     * @param string $attribute the attribute name or expression.
+     *
+     * @return mixed the corresponding attribute value.
+     */
+    public static function getRawAttributeValue(FormModelInterface $formModel, string $attribute)
+    {
+        return $formModel->getRawAttributeValue($attribute);
+    }
+
+    /**
      * This method parses an attribute expression and returns an associative array containing
      * real attribute name, prefix and suffix.
      * For example: `['name' => 'content', 'prefix' => '', 'suffix' => '[0]']`
