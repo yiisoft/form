@@ -17,6 +17,7 @@ final class FieldRadioListTest extends TestCase
 {
     use TestTrait;
 
+    /** @var string[] */
     private array $sex = [1 => 'Female', 2 => 'Male'];
     private TypeForm $formModel;
 
@@ -154,8 +155,8 @@ final class FieldRadioListTest extends TestCase
                 [
                     'itemsFormatter' => static function (RadioItem $item) {
                         return $item->checked
-                            ? "<label><input type='checkbox' name='{$item->name}' value='{$item->value}' checked> {$item->label}</label>"
-                            : "<label><input type='checkbox' name='{$item->name}' value='{$item->value}'> {$item->label}</label>";
+                            ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
+                            : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
                     },
                 ],
                 $this->sex
@@ -379,7 +380,7 @@ final class FieldRadioListTest extends TestCase
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
-        $html = Field::widget()->config($this->formModel, 'array')->radioList()->render();
+        Field::widget()->config($this->formModel, 'array')->radioList()->render();
     }
 
     protected function setUp(): void

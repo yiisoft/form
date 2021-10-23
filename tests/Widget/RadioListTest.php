@@ -17,6 +17,7 @@ final class RadioListTest extends TestCase
 {
     use TestTrait;
 
+    /** @var string[] */
     private array $cities = ['1' => 'Moscu', '2' => 'San Petersburgo', '3' => 'Novosibirsk', '4' => 'Ekaterinburgo'];
     private TypeForm $formModel;
 
@@ -180,10 +181,9 @@ final class RadioListTest extends TestCase
             ->config($this->formModel, 'int')
             ->items($this->cities)
             ->itemsFormatter(static function (RadioItem $item) {
-                $check = $item->checked ? 'checked' : '';
                 return $item->checked
-                    ? "<div class='col-sm-12'><label><input type='radio' name='{$item->name}' class='test-class' value='{$item->value}' tabindex='{$item->index}' checked> {$item->label}</label></div>"
-                    : "<div class='col-sm-12'><label><input type='radio' name='{$item->name}' class='test-class' value='{$item->value}' tabindex='{$item->index}'> {$item->label}</label></div>";
+                    ? "<div class='col-sm-12'><label><input type='radio' name='$item->name' class='test-class' value='$item->value' tabindex='$item->index' checked> $item->label</label></div>"
+                    : "<div class='col-sm-12'><label><input type='radio' name='$item->name' class='test-class' value='$item->value' tabindex='$item->index'> $item->label</label></div>";
             })
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -366,7 +366,7 @@ final class RadioListTest extends TestCase
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
-        $html = RadioList::widget()->config($this->formModel, 'array')->render();
+        RadioList::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

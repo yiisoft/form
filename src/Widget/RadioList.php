@@ -22,7 +22,7 @@ final class RadioList extends Widget
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
-    /** @psalm-var array<array-key, array<array-key, mixed>> */
+    /** @psalm-var array[] */
     private array $individualItemsAttributes = [];
     /** @psalm-var array<array-key, string> */
     private array $items = [];
@@ -93,7 +93,7 @@ final class RadioList extends Widget
      *
      * @return static
      *
-     * @psalm-param array<array-key, array<array-key, mixed>> $value
+     * @psalm-param array[] $value
      */
     public function individualItemsAttributes(array $value = []): self
     {
