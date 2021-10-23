@@ -126,14 +126,14 @@ final class FormTest extends TestCase
     public function testCsrfExceptionNotString(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('csrfToken must be a string or Stringable object.');
+        $this->expectExceptionMessage('$csrfToken must be a string or \Stringable object.');
         Form::widget()->action('/foo')->csrf(1)->begin();
     }
 
     public function testCsrfExceptionNotStringable(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('csrfToken must be a string or Stringable object.');
+        $this->expectExceptionMessage('$csrfToken must be a string or \Stringable object.');
         Form::widget()->action('/foo')->csrf(new StdClass())->begin();
     }
 
