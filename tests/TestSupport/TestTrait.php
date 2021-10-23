@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport;
 
 use ReflectionClass;
+use ReflectionException;
 use ReflectionObject;
 
 trait TestTrait
@@ -80,6 +81,6 @@ trait TestTrait
 
 namespace Yiisoft\Html;
 
-function hrtime(bool $getAsNumber = false)
+function hrtime(bool $getAsNumber = false): void
 {
 }

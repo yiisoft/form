@@ -38,7 +38,7 @@ final class DateTimeTest extends TestCase
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('DateTime widget requires a string value.');
-        $html = DateTime::widget()->config($this->formModel, 'array')->render();
+        DateTime::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

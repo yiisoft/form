@@ -67,8 +67,6 @@ final class PasswordTest extends TestCase
 
     public function testPlaceholder(): void
     {
-        $expected = <<<'HTML'
-        HTML;
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">',
             Password::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
@@ -87,7 +85,7 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" value>',
-            $html = Password::widget()->config($this->formModel, 'string')->render(),
+            Password::widget()->config($this->formModel, 'string')->render(),
         );
     }
 

@@ -120,24 +120,20 @@ final class Field extends Widget
      *
      * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
      * handled:
-     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see CheckboxList}.
-     * This attribute will render a hidden input so that if the {@see CheckboxList} is not checked and is submitted, the
-     * value of this attribute will still be submitted to the server via the hidden input. If you do not want any hidden
-     * input, you should explicitly no set.
      * - `itemsAttributes`: array, the HTML attributes for the items checkboxlist. This is only used when the `items`
      * attribute is specified.
      * - `separator`: string, the HTML code that separates items.
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     * @param array $items the data item used to generate the checkbox list. The array values are the labels,
-     * while the array keys are the corresponding checkbox values.
+     * @param string[] $items the data item used to generate the checkbox list.
+     * The array values are the labels, while the array keys are the corresponding checkbox values.
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsFromValues the data item used to generate the checkbox
+     * list. The array values are the labels, while the array values are the corresponding checkbox values.
      *
      * @return static the field object itself.
-     *
-     * @psalm-param array<array-key, string> $items
      */
-    public function checkboxList(array $attributes = [], array $items = []): self
+    public function checkboxList(array $attributes = [], array $items = [], array $itemsFromValues = []): self
     {
         $new = clone $this;
         $checkboxList = CheckboxList::widget();
@@ -149,7 +145,7 @@ final class Field extends Widget
             $checkboxList = $checkboxList->containerAttributes($attributes['containerAttributes']);
         }
 
-        if ($containerTag === false) {
+        if ($containerTag === null) {
             $checkboxList = $checkboxList->containerTag();
         } elseif (is_string($containerTag) && $containerTag !== '') {
             $checkboxList = $checkboxList->containerTag($containerTag);
@@ -195,6 +191,7 @@ final class Field extends Widget
         $new->parts['{input}'] = $checkboxList
             ->config($new->getFormModel(), $new->attribute, $attributes)
             ->items($items)
+            ->itemsFromValues($itemsFromValues)
             ->render();
 
         return $new;
@@ -552,24 +549,24 @@ final class Field extends Widget
      *
      * @param array $attributes the tag attributes in terms of name-value pairs. The following options are specially
      * handled:
-     * - `forceUncheckedValue`: string, the value associated with the uncheck state of the {@see RadioList}.
+     * - `uncheckValue`: string, the value associated with the uncheck state of the {@see RadioList}.
      * This attribute will render a hidden input so that if the {@see RadioList} is not checked and is submitted, the
      * value of this attribute will still be submitted to the server via the hidden input. If you do not want any hidden
      * input, you should explicitly no set.
-     * - `itemsAttributes`: array, the HTML attributes for the items checkboxlist. This is only used when the `items`
+     * - `itemsAttributes`: array, the HTML attributes for the items of radio list. This is only used when the `items`
      * attribute is specified.
      * - `separator`: string, the HTML code that separates items.
      *
      * The rest of the attribute will be rendered as the attributes of the resulting tag. The values will be
      * HTML-encoded using {@see \Yiisoft\Html\Html::encode()}. If you do not want any attribute no set.
-     * @param array $items the data item used to generate the radio list. The array values are the labels,
-     * while the array keys are the corresponding radio values.
+     * @param string[] $items the data item used to generate the radio list.
+     * The array values are the labels, while the array keys are the corresponding radio values.
+     * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsFromValues the data item used to generate the radio
+     * list. The array values are the labels, while the array values are the corresponding radio values.
      *
      * @return static the field object itself.
-     *
-     * @psalm-param array<array-key, string> $items
      */
-    public function radioList(array $attributes = [], array $items = []): self
+    public function radioList(array $attributes = [], array $items = [], array $itemsFromValues = []): self
     {
         $new = clone $this;
         $radioList = RadioList::widget();
@@ -615,6 +612,13 @@ final class Field extends Widget
             $radioList = $radioList->separator($attributes['separator']);
         }
 
+        if (
+            isset($attributes['uncheckValue']) &&
+            ((is_scalar($attributes['uncheckValue'])) || $attributes['uncheckValue'] instanceof Stringable)
+        ) {
+            $radioList = $radioList->uncheckValue($attributes['uncheckValue']);
+        }
+
         unset(
             $attributes['disabled'],
             $attributes['individualItemsAttributes'],
@@ -627,6 +631,7 @@ final class Field extends Widget
         $new->parts['{input}'] = $radioList
             ->config($new->getFormModel(), $new->attribute, $attributes)
             ->items($items)
+            ->itemsFromValues($itemsFromValues)
             ->render();
 
         return $new;

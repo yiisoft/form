@@ -17,6 +17,7 @@ final class RadioListTest extends TestCase
 {
     use TestTrait;
 
+    /** @var string[] */
     private array $cities = ['1' => 'Moscu', '2' => 'San Petersburgo', '3' => 'Novosibirsk', '4' => 'Ekaterinburgo'];
     private TypeForm $formModel;
 
@@ -69,7 +70,7 @@ final class RadioListTest extends TestCase
         HTML;
         $html = RadioList::widget()
             ->config($this->formModel, 'int')
-            ->containerTag(null)
+            ->containerTag()
             ->items($this->cities)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -104,8 +105,9 @@ final class RadioListTest extends TestCase
         </div>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int', ['forceUncheckedValue' => '0'])
+            ->config($this->formModel, 'int')
             ->items($this->cities)
+            ->uncheckValue(0)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -133,20 +135,16 @@ final class RadioListTest extends TestCase
     {
         $radioList = RadioList::widget();
         $this->assertNotSame($radioList, $radioList->containerAttributes([]));
-        $this->assertNotSame($radioList, $radioList->containerTag(null));
+        $this->assertNotSame($radioList, $radioList->containerTag());
         $this->assertNotSame($radioList, $radioList->disabled());
+        $this->assertNotSame($radioList, $radioList->individualItemsAttributes());
         $this->assertNotSame($radioList, $radioList->items());
         $this->assertNotSame($radioList, $radioList->itemsAttributes());
-        $this->assertNotSame(
-            $radioList,
-            $radioList->itemsFormatter(
-                static function (RadioItem $item): string {
-                    return '';
-                }
-            ),
-        );
+        $this->assertNotSame($radioList, $radioList->itemsFormatter(null));
+        $this->assertNotSame($radioList, $radioList->itemsFromValues());
         $this->assertNotSame($radioList, $radioList->readOnly());
-        $this->assertNotSame($radioList, $radioList->separator(''));
+        $this->assertNotSame($radioList, $radioList->separator());
+        $this->assertNotSame($radioList, $radioList->uncheckValue(''));
     }
 
     public function testItemsAttributes(): void
@@ -183,13 +181,29 @@ final class RadioListTest extends TestCase
             ->config($this->formModel, 'int')
             ->items($this->cities)
             ->itemsFormatter(static function (RadioItem $item) {
-                $check = $item->checked ? 'checked' : '';
                 return $item->checked
-                    ? "<div class='col-sm-12'><label><input type='radio' name='{$item->name}' class='test-class' value='{$item->value}' tabindex='{$item->index}' checked> {$item->label}</label></div>"
-                    : "<div class='col-sm-12'><label><input type='radio' name='{$item->name}' class='test-class' value='{$item->value}' tabindex='{$item->index}'> {$item->label}</label></div>";
+                    ? "<div class='col-sm-12'><label><input type='radio' name='$item->name' class='test-class' value='$item->value' tabindex='$item->index' checked> $item->label</label></div>"
+                    : "<div class='col-sm-12'><label><input type='radio' name='$item->name' class='test-class' value='$item->value' tabindex='$item->index'> $item->label</label></div>";
             })
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testItemsFromValues(): void
+    {
+        $this->formModel->setAttribute('string', 'Novosibirsk');
+        $expected = <<<'HTML'
+        <div id="typeform-string">
+        <label><input type="radio" name="TypeForm[string]" value="Moscu"> Moscu</label>
+        <label><input type="radio" name="TypeForm[string]" value="San Petersburgo"> San Petersburgo</label>
+        <label><input type="radio" name="TypeForm[string]" value="Novosibirsk" checked> Novosibirsk</label>
+        <label><input type="radio" name="TypeForm[string]" value="Ekaterinburgo"> Ekaterinburgo</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            RadioList::widget()->config($this->formModel, 'string')->itemsFromValues($this->cities)->render(),
+        );
     }
 
     public function testReadOnly(): void
@@ -351,8 +365,8 @@ final class RadioListTest extends TestCase
     {
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('RadioList widget required bool|float|int|string|null.');
-        $html = RadioList::widget()->config($this->formModel, 'array')->render();
+        $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
+        RadioList::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

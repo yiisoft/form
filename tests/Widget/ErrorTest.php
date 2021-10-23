@@ -14,7 +14,6 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorTest extends TestCase
 {
-    private array $record = [];
     private PersonalForm $formModel;
 
     public function testImmutability(): void

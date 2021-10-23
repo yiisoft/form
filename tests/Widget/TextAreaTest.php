@@ -95,7 +95,7 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('TextArea widget must be a string.');
-        $html = TextArea::widget()->config($this->formModel, 'array')->render();
+        TextArea::widget()->config($this->formModel, 'array')->render();
     }
 
     public function testWrap(): void

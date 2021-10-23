@@ -23,7 +23,7 @@ final class FieldTest extends TestCase
         'invalidClass()' => ['is-invalid'],
         'validClass()' => ['is-valid'],
     ];
-    private AttributesValidatorForm $attributeValidatorForm;
+    private AttributesValidatorForm $formModel;
 
     public function testAddAttributesEmailValidator(): void
     {
