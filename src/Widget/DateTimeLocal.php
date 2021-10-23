@@ -34,10 +34,10 @@ final class DateTimeLocal extends Widget
         $new = clone $this;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.date.html#input.date.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('DateTimeLocal widget requires a string value.');
+        if (!is_string($value) && null !== $value) {
+            throw new InvalidArgumentException('DateTimeLocal widget requires a string or null value.');
         }
 
         return Input::tag()
