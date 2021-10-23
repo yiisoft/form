@@ -27,7 +27,7 @@ final class HiddenTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hidden widget requires a string value.');
-        $html = Hidden::widget()->config($this->formModel, 'array')->render();
+        Hidden::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

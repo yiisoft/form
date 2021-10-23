@@ -70,7 +70,7 @@ final class RadioListTest extends TestCase
         HTML;
         $html = RadioList::widget()
             ->config($this->formModel, 'int')
-            ->containerTag(null)
+            ->containerTag()
             ->items($this->cities)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -135,7 +135,7 @@ final class RadioListTest extends TestCase
     {
         $radioList = RadioList::widget();
         $this->assertNotSame($radioList, $radioList->containerAttributes([]));
-        $this->assertNotSame($radioList, $radioList->containerTag(null));
+        $this->assertNotSame($radioList, $radioList->containerTag());
         $this->assertNotSame($radioList, $radioList->disabled());
         $this->assertNotSame($radioList, $radioList->individualItemsAttributes());
         $this->assertNotSame($radioList, $radioList->items());
@@ -143,7 +143,7 @@ final class RadioListTest extends TestCase
         $this->assertNotSame($radioList, $radioList->itemsFormatter(null));
         $this->assertNotSame($radioList, $radioList->itemsFromValues());
         $this->assertNotSame($radioList, $radioList->readOnly());
-        $this->assertNotSame($radioList, $radioList->separator(''));
+        $this->assertNotSame($radioList, $radioList->separator());
         $this->assertNotSame($radioList, $radioList->uncheckValue(''));
     }
 

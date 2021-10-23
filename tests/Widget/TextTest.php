@@ -114,7 +114,7 @@ final class TextTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text widget must be a string.');
-        $html = Text::widget()->config($this->formModel, 'array')->render();
+        Text::widget()->config($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

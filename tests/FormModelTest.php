@@ -254,7 +254,7 @@ final class FormModelTest extends TestCase
         $this->assertFalse($form2->load($data2));
     }
 
-    public function testLoadWithEmptyScope()
+    public function testLoadWithEmptyScope(): void
     {
         $form = new class () extends FormModel {
             private int $int = 1;
@@ -331,7 +331,7 @@ final class FormModelTest extends TestCase
         );
     }
 
-    public function testPublicAttributes()
+    public function testPublicAttributes(): void
     {
         $form = new class () extends FormModel {
             public int $int = 1;

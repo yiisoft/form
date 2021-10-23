@@ -12,6 +12,8 @@ final class CommonAttributesWidget extends Widget
 {
     use CommonAttributes;
 
+    private array $attributes = [];
+
     protected function run(): string
     {
         $new = clone $this;
