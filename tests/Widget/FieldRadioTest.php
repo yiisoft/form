@@ -160,7 +160,7 @@ final class FieldRadioTest extends TestCase
     public function testValues(): void
     {
         // value bool false
-        $this->formModel->setAttribute('bool', true);
+        $this->formModel->load(['TypeForm' => ['bool' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
@@ -183,7 +183,7 @@ final class FieldRadioTest extends TestCase
         );
 
         // value int 0
-        $this->formModel->setAttribute('int', 1);
+        $this->formModel->load(['TypeForm' => ['int' => '1']]);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
@@ -206,7 +206,7 @@ final class FieldRadioTest extends TestCase
         );
 
         // value string 'inactive'
-        $this->formModel->setAttribute('string', 'active');
+        $this->formModel->load(['TypeForm' => ['string' => 'active']]);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-string" name="TypeForm[string]" value="inactive"> String</label>
@@ -231,7 +231,7 @@ final class FieldRadioTest extends TestCase
         );
 
         // value null
-        $this->formModel->setAttribute('toNull', null);
+        $this->formModel->load(['TypeForm' => ['toNull' => '']]);
         $expected = <<<'HTML'
         <div>
         <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" checked> To Null</label>
@@ -245,6 +245,7 @@ final class FieldRadioTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Radio widget value can not be an iterable or an object.');
         Field::widget()->config($this->formModel, 'array')->radio()->render();

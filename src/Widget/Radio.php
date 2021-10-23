@@ -117,7 +117,8 @@ final class Radio extends Widget
         $new = clone $this;
         $radio = RadioTag::tag();
 
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @var mixed */
+        $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Radio widget value can not be an iterable or an object.');
