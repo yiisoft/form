@@ -20,10 +20,11 @@ final class FieldNumberTest extends TestCase
 
     public function testMax(): void
     {
+        $this->formModel->load(['TypeForm' => ['int' => '6']]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0" max="8">
+        <input type="number" id="typeform-int" name="TypeForm[int]" value="6" max="8">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -37,7 +38,7 @@ final class FieldNumberTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0" min="4">
+        <input type="number" id="typeform-int" name="TypeForm[int]" min="4">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -51,7 +52,7 @@ final class FieldNumberTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0" placeholder="PlaceHolder Text">
+        <input type="number" id="typeform-int" name="TypeForm[int]" placeholder="PlaceHolder Text">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -65,7 +66,7 @@ final class FieldNumberTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0">
+        <input type="number" id="typeform-int" name="TypeForm[int]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -76,8 +77,9 @@ final class FieldNumberTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Number widget must be a numeric value.');
+        $this->expectExceptionMessage('Number widget must be a numeric or null value.');
         Field::widget()->config($this->formModel, 'array')->number()->render();
     }
 

@@ -112,9 +112,11 @@ final class FieldTest extends TestCase
 
     public function testAddAttributesNumberValidator(): void
     {
-        // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('number', '1');
+        // create validator
         $validator = $this->createValidatorMock();
+
+        // add attributes html validator `Required::rule()`.
+        $this->formModel->load(['AttributesValidatorForm' => ['number' => '1']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -129,8 +131,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `Number::rule()`.
-        $this->formModel->setAttribute('number', '6');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['number' => '6']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
@@ -145,8 +146,7 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation number.
-        $this->formModel->setAttribute('number', '4');
-        $validator = $this->createValidatorMock();
+        $this->formModel->load(['AttributesValidatorForm' => ['number' => '4']]);
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
