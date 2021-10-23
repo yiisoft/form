@@ -36,7 +36,7 @@ final class Date extends Widget
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.date.html#input.date.attrs.value */
         $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value) && !is_null($value)) {
+        if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('Date widget requires a string or null value.');
         }
 

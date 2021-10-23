@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use StdClass;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;

@@ -218,7 +218,7 @@ final class CheckboxList extends Widget
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getRawAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_iterable($value) && !is_null($value)) {
+        if (!is_iterable($value) && null !== $value) {
             throw new InvalidArgumentException('CheckboxList widget value must be an array or null.');
         }
 
