@@ -22,7 +22,7 @@ final class FieldHintTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -36,7 +36,7 @@ final class FieldHintTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div class="test-class">Custom hint text.</div>
         </div>
         HTML;
@@ -52,7 +52,7 @@ final class FieldHintTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;

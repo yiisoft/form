@@ -22,7 +22,7 @@ final class FieldErrorTest extends TestCase
     public function testTabularErrors(): void
     {
         $validator = $this->createValidatorMock();
-        $this->formModel->setAttribute('name', 'sam');
+        $this->formModel->load(['PersonalForm' => ['name' => 'sam']]);
         $validator->validate($this->formModel);
 
         $expected = <<<'HTML'

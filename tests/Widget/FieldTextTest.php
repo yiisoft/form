@@ -23,7 +23,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string." dirname="test.dir">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string." dirname="test.dir">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -45,7 +45,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value form="form-id" placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" form="form-id" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -60,7 +60,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value maxlength="10" placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" maxlength="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -75,7 +75,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value minlength="4" placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" minlength="4" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -90,7 +90,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]" placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -106,7 +106,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -121,7 +121,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value readonly placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" readonly placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -136,7 +136,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -151,7 +151,7 @@ final class FieldTextTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value size="10" placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" size="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -163,8 +163,9 @@ final class FieldTextTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Text widget must be a string.');
+        $this->expectExceptionMessage('Text widget must be a string or null value.');
         Field::widget()->config($this->formModel, 'array')->render();
     }
 

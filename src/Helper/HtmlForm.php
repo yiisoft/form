@@ -169,7 +169,7 @@ final class HtmlForm
      */
     public static function getRawAttributeValue(FormModelInterface $formModel, string $attribute)
     {
-        return $formModel->getRawAttributeValue($attribute);
+        return $formModel->getRawAttributeValue(self::getAttributeName($formModel, $attribute));
     }
 
     /**
