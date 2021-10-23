@@ -25,7 +25,7 @@ final class RangeTest extends TestCase
     public function testMax(): void
     {
         $this->assertSame(
-            '<input type="range" id="typeform-int" name="TypeForm[int]" value="0" max="8">',
+            '<input type="range" id="typeform-int" name="TypeForm[int]" max="8">',
             Range::widget()->config($this->formModel, 'int')->max(8)->render(),
         );
     }
@@ -33,7 +33,7 @@ final class RangeTest extends TestCase
     public function testMin(): void
     {
         $this->assertSame(
-            '<input type="range" id="typeform-int" name="TypeForm[int]" value="0" min="4">',
+            '<input type="range" id="typeform-int" name="TypeForm[int]" min="4">',
             Range::widget()->config($this->formModel, 'int')->min(4)->render(),
         );
     }
@@ -41,7 +41,7 @@ final class RangeTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="range" id="typeform-int" name="TypeForm[int]" value="0">',
+            '<input type="range" id="typeform-int" name="TypeForm[int]">',
             Range::widget()->config($this->formModel, 'int')->render(),
         );
     }
@@ -49,7 +49,7 @@ final class RangeTest extends TestCase
     public function testValue(): void
     {
         // string value numeric `1`.
-        $this->formModel->setAttribute('string', '1');
+        $this->formModel->load(['TypeForm' => ['string' => '1']]);
         $this->assertSame(
             '<input type="range" id="typeform-string" name="TypeForm[string]" value="1">',
             Range::widget()->config($this->formModel, 'string')->render(),
@@ -58,8 +58,9 @@ final class RangeTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Range widget must be a numeric value.');
+        $this->expectExceptionMessage('Range widget must be a numeric or null value.');
         Range::widget()->config($this->formModel, 'array')->render();
     }
 

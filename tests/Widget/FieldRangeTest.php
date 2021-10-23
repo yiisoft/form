@@ -23,7 +23,7 @@ final class FieldRangeTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" max="8">
+        <input type="range" id="typeform-int" name="TypeForm[int]" max="8">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -37,7 +37,7 @@ final class FieldRangeTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" min="4">
+        <input type="range" id="typeform-int" name="TypeForm[int]" min="4">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -51,7 +51,7 @@ final class FieldRangeTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0">
+        <input type="range" id="typeform-int" name="TypeForm[int]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -62,8 +62,9 @@ final class FieldRangeTest extends TestCase
 
     public function testValueException(): void
     {
+        $this->formModel->load(['TypeForm' => ['array' => []]]);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Range widget must be a numeric value.');
+        $this->expectExceptionMessage('Range widget must be a numeric or null value.');
         Field::widget()->config($this->formModel, 'array')->range()->render();
     }
 

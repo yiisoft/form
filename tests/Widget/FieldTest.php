@@ -244,7 +244,7 @@ final class FieldTest extends TestCase
     public function testAddAttributesRangeValidator(): void
     {
         // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('number', '1');
+        $this->formModel->load(['AttributesValidatorForm' => ['number' => '1']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
@@ -260,7 +260,7 @@ final class FieldTest extends TestCase
         );
 
         // add attributes html validator `Number::rule()`.
-        $this->formModel->setAttribute('number', '6');
+        $this->formModel->load(['AttributesValidatorForm' => ['number' => '6']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
@@ -276,7 +276,7 @@ final class FieldTest extends TestCase
         );
 
         // passed all rules for validation number.
-        $this->formModel->setAttribute('number', '4');
+        $this->formModel->load(['AttributesValidatorForm' => ['number' => '4']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
