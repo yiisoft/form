@@ -1,6 +1,6 @@
 # RadioList widget
 
-[RadioList] Generates a list of radio with single selection.
+[RadioList] Generates a list of radio buttons with a single selection.
 
 ## Usage
 
