@@ -133,6 +133,7 @@ The following documentation describes how to use widgets with PHP:
 - [DateTimeLocal](docs/datetimelocal.md)
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
+- [Email](docs/email.md)
 
 ### Unit testing
 
