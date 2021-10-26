@@ -122,7 +122,7 @@ final class Range extends Widget
                 ->id($new->getId())
                 ->name($name)
                 ->value($value)
-                ->render()  . PHP_EOL .
+                ->render() . PHP_EOL .
             CustomTag::name($new->outputTag)
                 ->attributes($new->outputAttributes)
                 ->content((string) $value)
