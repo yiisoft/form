@@ -1,6 +1,6 @@
 # File widget
 
-[File](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file) the input element with a type attribute whose value is "file" represents a list of file items, each consisting of a file name, a file type, and a file body (the contents of the file).
+[File](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file) is an input element that represents a list of file items, each consisting of a file name, a file type, and a file body (the contents of the file).
 
 ## Usage
 
