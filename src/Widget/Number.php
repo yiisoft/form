@@ -80,8 +80,8 @@ final class Number extends Widget
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.value */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_numeric($value)) {
-            throw new InvalidArgumentException('Number widget must be a numeric value.');
+        if (!is_numeric($value) && null !== $value) {
+            throw new InvalidArgumentException('Number widget must be a numeric or null value.');
         }
 
         return Input::tag()
