@@ -35,7 +35,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-email">Email</label>
-        <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" value maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
+        <input type="email" id="attributesvalidatorform-email" class="is-invalid" name="AttributesValidatorForm[email]" maxlength="20" minlength="8" required pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$">
         <div class="info-class">Write your email.</div>
         <div class="hasError">Value cannot be blank.</div>
         </div>

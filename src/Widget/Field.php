@@ -321,9 +321,23 @@ final class Field extends Widget
     public function file(array $attributes = []): self
     {
         $new = clone $this;
+        $file = File::widget();
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = File::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
+        if (isset($attributes['hiddenAttributes']) && is_array($attributes['hiddenAttributes'])) {
+            $file = $file->hiddenAttributes($attributes['hiddenAttributes']);
+            unset($attributes['hiddenAttributes']);
+        }
+
+        if (
+            isset($attributes['uncheckValue']) &&
+            ((is_scalar($attributes['uncheckValue'])) || $attributes['uncheckValue'] instanceof Stringable)
+        ) {
+            $file = $file->uncheckValue($attributes['uncheckValue']);
+            unset($attributes['uncheckValue']);
+        }
+
+        $new->parts['{input}'] = $file->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }
