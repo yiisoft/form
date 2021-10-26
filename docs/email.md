@@ -1,6 +1,6 @@
 # Email widget
 
-[Email](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email) the input element with a type attribute whose value is "email" represents a control for editing a list of e-mail.
+[Email](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email) is an input element for editing a list of e-mails.
 
 ## Usage
 
