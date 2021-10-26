@@ -125,7 +125,6 @@ final class FieldEmailTest extends TestCase
         );
     }
 
-
     public function testValue(): void
     {
         // string 'email1@example.com;'
