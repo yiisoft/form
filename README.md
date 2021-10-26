@@ -136,6 +136,7 @@ The following documentation describes how to use widgets with PHP:
 - [File](docs/file.md)
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
+- [Range](docs/range.md)
 
 ### Unit testing
 
