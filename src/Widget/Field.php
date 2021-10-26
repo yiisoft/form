@@ -651,10 +651,19 @@ final class Field extends Widget
     public function range(array $attributes = []): self
     {
         $new = clone $this;
+        $range = Range::widget();
         $attributes['type'] = self::TYPE_NUMBER;
         $attributes = $new->setInputAttributes($attributes);
 
-        $new->parts['{input}'] = Range::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
+        if (isset($attributes['outputAttributes']) && is_array($attributes['outputAttributes'])) {
+            $range = $range->outputAttributes($attributes['outputAttributes']);
+        }
+
+        if (isset($attributes['outputTag']) && is_string($attributes['outputTag'])) {
+            $range = $range->outputTag($attributes['outputTag']);
+        }
+
+        $new->parts['{input}'] = $range->config($new->getFormModel(), $new->attribute, $attributes)->render();
 
         return $new;
     }

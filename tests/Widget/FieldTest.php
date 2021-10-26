@@ -253,7 +253,8 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
-        <input type="range" id="attributesvalidatorform-number" class="is-invalid" name="AttributesValidatorForm[number]" value="1" required max="5" min="3">
+        <input type="range" id="attributesvalidatorform-number" class="is-invalid" name="AttributesValidatorForm[number]" value="1" required max="5" min="3" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="AttributesValidatorForm[number]">1</output>
         <div class="hasError">Is too small.</div>
         </div>
         HTML;
@@ -269,7 +270,8 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
-        <input type="range" id="attributesvalidatorform-number" class="is-invalid" name="AttributesValidatorForm[number]" value="6" required max="5" min="3">
+        <input type="range" id="attributesvalidatorform-number" class="is-invalid" name="AttributesValidatorForm[number]" value="6" required max="5" min="3" oninput="i2.value=this.value">
+        <output id="i2" name="i2" for="AttributesValidatorForm[number]">6</output>
         <div class="hasError">Is too big.</div>
         </div>
         HTML;
@@ -285,7 +287,8 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-number">Number</label>
-        <input type="range" id="attributesvalidatorform-number" class="is-valid" name="AttributesValidatorForm[number]" value="4" required max="5" min="3">
+        <input type="range" id="attributesvalidatorform-number" class="is-valid" name="AttributesValidatorForm[number]" value="4" required max="5" min="3" oninput="i3.value=this.value">
+        <output id="i3" name="i3" for="AttributesValidatorForm[number]">4</output>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
