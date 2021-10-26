@@ -18,18 +18,25 @@ final class DateTimeTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="datetime" id="typeform-string" name="TypeForm[string]" value>',
-            DateTime::widget()->config($this->formModel, 'string')->render(),
+            '<input type="datetime" id="typeform-todate" name="TypeForm[toDate]">',
+            DateTime::widget()->config($this->formModel, 'toDate')->render(),
         );
     }
 
     public function testValue(): void
     {
         // string '2021-09-18'
-        $this->formModel->setAttribute('string', '2021-09-18T23:59:00');
+        $this->formModel->setAttribute('toDate', '2021-09-18T23:59:00');
         $this->assertSame(
-            '<input type="datetime" id="typeform-string" name="TypeForm[string]" value="2021-09-18T23:59:00">',
-            DateTime::widget()->config($this->formModel, 'string')->render(),
+            '<input type="datetime" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18T23:59:00">',
+            DateTime::widget()->config($this->formModel, 'toDate')->render(),
+        );
+
+        // value null
+        $this->formModel->setAttribute('toDate', null);
+        $this->assertSame(
+            '<input type="datetime" id="typeform-todate" name="TypeForm[toDate]">',
+            DateTime::widget()->config($this->formModel, 'toDate')->render(),
         );
     }
 
@@ -37,7 +44,7 @@ final class DateTimeTest extends TestCase
     {
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('DateTime widget requires a string value.');
+        $this->expectExceptionMessage('DateTime widget requires a string or null value.');
         DateTime::widget()->config($this->formModel, 'array')->render();
     }
 
