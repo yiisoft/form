@@ -136,7 +136,6 @@ final class FieldRangeTest extends TestCase
             $expected,
             Field::widget()->config($this->formModel, 'int')->range()->render(),
         );
-
     }
 
     public function testValueException(): void
