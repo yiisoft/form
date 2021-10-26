@@ -124,12 +124,15 @@ final class Password extends Widget
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.value */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('Password widget must be a string.');
+        if (!is_string($value) && null !== $value) {
+            throw new InvalidArgumentException('Password widget must be a string or null value.');
         }
 
         $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
 
-        return Input::password($name, $value)->attributes($new->attributes)->id($new->getId())->render();
+        return Input::password($name, $value === '' ? null : $value)
+            ->attributes($new->attributes)
+            ->id($new->getId())
+            ->render();
     }
 }

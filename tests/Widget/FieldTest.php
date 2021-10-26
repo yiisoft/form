@@ -171,7 +171,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-password">Password</label>
-        <input type="password" id="attributesvalidatorform-password" class="is-invalid" name="AttributesValidatorForm[password]" value maxlength="8" minlength="4" required pattern="^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$">
+        <input type="password" id="attributesvalidatorform-password" class="is-invalid" name="AttributesValidatorForm[password]" maxlength="8" minlength="4" required pattern="^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
