@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -20,6 +22,10 @@ final class File extends Widget
 {
     use CommonAttributes;
     use ModelAttributes;
+
+    private array $hiddenAttributes = [];
+    /** @var bool|float|int|string|Stringable|null */
+    private $uncheckValue = null;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -40,6 +46,22 @@ final class File extends Widget
     }
 
     /**
+     * The HTML attributes for tag hidden uncheckValue. The following special options are recognized.
+     *
+     * @param array $value
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function hiddenAttributes(array $value): self
+    {
+        $new = clone $this;
+        $new->hiddenAttributes = $value;
+        return $new;
+    }
+
+    /**
      * When the multiple Boolean attribute is specified, the file input allows the user to select more than one file.
      *
      * @param bool $value
@@ -56,6 +78,18 @@ final class File extends Widget
     }
 
     /**
+     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
+     *
+     * @return static
+     */
+    public function uncheckValue($value): self
+    {
+        $new = clone $this;
+        $new->uncheckValue = is_bool($value) ? (int) $value : $value;
+        return $new;
+    }
+
+    /**
      * Generates a file input tag for the given form attribute.
      *
      * @return string the generated input tag.
@@ -63,18 +97,8 @@ final class File extends Widget
     protected function run(): string
     {
         $new = clone $this;
-
-        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
-
-        /** @var string|null  */
-        $forceUncheckedValue = $new->attributes['forceUncheckedValue'] ?? null;
-
         $hiddenInput = '';
-
-        /** @var array */
-        $hiddenAttributes = $new->attributes['hiddenAttributes'] ?? [];
-
-        unset($new->attributes['forceUncheckedValue'], $new->attributes['hiddenAttributes']);
+        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
 
         /**
          * Add a hidden field so that if a form only has a file field, we can still use isset($body[$formClass]) to
@@ -84,12 +108,15 @@ final class File extends Widget
          *
          * Note: For file-field-only form with `disabled` option set to `true` input submitting detection won't work.
          */
-        if ($forceUncheckedValue !== null) {
-            $hiddenInput = Input::hidden($name, $forceUncheckedValue)->attributes($hiddenAttributes)->render();
+        if ($new->uncheckValue !== null) {
+            $hiddenInput = Input::hidden($name, $new->uncheckValue)->attributes($new->hiddenAttributes)->render();
         }
 
-        $new->attributes['value'] = false;
-
-        return $hiddenInput . Input::file($name)->attributes($new->attributes)->id($new->getId())->render();
+        return $hiddenInput .
+            Input::file(Html::getArrayableName($name))
+                ->attributes($new->attributes)
+                ->id($new->getId())
+                ->value(null)
+                ->render();
     }
 }

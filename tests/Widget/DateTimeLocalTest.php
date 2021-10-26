@@ -18,18 +18,25 @@ final class DateTimeLocalTest extends TestCase
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="datetime-local" id="typeform-string" name="TypeForm[string]" value>',
-            DateTimeLocal::widget()->config($this->formModel, 'string')->render(),
+            '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]">',
+            DateTimeLocal::widget()->config($this->formModel, 'toDate')->render(),
         );
     }
 
     public function testValue(): void
     {
         // string '2021-09-18'
-        $this->formModel->setAttribute('string', '2021-09-18T23:59:00');
+        $this->formModel->setAttribute('toDate', '2021-09-18T23:59:00');
         $this->assertSame(
-            '<input type="datetime-local" id="typeform-string" name="TypeForm[string]" value="2021-09-18T23:59:00">',
-            DateTimeLocal::widget()->config($this->formModel, 'string')->render(),
+            '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18T23:59:00">',
+            DateTimeLocal::widget()->config($this->formModel, 'toDate')->render(),
+        );
+
+        // value null
+        $this->formModel->setAttribute('toDate', null);
+        $this->assertSame(
+            '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]">',
+            DateTimeLocal::widget()->config($this->formModel, 'toDate')->render(),
         );
     }
 
@@ -37,7 +44,7 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('DateTimeLocal widget requires a string value.');
+        $this->expectExceptionMessage('DateTimeLocal widget requires a string or null value.');
         DateTimeLocal::widget()->config($this->formModel, 'array')->render();
     }
 
