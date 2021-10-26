@@ -1,6 +1,6 @@
 # DateTimeLocal widget
 
-[DateTimeLocal](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime-local.html#input.datetime-local) the input element with a type attribute whose value is "datetime-local" represents a control for setting the element’s value to a string representing a local date and time (with no timezone information).
+[DateTimeLocal](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime-local.html#input.datetime-local) is an input element representing a local date and time (with no timezone information).
 
 ## Usage
 
