@@ -30,7 +30,6 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\DateTime;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Form\Widget\Form;
-use Yiisoft\Form\Widget\Label;
 
 /**
  * @var FormModelInterface $data
