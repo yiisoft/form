@@ -23,7 +23,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value maxlength="10" placeholder="Typed your text string.">
+        <input type="email" id="typeform-string" name="TypeForm[string]" maxlength="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value minlength="4" placeholder="Typed your text string.">
+        <input type="email" id="typeform-string" name="TypeForm[string]" minlength="4" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -69,7 +69,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}" placeholder="Typed your text string.">
+        <input type="email" id="typeform-string" name="TypeForm[string]" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -85,7 +85,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
+        <input type="email" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -100,7 +100,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="email" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -115,7 +115,7 @@ final class FieldEmailTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="email" id="typeform-string" name="TypeForm[string]" value size="20" placeholder="Typed your text string.">
+        <input type="email" id="typeform-string" name="TypeForm[string]" size="20" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -125,10 +125,41 @@ final class FieldEmailTest extends TestCase
         );
     }
 
+    public function testValue(): void
+    {
+        // string 'email1@example.com;'
+        $this->formModel->setAttribute('string', 'email1@example.com;');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->email()->render(),
+        );
+
+        // value null
+        $this->formModel->setAttribute('string', null);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="email" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->email()->render(),
+        );
+    }
+
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Email widget must be a string.');
+        $this->expectExceptionMessage('Email widget must be a string or null value.');
         Field::widget()->config($this->formModel, 'int')->email()->render();
     }
 
