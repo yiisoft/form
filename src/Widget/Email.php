@@ -139,8 +139,8 @@ final class Email extends Widget
          */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('Email widget must be a string.');
+        if (!is_string($value) && null !== $value) {
+            throw new InvalidArgumentException('Email widget must be a string or null value.');
         }
 
         return Input::tag()
@@ -148,7 +148,7 @@ final class Email extends Widget
             ->attributes($new->attributes)
             ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
-            ->value($value)
+            ->value($value === '' ? null : $value)
             ->render();
     }
 }
