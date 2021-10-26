@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,6 +21,7 @@ final class FieldRangeTest extends TestCase
 
     public function testMax(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -35,6 +37,7 @@ final class FieldRangeTest extends TestCase
 
     public function testMin(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 1]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -50,6 +53,7 @@ final class FieldRangeTest extends TestCase
 
     public function testOutputAttributes(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 2]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -68,6 +72,7 @@ final class FieldRangeTest extends TestCase
 
     public function testOutputTag(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 3]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -93,6 +98,7 @@ final class FieldRangeTest extends TestCase
 
     public function testRender(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 5]);
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
@@ -109,6 +115,7 @@ final class FieldRangeTest extends TestCase
     public function testValue(): void
     {
         // string value numeric `1`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 6]);
         $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <div>
@@ -124,6 +131,7 @@ final class FieldRangeTest extends TestCase
         );
 
         // int value 1
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
         $this->formModel->setAttribute('int', '1');
         $expected = <<<'HTML'
         <div>
