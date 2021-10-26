@@ -21,27 +21,13 @@ final class FieldFileTest extends TestCase
     {
         $expected = <<<HTML
         <div>
-        <label for="typeform-tonull">To Null</label>
-        <input type="file" id="typeform-tonull" name="TypeForm[toNull]" accept="image/*">
+        <label for="typeform-array">Array</label>
+        <input type="file" id="typeform-array" name="TypeForm[array][]" accept="image/*">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->file(['accept' => 'image/*'])->render(),
-        );
-    }
-
-    public function testForceUncheckedValue(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-tonull">To Null</label>
-        <input type="hidden" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'toNull')->file(['forceUncheckedValue' => ''])->render(),
+            Field::widget()->config($this->formModel, 'array')->file(['accept' => 'image/*'])->render(),
         );
     }
 
@@ -49,13 +35,13 @@ final class FieldFileTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="typeform-tonull">To Null</label>
-        <input type="hidden" id="test-id" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <label for="typeform-array">Array</label>
+        <input type="hidden" id="test-id" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
         </div>
         HTML;
         $html = Field::widget()
-            ->config($this->formModel, 'toNull')
-            ->file(['forceUncheckedValue' => '', 'hiddenAttributes' => ['id' => 'test-id']])
+            ->config($this->formModel, 'array')
+            ->file(['uncheckValue' => '0', 'hiddenAttributes' => ['id' => 'test-id']])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -64,13 +50,13 @@ final class FieldFileTest extends TestCase
     {
         $expected = <<<HTML
         <div>
-        <label for="typeform-tonull">To Null</label>
-        <input type="file" id="typeform-tonull" name="TypeForm[toNull]" multiple>
+        <label for="typeform-array">Array</label>
+        <input type="file" id="typeform-array" name="TypeForm[array][]" multiple>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->file(['multiple' => true])->render(),
+            Field::widget()->config($this->formModel, 'array')->file(['multiple' => true])->render(),
         );
     }
 
@@ -78,13 +64,27 @@ final class FieldFileTest extends TestCase
     {
         $expected = <<<HTML
         <div>
-        <label for="typeform-tonull">To Null</label>
-        <input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <label for="typeform-array">Array</label>
+        <input type="file" id="typeform-array" name="TypeForm[array][]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->file()->render(),
+            Field::widget()->config($this->formModel, 'array')->file()->render(),
+        );
+    }
+
+    public function testUncheckValue(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-array">Array</label>
+        <input type="hidden" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'array')->file(['uncheckValue' => '0'])->render(),
         );
     }
 
