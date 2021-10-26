@@ -1,6 +1,6 @@
 # DateTime widget
 
-The input element with a type attribute whose value is "datetime" represents a control for setting the element’s value to a string representing a global date and time (with timezone information).
+[DateTime](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime) the input element with a type attribute whose value is "datetime" represents a control for setting the element’s value to a string representing a global date and time (with timezone information).
 
 ## Usage
 
