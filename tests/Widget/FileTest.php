@@ -17,36 +17,20 @@ final class FileTest extends TestCase
     public function testAccept(): void
     {
         $this->assertSame(
-            '<input type="file" id="typeform-tonull" name="TypeForm[toNull]" accept="image/*">',
-            File::widget()->config($this->formModel, 'toNull')->accept('image/*')->render(),
+            '<input type="file" id="typeform-array" name="TypeForm[array][]" accept="image/*">',
+            File::widget()->config($this->formModel, 'array')->accept('image/*')->render(),
         );
-    }
-
-    public function testForceUncheckedValue(): void
-    {
-        $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
-        HTML;
-        $html = File::widget()
-            ->config($this->formModel, 'toNull', ['forceUncheckedValue' => ''])
-            ->render();
-        $this->assertSame($expected, $html);
     }
 
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'
-        <input type="hidden" id="test-id" name="TypeForm[toNull]" value><input type="file" id="typeform-tonull" name="TypeForm[toNull]">
+        <input type="hidden" id="test-id" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
         HTML;
         $html = File::widget()
-            ->config(
-                $this->formModel,
-                'toNull',
-                [
-                    'forceUncheckedValue' => '',
-                    'hiddenAttributes' => ['id' => 'test-id'],
-                ]
-            )
+            ->config($this->formModel, 'array')
+            ->hiddenAttributes(['id' => 'test-id'])
+            ->uncheckValue('0')
             ->render();
         $this->assertSame($expected, $html);
     }
@@ -55,24 +39,34 @@ final class FileTest extends TestCase
     {
         $fileInput = File::widget();
         $this->assertNotSame($fileInput, $fileInput->accept(''));
-        $this->assertNotSame($fileInput, $fileInput->form(''));
+        $this->assertNotSame($fileInput, $fileInput->hiddenAttributes([]));
         $this->assertNotSame($fileInput, $fileInput->multiple());
+        $this->assertNotSame($fileInput, $fileInput->uncheckValue(null));
     }
 
     public function testMultiple(): void
     {
         $this->assertSame(
-            '<input type="file" id="typeform-tonull" name="TypeForm[toNull]" multiple>',
-            File::widget()->config($this->formModel, 'toNull')->multiple()->render(),
+            '<input type="file" id="typeform-array" name="TypeForm[array][]" multiple>',
+            File::widget()->config($this->formModel, 'array')->multiple()->render(),
         );
     }
 
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="file" id="typeform-tonull" name="TypeForm[toNull]">',
-            File::widget()->config($this->formModel, 'toNull')->render(),
+            '<input type="file" id="typeform-array" name="TypeForm[array][]">',
+            File::widget()->config($this->formModel, 'array')->render(),
         );
+    }
+
+    public function testUncheckValue(): void
+    {
+        $expected = <<<'HTML'
+        <input type="hidden" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
+        HTML;
+        $html = File::widget()->config($this->formModel, 'array')->uncheckValue('0')->render();
+        $this->assertSame($expected, $html);
     }
 
     protected function setUp(): void

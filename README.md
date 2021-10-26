@@ -129,6 +129,11 @@ The following documentation describes how to use widgets with PHP:
 
 - [Checkbox](docs/checkbox.md)
 - [CheckboxList](docs/checkboxlist.md)
+- [Date](docs/date.md)
+- [DateTime](docs/datetime.md)
+- [DateTimeLocal](docs/datetimelocal.md)
+- [Email](docs/email.md)
+- [File](docs/file.md)
 - [Password](docs/password.md)
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
