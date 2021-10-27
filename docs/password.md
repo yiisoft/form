@@ -1,6 +1,6 @@
 # Password widget
 
-[Password](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password) the input element with a type attribute whose value is "password" represents a one-line plain-text edit control for entering a password.
+[Password](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password) represents a one-line plain-text edit control for entering a password.
 
 ## Usage
 
