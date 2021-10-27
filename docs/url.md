@@ -1,6 +1,6 @@
 # Url widget
 
-[Url](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html) is an element with a type attribute whose value is "url" represents a control for editing an absolute URL give in the element’s value.
+[Url](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html) represents a control for editing an absolute URL give in the element’s value.
 
 ## Usage
 
