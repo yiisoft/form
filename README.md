@@ -139,6 +139,7 @@ The following documentation describes how to use widgets with PHP:
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
 - [Range](docs/range.md)
+- [ResetButton](docs/resetbutton.md)
 
 ### Unit testing
 
