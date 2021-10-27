@@ -22,13 +22,13 @@ final class FieldNumberTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0" max="8">
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" name="TypeForm[number]" max="8">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->number(['max' => 8])->render(),
+            Field::widget()->config($this->formModel, 'number')->number(['max' => 8])->render(),
         );
     }
 
@@ -36,13 +36,13 @@ final class FieldNumberTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0" min="4">
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" name="TypeForm[number]" min="4">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->number(['min' => 4])->render(),
+            Field::widget()->config($this->formModel, 'number')->number(['min' => 4])->render(),
         );
     }
 
@@ -50,13 +50,16 @@ final class FieldNumberTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0" placeholder="PlaceHolder Text">
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" name="TypeForm[number]" placeholder="PlaceHolder Text">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->number(['placeholder' => 'PlaceHolder Text'])->render(),
+            Field::widget()
+                ->config($this->formModel, 'number')
+                ->number(['placeholder' => 'PlaceHolder Text'])
+                ->render(),
         );
     }
 
@@ -64,20 +67,62 @@ final class FieldNumberTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <label for="typeform-int">Int</label>
-        <input type="number" id="typeform-int" name="TypeForm[int]" value="0">
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" name="TypeForm[number]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->number()->render(),
+            Field::widget()->config($this->formModel, 'number')->number()->render(),
+        );
+    }
+
+    public function testValue(): void
+    {
+        // value null
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" name="TypeForm[number]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'number')->number()->render(),
+        );
+
+        // int value 1
+        $this->formModel->setAttribute('number', 1);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" name="TypeForm[number]" value="1">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'number')->number()->render(),
+        );
+
+        // string numeric value '1'
+        $this->formModel->setAttribute('string', 1);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="number" id="typeform-string" name="TypeForm[string]" value="1" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->number()->render(),
         );
     }
 
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Number widget must be a numeric value.');
+        $this->expectExceptionMessage('Number widget must be a numeric or null value.');
         Field::widget()->config($this->formModel, 'array')->number()->render();
     }
 

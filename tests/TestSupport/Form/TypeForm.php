@@ -12,6 +12,7 @@ final class TypeForm extends FormModel
     private bool $bool = false;
     private float $float = 0;
     private int $int = 0;
+    private ?int $number = null;
     private ?object $object = null;
     private ?string $string = '';
     private string $toCamelCase = '';

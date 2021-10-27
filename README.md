@@ -134,6 +134,7 @@ The following documentation describes how to use widgets with PHP:
 - [DateTimeLocal](docs/datetimelocal.md)
 - [Email](docs/email.md)
 - [File](docs/file.md)
+- [Number](docs/number.md)
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
 - [Range](docs/range.md)
