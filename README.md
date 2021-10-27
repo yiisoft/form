@@ -140,6 +140,8 @@ The following documentation describes how to use widgets with PHP:
 - [RadioList](docs/radiolist.md)
 - [Range](docs/range.md)
 - [Text](docs/text.md)  
+- [Telephone](docs/telephone.md)
+- [Url](docs/url.md)
 
 ### Unit testing
 
