@@ -33,6 +33,7 @@ final class Select extends Widget
     /** @var string[] */
     private array $optionsData = [];
     private array $prompt = [];
+    private ?string $unselectValue = null;
 
     /**
      * The attributes for the optgroup tags.
@@ -205,6 +206,13 @@ final class Select extends Widget
         return $new;
     }
 
+    public function unselectValue(?string $value): self
+    {
+        $new = clone $this;
+        $new->unselectValue = $value;
+        return $new;
+    }
+
     /**
      * @return Optgroup[]|Option[]
      */
@@ -246,6 +254,13 @@ final class Select extends Widget
         $new = clone $this;
         $select = SelectTag::tag();
 
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+
+        if (is_object($value)) {
+            throw new InvalidArgumentException('Select widget value can not be an object.');
+        }
+
         if (isset($new->attributes['multiple']) && !isset($new->attributes['size'])) {
             $new = $new->size();
         }
@@ -268,18 +283,6 @@ final class Select extends Widget
             $select = $select->optionsData($new->optionsData, $new->encode);
         }
 
-        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute) ?? '';
-
-        if (is_object($value)) {
-            throw new InvalidArgumentException('Select widget required bool|float|int|iterable|string|null.');
-        }
-
-        /** @var string|null */
-        $unselectValue = $new->attributes['unselectValue'] ?? null;
-
-        unset($new->attributes['unselectValue']);
-
         if (is_iterable($value)) {
             $select = $select->values($value);
         } elseif (null !== $value) {
@@ -291,7 +294,7 @@ final class Select extends Widget
             ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->promptOption($promptOption)
-            ->unselectValue($unselectValue)
+            ->unselectValue($new->unselectValue)
             ->render();
     }
 }
