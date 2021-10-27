@@ -1,6 +1,6 @@
 # Range widget
 
-[Range](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html) the input element with a type attribute whose value is "range" represents an imprecise control for setting the element’s value representing a number.
+[Range](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html) is an imprecise control for setting the element’s value representing a number.
 
 ## Usage
 
