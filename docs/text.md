@@ -1,6 +1,6 @@
 # Text widget
 
-[Text](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text) is an element with a type attribute whose value is "text" represents a one-line plain text edit control for the input element’s value.
+[Text](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text) represents a one-line plain text edit control for the input element’s value.
 
 ## Usage
 
