@@ -117,7 +117,7 @@ final class Text extends Widget
     }
 
     /**
-     * The height of the <select> with multiple is true.
+     * The height of the input with multiple is true.
      *
      * Default value is 4.
      *
@@ -144,8 +144,9 @@ final class Text extends Widget
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.value */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('Text widget must be a string.');
+
+        if (!is_string($value) && null !== $value) {
+            throw new InvalidArgumentException('Text widget must be a string or null value.');
         }
 
         if ($new->dirname !== '') {
@@ -156,7 +157,7 @@ final class Text extends Widget
             ->attributes($new->attributes)
             ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
-            ->value($value)
+            ->value($value === '' ? null : $value)
             ->render();
     }
 }
