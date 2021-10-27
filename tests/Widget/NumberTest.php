@@ -26,38 +26,51 @@ final class NumberTest extends TestCase
     public function testMax(): void
     {
         $this->assertSame(
-            '<input type="number" id="typeform-int" name="TypeForm[int]" value="0" max="8">',
-            Number::widget()->config($this->formModel, 'int')->max(8)->render(),
+            '<input type="number" id="typeform-number" name="TypeForm[number]" max="8">',
+            Number::widget()->config($this->formModel, 'number')->max(8)->render(),
         );
     }
 
     public function testMin(): void
     {
         $this->assertSame(
-            '<input type="number" id="typeform-int" name="TypeForm[int]" value="0" min="4">',
-            Number::widget()->config($this->formModel, 'int')->min(4)->render(),
+            '<input type="number" id="typeform-number" name="TypeForm[number]" min="4">',
+            Number::widget()->config($this->formModel, 'number')->min(4)->render(),
         );
     }
 
     public function testPlaceholder(): void
     {
         $this->assertSame(
-            '<input type="number" id="typeform-int" name="TypeForm[int]" value="0" placeholder="PlaceHolder Text">',
-            Number::widget()->config($this->formModel, 'int')->placeholder('PlaceHolder Text')->render(),
+            '<input type="number" id="typeform-number" name="TypeForm[number]" placeholder="PlaceHolder Text">',
+            Number::widget()->config($this->formModel, 'number')->placeholder('PlaceHolder Text')->render(),
         );
     }
 
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="number" id="typeform-int" name="TypeForm[int]" value="0">',
-            Number::widget()->config($this->formModel, 'int')->render(),
+            '<input type="number" id="typeform-number" name="TypeForm[number]">',
+            Number::widget()->config($this->formModel, 'number')->render(),
         );
     }
 
     public function testValue(): void
     {
-        // string value numeric `1`.
+        // value null
+        $this->assertSame(
+            '<input type="number" id="typeform-number" name="TypeForm[number]">',
+            Number::widget()->config($this->formModel, 'number')->render(),
+        );
+
+        // int value 1
+        $this->formModel->setAttribute('number', 1);
+        $this->assertSame(
+            '<input type="number" id="typeform-number" name="TypeForm[number]" value="1">',
+            Number::widget()->config($this->formModel, 'number')->render(),
+        );
+
+        // string numeric value '1'
         $this->formModel->setAttribute('string', '1');
         $this->assertSame(
             '<input type="number" id="typeform-string" name="TypeForm[string]" value="1">',
@@ -68,7 +81,7 @@ final class NumberTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Number widget must be a numeric value.');
+        $this->expectExceptionMessage('Number widget must be a numeric or null value.');
         Number::widget()->config($this->formModel, 'array')->render();
     }
 
