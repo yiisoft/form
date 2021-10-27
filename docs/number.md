@@ -1,6 +1,6 @@
 # Number widget
 
-[Number](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html) the input element with a type attribute whose value is "number" represents a precise control for setting the element’s value to a string representing a number.
+[Number](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html) is a precise control for setting the element’s value to a string representing a number.
 
 ## Usage
 
