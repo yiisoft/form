@@ -1,6 +1,6 @@
 # Telephone widget
 
-[Telephone](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel) is element with a type attribute whose value is "tel" represents a one-line plain-text edit control for entering a telephone number
+[Telephone](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel) represents a one-line plain-text edit control for entering a telephone number.
 
 ## Usage
 
