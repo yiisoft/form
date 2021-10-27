@@ -310,7 +310,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
-        <input type="tel" id="attributesvalidatorform-telephone" class="is-invalid" name="AttributesValidatorForm[telephone]" value maxlength="16" minlength="8" required pattern="[^0-9+\(\)-]">
+        <input type="tel" id="attributesvalidatorform-telephone" class="is-invalid" name="AttributesValidatorForm[telephone]" maxlength="16" minlength="8" required pattern="[^0-9+\(\)-]">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;

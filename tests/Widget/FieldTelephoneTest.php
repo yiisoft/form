@@ -23,7 +23,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value maxlength="10" placeholder="Typed your text string.">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" maxlength="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value minlength="4" placeholder="Typed your text string.">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" minlength="4" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +53,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value pattern="[789][0-9]{9}" placeholder="Typed your text string.">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" pattern="[789][0-9]{9}" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -68,7 +68,7 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -84,7 +84,36 @@ final class FieldTelephoneTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="tel" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="tel" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->telephone()->render(),
+        );
+    }
+
+    public function testValue(): void
+    {
+        // value null
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-tonull">To Null</label>
+        <input type="tel" id="typeform-tonull" name="TypeForm[toNull]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'toNull')->telephone()->render(),
+        );
+
+        // value telephone number string '+71234567890'
+        $this->formModel->setAttribute('string', '+71234567890');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value="+71234567890" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -97,7 +126,7 @@ final class FieldTelephoneTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Telephone widget must be a string.');
+        $this->expectExceptionMessage('Telephone widget must be a string o null value.');
         Field::widget()->config($this->formModel, 'int')->telephone()->render();
     }
 
