@@ -95,7 +95,7 @@ final class Telephone extends Widget
     }
 
     /**
-     * The height of the <select> with multiple is true.
+     * The height of the text input.
      *
      * Default value is 4.
      *
@@ -124,8 +124,8 @@ final class Telephone extends Widget
          */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('Telephone widget must be a string.');
+        if (!is_string($value) && null !== $value) {
+            throw new InvalidArgumentException('Telephone widget must be a string o null value.');
         }
 
         return Input::tag()
@@ -133,7 +133,7 @@ final class Telephone extends Widget
             ->attributes($new->attributes)
             ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
-            ->value($value)
+            ->value($value === '' ? null : $value)
             ->render();
     }
 }

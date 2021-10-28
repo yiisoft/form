@@ -25,103 +25,9 @@ The package could be installed via composer:
 composer require yiisoft/form
 ```
 
-### Usage
+## Usage
 
-You must create your form model by extending the abstract form class, defining all the private properties with their
-respective typehint.
-
-Example: LoginForm.php
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Form;
-
-use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\Email;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\Rule\HasLength;
-
-class LoginForm extends FormModel
-{
-    /** Define properties with TypeHint */
-    private ?string $login = null;
-    private ?string $password = null;
-    private bool $rememberMe = false;
-
-    /** Getters properties */
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function getRememberMe(): bool
-    {
-        return $this->rememberMe;
-    }
-
-    /** Setters properties */
-    public function login(string $value): void
-    {
-        $this->login = $value;
-    }
-
-    public function password(string $value): void
-    {
-        $this->password = $value;
-    }
-
-    public function rememberMe(bool $value): void
-    {
-        $this->rememberMe = $value;
-    }
-
-    /** Define labels */
-    public function attributeLabels(): array
-    {
-        return [
-            'login' => 'Login:',
-            'password' => 'Password:',
-            'rememberMe' => 'remember Me:'
-        ];
-    }
-
-    /** Define form name */
-    public function formName(): string
-    {
-        return 'LoginForm';
-    }
-
-    /** Add rules */
-    public function rules(): array
-    {
-        return [
-            'login' => $this->loginRules()
-        ];
-    }
-
-    /** Define login rules */
-    private function loginRules(): array
-    {
-        return [
-            new Required(),
-            (new HasLength())
-            ->min(4)
-            ->max(40)
-            ->tooShortMessage('Is too short.')
-            ->tooLongMessage('Is too long.'),
-            new Email()
-        ];
-    }
-}
-```
+[Creating Forms](docs/creating-forms.md)
 
 ## Widgets usage
 
@@ -140,6 +46,11 @@ The following documentation describes how to use widgets with PHP:
 - [RadioList](docs/radiolist.md)
 - [Range](docs/range.md)
 - [Select](docs/select.md)
+- [ResetButton](docs/resetbutton.md)
+- [SubmitButton](docs/submitbutton.md)
+- [Text](docs/text.md)  
+- [Telephone](docs/telephone.md)
+- [Url](docs/url.md)
 
 ### Unit testing
 
