@@ -133,7 +133,7 @@ final class Radio extends Widget
         }
 
         return $radio
-            ->checked("$value" === "{$valueDefault}")
+            ->checked("$value" === "$valueDefault")
             ->attributes($new->attributes)
             ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))

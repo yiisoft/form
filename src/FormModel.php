@@ -273,8 +273,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      *
      * By default, this method returns all non-static properties of the class.
      *
-     * @throws \ReflectionException
-     *
      * @return array list of attribute types indexed by attribute names.
      */
     protected function collectAttributes(): array
