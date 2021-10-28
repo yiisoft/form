@@ -766,14 +766,22 @@ final class Field extends Widget
         $attributes = $new->setInputAttributes($attributes);
         /** @var bool */
         $encode = $attributes['encode'] ?? false;
-        /** @var array<array-key, string> */
+        /** @psalm-var array<array-key, string> */
         $itemsAttributes = $attributes['itemsAttributes'] ?? [];
-        /** @var array<array-key, string> */
+        /** @psalm-var array<array-key, string> */
         $optionsData = $attributes['optionsData'] ?? [];
-        /** @var array<array-key, mixed> */
+        /** @psalm-var array<array-key, mixed> */
         $prompt = $attributes['prompt'] ?? [];
+        /** @var string|null */
+        $unselectValue = $attributes['unselectValue'] ?? null;
 
-        unset($attributes['encode'], $attributes['itemsAttributes'], $attributes['optionsData'], $attributes['prompt']);
+        unset(
+            $attributes['encode'],
+            $attributes['itemsAttributes'],
+            $attributes['optionsData'],
+            $attributes['prompt'],
+            $attributes['unselectValue']
+        );
 
         $new->parts['{input}'] = Select::widget()
             ->config($new->getFormModel(), $new->attribute, $attributes)
@@ -782,6 +790,7 @@ final class Field extends Widget
             ->itemsAttributes($itemsAttributes)
             ->optionsData($optionsData, $encode)
             ->prompt($prompt)
+            ->unselectValue($unselectValue)
             ->render();
 
         return $new;

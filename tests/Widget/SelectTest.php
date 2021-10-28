@@ -22,26 +22,6 @@ final class SelectTest extends TestCase
     private array $groups = [];
     private TypeForm $formModel;
 
-    public function testForceUnselectValueWithMultiple(): void
-    {
-        $this->formModel->setAttribute('array', [1, 3]);
-        $expected = <<<'HTML'
-        <input type="hidden" name="TypeForm[array]" value="0">
-        <select id="typeform-array" name="TypeForm[array][]" multiple size="4">
-        <option value="1" selected>Moscu</option>
-        <option value="2">San Petersburgo</option>
-        <option value="3" selected>Novosibirsk</option>
-        <option value="4">Ekaterinburgo</option>
-        </select>
-        HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'array', ['unselectValue' => 0])
-            ->items($this->cities)
-            ->multiple()
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
     public function testImmutability(): void
     {
         $select = Select::widget();
@@ -52,11 +32,11 @@ final class SelectTest extends TestCase
         $this->assertNotSame($select, $select->optionsData([], false));
         $this->assertNotSame($select, $select->prompt());
         $this->assertNotSame($select, $select->size());
+        $this->assertNotSame($select, $select->unselectValue(null));
     }
 
     public function testGroups(): void
     {
-        $this->formModel->setAttribute('int', 8);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <optgroup label="Russia">
@@ -68,7 +48,7 @@ final class SelectTest extends TestCase
         <optgroup label="Chile">
         <option value="6">Santiago</option>
         <option value="7">Concepcion</option>
-        <option value="8" selected>Chillan</option>
+        <option value="8">Chillan</option>
         </optgroup>
         </select>
         HTML;
@@ -82,7 +62,6 @@ final class SelectTest extends TestCase
 
     public function testGroupsItemsAttributes(): void
     {
-        $this->formModel->setAttribute('int', 7);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <optgroup label="Russia">
@@ -93,7 +72,7 @@ final class SelectTest extends TestCase
         </optgroup>
         <optgroup label="Chile">
         <option value="6">Santiago</option>
-        <option value="7" selected>Concepcion</option>
+        <option value="7">Concepcion</option>
         <option value="8">Chillan</option>
         </optgroup>
         </select>
@@ -120,9 +99,10 @@ final class SelectTest extends TestCase
         </select>
         HTML;
         $html = Select::widget()
-            ->config($this->formModel, 'array', ['unselectValue' => 0])
+            ->config($this->formModel, 'array')
             ->items($this->cities)
             ->multiple()
+            ->unselectValue('0')
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -135,7 +115,6 @@ final class SelectTest extends TestCase
             '3' => 'Novosibirsk',
             '4' => 'Ekaterinburgo',
         ];
-        $this->formModel->setAttribute('cityBirth', 3);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1">&lt;b&gt;Moscu&lt;/b&gt;</option>
@@ -178,11 +157,10 @@ final class SelectTest extends TestCase
 
     public function testRender(): void
     {
-        $this->formModel->setAttribute('int', 2);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1">Moscu</option>
-        <option value="2" selected>San Petersburgo</option>
+        <option value="2">San Petersburgo</option>
         <option value="3">Novosibirsk</option>
         <option value="4">Ekaterinburgo</option>
         </select>
@@ -195,12 +173,11 @@ final class SelectTest extends TestCase
 
     public function testSizeWithMultiple(): void
     {
-        $this->formModel->setAttribute('int', 2);
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[int]" value>
         <select id="typeform-int" name="TypeForm[int][]" multiple size="3">
         <option value="1">Moscu</option>
-        <option value="2" selected>San Petersburgo</option>
+        <option value="2">San Petersburgo</option>
         <option value="3">Novosibirsk</option>
         <option value="4">Ekaterinburgo</option>
         </select>
@@ -210,6 +187,26 @@ final class SelectTest extends TestCase
             ->items($this->cities)
             ->multiple()
             ->size(3)
+            ->render();
+        $this->assertEqualsWithoutLE($expected, $html);
+    }
+
+    public function testUnselectValueWithMultiple(): void
+    {
+        $expected = <<<'HTML'
+        <input type="hidden" name="TypeForm[array]" value="0">
+        <select id="typeform-array" name="TypeForm[array][]" multiple size="4">
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        HTML;
+        $html = Select::widget()
+            ->config($this->formModel, 'array')
+            ->items($this->cities)
+            ->multiple()
+            ->unselectValue('0')
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -292,9 +289,9 @@ final class SelectTest extends TestCase
         );
 
         // value null.
-        $this->formModel->setAttribute('toNull', null);
+        $this->formModel->setAttribute('int', null);
         $expected = <<<'HTML'
-        <select id="typeform-tonull" name="TypeForm[toNull]">
+        <select id="typeform-int" name="TypeForm[int]">
         <option value="1">Moscu</option>
         <option value="2">San Petersburgo</option>
         <option value="3">Novosibirsk</option>
@@ -303,7 +300,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'toNull')->items($this->cities)->render(),
+            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
         );
     }
 
@@ -311,7 +308,7 @@ final class SelectTest extends TestCase
     {
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Select widget required bool|float|int|iterable|string|null.');
+        $this->expectExceptionMessage('Select widget value can not be an object.');
         Select::widget()->config($this->formModel, 'object')->render();
     }
 
