@@ -1,8 +1,8 @@
 # Creating Forms
 
-The primary way of using forms in `Yii` is through `Yiisoft\Form\Widget\Form` this approach should be preferred when the form is based upon a form model. Additionally, there are some useful `widgets` that are typically used for adding buttons and help text to any form.
+The primary way of using forms in `Yii` is through `Yiisoft\Form\Widget\Form` this approach should be preferred when the form is based upon a form model. Additionally, there are some useful "widgets" that are typically used for adding custom inputs and help text to a form.
 
-A form, that is displayed on the client-side, will in most cases have a corresponding form model which is used to validate (Check the [Validating Input section for more details on validation](https://github.com/yiisoft/validator)). 
+A form, that is displayed on the client-side, will in most cases have a corresponding form model which is used to [validate input](https://github.com/yiisoft/validator). 
 
 In the following example, we show how a generic form model can be used for a login form:
 
