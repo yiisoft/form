@@ -117,19 +117,6 @@ final class FieldCheckBoxTest extends TestCase
         );
     }
 
-    public function testForceUncheckedValue(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox(['forceUncheckedValue' => '0'])->render(),
-        );
-    }
-
     public function testForm(): void
     {
         $expected = <<<'HTML'
@@ -153,6 +140,35 @@ final class FieldCheckBoxTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->config($this->formModel, 'bool')->checkbox()->render(),
+        );
+    }
+
+    public function testUncheckValue(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'bool')->checkbox(['uncheckValue' => '0'])->render(),
+        );
+    }
+
+    public function testValue(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="TypeForm[string]" value="inactive"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="active"> String</label>
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')
+                ->checkbox(['uncheckValue' => 'inactive', 'value' => 'active'])
+                ->render(),
         );
     }
 

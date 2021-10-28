@@ -96,13 +96,21 @@ final class Field extends Widget
 
         if (isset($attributes['label']) && is_string($attributes['label'])) {
             $checkbox = $checkbox->label($attributes['label']);
+            unset($attributes['label']);
         }
 
         if (isset($attributes['labelAttributes']) && is_array($attributes['labelAttributes'])) {
             $checkbox = $checkbox->labelAttributes($attributes['labelAttributes']);
+            unset($attributes['labelAttributes']);
         }
 
-        unset($attributes['label'], $attributes['labelAttributes']);
+        if (
+            isset($attributes['uncheckValue']) &&
+            ((is_scalar($attributes['uncheckValue'])) || $attributes['uncheckValue'] instanceof Stringable)
+        ) {
+            $checkbox = $checkbox->uncheckValue($attributes['uncheckValue']);
+            unset($attributes['uncheckValue']);
+        }
 
         $new->parts['{input}'] = $checkbox
             ->config($new->getFormModel(), $new->attribute, $attributes)

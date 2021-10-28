@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Arrays\ArrayHelper;
+use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\CommonAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
@@ -27,6 +27,10 @@ final class Checkbox extends Widget
     private bool $enclosedByLabel = true;
     private string $label = '';
     private array $labelAttributes = [];
+    /** @var bool|float|int|string|Stringable|null */
+    private $uncheckValue = '0';
+    /** @var scalar|Stringable|null */
+    private $value = '1';
 
     /**
      * If the widget should be enclosed by label.
@@ -82,6 +86,34 @@ final class Checkbox extends Widget
     }
 
     /**
+     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
+     *
+     * @return static
+     */
+    public function uncheckValue($value): self
+    {
+        $new = clone $this;
+        $new->uncheckValue = is_bool($value) ? (int) $value : $value;
+        return $new;
+    }
+
+    /**
+     * The value of the radio button.
+     *
+     * @param scalar|Stringable|null $value
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox.attrs.value
+     */
+    public function value($value): self
+    {
+        $new = clone $this;
+        $new->attributes['value'] = $value;
+        return $new;
+    }
+
+    /**
      * @return string the generated checkbox tag.
      */
     protected function run(): string
@@ -89,31 +121,29 @@ final class Checkbox extends Widget
         $new = clone $this;
 
         $checkbox = CheckboxTag::tag();
-
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');
         }
 
-        $new->attributes['value'] = array_key_exists('value', $new->attributes) ? $new->attributes['value'] : '1';
-
-        /** @var bool|float|int|string|null  */
-        $forceUncheckedValue = ArrayHelper::remove($new->attributes, 'forceUncheckedValue', '0');
-
-        unset($new->attributes['forceUncheckedValue']);
+        /** @var scalar|Stringable|null */
+        $valueDefault = array_key_exists('value', $new->attributes) ? $new->attributes['value'] : $new->value;
+        $valueDefault = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
 
         if ($new->enclosedByLabel === true) {
-            $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
+            $label = $new->label !== '' ?
+                $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
             $checkbox = $checkbox->label($label, $new->labelAttributes);
         }
 
         return $checkbox
-            ->checked("$value" === "{$new->attributes['value']}")
+            ->checked("$value" === "$valueDefault")
             ->attributes($new->attributes)
             ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
-            ->uncheckValue($forceUncheckedValue)
+            ->uncheckValue($new->uncheckValue)
+            ->value($valueDefault)
             ->render();
     }
 }
