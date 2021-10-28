@@ -1,6 +1,7 @@
 # Submit button widget
 
-[SubmitButton](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.submit.html) is an element with a type attribute whose value is "submit" represents a button for submitting a form.
+[SubmitButton](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.submit.html) represents a button for submitting a form.
+
 ## Usage
 
 Widget view:
