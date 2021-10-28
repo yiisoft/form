@@ -23,7 +23,7 @@ final class FieldAttributesTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value aria-describedby="typeform-string" placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" aria-describedby="typeform-string" placeholder="Typed your text string.">
         <div id="typeform-string">Write your text string.</div>
         </div>
         HTML;
@@ -39,7 +39,7 @@ final class FieldAttributesTest extends TestCase
         $expected = <<<'HTML'
         <div class="test-class">
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -62,7 +62,7 @@ final class FieldAttributesTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" class="test-class" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" class="test-class" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -93,7 +93,7 @@ final class FieldAttributesTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label class="test-class" for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -108,7 +108,7 @@ final class FieldAttributesTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         </div>
         HTML;
         $html = Field::widget()

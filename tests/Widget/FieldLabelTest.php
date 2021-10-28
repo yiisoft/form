@@ -21,7 +21,7 @@ final class FieldLabelTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="text" id="personalform-email" name="PersonalForm[email]" value>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -35,7 +35,7 @@ final class FieldLabelTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label class="test-class" for="personalform-email">Email:</label>
-        <input type="text" id="personalform-email" name="PersonalForm[email]" value>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
         </div>
         HTML;
         $html = Field::widget()
@@ -50,7 +50,7 @@ final class FieldLabelTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="personalform-email">Email</label>
-        <input type="text" id="personalform-email" name="PersonalForm[email]" value>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->config($this->formModel, 'email')->render());

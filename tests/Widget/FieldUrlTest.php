@@ -23,7 +23,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value maxlength="10" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" maxlength="10" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -38,7 +38,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value minlength="4" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" minlength="4" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -53,7 +53,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -69,7 +69,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value placeholder="PlaceHolder Text">
+        <input type="url" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -84,7 +84,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -99,7 +99,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="url" id="typeform-string" name="TypeForm[string]" value size="20" placeholder="Typed your text string.">
+        <input type="url" id="typeform-string" name="TypeForm[string]" size="20" placeholder="Typed your text string.">
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -109,10 +109,39 @@ final class FieldUrlTest extends TestCase
         );
     }
 
+    public function testValue(): void
+    {
+        // value null
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-tonull">To Null</label>
+        <input type="url" id="typeform-tonull" name="TypeForm[toNull]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'toNull')->url()->render(),
+        );
+
+        // value string 'https://yiiframework.com'
+        $this->formModel->setAttribute('string', 'https://yiiframework.com');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="url" id="typeform-string" name="TypeForm[string]" value="https://yiiframework.com" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->url()->render(),
+        );
+    }
+
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Url widget must be a string.');
+        $this->expectExceptionMessage('Url widget must be a string or null value.');
         Field::widget()->config($this->formModel, 'int')->url()->render();
     }
 

@@ -134,12 +134,15 @@ The following documentation describes how to use widgets with PHP:
 - [DateTimeLocal](docs/datetimelocal.md)
 - [Email](docs/email.md)
 - [File](docs/file.md)
-- [Password](docs/password.md)
 - [Number](docs/number.md)
+- [Password](docs/password.md)
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
 - [Range](docs/range.md)
 - [SubmitButton](docs/submitbutton.md)
+- [Text](docs/text.md)  
+- [Telephone](docs/telephone.md)
+- [Url](docs/url.md)
 
 ### Unit testing
 

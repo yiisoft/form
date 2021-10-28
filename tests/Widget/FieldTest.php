@@ -310,7 +310,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-telephone">Telephone</label>
-        <input type="tel" id="attributesvalidatorform-telephone" class="is-invalid" name="AttributesValidatorForm[telephone]" value maxlength="16" minlength="8" required pattern="[^0-9+\(\)-]">
+        <input type="tel" id="attributesvalidatorform-telephone" class="is-invalid" name="AttributesValidatorForm[telephone]" maxlength="16" minlength="8" required pattern="[^0-9+\(\)-]">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
@@ -392,7 +392,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-text">Text</label>
-        <input type="text" id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" value maxlength="6" minlength="3" required pattern="^[a-zA-Z0-9_.-]+$">
+        <input type="text" id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" maxlength="6" minlength="3" required pattern="^[a-zA-Z0-9_.-]+$">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
@@ -540,7 +540,7 @@ final class FieldTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="attributesvalidatorform-url">Url</label>
-        <input type="url" id="attributesvalidatorform-url" class="is-invalid" name="AttributesValidatorForm[url]" value maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
+        <input type="url" id="attributesvalidatorform-url" class="is-invalid" name="AttributesValidatorForm[url]" maxlength="20" minlength="15" required pattern="^(http|https):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(?::\d{1,5})?(?:$|[?\/#])">
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
