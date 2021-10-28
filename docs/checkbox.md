@@ -4,7 +4,7 @@
 
 ## Usage
 
-The `Checkbox` widget is designed to return the status of the checkbox. Generally it returns two values, by default it is `0` for uncheck, and `1` when is checked.
+The `Checkbox` widget is designed to return the status of the checkbox. Generally it returns two values, by default it is `0` for unchecked, and `1` for checkeded.
 
 You can also configure the widget to return the value only when the checkbox is checked.
 
@@ -123,7 +123,7 @@ That would generate the following code:
 
 ### More custom values
 
-In this example we use two values for checked `active` value for checkbox and `inactive` value for unchecked.
+In this example we use two values for checked `active` value for checked and `inactive` value for unchecked.
 
 ```php
 <?php
