@@ -1,6 +1,6 @@
 # Reset button widget
 
-[ResetButton](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.reset.html#input.reset) is an element with a type attribute whose value is "reset" represents a button for resetting a form.
+[ResetButton](https://www.w3.org/TR/2012/WD-html-markup-20120329/input.reset.html#input.reset) represents a button for resetting a form.
 
 ## Usage
 
