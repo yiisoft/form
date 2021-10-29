@@ -81,21 +81,21 @@ final class TelephoneTest extends TestCase
             Telephone::widget()->config($this->formModel, 'toNull')->render(),
         );
 
-        // value telephone string '+71234567890'
+        // telephone as string, "+71234567890"
         $this->formModel->setAttribute('string', '+71234567890');
         $this->assertSame(
             '<input type="tel" id="typeform-string" name="TypeForm[string]" value="+71234567890">',
             Telephone::widget()->config($this->formModel, 'string')->render(),
         );
 
-        // value telephone numeric string '71234567890'
+        // telephone as numeric string, "71234567890"
         $this->formModel->setAttribute('string', '71234567890');
         $this->assertSame(
             '<input type="tel" id="typeform-string" name="TypeForm[string]" value="71234567890">',
             Telephone::widget()->config($this->formModel, 'string')->render(),
         );
 
-        // value telephone integer 71234567890
+        // telephone as integer, 71234567890
         $this->formModel->setAttribute('int', 71234567890);
         $this->assertSame(
             '<input type="tel" id="typeform-int" name="TypeForm[int]" value="71234567890">',
@@ -106,7 +106,7 @@ final class TelephoneTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Telephone widget must be a string, numeric o null value.');
+        $this->expectExceptionMessage('Telephone widget must be a string, numeric or null.');
         Telephone::widget()->config($this->formModel, 'array')->render();
     }
 
