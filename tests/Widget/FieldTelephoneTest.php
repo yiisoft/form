@@ -108,7 +108,7 @@ final class FieldTelephoneTest extends TestCase
             Field::widget()->config($this->formModel, 'toNull')->telephone()->render(),
         );
 
-        // value telephone number string '+71234567890'
+        // telephone as string, "+71234567890"
         $this->formModel->setAttribute('string', '+71234567890');
         $expected = <<<'HTML'
         <div>
@@ -121,13 +121,40 @@ final class FieldTelephoneTest extends TestCase
             $expected,
             Field::widget()->config($this->formModel, 'string')->telephone()->render(),
         );
+
+        // telephone as numeric string, "71234567890"
+        $this->formModel->setAttribute('string', '71234567890');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="tel" id="typeform-string" name="TypeForm[string]" value="71234567890" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->telephone()->render(),
+        );
+
+        // telephone as integer, 71234567890
+        $this->formModel->setAttribute('int', '71234567890');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-int">Int</label>
+        <input type="tel" id="typeform-int" name="TypeForm[int]" value="71234567890">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'int')->telephone()->render(),
+        );
     }
 
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Telephone widget must be a string o null value.');
-        Field::widget()->config($this->formModel, 'int')->telephone()->render();
+        $this->expectExceptionMessage('Telephone widget must be a string, numeric or null.');
+        Field::widget()->config($this->formModel, 'array')->telephone()->render();
     }
 
     protected function setUp(): void
