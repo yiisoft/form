@@ -124,8 +124,8 @@ final class Telephone extends Widget
          */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_string($value) && null !== $value) {
-            throw new InvalidArgumentException('Telephone widget must be a string o null value.');
+        if (!is_string($value) && !is_int($value) && null !== $value ) {
+            throw new InvalidArgumentException('Telephone widget must be a string, numeric o null value.');
         }
 
         return Input::tag()
