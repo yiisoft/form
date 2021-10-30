@@ -27,6 +27,29 @@ use function strpos;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
+    /**
+     * @psalm-param array<string, array<array-key, string>>
+     */
+    private const TYPE_MAP = [
+        'boolean' => 'bool',
+        'integer' => 'int',
+        'double'  => 'float',
+        'string'  => 'string',
+        'array'   => 'array',
+        'object'  => 'object',
+        'NULL'    => 'null',
+    ];
+
+    /**
+     * @psalm-param array<string, array<array-key, int>>
+     */
+    private const SCALAR_TYPE_MAP = [
+        FILTER_VALIDATE_BOOL  => 'bool',
+        FILTER_VALIDATE_INT   => 'int',
+        FILTER_VALIDATE_FLOAT => 'float',
+        FILTER_DEFAULT        => 'string',
+    ];
+
     private array $attributes;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
@@ -216,6 +239,60 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
+     *
+     * @param mixed $value
+     * @param string $types
+     * @return mixed
+     */
+    private static function setType($value, string ...$types)
+    {
+        foreach ($types as $type) {
+            $v = $value;
+
+            if (settype($v, $type)) {
+                return $v;
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function typeCast(string $name, $value)
+    {
+        $type = gettype($value);
+        $mapped = self::TYPE_MAP[$type] ?? null;
+        $types = $this->attributes[$name] ?? null;
+
+        if (empty($types) || in_array($mapped, $types, true)) {
+            return $value;
+        }
+
+        if (is_scalar($value)) {
+            $filters = array_keys(array_intersect(self::SCALAR_TYPE_MAP, $types));
+
+            foreach ($filters as $filter) {
+                $val = filter_var($value, $filter, FILTER_NULL_ON_FAILURE);
+
+                if ($val !== null) {
+                    return $val;
+                }
+            }
+        } elseif ($value instanceof Stringable && in_array('string', $types, true)) {
+            return (string) $value;
+        }
+
+        $types = array_intersect($types, self::TYPE_MAP);
+
+        return self::setType($value, ...$types);
+    }
+
+    /**
      * @param iterable|object|scalar|Stringable|null $value
      *
      * @psalm-suppress PossiblyInvalidCast
@@ -225,23 +302,8 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$realName] = $this->getNestedAttribute($name);
 
         if (isset($this->attributes[$realName])) {
-            switch ($this->attributes[$realName]) {
-                case 'bool':
-                    $this->writeProperty($name, (bool) $value);
-                    break;
-                case 'float':
-                    $this->writeProperty($name, (float) $value);
-                    break;
-                case 'int':
-                    $this->writeProperty($name, (int) $value);
-                    break;
-                case 'string':
-                    $this->writeProperty($name, (string) $value);
-                    break;
-                default:
-                    $this->writeProperty($name, $value);
-                    break;
-            }
+            $value = $this->typeCast($realName, $value);
+            $this->writeProperty($name, $value);
         }
     }
 
@@ -287,10 +349,24 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 continue;
             }
 
-            /** @var ReflectionNamedType|null $type */
+            /** @var ReflectionNamedType|ReflectionUnionTypes|null $type */
             $type = $property->getType();
+            $name = $property->getName();
 
-            $attributes[$property->getName()] = $type !== null ? $type->getName() : '';
+            if ($type === null) {
+                $attributes[$name] = [];
+            } else {
+                if ($type instanceof ReflectionNamedType) {
+                    $attributes[$name] = [$type->getName()];
+                } else {
+                    /** @var ReflectionUnionTypes $type */
+                    $attributes[$name] = array_map(fn (ReflectionNamedType $type) => $type->getName(), $type->getTypes());
+                }
+
+                if ($type->allowsNull()) {
+                    $attributes[$name][] = self::TYPE_MAP['NULL'];
+                }
+            }
         }
 
         return $attributes;
@@ -406,14 +482,18 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         [$attribute, $nested] = explode('.', $attribute, 2);
 
-        /** @var object|string */
+        /** @var array */
         $attributeNested = $this->attributes[$attribute];
+        $classNames = array_diff($attributeNested, self::TYPE_MAP);
 
-        if (!is_subclass_of($attributeNested, self::class)) {
-            throw new InvalidArgumentException('Nested attribute can only be of ' . self::class . ' type.');
+        foreach ($classNames as $className) {
+            /** @var object|string  $className */
+            if (is_subclass_of($className, self::class)) {
+                return [$attribute, $nested];
+            }
         }
 
-        return [$attribute, $nested];
+        throw new InvalidArgumentException('Nested attribute can only be of ' . self::class . ' type.');
     }
 
     private function getNestedAttributeValue(string $method, string $attribute): string

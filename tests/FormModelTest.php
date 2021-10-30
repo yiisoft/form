@@ -10,6 +10,8 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Form\Tests\TestSupport\Form\UnionPropertyForm;
+
 
 use function str_repeat;
 
@@ -341,6 +343,25 @@ final class FormModelTest extends TestCase
 
         $form->setAttribute('int', 1);
         $this->assertSame(1, $form->getAttributeValue('int'));
+    }
+
+    public function testUnionAttributes(): void
+    {
+        if (version_compare(PHP_VERSION, '8.0', '>=')) {
+            $form = new UnionPropertyForm();
+
+            $form->setAttribute('prefer_array', '1');
+            $this->assertSame(1, $form->getAttributeValue('prefer_array'));
+
+            $form->setAttribute('prefer_array', [1, 2, '3']);
+            $this->assertSame([1, 2, '3'], $form->getAttributeValue('prefer_array'));
+
+            $form->setAttribute('prefer_array', 'string');
+            $this->assertSame(['string'], $form->getAttributeValue('prefer_array'));
+
+            $form->setAttribute('prefer_int', '0');
+            $this->assertSame(0, $form->getAttributeValue('prefer_int'));
+        }
     }
 
     private function createValidatorMock(): ValidatorInterface
