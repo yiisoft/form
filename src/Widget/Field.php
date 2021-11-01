@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Closure;
-use ReflectionException;
 use Stringable;
 use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Widget\Attribute\FieldAttributes;
@@ -164,7 +163,7 @@ final class Field extends Widget
         }
 
         if (isset($attributes['individualItemsAttributes']) && is_array($attributes['individualItemsAttributes'])) {
-            /** @var array<array-key, array<array-key, mixed>> */
+            /** @var array[] */
             $individualItemsAttributes = $attributes['individualItemsAttributes'];
             $checkboxList = $checkboxList->individualItemsAttributes($individualItemsAttributes);
         }
@@ -611,7 +610,7 @@ final class Field extends Widget
         }
 
         if (isset($attributes['individualItemsAttributes']) && is_array($attributes['individualItemsAttributes'])) {
-            /** @var array<array-key, array<array-key, mixed>> */
+            /** @var array[] */
             $individualItemsAttributes = $attributes['individualItemsAttributes'];
             $radioList = $radioList->individualItemsAttributes($individualItemsAttributes);
         }
@@ -778,7 +777,7 @@ final class Field extends Widget
         $itemsAttributes = $attributes['itemsAttributes'] ?? [];
         /** @psalm-var array<array-key, string> */
         $optionsData = $attributes['optionsData'] ?? [];
-        /** @psalm-var array<array-key, mixed> */
+        /** @var array */
         $prompt = $attributes['prompt'] ?? [];
         /** @var string|null */
         $unselectValue = $attributes['unselectValue'] ?? null;
@@ -958,8 +957,6 @@ final class Field extends Widget
      *
      * If (not set), the default methods will be called to generate the label and input tag, and use them as the
      * content.
-     *
-     * @throws ReflectionException
      *
      * @return string the rendering result.
      */

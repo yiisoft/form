@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use JsonException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
@@ -43,7 +42,7 @@ final class ErrorSummary extends Widget
     /**
      * Set model class name.
      *
-     * @param string $class name of model.
+     * @param FormModelInterface $formModel
      *
      * @return static
      */
@@ -91,8 +90,6 @@ final class ErrorSummary extends Widget
 
     /**
      * Generates a summary of the validation errors.
-     *
-     * @throws JsonException
      *
      * @return string the generated error summary
      */

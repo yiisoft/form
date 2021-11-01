@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
 use Yiisoft\Widget\Widget;
@@ -159,7 +160,7 @@ final class Form extends Widget
     /**
      * The CSRF-token content attribute token that are known to be safe to use for.
      *
-     * @param mixed|string|\Stringable $csrfToken the CSRF-token attribute value.
+     * @param mixed|string|Stringable $csrfToken the CSRF-token attribute value.
      * @param string $csrfName the CSRF-token attribute name.
      *
      * @return static

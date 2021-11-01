@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Stringable;
 use Yiisoft\Validator\DataSetInterface;
 
 /**
