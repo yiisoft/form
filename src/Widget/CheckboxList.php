@@ -218,8 +218,8 @@ final class CheckboxList extends Widget
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
         $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
 
-        if (!is_iterable($value)) {
-            throw new InvalidArgumentException('CheckboxList widget value must always be an array.');
+        if (!is_iterable($value) && null !== $value) {
+            throw new InvalidArgumentException('CheckboxList widget must be a array or null value.');
         }
 
         /** @var string */
@@ -241,6 +241,10 @@ final class CheckboxList extends Widget
             $checkboxList = $checkboxList->separator($new->separator);
         }
 
+        if ($value !== null) {
+            $checkboxList = $checkboxList->values($value);
+        }
+
         return $checkboxList
             ->checkboxAttributes($new->attributes)
             ->containerAttributes($new->containerAttributes)
@@ -248,7 +252,6 @@ final class CheckboxList extends Widget
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
             ->replaceCheckboxAttributes($new->itemsAttributes)
-            ->values($value)
             ->render();
     }
 }
