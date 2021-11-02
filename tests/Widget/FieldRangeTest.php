@@ -114,14 +114,28 @@ final class FieldRangeTest extends TestCase
 
     public function testValue(): void
     {
-        // string value numeric `1`.
+        // value null
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 6]);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-tonull">To Null</label>
+        <input type="range" id="typeform-tonull" name="TypeForm[toNull]" oninput="i7.value=this.value">
+        <output id="i7" name="i7" for="TypeForm[toNull]"></output>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'toNull')->range()->render(),
+        );
+
+        // value string numeric `1`
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
         $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <div>
         <label for="typeform-string">String</label>
-        <input type="range" id="typeform-string" name="TypeForm[string]" value="1" placeholder="Typed your text string." oninput="i7.value=this.value">
-        <output id="i7" name="i7" for="TypeForm[string]">1</output>
+        <input type="range" id="typeform-string" name="TypeForm[string]" value="1" placeholder="Typed your text string." oninput="i8.value=this.value">
+        <output id="i8" name="i8" for="TypeForm[string]">1</output>
         <div>Write your text string.</div>
         </div>
         HTML;
@@ -130,14 +144,14 @@ final class FieldRangeTest extends TestCase
             Field::widget()->config($this->formModel, 'string')->range()->render(),
         );
 
-        // int value 1
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
+        // value int 1
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 8]);
         $this->formModel->setAttribute('int', '1');
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i8.value=this.value">
-        <output id="i8" name="i8" for="TypeForm[int]">1</output>
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i9.value=this.value">
+        <output id="i9" name="i9" for="TypeForm[int]">1</output>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -149,7 +163,7 @@ final class FieldRangeTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Range widget must be a numeric value.');
+        $this->expectExceptionMessage('Range widget must be a numeric or null value.');
         Field::widget()->config($this->formModel, 'array')->range()->render();
     }
 
