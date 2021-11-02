@@ -8,7 +8,7 @@ use Yiisoft\Form\FormModel;
 
 final class TypeForm extends FormModel
 {
-    private array $array = [];
+    private ?array $array = [];
     private bool $bool = false;
     private float $float = 0;
     private int $int = 0;
