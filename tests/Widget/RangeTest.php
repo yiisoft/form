@@ -100,24 +100,35 @@ final class RangeTest extends TestCase
 
     public function testValue(): void
     {
-        // string value numeric `1`
+        // value null
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 6]);
+        $expected = <<<'HTML'
+        <input type="range" id="typeform-tonull" name="TypeForm[toNull]" oninput="i7.value=this.value">
+        <output id="i7" name="i7" for="TypeForm[toNull]"></output>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Range::widget()->config($this->formModel, 'toNull')->render(),
+        );
+
+        // value string numeric `1`
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
         $this->formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
-        <input type="range" id="typeform-string" name="TypeForm[string]" value="1" oninput="i7.value=this.value">
-        <output id="i7" name="i7" for="TypeForm[string]">1</output>
+        <input type="range" id="typeform-string" name="TypeForm[string]" value="1" oninput="i8.value=this.value">
+        <output id="i8" name="i8" for="TypeForm[string]">1</output>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
             Range::widget()->config($this->formModel, 'string')->render(),
         );
 
-        // int value 1
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
+        // value int 1
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 8]);
         $this->formModel->setAttribute('int', '1');
         $expected = <<<'HTML'
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i8.value=this.value">
-        <output id="i8" name="i8" for="TypeForm[int]">1</output>
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i9.value=this.value">
+        <output id="i9" name="i9" for="TypeForm[int]">1</output>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
@@ -128,7 +139,7 @@ final class RangeTest extends TestCase
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Range widget must be a numeric value.');
+        $this->expectExceptionMessage('Range widget must be a numeric or null value.');
         Range::widget()->config($this->formModel, 'array')->render();
     }
 
