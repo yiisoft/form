@@ -91,10 +91,26 @@ final class TextAreaTest extends TestCase
         );
     }
 
+    public function testValue(): void
+    {
+        // value null
+        $this->assertSame(
+            '<textarea id="typeform-tonull" name="TypeForm[toNull]"></textarea>',
+            TextArea::widget()->config($this->formModel, 'toNull')->render(),
+        );
+
+        // value string
+        $this->formModel->setAttribute('string', 'hello');
+        $this->assertSame(
+            '<textarea id="typeform-string" name="TypeForm[string]">hello</textarea>',
+            TextArea::widget()->config($this->formModel, 'string')->render(),
+        );
+    }
+
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('TextArea widget must be a string.');
+        $this->expectExceptionMessage('TextArea widget must be a string or null value.');
         TextArea::widget()->config($this->formModel, 'array')->render();
     }
 

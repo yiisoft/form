@@ -116,10 +116,39 @@ final class FieldTextAreaTest extends TestCase
         );
     }
 
+    public function testValue(): void
+    {
+        // value null
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-tonull">To Null</label>
+        <textarea id="typeform-tonull" name="TypeForm[toNull]"></textarea>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'toNull')->textArea()->render(),
+        );
+
+        // value string
+        $this->formModel->setAttribute('string', 'hello');
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <textarea id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">hello</textarea>
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->textArea()->render(),
+        );
+    }
+
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('TextArea widget must be a string.');
+        $this->expectExceptionMessage('TextArea widget must be a string or null value.');
         Field::widget()->config($this->formModel, 'array')->textArea()->render();
     }
 
