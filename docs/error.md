@@ -1,6 +1,6 @@
 # Error widget
 
-[Error] displays an error message.
+Displays an error message.
 
 ## Usage
 
