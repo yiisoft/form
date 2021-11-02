@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
@@ -17,7 +16,22 @@ final class Error extends Widget
 {
     use ModelAttributes;
 
+    private bool $encode = true;
     private string $message = '';
+    private array $messageCallback = [];
+    private string $tag = 'div';
+
+    /**
+     * Whether content should be HTML-encoded.
+     *
+     * @param bool $value
+     */
+    public function encode(bool $value): self
+    {
+        $new = clone $this;
+        $new->encode = $value;
+        return $new;
+    }
 
     /**
      * Error message to display.
@@ -44,10 +58,10 @@ final class Error extends Widget
      *
      * @return static
      */
-    public function messageCallback(array $value = []): self
+    public function messageCallback(array $value): self
     {
         $new = clone $this;
-        $new->attributes['messageCallback'] = $value;
+        $new->messageCallback = $value;
         return $new;
     }
 
@@ -60,10 +74,10 @@ final class Error extends Widget
      *
      * @return static
      */
-    public function tag(string $value = ''): self
+    public function tag(string $value): self
     {
         $new = clone $this;
-        $new->attributes['tag'] = $value;
+        $new->tag = $value;
         return $new;
     }
 
@@ -75,27 +89,19 @@ final class Error extends Widget
     protected function run(): string
     {
         $new = clone $this;
+        $error = HtmlForm::getFirstError($new->getFormModel(), $new->attribute);
 
-        /** @var bool */
-        $encode = $new->attributes['encode'] ?? true;
-
-        $error = $new->message !== '' ? $new->message : HtmlForm::getFirstError($new->getFormModel(), $new->attribute);
-
-        /** @var string */
-        $tag = ArrayHelper::remove($new->attributes, 'tag', 'div');
-
-        /** @var array|null */
-        $messageCallback = $new->attributes['messageCallback'] ?? null;
-
-        if ($messageCallback !== null) {
-            /** @var string */
-            $error = $messageCallback($new->getFormModel(), $new->attribute);
+        if ($error !== '' && $new->message !== '') {
+            $error = $new->message;
         }
 
-        unset($new->attributes['messageCallback']);
+        if ($error !== '' && $new->messageCallback !== []) {
+            /** @var string */
+            $error = call_user_func($new->messageCallback, $new->getFormModel(), $new->attribute);
+        }
 
-        $html = $tag !== ''
-            ? CustomTag::name($tag)->attributes($new->attributes)->content($error)->encode($encode)->render()
+        $html = $new->tag !== ''
+            ? CustomTag::name($new->tag)->attributes($new->attributes)->content($error)->encode($new->encode)->render()
             : $error;
 
         return $error !== '' ? $html : '';

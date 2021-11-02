@@ -294,9 +294,14 @@ final class Field extends Widget
      * - `tag`: string, the tag name of the container. if not set, `div` will be used. if `null`, no container tag will
      * be rendered.
      *
+     * @param array $messageCallback the callback that returns the error message. The signature of the callback
+     * should be: `[$FormModel, function()]` where `$FormModel` is the model object being validated, and `function()`
+     * returns the error message.
+     * @param bool $encode Whether content should be HTML-encoded.
+     *
      * @return static the field object itself.
      */
-    public function error(array $attributes = []): self
+    public function error(array $attributes = [], array $messageCallback = [], bool $encode = true): self
     {
         $new = clone $this;
         /** @var string */
@@ -309,6 +314,8 @@ final class Field extends Widget
         $new->parts['{error}'] = Error::widget()
             ->config($new->getFormModel(), $new->attribute, $attributes)
             ->message($errorMessage)
+            ->messageCallback($messageCallback)
+            ->encode($encode)
             ->render();
 
         return $new;

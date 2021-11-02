@@ -19,9 +19,10 @@ final class ErrorTest extends TestCase
     public function testImmutability(): void
     {
         $error = Error::widget();
+        $this->assertNotSame($error, $error->encode(false));
         $this->assertNotSame($error, $error->message(''));
         $this->assertNotSame($error, $error->messageCallback([]));
-        $this->assertNotSame($error, $error->tag());
+        $this->assertNotSame($error, $error->tag('div'));
     }
 
     public function testMessage(): void
@@ -42,7 +43,8 @@ final class ErrorTest extends TestCase
     public function testMessageCallbackWithNoEncode(): void
     {
         $html = Error::widget()
-            ->config($this->formModel, 'name', ['encode' => false])
+            ->config($this->formModel, 'name')
+            ->encode(false)
             ->messageCallback([$this->formModel, 'customErrorWithIcon'])
             ->render();
         $this->assertSame('<div>(&#10006;) This is custom error message.</div>', $html);
@@ -60,7 +62,7 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             'Value cannot be blank.',
-            Error::widget()->config($this->formModel, 'name')->tag()->render(),
+            Error::widget()->config($this->formModel, 'name')->tag('')->render(),
         );
         $this->assertSame(
             '<span>Value cannot be blank.</span>',
