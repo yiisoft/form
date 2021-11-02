@@ -37,7 +37,7 @@ final class CheckboxList extends Widget
     private ?Closure $itemsFormatter = null;
     /** @var bool[]|float[]|int[]|string[]|Stringable[] */
     private array $itemsFromValues = [];
-    private string $separator = '';
+    private string $separator = "\n";
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -222,7 +222,6 @@ final class CheckboxList extends Widget
             throw new InvalidArgumentException('CheckboxList widget must be a array or null value.');
         }
 
-        /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         /** @var bool */
@@ -237,14 +236,6 @@ final class CheckboxList extends Widget
             $checkboxList = $checkboxList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
         }
 
-        if ($new->separator !== '') {
-            $checkboxList = $checkboxList->separator($new->separator);
-        }
-
-        if ($value !== null) {
-            $checkboxList = $checkboxList->values($value);
-        }
-
         return $checkboxList
             ->checkboxAttributes($new->attributes)
             ->containerAttributes($new->containerAttributes)
@@ -252,6 +243,8 @@ final class CheckboxList extends Widget
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
             ->replaceCheckboxAttributes($new->itemsAttributes)
+            ->separator($new->separator)
+            ->values($value ?? [])
             ->render();
     }
 }
