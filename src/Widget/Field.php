@@ -293,7 +293,6 @@ final class Field extends Widget
      * - `messageCallback`: callback, a PHP callback that returns the error message to be displayed.
      * - `tag`: string, the tag name of the container. if not set, `div` will be used. if `null`, no container tag will
      * be rendered.
-     *
      * @param array $messageCallback the callback that returns the error message. The signature of the callback
      * should be: `[$FormModel, function()]` where `$FormModel` is the model object being validated, and `function()`
      * returns the error message.

@@ -19,7 +19,6 @@ final class FieldErrorTest extends TestCase
 
     private PersonalForm $formModel;
 
-
     public function testMessageCallback(): void
     {
         $validator = $this->createValidatorMock();
