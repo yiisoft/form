@@ -19,6 +19,49 @@ final class FieldErrorTest extends TestCase
 
     private PersonalForm $formModel;
 
+    public function testMessageCallback(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <div>This is custom error message.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'name')->error([], [$this->formModel, 'customError'])->render(),
+        );
+    }
+
+    public function testMessageCallbackWithNoEncode(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <div>(&#10006;) This is custom error message.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->config($this->formModel, 'name')
+                ->error([], [$this->formModel, 'customErrorWithIcon'], false)
+                ->render(),
+        );
+    }
+
     public function testTabularErrors(): void
     {
         $validator = $this->createValidatorMock();
