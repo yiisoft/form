@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
@@ -12,14 +13,37 @@ use Yiisoft\Widget\Widget;
 
 /**
  * The widget for hint form.
+ *
+ * @psalm-suppress MissingConstructor
  */
 final class Hint extends Widget
 {
-    use ModelAttributes;
-
+    private array $attributes = [];
+    private string $attribute = '';
     private bool $encode = true;
     private ?string $hint = '';
     private string $tag = 'div';
+    private FormModelInterface $formModel;
+
+    /**
+     * Set form interface, attribute name and attributes, and attributes for the widget.
+     *
+     * @param FormModelInterface $formModel Form.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $attributes The HTML attributes for the widget container tag.
+     *
+     * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->formModel = $formModel;
+        $new->attribute = $attribute;
+        $new->attributes = $attributes;
+        return $new;
+    }
 
     /**
      * Whether content should be HTML-encoded.
@@ -71,7 +95,7 @@ final class Hint extends Widget
         $new = clone $this;
 
         if ($new->hint !== null && $new->hint === '') {
-            $new->hint = HtmlForm::getAttributeHint($new->getFormModel(), $new->attribute);
+            $new->hint = HtmlForm::getAttributeHint($new->formModel, $new->attribute);
         }
 
         if ($new->tag === '') {
