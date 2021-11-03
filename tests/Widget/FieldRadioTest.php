@@ -28,7 +28,7 @@ final class FieldRadioTest extends TestCase
         $html = Field::widget()
             ->config($this->formModel, 'bool')
             ->radio(['value' => true], false)
-            ->label(['label' => false])
+            ->label([], null)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -100,7 +100,7 @@ final class FieldRadioTest extends TestCase
         $html = Field::widget()
             ->config($this->formModel, 'bool')
             ->radio(['value' => true], false)
-            ->label(['label' => 'test-text-label'])
+            ->label([], 'test-text-label')
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
 

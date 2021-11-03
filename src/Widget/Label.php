@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Label as LabelTag;
 use Yiisoft\Widget\Widget;
 
@@ -14,12 +14,50 @@ use Yiisoft\Widget\Widget;
  * Generates a label tag for the given form attribute.
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/label.html
+ *
+ * @psalm-suppress MissingConstructor
  */
 final class Label extends Widget
 {
-    use ModelAttributes;
+    private array $attributes = [];
+    private string $attribute = '';
+    private bool $encode = true;
+    private ?string $label = '';
+    private FormModelInterface $formModel;
 
-    private string $label = '';
+    /**
+     * Set form interface, attribute name and attributes, and attributes for the widget.
+     *
+     * @param FormModelInterface $formModel Form.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $attributes The HTML attributes for the widget container tag.
+     *
+     * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->formModel = $formModel;
+        $new->attribute = $attribute;
+        $new->attributes = $attributes;
+        return $new;
+    }
+
+    /**
+     * Whether content should be HTML-encoded.
+     *
+     * @param bool $value
+     *
+     * @return static
+     */
+    public function encode(bool $value): self
+    {
+        $new = clone $this;
+        $new->encode = $value;
+        return $new;
+    }
 
     /**
      * The id of a labelable form-related element in the same document as the tag label element.
@@ -51,7 +89,7 @@ final class Label extends Widget
      * - If this is not set, {@see \Yiisoft\Form\FormModel::getAttributeLabel() will be called to get the label for
      * display (after encoding).
      */
-    public function label(string $value): self
+    public function label(?string $value): self
     {
         $new = clone $this;
         $new->label = $value;
@@ -65,23 +103,20 @@ final class Label extends Widget
     {
         $new = clone $this;
 
-        $label = $new->label !== '' ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
-
-        /** @var bool|string */
-        $attributeLabel = ArrayHelper::remove($new->attributes, 'label', '');
-
-        /** @var bool */
-        $encode = $new->attributes['encode'] ?? false;
-
-        if (is_string($attributeLabel) && $attributeLabel !== '') {
-            $label = $attributeLabel;
+        if ($new->label === '') {
+            $new->label = HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
         }
 
         /** @var string */
-        $for = $new->attributes['for'] ?? $new->getId();
+        $for = $new->attributes['for'] ?? HtmlForm::getInputId($new->formModel, $new->attribute);
 
-        return $attributeLabel !== false
-            ? LabelTag::tag()->attributes($new->attributes)->content($label)->encode($encode)->forId($for)->render()
+        return $new->label !== null
+            ? LabelTag::tag()
+                ->attributes($new->attributes)
+                ->content($new->label)
+                ->encode($new->encode)
+                ->forId($for)
+                ->render()
             : '';
     }
 }
