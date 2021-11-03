@@ -40,6 +40,7 @@ The following documentation describes how to use widgets with PHP:
 - [DateTimeLocal](docs/datetimelocal.md)
 - [Email](docs/email.md)
 - [Error](docs/error.md)
+- [ErrorSummary](docs/error-summary.md)
 - [File](docs/file.md)
 - [Number](docs/number.md)
 - [Password](docs/password.md)
