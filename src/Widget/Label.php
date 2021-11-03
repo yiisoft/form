@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Label as LabelTag;
 use Yiisoft\Widget\Widget;
 
