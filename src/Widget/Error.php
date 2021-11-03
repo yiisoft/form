@@ -19,10 +19,10 @@ final class Error extends Widget
     private array $attributes = [];
     private string $attribute = '';
     private bool $encode = true;
+    private FormModelInterface $formModel;
     private string $message = '';
     private array $messageCallback = [];
     private string $tag = 'div';
-    private FormModelInterface $formModel;
 
     /**
      * Set form interface, attribute name and attributes, and attributes for the widget.
