@@ -48,6 +48,8 @@ final class Hint extends Widget
      * Whether content should be HTML-encoded.
      *
      * @param bool $value
+     *
+     * @return static
      */
     public function encode(bool $value): self
     {
@@ -60,6 +62,8 @@ final class Hint extends Widget
      * Set hint text.
      *
      * @param string|null $value
+     *
+     * @return static
      */
     public function hint(?string $value): self
     {
