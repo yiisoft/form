@@ -4,27 +4,52 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
 /**
  * The Error widget displays an error message.
+ *
+ * @psalm-suppress MissingConstructor
  */
 final class Error extends Widget
 {
-    use ModelAttributes;
-
+    private array $attributes = [];
+    private string $attribute = '';
     private bool $encode = true;
     private string $message = '';
     private array $messageCallback = [];
     private string $tag = 'div';
+    private FormModelInterface $formModel;
+
+    /**
+     * Set form interface, attribute name and attributes, and attributes for the widget.
+     *
+     * @param FormModelInterface $formModel Form.
+     * @param string $attribute Form model property this widget is rendered for.
+     * @param array $attributes The HTML attributes for the widget container tag.
+     *
+     * @return static
+     *
+     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    {
+        $new = clone $this;
+        $new->formModel = $formModel;
+        $new->attribute = $attribute;
+        $new->attributes = $attributes;
+        return $new;
+    }
 
     /**
      * Whether content should be HTML-encoded.
      *
      * @param bool $value
+     *
+     * @return static
      */
     public function encode(bool $value): self
     {
@@ -89,7 +114,7 @@ final class Error extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $error = HtmlForm::getFirstError($new->getFormModel(), $new->attribute);
+        $error = HtmlForm::getFirstError($new->formModel, $new->attribute);
 
         if ($error !== '' && $new->message !== '') {
             $error = $new->message;
@@ -97,7 +122,7 @@ final class Error extends Widget
 
         if ($error !== '' && $new->messageCallback !== []) {
             /** @var string */
-            $error = call_user_func($new->messageCallback, $new->getFormModel(), $new->attribute);
+            $error = call_user_func($new->messageCallback, $new->formModel, $new->attribute);
         }
 
         $html = $new->tag !== ''
