@@ -1,6 +1,6 @@
 # Label widget
 
-Display label for field form.
+Displays label for a field form.
 
 ## Usage
 
