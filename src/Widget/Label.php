@@ -21,8 +21,8 @@ final class Label extends Widget
     private array $attributes = [];
     private string $attribute = '';
     private bool $encode = true;
-    private ?string $label = '';
     private FormModelInterface $formModel;
+    private ?string $label = '';
 
     /**
      * Set form interface, attribute name and attributes, and attributes for the widget.
