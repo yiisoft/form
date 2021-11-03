@@ -41,9 +41,9 @@ use Yiisoft\Form\Widget\Radio;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Radio::widget()->config($data, 'active',)->value(true)->render(); ?>
+    <?= Radio::widget()->config($data, 'active',)->value(true) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
 <?= Form::end() ?>
 ```
 
@@ -106,9 +106,9 @@ use Yiisoft\Form\Widget\Radio;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Radio::widget()->config($data, 'number')->uncheckValue(0)->value(5)->render() ?>
+    <?= Radio::widget()->config($data, 'number')->uncheckValue(0)->value(5) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
 <?= Form::end() ?>
 ```
 
@@ -165,10 +165,10 @@ use Yiisoft\Form\Widget\Radio;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Radio::widget()->config($data, 'active')->label('inactive')->uncheckValue("")->value('inactive')->render() ?>
-    <?= Radio::widget()->config($data, 'active')->value('active')->render() ?>
+    <?= Radio::widget()->config($data, 'active')->label('inactive')->uncheckValue("")->value('inactive') ?>
+    <?= Radio::widget()->config($data, 'active')->value('active') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
 <?= Form::end() ?>
 ```
 

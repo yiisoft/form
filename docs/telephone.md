@@ -37,17 +37,17 @@ use Yiisoft\Form\Widget\Telephone;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Telephone::widget()->config($data, 'phoneNumber')->render(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= Telephone::widget()->config($data, 'phoneNumber') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:
 
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="en29GwyIKyFYUSq5NXy1I1hicrGmoFLHnvKOYvVxyEceEMxJPuRoQGwgE_1qEcURAhEZnJ_rPrSun9oqrAKlCw==">
+<form action="widgets" method="POST" _csrf="en29GwyIKyFYUSq5NXy1I1hicrGmoFLHnvKOYvVxyEceEMxJPuRoQGwgE_1qEcURAhEZnJ_rPrSun9oqrAKlCw==">
     <input type="hidden" name="_csrf" value="en29GwyIKyFYUSq5NXy1I1hicrGmoFLHnvKOYvVxyEceEMxJPuRoQGwgE_1qEcURAhEZnJ_rPrSun9oqrAKlCw==">
     <input type="tel" id="testform-phonenumber" name="TestForm[phoneNumber]">
     <hr class="mt-3">

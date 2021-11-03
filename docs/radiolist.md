@@ -40,11 +40,11 @@ use Yiisoft\Form\Widget\RadioList;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= RadioList::widget()->config($data, 'status')->items(['0' => 'Inactive', '1' => 'Active'])->render(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= RadioList::widget()->config($data, 'status')->items(['0' => 'Inactive', '1' => 'Active']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:
@@ -101,16 +101,11 @@ use Yiisoft\Form\Widget\RadioList;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= RadioList::widget()
-        ->config($data, 'status')
-        ->itemsFromValues(['0' => 'Inactive', '1' => 'Active'])
-        ->uncheckValue('Undefined')
-        ->render();
-    ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= RadioList::widget()->config($data, 'status')->itemsFromValues(['0' => 'Inactive', '1' => 'Active'])->uncheckValue('Undefined') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:

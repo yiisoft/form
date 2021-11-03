@@ -1,6 +1,6 @@
 # CheckboxList widget
 
-[CheckboxList] Generates a list of checkboxes with multiple selection.
+Generates a list of checkboxes with multiple selection.
 
 ## Usage
 
@@ -40,11 +40,11 @@ use Yiisoft\Form\Widget\Label;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= CheckboxList::widget()->config($data, 'fruits')->items(['0' => 'Apple', '1' => 'Banana'])->render(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= CheckboxList::widget()->config($data, 'fruits')->items(['0' => 'Apple', '1' => 'Banana']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:
@@ -96,9 +96,9 @@ use Yiisoft\Form\Widget\Label;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= CheckboxList::widget()->config($data, 'fruits')->itemsFromValues(['0' => 'Apple', '1' => 'Banana'])->render(); ?>
+    <?= CheckboxList::widget()->config($data, 'fruits')->itemsFromValues(['0' => 'Apple', '1' => 'Banana']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
 <?= Form::end() ?>
 ```
 
