@@ -79,7 +79,7 @@ use Yiisoft\Form\Widget\Text;
 That would generate the following code before validation:
 
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+<form action="widgets" method="POST" _csrf="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
     <input type="hidden" name="_csrf" value="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
     <input type="text" id="testform-name" name="TestForm[name]">
     <input type="text" id="testform-email" name="TestForm[email]">
@@ -93,7 +93,7 @@ That would generate the following code before validation:
 
 That would generate the following code after validation:
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="9moR1LM6d8JXgqYRLTD_ba2D-fQNRSyXTddnFUQIU1XFXWi61m408iDU_mhMaJ4127TIjk4fQ-MLsDUhDUkZPg==">
+<form action="widgets" method="POST" _csrf="9moR1LM6d8JXgqYRLTD_ba2D-fQNRSyXTddnFUQIU1XFXWi61m408iDU_mhMaJ4127TIjk4fQ-MLsDUhDUkZPg==">
     <input type="hidden" name="_csrf" value="9moR1LM6d8JXgqYRLTD_ba2D-fQNRSyXTddnFUQIU1XFXWi61m408iDU_mhMaJ4127TIjk4fQ-MLsDUhDUkZPg==">
     <input type="text" id="testform-name" name="TestForm[name]">
     <input type="text" id="testform-email" name="TestForm[email]">
@@ -148,7 +148,7 @@ use Yiisoft\Form\Widget\Text;
 That would generate the following code before validation:
 
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="SNh_ZumgopPv9wpiFCMw3IioeIbaQ9w54dYmh0XRanl77wYIjPTho5ihUht1e1GE_p9J_JkZs02nsXSzDJAgEg==">    
+<form action="widgets" method="POST" _csrf="SNh_ZumgopPv9wpiFCMw3IioeIbaQ9w54dYmh0XRanl77wYIjPTho5ihUht1e1GE_p9J_JkZs02nsXSzDJAgEg==">    
     <input type="hidden" name="_csrf" value="SNh_ZumgopPv9wpiFCMw3IioeIbaQ9w54dYmh0XRanl77wYIjPTho5ihUht1e1GE_p9J_JkZs02nsXSzDJAgEg==">
     <input type="text" id="testform-name" name="TestForm[name]">
     <input type="text" id="testform-email" name="TestForm[email]">
@@ -163,7 +163,7 @@ That would generate the following code before validation:
 That would generate the following code after validation:
 
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="PwqhEiBBULqjUwjVQFBIGDt2iral9LmaJNOkfEJe-BcMPdh8RRUTitQFUKwhCClATUG7zOau1u5itPZICx-yfA==">
+<form action="widgets" method="POST" _csrf="PwqhEiBBULqjUwjVQFBIGDt2iral9LmaJNOkfEJe-BcMPdh8RRUTitQFUKwhCClATUG7zOau1u5itPZICx-yfA==">
     <input type="hidden" name="_csrf" value="PwqhEiBBULqjUwjVQFBIGDt2iral9LmaJNOkfEJe-BcMPdh8RRUTitQFUKwhCClATUG7zOau1u5itPZICx-yfA==">
     <input type="text" id="testform-name" name="TestForm[name]">
     <input type="text" id="testform-email" name="TestForm[email]">
