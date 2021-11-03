@@ -19,9 +19,9 @@ use Yiisoft\Form\Widget\SubmitButton;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= SubmitButton::widget()->attributes(['class' => 'button is-block is-info is-fullwidth'])->value('Save'); ?>
-<?= Form::end(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= SubmitButton::widget()->attributes(['class' => 'button is-block is-info is-fullwidth'])->value('Save') ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:

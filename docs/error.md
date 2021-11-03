@@ -64,18 +64,18 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Text::widget()->config($formModel, 'name')->render(); ?>
-    <?= Error::widget()->config($formModel, 'name')->render(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= Text::widget()->config($formModel, 'name') ?>
+    <?= Error::widget()->config($formModel, 'name') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code before validation:
 
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="qfONqNkLtpAYOtH31NnTuAVm1T1TPlqmeW6h4D1v_QKYubvGnXKboF9xo6iziqP-fC-6TQVwCNEIA5PNDh6zTg==">
+<form action="widgets" method="POST" _csrf="qfONqNkLtpAYOtH31NnTuAVm1T1TPlqmeW6h4D1v_QKYubvGnXKboF9xo6iziqP-fC-6TQVwCNEIA5PNDh6zTg==">
     <input type="hidden" name="_csrf" value="qfONqNkLtpAYOtH31NnTuAVm1T1TPlqmeW6h4D1v_QKYubvGnXKboF9xo6iziqP-fC-6TQVwCNEIA5PNDh6zTg==">
     <input type="text" id="testform-name" name="TestForm[name]">
     <hr class="mt-3">
@@ -87,7 +87,7 @@ That would generate the following code before validation:
 
 That would generate the following code after validation:
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="Aiy1ErQn34PnDuppCr1R8ilU--fkz6J4xp6EMG5w49gzZoN88F7ys6BFmDZt7iG0UB2Ul7KB8A-387YdXQGtlA==">
+<form action="widgets" method="POST" _csrf="Aiy1ErQn34PnDuppCr1R8ilU--fkz6J4xp6EMG5w49gzZoN88F7ys6BFmDZt7iG0UB2Ul7KB8A-387YdXQGtlA==">
     <input type="hidden" name="_csrf" value="Aiy1ErQn34PnDuppCr1R8ilU--fkz6J4xp6EMG5w49gzZoN88F7ys6BFmDZt7iG0UB2Ul7KB8A-387YdXQGtlA==">
     <input type="text" id="testform-name" name="TestForm[name]" value="sam">
     <div>Is too short.</div>
@@ -119,18 +119,18 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Text::widget()->config($formModel, 'name')->render(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= Text::widget()->config($formModel, 'name') ?>
     // custom error message
-    <?= Error::widget()->config($formModel, 'name')->message('The name must have more than 3 letters.')->render(); ?>
+    <?= Error::widget()->config($formModel, 'name')->message('The name must have more than 3 letters.') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code after validation:
 ```html
-<form action="widgets" method="POST" novalidate="" _csrf="2r6S9Lucw5hHfor7E_OGi-rnPvchDI3LOwCv-0YEnB7r9KSa_-XuqAA1-KR0oPbNk65Rh3dC37xKbZ3WdXXSUg==">
+<form action="widgets" method="POST" _csrf="2r6S9Lucw5hHfor7E_OGi-rnPvchDI3LOwCv-0YEnB7r9KSa_-XuqAA1-KR0oPbNk65Rh3dC37xKbZ3WdXXSUg==">
     <input type="hidden" name="_csrf" value="2r6S9Lucw5hHfor7E_OGi-rnPvchDI3LOwCv-0YEnB7r9KSa_-XuqAA1-KR0oPbNk65Rh3dC37xKbZ3WdXXSUg==">
     <input type="text" id="testform-name" name="TestForm[name]" value="sam">
     <div>The name must have more than 3 letters.</div>

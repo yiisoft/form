@@ -62,11 +62,11 @@ $citiesGroups = [
 ];
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Select::widget()->config($data, 'cityOfBirth')->groups($groups)->items($citiesGroups)->prompt($prompt); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= Select::widget()->config($data, 'cityOfBirth')->groups($groups)->items($citiesGroups)->prompt($prompt) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:

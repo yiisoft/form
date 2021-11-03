@@ -37,11 +37,11 @@ use Yiisoft\Form\Widget\Range;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Range::widget()->config($data, 'number')->render(); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= Range::widget()->config($data, 'number') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:

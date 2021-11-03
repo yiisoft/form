@@ -20,11 +20,11 @@ use Yiisoft\Form\Widget\ResetButton;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= ResetButton::widget()->value('Reset Form'); ?>
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+    <?= ResetButton::widget()->value('Reset Form') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
-<?= Form::end(); ?>
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+<?= Form::end() ?>
 ```
 
 That would generate the following code:
