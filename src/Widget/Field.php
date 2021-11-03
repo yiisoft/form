@@ -293,6 +293,7 @@ final class Field extends Widget
      * - `messageCallback`: callback, a PHP callback that returns the error message to be displayed.
      * - `tag`: string, the tag name of the container. if not set, `div` will be used. if `null`, no container tag will
      * be rendered.
+     * @param string $messageError the error message to be displayed.
      * @param array $messageCallback the callback that returns the error message. The signature of the callback
      * should be: `[$FormModel, function()]` where `$FormModel` is the model object being validated, and `function()`
      * returns the error message.
@@ -300,19 +301,27 @@ final class Field extends Widget
      *
      * @return static the field object itself.
      */
-    public function error(array $attributes = [], array $messageCallback = [], bool $encode = true): self
-    {
+    public function error(
+        array $attributes = [],
+        string $messageError = '',
+        array $messageCallback = [],
+        bool $encode = true
+    ): self {
         $new = clone $this;
-        /** @var string */
-        $errorMessage = $attributes['errorMessage'] ?? '';
+        $error = Error::widget();
+
+        if (isset($attributes['tag']) && is_string($attributes['tag'])) {
+            $error = $error->tag($attributes['tag']);
+            unset($attributes['tag']);
+        }
 
         if ($new->errorClass !== '') {
             Html::addCssClass($attributes, $new->errorClass);
         }
 
-        $new->parts['{error}'] = Error::widget()
+        $new->parts['{error}'] = $error
             ->config($new->getFormModel(), $new->attribute, $attributes)
-            ->message($errorMessage)
+            ->message($messageError)
             ->messageCallback($messageCallback)
             ->encode($encode)
             ->render();

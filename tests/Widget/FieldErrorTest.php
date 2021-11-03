@@ -19,6 +19,29 @@ final class FieldErrorTest extends TestCase
 
     private PersonalForm $formModel;
 
+    public function testMessageCustomText(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <div>This is custom error message.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->config($this->formModel, 'name')
+                ->error([], 'This is custom error message.')
+                ->render(),
+        );
+    }
+
     public function testMessageCallback(): void
     {
         $validator = $this->createValidatorMock();
@@ -35,7 +58,10 @@ final class FieldErrorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'name')->error([], [$this->formModel, 'customError'])->render(),
+            Field::widget()
+                ->config($this->formModel, 'name')
+                ->error([], '', [$this->formModel, 'customError'])
+                ->render(),
         );
     }
 
@@ -57,7 +83,7 @@ final class FieldErrorTest extends TestCase
             $expected,
             Field::widget()
                 ->config($this->formModel, 'name')
-                ->error([], [$this->formModel, 'customErrorWithIcon'], false)
+                ->error([], '', [$this->formModel, 'customErrorWithIcon'], false)
                 ->render(),
         );
     }
@@ -77,6 +103,49 @@ final class FieldErrorTest extends TestCase
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->config($this->formModel, '[0]name')->render());
+    }
+
+    public function testRender(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <div>Is too short.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'name')->render(),
+        );
+    }
+
+    public function testTag(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <span>Is too short.</span>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->config($this->formModel, 'name')
+                ->error(['tag' => 'span'])
+                ->render(),
+        );
     }
 
     protected function setUp(): void
