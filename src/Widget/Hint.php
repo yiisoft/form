@@ -20,9 +20,9 @@ final class Hint extends Widget
     private array $attributes = [];
     private string $attribute = '';
     private bool $encode = true;
+    private FormModelInterface $formModel;
     private ?string $hint = '';
     private string $tag = 'div';
-    private FormModelInterface $formModel;
 
     /**
      * Set form interface, attribute name and attributes, and attributes for the widget.
