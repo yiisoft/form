@@ -18,14 +18,16 @@ final class HintTest extends TestCase
     {
         $this->assertSame(
             '<div>Write your text.</div>',
-            Hint::widget()->config($this->formModel, 'string', ['hint' => 'Write your text.'])->render(),
+            Hint::widget()->config($this->formModel, 'string')->hint('Write your text.')->render(),
         );
     }
 
     public function testEncodeFalse(): void
     {
         $html = Hint::widget()
-            ->config($this->formModel, 'string', ['hint' => 'Write&nbsp;your&nbsp;text.', 'encode' => false])
+            ->config($this->formModel, 'string')
+            ->encode(false)
+            ->hint('Write&nbsp;your&nbsp;text.')
             ->render();
         $this->assertSame('<div>Write&nbsp;your&nbsp;text.</div>', $html);
     }
@@ -42,7 +44,7 @@ final class HintTest extends TestCase
     {
         $this->assertSame(
             '<span>Write your text string.</span>',
-            Hint::widget()->config($this->formModel, 'string', ['tag' => 'span'])->render(),
+            Hint::widget()->config($this->formModel, 'string')->tag('span')->render(),
         );
     }
 

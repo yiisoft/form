@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Arrays\ArrayHelper;
+use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
@@ -17,6 +17,50 @@ final class Hint extends Widget
 {
     use ModelAttributes;
 
+    private bool $encode = true;
+    private ?string $hint = '';
+    private string $tag = 'div';
+
+    /**
+     * Whether content should be HTML-encoded.
+     *
+     * @param bool $value
+     */
+    public function encode(bool $value): self
+    {
+        $new = clone $this;
+        $new->encode = $value;
+        return $new;
+    }
+
+    /**
+     * Set hint text.
+     *
+     * @param string|null $value
+     */
+    public function hint(?string $value): self
+    {
+        $new = clone $this;
+        $new->hint = $value;
+        return $new;
+    }
+
+    /**
+     * Set the container tag name for the hint.
+     *
+     * Empty to render error messages without container {@see Html::tag()}.
+     *
+     * @param string $value
+     *
+     * @return static
+     */
+    public function tag(string $value): self
+    {
+        $new = clone $this;
+        $new->tag = $value;
+        return $new;
+    }
+
     /**
      * Generates a hint tag for the given form attribute.
      *
@@ -26,23 +70,20 @@ final class Hint extends Widget
     {
         $new = clone $this;
 
-        /** @var bool */
-        $encode = $new->attributes['encode'] ?? false;
+        if ($new->hint !== null && $new->hint === '') {
+            $new->hint = HtmlForm::getAttributeHint($new->getFormModel(), $new->attribute);
+        }
 
-        /** @var bool|string */
-        $hint = ArrayHelper::remove(
-            $new->attributes,
-            'hint',
-            HtmlForm::getAttributeHint($new->getFormModel(), $new->attribute),
-        );
+        if ($new->tag === '') {
+            throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
 
-        /** @psalm-var non-empty-string */
-        $tag = $new->attributes['tag'] ?? 'div';
-
-        unset($new->attributes['hint'], $new->attributes['tag']);
-
-        return (!is_bool($hint) && $hint !== '')
-            ? CustomTag::name($tag)->attributes($new->attributes)->content($hint)->encode($encode)->render()
+        return (!empty($new->hint))
+            ? CustomTag::name($new->tag)
+                ->attributes($new->attributes)
+                ->content($new->hint)
+                ->encode($new->encode)
+                ->render()
             : '';
     }
 }
