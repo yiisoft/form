@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
@@ -146,7 +147,9 @@ final class ErrorSummary extends Widget
         $lines = [];
 
         foreach ([$new->formModel] as $form) {
-            $lines = array_unique(array_merge($lines, $form->getErrorSummary($showAllErrors)));
+            $lines = array_unique(
+                array_merge($lines, HtmlFormErrors::getErrorSummary($form, $showAllErrors))
+            );
         }
 
         /**
