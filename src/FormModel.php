@@ -28,7 +28,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $attributes;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
-    private FormErrorsInterface $formError;
+    private FormErrorsInterface $formErrors;
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
