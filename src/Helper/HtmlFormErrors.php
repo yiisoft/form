@@ -12,40 +12,50 @@ use Yiisoft\Form\FormModelInterface;
 final class HtmlFormErrors
 {
     /**
-     * Returns the errors for single attribute.
-     *
-     * @param FormModelInterface $formModel the form object.
-     * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
-     */
-    public static function getError(FormModelInterface $formModel, string $attribute): array
-    {
-        return $formModel->getFormErrors()->getError($attribute);
-    }
-
-    /**
      * Returns the errors for all attributes.
      *
      * @param FormModelInterface $formModel the form object.
      *
      * @return array the error messages.
      */
-    public static function getErrors(FormModelInterface $formModel): array
+    public static function getAllErrors(FormModelInterface $formModel): array
     {
-        return $formModel->getFormErrors()->getErrors();
+        return $formModel->getFormErrors()->getAllErrors();
+    }
+
+    /**
+     * Returns the errors for single attribute.
+     *
+     * @param FormModelInterface $formModel the form object.
+     * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
+     */
+    public static function getErrors(FormModelInterface $formModel, string $attribute): array
+    {
+        return $formModel->getFormErrors()->getErrors($attribute);
+    }
+
+    /**
+     * Returns the firts errors for all attributes as a one-dimensional array.
+     *
+     * @param FormModelInterface $formModel the form object.
+     *
+     * @return array errors for all attributes as a one-dimensional array. Empty array is returned if no error.
+     */
+    public static function getErrorSummaryFirstErrors(FormModelInterface $formModel): array
+    {
+        return $formModel->getFormErrors()->getErrorSummaryFirstErrors();
     }
 
     /**
      * Returns the errors for all attributes as a one-dimensional array.
      *
      * @param FormModelInterface $formModel the form object.
-     * @param bool $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
-     * only the first error message for each attribute will be shown.
      *
      * @return array errors for all attributes as a one-dimensional array. Empty array is returned if no error.
      */
-    public static function getErrorSummary(FormModelInterface $formModel, bool $showAllErrors): array
+    public static function getErrorSummary(FormModelInterface $formModel): array
     {
-        return $formModel->getFormErrors()->getErrorSummary($showAllErrors);
+        return $formModel->getFormErrors()->getErrorSummary();
     }
 
     /**

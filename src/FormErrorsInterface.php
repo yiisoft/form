@@ -10,10 +10,10 @@ namespace Yiisoft\Form;
 interface FormErrorsInterface
 {
     /**
-     * Add error for the specified attribute.
+     * Add an error for the specified attribute.
      *
-     * @param string $attribute attribute name.
-     * @param string $error attribute error message.
+     * @param string $attribute Attribute name.
+     * @param string $error Attribute error message.
      */
     public function addError(string $attribute, string $error): void;
 
@@ -23,20 +23,9 @@ interface FormErrorsInterface
     public function clear(): void;
 
     /**
-     * Returns the errors for single attribute.
+     * Returns errors for all attributes.
      *
-     * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
-     *
-     * @return array
-     *
-     * @psalm-return string[]
-     */
-    public function getError(string $attribute): array;
-
-    /**
-     * Returns the errors for all attributes.
-     *
-     * @return array errors for all attributes or the specified attribute. null is returned if no error.
+     * @return array Errors for all attributes.
      *
      * Note that when returning errors for all attributes, the result is a two-dimensional array, like the following:
      *
@@ -57,20 +46,35 @@ interface FormErrorsInterface
      *
      * @psalm-return array<string, array<string>>
      */
-    public function getErrors(): array;
+    public function getAllErrors(): array;
 
     /**
-     * Returns the errors for all attributes as a one-dimensional array.
+     * Returns errors for an attribute with a given name.
      *
-     * @param bool $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
-     * only the first error message for each attribute will be shown.
+     * @param string $attribute Attribute name.
+     *
+     * @return array
+     *
+     * @psalm-return string[]
+     */
+    public function getErrors(string $attribute): array;
+
+    /**
+     * Returns errors for all attributes as a one-dimensional array.
      *
      * @return array errors for all attributes as a one-dimensional array. Empty array is returned if no error.
      *
      * {@see getErrors()}
      * {@see getFirstErrors(){}
      */
-    public function getErrorSummary(bool $showAllErrors): array;
+    public function getErrorSummary(): array;
+
+    /**
+     * Returns the first error of every attribute in the collection.
+     *
+     * @return array the first error of every attribute in the collection. Empty array is returned if no error.
+     */
+    public function getErrorSummaryFirstErrors(): array;
 
     /**
      * Returns the first error of the specified attribute.

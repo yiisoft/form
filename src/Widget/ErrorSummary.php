@@ -134,31 +134,24 @@ final class ErrorSummary extends Widget
     /**
      * Return array of the validation errors.
      *
-     * @param bool $encode if set to false then the error messages won't be encoded.
-     * @param bool $showAllErrors if set to true every error message for each attribute will be shown otherwise only
-     * the first error message for each attribute will be shown.
-     *
      * @return array of the validation errors.
      */
-    private function collectErrors(bool $encode, bool $showAllErrors): array
+    private function collectErrors(): array
     {
         $new = clone $this;
+        $errors = HtmlFormErrors::getErrorSummaryFirstErrors($new->formModel);
 
-        $lines = [];
-
-        foreach ([$new->formModel] as $form) {
-            $lines = array_unique(
-                array_merge($lines, HtmlFormErrors::getErrorSummary($form, $showAllErrors))
-            );
+        if ($new->showAllErrors) {
+            $errors = HtmlFormErrors::getErrorSummary($new->formModel);
         }
 
         /**
          * If there are the same error messages for different attributes, array_unique will leave gaps between
          * sequential keys. Applying array_values to reorder array keys.
          */
-        $lines = array_values($lines);
+        $lines = array_values(array_unique($errors));
 
-        if ($encode) {
+        if ($new->encode) {
             /** @var string $line */
             foreach ($lines as &$line) {
                 $line = Html::encode($line);
@@ -178,7 +171,7 @@ final class ErrorSummary extends Widget
         $new = clone $this;
 
         /** @var array<string, string> */
-        $lines = $new->collectErrors($new->encode, $new->showAllErrors);
+        $lines = $new->collectErrors();
 
         if (empty($lines)) {
             /** still render the placeholder for client-side validation use */

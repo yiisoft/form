@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 /**
- * FormErrors represents a form errors collection.
+ * FormErrors represents a form validation errors collection.
  */
 final class FormErrors implements FormErrorsInterface
 {
@@ -23,26 +23,24 @@ final class FormErrors implements FormErrorsInterface
         $this->attributesErrors[$attribute][] = $error;
     }
 
-    public function getError(string $attribute): array
-    {
-        return $this->attributesErrors[$attribute] ?? [];
-    }
-
-    public function getErrors(): array
+    public function getAllErrors(): array
     {
         return $this->attributesErrors;
     }
 
-    public function getErrorSummary(bool $showAllErrors): array
+    public function getErrors(string $attribute): array
     {
-        $lines = [];
-        $errors = $showAllErrors ? $this->getErrors() : [$this->getFirstErrors()];
+        return $this->attributesErrors[$attribute] ?? [];
+    }
 
-        foreach ($errors as $error) {
-            $lines = array_merge($lines, $error);
-        }
+    public function getErrorSummary(): array
+    {
+        return $this->renderErrorSumary($this->getAllErrors());
+    }
 
-        return $lines;
+    public function getErrorSummaryFirstErrors(): array
+    {
+        return $this->renderErrorSumary([$this->getFirstErrors()]);
     }
 
     public function getFirstError(string $attribute): string
@@ -79,5 +77,17 @@ final class FormErrors implements FormErrorsInterface
     public function clear(): void
     {
         $this->attributesErrors = [];
+    }
+
+    private function renderErrorSumary(array $errors): array
+    {
+        $lines = [];
+
+        /** @var string[] errors */
+        foreach ($errors as $error) {
+            $lines = array_merge($lines, $error);
+        }
+
+        return $lines;
     }
 }

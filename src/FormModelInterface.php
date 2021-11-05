@@ -22,7 +22,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function getAttributeValue(string $attribute);
 
     /**
-     * @return FormErrorsInterface Get FormErrors object.
+     * @return FormErrorsInterface Validation errors.
      */
     public function getFormErrors(): FormErrorsInterface;
 

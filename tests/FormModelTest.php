@@ -169,7 +169,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            HtmlFormErrors::getErrorSummary($form, false)
+            HtmlFormErrors::getErrorSummaryFirstErrors($form)
         );
 
         $expected = [
@@ -179,7 +179,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            HtmlFormErrors::getErrorSummary($form, true)
+            HtmlFormErrors::getErrorSummary($form)
         );
     }
 
@@ -307,14 +307,14 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             ['Value cannot be blank.'],
-            HtmlFormErrors::getError($form, 'login')
+            HtmlFormErrors::getErrors($form, 'login')
         );
 
         $form->login('x');
         $validator->validate($form);
         $this->assertEquals(
             ['Is too short.'],
-            HtmlFormErrors::getError($form, 'login')
+            HtmlFormErrors::getErrors($form, 'login')
         );
 
         $form->login(str_repeat('x', 60));
