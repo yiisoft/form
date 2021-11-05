@@ -28,6 +28,8 @@ interface FormErrorsInterface
      * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
      *
      * @return array
+     *
+     * @psalm-return string[]
      */
     public function getError(string $attribute): array;
 
@@ -52,6 +54,8 @@ interface FormErrorsInterface
      *
      * {@see getFirstErrors()}
      * {@see getFirstError()}
+     *
+     * @psalm-return array<string, array<string>>
      */
     public function getErrors(): array;
 
