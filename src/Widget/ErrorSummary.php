@@ -11,7 +11,6 @@ use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
-use function array_merge;
 use function array_unique;
 use function array_values;
 
