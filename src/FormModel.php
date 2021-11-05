@@ -28,14 +28,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $attributes;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
-    private FormErrorInterface $formError;
+    private FormErrorsInterface $formError;
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
-        $this->formError = new FormError();
+        $this->formErrors = new FormErrors();
     }
 
     public function getAttributeHint(string $attribute): string
@@ -103,11 +103,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return FormErrorInterface Get FormErrors object.
+     * @return FormErrorsInterface Get FormErrors object.
      */
-    public function getFormErrors(): FormErrorInterface
+    public function getFormErrors(): FormErrorsInterface
     {
-        return $this->formError;
+        return $this->formErrors;
     }
 
     /**
@@ -202,7 +202,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function processValidationResult(ResultSet $resultSet): void
     {
-        $this->formError->clear();
+        $this->formErrors->clear();
         /** @var array<array-key, Resultset> $resultSet */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
@@ -251,7 +251,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this->formError->addError($attribute, $error);
+                $this->formErrors->addError($attribute, $error);
             }
         }
     }

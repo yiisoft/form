@@ -7,7 +7,7 @@ namespace Yiisoft\Form;
 /**
  * FormErrors represents a form errors collection.
  */
-final class FormError implements FormErrorInterface
+final class FormErrors implements FormErrorsInterface
 {
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors;

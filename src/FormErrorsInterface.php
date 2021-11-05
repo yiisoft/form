@@ -7,7 +7,7 @@ namespace Yiisoft\Form;
 /**
  * FormErrors represents a form errors collection.
  */
-interface FormErrorInterface
+interface FormErrorsInterface
 {
     /**
      * Add error for the specified attribute.
