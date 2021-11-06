@@ -28,7 +28,7 @@ trait TestTrait
 
     public function createFormModel(string $class): void
     {
-        $this->formModel = new $class(new FormErrors());
+        $this->formModel = new $class();
     }
 
     /**
