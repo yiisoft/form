@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Helper;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\FormErrors;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;

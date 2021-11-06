@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\FormErrors;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;

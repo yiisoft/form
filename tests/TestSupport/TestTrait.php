@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\TestSupport;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
-use Yiisoft\Form\FormErrors;
 
 trait TestTrait
 {
