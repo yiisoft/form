@@ -32,10 +32,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
-    public function __construct()
+    public function __construct(FormErrorsInterface $formErrors)
     {
         $this->attributes = $this->collectAttributes();
-        $this->formErrors = new FormErrors();
+        $this->formErrors = $formErrors;
     }
 
     public function getAttributeHint(string $attribute): string
