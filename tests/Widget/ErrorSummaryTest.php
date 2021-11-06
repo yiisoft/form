@@ -100,15 +100,14 @@ final class ErrorSummaryTest extends TestCase
             ],
         ];
 
-        $data = new PersonalForm();
-        $data->load($record);
+        $this->formModel->load($record);
 
         $validator = $this->createValidatorMock();
-        $validator->validate($data);
+        $validator->validate($this->formModel);
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->model($data)
+            ->model($this->formModel)
             ->footer($footer)
             ->showAllErrors($showAllErrors);
         $errorSummary = $header !== '' ? $errorSummary->header($header) : $errorSummary;
@@ -130,7 +129,7 @@ final class ErrorSummaryTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new PersonalForm();
+        $this->createFormModel(PersonalForm::class);
     }
 
     private function createValidatorMock(): ValidatorInterface

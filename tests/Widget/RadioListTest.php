@@ -373,6 +373,6 @@ final class RadioListTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new typeForm();
+        $this->createFormModel(TypeForm::class);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\FormErrors;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
@@ -20,31 +21,31 @@ final class FormModelTest extends TestCase
 {
     public function testAnonymousFormName(): void
     {
-        $form = new class () extends FormModel {};
+        $form = new class (new FormErrors()) extends FormModel {};
         $this->assertEquals('', $form->getFormName());
     }
 
     public function testDefaultFormName(): void
     {
-        $form = new DefaultFormNameForm();
+        $form = new DefaultFormNameForm(new FormErrors());
         $this->assertEquals('DefaultFormNameForm', $form->getFormName());
     }
 
     public function testNonNamespacedFormName(): void
     {
-        $form = new \NonNamespacedForm();
+        $form = new \NonNamespacedForm(new FormErrors());
         $this->assertEquals('NonNamespacedForm', $form->getFormName());
     }
 
     public function testCustomFormName(): void
     {
-        $form = new CustomFormNameForm();
+        $form = new CustomFormNameForm(new FormErrors());
         $this->assertEquals('my-best-form-name', $form->getFormName());
     }
 
     public function testUnknownPropertyType(): void
     {
-        $form = new class () extends FormModel {
+        $form = new class (new FormErrors()) extends FormModel {
             private $property;
         };
 
@@ -66,7 +67,7 @@ final class FormModelTest extends TestCase
 
     public function testGetAttributeValue(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $form->login('admin');
         $this->assertEquals('admin', $form->getAttributeValue('login'));
@@ -80,7 +81,7 @@ final class FormModelTest extends TestCase
 
     public function testGetAttributeValueWithNestedAttribute(): void
     {
-        $form = new FormWithNestedAttribute();
+        $form = new FormWithNestedAttribute(new FormErrors());
 
         $form->setUserLogin('admin');
         $this->assertEquals('admin', $form->getAttributeValue('user.login'));
@@ -88,7 +89,7 @@ final class FormModelTest extends TestCase
 
     public function testGetAttributeHint(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $this->assertEquals('Write your id or email.', $form->getAttributeHint('login'));
         $this->assertEquals('Write your password.', $form->getAttributeHint('password'));
@@ -97,14 +98,14 @@ final class FormModelTest extends TestCase
 
     public function testGetNestedAttributeHint(): void
     {
-        $form = new FormWithNestedAttribute();
+        $form = new FormWithNestedAttribute(new FormErrors());
 
         $this->assertEquals('Write your id or email.', $form->getAttributeHint('user.login'));
     }
 
     public function testGetAttributeLabel(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $this->assertEquals('Login:', $form->getAttributeLabel('login'));
         $this->assertEquals('Testme', $form->getAttributeLabel('testme'));
@@ -112,14 +113,14 @@ final class FormModelTest extends TestCase
 
     public function testGetNestedAttributeLabel(): void
     {
-        $form = new FormWithNestedAttribute();
+        $form = new FormWithNestedAttribute(new FormErrors());
 
         $this->assertEquals('Login:', $form->getAttributeLabel('user.login'));
     }
 
     public function testAttributesLabels(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $expected = [
             'login' => 'Login:',
@@ -132,7 +133,7 @@ final class FormModelTest extends TestCase
 
     public function testGetAttributePlaceHolder(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
         $this->assertEquals('Type Password.', $form->getAttributePlaceHolder('password'));
@@ -141,14 +142,14 @@ final class FormModelTest extends TestCase
 
     public function testGetNestedAttributePlaceHolder(): void
     {
-        $form = new FormWithNestedAttribute();
+        $form = new FormWithNestedAttribute(new FormErrors());
 
         $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
     }
 
     public function testErrorSummary(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $data = [
             'LoginForm' => [
@@ -185,7 +186,7 @@ final class FormModelTest extends TestCase
 
     public function testHasAttribute(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $this->assertTrue($form->hasAttribute('login'));
         $this->assertTrue($form->hasAttribute('password'));
@@ -196,7 +197,7 @@ final class FormModelTest extends TestCase
 
     public function testLoad(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $this->assertNull($form->getLogin());
         $this->assertNull($form->getPassword());
@@ -220,7 +221,7 @@ final class FormModelTest extends TestCase
 
     public function testLoadWithNestedAttribute(): void
     {
-        $form = new FormWithNestedAttribute();
+        $form = new FormWithNestedAttribute(new FormErrors());
 
         $data = [
             'FormWithNestedAttribute' => [
@@ -234,8 +235,8 @@ final class FormModelTest extends TestCase
 
     public function testFailedLoadForm(): void
     {
-        $form1 = new LoginForm();
-        $form2 = new class () extends FormModel {
+        $form1 = new LoginForm(new FormErrors());
+        $form2 = new class (new FormErrors()) extends FormModel {
         };
 
         $data1 = [
@@ -257,7 +258,7 @@ final class FormModelTest extends TestCase
 
     public function testLoadWithEmptyScope(): void
     {
-        $form = new class () extends FormModel {
+        $form = new class (new FormErrors()) extends FormModel {
             private int $int = 1;
             private string $string = 'string';
             private float $float = 3.14;
@@ -277,7 +278,7 @@ final class FormModelTest extends TestCase
 
     public function testAddError(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
         $errorMessage = 'Invalid password.';
 
         $form->getFormErrors()->addError('password', $errorMessage);
@@ -288,7 +289,7 @@ final class FormModelTest extends TestCase
 
     public function testAddAndGetErrorForNonExistingAttribute(): void
     {
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
         $errorMessage = 'Invalid username and/or password.';
 
         $form->getFormErrors()->addError('form', $errorMessage);
@@ -300,7 +301,7 @@ final class FormModelTest extends TestCase
     public function testValidatorRules(): void
     {
         $validator = $this->createValidatorMock();
-        $form = new LoginForm();
+        $form = new LoginForm(new FormErrors());
 
         $form->login('');
         $validator->validate($form);
@@ -334,7 +335,7 @@ final class FormModelTest extends TestCase
 
     public function testPublicAttributes(): void
     {
-        $form = new class () extends FormModel {
+        $form = new class (new FormErrors()) extends FormModel {
             public int $int = 1;
         };
         $form->load(['int' => '2']);

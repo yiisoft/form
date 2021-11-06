@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\TestSupport;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
+use Yiisoft\Form\FormErrors;
 
 trait TestTrait
 {
@@ -23,6 +24,11 @@ trait TestTrait
         $actual = str_replace("\r\n", "\n", $actual);
 
         $this->assertEquals($expected, $actual, $message);
+    }
+
+    public function createFormModel(string $class): void
+    {
+        $this->formModel = new $class(new FormErrors());
     }
 
     /**

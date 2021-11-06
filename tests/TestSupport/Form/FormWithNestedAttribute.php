@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
+use Yiisoft\Form\FormErrorsInterface;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Required;
 
@@ -12,10 +13,10 @@ final class FormWithNestedAttribute extends FormModel
     private ?int $id = null;
     private LoginForm $user;
 
-    public function __construct()
+    public function __construct(FormErrorsInterface $formErrors)
     {
-        $this->user = new LoginForm();
-        parent::__construct();
+        $this->user = new LoginForm($formErrors);
+        parent::__construct($formErrors);
     }
 
     public function getAttributeLabels(): array

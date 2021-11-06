@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Helper;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\FormErrors;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
@@ -14,10 +15,10 @@ final class HtmlFormTest extends TestCase
 {
     public function testGetAttributeHint(): void
     {
-        $formModel = new LoginForm();
+        $formModel = new LoginForm(new FormErrors());
         $this->assertSame('Write your id or email.', HtmlForm::getAttributeHint($formModel, 'login'));
 
-        $anonymousForm = new class () extends FormModel {
+        $anonymousForm = new class (new FormErrors()) extends FormModel {
             private string $age = '';
         };
         $this->assertEmpty(HtmlForm::getAttributeHint($anonymousForm, 'age'));
@@ -25,7 +26,7 @@ final class HtmlFormTest extends TestCase
 
     public function testGetAttributeName(): void
     {
-        $formModel = new LoginForm();
+        $formModel = new LoginForm(new FormErrors());
         $this->assertSame('login', HtmlForm::getAttributeName($formModel, '[0]login'));
         $this->assertSame('login', HtmlForm::getAttributeName($formModel, 'login[0]'));
         $this->assertSame('login', HtmlForm::getAttributeName($formModel, '[0]login[0]'));
@@ -33,7 +34,7 @@ final class HtmlFormTest extends TestCase
 
     public function testGetAttributeNameException(): void
     {
-        $formModel = new LoginForm();
+        $formModel = new LoginForm(new FormErrors());
 
         $this->expectExceptionMessage("Attribute 'noExist' does not exist.");
         HtmlForm::getAttributeName($formModel, 'noExist');
@@ -41,15 +42,15 @@ final class HtmlFormTest extends TestCase
 
     public function testGetAttributeNameInvalid(): void
     {
-        $formModel = new LoginForm();
+        $formModel = new LoginForm(new FormErrors());
         $this->expectExceptionMessage('Attribute name must contain word characters only.');
         HtmlForm::getAttributeName($formModel, 'content body');
     }
 
     public function dataGetInputName(): array
     {
-        $loginForm = new LoginForm();
-        $anonymousForm = new class () extends FormModel {
+        $loginForm = new LoginForm(new FormErrors());
+        $anonymousForm = new class (new FormErrors()) extends FormModel {
         };
         return [
             [$loginForm, '[0]content', 'LoginForm[0][content]'],
@@ -75,7 +76,7 @@ final class HtmlFormTest extends TestCase
 
     public function testGetInputNameException(): void
     {
-        $anonymousForm = new class () extends FormModel {
+        $anonymousForm = new class (new FormErrors()) extends FormModel {
         };
 
         $this->expectExceptionMessage('formName() cannot be empty for tabular inputs.');
