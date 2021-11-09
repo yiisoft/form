@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
