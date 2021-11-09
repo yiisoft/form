@@ -26,7 +26,7 @@ final class FieldLabelTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'email')->label([], null, false)->render(),
+            Field::widget()->config($this->formModel, 'email')->label([], null)->render(),
         );
     }
 
