@@ -320,10 +320,11 @@ final class Field extends Widget
         }
 
         $new->parts['{error}'] = $error
-            ->config($new->getFormModel(), $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute)
+            ->encode($encode)
             ->message($messageError)
             ->messageCallback($messageCallback)
-            ->encode($encode)
+            ->tagAttributes($attributes)
             ->render();
 
         return $new;

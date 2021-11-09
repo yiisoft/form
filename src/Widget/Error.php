@@ -16,31 +16,29 @@ use Yiisoft\Widget\Widget;
  */
 final class Error extends Widget
 {
-    private array $attributes = [];
     private string $attribute = '';
     private bool $encode = true;
     private FormModelInterface $formModel;
     private string $message = '';
     private array $messageCallback = [];
     private string $tag = 'div';
+    private array $tagAttributes = [];
 
     /**
      * Specify a form, its attribute and a list HTML attributes for the error generated.
      *
      * @param FormModelInterface $formModel Form instance.
      * @param string $attribute Form model's property name this widget is rendered for.
-     * @param array $attributes HTML attributes for the widget container tag.
      *
      * @return static
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    public function config(FormModelInterface $formModel, string $attribute): self
     {
         $new = clone $this;
         $new->formModel = $formModel;
         $new->attribute = $attribute;
-        $new->attributes = $attributes;
         return $new;
     }
 
@@ -107,6 +105,22 @@ final class Error extends Widget
     }
 
     /**
+     * HTML attributes for the widget container tag.
+     *
+     * @param array $value
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function tagAttributes(array $value): self
+    {
+        $new = clone $this;
+        $new->tagAttributes = $value;
+        return $new;
+    }
+
+    /**
      * Generates a tag that contains the first validation error of the specified form attribute.
      *
      * @return string the generated label tag
@@ -126,7 +140,11 @@ final class Error extends Widget
         }
 
         $html = $new->tag !== ''
-            ? CustomTag::name($new->tag)->attributes($new->attributes)->content($error)->encode($new->encode)->render()
+            ? CustomTag::name($new->tag)
+                ->attributes($new->tagAttributes)
+                ->content($error)
+                ->encode($new->encode)
+                ->render()
             : $error;
 
         return $error !== '' ? $html : '';

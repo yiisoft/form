@@ -23,6 +23,7 @@ final class ErrorTest extends TestCase
         $this->assertNotSame($error, $error->message(''));
         $this->assertNotSame($error, $error->messageCallback([]));
         $this->assertNotSame($error, $error->tag('div'));
+        $this->assertNotSame($error, $error->tagAttributes([]));
     }
 
     public function testMessage(): void
@@ -67,6 +68,14 @@ final class ErrorTest extends TestCase
         $this->assertSame(
             '<span>Value cannot be blank.</span>',
             Error::widget()->config($this->formModel, 'name')->tag('span')->render(),
+        );
+    }
+
+    public function testTagAttributes(): void
+    {
+        $this->assertSame(
+            '<div class="testClass">Value cannot be blank.</div>',
+            Error::widget()->config($this->formModel, 'name')->tagAttributes(['class' => 'testClass'])->render(),
         );
     }
 

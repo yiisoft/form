@@ -141,10 +141,27 @@ final class FieldErrorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()
-                ->config($this->formModel, 'name')
-                ->error(['tag' => 'span'])
-                ->render(),
+            Field::widget()->config($this->formModel, 'name')->error(['tag' => 'span'])->render(),
+        );
+    }
+
+    public function testTagAttributes(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <div class="testClass">Is too short.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'name')->error(['class' => 'testClass'])->render(),
         );
     }
 
