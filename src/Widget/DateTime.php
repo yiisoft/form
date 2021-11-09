@@ -41,7 +41,7 @@ final class DateTime extends Widget
         return Input::tag()
             ->type('datetime')
             ->attributes($this->attributes)
-            ->id($this->generateId())
+            ->id($this->getId())
             ->name(HtmlForm::getInputName($this->getFormModel(), $this->attribute))
             ->value($value === '' ? null : $value)
             ->render();

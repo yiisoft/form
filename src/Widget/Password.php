@@ -132,7 +132,7 @@ final class Password extends Widget
 
         return Input::password($name, $value === '' ? null : $value)
             ->attributes($new->attributes)
-            ->id($new->generateId())
+            ->id($new->getId())
             ->render();
     }
 }

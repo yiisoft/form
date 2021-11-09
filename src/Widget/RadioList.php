@@ -236,7 +236,7 @@ final class RadioList extends Widget
         }
 
         /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->generateId();
+        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         /** @var bool */
         $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;

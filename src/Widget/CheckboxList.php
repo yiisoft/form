@@ -222,7 +222,7 @@ final class CheckboxList extends Widget
             throw new InvalidArgumentException('CheckboxList widget must be a array or null value.');
         }
 
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->generateId();
+        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
         /** @var bool */
         $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;

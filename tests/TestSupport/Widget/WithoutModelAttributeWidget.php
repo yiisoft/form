@@ -16,7 +16,7 @@ final class WithoutModelAttributeWidget extends Widget
     {
         $new = clone $this;
 
-        $new->attributes['id'] = $new->generateId();
+        $new->attributes['id'] = $new->getId();
         $new->attributes['name'] = $new->getName();
         $new->attributes['value'] = $new->value;
 

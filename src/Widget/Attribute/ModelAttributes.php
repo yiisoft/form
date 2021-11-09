@@ -54,7 +54,7 @@ trait ModelAttributes
     /**
      * Set the ID of the widget.
      *
-     * @param string|null $value The ID of the widget. if `null` the attribute will be removed.
+     * @param string|null $value The ID of the widget. `null` means that the attribute will be removed.
      *
      * @return static
      *
@@ -81,13 +81,11 @@ trait ModelAttributes
      *
      * @return string|null
      */
-    protected function generateId(): ?string
+    protected function getId(): ?string
     {
-        $new = clone $this;
-
         /** @var string */
-        $id = ArrayHelper::remove($new->attributes, 'id', $new->id);
+        $id = ArrayHelper::remove($this->attributes, 'id', $this->id);
 
-        return $id === '' ? HtmlForm::getInputId($new->getFormModel(), $new->attribute, $new->charset) : $id;
+        return $id === '' ? HtmlForm::getInputId($this->getFormModel(), $this->attribute, $this->charset) : $id;
     }
 }

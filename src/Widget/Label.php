@@ -78,7 +78,7 @@ final class Label extends Widget
         }
 
         /** @var string */
-        $for = $new->attributes['for'] ?? $new->generateId();
+        $for = $new->attributes['for'] ?? $new->getId();
 
         return $attributeLabel !== false
             ? LabelTag::tag()->attributes($new->attributes)->content($label)->encode($encode)->forId($for)->render()

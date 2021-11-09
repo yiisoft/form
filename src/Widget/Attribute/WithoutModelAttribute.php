@@ -97,13 +97,13 @@ trait WithoutModelAttribute
      *
      * @return string
      */
-    protected function generateId(): string
+    protected function getId(): string
     {
         return $this->id = $this->id !== '' ? $this->id : Html::generateId($this->autoIdPrefix);
     }
 
     protected function getName(): string
     {
-        return $this->name = $this->name !== '' ? $this->name : $this->generateId();
+        return $this->name = $this->name !== '' ? $this->name : $this->getId();
     }
 }

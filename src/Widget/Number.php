@@ -87,7 +87,7 @@ final class Number extends Widget
         return Input::tag()
             ->type('number')
             ->attributes($new->attributes)
-            ->id($new->generateId())
+            ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value)
             ->render();

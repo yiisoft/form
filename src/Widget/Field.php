@@ -401,7 +401,7 @@ final class Field extends Widget
         $new = clone $this;
 
         if ($new->ariaDescribedBy === true) {
-            $attributes['id'] = $new->generateId();
+            $attributes['id'] = $new->getId();
         }
 
         if ($new->hintClass !== '') {

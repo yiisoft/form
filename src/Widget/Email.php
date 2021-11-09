@@ -146,7 +146,7 @@ final class Email extends Widget
         return Input::tag()
             ->type('email')
             ->attributes($new->attributes)
-            ->id($new->generateId())
+            ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value === '' ? null : $value)
             ->render();

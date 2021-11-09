@@ -140,7 +140,7 @@ final class Checkbox extends Widget
         return $checkbox
             ->checked("$value" === "$valueDefault")
             ->attributes($new->attributes)
-            ->id($new->generateId())
+            ->id($new->getId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->uncheckValue($new->uncheckValue)
             ->value($valueDefault)
