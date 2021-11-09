@@ -116,5 +116,5 @@ Method | Description | Default
 -------|-------------|---------
 `config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
 `encode(bool $value)` | Whether to encode the error message. | `true`
-`for(string $value)` | The id of a labelable form-related element in the same document as the tag label element. | `null`
+`for(?string $value)` | The id of a labelable form-related element in the same document as the tag label element. | `''`
 `label(?string $value)` | The text of the label. | `''`
