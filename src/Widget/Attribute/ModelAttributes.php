@@ -54,7 +54,7 @@ trait ModelAttributes
     /**
      * Set the ID of the widget.
      *
-     * @param string|null $value The ID of the widget. if null the attribute will be removed.
+     * @param string|null $value The ID of the widget. if `null` the attribute will be removed.
      *
      * @return static
      *
