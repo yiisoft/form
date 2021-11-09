@@ -26,7 +26,7 @@ final class Label extends Widget
     private ?string $label = '';
 
     /**
-     * Set form interface, attribute name and attributes, and attributes for the widget.
+     * Specify a form, its attribute and a list HTML attributes for the label generated.
      *
      * @param FormModelInterface $formModel Form.
      * @param string $attribute Form model property this widget is rendered for.

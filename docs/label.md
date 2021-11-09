@@ -69,7 +69,7 @@ That would generate the following code:
 
 ### Custom label text
 
-To configure a custom label text, we simply change it in the widget, taking the previous example the code would be the following: 
+To configure a custom label text, you can specify it when the widget is used: 
 
 ```php
 <?php
@@ -116,5 +116,5 @@ Method | Description | Default
 -------|-------------|---------
 `config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
 `encode(bool $value)` | Whether to encode the error message. | `true`
-`for(?string $value)` | The id of a labelable form-related element in the same document as the tag label element. | `''`
+`for(?string $value)` | The ID of a form element to associate label with. | `''`
 `label(?string $value)` | The text of the label. | `''`
