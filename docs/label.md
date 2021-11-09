@@ -114,7 +114,8 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
+`config(FormModelInterface $formModel, string $attribute)` | Configure the widget. |
 `encode(bool $value)` | Whether to encode the error message. | `true`
 `for(?string $value)` | The ID of a form element to associate label with. | `''`
 `label(?string $value)` | The text of the label. | `''`
+`tagAttributes(array $value)` | Attributes to use to display the error. | `[]`
