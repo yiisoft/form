@@ -25,11 +25,11 @@ final class Error extends Widget
     private string $tag = 'div';
 
     /**
-     * Set form interface, attribute name and attributes, and attributes for the widget.
+     * Specify a form, its attribute and a list HTML attributes for the error generated.
      *
-     * @param FormModelInterface $formModel Form.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $attributes The HTML attributes for the widget container tag.
+     * @param FormModelInterface $formModel Form instance.
+     * @param string $attribute Form model's property name this widget is rendered for.
+     * @param array $attributes HTML attributes for the widget container tag.
      *
      * @return static
      *
