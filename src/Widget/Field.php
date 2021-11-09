@@ -393,22 +393,35 @@ final class Field extends Widget
      * - `hint`: string, the content of the hint tag. Note that it will NOT be HTML-encoded. If no set, the hint will be
      * generated via {@see \Yiisoft\Form\FormModel::getAttributeHint()}. if `null` it will not be rendered.
      * - `tag`: string, the tag name of the hint tag. if not set, `div` will be used. if `null` no tag will be used.
+     * @param string|null $hint The hint text. If value is an empty string, the hint will be generated via
+     * {@see \Yiisoft\Form\FormModel::getAttributeHint()}, if value is `null`, the hint will not be rendered.
+     * @param bool $encode Whether content should be HTML-encoded.
      *
      * @return static
      */
-    public function hint(array $attributes = []): self
+    public function hint(array $attributes = [], ?string $hint = '', bool $encode = true): self
     {
         $new = clone $this;
+        $hintWidget = Hint::widget();
 
         if ($new->ariaDescribedBy === true) {
             $attributes['id'] = $new->getId();
+        }
+
+        if (isset($attributes['tag']) && is_string($attributes['tag'])) {
+            $hintWidget = $hintWidget->tag($attributes['tag']);
+            unset($attributes['tag']);
         }
 
         if ($new->hintClass !== '') {
             Html::addCssClass($attributes, $new->hintClass);
         }
 
-        $new->parts['{hint}'] = Hint::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
+        $new->parts['{hint}'] = $hintWidget
+            ->config($new->getFormModel(), $new->attribute, $attributes)
+            ->hint($hint)
+            ->encode($encode)
+            ->render();
 
         return $new;
     }

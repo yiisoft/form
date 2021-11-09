@@ -339,6 +339,6 @@ final class SelectTest extends TestCase
             '1' => ['label' => 'Russia'],
             '2' => ['label' => 'Chile'],
         ];
-        $this->formModel = new TypeForm();
+        $this->createFormModel(TypeForm::class);
     }
 }

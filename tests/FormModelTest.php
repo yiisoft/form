@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
@@ -168,7 +169,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->getErrorSummary(false)
+            HtmlFormErrors::getErrorSummaryFirstErrors($form)
         );
 
         $expected = [
@@ -178,7 +179,7 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             $expected,
-            $form->getErrorSummary(true)
+            HtmlFormErrors::getErrorSummary($form)
         );
     }
 
@@ -279,10 +280,10 @@ final class FormModelTest extends TestCase
         $form = new LoginForm();
         $errorMessage = 'Invalid password.';
 
-        $form->addError('password', $errorMessage);
+        $form->getFormErrors()->addError('password', $errorMessage);
 
-        $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->getFirstError('password'));
+        $this->assertTrue(HtmlFormErrors::hasErrors($form));
+        $this->assertEquals($errorMessage, HtmlFormErrors::getFirstError($form, 'password'));
     }
 
     public function testAddAndGetErrorForNonExistingAttribute(): void
@@ -290,10 +291,10 @@ final class FormModelTest extends TestCase
         $form = new LoginForm();
         $errorMessage = 'Invalid username and/or password.';
 
-        $form->addError('form', $errorMessage);
+        $form->getFormErrors()->addError('form', $errorMessage);
 
-        $this->assertTrue($form->hasErrors());
-        $this->assertEquals($errorMessage, $form->getFirstError('form'));
+        $this->assertTrue(HtmlFormErrors::hasErrors($form));
+        $this->assertEquals($errorMessage, $form->getFormErrors()->getFirstError('form'));
     }
 
     public function testValidatorRules(): void
@@ -306,28 +307,28 @@ final class FormModelTest extends TestCase
 
         $this->assertEquals(
             ['Value cannot be blank.'],
-            $form->getError('login')
+            HtmlFormErrors::getErrors($form, 'login')
         );
 
         $form->login('x');
         $validator->validate($form);
         $this->assertEquals(
             ['Is too short.'],
-            $form->getError('login')
+            HtmlFormErrors::getErrors($form, 'login')
         );
 
         $form->login(str_repeat('x', 60));
         $validator->validate($form);
         $this->assertEquals(
             'Is too long.',
-            $form->getFirstError('login')
+            HtmlFormErrors::getFirstError($form, 'login')
         );
 
         $form->login('admin@.com');
         $validator->validate($form);
         $this->assertEquals(
             'This value is not a valid email address.',
-            $form->getFirstError('login')
+            HtmlFormErrors::getFirstError($form, 'login')
         );
     }
 
