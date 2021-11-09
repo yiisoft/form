@@ -20,6 +20,7 @@ final class Label extends Widget
 {
     private array $attributes = [];
     private string $attribute = '';
+    private ?string $for = '';
     private bool $encode = true;
     private FormModelInterface $formModel;
     private ?string $label = '';
@@ -64,16 +65,17 @@ final class Label extends Widget
      * The first element in the document with an id matching the value of the for attribute is the labeled control for
      * this label element, if it is a labelable element.
      *
-     * @param string $value
+     * @param string|null $value The id of a labelable form-related element in the same document as the tag label
+     * element. If null, the attribute will be removed.
      *
      * @return static
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/label.html#label.attrs.for
      */
-    public function for(string $value): self
+    public function for(?string $value): self
     {
         $new = clone $this;
-        $new->attributes['for'] = $value;
+        $new->for = $value;
         return $new;
     }
 
@@ -106,15 +108,16 @@ final class Label extends Widget
             $new->label = HtmlForm::getAttributeLabel($new->formModel, $new->attribute);
         }
 
-        /** @var string */
-        $for = $new->attributes['for'] ?? HtmlForm::getInputId($new->formModel, $new->attribute);
+        if ($new->for === '') {
+            $new->for = HtmlForm::getInputId($new->formModel, $new->attribute);
+        }
 
         return $new->label !== null
             ? LabelTag::tag()
                 ->attributes($new->attributes)
                 ->content($new->label)
                 ->encode($new->encode)
-                ->forId($for)
+                ->forId($new->for)
                 ->render()
             : '';
     }

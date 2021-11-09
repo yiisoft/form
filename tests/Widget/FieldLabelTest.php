@@ -84,6 +84,20 @@ final class FieldLabelTest extends TestCase
         );
     }
 
+    public function testWithoutFor(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label>Email</label>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'email')->label(['for' => null])->render(),
+        );
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

@@ -461,9 +461,13 @@ final class Field extends Widget
             Html::addCssClass($attributes, $new->labelClass);
         }
 
+        /** @var string|null */
+        $for = ArrayHelper::remove($attributes, 'for', '');
+
         $new->parts['{label}'] = Label::widget()
             ->config($new->getFormModel(), $new->attribute, $attributes)
             ->encode($encode)
+            ->for($for)
             ->label($label)
             ->render();
 

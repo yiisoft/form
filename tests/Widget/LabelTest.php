@@ -57,6 +57,14 @@ final class LabelTest extends TestCase
         );
     }
 
+    public function testWithoutFor(): void
+    {
+        $this->assertSame(
+            '<label>String</label>',
+            Label::widget()->config($this->formModel, 'string')->for(null)->render(),
+        );
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
