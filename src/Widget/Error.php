@@ -26,7 +26,7 @@ final class Error extends Widget
     private array $tagAttributes = [];
 
     /**
-     * Specify a form, its attribute and a list HTML attributes for the error generated.
+     * Specify a form, its attribute.
      *
      * @param FormModelInterface $formModel Form instance.
      * @param string $attribute Form model's property name this widget is rendered for.
