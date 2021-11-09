@@ -7,12 +7,15 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Url;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class UrlTest extends TestCase
 {
+    use TestTrait;
+
     private TypeForm $formModel;
 
     public function testImmutability(): void
@@ -104,6 +107,6 @@ final class UrlTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new TypeForm();
+        $this->createFormModel(TypeForm::class);
     }
 }

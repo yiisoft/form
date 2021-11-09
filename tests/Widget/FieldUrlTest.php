@@ -149,6 +149,6 @@ final class FieldUrlTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new TypeForm();
+        $this->createFormModel(TypeForm::class);
     }
 }

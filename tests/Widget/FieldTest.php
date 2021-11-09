@@ -617,7 +617,7 @@ final class FieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new AttributesValidatorForm();
+        $this->createFormModel(AttributesValidatorForm::class);
     }
 
     private function createValidatorMock(): ValidatorInterface

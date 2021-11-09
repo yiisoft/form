@@ -7,12 +7,15 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Radio;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class RadioTest extends TestCase
 {
+    use TestTrait;
+
     private TypeForm $formModel;
 
     public function testEnClosedByLabelWithFalse(): void
@@ -138,6 +141,6 @@ final class RadioTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new TypeForm();
+        $this->createFormModel(TypeForm::class);
     }
 }

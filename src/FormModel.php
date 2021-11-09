@@ -16,10 +16,8 @@ use Yiisoft\Validator\ResultSet;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
-use function array_merge;
 use function explode;
 use function is_subclass_of;
-use function reset;
 use function strpos;
 
 /**
@@ -30,12 +28,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $attributes;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
+    private string $formErrorsClass = FormErrors::class;
+    private FormErrorsInterface $formErrors;
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
+        $this->formErrors = $this->createFormErrors();
     }
 
     public function getAttributeHint(string $attribute): string
@@ -103,6 +104,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
+     * @return FormErrorsInterface Get FormErrors object.
+     */
+    public function getFormErrors(): FormErrorsInterface
+    {
+        return $this->formErrors;
+    }
+
+    /**
      * @return string Returns classname without a namespace part or empty string when class is anonymous
      */
     public function getFormName(): string
@@ -130,59 +139,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getError(string $attribute): array
     {
         return $this->attributesErrors[$attribute] ?? [];
-    }
-
-    /**
-     * @return string[][]
-     *
-     * @psalm-return array<string, array<string>>
-     */
-    public function getErrors(): array
-    {
-        return $this->attributesErrors;
-    }
-
-    public function getErrorSummary(bool $showAllErrors): array
-    {
-        $lines = [];
-        $errors = $showAllErrors ? $this->getErrors() : [$this->getFirstErrors()];
-
-        foreach ($errors as $error) {
-            $lines = array_merge($lines, $error);
-        }
-
-        return $lines;
-    }
-
-    public function getFirstError(string $attribute): string
-    {
-        if (empty($this->attributesErrors[$attribute])) {
-            return '';
-        }
-
-        return reset($this->attributesErrors[$attribute]);
-    }
-
-    public function getFirstErrors(): array
-    {
-        if (empty($this->attributesErrors)) {
-            return [];
-        }
-
-        $errors = [];
-
-        foreach ($this->attributesErrors as $name => $es) {
-            if (!empty($es)) {
-                $errors[$name] = reset($es);
-            }
-        }
-
-        return $errors;
-    }
-
-    public function hasErrors(?string $attribute = null): bool
-    {
-        return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
     /**
@@ -245,9 +201,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
     }
 
+    public function setFormErrorsClass(string $formErrorsClass): void
+    {
+        $this->formErrorsClass = $formErrorsClass;
+    }
+
     public function processValidationResult(ResultSet $resultSet): void
     {
-        $this->clearErrors();
+        $this->formErrors->clear();
         /** @var array<array-key, Resultset> $resultSet */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
@@ -256,11 +217,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             }
         }
         $this->validated = true;
-    }
-
-    public function addError(string $attribute, string $error): void
-    {
-        $this->attributesErrors[$attribute][] = $error;
     }
 
     public function getRules(): array
@@ -301,7 +257,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this->attributesErrors[$attribute][] = $error;
+                $this->formErrors->addError($attribute, $error);
             }
         }
     }
@@ -310,6 +266,18 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $this->attributesErrors = [];
         $this->validated = false;
+    }
+
+    private function createFormErrors(): FormErrorsInterface
+    {
+        $formErrorsClass = $this->formErrorsClass;
+        $formErrorsClass = new $formErrorsClass();
+
+        if (!$formErrorsClass instanceof FormErrorsInterface) {
+            throw new InvalidArgumentException('Form errors class must implement ' . FormErrorsInterface::class);
+        }
+
+        return $formErrorsClass;
     }
 
     private function getInflector(): Inflector

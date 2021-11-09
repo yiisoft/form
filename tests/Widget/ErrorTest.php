@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Error;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -14,6 +15,8 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorTest extends TestCase
 {
+    use TestTrait;
+
     private PersonalForm $formModel;
 
     public function testImmutability(): void
@@ -74,7 +77,7 @@ final class ErrorTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new PersonalForm();
+        $this->createFormModel(PersonalForm::class);
         $this->formModel->load(['PersonalForm' => ['name' => '']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);

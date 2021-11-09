@@ -88,19 +88,6 @@ final class HtmlForm
     }
 
     /**
-     * Return the attribute first error message.
-     *
-     * @param FormModelInterface $formModel the form object.
-     * @param string $attribute the attribute name or expression.
-     *
-     * @return string
-     */
-    public static function getFirstError(FormModelInterface $formModel, string $attribute): string
-    {
-        return $formModel->getFirstError(self::getAttributeName($formModel, $attribute));
-    }
-
-    /**
      * Generates an appropriate input ID for the specified attribute name or expression.
      *
      * This method converts the result {@see getInputName()} into a valid input ID.

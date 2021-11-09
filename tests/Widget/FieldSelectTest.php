@@ -364,7 +364,7 @@ final class FieldSelectTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new TypeForm();
+        $this->createFormModel(TypeForm::class);
         $this->cities = [
             '1' => 'Moscu',
             '2' => 'San Petersburgo',
