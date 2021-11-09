@@ -1,6 +1,6 @@
 # Hint widget
 
-Display hint for field form.
+Displays hint for a field form.
 
 ## Usage
 
@@ -69,7 +69,7 @@ That would generate the following code:
 
 ### Custom hint text
 
-To configure a custom hint text, we simply change it in the widget, taking the previous example the code would be the following: 
+You can use custom hint text when calling the widget: 
 
 ```php
 <?php
