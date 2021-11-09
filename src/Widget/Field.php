@@ -478,10 +478,11 @@ final class Field extends Widget
         $for = ArrayHelper::remove($attributes, 'for', '');
 
         $new->parts['{label}'] = Label::widget()
-            ->config($new->getFormModel(), $new->attribute, $attributes)
+            ->config($new->getFormModel(), $new->attribute)
             ->encode($encode)
             ->for($for)
             ->label($label)
+            ->tagAttributes($attributes)
             ->render();
 
         return $new;

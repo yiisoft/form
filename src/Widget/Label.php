@@ -18,30 +18,28 @@ use Yiisoft\Widget\Widget;
  */
 final class Label extends Widget
 {
-    private array $attributes = [];
     private string $attribute = '';
     private ?string $for = '';
     private bool $encode = true;
     private FormModelInterface $formModel;
     private ?string $label = '';
+    private array $tagAttributes = [];
 
     /**
-     * Specify a form, its attribute and a list HTML attributes for the label generated.
+     * Specify a form, its attribute.
      *
-     * @param FormModelInterface $formModel Form.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $attributes The HTML attributes for the widget container tag.
+     * @param FormModelInterface $formModel Form instance.
+     * @param string $attribute Form model's property name this widget is rendered for.
      *
      * @return static
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
+    public function config(FormModelInterface $formModel, string $attribute): self
     {
         $new = clone $this;
         $new->formModel = $formModel;
         $new->attribute = $attribute;
-        $new->attributes = $attributes;
         return $new;
     }
 
@@ -98,6 +96,22 @@ final class Label extends Widget
     }
 
     /**
+     * HTML attributes for the widget container tag.
+     *
+     * @param array $value
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function tagAttributes(array $value): self
+    {
+        $new = clone $this;
+        $new->tagAttributes = $value;
+        return $new;
+    }
+
+    /**
      * @return string the generated label tag.
      */
     protected function run(): string
@@ -114,7 +128,7 @@ final class Label extends Widget
 
         return $new->label !== null
             ? LabelTag::tag()
-                ->attributes($new->attributes)
+                ->attributes($new->tagAttributes)
                 ->content($new->label)
                 ->encode($new->encode)
                 ->forId($new->for)
