@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget\Attribute;
 
 use InvalidArgumentException;
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 
@@ -13,7 +14,7 @@ trait ModelAttributes
     private array $attributes = [];
     private string $attribute = '';
     private string $charset = 'UTF-8';
-    private string $id = '';
+    private ?string $id = '';
     private ?FormModelInterface $formModel = null;
 
     /**
@@ -53,13 +54,13 @@ trait ModelAttributes
     /**
      * Set the ID of the widget.
      *
-     * @param string $value
+     * @param string|null $value The ID of the widget. `null` means that the attribute will be removed.
      *
      * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
-    public function id(string $value): self
+    public function id(?string $value): self
     {
         $new = clone $this;
         $new->id = $value;
@@ -76,17 +77,15 @@ trait ModelAttributes
     }
 
     /**
-     * Return the input id.
+     * Generates a unique ID for the attribute.
      *
-     * @return string
+     * @return string|null
      */
-    protected function getId(): string
+    protected function getId(): ?string
     {
-        $new = clone $this;
-
         /** @var string */
-        $id = $new->attributes['id'] ?? $new->id;
+        $id = ArrayHelper::remove($this->attributes, 'id', $this->id);
 
-        return $id === '' ? HtmlForm::getInputId($new->getFormModel(), $new->attribute, $new->charset) : $id;
+        return $id === '' ? HtmlForm::getInputId($this->getFormModel(), $this->attribute, $this->charset) : $id;
     }
 }

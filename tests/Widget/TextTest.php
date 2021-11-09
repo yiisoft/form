@@ -136,6 +136,14 @@ final class TextTest extends TestCase
         Text::widget()->config($this->formModel, 'array')->render();
     }
 
+    public function testWithoutId(): void
+    {
+        $this->assertSame(
+            '<input type="text" name="TypeForm[string]" size="10">',
+            Text::widget()->config($this->formModel, 'string', ['id' => null])->size(10)->render(),
+        );
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

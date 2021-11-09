@@ -228,12 +228,10 @@ trait FieldAttributes
      */
     private function getId(): string
     {
-        $new = clone $this;
-
         /** @var string */
-        $id = $new->attributes['id'] ?? $new->id;
+        $id = $this->attributes['id'] ?? $this->id;
 
-        return $id === '' ? HtmlForm::getInputId($new->getFormModel(), $new->attribute) : $id;
+        return $id === '' ? HtmlForm::getInputId($this->getFormModel(), $this->attribute) : $id;
     }
 
     private function setInputAttributes(array $attributes): array

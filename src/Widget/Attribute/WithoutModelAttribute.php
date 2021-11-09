@@ -92,6 +92,11 @@ trait WithoutModelAttribute
         return $new;
     }
 
+    /**
+     * Generates a unique ID for the attribute.
+     *
+     * @return string
+     */
     protected function getId(): string
     {
         return $this->id = $this->id !== '' ? $this->id : Html::generateId($this->autoIdPrefix);
