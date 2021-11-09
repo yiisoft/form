@@ -169,7 +169,7 @@ final class FieldErrorTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new PersonalForm();
+        $this->createFormModel(PersonalForm::class);
     }
 
     private function createValidatorMock(): ValidatorInterface

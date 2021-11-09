@@ -25,6 +25,11 @@ trait TestTrait
         $this->assertEquals($expected, $actual, $message);
     }
 
+    public function createFormModel(string $class): void
+    {
+        $this->formModel = new $class();
+    }
+
     /**
      * Invokes a inaccessible method.
      *

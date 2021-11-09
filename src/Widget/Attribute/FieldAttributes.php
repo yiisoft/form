@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Widget\Attribute;
 use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\MatchRegularExpression;
@@ -227,12 +228,10 @@ trait FieldAttributes
      */
     private function getId(): string
     {
-        $new = clone $this;
-
         /** @var string */
-        $id = $new->attributes['id'] ?? $new->id;
+        $id = $this->attributes['id'] ?? $this->id;
 
-        return $id === '' ? HtmlForm::getInputId($new->getFormModel(), $new->attribute) : $id;
+        return $id === '' ? HtmlForm::getInputId($this->getFormModel(), $this->attribute) : $id;
     }
 
     private function setInputAttributes(array $attributes): array
@@ -253,7 +252,7 @@ trait FieldAttributes
             Html::addCssClass($attributes, $new->inputClass);
         }
 
-        if ($new->errorClass !== '' && $new->getFormModel()->hasErrors($attributeName)) {
+        if ($new->errorClass !== '' && HtmlFormErrors::hasErrors($new->getFormModel(), $attributeName)) {
             Html::addCssClass($attributes, $new->invalidClass);
         } elseif ($new->validClass !== '' && $new->getFormModel()->isValidated()) {
             Html::addCssClass($attributes, $new->validClass);

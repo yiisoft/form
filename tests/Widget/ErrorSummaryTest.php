@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -27,20 +28,29 @@ final class ErrorSummaryTest extends TestCase
                 'jack@example.com',
                 'A258*fgh',
                 [],
+                '',
+                '',
+                true,
                 '<div style="display:none"><p>Please fix the following errors:</p><ul></ul></div>',
             ],
             [
                 'Jack Ryan',
                 'jack@example.com',
                 'A258*fgh',
-                ['header' => 'Custom header', 'footer' => 'Custom footer', 'style' => 'color: red'],
+                ['style' => 'color: red'],
+                'Custom header',
+                'Custom footer',
+                false,
                 '<div style="color: red; display:none">Custom header<ul></ul>Custom footer</div>',
             ],
             [
                 'jac',
                 'jack@.com',
                 'A258*f',
-                ['showAllErrors' => true],
+                [],
+                '',
+                '',
+                true,
                 '<div><p>Please fix the following errors:</p><ul><li>Is too short.</li>' . "\n" .
                 '<li>This value is not a valid email address.</li>' . "\n" .
                 '<li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li></ul></div>',
@@ -52,7 +62,12 @@ final class ErrorSummaryTest extends TestCase
     {
         $errorSummary = ErrorSummary::widget();
         $this->assertNotSame($errorSummary, $errorSummary->attributes([]));
+        $this->assertNotSame($errorSummary, $errorSummary->encode(false));
+        $this->assertNotSame($errorSummary, $errorSummary->footer(''));
+        $this->assertNotSame($errorSummary, $errorSummary->header(''));
         $this->assertNotSame($errorSummary, $errorSummary->model($this->formModel));
+        $this->assertNotSame($errorSummary, $errorSummary->showAllErrors(false));
+        $this->assertNotSame($errorSummary, $errorSummary->tag('div'));
     }
 
     /**
@@ -62,6 +77,9 @@ final class ErrorSummaryTest extends TestCase
      * @param string $email
      * @param string $password
      * @param array $attributes
+     * @param string $header
+     * @param string $footer
+     * @param string $showAllErrors
      * @param string $expected
      */
     public function testErrorSummary(
@@ -69,6 +87,9 @@ final class ErrorSummaryTest extends TestCase
         string $email,
         string $password,
         array $attributes,
+        string $header,
+        string $footer,
+        bool $showAllErrors,
         string $expected
     ): void {
         $record = [
@@ -79,22 +100,36 @@ final class ErrorSummaryTest extends TestCase
             ],
         ];
 
-        $data = new PersonalForm();
-        $data->load($record);
+        $this->formModel->load($record);
 
         $validator = $this->createValidatorMock();
-        $validator->validate($data);
+        $validator->validate($this->formModel);
+
+        $errorSummary = ErrorSummary::widget()
+            ->attributes($attributes)
+            ->model($this->formModel)
+            ->footer($footer)
+            ->showAllErrors($showAllErrors);
+        $errorSummary = $header !== '' ? $errorSummary->header($header) : $errorSummary;
+
         $this->assertEqualsWithoutLE(
             $expected,
-            ErrorSummary::widget()->attributes($attributes)->model($data)->render(),
+            $errorSummary->render(),
         );
+    }
+
+    public function testTagException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        ErrorSummary::widget()->tag('')->render();
     }
 
     protected function setUp(): void
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->formModel = new PersonalForm();
+        $this->createFormModel(PersonalForm::class);
     }
 
     private function createValidatorMock(): ValidatorInterface

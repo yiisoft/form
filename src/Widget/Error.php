@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Form\Helper\HtmlFormErrors;
+use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
@@ -128,7 +129,7 @@ final class Error extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $error = HtmlForm::getFirstError($new->formModel, $new->attribute);
+        $error = HtmlFormErrors::getFirstError($new->formModel, $new->attribute);
 
         if ($error !== '' && $new->message !== '') {
             $error = $new->message;
