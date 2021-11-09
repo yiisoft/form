@@ -197,6 +197,21 @@ final class FieldTextTest extends TestCase
         Field::widget()->config($this->formModel, 'array')->render();
     }
 
+    public function testWithoutId(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="text" name="TypeForm[string]" placeholder="Typed your text string.">
+        <div>Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'string')->text(['id' => null])->render(),
+        );
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
