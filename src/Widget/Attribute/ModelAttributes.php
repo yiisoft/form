@@ -77,11 +77,11 @@ trait ModelAttributes
     }
 
     /**
-     * Return the input id.
+     * Generates a unique ID for the attribute.
      *
-     * @return string
+     * @return string|null
      */
-    protected function getId(): ?string
+    protected function generateId(): ?string
     {
         $new = clone $this;
 

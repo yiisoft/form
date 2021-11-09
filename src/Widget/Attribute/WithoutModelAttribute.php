@@ -92,13 +92,18 @@ trait WithoutModelAttribute
         return $new;
     }
 
-    protected function getId(): string
+    /**
+     * Generates a unique ID for the attribute.
+     *
+     * @return string
+     */
+    protected function generateId(): string
     {
         return $this->id = $this->id !== '' ? $this->id : Html::generateId($this->autoIdPrefix);
     }
 
     protected function getName(): string
     {
-        return $this->name = $this->name !== '' ? $this->name : $this->getId();
+        return $this->name = $this->name !== '' ? $this->name : $this->generateId();
     }
 }

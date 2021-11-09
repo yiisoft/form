@@ -155,7 +155,7 @@ final class Text extends Widget
 
         return Input::text()
             ->attributes($new->attributes)
-            ->id($new->getId())
+            ->id($new->generateId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value === '' ? null : $value)
             ->render();

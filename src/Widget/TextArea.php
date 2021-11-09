@@ -175,7 +175,7 @@ final class TextArea extends Widget
 
         return TextAreaTag::tag()
             ->attributes($new->attributes)
-            ->id($new->getId())
+            ->id($new->generateId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value)
             ->render();

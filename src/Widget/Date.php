@@ -43,7 +43,7 @@ final class Date extends Widget
         return Input::tag()
             ->type('date')
             ->attributes($new->attributes)
-            ->id($new->getId())
+            ->id($new->generateId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value === '' ? null : $value)
             ->render();

@@ -36,6 +36,6 @@ final class Hidden extends Widget
             throw new InvalidArgumentException('Hidden widget requires a string value.');
         }
 
-        return Input::hidden($new->getId(), $value)->attributes($new->attributes)->render();
+        return Input::hidden($new->generateId(), $value)->attributes($new->attributes)->render();
     }
 }

@@ -115,7 +115,7 @@ final class File extends Widget
         return $hiddenInput .
             Input::file(Html::getArrayableName($name))
                 ->attributes($new->attributes)
-                ->id($new->getId())
+                ->id($new->generateId())
                 ->value(null)
                 ->render();
     }

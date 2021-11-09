@@ -35,6 +35,6 @@ final class SubmitButton extends Widget
             $submit = $submit->value($new->value);
         }
 
-        return $submit->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
+        return $submit->attributes($new->attributes)->id($new->generateId())->name($new->getName())->render();
     }
 }

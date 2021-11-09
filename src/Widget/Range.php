@@ -119,7 +119,7 @@ final class Range extends Widget
             Input::tag()
                 ->type('range')
                 ->attributes($new->attributes)
-                ->id($new->getId())
+                ->id($new->generateId())
                 ->name($name)
                 ->value($value)
                 ->render() . PHP_EOL .

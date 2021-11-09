@@ -225,7 +225,7 @@ trait FieldAttributes
      *
      * @return string
      */
-    private function getId(): string
+    private function generateId(): string
     {
         $new = clone $this;
 
@@ -246,7 +246,7 @@ trait FieldAttributes
         $attributeName = HtmlForm::getAttributeName($new->getFormModel(), $new->attribute);
 
         if ($new->ariaDescribedBy === true) {
-            $attributes['aria-describedby'] = $new->getId();
+            $attributes['aria-describedby'] = $new->generateId();
         }
 
         if ($new->inputClass !== '') {

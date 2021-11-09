@@ -98,6 +98,6 @@ final class Image extends Widget
             $new->autoIdPrefix = 'image-';
         }
 
-        return $img->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
+        return $img->attributes($new->attributes)->id($new->generateId())->name($new->getName())->render();
     }
 }

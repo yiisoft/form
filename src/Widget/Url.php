@@ -129,7 +129,7 @@ final class Url extends Widget
         return Input::tag()
             ->type('url')
             ->attributes($new->attributes)
-            ->id($new->getId())
+            ->id($new->generateId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value === '' ? null : $value)
             ->render();

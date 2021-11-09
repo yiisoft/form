@@ -43,7 +43,7 @@ final class DateTimeLocal extends Widget
         return Input::tag()
             ->type('datetime-local')
             ->attributes($new->attributes)
-            ->id($new->getId())
+            ->id($new->generateId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->value($value === '' ? null : $value)
             ->render();

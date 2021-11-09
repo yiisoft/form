@@ -291,7 +291,7 @@ final class Select extends Widget
 
         return $select
             ->attributes($new->attributes)
-            ->id($new->getId())
+            ->id($new->generateId())
             ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
             ->promptOption($promptOption)
             ->unselectValue($new->unselectValue)
