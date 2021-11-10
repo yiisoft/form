@@ -229,7 +229,7 @@ trait FieldAttributes
     private function getSchemePattern(string $scheme): string
     {
         $result = '';
-        for ($i = 0, $length = mb_strlen($scheme); $i < $length; $i++){
+        for ($i = 0, $length = mb_strlen($scheme); $i < $length; $i++) {
             $result .= '[' . mb_strtolower($scheme[$i]) . mb_strtoupper($scheme[$i]) . ']';
         }
         return $result;
