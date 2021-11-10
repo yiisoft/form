@@ -26,11 +26,25 @@ final class FieldLabelTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'email')->label(['label' => false])->render(),
+            Field::widget()->config($this->formModel, 'email')->label([], null)->render(),
         );
     }
 
-    public function testLabelCustom(): void
+    public function testFor(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="for-id">Email</label>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'email')->label(['for' => 'for-id'])->render(),
+        );
+    }
+
+    public function testLabel(): void
     {
         $expected = <<<'HTML'
         <div>
@@ -40,7 +54,7 @@ final class FieldLabelTest extends TestCase
         HTML;
         $html = Field::widget()
             ->config($this->formModel, 'email')
-            ->label(['class' => 'test-class', 'label' => 'Email:'])
+            ->label(['class' => 'test-class'], 'Email:')
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -54,6 +68,34 @@ final class FieldLabelTest extends TestCase
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->config($this->formModel, 'email')->render());
+    }
+
+    public function testWithoutEncode(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-email">My&nbsp;Field</label>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'email')->label([], 'My&nbsp;Field', false)->render(),
+        );
+    }
+
+    public function testWithoutFor(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label>Email</label>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->config($this->formModel, 'email')->label(['for' => null])->render(),
+        );
     }
 
     protected function setUp(): void

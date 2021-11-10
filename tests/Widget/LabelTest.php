@@ -17,17 +17,6 @@ final class LabelTest extends TestCase
 
     private TypeForm $formModel;
 
-    /**
-     * @link https://github.com/yiisoft/form/issues/85
-     */
-    public function testEncodeFalse(): void
-    {
-        $this->assertSame(
-            '<label for="typeform-string">My&nbsp;Field</label>',
-            Label::widget()->config($this->formModel, 'string', ['encode' => false])->label('My&nbsp;Field')->render(),
-        );
-    }
-
     public function testFor(): void
     {
         $this->assertSame(
@@ -39,6 +28,7 @@ final class LabelTest extends TestCase
     public function testImmutability(): void
     {
         $label = Label::widget();
+        $this->assertNotSame($label, $label->encode(false));
         $this->assertNotSame($label, $label->for(''));
         $this->assertNotSame($label, $label->label(''));
     }
@@ -56,6 +46,25 @@ final class LabelTest extends TestCase
         $this->assertSame(
             '<label for="typeform-string">String</label>',
             Label::widget()->config($this->formModel, 'string')->render(),
+        );
+    }
+
+    /**
+     * @link https://github.com/yiisoft/form/issues/85
+     */
+    public function testWithoutEncode(): void
+    {
+        $this->assertSame(
+            '<label for="typeform-string">My&nbsp;Field</label>',
+            Label::widget()->config($this->formModel, 'string')->encode(false)->label('My&nbsp;Field')->render(),
+        );
+    }
+
+    public function testWithoutFor(): void
+    {
+        $this->assertSame(
+            '<label>String</label>',
+            Label::widget()->config($this->formModel, 'string')->for(null)->render(),
         );
     }
 

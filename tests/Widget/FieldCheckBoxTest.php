@@ -29,7 +29,7 @@ final class FieldCheckBoxTest extends TestCase
         $html = Field::widget()
             ->config($this->formModel, 'bool')
             ->checkbox([], false)
-            ->label(['label' => false])
+            ->label([], null)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -101,7 +101,7 @@ final class FieldCheckBoxTest extends TestCase
         $html = Field::widget()
             ->config($this->formModel, 'bool')
             ->checkbox([], false)
-            ->label(['label' => 'test-text-label'])
+            ->label([], 'test-text-label')
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
 

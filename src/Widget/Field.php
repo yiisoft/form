@@ -461,10 +461,12 @@ final class Field extends Widget
      * be generated via {@see \Yiisoft\Form\FormModel::getAttributeLabel()}. if `null` it will not be rendered.
      * - `labelAttribute`: array, the HTML attributes for the label tag. This is only used when the `label` attribute is
      * specified.
+     * @param string|null $label the label to be generated.
+     * @param bool $encode whether to encode the label.
      *
      * @return static the field object itself.
      */
-    public function label(array $attributes = []): self
+    public function label(array $attributes = [], ?string $label = '', bool $encode = true): self
     {
         $new = clone $this;
 
@@ -472,7 +474,16 @@ final class Field extends Widget
             Html::addCssClass($attributes, $new->labelClass);
         }
 
-        $new->parts['{label}'] = Label::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
+        /** @var string|null */
+        $for = ArrayHelper::remove($attributes, 'for', '');
+
+        $new->parts['{label}'] = Label::widget()
+            ->config($new->getFormModel(), $new->attribute)
+            ->encode($encode)
+            ->for($for)
+            ->label($label)
+            ->tagAttributes($attributes)
+            ->render();
 
         return $new;
     }

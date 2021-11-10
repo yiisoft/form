@@ -43,6 +43,7 @@ The following documentation describes how to use widgets with PHP:
 - [ErrorSummary](docs/error-summary.md)
 - [File](docs/file.md)
 - [Hint](docs/hint.md)
+- [Label](docs/label.md)
 - [Number](docs/number.md)
 - [Password](docs/password.md)
 - [Radio](docs/radio.md)
