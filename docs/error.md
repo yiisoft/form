@@ -145,21 +145,9 @@ That would generate the following code after validation:
 
 Method | Description | Default
 -------|-------------|---------
+`config(FormModelInterface $formModel, string $attribute)` | Configure the widget. |
 `encode(bool $value)` | Whether to encode the error message. | `true`
 `message(string $value)` | Error message to display. | `''`
 `messageCallback(array $value)` | Callback that will be called to obtain an error message. | `[]`
 `tag(string $value)` | Tag to use to display the error. | `'div'`
-
-### `Common` methods:
-
-Method | Description | Default
--------|-------------|---------
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | `''`
-`id(string $value)` | Sets the id attribute | `''`
-`readonly()` | Sets the readonly attribute | `false`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`tagAttributes(array $value)` | Attributes to use to display the error. | `[]`
