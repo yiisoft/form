@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
@@ -21,7 +21,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Range extends Widget
 {
-    use CommonAttributes;
+    use InputAttributes;
     use ModelAttributes;
 
     private array $outputAttributes = [];

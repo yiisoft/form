@@ -11,8 +11,6 @@ trait WithoutModelAttribute
     private string $autoIdPrefix = '';
     private array $attributes = [];
     private string $id = '';
-    private string $name = '';
-    private string $value = '';
 
     /**
      * The prefix to the automatically generated widget IDs.
@@ -61,38 +59,6 @@ trait WithoutModelAttribute
     }
 
     /**
-     * The name part of the name/value pair associated with this element for the purposes of form submission.
-     *
-     * @param string The name of the widget.
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.reset.html#input.reset.attrs.name
-     */
-    public function name(string $value): self
-    {
-        $new = clone $this;
-        $new->name = $value;
-        return $new;
-    }
-
-    /**
-     * Specifies a value for the input element.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.reset.html#input.reset.attrs.value
-     */
-    public function value(string $value): self
-    {
-        $new = clone $this;
-        $new->value = $value;
-        return $new;
-    }
-
-    /**
      * Generates a unique ID for the attribute.
      *
      * @return string
@@ -104,6 +70,12 @@ trait WithoutModelAttribute
 
     protected function getName(): string
     {
-        return $this->name = $this->name !== '' ? $this->name : $this->getId();
+        $name = $this->getId();
+
+        if (isset($this->attributes['name']) && is_string($this->attributes['name'])) {
+            $name = $this->attributes['name'];
+        }
+
+        return $name;
     }
 }

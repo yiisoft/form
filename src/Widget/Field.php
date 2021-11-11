@@ -756,15 +756,7 @@ final class Field extends Widget
             $reset = $reset->id($attributes['id']);
         }
 
-        if (isset($attributes['name']) && is_string($attributes['name'])) {
-            $reset = $reset->name($attributes['name']);
-        }
-
-        if (isset($attributes['value']) && is_string($attributes['value'])) {
-            $reset = $reset->value($attributes['value']);
-        }
-
-        unset($attributes['autoIdPrefix'], $attributes['id'], $attributes['name'], $attributes['value']);
+        unset($attributes['autoIdPrefix'], $attributes['id']);
 
         $new->parts['{input}'] = $reset->attributes($attributes)->render();
 
@@ -870,15 +862,7 @@ final class Field extends Widget
             $submit = $submit->id($attributes['id']);
         }
 
-        if (isset($attributes['name']) && is_string($attributes['name'])) {
-            $submit = $submit->name($attributes['name']);
-        }
-
-        if (isset($attributes['value']) && is_string($attributes['value'])) {
-            $submit = $submit->value($attributes['value']);
-        }
-
-        unset($attributes['autoIdPrefix'], $attributes['id'], $attributes['name'], $attributes['value']);
+        unset($attributes['autoIdPrefix'], $attributes['id']);
 
         $new->parts['{input}'] = $submit->attributes($attributes)->render();
 

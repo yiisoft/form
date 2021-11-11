@@ -18,7 +18,6 @@ final class WithoutModelAttributeWidget extends Widget
 
         $new->attributes['id'] = $new->getId();
         $new->attributes['name'] = $new->getName();
-        $new->attributes['value'] = $new->value;
 
         return '<test' . Html::renderTagAttributes($new->attributes) . '>';
     }

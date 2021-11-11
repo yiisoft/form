@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-trait CommonAttributes
+use Stringable;
+
+trait InputAttributes
 {
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -63,6 +65,22 @@ trait CommonAttributes
     }
 
     /**
+     * The name part of the name/value pair associated with this element for the purposes of form submission.
+     *
+     * @param string The name of the widget.
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-formelements-name
+     */
+    public function name(string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['name'] = $value;
+        return $new;
+    }
+
+    /**
      * If it is required to fill in a value in order to submit the form.
      *
      * @param bool $value
@@ -90,6 +108,22 @@ trait CommonAttributes
     {
         $new = clone $this;
         $new->attributes['readonly'] = true;
+        return $new;
+    }
+
+    /**
+     * The value input tag.
+     *
+     * @param scalar|Stringable|null $value
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-input-value
+     */
+    public function value($value): self
+    {
+        $new = clone $this;
+        $new->attributes['value'] = $value;
         return $new;
     }
 

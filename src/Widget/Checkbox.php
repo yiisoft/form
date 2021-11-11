@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 use Yiisoft\Widget\Widget;
@@ -21,7 +21,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Checkbox extends Widget
 {
-    use CommonAttributes;
+    use InputAttributes;
     use ModelAttributes;
 
     private bool $enclosedByLabel = true;
@@ -94,22 +94,6 @@ final class Checkbox extends Widget
     {
         $new = clone $this;
         $new->uncheckValue = is_bool($value) ? (int) $value : $value;
-        return $new;
-    }
-
-    /**
-     * The value of the radio button.
-     *
-     * @param scalar|Stringable|null $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox.attrs.value
-     */
-    public function value($value): self
-    {
-        $new = clone $this;
-        $new->attributes['value'] = $value;
         return $new;
     }
 

@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
@@ -20,7 +20,7 @@ use Yiisoft\Widget\Widget;
  */
 final class File extends Widget
 {
-    use CommonAttributes;
+    use InputAttributes;
     use ModelAttributes;
 
     private array $hiddenAttributes = [];

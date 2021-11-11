@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -44,6 +45,13 @@ final class HintTest extends TestCase
     }
 
     public function testTag(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        Hint::widget()->config($this->formModel, 'string')->tag('')->render();
+    }
+
+    public function testTagException(): void
     {
         $this->assertSame(
             '<span>Write your text string.</span>',

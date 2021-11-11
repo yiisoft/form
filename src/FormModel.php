@@ -26,17 +26,14 @@ use function strpos;
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
     private array $attributes;
-    /** @psalm-var array<string, array<array-key, string>> */
-    private array $attributesErrors = [];
-    private string $formErrorsClass = FormErrors::class;
     private FormErrorsInterface $formErrors;
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
-    public function __construct()
+    public function __construct(string $formErrorsClass = FormErrors::class)
     {
         $this->attributes = $this->collectAttributes();
-        $this->formErrors = $this->createFormErrors();
+        $this->formErrors = $this->createFormErrors($formErrorsClass);
     }
 
     public function getAttributeHint(string $attribute): string
@@ -134,14 +131,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return string[]
-     */
-    public function getError(string $attribute): array
-    {
-        return $this->attributesErrors[$attribute] ?? [];
-    }
-
-    /**
      * @param array $data
      * @param string|null $formName
      *
@@ -201,14 +190,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
     }
 
-    public function setFormErrorsClass(string $formErrorsClass): void
-    {
-        $this->formErrorsClass = $formErrorsClass;
-    }
-
     public function processValidationResult(ResultSet $resultSet): void
     {
         $this->formErrors->clear();
+        $this->validated = false;
+
         /** @var array<array-key, Resultset> $resultSet */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
@@ -216,6 +202,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 $this->addErrors([$attribute => $result->getErrors()]);
             }
         }
+
         $this->validated = true;
     }
 
@@ -262,15 +249,8 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
     }
 
-    private function clearErrors(): void
+    private function createFormErrors(string $formErrorsClass): FormErrorsInterface
     {
-        $this->attributesErrors = [];
-        $this->validated = false;
-    }
-
-    private function createFormErrors(): FormErrorsInterface
-    {
-        $formErrorsClass = $this->formErrorsClass;
         $formErrorsClass = new $formErrorsClass();
 
         if (!$formErrorsClass instanceof FormErrorsInterface) {
@@ -373,10 +353,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$attribute, $nested] = explode('.', $attribute, 2);
 
         /** @var object|string */
-        $attributeNested = $this->attributes[$attribute];
+        $attributeNested = $this->attributes[$attribute] ?? '';
 
         if (!is_subclass_of($attributeNested, self::class)) {
-            throw new InvalidArgumentException('Nested attribute can only be of ' . self::class . ' type.');
+            throw new InvalidArgumentException("Attribute \"$attribute\" is not a nested attribute.");
         }
 
         return [$attribute, $nested];

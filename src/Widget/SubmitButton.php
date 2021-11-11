@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\WithoutModelAttribute;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
@@ -16,7 +16,7 @@ use Yiisoft\Widget\Widget;
  */
 final class SubmitButton extends Widget
 {
-    use CommonAttributes;
+    use InputAttributes;
     use WithoutModelAttribute;
 
     /**
@@ -29,10 +29,6 @@ final class SubmitButton extends Widget
 
         if ($new->autoIdPrefix === '') {
             $new->autoIdPrefix = 'submit-';
-        }
-
-        if ($new->value !== '') {
-            $submit = $submit->value($new->value);
         }
 
         return $submit->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();

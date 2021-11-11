@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
@@ -19,7 +19,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Password extends Widget
 {
-    use CommonAttributes;
+    use InputAttributes;
     use ModelAttributes;
 
     /**
@@ -91,24 +91,6 @@ final class Password extends Widget
     {
         $new = clone $this;
         $new->attributes['placeholder'] = $value;
-        return $new;
-    }
-
-    /**
-     * A Boolean attribute which, if present, means this field cannot be edited by the user.
-     * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
-     * property.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.readonly
-     */
-    public function readOnly(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = $value;
         return $new;
     }
 

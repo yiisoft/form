@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\ModelAttributes;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
 use Yiisoft\Widget\Widget;
@@ -18,7 +18,7 @@ use Yiisoft\Widget\Widget;
  */
 final class TextArea extends Widget
 {
-    use CommonAttributes;
+    use InputAttributes;
     use ModelAttributes;
 
     private string $dirname = '';
@@ -93,24 +93,6 @@ final class TextArea extends Widget
     {
         $new = clone $this;
         $new->attributes['placeholder'] = $value;
-        return $new;
-    }
-
-    /**
-     * A Boolean attribute which, if present, means this field cannot be edited by the user.
-     * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
-     * property.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.readonly
-     */
-    public function readonly(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = $value;
         return $new;
     }
 

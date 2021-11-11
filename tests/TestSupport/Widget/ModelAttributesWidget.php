@@ -16,6 +16,8 @@ final class ModelAttributesWidget extends Widget
     {
         $new = clone $this;
 
+        $new->attributes['id'] = $new->getId();
+
         return '<test' . Html::renderTagAttributes($new->attributes) . '>';
     }
 }

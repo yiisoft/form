@@ -18,7 +18,7 @@ final class WithoutModelAttributeTest extends TestCase
     public function testAutoIdPrefix(): void
     {
         $this->assertSame(
-            '<test id="t-1" name="t-1" value>',
+            '<test id="t-1" name="t-1">',
             WithoutModelAttributeWidget::widget()->autoIdPrefix('t-')->render(),
         );
     }
@@ -26,7 +26,7 @@ final class WithoutModelAttributeTest extends TestCase
     public function testAttributes(): void
     {
         $this->assertSame(
-            '<test id="1" name="1" value disabled>',
+            '<test id="1" name="1" disabled>',
             WithoutModelAttributeWidget::widget()->attributes(['disabled' => true])->render(),
         );
     }
@@ -34,16 +34,8 @@ final class WithoutModelAttributeTest extends TestCase
     public function testId(): void
     {
         $this->assertSame(
-            '<test id="test-id" name="test-id" value>',
+            '<test id="test-id" name="test-id">',
             WithoutModelAttributeWidget::widget()->id('test-id')->render(),
-        );
-    }
-
-    public function testValue(): void
-    {
-        $this->assertSame(
-            '<test id="1" name="1" value="test-value">',
-            WithoutModelAttributeWidget::widget()->value('test-value')->render(),
         );
     }
 

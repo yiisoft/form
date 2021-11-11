@@ -121,10 +121,6 @@ final class ErrorSummary extends Widget
      */
     public function tag(string $value): self
     {
-        if ($value === '') {
-            throw new InvalidArgumentException('Tag name cannot be empty.');
-        }
-
         $new = clone $this;
         $new->tag = $value;
         return $new;
@@ -169,6 +165,10 @@ final class ErrorSummary extends Widget
     {
         $new = clone $this;
 
+        if ($new->tag === '') {
+            throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
         /** @var array<string, string> */
         $lines = $new->collectErrors();
 
@@ -179,10 +179,6 @@ final class ErrorSummary extends Widget
                 ? rtrim((string)$new->attributes['style'], ';') . '; display:none' : 'display:none';
         } else {
             $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
-        }
-
-        if ($new->tag === '') {
-            throw new InvalidArgumentException('Tag name cannot be empty.');
         }
 
         return CustomTag::name($new->tag)

@@ -25,6 +25,11 @@ final class ModelAttributesTest extends TestCase
         $this->invokeMethod(ModelAttributesWidget::widget(), 'getFormModel');
     }
 
+    public function testId(): void
+    {
+        $this->assertSame('<test id="test-id">', ModelAttributesWidget::widget()->id('test-id')->render());
+    }
+
     public function testImmutability(): void
     {
         $modelAttributes = ModelAttributesWidget::widget();

@@ -95,12 +95,12 @@ final class Hint extends Widget
     {
         $new = clone $this;
 
-        if ($new->hint !== null && $new->hint === '') {
-            $new->hint = HtmlForm::getAttributeHint($new->formModel, $new->attribute);
-        }
-
         if ($new->tag === '') {
             throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
+        if ($new->hint !== null && $new->hint === '') {
+            $new->hint = HtmlForm::getAttributeHint($new->formModel, $new->attribute);
         }
 
         return (!empty($new->hint))
