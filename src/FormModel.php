@@ -25,15 +25,16 @@ use function strpos;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
+    protected string $formErrorsClass = FormErrors::class;
     private array $attributes;
     private FormErrorsInterface $formErrors;
     private ?Inflector $inflector = null;
     private bool $validated = false;
 
-    public function __construct(string $formErrorsClass = FormErrors::class)
+    public function __construct()
     {
         $this->attributes = $this->collectAttributes();
-        $this->formErrors = $this->createFormErrors($formErrorsClass);
+        $this->formErrors = $this->createFormErrors($this->formErrorsClass);
     }
 
     public function getAttributeHint(string $attribute): string

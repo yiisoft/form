@@ -332,7 +332,9 @@ final class FormModelTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Form errors class must implement Yiisoft\Form\FormErrorsInterface');
-        $new = new LoginForm(stdClass::class);
+        $form = new class () extends FormModel {
+            protected string $formErrorsClass = \stdClass::class;
+        };
     }
 }
 
