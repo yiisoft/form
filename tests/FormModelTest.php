@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
