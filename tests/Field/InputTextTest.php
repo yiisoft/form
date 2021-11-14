@@ -10,7 +10,6 @@ use Yiisoft\Form\Field\InputText;
 use Yiisoft\Form\Tests\TestSupport\AssertTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Html\Tag\CustomTag;
-use Yiisoft\Html\Tag\Div;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\WidgetFactory;
 
