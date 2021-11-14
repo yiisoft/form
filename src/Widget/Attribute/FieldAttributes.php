@@ -31,6 +31,7 @@ trait FieldAttributes
     private string $validClass = '';
     private array $parts = [];
     private string $template = "{label}\n{input}\n{hint}\n{error}";
+    private array $widgetTemplates = [];
     private string $validationStateOn = 'input';
     private ?FormModelInterface $formModel = null;
 
@@ -151,6 +152,48 @@ trait FieldAttributes
     {
         $new = clone $this;
         $new->template = $value;
+        return $new;
+    }
+
+    /**
+     * Set layout templates for each widget
+     *
+     * @param array $templates
+     * @param bool $replace
+     *
+     * @return static
+     */
+    public function widgetTemplates(array $templates, bool $replace = false): self
+    {
+        $new = clone $this;
+
+        if ($replace) {
+            $new->widgetTemplates = $templates;
+        } else {
+            $new->widgetTemplates = array_merge($new->widgetTemplates, $templates);
+        }
+
+        return $new;
+    }
+
+    /**
+     * Set layout template for current widget
+     *
+     * @param string $widgetClass
+     * @param string|null $template
+     *
+     * @return static
+     */
+    public function widgetTemplate(string $widgetClass, ?string $template): self
+    {
+        $new = clone $this;
+
+        if (empty($template)) {
+            unset($new->widgetTemplates[$widgetClass]);
+        } else {
+            $new->widgetTemplates[$widgetClass] = $template;
+        }
+
         return $new;
     }
 

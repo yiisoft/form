@@ -85,6 +85,7 @@ final class Field extends Widget
     public function checkbox(array $attributes = [], bool $enclosedByLabel = true): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Checkbox::class] ?? $this->template;
         $checkbox = Checkbox::widget();
         $attributes['type'] = self::TYPE_CHECKBOX;
         $attributes = $new->setInputAttributes($attributes);
@@ -143,6 +144,7 @@ final class Field extends Widget
     public function checkboxList(array $attributes = [], array $items = [], array $itemsFromValues = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[CheckboxList::class] ?? $this->template;
         $checkboxList = CheckboxList::widget();
         $attributes = $new->setInputAttributes($attributes);
         /** @var bool|string|null */
@@ -214,6 +216,7 @@ final class Field extends Widget
     public function date(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Date::class] ?? $this->template;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = Date::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
@@ -231,6 +234,7 @@ final class Field extends Widget
     public function datetime(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[DateTime::class] ?? $this->template;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = DateTime::widget()->config($new->getFormModel(), $new->attribute, $attributes)->render();
@@ -248,6 +252,7 @@ final class Field extends Widget
     public function datetimelocal(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[DateTimeLocal::class] ?? $this->template;
         $attributes = $new->setInputAttributes($attributes);
 
         $new->parts['{input}'] = DateTimeLocal::widget()
@@ -271,6 +276,7 @@ final class Field extends Widget
     public function email(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Email::class] ?? $this->template;
         $attributes['type'] = self::TYPE_EMAIL;
         $attributes = $new->setInputAttributes($attributes);
 
@@ -344,6 +350,7 @@ final class Field extends Widget
     public function file(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[File::class] ?? $this->template;
         $file = File::widget();
         $attributes = $new->setInputAttributes($attributes);
 
@@ -382,6 +389,7 @@ final class Field extends Widget
     public function hidden(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Hidden::class] ?? $this->template;
         $attributes['type'] = self::TYPE_HIDDEN;
         $attributes = $new->setInputAttributes($attributes);
 
@@ -450,6 +458,7 @@ final class Field extends Widget
     public function image(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Image::class] ?? $this->template;
         $image = Image::widget();
         $new->parts['{error}'] = '';
         $new->parts['{hint}'] = '';
@@ -512,6 +521,7 @@ final class Field extends Widget
     public function number(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Number::class] ?? $this->template;
         $attributes['type'] = self::TYPE_NUMBER;
         $attributes = $new->setInputAttributes($attributes);
 
@@ -534,6 +544,7 @@ final class Field extends Widget
     public function password(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Password::class] ?? $this->template;
         $attributes['type'] = self::TYPE_PASSWORD;
         $attributes = $new->setInputAttributes($attributes);
 
@@ -569,6 +580,7 @@ final class Field extends Widget
     public function radio(array $attributes = [], bool $enclosedByLabel = true): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Radio::class] ?? $this->template;
         $radio = Radio::widget();
         $attributes['type'] = self::TYPE_RADIO;
         $attributes = $new->setInputAttributes($attributes);
@@ -630,6 +642,7 @@ final class Field extends Widget
     public function radioList(array $attributes = [], array $items = [], array $itemsFromValues = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[RadioList::class] ?? $this->template;
         $radioList = RadioList::widget();
         $attributes = $new->setInputAttributes($attributes);
         /** @var bool|string|null */
@@ -712,6 +725,7 @@ final class Field extends Widget
     public function range(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Range::class] ?? $this->template;
         $range = Range::widget();
         $attributes['type'] = self::TYPE_NUMBER;
         $attributes = $new->setInputAttributes($attributes);
@@ -743,6 +757,7 @@ final class Field extends Widget
     public function resetButton(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[ResetButton::class] ?? $this->template;
         $reset = ResetButton::widget();
         $new->parts['{error}'] = '';
         $new->parts['{hint}'] = '';
@@ -809,6 +824,7 @@ final class Field extends Widget
     public function select(array $attributes = [], array $items = [], array $groups = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Select::class] ?? $this->template;
         $attributes['type'] = self::TYPE_SELECT;
         $attributes = $new->setInputAttributes($attributes);
         /** @var bool */
@@ -857,6 +873,7 @@ final class Field extends Widget
     public function submitButton(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[SubmitButton::class] ?? $this->template;
         $submit = SubmitButton::widget();
         $new->parts['{error}'] = '';
         $new->parts['{hint}'] = '';
@@ -899,6 +916,7 @@ final class Field extends Widget
     public function telephone(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Telephone::class] ?? $this->template;
         $attributes['type'] = self::TYPE_TEL;
         $attributes = $new->setInputAttributes($attributes);
 
@@ -921,6 +939,7 @@ final class Field extends Widget
     public function text(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Text::class] ?? $this->template;
         $attributes['type'] = self::TYPE_TEXT;
         $attributes = $new->setInputAttributes($attributes);
         $text = Text::widget();
@@ -949,6 +968,7 @@ final class Field extends Widget
     public function textArea(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[TextArea::class] ?? $this->template;
         $textArea = TextArea::widget();
         $attributes = $new->setInputAttributes($attributes);
 
@@ -981,6 +1001,7 @@ final class Field extends Widget
     public function url(array $attributes = []): self
     {
         $new = clone $this;
+        $new->template = $this->widgetTemplates[Url::class] ?? $this->template;
         $attributes['type'] = self::TYPE_URL;
         $attributes = $new->setInputAttributes($attributes);
 
