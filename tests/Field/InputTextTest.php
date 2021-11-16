@@ -114,7 +114,7 @@ final class InputTextTest extends TestCase
 
         $result = InputText::widget()
             ->attribute(new TypeForm(), 'string')
-            ->doNotSetInputIdAttribute()
+            ->setInputIdAttribute(false)
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);

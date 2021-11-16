@@ -73,6 +73,9 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
+    /**
+     * @return static
+     */
     final public function id(?string $id): self
     {
         $new = clone $this;
@@ -80,13 +83,19 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    final public function doNotSetInputIdAttribute(): self
+    /**
+     * @return static
+     */
+    final public function setInputIdAttribute(bool $value): self
     {
         $new = clone $this;
-        $new->setInputIdAttribute = false;
+        $new->setInputIdAttribute = $value;
         return $new;
     }
 
+    /**
+     * @return static
+     */
     final public function labelTag(?Label $tag): self
     {
         $new = clone $this;
@@ -94,6 +103,9 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
+    /**
+     * @return static
+     */
     final public function label(?string $content): self
     {
         $new = clone $this;
@@ -101,10 +113,13 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    final public function doNotSetLabelForAttribute(): self
+    /**
+     * @return static
+     */
+    final public function setLabelForAttribute(bool $value): self
     {
         $new = clone $this;
-        $new->setLabelForAttribute = false;
+        $new->setLabelForAttribute = $value;
         return $new;
     }
 
