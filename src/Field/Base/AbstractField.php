@@ -8,8 +8,8 @@ use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Tag\Base\ContentTagInterface;
 use Yiisoft\Html\Tag\Base\Tag;
-use Yiisoft\Html\Tag\Base\TagContentInterface;
 use Yiisoft\Html\Tag\Div;
 use Yiisoft\Html\Tag\Label;
 use Yiisoft\Widget\Widget;
@@ -19,7 +19,7 @@ abstract class AbstractField extends Widget
     private ?FormModelInterface $formModel = null;
     private string $attribute = '';
 
-    private ?TagContentInterface $containerTag = null;
+    private ?ContentTagInterface $containerTag = null;
     private bool $withoutContainer = false;
 
     private string $template = "{label}\n{input}\n{hint}\n{error}";
@@ -31,7 +31,7 @@ abstract class AbstractField extends Widget
     private ?string $labelContent = null;
     private bool $setLabelForAttribute = true;
 
-    private ?TagContentInterface $hintTag = null;
+    private ?ContentTagInterface $hintTag = null;
     private ?string $hintContent = null;
 
     /**
@@ -45,7 +45,7 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    final public function containerTag(?TagContentInterface $tag): self
+    final public function containerTag(?ContentTagInterface $tag): self
     {
         $new = clone $this;
         $new->containerTag = $tag;
@@ -123,7 +123,7 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    final public function hintTag(?TagContentInterface $tag): self
+    final public function hintTag(?ContentTagInterface $tag): self
     {
         $new = clone $this;
         $new->hintTag = $tag;
