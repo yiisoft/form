@@ -62,7 +62,7 @@ final class FieldFactoryTest extends TestCase
                     'template()' => ["{hint}\n{error}\n{input}\n{label}"],
                     'inputTextConfig()' => [
                         [
-                            'template()' => ["{input}"],
+                            'template()' => ['{input}'],
                         ],
                     ],
                 ],
