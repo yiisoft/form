@@ -16,7 +16,47 @@ final class FieldDateTimeTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    public function testMax(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-todate">To Date</label>
+        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" max="1990-12-31T23:59:60Z">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'toDate')->dateTime(['max' => '1990-12-31T23:59:60Z'])->render(),
+        );
+    }
+
+    public function testMin(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-todate">To Date</label>
+        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" min="1990-12-31T23:59:60Z">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'toDate')->dateTime(['min' => '1990-12-31T23:59:60Z'])->render(),
+        );
+    }
+
+    public function testReadonly(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-todate">To Date</label>
+        <input type="datetime" id="typeform-todate" name="TypeForm[toDate]" readonly>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'toDate')->dateTime(['readonly' => true])->render(),
+        );
+    }
 
     public function testRender(): void
     {
@@ -28,7 +68,7 @@ final class FieldDateTimeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toDate')->datetime()->render(),
+            Field::widget()->for($this->formModel, 'toDate')->dateTime()->render(),
         );
     }
 
@@ -44,7 +84,7 @@ final class FieldDateTimeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toDate')->datetime()->render(),
+            Field::widget()->for($this->formModel, 'toDate')->dateTime()->render(),
         );
 
         // value null
@@ -57,7 +97,7 @@ final class FieldDateTimeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toDate')->datetime()->render(),
+            Field::widget()->for($this->formModel, 'toDate')->dateTime()->render(),
         );
     }
 
@@ -65,7 +105,7 @@ final class FieldDateTimeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('DateTime widget requires a string or null value.');
-        Field::widget()->config($this->formModel, 'array')->datetime()->render();
+        Field::widget()->for($this->formModel, 'array')->dateTime()->render();
     }
 
     protected function setUp(): void

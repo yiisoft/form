@@ -5,58 +5,18 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Tag\CustomTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * The widget for hint form.
  *
  * @psalm-suppress MissingConstructor
  */
-final class Hint extends Widget
+final class Hint extends AbstractWidget
 {
-    private array $attributes = [];
-    private string $attribute = '';
-    private bool $encode = true;
-    private FormModelInterface $formModel;
     private ?string $hint = '';
     private string $tag = 'div';
-
-    /**
-     * Specify a form, its attribute and a list HTML attributes for the hint generated.
-     *
-     * @param FormModelInterface $formModel Form instance.
-     * @param string $attribute Form model's property name this widget is rendered for.
-     * @param array $attributes HTML attributes for the widget container tag.
-     *
-     * @return static
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
-    {
-        $new = clone $this;
-        $new->formModel = $formModel;
-        $new->attribute = $attribute;
-        $new->attributes = $attributes;
-        return $new;
-    }
-
-    /**
-     * Whether content should be HTML-encoded.
-     *
-     * @param bool $value
-     *
-     * @return static
-     */
-    public function encode(bool $value): self
-    {
-        $new = clone $this;
-        $new->encode = $value;
-        return $new;
-    }
 
     /**
      * Set hint text.
@@ -95,19 +55,19 @@ final class Hint extends Widget
     {
         $new = clone $this;
 
-        if ($new->hint !== null && $new->hint === '') {
-            $new->hint = HtmlForm::getAttributeHint($new->formModel, $new->attribute);
-        }
-
         if ($new->tag === '') {
             throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
+        if ($new->hint === '') {
+            $new->hint = HtmlForm::getAttributeHint($new->getFormModel(), $new->getAttribute());
         }
 
         return (!empty($new->hint))
             ? CustomTag::name($new->tag)
                 ->attributes($new->attributes)
                 ->content($new->hint)
-                ->encode($new->encode)
+                ->encode($new->getEncode())
                 ->render()
             : '';
     }

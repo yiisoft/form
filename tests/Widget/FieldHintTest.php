@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -15,8 +16,6 @@ final class FieldHintTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testAnyHint(): void
     {
         $expected = <<<'HTML'
@@ -27,7 +26,22 @@ final class FieldHintTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->hint([], null)->render(),
+            Field::widget()->for($this->formModel, 'string')->hint([], ['hint()' => [null]])->render(),
+        );
+    }
+
+    public function testAttributes(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
+        <div class="test-class">Write your text string.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->hint(['class' => 'test-class'])->render(),
         );
     }
 
@@ -43,8 +57,8 @@ final class FieldHintTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
-                ->config($this->formModel, 'string')
-                ->hint([], 'Write&nbsp;your&nbsp;text.', false)
+                ->for($this->formModel, 'string')
+                ->hint([], ['encode()' => [false], 'hint()' => ['Write&nbsp;your&nbsp;text.']])
                 ->render(),
         );
     }
@@ -58,11 +72,13 @@ final class FieldHintTest extends TestCase
         <div class="test-class">Custom hint text.</div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->hint(['class' => 'test-class'], 'Custom hint text.')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'string')
+                ->hint(['class' => 'test-class'], ['hint()' => ['Custom hint text.']])
+                ->render(),
+        );
     }
 
     public function testRender(): void
@@ -76,7 +92,7 @@ final class FieldHintTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->render(),
+            Field::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -91,8 +107,15 @@ final class FieldHintTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->hint(['tag' => 'span'])->render(),
+            Field::widget()->for($this->formModel, 'string')->hint([], ['tag()' => ['span']])->render(),
         );
+    }
+
+    public function testTagException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        Field::widget()->for($this->formModel, 'string')->hint([], ['tag()' => ['']])->render();
     }
 
     protected function setUp(): void

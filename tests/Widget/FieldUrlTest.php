@@ -16,8 +16,6 @@ final class FieldUrlTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testMaxLength(): void
     {
         $expected = <<<'HTML'
@@ -29,7 +27,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->url(['maxlength' => 10])->render(),
+            Field::widget()->for($this->formModel, 'string')->url(['maxlength' => 10])->render(),
         );
     }
 
@@ -44,7 +42,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->url(['minlength' => 4])->render(),
+            Field::widget()->for($this->formModel, 'string')->url(['minlength' => 4])->render(),
         );
     }
 
@@ -58,7 +56,7 @@ final class FieldUrlTest extends TestCase
         </div>
         HTML;
         $html = Field::widget()
-            ->config($this->formModel, 'string')
+            ->for($this->formModel, 'string')
             ->url(['pattern' => "^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$"])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
@@ -75,7 +73,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->url(['placeholder' => 'PlaceHolder Text'])->render(),
+            Field::widget()->for($this->formModel, 'string')->url(['placeholder' => 'PlaceHolder Text'])->render(),
         );
     }
 
@@ -90,7 +88,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->url()->render(),
+            Field::widget()->for($this->formModel, 'string')->url()->render(),
         );
     }
 
@@ -105,7 +103,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->url(['size' => 20])->render(),
+            Field::widget()->for($this->formModel, 'string')->url(['size' => 20])->render(),
         );
     }
 
@@ -120,7 +118,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->url()->render(),
+            Field::widget()->for($this->formModel, 'toNull')->url()->render(),
         );
 
         // value string 'https://yiiframework.com'
@@ -134,7 +132,7 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->url()->render(),
+            Field::widget()->for($this->formModel, 'string')->url()->render(),
         );
     }
 
@@ -142,7 +140,7 @@ final class FieldUrlTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Url widget must be a string or null value.');
-        Field::widget()->config($this->formModel, 'int')->url()->render();
+        Field::widget()->for($this->formModel, 'int')->url()->render();
     }
 
     protected function setUp(): void

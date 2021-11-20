@@ -16,7 +16,56 @@ final class FieldDateTimeLocalTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    public function testMax(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-todate">To Date</label>
+        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" max="1985-04-12T23:20:50.52">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'toDate')
+                ->dateTimeLocal(['max' => '1985-04-12T23:20:50.52'])
+                ->render(),
+        );
+    }
+
+    public function testMin(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-todate">To Date</label>
+        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" min="1985-04-12T23:20:50.52">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'toDate')
+                ->dateTimeLocal(['min' => '1985-04-12T23:20:50.52'])
+                ->render(),
+        );
+    }
+
+    public function testReadonly(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-todate">To Date</label>
+        <input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" readonly>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'toDate')
+                ->dateTimeLocal(['readonly' => true])
+                ->render(),
+        );
+    }
 
     public function testRender(): void
     {
@@ -28,7 +77,7 @@ final class FieldDateTimeLocalTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toDate')->datetimelocal()->render(),
+            Field::widget()->for($this->formModel, 'toDate')->dateTimeLocal()->render(),
         );
     }
 
@@ -44,7 +93,7 @@ final class FieldDateTimeLocalTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toDate')->datetimelocal()->render(),
+            Field::widget()->for($this->formModel, 'toDate')->dateTimeLocal()->render(),
         );
 
         // value null
@@ -57,7 +106,7 @@ final class FieldDateTimeLocalTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toDate')->datetimelocal()->render(),
+            Field::widget()->for($this->formModel, 'toDate')->dateTimeLocal()->render(),
         );
     }
 
@@ -65,7 +114,7 @@ final class FieldDateTimeLocalTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('DateTimeLocal widget requires a string or null value.');
-        Field::widget()->config($this->formModel, 'array')->datetimelocal()->render();
+        Field::widget()->for($this->formModel, 'array')->dateTimeLocal()->render();
     }
 
     protected function setUp(): void

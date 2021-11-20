@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "number" represents a precise control for setting the
@@ -17,10 +15,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends Widget
+final class Number extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     /**
      * The expected upper bound for the element’s value.
@@ -61,12 +58,27 @@ final class Number extends Widget
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.placeholder
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.placeholder
      */
     public function placeholder(string $value): self
     {
         $new = clone $this;
         $new->attributes['placeholder'] = $value;
+        return $new;
+    }
+
+    /**
+     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
+     * When specified, the element is not mutable.
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.readonly
+     */
+    public function readonly(): self
+    {
+        $new = clone $this;
+        $new->attributes['readonly'] = true;
         return $new;
     }
 
@@ -78,7 +90,7 @@ final class Number extends Widget
         $new = clone $this;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_numeric($value) && null !== $value) {
             throw new InvalidArgumentException('Number widget must be a numeric or null value.');
@@ -88,7 +100,7 @@ final class Number extends Widget
             ->type('number')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->value($value)
             ->render();
     }

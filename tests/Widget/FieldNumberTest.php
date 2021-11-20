@@ -16,7 +16,19 @@ final class FieldNumberTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    public function testAttributes(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-number">Number</label>
+        <input type="number" id="typeform-number" class="test-class" name="TypeForm[number]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'number')->number(['class' => 'test-class'])->render(),
+        );
+    }
 
     public function testMax(): void
     {
@@ -28,7 +40,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'number')->number(['max' => 8])->render(),
+            Field::widget()->for($this->formModel, 'number')->number(['max' => 8])->render(),
         );
     }
 
@@ -42,7 +54,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'number')->number(['min' => 4])->render(),
+            Field::widget()->for($this->formModel, 'number')->number(['min' => 4])->render(),
         );
     }
 
@@ -57,7 +69,7 @@ final class FieldNumberTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
-                ->config($this->formModel, 'number')
+                ->for($this->formModel, 'number')
                 ->number(['placeholder' => 'PlaceHolder Text'])
                 ->render(),
         );
@@ -73,7 +85,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'number')->number()->render(),
+            Field::widget()->for($this->formModel, 'number')->number()->render(),
         );
     }
 
@@ -88,7 +100,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'number')->number()->render(),
+            Field::widget()->for($this->formModel, 'number')->number()->render(),
         );
 
         // int value 1
@@ -101,7 +113,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'number')->number()->render(),
+            Field::widget()->for($this->formModel, 'number')->number()->render(),
         );
 
         // string numeric value '1'
@@ -115,7 +127,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->number()->render(),
+            Field::widget()->for($this->formModel, 'string')->number()->render(),
         );
     }
 
@@ -123,7 +135,7 @@ final class FieldNumberTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number widget must be a numeric or null value.');
-        Field::widget()->config($this->formModel, 'array')->number()->render();
+        Field::widget()->for($this->formModel, 'array')->number()->render();
     }
 
     protected function setUp(): void

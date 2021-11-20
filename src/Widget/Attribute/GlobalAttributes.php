@@ -4,8 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-trait CommonAttributes
+use InvalidArgumentException;
+use Stringable;
+use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Html\Html;
+
+trait GlobalAttributes
 {
+    private string $autoIdPrefix = '';
+
     /**
      * Focus on the control (put cursor into it) when the page loads.
      * Only one form element could be in focus at the same time.
@@ -20,6 +27,20 @@ trait CommonAttributes
     {
         $new = clone $this;
         $new->attributes['autofocus'] = $value;
+        return $new;
+    }
+
+    /**
+     * The prefix to the automatically generated widget IDs.
+     *
+     * @param string $value
+     *
+     * @return static
+     */
+    public function autoIdPrefix(string $value): self
+    {
+        $new = clone $this;
+        $new->autoIdPrefix = $value;
         return $new;
     }
 
@@ -63,6 +84,38 @@ trait CommonAttributes
     }
 
     /**
+     * Set the ID of the widget.
+     *
+     * @param string|null $id
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
+     */
+    public function id(?string $id): self
+    {
+        $new = clone $this;
+        $new->attributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * The name part of the name/value pair associated with this element for the purposes of form submission.
+     *
+     * @param string|null The name of the widget.
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name
+     */
+    public function name(?string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['name'] = $value;
+        return $new;
+    }
+
+    /**
      * If it is required to fill in a value in order to submit the form.
      *
      * @param bool $value
@@ -75,21 +128,6 @@ trait CommonAttributes
     {
         $new = clone $this;
         $new->attributes['required'] = $value;
-        return $new;
-    }
-
-    /**
-     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
-     * When specified, the element is not mutable.
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-     */
-    public function readonly(): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = true;
         return $new;
     }
 
@@ -109,7 +147,7 @@ trait CommonAttributes
      *
      * @param int $value
      *
-     * @return self
+     * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
      */
@@ -118,5 +156,57 @@ trait CommonAttributes
         $new = clone $this;
         $new->attributes['tabindex'] = $value;
         return $new;
+    }
+
+    /**
+     * The title global attribute contains text representing advisory information related to the element it belongs to.
+     *
+     * @param string $value
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/dom.html#attr-title
+     */
+    public function title(string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['title'] = $value;
+        return $new;
+    }
+
+    /**
+     * The value of the radio button.
+     *
+     * @param scalar|Stringable|null $value
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
+     */
+    public function value($value): self
+    {
+        $new = clone $this;
+        $new->attributes['value'] = $value;
+        return $new;
+    }
+
+    /**
+     * Generates a unique ID for the attribute without model, if it does not have one yet.
+     *
+     * @return string
+     */
+    protected function getIdWithoutModel(): ?string
+    {
+        $id = ArrayHelper::remove($this->attributes, 'id', '');
+
+        if (!is_string($id) && null !== $id) {
+            throw new InvalidArgumentException('Attribute "id" must be a string or null.');
+        }
+
+        if ($id === '') {
+            $id = Html::generateId($this->autoIdPrefix);
+        }
+
+        return $id === null ? null : $id;
     }
 }

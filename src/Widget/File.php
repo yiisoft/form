@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "file" represents a list of file items, each consisting of a
@@ -18,10 +15,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file
  */
-final class File extends Widget
+final class File extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     private array $hiddenAttributes = [];
     /** @var bool|float|int|string|Stringable|null */
@@ -97,8 +93,10 @@ final class File extends Widget
     protected function run(): string
     {
         $new = clone $this;
+
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file.attrs.name */
+        $name = $new->getName();
         $hiddenInput = '';
-        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
 
         /**
          * Add a hidden field so that if a form only has a file field, we can still use isset($body[$formClass]) to

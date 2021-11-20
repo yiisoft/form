@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "tel" represents a one-line plain-text edit control for
@@ -17,10 +15,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel
  */
-final class Telephone extends Widget
+final class Telephone extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
@@ -95,6 +92,21 @@ final class Telephone extends Widget
     }
 
     /**
+     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
+     * When specified, the element is not mutable.
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.readonly
+     */
+    public function readonly(): self
+    {
+        $new = clone $this;
+        $new->attributes['readonly'] = true;
+        return $new;
+    }
+
+    /**
      * The height of the text input.
      *
      * Default value is 4.
@@ -119,10 +131,8 @@ final class Telephone extends Widget
     {
         $new = clone $this;
 
-        /**
-         * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.value
-         */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.value */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_string($value) && !is_int($value) && null !== $value) {
             throw new InvalidArgumentException('Telephone widget must be a string, numeric or null.');
@@ -132,7 +142,7 @@ final class Telephone extends Widget
             ->type('tel')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->value($value === '' ? null : $value)
             ->render();
     }

@@ -15,8 +15,6 @@ final class FieldLabelTest extends TestCase
 {
     use TestTrait;
 
-    private PersonalForm $formModel;
-
     public function testAnyLabel(): void
     {
         $expected = <<<'HTML'
@@ -26,7 +24,21 @@ final class FieldLabelTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'email')->label([], null)->render(),
+            Field::widget()->for($this->formModel, 'email')->label([], ['label()' => [null]])->render(),
+        );
+    }
+
+    public function testAttributes(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label class="test-class" for="personalform-email">Email</label>
+        <input type="text" id="personalform-email" name="PersonalForm[email]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'email')->label(['class' => 'test-class'])->render(),
         );
     }
 
@@ -40,7 +52,7 @@ final class FieldLabelTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'email')->label(['for' => 'for-id'])->render(),
+            Field::widget()->for($this->formModel, 'email')->label(['for' => 'for-id'])->render(),
         );
     }
 
@@ -52,11 +64,13 @@ final class FieldLabelTest extends TestCase
         <input type="text" id="personalform-email" name="PersonalForm[email]">
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'email')
-            ->label(['class' => 'test-class'], 'Email:')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'email')
+                ->label(['class' => 'test-class'], ['label()' => ['Email:']])
+                ->render()
+        );
     }
 
     public function testRender(): void
@@ -67,7 +81,7 @@ final class FieldLabelTest extends TestCase
         <input type="text" id="personalform-email" name="PersonalForm[email]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->config($this->formModel, 'email')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->for($this->formModel, 'email')->render());
     }
 
     public function testWithoutEncode(): void
@@ -80,7 +94,10 @@ final class FieldLabelTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'email')->label([], 'My&nbsp;Field', false)->render(),
+            Field::widget()
+                ->for($this->formModel, 'email')
+                ->label([], ['encode()' => [false], 'label()' => ['My&nbsp;Field']])
+                ->render(),
         );
     }
 
@@ -94,7 +111,7 @@ final class FieldLabelTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'email')->label(['for' => null])->render(),
+            Field::widget()->for($this->formModel, 'email')->label(['for' => null])->render(),
         );
     }
 

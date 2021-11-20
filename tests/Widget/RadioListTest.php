@@ -19,7 +19,6 @@ final class RadioListTest extends TestCase
 
     /** @var string[] */
     private array $cities = ['1' => 'Moscu', '2' => 'San Petersburgo', '3' => 'Novosibirsk', '4' => 'Ekaterinburgo'];
-    private TypeForm $formModel;
 
     public function testContainerAttributes(): void
     {
@@ -33,7 +32,7 @@ final class RadioListTest extends TestCase
         </div>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->containerAttributes(['class' => 'test-class'])
             ->items($this->cities)
             ->render();
@@ -52,7 +51,7 @@ final class RadioListTest extends TestCase
         </tag-test>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->containerTag('tag-test')
             ->items($this->cities)
             ->render();
@@ -69,7 +68,7 @@ final class RadioListTest extends TestCase
         <label><input type="radio" name="TypeForm[int]" value="4"> Ekaterinburgo</label>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->containerTag()
             ->items($this->cities)
             ->render();
@@ -88,7 +87,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->disabled()->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'int')->disabled()->items($this->cities)->render(),
         );
     }
 
@@ -105,7 +104,7 @@ final class RadioListTest extends TestCase
         </div>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->items($this->cities)
             ->uncheckValue(0)
             ->render();
@@ -124,7 +123,7 @@ final class RadioListTest extends TestCase
         </div>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->individualItemsAttributes([1 => ['disabled' => true], 2 => ['class' => 'test-class']])
             ->items($this->cities)
             ->render();
@@ -159,7 +158,7 @@ final class RadioListTest extends TestCase
         </div>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->items($this->cities)
             ->itemsAttributes(['class' => 'test-class'])
             ->render();
@@ -178,7 +177,7 @@ final class RadioListTest extends TestCase
         </div>
         HTML;
         $html = RadioList::widget()
-            ->config($this->formModel, 'int')
+            ->for($this->formModel, 'int')
             ->items($this->cities)
             ->itemsFormatter(static function (RadioItem $item) {
                 return $item->checked
@@ -202,7 +201,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'string')->itemsFromValues($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'string')->itemsFromValues($this->cities)->render(),
         );
     }
 
@@ -219,7 +218,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items($this->cities)->readOnly()->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items($this->cities)->readOnly()->render(),
         );
     }
 
@@ -236,7 +235,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
     }
 
@@ -253,7 +252,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items($this->cities)->separator(PHP_EOL)->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items($this->cities)->separator(PHP_EOL)->render(),
         );
     }
 
@@ -269,7 +268,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items([0 => 'Female', 1 => 'Male'])->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items([0 => 'Female', 1 => 'Male'])->render(),
         );
 
         // value bool true
@@ -282,7 +281,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items([0 => 'Female', 1 => 'Male'])->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items([0 => 'Female', 1 => 'Male'])->render(),
         );
 
         // value int 0
@@ -297,7 +296,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
 
         // value int 1
@@ -312,7 +311,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
 
         // value string '0'
@@ -327,7 +326,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'string')->items($this->cities)->render(),
         );
 
         // value string '1'
@@ -342,7 +341,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'string')->items($this->cities)->render(),
         );
 
         // value null
@@ -357,7 +356,7 @@ final class RadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            RadioList::widget()->config($this->formModel, 'toNull')->items($this->cities)->render(),
+            RadioList::widget()->for($this->formModel, 'toNull')->items($this->cities)->render(),
         );
     }
 
@@ -366,7 +365,7 @@ final class RadioListTest extends TestCase
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
-        RadioList::widget()->config($this->formModel, 'array')->render();
+        RadioList::widget()->for($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

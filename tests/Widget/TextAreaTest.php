@@ -16,13 +16,11 @@ final class TextAreaTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testCols(): void
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" cols="50"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->cols(50)->render(),
+            TextArea::widget()->for($this->formModel, 'string')->cols(50)->render(),
         );
     }
 
@@ -30,7 +28,7 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" dirname="test.dir"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->dirname('test.dir')->render(),
+            TextArea::widget()->for($this->formModel, 'string')->dirname('test.dir')->render(),
         );
     }
 
@@ -38,15 +36,7 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
-        TextArea::widget()->config($this->formModel, 'string')->dirname('')->render();
-    }
-
-    public function testForm(): void
-    {
-        $this->assertSame(
-            '<textarea id="typeform-string" name="TypeForm[string]" form="form-id"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->form('form-id')->render(),
-        );
+        TextArea::widget()->for($this->formModel, 'string')->dirname('')->render();
     }
 
     public function testImmutability(): void
@@ -54,7 +44,6 @@ final class TextAreaTest extends TestCase
         $textArea = TextArea::widget();
         $this->assertNotSame($textArea, $textArea->cols(0));
         $this->assertNotSame($textArea, $textArea->dirname('test.dir'));
-        $this->assertNotSame($textArea, $textArea->form(''));
         $this->assertNotSame($textArea, $textArea->maxlength(0));
         $this->assertNotSame($textArea, $textArea->placeholder(''));
         $this->assertNotSame($textArea, $textArea->readOnly());
@@ -66,7 +55,7 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" maxlength="100"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->maxLength(100)->render(),
+            TextArea::widget()->for($this->formModel, 'string')->maxLength(100)->render(),
         );
     }
 
@@ -74,7 +63,7 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
+            TextArea::widget()->for($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
 
@@ -82,7 +71,7 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->render(),
+            TextArea::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -90,7 +79,7 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" readonly></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->readOnly()->render(),
+            TextArea::widget()->for($this->formModel, 'string')->readOnly()->render(),
         );
     }
 
@@ -99,14 +88,14 @@ final class TextAreaTest extends TestCase
         // value null
         $this->assertSame(
             '<textarea id="typeform-tonull" name="TypeForm[toNull]"></textarea>',
-            TextArea::widget()->config($this->formModel, 'toNull')->render(),
+            TextArea::widget()->for($this->formModel, 'toNull')->render(),
         );
 
         // value string
         $this->formModel->setAttribute('string', 'hello');
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]">hello</textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->render(),
+            TextArea::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -114,7 +103,7 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('TextArea widget must be a string or null value.');
-        TextArea::widget()->config($this->formModel, 'array')->render();
+        TextArea::widget()->for($this->formModel, 'array')->render();
     }
 
     public function testWrap(): void
@@ -122,13 +111,13 @@ final class TextAreaTest extends TestCase
         /** hard value */
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" wrap="hard"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->wrap()->render(),
+            TextArea::widget()->for($this->formModel, 'string')->wrap()->render(),
         );
 
         /** soft value */
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" wrap="soft"></textarea>',
-            TextArea::widget()->config($this->formModel, 'string')->wrap('soft')->render(),
+            TextArea::widget()->for($this->formModel, 'string')->wrap('soft')->render(),
         );
     }
 
@@ -136,7 +125,7 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid wrap value. Valid values are: hard, soft.');
-        TextArea::widget()->config($this->formModel, 'string')->wrap('exception');
+        TextArea::widget()->for($this->formModel, 'string')->wrap('exception');
     }
 
     protected function setUp(): void

@@ -16,8 +16,6 @@ final class UrlTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testImmutability(): void
     {
         $url = Url::widget();
@@ -32,7 +30,7 @@ final class UrlTest extends TestCase
     {
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]" maxlength="10">',
-            Url::widget()->config($this->formModel, 'string')->maxlength(10)->render(),
+            Url::widget()->for($this->formModel, 'string')->maxlength(10)->render(),
         );
     }
 
@@ -40,7 +38,7 @@ final class UrlTest extends TestCase
     {
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]" minlength="4">',
-            Url::widget()->config($this->formModel, 'string')->minlength(4)->render(),
+            Url::widget()->for($this->formModel, 'string')->minlength(4)->render(),
         );
     }
 
@@ -50,7 +48,7 @@ final class UrlTest extends TestCase
         <input type="url" id="typeform-string" name="TypeForm[string]" pattern="^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!$&amp;&apos;\(\)\*\+,;=.]+$">
         HTML;
         $html = Url::widget()
-            ->config($this->formModel, 'string')
+            ->for($this->formModel, 'string')
             ->pattern("^(http(s)?:\/\/)+[\w\-\._~:\/?#[\]@!\$&'\(\)\*\+,;=.]+$")
             ->render();
         $this->assertSame($expected, $html);
@@ -60,7 +58,7 @@ final class UrlTest extends TestCase
     {
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
-            Url::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
+            Url::widget()->for($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
 
@@ -68,7 +66,7 @@ final class UrlTest extends TestCase
     {
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]">',
-            Url::widget()->config($this->formModel, 'string')->render(),
+            Url::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -76,7 +74,7 @@ final class UrlTest extends TestCase
     {
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]" size="20">',
-            Url::widget()->config($this->formModel, 'string')->size(20)->render(),
+            Url::widget()->for($this->formModel, 'string')->size(20)->render(),
         );
     }
 
@@ -85,14 +83,14 @@ final class UrlTest extends TestCase
         // value null
         $this->assertSame(
             '<input type="url" id="typeform-tonull" name="TypeForm[toNull]">',
-            Url::widget()->config($this->formModel, 'toNull')->render(),
+            Url::widget()->for($this->formModel, 'toNull')->render(),
         );
 
         // value string 'https://yiiframework.com'
         $this->formModel->setAttribute('string', 'https://yiiframework.com');
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]" value="https://yiiframework.com">',
-            Url::widget()->config($this->formModel, 'string')->render(),
+            Url::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -100,7 +98,7 @@ final class UrlTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Url widget must be a string or null value.');
-        Url::widget()->config($this->formModel, 'int')->render();
+        Url::widget()->for($this->formModel, 'int')->render();
     }
 
     protected function setUp(): void

@@ -20,7 +20,6 @@ final class SelectTest extends TestCase
     private array $cities = [];
     private array $citiesGroups = [];
     private array $groups = [];
-    private TypeForm $formModel;
 
     public function testImmutability(): void
     {
@@ -29,9 +28,9 @@ final class SelectTest extends TestCase
         $this->assertNotSame($select, $select->items());
         $this->assertNotSame($select, $select->itemsAttributes());
         $this->assertNotSame($select, $select->multiple());
-        $this->assertNotSame($select, $select->optionsData([], false));
+        $this->assertNotSame($select, $select->optionsData([]));
         $this->assertNotSame($select, $select->prompt());
-        $this->assertNotSame($select, $select->size());
+        $this->assertNotSame($select, $select->size(0));
         $this->assertNotSame($select, $select->unselectValue(null));
     }
 
@@ -52,12 +51,14 @@ final class SelectTest extends TestCase
         </optgroup>
         </select>
         HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'int')
-            ->groups($this->groups)
-            ->items($this->citiesGroups)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for($this->formModel, 'int')
+                ->groups($this->groups)
+                ->items($this->citiesGroups)
+                ->render(),
+        );
     }
 
     public function testGroupsItemsAttributes(): void
@@ -77,13 +78,15 @@ final class SelectTest extends TestCase
         </optgroup>
         </select>
         HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'int')
-            ->items($this->citiesGroups)
-            ->itemsAttributes(['2' => ['disabled' => true]])
-            ->groups($this->groups)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for($this->formModel, 'int')
+                ->items($this->citiesGroups)
+                ->itemsAttributes(['2' => ['disabled' => true]])
+                ->groups($this->groups)
+                ->render(),
+        );
     }
 
     public function testMultiple(): void
@@ -98,13 +101,15 @@ final class SelectTest extends TestCase
         <option value="4" selected>Ekaterinburgo</option>
         </select>
         HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'array')
-            ->items($this->cities)
-            ->multiple()
-            ->unselectValue('0')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for($this->formModel, 'array')
+                ->multiple()
+                ->items($this->cities)
+                ->unselectValue('0')
+                ->render(),
+        );
     }
 
     public function testOptionsDataEncode(): void
@@ -125,7 +130,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'int')->optionsData($cities, true)->render(),
+            Select::widget()->for($this->formModel, 'int')->encode(true)->optionsData($cities)->render(),
         );
     }
 
@@ -147,12 +152,14 @@ final class SelectTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'int')
-            ->items($this->cities)
-            ->prompt($prompt)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for($this->formModel, 'int')
+                ->items($this->cities)
+                ->prompt($prompt)
+                ->render(),
+        );
     }
 
     public function testRender(): void
@@ -167,7 +174,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
     }
 
@@ -182,13 +189,15 @@ final class SelectTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'int')
-            ->items($this->cities)
-            ->multiple()
-            ->size(3)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for($this->formModel, 'int')
+                ->items($this->cities)
+                ->multiple()
+                ->size(3)
+                ->render(),
+        );
     }
 
     public function testUnselectValueWithMultiple(): void
@@ -202,13 +211,15 @@ final class SelectTest extends TestCase
         <option value="4">Ekaterinburgo</option>
         </select>
         HTML;
-        $html = Select::widget()
-            ->config($this->formModel, 'array')
-            ->items($this->cities)
-            ->multiple()
-            ->unselectValue('0')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for($this->formModel, 'array')
+                ->items($this->cities)
+                ->multiple(true)
+                ->unselectValue('0')
+                ->render(),
+        );
     }
 
     public function testValues(): void
@@ -225,7 +236,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
 
         // value int 2.
@@ -240,7 +251,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
 
         // value iterable [2, 3].
@@ -255,7 +266,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'array')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'array')->items($this->cities)->render(),
         );
 
         // value string '1'.
@@ -270,7 +281,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'string')->items($this->cities)->render(),
         );
 
         // value string '2'
@@ -285,7 +296,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'string')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'string')->items($this->cities)->render(),
         );
 
         // value null.
@@ -300,7 +311,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->config($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
         );
     }
 
@@ -309,7 +320,7 @@ final class SelectTest extends TestCase
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select widget value can not be an object.');
-        Select::widget()->config($this->formModel, 'object')->render();
+        Select::widget()->for($this->formModel, 'object')->render();
     }
 
     protected function setUp(): void

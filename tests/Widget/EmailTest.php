@@ -16,8 +16,6 @@ final class EmailTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testImmutability(): void
     {
         $email = Email::widget();
@@ -33,7 +31,7 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" maxlength="10">',
-            Email::widget()->config($this->formModel, 'string')->maxlength(10)->render(),
+            Email::widget()->for($this->formModel, 'string')->maxlength(10)->render(),
         );
     }
 
@@ -41,7 +39,7 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" minlength="4">',
-            Email::widget()->config($this->formModel, 'string')->minlength(4)->render(),
+            Email::widget()->for($this->formModel, 'string')->minlength(4)->render(),
         );
     }
 
@@ -50,7 +48,7 @@ final class EmailTest extends TestCase
         $this->formModel->setAttribute('string', 'email1@example.com;email2@example.com;');
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;email2@example.com;" multiple>',
-            Email::widget()->config($this->formModel, 'string')->multiple()->render(),
+            Email::widget()->for($this->formModel, 'string')->multiple(true)->render(),
         );
     }
 
@@ -60,7 +58,7 @@ final class EmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}">
         HTML;
         $html = Email::widget()
-            ->config($this->formModel, 'string')
+            ->for($this->formModel, 'string')
             ->pattern('[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}')
             ->render();
         $this->assertSame($expected, $html);
@@ -70,7 +68,7 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
-            Email::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
+            Email::widget()->for($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
 
@@ -78,7 +76,7 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]">',
-            Email::widget()->config($this->formModel, 'string')->render(),
+            Email::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -86,7 +84,7 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" size="20">',
-            Email::widget()->config($this->formModel, 'string')->size(20)->render(),
+            Email::widget()->for($this->formModel, 'string')->size(20)->render(),
         );
     }
 
@@ -96,14 +94,14 @@ final class EmailTest extends TestCase
         $this->formModel->setAttribute('string', 'email1@example.com;');
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;">',
-            Email::widget()->config($this->formModel, 'string')->render(),
+            Email::widget()->for($this->formModel, 'string')->render(),
         );
 
         // value null
         $this->formModel->setAttribute('string', null);
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]">',
-            Email::widget()->config($this->formModel, 'string')->render(),
+            Email::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -111,7 +109,7 @@ final class EmailTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Email widget must be a string or null value.');
-        Email::widget()->config($this->formModel, 'int')->render();
+        Email::widget()->for($this->formModel, 'int')->render();
     }
 
     protected function setUp(): void

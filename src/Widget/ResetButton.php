@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\WithoutModelAttribute;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -16,8 +15,25 @@ use Yiisoft\Widget\Widget;
  */
 final class ResetButton extends Widget
 {
-    use CommonAttributes;
-    use WithoutModelAttribute;
+    use GlobalAttributes;
+
+    protected array $attributes = [];
+
+    /**
+     * The HTML attributes. The following special options are recognized.
+     *
+     * @param array $value
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function attributes(array $value): self
+    {
+        $new = clone $this;
+        $new->attributes = $value;
+        return $new;
+    }
 
     /**
      * @return string the generated input tag.
@@ -31,10 +47,10 @@ final class ResetButton extends Widget
             $new->autoIdPrefix = 'reset-';
         }
 
-        if ($new->value !== '') {
-            $input = $input->value($new->value);
-        }
+        $id = $new->getIdWithoutModel();
+        /** @var string|null */
+        $name = $new->attributes['name'] ?? $id;
 
-        return $input->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
+        return $input->attributes($new->attributes)->id($id)->name($name)->render();
     }
 }

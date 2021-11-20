@@ -23,14 +23,6 @@ final class ImageTest extends TestCase
         );
     }
 
-    public function testHeight(): void
-    {
-        $this->assertSame(
-            '<input type="image" id="image-1" name="image-1" height="20">',
-            Image::widget()->height('20')->render(),
-        );
-    }
-
     public function testImmutability(): void
     {
         $image = Image::widget();
@@ -38,6 +30,14 @@ final class ImageTest extends TestCase
         $this->assertNotSame($image, $image->height(''));
         $this->assertNotSame($image, $image->src(''));
         $this->assertNotSame($image, $image->width(''));
+    }
+
+    public function testHeight(): void
+    {
+        $this->assertSame(
+            '<input type="image" id="image-1" name="image-1" height="20">',
+            Image::widget()->height('20')->render(),
+        );
     }
 
     public function testSrc(): void

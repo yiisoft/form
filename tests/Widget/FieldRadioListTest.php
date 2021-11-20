@@ -19,7 +19,6 @@ final class FieldRadioListTest extends TestCase
 
     /** @var string[] */
     private array $sex = [1 => 'Female', 2 => 'Male'];
-    private TypeForm $formModel;
 
     public function testContainerAttributes(): void
     {
@@ -33,11 +32,13 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['containerAttributes' => ['class' => 'test-class']], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['containerAttributes()' => [['class' => 'test-class']], 'items()' => [$this->sex]])
+                ->render(),
+        );
     }
 
     public function testContainerTag(): void
@@ -52,11 +53,13 @@ final class FieldRadioListTest extends TestCase
         </span>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['containerTag' => 'span'], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['containerTag()' => ['span'], 'items()' => [$this->sex]])
+                ->render(),
+        );
     }
 
     public function testContainerTagWithFalse(): void
@@ -69,11 +72,13 @@ final class FieldRadioListTest extends TestCase
         <label><input type="radio" name="TypeForm[int]" value="2"> Male</label>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['containerTag' => false], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['containerTag()' => [null], 'items()' => [$this->sex]])
+                ->render(),
+        );
     }
 
     public function testDisabled(): void
@@ -87,11 +92,13 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['disabled' => true], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['disabled()' => [], 'items()' => [$this->sex]])
+                ->render(),
+        );
     }
 
     public function testIndividualItemsAttributes(): void
@@ -106,16 +113,19 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(
-                [
-                    'individualItemsAttributes' => [1 => ['disabled' => true], 2 => ['class' => 'test-class']],
-                ],
-                $this->sex,
-            )
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList(
+                    [],
+                    [
+                        'individualItemsAttributes()' => [[1 => ['disabled' => true], 2 => ['class' => 'test-class']]],
+                        'items()' => [$this->sex],
+                    ],
+                )
+                ->render(),
+        );
     }
 
     public function testItemsAttributes(): void
@@ -130,11 +140,13 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['itemsAttributes' => ['class' => 'test-class']], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['items()' => [$this->sex], 'itemsAttributes()' => [['class' => 'test-class']]])
+                ->render(),
+        );
     }
 
     public function testItemFormater(): void
@@ -149,20 +161,25 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(
-                [
-                    'itemsFormatter' => static function (RadioItem $item) {
-                        return $item->checked
-                            ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
-                            : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
-                    },
-                ],
-                $this->sex
-            )
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList(
+                    [],
+                    [
+                        'items()' => [$this->sex],
+                        'itemsFormatter()' => [
+                            static function (RadioItem $item) {
+                                return $item->checked
+                                    ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
+                                    : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
+                            },
+                        ],
+                    ],
+                )
+                ->render(),
+        );
     }
 
     public function testItemsFromValues(): void
@@ -180,7 +197,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->radioList([], [], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'string')->radioList([], ['itemsFromValues()' => [$this->sex]])->render(),
         );
     }
 
@@ -198,7 +215,10 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radioList(['readonly' => true], $this->sex)->render(),
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['items()' => [$this->sex], 'readOnly()' => []])
+                ->render(),
         );
     }
 
@@ -216,7 +236,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radioList([], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'int')->radioList([], ['items()' => [$this->sex]])->render(),
         );
     }
 
@@ -232,11 +252,13 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['separator' => PHP_EOL], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['items()' => [$this->sex], 'separator()' => [PHP_EOL]])
+                ->render(),
+        );
     }
 
     public function testUncheckValue(): void
@@ -251,11 +273,13 @@ final class FieldRadioListTest extends TestCase
         </div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->radioList(['uncheckValue' => '0'], $this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->radioList([], ['items()' => [$this->sex], 'uncheckValue()' => ['0']])
+                ->render(),
+        );
     }
 
     public function testValue(): void
@@ -273,7 +297,10 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radioList([], [0 => 'Female', 1 => 'Male'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->radioList([], ['items()' => [[0 => 'Female', 1 => 'Male']]])
+                ->render(),
         );
 
         // value bool true
@@ -289,7 +316,10 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->radioList([], [0 => 'Female', 1 => 'Male'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->radioList([], ['items()' => [[0 => 'Female', 1 => 'Male']]])
+                ->render(),
         );
 
         // value int 0
@@ -305,7 +335,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radioList([], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'int')->radioList([], ['items()' => [$this->sex]])->render(),
         );
 
         // value int 1
@@ -321,7 +351,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->radioList([], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'int')->radioList([], ['items()' => [$this->sex]])->render(),
         );
 
         // value string '1'
@@ -338,7 +368,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->radioList([], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'string')->radioList([], ['items()' => [$this->sex]])->render(),
         );
 
         // value string '2'
@@ -355,7 +385,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->radioList([], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'string')->radioList([], ['items()' => [$this->sex]])->render(),
         );
 
         // value null
@@ -371,7 +401,7 @@ final class FieldRadioListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->radioList([], $this->sex)->render(),
+            Field::widget()->for($this->formModel, 'toNull')->radioList([], ['items()' => [$this->sex]])->render(),
         );
     }
 
@@ -380,7 +410,7 @@ final class FieldRadioListTest extends TestCase
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('RadioList widget value can not be an iterable or an object.');
-        Field::widget()->config($this->formModel, 'array')->radioList()->render();
+        Field::widget()->for($this->formModel, 'array')->radioList()->render();
     }
 
     protected function setUp(): void

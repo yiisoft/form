@@ -24,8 +24,8 @@ final class ErrorSummary extends Widget
     private array $attributes = [];
     private bool $encode = true;
     private FormModelInterface $formModel;
-    private string $footer = '';
-    private string $header = '<p>' . 'Please fix the following errors:' . '</p>';
+    private ?string $footer = null;
+    private ?string $header = '<p>' . 'Please fix the following errors:' . '</p>';
     private bool $showAllErrors = false;
     /** @psalm-param non-empty-string */
     private string $tag = 'div';
@@ -37,7 +37,7 @@ final class ErrorSummary extends Widget
      *
      * @return static
      *
-     * See {@see Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function attributes(array $value): self
     {
@@ -50,6 +50,8 @@ final class ErrorSummary extends Widget
      * Whether content should be HTML-encoded.
      *
      * @param bool $value
+     *
+     * @return static
      */
     public function encode(bool $value): self
     {
@@ -61,9 +63,11 @@ final class ErrorSummary extends Widget
     /**
      * Set the footer text for the error summary
      *
-     * @param string $value
+     * @param string|null $value
+     *
+     * return static
      */
-    public function footer(string $value): self
+    public function footer(?string $value): self
     {
         $new = clone $this;
         $new->footer = $value;
@@ -73,9 +77,11 @@ final class ErrorSummary extends Widget
     /**
      * Set the header text for the error summary
      *
-     * @param string $value
+     * @param string|null $value
+     *
+     * return static
      */
-    public function header(string $value): self
+    public function header(?string $value): self
     {
         $new = clone $this;
         $new->header = $value;
@@ -121,10 +127,6 @@ final class ErrorSummary extends Widget
      */
     public function tag(string $value): self
     {
-        if ($value === '') {
-            throw new InvalidArgumentException('Tag name cannot be empty.');
-        }
-
         $new = clone $this;
         $new->tag = $value;
         return $new;
@@ -169,6 +171,10 @@ final class ErrorSummary extends Widget
     {
         $new = clone $this;
 
+        if ($new->tag === '') {
+            throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
         /** @var array<string, string> */
         $lines = $new->collectErrors();
 
@@ -181,14 +187,14 @@ final class ErrorSummary extends Widget
             $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
         }
 
-        if ($new->tag === '') {
-            throw new InvalidArgumentException('Tag name cannot be empty.');
+        if ($new->header !== null) {
+            $content = $new->header . $content;
         }
 
-        return CustomTag::name($new->tag)
-            ->attributes($new->attributes)
-            ->encode(false)
-            ->content($new->header . $content . $new->footer)
-            ->render();
+        if ($new->footer !== null) {
+            $content .= $new->footer;
+        }
+
+        return CustomTag::name($new->tag)->attributes($new->attributes)->encode(false)->content($content)->render();
     }
 }

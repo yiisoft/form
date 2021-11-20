@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
@@ -17,8 +16,6 @@ final class FieldCheckBoxTest extends TestCase
 {
     use TestTrait;
 
-    private FormModelInterface $formModel;
-
     public function testAnyLabel(): void
     {
         $expected = <<<'HTML'
@@ -26,12 +23,30 @@ final class FieldCheckBoxTest extends TestCase
         <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'bool')
-            ->checkbox([], false)
-            ->label([], null)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['enclosedByLabel()' => [false]])
+                ->label([], ['label()' => [null]])
+                ->render(),
+        );
+    }
+
+    public function testAttributes(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" class="test-class" name="TypeForm[bool]" value="1"> Bool</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['class' => 'test-class', 'value' => '1'])
+                ->render(),
+        );
     }
 
     public function testEnclosedByLabel(): void
@@ -45,7 +60,10 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox([], false)->render(),
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['enclosedByLabel()' => [false]])
+                ->render(),
         );
 
         // Enclosed by label `true`
@@ -56,7 +74,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox([], true)->render(),
+            Field::widget()->for($this->formModel, 'bool')->checkbox(['value' => '1'])->render(),
         );
     }
 
@@ -69,12 +87,14 @@ final class FieldCheckBoxTest extends TestCase
         <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'bool')
-            ->checkbox([], false)
-            ->label(['class' => 'test-class'])
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['enclosedByLabel()' => [false]])
+                ->label(['class' => 'test-class'])
+                ->render(),
+        );
 
         // Enclosed by label `true` with label attributes
         $expected = <<<'HTML'
@@ -82,11 +102,13 @@ final class FieldCheckBoxTest extends TestCase
         <input type="hidden" name="TypeForm[bool]" value="0"><label class="test-class"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'bool')
-            ->checkbox(['labelAttributes' => ['class' => 'test-class']])
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['labelAttributes()' => [['class' => 'test-class']]])
+                ->render(),
+        );
     }
 
     public function testEnclosedByLabelCustomText(): void
@@ -98,12 +120,14 @@ final class FieldCheckBoxTest extends TestCase
         <input type="hidden" name="TypeForm[bool]" value="0"><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1">
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'bool')
-            ->checkbox([], false)
-            ->label([], 'test-text-label')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['enclosedByLabel()' => [false]])
+                ->label([], ['label()' => ['test-text-label']])
+                ->render(),
+        );
 
         // Enclosed by label `true` with custom text
         $expected = <<<'HTML'
@@ -113,7 +137,10 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox(['label' => 'test-text-label'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['label()' => ['test-text-label']])
+                ->render(),
         );
     }
 
@@ -126,7 +153,10 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox(['form' => 'form-id'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['form' => 'form-id', 'value' => '1'])
+                ->render(),
         );
     }
 
@@ -139,7 +169,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'bool')->checkbox(['value' => '1'])->render(),
         );
     }
 
@@ -152,7 +182,10 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox(['uncheckValue' => '0'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'bool')
+                ->checkbox(['value' => '1'], ['uncheckValue()' => ['0']])
+                ->render(),
         );
     }
 
@@ -166,8 +199,8 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')
-                ->checkbox(['uncheckValue' => 'inactive', 'value' => 'active'])
+            Field::widget()->for($this->formModel, 'string')
+                ->checkbox(['value' => 'active'], ['uncheckValue()' => ['inactive']])
                 ->render(),
         );
     }
@@ -183,7 +216,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'bool')->checkbox(['value' => '1'])->render(),
         );
 
         // value bool true
@@ -195,7 +228,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'bool')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'bool')->checkbox(['value' => '1'])->render(),
         );
 
         // value int 0
@@ -207,7 +240,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'int')->checkbox(['value' => '1'])->render(),
         );
 
         // value int 1
@@ -219,7 +252,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'int')->checkbox(['value' => '1'])->render(),
         );
 
         // value string '0'
@@ -232,7 +265,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'string')->checkbox(['value' => '1'])->render(),
         );
 
         // value string '1'
@@ -245,7 +278,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'string')->checkbox(['value' => '1'])->render(),
         );
 
         // value null
@@ -257,7 +290,7 @@ final class FieldCheckBoxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'toNull')->checkbox()->render(),
+            Field::widget()->for($this->formModel, 'toNull')->checkbox(['value' => '1'])->render(),
         );
     }
 
@@ -265,7 +298,7 @@ final class FieldCheckBoxTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
-        Field::widget()->config($this->formModel, 'array')->checkbox()->render();
+        Field::widget()->for($this->formModel, 'array')->checkbox()->render();
     }
 
     protected function setUp(): void

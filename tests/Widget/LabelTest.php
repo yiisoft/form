@@ -15,21 +15,18 @@ final class LabelTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
-    public function testFor(): void
+    public function testForId(): void
     {
         $this->assertSame(
-            '<label for="for-id">String</label>',
-            Label::widget()->config($this->formModel, 'string')->for('for-id')->render(),
+            '<label for="test-id">String</label>',
+            Label::widget()->for($this->formModel, 'string')->forId('test-id')->render(),
         );
     }
 
     public function testImmutability(): void
     {
         $label = Label::widget();
-        $this->assertNotSame($label, $label->encode(false));
-        $this->assertNotSame($label, $label->for(''));
+        $this->assertNotSame($label, $label->forId(''));
         $this->assertNotSame($label, $label->label(''));
     }
 
@@ -37,7 +34,7 @@ final class LabelTest extends TestCase
     {
         $this->assertSame(
             '<label for="typeform-string">Label:</label>',
-            Label::widget()->config($this->formModel, 'string')->label('Label:')->render(),
+            Label::widget()->for($this->formModel, 'string')->label('Label:')->render(),
         );
     }
 
@@ -45,7 +42,7 @@ final class LabelTest extends TestCase
     {
         $this->assertSame(
             '<label for="typeform-string">String</label>',
-            Label::widget()->config($this->formModel, 'string')->render(),
+            Label::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -56,15 +53,7 @@ final class LabelTest extends TestCase
     {
         $this->assertSame(
             '<label for="typeform-string">My&nbsp;Field</label>',
-            Label::widget()->config($this->formModel, 'string')->encode(false)->label('My&nbsp;Field')->render(),
-        );
-    }
-
-    public function testWithoutFor(): void
-    {
-        $this->assertSame(
-            '<label>String</label>',
-            Label::widget()->config($this->formModel, 'string')->for(null)->render(),
+            Label::widget()->for($this->formModel, 'string')->encode(false)->label('My&nbsp;Field')->render(),
         );
     }
 

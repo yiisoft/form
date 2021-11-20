@@ -8,17 +8,13 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\ErrorSummary;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorSummaryTest extends TestCase
 {
     use TestTrait;
-
-    private PersonalForm $formModel;
 
     public function dataProviderErrorSummary(): array
     {
@@ -110,12 +106,10 @@ final class ErrorSummaryTest extends TestCase
             ->model($this->formModel)
             ->footer($footer)
             ->showAllErrors($showAllErrors);
+
         $errorSummary = $header !== '' ? $errorSummary->header($header) : $errorSummary;
 
-        $this->assertEqualsWithoutLE(
-            $expected,
-            $errorSummary->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, $errorSummary->render());
     }
 
     public function testTagException(): void
@@ -130,10 +124,5 @@ final class ErrorSummaryTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->createFormModel(PersonalForm::class);
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 }

@@ -21,7 +21,6 @@ final class FieldSelectTest extends TestCase
     private array $cities = [];
     /** @var string[][] */
     private array $citiesGroups = [];
-    private TypeForm $formModel;
     /** @var string[][] */
     private array $groups = [];
 
@@ -45,11 +44,13 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->select([], $this->citiesGroups, $this->groups)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->select([], ['items()' => [$this->citiesGroups], 'groups()' => [$this->groups]])
+                ->render(),
+        );
     }
 
     public function testGroupsItemsAttributes(): void
@@ -72,11 +73,20 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->select(['itemsAttributes' => ['2' => ['disabled' => true]]], $this->citiesGroups, $this->groups)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->select(
+                    [],
+                    [
+                        'items()' => [$this->citiesGroups],
+                        'groups()' => [$this->groups],
+                        'itemsAttributes()' => [['2' => ['disabled' => true]]],
+                    ],
+                )
+                ->render(),
+        );
     }
 
     public function testMultiple(): void
@@ -93,11 +103,13 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'array')
-            ->select(['multiple' => true, 'unselectValue' => '0'], $this->cities)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'array')
+                ->select(['multiple' => true], ['items()' => [$this->cities], 'unselectValue()' => ['0']])
+                ->render(),
+        );
     }
 
     public function testOptionsDataEncode(): void
@@ -120,11 +132,13 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->select(['optionsData' => $cities, 'encode' => false])
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->select([], ['optionsData()' => [$cities], 'encode()' => [false]])
+                ->render(),
+        );
 
         // encode true.
         $cities = [
@@ -144,11 +158,13 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->select(['optionsData' => $cities, 'encode' => true])
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->select([], ['optionsData()' => [$cities], 'encode()' => [true]])
+                ->render(),
+        );
     }
 
     public function testPrompt(): void
@@ -174,7 +190,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->select(['prompt' => $prompt], $this->cities)->render(),
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->select([], ['items()' => [$this->cities], 'prompt()' => [$prompt]])
+                ->render(),
         );
     }
 
@@ -193,7 +212,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
         );
     }
 
@@ -211,11 +230,13 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'int')
-            ->select(['multiple' => true, 'size' => 4], $this->cities)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'int')
+                ->select(['multiple' => true, 'size' => 4], ['items()' => [$this->cities]])
+                ->render(),
+        );
     }
 
     public function testUnselectValueWithMultiple(): void
@@ -224,7 +245,8 @@ final class FieldSelectTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-array">Array</label>
-        <select id="typeform-array" name="TypeForm[array]">
+        <input type="hidden" name="TypeForm[array]" value="0">
+        <select id="typeform-array" name="TypeForm[array][]" multiple size="4">
         <option value="1" selected>Moscu</option>
         <option value="2">San Petersburgo</option>
         <option value="3" selected>Novosibirsk</option>
@@ -232,11 +254,13 @@ final class FieldSelectTest extends TestCase
         </select>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'array', ['unselectValue' => 0, 'multiple' => true])
-            ->select([], $this->cities)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'array')
+                ->select(['multiple' => true], ['items()' => [$this->cities], 'unselectValue()' => ['0']])
+                ->render(),
+        );
     }
 
     public function testValues(): void
@@ -256,7 +280,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
         );
 
         // value int 2.
@@ -274,7 +298,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
         );
 
         // value iterable [2, 3].
@@ -292,7 +316,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'array')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'array')->select([], ['items()' => [$this->cities]])->render(),
         );
 
         // value string '1'
@@ -311,7 +335,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'string')->select([], ['items()' => [$this->cities]])->render(),
         );
 
         // value string '2'
@@ -330,7 +354,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'string')->select([], ['items()' => [$this->cities]])->render(),
         );
 
         // value null
@@ -348,7 +372,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->select([], $this->cities)->render(),
+            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
         );
     }
 
@@ -357,7 +381,7 @@ final class FieldSelectTest extends TestCase
         $this->formModel->setAttribute('object', new StdClass());
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select widget value can not be an object.');
-        Field::widget()->config($this->formModel, 'object')->select()->render();
+        Field::widget()->for($this->formModel, 'object')->select()->render();
     }
 
     protected function setUp(): void

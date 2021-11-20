@@ -11,7 +11,7 @@ use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
-final class FieldSubmitTest extends TestCase
+final class FieldResetButtonTest extends TestCase
 {
     use TestTrait;
 
@@ -19,12 +19,12 @@ final class FieldSubmitTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="s-1" name="s-1">
+        <input type="reset" id="s-1" name="s-1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->submitButton(['autoIdPrefix' => 's-'])->render(),
+            Field::widget()->resetButton([], ['autoIdPrefix()' => ['s-']])->render()
         );
     }
 
@@ -32,65 +32,50 @@ final class FieldSubmitTest extends TestCase
     {
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-1" name="submit-1" disabled>
+        <input type="reset" id="reset-1" name="reset-1" disabled>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->submitButton(['disabled' => true])->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['disabled' => true])->render());
     }
 
     public function testId(): void
     {
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="test-id" name="test-id">
+        <input type="reset" id="test-id" name="test-id">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->submitButton(['id' => 'test-id'])->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['id' => 'test-id'])->render());
     }
 
     public function testName(): void
     {
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-1" name="test-name">
+        <input type="reset" id="reset-1" name="test-name">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->submitButton(['name' => 'test-name'])->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['name' => 'test-name'])->render());
     }
 
     public function testRender(): void
     {
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-1" name="submit-1">
+        <input type="reset" id="reset-1" name="reset-1">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->submitButton()->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton()->render());
     }
 
     public function testValue(): void
     {
         $expected = <<<'HTML'
         <div>
-        <input type="submit" id="submit-1" name="submit-1" value="Save">
+        <input type="reset" id="reset-1" name="reset-1" value="Reseteable">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->submitButton(['value' => 'Save'])->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['value' => 'Reseteable'])->render());
     }
 
     protected function setUp(): void

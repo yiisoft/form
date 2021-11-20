@@ -16,8 +16,6 @@ final class FieldEmailTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testMaxLength(): void
     {
         $expected = <<<'HTML'
@@ -29,7 +27,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email(['maxlength' => 10])->render(),
+            Field::widget()->for($this->formModel, 'string')->email(['maxlength' => 10])->render(),
         );
     }
 
@@ -44,7 +42,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email(['minlength' => 4])->render(),
+            Field::widget()->for($this->formModel, 'string')->email(['minlength' => 4])->render(),
         );
     }
 
@@ -60,7 +58,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email(['multiple' => true])->render(),
+            Field::widget()->for($this->formModel, 'string')->email(['multiple' => true])->render(),
         );
     }
 
@@ -73,11 +71,13 @@ final class FieldEmailTest extends TestCase
         <div>Write your text string.</div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->email(['pattern' => '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}'])
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->for($this->formModel, 'string')
+                ->email(['pattern' => '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}'])
+                ->render(),
+        );
     }
 
     public function testPlaceholder(): void
@@ -91,7 +91,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email(['placeholder' => 'PlaceHolder Text'])->render(),
+            Field::widget()->for($this->formModel, 'string')->email(['placeholder' => 'PlaceHolder Text'])->render(),
         );
     }
 
@@ -106,7 +106,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email()->render(),
+            Field::widget()->for($this->formModel, 'string')->email()->render(),
         );
     }
 
@@ -121,7 +121,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email(['size' => 20])->render(),
+            Field::widget()->for($this->formModel, 'string')->email(['size' => 20])->render(),
         );
     }
 
@@ -138,7 +138,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email()->render(),
+            Field::widget()->for($this->formModel, 'string')->email()->render(),
         );
 
         // value null
@@ -152,7 +152,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->email()->render(),
+            Field::widget()->for($this->formModel, 'string')->email()->render(),
         );
     }
 
@@ -160,7 +160,7 @@ final class FieldEmailTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Email widget must be a string or null value.');
-        Field::widget()->config($this->formModel, 'int')->email()->render();
+        Field::widget()->for($this->formModel, 'int')->email()->render();
     }
 
     protected function setUp(): void

@@ -16,13 +16,43 @@ final class DateTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    public function testImmutability(): void
+    {
+        $date = Date::widget();
+        $this->assertNotSame($date, $date->max(''));
+        $this->assertNotSame($date, $date->min(''));
+        $this->assertNotSame($date, $date->readonly());
+    }
+
+    public function testMax(): void
+    {
+        $this->assertSame(
+            '<input type="date" id="typeform-todate" name="TypeForm[toDate]" max="1996-12-19">',
+            Date::widget()->for($this->formModel, 'toDate')->max('1996-12-19')->render(),
+        );
+    }
+
+    public function testMin(): void
+    {
+        $this->assertSame(
+            '<input type="date" id="typeform-todate" name="TypeForm[toDate]" min="1996-12-19">',
+            Date::widget()->for($this->formModel, 'toDate')->min('1996-12-19')->render(),
+        );
+    }
+
+    public function testReadonly(): void
+    {
+        $this->assertSame(
+            '<input type="date" id="typeform-todate" name="TypeForm[toDate]" readonly>',
+            Date::widget()->for($this->formModel, 'toDate')->readonly()->render(),
+        );
+    }
 
     public function testRender(): void
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]">',
-            Date::widget()->config($this->formModel, 'toDate')->render(),
+            Date::widget()->for($this->formModel, 'toDate')->render(),
         );
     }
 
@@ -32,14 +62,14 @@ final class DateTest extends TestCase
         $this->formModel->setAttribute('toDate', '2021-09-18');
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18">',
-            Date::widget()->config($this->formModel, 'toDate')->render(),
+            Date::widget()->for($this->formModel, 'toDate')->render(),
         );
 
         // value null
         $this->formModel->setAttribute('toDate', null);
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]">',
-            Date::widget()->config($this->formModel, 'toDate')->render(),
+            Date::widget()->for($this->formModel, 'toDate')->render(),
         );
     }
 
@@ -48,7 +78,7 @@ final class DateTest extends TestCase
         $this->formModel->setAttribute('array', []);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Date widget requires a string or null value.');
-        Date::widget()->config($this->formModel, 'array')->render();
+        Date::widget()->for($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

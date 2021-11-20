@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "password" represents a one-line plain-text edit control for
@@ -17,10 +15,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password
  */
-final class Password extends Widget
+final class Password extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
@@ -113,6 +110,22 @@ final class Password extends Widget
     }
 
     /**
+     * The number of options meant to be shown by the control represented by its element.
+     *
+     * @param int $size
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.size
+     */
+    public function size(int $size): self
+    {
+        $new = clone $this;
+        $new->attributes['size'] = $size;
+        return $new;
+    }
+
+    /**
      * Generates a password input tag for the given form attribute.
      *
      * @return string the generated input tag,
@@ -122,15 +135,13 @@ final class Password extends Widget
         $new = clone $this;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('Password widget must be a string or null value.');
         }
 
-        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
-
-        return Input::password($name, $value === '' ? null : $value)
+        return Input::password($new->getName(), $value === '' ? null : $value)
             ->attributes($new->attributes)
             ->id($new->getId())
             ->render();

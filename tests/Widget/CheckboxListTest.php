@@ -19,7 +19,6 @@ final class CheckboxListTest extends TestCase
 
     /** @var string[] */
     private array $sex = [1 => 'Female', 2 => 'Male'];
-    private TypeForm $formModel;
 
     public function testContainerAttributes(): void
     {
@@ -29,12 +28,14 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[array][]" value="2"> Male</label>
         </div>
         HTML;
-        $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
-            ->containerAttributes(['class' => 'test-class'])
-            ->items($this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            CheckboxList::widget()
+                ->for($this->formModel, 'array')
+                ->containerAttributes(['class' => 'test-class'])
+                ->items($this->sex)
+                ->render(),
+        );
     }
 
     public function testContainerTag(): void
@@ -45,12 +46,14 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[array][]" value="2"> Male</label>
         </span>
         HTML;
-        $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
-            ->containerTag('span')
-            ->items($this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            CheckboxList::widget()
+                ->for($this->formModel, 'array')
+                ->containerTag('span')
+                ->items($this->sex)
+                ->render(),
+        );
     }
 
     public function testContainerTagWithNull(): void
@@ -59,40 +62,49 @@ final class CheckboxListTest extends TestCase
         <label><input type="checkbox" name="TypeForm[array][]" value="1"> Female</label>
         <label><input type="checkbox" name="TypeForm[array][]" value="2"> Male</label>
         HTML;
-        $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
-            ->containerTag(null)
-            ->items($this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testDisabled(): void
-    {
-        $expected = <<<'HTML'
-        <div id="typeform-array">
-        <label><input type="checkbox" name="TypeForm[array][]" value="1" disabled> Female</label>
-        <label><input type="checkbox" name="TypeForm[array][]" value="2" disabled> Male</label>
-        </div>
-        HTML;
-        $html = CheckboxList::widget()->config($this->formModel, 'array')->disabled(true)->items($this->sex)->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            CheckboxList::widget()
+                ->for($this->formModel, 'array')
+                ->containerTag(null)
+                ->items($this->sex)
+                ->render()
+        );
     }
 
     public function testIndividualItemsAttributes(): void
     {
+        // set disabled `true`.
         $expected = <<<'HTML'
         <div id="typeform-array">
         <label><input type="checkbox" name="TypeForm[array][]" value="1" disabled> Female</label>
         <label><input type="checkbox" class="test-class" name="TypeForm[array][]" value="2"> Male</label>
         </div>
         HTML;
-        $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
-            ->individualItemsAttributes([1 => ['disabled' => true], 2 => ['class' => 'test-class']])
-            ->items($this->sex)
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            CheckboxList::widget()
+                ->for($this->formModel, 'array')
+                ->individualItemsAttributes([1 => ['disabled' => true], 2 => ['class' => 'test-class']])
+                ->items($this->sex)
+                ->render(),
+        );
+
+        // set readonly `true.
+        $expected = <<<'HTML'
+        <div id="typeform-array">
+        <label><input type="checkbox" name="TypeForm[array][]" value="1" readonly> Female</label>
+        <label><input type="checkbox" name="TypeForm[array][]" value="2" readonly> Male</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            CheckboxList::widget()
+                ->for($this->formModel, 'array')
+                ->items($this->sex)
+                ->individualItemsAttributes([1 => ['readonly' => true], 2 => ['readonly' => true]])
+                ->render(),
+        );
     }
 
     public function testItemsAttributes(): void
@@ -104,7 +116,7 @@ final class CheckboxListTest extends TestCase
         </div>
         HTML;
         $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
+            ->for($this->formModel, 'array')
             ->items($this->sex)
             ->itemsAttributes(['class' => 'test-class'])
             ->render();
@@ -120,7 +132,7 @@ final class CheckboxListTest extends TestCase
         </div>
         HTML;
         $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
+            ->for($this->formModel, 'array')
             ->itemsFormatter(
                 static function (CheckboxItem $item) {
                     return $item->checked
@@ -143,7 +155,6 @@ final class CheckboxListTest extends TestCase
         $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
         $this->assertNotSame($checkboxList, $checkboxList->itemsFormatter(null));
         $this->assertNotSame($checkboxList, $checkboxList->itemsFromValues());
-        $this->assertNotSame($checkboxList, $checkboxList->readonly());
         $this->assertNotSame($checkboxList, $checkboxList->separator(''));
     }
 
@@ -157,24 +168,10 @@ final class CheckboxListTest extends TestCase
         </div>
         HTML;
         $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
+            ->for($this->formModel, 'array')
             ->itemsFromValues($this->sex)
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testReadOnly(): void
-    {
-        $expected = <<<'HTML'
-        <div id="typeform-array">
-        <label><input type="checkbox" name="TypeForm[array][]" value="1" readonly> Female</label>
-        <label><input type="checkbox" name="TypeForm[array][]" value="2" readonly> Male</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            CheckboxList::widget()->config($this->formModel, 'array')->items($this->sex)->readonly(true)->render(),
-        );
     }
 
     public function testRender(): void
@@ -187,7 +184,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($this->formModel, 'array')->items($this->sex)->render(),
+            CheckboxList::widget()->for($this->formModel, 'array')->items($this->sex)->render(),
         );
     }
 
@@ -199,7 +196,7 @@ final class CheckboxListTest extends TestCase
         </div>
         HTML;
         $html = CheckboxList::widget()
-            ->config($this->formModel, 'array')
+            ->for($this->formModel, 'array')
             ->items($this->sex)
             ->separator('&#9866;')
             ->render();
@@ -218,7 +215,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($this->formModel, 'array')->items($this->sex)->render(),
+            CheckboxList::widget()->for($this->formModel, 'array')->items($this->sex)->render(),
         );
 
         // value iterable
@@ -231,7 +228,7 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->config($this->formModel, 'array')->items($this->sex)->render(),
+            CheckboxList::widget()->for($this->formModel, 'array')->items($this->sex)->render(),
         );
     }
 
@@ -240,7 +237,7 @@ final class CheckboxListTest extends TestCase
         $this->formModel->setAttribute('int', 1);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('CheckboxList widget must be a array or null value.');
-        CheckboxList::widget()->config($this->formModel, 'int')->render();
+        CheckboxList::widget()->for($this->formModel, 'int')->render();
     }
 
     protected function setUp(): void

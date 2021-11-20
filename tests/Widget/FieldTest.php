@@ -7,11 +7,9 @@ namespace Yiisoft\Form\Tests\Widget;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\AttributesValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldTest extends TestCase
@@ -24,7 +22,6 @@ final class FieldTest extends TestCase
         'invalidClass()' => ['is-invalid'],
         'validClass()' => ['is-valid'],
     ];
-    private AttributesValidatorForm $formModel;
 
     public function testAddAttributesEmailValidator(): void
     {
@@ -42,7 +39,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'email')->email()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'email')->email()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -59,7 +56,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'email')->email()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'email')->email()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -76,7 +73,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'email')->email()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'email')->email()->render(),
         );
 
         // add attributes html validator `MatchRegularExpression::class`.
@@ -93,7 +90,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'email')->email()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'email')->email()->render(),
         );
 
         // passed all rules for validation email.
@@ -109,7 +106,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'email')->email()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'email')->email()->render(),
         );
     }
 
@@ -128,7 +125,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->number()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'number')->number()->render(),
         );
 
         // add attributes html validator `Number::rule()`.
@@ -144,7 +141,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->number()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'number')->number()->render(),
         );
 
         // passed all rules for validation number.
@@ -159,7 +156,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->number()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'number')->number()->render(),
         );
     }
 
@@ -178,7 +175,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'password')->password()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'password')->password()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -194,7 +191,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'password')->password()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'password')->password()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -210,7 +207,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'password')->password()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'password')->password()->render(),
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
@@ -226,7 +223,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'password')->password()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'password')->password()->render(),
         );
 
         // passed all rules for validation password.
@@ -241,7 +238,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'password')->password()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'password')->password()->render(),
         );
     }
 
@@ -262,7 +259,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->range()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'number')->range()->render(),
         );
 
         // add attributes html validator `Number::rule()`.
@@ -280,7 +277,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->range()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'number')->range()->render(),
         );
 
         // passed all rules for validation number.
@@ -297,7 +294,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'number')->range()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'number')->range()->render(),
         );
     }
 
@@ -316,7 +313,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'telephone')->telephone()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'telephone')->telephone()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -332,7 +329,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'telephone')->telephone()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'telephone')->telephone()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -348,7 +345,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'telephone')->telephone()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'telephone')->telephone()->render(),
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
@@ -364,7 +361,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'telephone')->telephone()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'telephone')->telephone()->render(),
         );
 
         // passed all rules for validation telephone.
@@ -379,7 +376,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'telephone')->telephone()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'telephone')->telephone()->render(),
         );
     }
 
@@ -398,7 +395,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'text')->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -414,7 +411,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'text')->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -430,7 +427,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'text')->render(),
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
@@ -446,7 +443,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'text')->render(),
         );
 
         // passed all rules for validation text.
@@ -461,73 +458,73 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'text')->render(),
         );
     }
 
     public function testAddAttributesTextAreaValidator(): void
     {
         // add attributes html validator `Required::rule()`.
-        $this->formModel->setAttribute('text', '');
+        $this->formModel->setAttribute('textArea', '');
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
-        <label for="attributesvalidatorform-text">Text</label>
-        <textarea id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" required></textarea>
+        <label for="attributesvalidatorform-textarea">Text Area</label>
+        <textarea id="attributesvalidatorform-textarea" class="is-invalid" name="AttributesValidatorForm[textArea]" maxlength="100" minlength="10" required pattern="^[a-zA-Z ]*$"></textarea>
         <div class="hasError">Value cannot be blank.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'textArea')->textArea()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('text', 'a');
+        $this->formModel->setAttribute('textArea', 'a');
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
-        <label for="attributesvalidatorform-text">Text</label>
-        <textarea id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" required>a</textarea>
+        <label for="attributesvalidatorform-textarea">Text Area</label>
+        <textarea id="attributesvalidatorform-textarea" class="is-invalid" name="AttributesValidatorForm[textArea]" maxlength="100" minlength="10" required pattern="^[a-zA-Z ]*$">a</textarea>
         <div class="hasError">Is too short.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'textArea')->textArea()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
-        $this->formModel->setAttribute('text', 'testsme');
+        $this->formModel->setAttribute('textArea', str_repeat('a', 101));
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
-        <label for="attributesvalidatorform-text">Text</label>
-        <textarea id="attributesvalidatorform-text" class="is-invalid" name="AttributesValidatorForm[text]" required>testsme</textarea>
+        <label for="attributesvalidatorform-textarea">Text Area</label>
+        <textarea id="attributesvalidatorform-textarea" class="is-invalid" name="AttributesValidatorForm[textArea]" maxlength="100" minlength="10" required pattern="^[a-zA-Z ]*$">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
         <div class="hasError">Is too long.</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'textArea')->textArea()->render(),
         );
 
         // passed all rules for validation textarea.
-        $this->formModel->setAttribute('text', 'tests');
+        $this->formModel->setAttribute('textArea', 'This is normal text');
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
         $expected = <<<'HTML'
         <div>
-        <label for="attributesvalidatorform-text">Text</label>
-        <textarea id="attributesvalidatorform-text" class="is-valid" name="AttributesValidatorForm[text]" required>tests</textarea>
+        <label for="attributesvalidatorform-textarea">Text Area</label>
+        <textarea id="attributesvalidatorform-textarea" class="is-valid" name="AttributesValidatorForm[textArea]" maxlength="100" minlength="10" required pattern="^[a-zA-Z ]*$">This is normal text</textarea>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'text')->textArea()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'textArea')->textArea()->render(),
         );
     }
 
@@ -546,7 +543,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'url')->url()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -562,7 +559,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'url')->url()->render(),
         );
 
         // add attributes html validator `HasLength::rule()`.
@@ -578,7 +575,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'url')->url()->render(),
         );
 
         // add attributes html validator `MatchRegularExpression::rule()`.
@@ -594,7 +591,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'url')->url()->render(),
         );
 
         // passed all rules for validation url.
@@ -609,7 +606,7 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->config($this->formModel, 'url')->url()->render(),
+            Field::widget($this->fieldConfig)->for($this->formModel, 'url')->url()->render(),
         );
     }
 
@@ -618,10 +615,5 @@ final class FieldTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->createFormModel(AttributesValidatorForm::class);
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 }

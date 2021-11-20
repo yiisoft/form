@@ -8,21 +8,18 @@ use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListTag;
-use Yiisoft\Widget\Widget;
 
 /*
  * Generates a list of checkboxes.
  *
  * A checkbox list allows multiple selection.
  */
-final class CheckboxList extends Widget
+final class CheckboxList extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
@@ -70,28 +67,6 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * Set whether the element is disabled or not.
-     *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
-     * text.
-     * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
-     * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to false to enable the element again, which is not the case.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
-     */
-    public function disabled(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->itemsAttributes['disabled'] = $value;
-        return $new;
-    }
-
-    /**
      * The specified attributes for items.
      *
      * @param array $attributes
@@ -124,7 +99,7 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * The items attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
+     * The items attribute for generating the list of checkboxes tag using {@see CheckBoxList}.
      *
      * @param array $attributes
      *
@@ -179,21 +154,6 @@ final class CheckboxList extends Widget
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
-     * When specified, the element is not mutable.
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-     */
-    public function readonly(): self
-    {
-        $new = clone $this;
-        $new->itemsAttributes['readonly'] = true;
-        return $new;
-    }
-
-    /**
      * The HTML code that separates items.
      *
      * @param string $separator
@@ -213,14 +173,19 @@ final class CheckboxList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $checkboxList = CheckboxListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
-        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /**
+         *  @var iterable<int, scalar|Stringable>|scalar|Stringable|null
+         *
+         *  @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
+         */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_iterable($value) && null !== $value) {
             throw new InvalidArgumentException('CheckboxList widget must be a array or null value.');
         }
+
+        $checkboxList = CheckboxListTag::create($new->getName());
 
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
 
@@ -236,13 +201,16 @@ final class CheckboxList extends Widget
             $checkboxList = $checkboxList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
         }
 
+        if ($new->itemsAttributes !== []) {
+            $checkboxList = $checkboxList->replaceCheckboxAttributes($new->itemsAttributes);
+        }
+
         return $checkboxList
             ->checkboxAttributes($new->attributes)
             ->containerAttributes($new->containerAttributes)
             ->containerTag($new->containerTag)
             ->individualInputAttributes($new->individualItemsAttributes)
             ->itemFormatter($new->itemsFormatter)
-            ->replaceCheckboxAttributes($new->itemsAttributes)
             ->separator($new->separator)
             ->values($value ?? [])
             ->render();

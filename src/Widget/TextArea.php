@@ -6,23 +6,17 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * Generates a textarea tag for the given form attribute.
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html
  */
-final class TextArea extends Widget
+final class TextArea extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
-
-    private string $dirname = '';
-    private string $wrap = '';
+    use GlobalAttributes;
 
     /**
      * The expected maximum number of characters per line of text for the UA to show.
@@ -57,7 +51,7 @@ final class TextArea extends Widget
         }
 
         $new = clone $this;
-        $new->dirname = $value;
+        $new->attributes['dirname'] = $value;
         return $new;
     }
 
@@ -148,7 +142,7 @@ final class TextArea extends Widget
         }
 
         $new = clone $this;
-        $new->wrap = $value;
+        $new->attributes['wrap'] = $value;
         return $new;
     }
 
@@ -159,24 +153,17 @@ final class TextArea extends Widget
     {
         $new = clone $this;
 
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('TextArea widget must be a string or null value.');
         }
 
-        if ($new->dirname !== '') {
-            $new->attributes['dirname'] = $new->dirname;
-        }
-
-        if ($new->wrap !== '') {
-            $new->attributes['wrap'] = $new->wrap;
-        }
-
         return TextAreaTag::tag()
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->value($value)
             ->render();
     }

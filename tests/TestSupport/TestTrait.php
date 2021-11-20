@@ -7,9 +7,14 @@ namespace Yiisoft\Form\Tests\TestSupport;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
+use Yiisoft\Validator\ValidatorInterface;
 
 trait TestTrait
 {
+    private FormModelInterface $formModel;
+
     /**
      * Asserting two strings equality ignoring line endings.
      *
@@ -28,6 +33,11 @@ trait TestTrait
     public function createFormModel(string $class): void
     {
         $this->formModel = new $class();
+    }
+
+    private function createValidatorMock(): ValidatorInterface
+    {
+        return new ValidatorMock();
     }
 
     /**

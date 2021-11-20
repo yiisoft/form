@@ -15,13 +15,11 @@ final class FileTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testAccept(): void
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" accept="image/*">',
-            File::widget()->config($this->formModel, 'array')->accept('image/*')->render(),
+            File::widget()->for($this->formModel, 'array')->accept('image/*')->render(),
         );
     }
 
@@ -31,7 +29,7 @@ final class FileTest extends TestCase
         <input type="hidden" id="test-id" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
         HTML;
         $html = File::widget()
-            ->config($this->formModel, 'array')
+            ->for($this->formModel, 'array')
             ->hiddenAttributes(['id' => 'test-id'])
             ->uncheckValue('0')
             ->render();
@@ -51,7 +49,7 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" multiple>',
-            File::widget()->config($this->formModel, 'array')->multiple()->render(),
+            File::widget()->for($this->formModel, 'array')->multiple()->render(),
         );
     }
 
@@ -59,7 +57,7 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]">',
-            File::widget()->config($this->formModel, 'array')->render(),
+            File::widget()->for($this->formModel, 'array')->render(),
         );
     }
 
@@ -68,7 +66,7 @@ final class FileTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
         HTML;
-        $html = File::widget()->config($this->formModel, 'array')->uncheckValue('0')->render();
+        $html = File::widget()->for($this->formModel, 'array')->uncheckValue('0')->render();
         $this->assertSame($expected, $html);
     }
 

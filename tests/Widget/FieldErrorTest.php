@@ -7,17 +7,33 @@ namespace Yiisoft\Form\Tests\Widget;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldErrorTest extends TestCase
 {
     use TestTrait;
 
-    private PersonalForm $formModel;
+    public function testAttributes(): void
+    {
+        $validator = $this->createValidatorMock();
+        $this->formModel->setAttribute('name', 'sam');
+        $validator->validate($this->formModel);
+
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
+        <div>Write your first name.</div>
+        <div class="testClass">Is too short.</div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'name')->error(['class' => 'testClass'])->render(),
+        );
+    }
 
     public function testMessageCustomText(): void
     {
@@ -36,8 +52,8 @@ final class FieldErrorTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
-                ->config($this->formModel, 'name')
-                ->error([], 'This is custom error message.')
+                ->for($this->formModel, 'name')
+                ->error([], ['message()' => ['This is custom error message.']])
                 ->render(),
         );
     }
@@ -59,8 +75,8 @@ final class FieldErrorTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
-                ->config($this->formModel, 'name')
-                ->error([], '', [$this->formModel, 'customError'])
+                ->for($this->formModel, 'name')
+                ->error([], ['messageCallback()' => [[$this->formModel, 'customError']]])
                 ->render(),
         );
     }
@@ -82,8 +98,8 @@ final class FieldErrorTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
-                ->config($this->formModel, 'name')
-                ->error([], '', [$this->formModel, 'customErrorWithIcon'], false)
+                ->for($this->formModel, 'name')
+                ->error([], ['encode()' => [false], 'messageCallback()' => [[$this->formModel, 'customErrorWithIcon']]])
                 ->render(),
         );
     }
@@ -102,7 +118,7 @@ final class FieldErrorTest extends TestCase
         <div>Is too short.</div>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->config($this->formModel, '[0]name')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->for($this->formModel, '[0]name')->render());
     }
 
     public function testRender(): void
@@ -121,7 +137,7 @@ final class FieldErrorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'name')->render(),
+            Field::widget()->for($this->formModel, 'name')->render(),
         );
     }
 
@@ -141,27 +157,7 @@ final class FieldErrorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'name')->error(['tag' => 'span'])->render(),
-        );
-    }
-
-    public function testTagAttributes(): void
-    {
-        $validator = $this->createValidatorMock();
-        $this->formModel->setAttribute('name', 'sam');
-        $validator->validate($this->formModel);
-
-        $expected = <<<'HTML'
-        <div>
-        <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" value="sam" minlength="4" required>
-        <div>Write your first name.</div>
-        <div class="testClass">Is too short.</div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'name')->error(['class' => 'testClass'])->render(),
+            Field::widget()->for($this->formModel, 'name')->error([], ['tag()' => ['span']])->render(),
         );
     }
 
@@ -170,10 +166,5 @@ final class FieldErrorTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer(), []);
         $this->createFormModel(PersonalForm::class);
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 }

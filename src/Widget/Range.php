@@ -6,12 +6,10 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "range" represents an imprecise control for setting the
@@ -19,10 +17,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html
  */
-final class Range extends Widget
+final class Range extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     private array $outputAttributes = [];
     private string $outputTag = 'output';
@@ -97,7 +94,9 @@ final class Range extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
+
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html#input.range.attrs.name */
+        $name = $new->getName();
         $nameOutput = Html::generateId();
 
         if (empty($new->outputTag)) {
@@ -105,7 +104,7 @@ final class Range extends Widget
         }
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html#input.range.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_numeric($value) && null !== $value) {
             throw new InvalidArgumentException('Range widget must be a numeric or null value.');

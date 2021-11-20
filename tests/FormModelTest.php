@@ -4,120 +4,67 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\Helper\HtmlFormErrors;
+use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
+use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
-use Yiisoft\Validator\ValidatorInterface;
-
-use function str_repeat;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
 final class FormModelTest extends TestCase
 {
+    use TestTrait;
+
     public function testAnonymousFormName(): void
     {
-        $form = new class () extends FormModel {};
-        $this->assertEquals('', $form->getFormName());
-    }
-
-    public function testDefaultFormName(): void
-    {
-        $form = new DefaultFormNameForm();
-        $this->assertEquals('DefaultFormNameForm', $form->getFormName());
-    }
-
-    public function testNonNamespacedFormName(): void
-    {
-        $form = new \NonNamespacedForm();
-        $this->assertEquals('NonNamespacedForm', $form->getFormName());
+        $form = new class () extends FormModel {
+        };
+        $this->assertSame('', $form->getFormName());
     }
 
     public function testCustomFormName(): void
     {
         $form = new CustomFormNameForm();
-        $this->assertEquals('my-best-form-name', $form->getFormName());
+        $this->assertSame('my-best-form-name', $form->getFormName());
     }
 
-    public function testUnknownPropertyType(): void
+    public function testDefaultFormName(): void
     {
+        $form = new DefaultFormNameForm();
+        $this->assertSame('DefaultFormNameForm', $form->getFormName());
+    }
+
+    public function testsFormErrorsException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Form errors class must implement Yiisoft\Form\FormErrorsInterface');
         $form = new class () extends FormModel {
-            private $property;
+            protected string $formErrorsClass = \stdClass::class;
         };
-
-        $form->setAttribute('property', true);
-        $this->assertSame(true, $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', 'string');
-        $this->assertSame('string', $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', 0);
-        $this->assertSame(0, $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', 1.2563);
-        $this->assertSame(1.2563, $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', []);
-        $this->assertSame([], $form->getAttributeValue('property'));
-    }
-
-    public function testGetAttributeValue(): void
-    {
-        $form = new LoginForm();
-
-        $form->login('admin');
-        $this->assertEquals('admin', $form->getAttributeValue('login'));
-
-        $form->password('123456');
-        $this->assertEquals('123456', $form->getAttributeValue('password'));
-
-        $form->rememberMe(true);
-        $this->assertEquals(true, $form->getAttributeValue('rememberMe'));
-    }
-
-    public function testGetAttributeValueWithNestedAttribute(): void
-    {
-        $form = new FormWithNestedAttribute();
-
-        $form->setUserLogin('admin');
-        $this->assertEquals('admin', $form->getAttributeValue('user.login'));
     }
 
     public function testGetAttributeHint(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Write your id or email.', $form->getAttributeHint('login'));
-        $this->assertEquals('Write your password.', $form->getAttributeHint('password'));
+        $this->assertSame('Write your id or email.', $form->getAttributeHint('login'));
+        $this->assertSame('Write your password.', $form->getAttributeHint('password'));
         $this->assertEmpty($form->getAttributeHint('noExist'));
-    }
-
-    public function testGetNestedAttributeHint(): void
-    {
-        $form = new FormWithNestedAttribute();
-
-        $this->assertEquals('Write your id or email.', $form->getAttributeHint('user.login'));
     }
 
     public function testGetAttributeLabel(): void
     {
         $form = new LoginForm();
 
-        $this->assertEquals('Login:', $form->getAttributeLabel('login'));
-        $this->assertEquals('Testme', $form->getAttributeLabel('testme'));
+        $this->assertSame('Login:', $form->getAttributeLabel('login'));
+        $this->assertSame('Testme', $form->getAttributeLabel('testme'));
     }
 
-    public function testGetNestedAttributeLabel(): void
-    {
-        $form = new FormWithNestedAttribute();
-
-        $this->assertEquals('Login:', $form->getAttributeLabel('user.login'));
-    }
-
-    public function testAttributesLabels(): void
+    public function testGetAttributesLabels(): void
     {
         $form = new LoginForm();
 
@@ -127,60 +74,79 @@ final class FormModelTest extends TestCase
             'rememberMe' => 'remember Me:',
         ];
 
-        $this->assertEquals($expected, $form->getAttributeLabels());
+        $this->assertSame($expected, $form->getAttributeLabels());
     }
 
-    public function testGetAttributePlaceHolder(): void
+    public function testGetNestedAttributeException(): void
     {
-        $form = new LoginForm();
+        $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
-        $this->assertEquals('Type Password.', $form->getAttributePlaceHolder('password'));
-        $this->assertEmpty($form->getAttributePlaceHolder('noExist'));
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Attribute "profile" is not a nested attribute.');
+        $form->getAttributeValue('profile.user');
+    }
+
+    public function testGetNestedAttributeHint(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertSame('Write your id or email.', $form->getAttributeHint('user.login'));
+    }
+
+    public function testGetNestedAttributeLabel(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertSame('Login:', $form->getAttributeLabel('user.login'));
     }
 
     public function testGetNestedAttributePlaceHolder(): void
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertEquals('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
+        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
     }
 
-    public function testErrorSummary(): void
+    public function testGetAttributePlaceHolder(): void
     {
         $form = new LoginForm();
 
-        $data = [
-            'LoginForm' => [
-                'login' => 'admin@.com',
-                'password' => '123456',
-            ],
-        ];
+        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
+        $this->assertSame('Type Password.', $form->getAttributePlaceHolder('password'));
+        $this->assertEmpty($form->getAttributePlaceHolder('noExist'));
+    }
 
-        $expected = [
-            'login' => 'This value is not a valid email address.',
-            'password' => 'Is too short.',
-        ];
+    public function testGetAttributeValue(): void
+    {
+        $form = new LoginForm();
 
-        $validator = $this->createValidatorMock();
+        $form->login('admin');
+        $this->assertSame('admin', $form->getAttributeValue('login'));
 
-        $this->assertTrue($form->load($data));
-        $this->assertFalse($validator->validate($form)->isValid());
+        $form->password('123456');
+        $this->assertSame('123456', $form->getAttributeValue('password'));
 
-        $this->assertEquals(
-            $expected,
-            HtmlFormErrors::getErrorSummaryFirstErrors($form)
+        $form->rememberMe(true);
+        $this->assertSame(true, $form->getAttributeValue('rememberMe'));
+    }
+
+    public function testGetAttributeValueException(): void
+    {
+        $form = new LoginForm();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".'
         );
+        $form->getAttributeValue('noExist');
+    }
 
-        $expected = [
-            'This value is not a valid email address.',
-            'Is too short.',
-        ];
+    public function testGetAttributeValueWithNestedAttribute(): void
+    {
+        $form = new FormWithNestedAttribute();
 
-        $this->assertEquals(
-            $expected,
-            HtmlFormErrors::getErrorSummary($form)
-        );
+        $form->setUserLogin('admin');
+        $this->assertSame('admin', $form->getAttributeValue('user.login'));
     }
 
     public function testHasAttribute(): void
@@ -213,26 +179,12 @@ final class FormModelTest extends TestCase
 
         $this->assertTrue($form->load($data));
 
-        $this->assertEquals('admin', $form->getLogin());
-        $this->assertEquals('123456', $form->getPassword());
-        $this->assertEquals(true, $form->getRememberMe());
+        $this->assertSame('admin', $form->getLogin());
+        $this->assertSame('123456', $form->getPassword());
+        $this->assertSame(true, $form->getRememberMe());
     }
 
-    public function testLoadWithNestedAttribute(): void
-    {
-        $form = new FormWithNestedAttribute();
-
-        $data = [
-            'FormWithNestedAttribute' => [
-                'user.login' => 'admin',
-            ],
-        ];
-
-        $this->assertTrue($form->load($data));
-        $this->assertEquals('admin', $form->getUserLogin());
-    }
-
-    public function testFailedLoadForm(): void
+    public function testLoadFailedForm(): void
     {
         $form1 = new LoginForm();
         $form2 = new class () extends FormModel {
@@ -275,61 +227,24 @@ final class FormModelTest extends TestCase
         $this->assertIsString($form->getAttributeValue('string'));
     }
 
-    public function testAddError(): void
+    public function testLoadWithNestedAttribute(): void
     {
-        $form = new LoginForm();
-        $errorMessage = 'Invalid password.';
+        $form = new FormWithNestedAttribute();
 
-        $form->getFormErrors()->addError('password', $errorMessage);
+        $data = [
+            'FormWithNestedAttribute' => [
+                'user.login' => 'admin',
+            ],
+        ];
 
-        $this->assertTrue(HtmlFormErrors::hasErrors($form));
-        $this->assertEquals($errorMessage, HtmlFormErrors::getFirstError($form, 'password'));
+        $this->assertTrue($form->load($data));
+        $this->assertSame('admin', $form->getUserLogin());
     }
 
-    public function testAddAndGetErrorForNonExistingAttribute(): void
+    public function testNonNamespacedFormName(): void
     {
-        $form = new LoginForm();
-        $errorMessage = 'Invalid username and/or password.';
-
-        $form->getFormErrors()->addError('form', $errorMessage);
-
-        $this->assertTrue(HtmlFormErrors::hasErrors($form));
-        $this->assertEquals($errorMessage, $form->getFormErrors()->getFirstError('form'));
-    }
-
-    public function testValidatorRules(): void
-    {
-        $validator = $this->createValidatorMock();
-        $form = new LoginForm();
-
-        $form->login('');
-        $validator->validate($form);
-
-        $this->assertEquals(
-            ['Value cannot be blank.'],
-            HtmlFormErrors::getErrors($form, 'login')
-        );
-
-        $form->login('x');
-        $validator->validate($form);
-        $this->assertEquals(
-            ['Is too short.'],
-            HtmlFormErrors::getErrors($form, 'login')
-        );
-
-        $form->login(str_repeat('x', 60));
-        $validator->validate($form);
-        $this->assertEquals(
-            'Is too long.',
-            HtmlFormErrors::getFirstError($form, 'login')
-        );
-
-        $form->login('admin@.com');
-        $validator->validate($form);
-        $this->assertEquals(
-            'This value is not a valid email address.',
-            HtmlFormErrors::getFirstError($form, 'login')
-        );
+        $form = new \NonNamespacedForm();
+        $this->assertSame('NonNamespacedForm', $form->getFormName());
     }
 
     public function testPublicAttributes(): void
@@ -344,20 +259,25 @@ final class FormModelTest extends TestCase
         $this->assertSame(1, $form->getAttributeValue('int'));
     }
 
-    private function createValidatorMock(): ValidatorInterface
+    public function testUnknownPropertyType(): void
     {
-        return new ValidatorMock();
-    }
-}
+        $form = new class () extends FormModel {
+            private $property;
+        };
 
-final class DefaultFormNameForm extends FormModel
-{
-}
+        $form->setAttribute('property', true);
+        $this->assertSame(true, $form->getAttributeValue('property'));
 
-final class CustomFormNameForm extends FormModel
-{
-    public function getFormName(): string
-    {
-        return 'my-best-form-name';
+        $form->setAttribute('property', 'string');
+        $this->assertSame('string', $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', 0);
+        $this->assertSame(0, $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', 1.2563);
+        $this->assertSame(1.2563, $form->getAttributeValue('property'));
+
+        $form->setAttribute('property', []);
+        $this->assertSame([], $form->getAttributeValue('property'));
     }
 }

@@ -16,13 +16,11 @@ final class TextTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testDirname(): void
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" dirname="test.dir">',
-            Text::widget()->config($this->formModel, 'string')->dirname('test.dir')->render(),
+            Text::widget()->for($this->formModel, 'string')->dirname('test.dir')->render(),
         );
     }
 
@@ -30,14 +28,14 @@ final class TextTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
-        Text::widget()->config($this->formModel, 'string')->dirname('')->render();
+        Text::widget()->for($this->formModel, 'string')->dirname('')->render();
     }
 
     public function testForm(): void
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" form="form-id">',
-            Text::widget()->config($this->formModel, 'string')->form('form-id')->render(),
+            Text::widget()->for($this->formModel, 'string')->form('form-id')->render(),
         );
     }
 
@@ -57,7 +55,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" maxlength="10">',
-            Text::widget()->config($this->formModel, 'string')->maxlength(10)->render(),
+            Text::widget()->for($this->formModel, 'string')->maxlength(10)->render(),
         );
     }
 
@@ -65,7 +63,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" minlength="4">',
-            Text::widget()->config($this->formModel, 'string')->minlength(4)->render(),
+            Text::widget()->for($this->formModel, 'string')->minlength(4)->render(),
         );
     }
 
@@ -75,8 +73,9 @@ final class TextTest extends TestCase
         <input type="text" id="typeform-string" name="TypeForm[string]" title="Only accepts uppercase and lowercase letters." pattern="[A-Za-z]">
         HTML;
         $html = Text::widget()
-            ->config($this->formModel, 'string', ['title' => 'Only accepts uppercase and lowercase letters.'])
+            ->for($this->formModel, 'string')
             ->pattern('[A-Za-z]')
+            ->title('Only accepts uppercase and lowercase letters.')
             ->render();
         $this->assertSame($expected, $html);
     }
@@ -85,7 +84,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
-            Text::widget()->config($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
+            Text::widget()->for($this->formModel, 'string')->placeholder('PlaceHolder Text')->render(),
         );
     }
 
@@ -93,7 +92,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" readonly>',
-            Text::widget()->config($this->formModel, 'string')->readOnly()->render(),
+            Text::widget()->for($this->formModel, 'string')->readOnly()->render(),
         );
     }
 
@@ -101,7 +100,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]">',
-            Text::widget()->config($this->formModel, 'string')->render(),
+            Text::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -109,7 +108,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" size="10">',
-            Text::widget()->config($this->formModel, 'string')->size(10)->render(),
+            Text::widget()->for($this->formModel, 'string')->size(10)->render(),
         );
     }
 
@@ -118,14 +117,14 @@ final class TextTest extends TestCase
         // value null
         $this->assertSame(
             '<input type="text" id="typeform-tonull" name="TypeForm[toNull]">',
-            Text::widget()->config($this->formModel, 'toNull')->render(),
+            Text::widget()->for($this->formModel, 'toNull')->render(),
         );
 
         // value string
         $this->formModel->setAttribute('string', 'hello');
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" value="hello">',
-            Text::widget()->config($this->formModel, 'string')->render(),
+            Text::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -133,15 +132,7 @@ final class TextTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text widget must be a string or null value.');
-        Text::widget()->config($this->formModel, 'array')->render();
-    }
-
-    public function testWithoutId(): void
-    {
-        $this->assertSame(
-            '<input type="text" name="TypeForm[string]" size="10">',
-            Text::widget()->config($this->formModel, 'string', ['id' => null])->size(10)->render(),
-        );
+        Text::widget()->for($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

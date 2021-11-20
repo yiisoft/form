@@ -6,9 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "url" represents a control for editing an absolute URL given
@@ -16,9 +15,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html
  */
-final class Url extends Widget
+final class Url extends AbstractWidget
 {
-    use ModelAttributes;
+    use GlobalAttributes;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
@@ -117,10 +116,8 @@ final class Url extends Widget
     {
         $new = clone $this;
 
-        /**
-         * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html#input.url.attrs.value
-         */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html#input.url.attrs.value */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('Url widget must be a string or null value.');
@@ -130,7 +127,7 @@ final class Url extends Widget
             ->type('url')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->value($value === '' ? null : $value)
             ->render();
     }

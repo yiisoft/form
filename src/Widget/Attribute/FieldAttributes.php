@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Helper\HtmlFormErrors;
@@ -18,21 +17,187 @@ use Yiisoft\Validator\Rule\Url;
 trait FieldAttributes
 {
     private bool $ariaDescribedBy = false;
-    private string $attribute = '';
-    private array $attributes = [];
     private string $containerClass = '';
+    /** @psalm-var array<string, string> */
+    private array $containersClass = [];
     private string $errorClass = '';
+    /** @psalm-var array<string, string> */
+    private array $errorsClass = [];
     private string $errorMessage = '';
     private string $hintClass = '';
+    /** @psalm-var array<string, string> */
+    private array $hintsClass = [];
     private string $id = '';
     private string $inputClass = '';
+    private array $inputsClass = [];
     private string $labelClass = '';
+    /** @psalm-var array<string, string> */
+    private array $labelsClass = [];
     private string $invalidClass = '';
+    /** @psalm-var array<string, string> */
+    private array $invalidsClass = [];
     private string $validClass = '';
+    /** @psalm-var array<string, string> */
+    private array $validsClass = [];
     private array $parts = [];
     private string $template = "{label}\n{input}\n{hint}\n{error}";
+    /** @psalm-var array<string, string> */
+    private array $templates = [];
+    private string $type = '';
     private string $validationStateOn = 'input';
     private ?FormModelInterface $formModel = null;
+
+    /**
+     * Set container class each for field type.
+     *
+     * @param array $containerClass the container class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $containerClass
+     */
+    public function addContainerClass(array $containerClass): self
+    {
+        $new = clone $this;
+        $new->containersClass = $containerClass;
+        return $new;
+    }
+
+    /**
+     * Set error class each for field type.
+     *
+     * @param array $errorClass the error class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $errorClass
+     */
+    public function addErrorClass(array $errorClass): self
+    {
+        $new = clone $this;
+        $new->errorsClass = $errorClass;
+        return $new;
+    }
+
+    /**
+     * Set hint class each for field type.
+     *
+     * @param array $hintClass the hint class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $hintClass
+     */
+    public function addHintClass(array $hintClass): self
+    {
+        $new = clone $this;
+        $new->hintsClass = $hintClass;
+        return $new;
+    }
+
+    /**
+     * Set input class each for field type.
+     *
+     * @param array $inputClass the input class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $inputClass
+     */
+    public function addInputClass(array $inputClass): self
+    {
+        $new = clone $this;
+        $new->inputsClass = $inputClass;
+        return $new;
+    }
+
+    /**
+     * Set invalid class each for field type.
+     *
+     * @param array $invalidClass the input class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $invalidClass
+     */
+    public function addInvalidClass(array $invalidClass): self
+    {
+        $new = clone $this;
+        $new->invalidsClass = $invalidClass;
+        return $new;
+    }
+
+    /**
+     * Set label class each for field type.
+     *
+     * @param array $labelClass the input class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $labelClass
+     */
+    public function addLabelClass(array $labelClass): self
+    {
+        $new = clone $this;
+        $new->labelsClass = $labelClass;
+        return $new;
+    }
+
+    /**
+     * Set layout template for render a field with label, input, hint and error.
+     *
+     * @param array $template the template to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => '{input}', Field::TYPE_SUBMIT_BUTTON => '<div>{input}</div>']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $template
+     */
+    public function addTemplate(array $template): self
+    {
+        $new = clone $this;
+        $new->templates = $template;
+        return $new;
+    }
+
+    /**
+     * Set invalid class each for field type.
+     *
+     * @param array $validsClass the input class to be used to layout the field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $validsClass
+     */
+    public function addValidClass(array $validsClass): self
+    {
+        $new = clone $this;
+        $new->validsClass = $validsClass;
+        return $new;
+    }
 
     /**
      * Set aria-describedby attribute.
@@ -45,26 +210,6 @@ trait FieldAttributes
     {
         $new = clone $this;
         $new->ariaDescribedBy = true;
-        return $new;
-    }
-
-    /**
-     * Set form interface, attribute name and attributes, and attributes for the widget.
-     *
-     * @param FormModelInterface $formModel Form.
-     * @param string $attribute Form model property this widget is rendered for.
-     * @param array $attributes The HTML attributes for the widget container tag.
-     *
-     * @return static
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function config(FormModelInterface $formModel, string $attribute, array $attributes = []): self
-    {
-        $new = clone $this;
-        $new->formModel = $formModel;
-        $new->attribute = $attribute;
-        $new->attributes = $attributes;
         return $new;
     }
 
@@ -168,46 +313,95 @@ trait FieldAttributes
         return $new;
     }
 
-    protected function getFormModel(): FormModelInterface
+    private function getSchemePattern(string $scheme): string
     {
-        if ($this->formModel === null) {
-            throw new InvalidArgumentException('Form model is not set.');
+        $result = '';
+        for ($i = 0, $length = mb_strlen($scheme); $i < $length; $i++) {
+            $result .= '[' . mb_strtolower($scheme[$i]) . mb_strtoupper($scheme[$i]) . ']';
         }
-
-        return $this->formModel;
+        return $result;
     }
 
-    private function addValidatorAttributeHtml(
-        FormModelInterface $formModel,
-        string $attribute,
-        array $attributes,
-        string $type
-    ): array {
+    private function setInputAttributes(string $type, array $attributes): array
+    {
+        $formModel = $this->getFormModel();
+        $placeHolder = '';
+
+        // set aria-describedby attribute.
+        if ($this->ariaDescribedBy === true) {
+            $attributes['aria-describedby'] = $this->getId();
+        }
+
+        // set input class attribute.
+        /** @var string */
+        $inputClass = $this->inputsClass[$type] ?? $this->inputClass;
+
+        if ($inputClass !== '') {
+            Html::addCssClass($attributes, $inputClass);
+        }
+
+        // set placeholder attribute.
+        if (!in_array($type, self::NO_PLACEHOLDER_TYPES, true)) {
+            $placeHolder = $this->getFormModel()->getAttributePlaceholder($this->getAttribute());
+        }
+
+        if (!isset($attributes['placeholder']) && $placeHolder !== '') {
+            $attributes['placeholder'] = $placeHolder;
+        }
+
+        // set input class valid and invalid.
+        $attributes = $this->setValidAndInvalidClass($formModel, $type, $attributes);
+
+        return $this->setValidatorAttributeHtml($formModel, $type, $attributes);
+    }
+
+    private function setValidAndInvalidClass(FormModelInterface $formModel, string $type, array $attributes): array
+    {
+        $attributeName = HtmlForm::getAttributeName($formModel, $this->getAttribute());
+
+        $invalidClass = $this->invalidsClass[$type] ?? $this->invalidClass;
+        $validClass = $this->validsClass[$type] ?? $this->validClass;
+
+        if ($invalidClass !== '' && HtmlFormErrors::hasErrors($formModel, $attributeName)) {
+            Html::addCssClass($attributes, $invalidClass);
+        } elseif ($validClass !== '' && $formModel->isValidated()) {
+            Html::addCssClass($attributes, $validClass);
+        }
+
+        return $attributes;
+    }
+
+    private function setValidatorAttributeHtml(FormModelInterface $formModel, string $type, array $attributes): array
+    {
         /** @var array */
-        $rules = $formModel->getRules()[$attribute] ?? [];
+        $rules = $formModel->getRules()[$this->getAttribute()] ?? [];
 
         /** @var object $rule */
         foreach ($rules as $rule) {
             if ($rule instanceof Required) {
                 $attributes['required'] = true;
             }
+
             if ($rule instanceof HasLength && in_array($type, self::HAS_LENGTH_TYPES, true)) {
                 /** @var string */
                 $attributes['maxlength'] = $rule->getOptions()['max'];
                 /** @var string */
                 $attributes['minlength'] = $rule->getOptions()['min'];
             }
+
             if ($rule instanceof MatchRegularExpression && in_array($type, self::MATCH_REGULAR_EXPRESSION_TYPES, true)) {
                 /** @var string */
                 $pattern = $rule->getOptions()['pattern'];
                 $attributes['pattern'] = Html::normalizeRegexpPattern($pattern);
             }
-            if ($rule instanceof Number && $type === self::TYPE_NUMBER) {
+
+            if ($rule instanceof Number && in_array($type, self::NUMBER_TYPES, true)) {
                 /** @var string */
                 $attributes['max'] = $rule->getOptions()['max'];
                 /** @var string */
                 $attributes['min'] = $rule->getOptions()['min'];
             }
+
             if ($rule instanceof Url && $type === self::TYPE_URL) {
                 /** @var array<array-key, string> */
                 $validSchemes = $rule->getOptions()['validSchemes'];
@@ -222,63 +416,6 @@ trait FieldAttributes
                 $normalizePattern = str_replace('{schemes}', '(' . implode('|', $schemes) . ')', $pattern);
                 $attributes['pattern'] = Html::normalizeRegexpPattern($normalizePattern);
             }
-        }
-
-        return $attributes;
-    }
-
-    private function getSchemePattern(string $scheme): string
-    {
-        $result = '';
-        for ($i = 0, $length = mb_strlen($scheme); $i < $length; $i++) {
-            $result .= '[' . mb_strtolower($scheme[$i]) . mb_strtoupper($scheme[$i]) . ']';
-        }
-        return $result;
-    }
-
-    /**
-     * Return the input id.
-     *
-     * @return string
-     */
-    private function getId(): string
-    {
-        /** @var string */
-        $id = $this->attributes['id'] ?? $this->id;
-
-        return $id === '' ? HtmlForm::getInputId($this->getFormModel(), $this->attribute) : $id;
-    }
-
-    private function setInputAttributes(array $attributes): array
-    {
-        $new = clone $this;
-        $placeHolder = '';
-        /** @var string */
-        $type = $attributes['type'] ?? '';
-        unset($attributes['type']);
-        $attributes = $new->addValidatorAttributeHtml($new->getFormModel(), $new->attribute, $attributes, $type);
-        $attributeName = HtmlForm::getAttributeName($new->getFormModel(), $new->attribute);
-
-        if ($new->ariaDescribedBy === true) {
-            $attributes['aria-describedby'] = $new->getId();
-        }
-
-        if ($new->inputClass !== '') {
-            Html::addCssClass($attributes, $new->inputClass);
-        }
-
-        if ($new->errorClass !== '' && HtmlFormErrors::hasErrors($new->getFormModel(), $attributeName)) {
-            Html::addCssClass($attributes, $new->invalidClass);
-        } elseif ($new->validClass !== '' && $new->getFormModel()->isValidated()) {
-            Html::addCssClass($attributes, $new->validClass);
-        }
-
-        if (!in_array($type, self::NO_PLACEHOLDER_TYPES, true)) {
-            $placeHolder = $new->getFormModel()->getAttributePlaceholder($new->attribute);
-        }
-
-        if (!isset($attributes['placeholder']) && $placeHolder !== '') {
-            $attributes['placeholder'] = $placeHolder;
         }
 
         return $attributes;

@@ -4,57 +4,19 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Tag\CustomTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * The Error widget displays an error message.
  *
  * @psalm-suppress MissingConstructor
  */
-final class Error extends Widget
+final class Error extends AbstractWidget
 {
-    private string $attribute = '';
-    private bool $encode = true;
-    private FormModelInterface $formModel;
     private string $message = '';
     private array $messageCallback = [];
     private string $tag = 'div';
-    private array $tagAttributes = [];
-
-    /**
-     * Specify a form, its attribute.
-     *
-     * @param FormModelInterface $formModel Form instance.
-     * @param string $attribute Form model's property name this widget is rendered for.
-     *
-     * @return static
-     *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function config(FormModelInterface $formModel, string $attribute): self
-    {
-        $new = clone $this;
-        $new->formModel = $formModel;
-        $new->attribute = $attribute;
-        return $new;
-    }
-
-    /**
-     * Whether content should be HTML-encoded.
-     *
-     * @param bool $value
-     *
-     * @return static
-     */
-    public function encode(bool $value): self
-    {
-        $new = clone $this;
-        $new->encode = $value;
-        return $new;
-    }
 
     /**
      * Error message to display.
@@ -105,22 +67,6 @@ final class Error extends Widget
     }
 
     /**
-     * HTML attributes for the widget container tag.
-     *
-     * @param array $value
-     *
-     * @return static
-     *
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function tagAttributes(array $value): self
-    {
-        $new = clone $this;
-        $new->tagAttributes = $value;
-        return $new;
-    }
-
-    /**
      * Generates a tag that contains the first validation error of the specified form attribute.
      *
      * @return string the generated label tag
@@ -128,7 +74,7 @@ final class Error extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $error = HtmlFormErrors::getFirstError($new->formModel, $new->attribute);
+        $error = HtmlFormErrors::getFirstError($new->getFormModel(), $new->getAttribute());
 
         if ($error !== '' && $new->message !== '') {
             $error = $new->message;
@@ -136,14 +82,14 @@ final class Error extends Widget
 
         if ($error !== '' && $new->messageCallback !== []) {
             /** @var string */
-            $error = call_user_func($new->messageCallback, $new->formModel, $new->attribute);
+            $error = call_user_func($new->messageCallback, $new->getFormModel(), $new->getAttribute());
         }
 
         $html = $new->tag !== ''
             ? CustomTag::name($new->tag)
-                ->attributes($new->tagAttributes)
+                ->attributes($new->attributes)
                 ->content($error)
-                ->encode($new->encode)
+                ->encode($new->getEncode())
                 ->render()
             : $error;
 

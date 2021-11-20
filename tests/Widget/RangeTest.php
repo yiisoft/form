@@ -17,13 +17,13 @@ final class RangeTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testImmutability(): void
     {
         $range = Range::widget();
         $this->assertNotSame($range, $range->max(0));
         $this->assertNotSame($range, $range->min(0));
+        $this->assertNotSame($range, $range->outputAttributes([]));
+        $this->assertNotSame($range, $range->outputTag(''));
     }
 
     public function testMax(): void
@@ -35,7 +35,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'int')->max(8)->render(),
+            Range::widget()->for($this->formModel, 'int')->max(8)->render(),
         );
     }
 
@@ -48,7 +48,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'int')->min(4)->render(),
+            Range::widget()->for($this->formModel, 'int')->min(4)->render(),
         );
     }
 
@@ -61,7 +61,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'int')->outputAttributes(['class' => 'test-class'])->render(),
+            Range::widget()->for($this->formModel, 'int')->outputAttributes(['class' => 'test-class'])->render(),
         );
     }
 
@@ -74,7 +74,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'int')->outputTag('p')->render(),
+            Range::widget()->for($this->formModel, 'int')->outputTag('p')->render(),
         );
     }
 
@@ -82,7 +82,7 @@ final class RangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The output tag name it cannot be empty value.');
-        Range::widget()->config($this->formModel, 'int')->outputTag('')->render();
+        Range::widget()->for($this->formModel, 'int')->outputTag('')->render();
     }
 
     public function testRender(): void
@@ -94,7 +94,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'int')->render(),
+            Range::widget()->for($this->formModel, 'int')->render(),
         );
     }
 
@@ -108,7 +108,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'toNull')->render(),
+            Range::widget()->for($this->formModel, 'toNull')->render(),
         );
 
         // value string numeric `1`
@@ -120,7 +120,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'string')->render(),
+            Range::widget()->for($this->formModel, 'string')->render(),
         );
 
         // value int 1
@@ -132,7 +132,7 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->config($this->formModel, 'int')->render(),
+            Range::widget()->for($this->formModel, 'int')->render(),
         );
     }
 
@@ -140,7 +140,7 @@ final class RangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range widget must be a numeric or null value.');
-        Range::widget()->config($this->formModel, 'array')->render();
+        Range::widget()->for($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

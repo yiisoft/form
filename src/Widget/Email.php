@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "email" represents a control for editing a list of e-mail
@@ -17,10 +15,9 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email
  */
-final class Email extends Widget
+final class Email extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
     /**
      * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
@@ -111,7 +108,7 @@ final class Email extends Widget
     }
 
     /**
-     * The height of the <select> with multiple is true.
+     * The number of options meant to be shown by the control represented by its element.
      *
      * @param int $size
      *
@@ -137,7 +134,7 @@ final class Email extends Widget
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.value.single
          * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.value.multiple
          */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('Email widget must be a string or null value.');
@@ -147,7 +144,7 @@ final class Email extends Widget
             ->type('email')
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->value($value === '' ? null : $value)
             ->render();
     }

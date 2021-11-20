@@ -17,7 +17,21 @@ final class FieldRangeTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    public function testAttributes(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-int">Int</label>
+        <input type="range" id="typeform-int" class="test-class" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="TypeForm[int]">0</output>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'int')->range(['class' => 'test-class'])->render(),
+        );
+    }
 
     public function testMax(): void
     {
@@ -31,7 +45,7 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->range(['max' => 8])->render(),
+            Field::widget()->for($this->formModel, 'int')->range(['max' => 8])->render(),
         );
     }
 
@@ -47,7 +61,7 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'int')->range(['min' => 4])->render(),
+            Field::widget()->for($this->formModel, 'int')->range(['min' => 4])->render(),
         );
     }
 
@@ -57,15 +71,15 @@ final class FieldRangeTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" outputAttributes='{"class":"test-class"}' oninput="i3.value=this.value">
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i3.value=this.value">
         <output id="i3" class="test-class" name="i3" for="TypeForm[int]">0</output>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
-                ->config($this->formModel, 'int')
-                ->range(['outputAttributes' => ['class' => 'test-class']])
+                ->for($this->formModel, 'int')
+                ->range([], ['outputAttributes()' => [['class' => 'test-class']]])
                 ->render(),
         );
     }
@@ -76,16 +90,13 @@ final class FieldRangeTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" outputTag="p" oninput="i4.value=this.value">
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i4.value=this.value">
         <p id="i4" name="i4" for="TypeForm[int]">0</p>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()
-                ->config($this->formModel, 'int')
-                ->range(['outputTag' => 'p'])
-                ->render(),
+            Field::widget()->for($this->formModel, 'int')->range([], ['outputTag()' => ['p']])->render(),
         );
     }
 
@@ -93,7 +104,7 @@ final class FieldRangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The output tag name it cannot be empty value.');
-        Field::widget()->config($this->formModel, 'int')->range(['outputTag' => ''])->render();
+        Field::widget()->for($this->formModel, 'int')->range([], ['outputTag()' => ['']])->render();
     }
 
     public function testRender(): void
@@ -106,10 +117,7 @@ final class FieldRangeTest extends TestCase
         <output id="i6" name="i6" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'int')->range()->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->for($this->formModel, 'int')->range()->render());
     }
 
     public function testValue(): void
@@ -123,10 +131,7 @@ final class FieldRangeTest extends TestCase
         <output id="i7" name="i7" for="TypeForm[toNull]"></output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'toNull')->range()->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->for($this->formModel, 'toNull')->range()->render());
 
         // value string numeric `1`
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
@@ -139,10 +144,7 @@ final class FieldRangeTest extends TestCase
         <div>Write your text string.</div>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'string')->range()->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->for($this->formModel, 'string')->range()->render());
 
         // value int 1
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 8]);
@@ -154,17 +156,14 @@ final class FieldRangeTest extends TestCase
         <output id="i9" name="i9" for="TypeForm[int]">1</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->config($this->formModel, 'int')->range()->render(),
-        );
+        $this->assertEqualsWithoutLE($expected, Field::widget()->for($this->formModel, 'int')->range()->render());
     }
 
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range widget must be a numeric or null value.');
-        Field::widget()->config($this->formModel, 'array')->range()->render();
+        Field::widget()->for($this->formModel, 'array')->range()->render();
     }
 
     protected function setUp(): void

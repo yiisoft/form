@@ -15,18 +15,29 @@ final class FieldHiddenTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
+    public function testAttributes(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" class="test-class" name="typeform-string">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->hidden(['class' => 'test-class'])->render(),
+        );
+    }
 
     public function testRender(): void
     {
         $expected = <<<'HTML'
         <div>
-        <input type="hidden" name="typeform-string" value>
+        <input type="hidden" name="typeform-string">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->config($this->formModel, 'string')->hidden()->render(),
+            Field::widget()->for($this->formModel, 'string')->hidden()->render(),
         );
     }
 

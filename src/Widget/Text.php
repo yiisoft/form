@@ -6,22 +6,17 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * Generates a text input tag for the given form attribute.
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
  */
-final class Text extends Widget
+final class Text extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
-
-    private string $dirname = '';
+    use GlobalAttributes;
 
     /**
      * Enables submission of a value for the directionality of the element, and gives the name of the field that
@@ -40,7 +35,7 @@ final class Text extends Widget
         }
 
         $new = clone $this;
-        $new->dirname = $value;
+        $new->attributes['dirname'] = $value;
         return $new;
     }
 
@@ -117,6 +112,24 @@ final class Text extends Widget
     }
 
     /**
+     * A Boolean attribute which, if present, means this field cannot be edited by the user.
+     * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
+     * property.
+     *
+     * @param bool $value
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.readonly
+     */
+    public function readonly(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->attributes['readonly'] = $value;
+        return $new;
+    }
+
+    /**
      * The height of the input with multiple is true.
      *
      * Default value is 4.
@@ -142,21 +155,17 @@ final class Text extends Widget
         $new = clone $this;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('Text widget must be a string or null value.');
         }
 
-        if ($new->dirname !== '') {
-            $new->attributes['dirname'] = $new->dirname;
-        }
-
         return Input::text()
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->value($value === '' ? null : $value)
             ->render();
     }

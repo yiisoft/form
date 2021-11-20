@@ -16,13 +16,11 @@ final class HiddenTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testRender(): void
     {
         $this->assertSame(
-            '<input type="hidden" name="typeform-string" value>',
-            Hidden::widget()->config($this->formModel, 'string')->render(),
+            '<input type="hidden" name="typeform-string">',
+            Hidden::widget()->for($this->formModel, 'string')->render(),
         );
     }
 
@@ -30,7 +28,7 @@ final class HiddenTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hidden widget requires a string value.');
-        Hidden::widget()->config($this->formModel, 'array')->render();
+        Hidden::widget()->for($this->formModel, 'array')->render();
     }
 
     protected function setUp(): void

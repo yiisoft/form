@@ -7,12 +7,10 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * Generates a drop-down list for the given form attribute.
@@ -21,12 +19,10 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/select.html
  */
-final class Select extends Widget
+final class Select extends AbstractWidget
 {
-    use CommonAttributes;
-    use ModelAttributes;
+    use GlobalAttributes;
 
-    private bool $encode = false;
     private array $items = [];
     private array $itemsAttributes = [];
     private array $groups = [];
@@ -149,15 +145,13 @@ final class Select extends Widget
 
     /**
      * @param string[] $data
-     * @param bool $encode Whether option content should be HTML-encoded.
      *
      * @return static
      */
-    public function optionsData(array $data, bool $encode): self
+    public function optionsData(array $data): self
     {
         $new = clone $this;
         $new->optionsData = $data;
-        $new->encode = $encode;
         return $new;
     }
 
@@ -252,17 +246,22 @@ final class Select extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $select = SelectTag::tag();
 
-        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /**
+         * @var iterable<int, scalar|Stringable>|scalar|Stringable|null
+         *
+         * @link https://www.w3.org/TR/2011/WD-html5-20110525/association-of-controls-and-forms.html#concept-fe-value
+         */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (is_object($value)) {
             throw new InvalidArgumentException('Select widget value can not be an object.');
         }
 
+        $select = SelectTag::tag();
+
         if (isset($new->attributes['multiple']) && !isset($new->attributes['size'])) {
-            $new = $new->size();
+            $new->attributes['size'] = 4;
         }
 
         $promptOption = null;
@@ -280,7 +279,7 @@ final class Select extends Widget
         if ($new->items !== []) {
             $select = $select->items(...$new->renderItems($new->items));
         } elseif ($new->optionsData !== []) {
-            $select = $select->optionsData($new->optionsData, $new->encode);
+            $select = $select->optionsData($new->optionsData, $new->getEncode());
         }
 
         if (is_iterable($value)) {
@@ -292,7 +291,7 @@ final class Select extends Widget
         return $select
             ->attributes($new->attributes)
             ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
+            ->name($new->getName())
             ->promptOption($promptOption)
             ->unselectValue($new->unselectValue)
             ->render();

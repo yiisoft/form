@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget\Attribute;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -16,8 +15,6 @@ final class FieldAttributesTest extends TestCase
 {
     use TestTrait;
 
-    private TypeForm $formModel;
-
     public function testAriaDescribedBy(): void
     {
         $expected = <<<'HTML'
@@ -27,11 +24,10 @@ final class FieldAttributesTest extends TestCase
         <div id="typeform-string">Write your text string.</div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->ariaDescribedBy()
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->ariaDescribedBy()->render(),
+        );
     }
 
     public function testContainerClass(): void
@@ -43,18 +39,10 @@ final class FieldAttributesTest extends TestCase
         <div>Write your text string.</div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->containerClass('test-class')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
-    }
-
-    public function testGetFormModelException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Form model is not set.');
-        $this->invokeMethod(Field::widget(), 'getFormModel');
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->containerClass('test-class')->render(),
+        );
     }
 
     public function testInputClass(): void
@@ -66,18 +54,17 @@ final class FieldAttributesTest extends TestCase
         <div>Write your text string.</div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->inputClass('test-class')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->inputClass('test-class')->render(),
+        );
     }
 
     public function testImmutability(): void
     {
         $field = Field::widget();
         $this->assertNotSame($field, $field->ariaDescribedBy());
-        $this->assertNotSame($field, $field->config($this->formModel, 'string', []));
+        $this->assertNotSame($field, $field->for($this->formModel, 'string', []));
         $this->assertNotSame($field, $field->containerClass(''));
         $this->assertNotSame($field, $field->errorClass(''));
         $this->assertNotSame($field, $field->hintClass(''));
@@ -97,11 +84,10 @@ final class FieldAttributesTest extends TestCase
         <div>Write your text string.</div>
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->labelClass('test-class')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->labelClass('test-class')->render(),
+        );
     }
 
     public function testTemplate(): void
@@ -111,11 +97,10 @@ final class FieldAttributesTest extends TestCase
         <input type="text" id="typeform-string" name="TypeForm[string]" placeholder="Typed your text string.">
         </div>
         HTML;
-        $html = Field::widget()
-            ->config($this->formModel, 'string')
-            ->template('{input}')
-            ->render();
-        $this->assertEqualsWithoutLE($expected, $html);
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->for($this->formModel, 'string')->template('{input}')->render(),
+        );
     }
 
     protected function setUp(): void

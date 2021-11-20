@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\TestSupport\Widget;
 
-use Yiisoft\Form\Widget\Attribute\DateAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
-final class DateAttributesWidget extends Widget
+final class GlobalAttributesWidget extends Widget
 {
-    use DateAttributes;
+    use GlobalAttributes;
 
     private array $attributes = [];
+
+    public function attributes(array $value): self
+    {
+        $new = clone $this;
+        $new->attributes = $value;
+        return $new;
+    }
 
     protected function run(): string
     {

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\WithoutModelAttribute;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -18,8 +17,25 @@ use Yiisoft\Widget\Widget;
  */
 final class Image extends Widget
 {
-    use CommonAttributes;
-    use WithoutModelAttribute;
+    use GlobalAttributes;
+
+    protected array $attributes = [];
+
+    /**
+     * The HTML attributes. The following special options are recognized.
+     *
+     * @param array $value
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function attributes(array $value): self
+    {
+        $new = clone $this;
+        $new->attributes = $value;
+        return $new;
+    }
 
     /**
      * Provides a textual label for an alternative button for users and UAs who cannot use the image specified by the
@@ -98,6 +114,10 @@ final class Image extends Widget
             $new->autoIdPrefix = 'image-';
         }
 
-        return $img->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
+        $id = $new->getIdWithoutModel();
+        /** @var string|null */
+        $name = $new->attributes['name'] ?? $id;
+
+        return $img->attributes($new->attributes)->id($id)->name($name)->render();
     }
 }

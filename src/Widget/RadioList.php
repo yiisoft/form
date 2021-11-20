@@ -8,17 +8,16 @@ use Closure;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * Generates a list of radio.
  */
-final class RadioList extends Widget
+final class RadioList extends AbstractWidget
 {
-    use ModelAttributes;
+    use GlobalAttributes;
 
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
@@ -71,7 +70,7 @@ final class RadioList extends Widget
      * text.
      * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to false to enable the element again, which is not the case.
+     * this will suggest you can set it too false to enable the element again, which is not the case.
      *
      * @param bool $value
      *
@@ -226,14 +225,19 @@ final class RadioList extends Widget
     protected function run(): string
     {
         $new = clone $this;
-        $radioList = RadioListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
 
-        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /**
+         * @var iterable<int, scalar|Stringable>|scalar|Stringable|null
+         *
+         * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
+         */
+        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('RadioList widget value can not be an iterable or an object.');
         }
+
+        $radioList = RadioListTag::create($new->getName());
 
         /** @var string */
         $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();

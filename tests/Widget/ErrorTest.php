@@ -7,17 +7,13 @@ namespace Yiisoft\Form\Tests\Widget;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Form\Widget\Error;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorTest extends TestCase
 {
     use TestTrait;
-
-    private PersonalForm $formModel;
 
     public function testImmutability(): void
     {
@@ -26,39 +22,44 @@ final class ErrorTest extends TestCase
         $this->assertNotSame($error, $error->message(''));
         $this->assertNotSame($error, $error->messageCallback([]));
         $this->assertNotSame($error, $error->tag('div'));
-        $this->assertNotSame($error, $error->tagAttributes([]));
     }
 
     public function testMessage(): void
     {
-        $html = Error::widget()->config($this->formModel, 'name')->message('This is custom error message.')->render();
-        $this->assertSame('<div>This is custom error message.</div>', $html);
+        $this->assertSame(
+            '<div>This is custom error message.</div>',
+            Error::widget()->for($this->formModel, 'name')->message('This is custom error message.')->render(),
+        );
     }
 
     public function testMessageCallback(): void
     {
-        $html = Error::widget()
-            ->config($this->formModel, 'name')
-            ->messageCallback([$this->formModel, 'customError'])
-            ->render();
-        $this->assertSame('<div>This is custom error message.</div>', $html);
+        $this->assertSame(
+            '<div>This is custom error message.</div>',
+            Error::widget()
+                ->for($this->formModel, 'name')
+                ->messageCallback([$this->formModel, 'customError'])
+                ->render(),
+        );
     }
 
     public function testMessageCallbackWithNoEncode(): void
     {
-        $html = Error::widget()
-            ->config($this->formModel, 'name')
-            ->encode(false)
-            ->messageCallback([$this->formModel, 'customErrorWithIcon'])
-            ->render();
-        $this->assertSame('<div>(&#10006;) This is custom error message.</div>', $html);
+        $this->assertSame(
+            '<div>(&#10006;) This is custom error message.</div>',
+            Error::widget()
+                ->for($this->formModel, 'name')
+                ->encode(false)
+                ->messageCallback([$this->formModel, 'customErrorWithIcon'])
+                ->render(),
+        );
     }
 
     public function testRender(): void
     {
         $this->assertSame(
             '<div>Value cannot be blank.</div>',
-            Error::widget()->config($this->formModel, 'name')->render(),
+            Error::widget()->for($this->formModel, 'name')->render(),
         );
     }
 
@@ -66,19 +67,11 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             'Value cannot be blank.',
-            Error::widget()->config($this->formModel, 'name')->tag('')->render(),
+            Error::widget()->for($this->formModel, 'name')->tag('')->render(),
         );
         $this->assertSame(
             '<span>Value cannot be blank.</span>',
-            Error::widget()->config($this->formModel, 'name')->tag('span')->render(),
-        );
-    }
-
-    public function testTagAttributes(): void
-    {
-        $this->assertSame(
-            '<div class="testClass">Value cannot be blank.</div>',
-            Error::widget()->config($this->formModel, 'name')->tagAttributes(['class' => 'testClass'])->render(),
+            Error::widget()->for($this->formModel, 'name')->tag('span')->render(),
         );
     }
 
@@ -90,10 +83,5 @@ final class ErrorTest extends TestCase
         $this->formModel->load(['PersonalForm' => ['name' => '']]);
         $validator = $this->createValidatorMock();
         $validator->validate($this->formModel);
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 }
