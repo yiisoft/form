@@ -185,15 +185,13 @@ final class Select extends AbstractWidget
     /**
      * The height of the <select> with multiple is true.
      *
-     * Default value is 4.
-     *
      * @param int $value
      *
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-select-size
      */
-    public function size(int $value = 4): self
+    public function size(int $value): self
     {
         $new = clone $this;
         $new->attributes['size'] = $value;
@@ -225,15 +223,15 @@ final class Select extends AbstractWidget
                 /** @var string $c */
                 foreach ($content as $v => $c) {
                     /** @var array */
-                    $attributes = $new->itemsAttributes[$v] ?? [];
-                    $options[] = Option::tag()->attributes($attributes)->content($c)->value($v);
+                    $new->itemsAttributes[$v] ??= [];
+                    $options[] = Option::tag()->attributes($new->itemsAttributes[$v])->content($c)->value($v);
                 }
 
                 $items[] = Optgroup::tag()->attributes($groupAttrs)->options(...$options);
             } else {
                 /** @var array */
-                $attributes = $new->itemsAttributes[$value] ?? [];
-                $items[] = Option::tag()->attributes($attributes)->content($content)->value($value);
+                $new->itemsAttributes[$value] ??= [];
+                $items[] = Option::tag()->attributes($new->itemsAttributes[$value])->content($content)->value($value);
             }
         }
 

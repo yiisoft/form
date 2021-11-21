@@ -187,18 +187,12 @@ final class CheckboxList extends AbstractWidget
 
         $checkboxList = CheckboxListTag::create($new->getName());
 
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
-        /** @var bool */
-        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
-
-        /** @var bool */
-        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
+        $new->containerAttributes['id'] ??= $new->getId();
 
         if ($new->items !== []) {
-            $checkboxList = $checkboxList->items($new->items, $itemsEncodeLabels);
+            $checkboxList = $checkboxList->items($new->items, $new->getEncode());
         } elseif ($new->itemsFromValues !== []) {
-            $checkboxList = $checkboxList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
+            $checkboxList = $checkboxList->itemsFromValues($new->itemsFromValues, $new->getEncode());
         }
 
         if ($new->itemsAttributes !== []) {

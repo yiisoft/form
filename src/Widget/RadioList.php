@@ -240,18 +240,12 @@ final class RadioList extends AbstractWidget
         $radioList = RadioListTag::create($new->getName());
 
         /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
-        /** @var bool */
-        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
-
-        /** @var bool */
-        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
+        $new->containerAttributes['id'] ??= $new->getId();
 
         if ($new->items !== []) {
-            $radioList = $radioList->items($new->items, $itemsEncodeLabels);
+            $radioList = $radioList->items($new->items, $new->getEncode());
         } elseif ($new->itemsFromValues !== []) {
-            $radioList = $radioList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
+            $radioList = $radioList->itemsFromValues($new->itemsFromValues, $new->getEncode());
         }
 
         if ($new->separator !== '') {

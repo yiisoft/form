@@ -17,16 +17,14 @@ trait GlobalAttributes
      * Focus on the control (put cursor into it) when the page loads.
      * Only one form element could be in focus at the same time.
      *
-     * @param bool $value
-     *
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
      */
-    public function autofocus(bool $value = true): self
+    public function autofocus(): self
     {
         $new = clone $this;
-        $new->attributes['autofocus'] = $value;
+        $new->attributes['autofocus'] = true;
         return $new;
     }
 
@@ -53,16 +51,14 @@ trait GlobalAttributes
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
      * this will suggest you can set it to `false` to enable the element again, which is not the case.
      *
-     * @param bool $value
-     *
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
      */
-    public function disabled(bool $value = true): self
+    public function disabled(): self
     {
         $new = clone $this;
-        $new->attributes['disabled'] = $value;
+        $new->attributes['disabled'] = true;
         return $new;
     }
 
@@ -118,16 +114,14 @@ trait GlobalAttributes
     /**
      * If it is required to fill in a value in order to submit the form.
      *
-     * @param bool $value
-     *
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
-    public function required(bool $value = true): self
+    public function required(): self
     {
         $new = clone $this;
-        $new->attributes['required'] = $value;
+        $new->attributes['required'] = true;
         return $new;
     }
 
@@ -151,7 +145,7 @@ trait GlobalAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
      */
-    public function tabIndex(int $value = 0): self
+    public function tabIndex(int $value): self
     {
         $new = clone $this;
         $new->attributes['tabindex'] = $value;
@@ -195,7 +189,7 @@ trait GlobalAttributes
      *
      * @return string
      */
-    protected function getIdWithoutModel(): ?string
+    private function getIdWithoutModel(): ?string
     {
         $id = ArrayHelper::remove($this->attributes, 'id', '');
 

@@ -32,7 +32,7 @@ final class Radio extends AbstractWidget
      *
      * @return static
      */
-    public function enclosedByLabel(bool $value = true): self
+    public function enclosedByLabel(bool $value): self
     {
         $new = clone $this;
         $new->enclosedByLabel = $value;

@@ -132,15 +132,13 @@ final class Text extends AbstractWidget
     /**
      * The height of the input with multiple is true.
      *
-     * Default value is 4.
-     *
      * @param int $value
      *
      * @return static
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.size
      */
-    public function size(int $value = 4): self
+    public function size(int $value): self
     {
         $new = clone $this;
         $new->attributes['size'] = $value;

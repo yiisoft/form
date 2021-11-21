@@ -34,7 +34,7 @@ final class Checkbox extends AbstractWidget
      *
      * @return static
      */
-    public function enclosedByLabel(bool $value = true): self
+    public function enclosedByLabel(bool $value): self
     {
         $new = clone $this;
         $new->enclosedByLabel = $value;
@@ -109,8 +109,9 @@ final class Checkbox extends AbstractWidget
         $checkbox = CheckboxTag::tag();
 
         /** @var scalar|Stringable|null */
-        $valueDefault = $new->attributes['value'] ?? null;
-        $valueDefault = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
+        $new->attributes['value'] ??= null;
+        $valueDefault = is_bool($new->attributes['value'])
+            ? (int) $new->attributes['value'] : $new->attributes['value'];
 
         if ($new->enclosedByLabel === true) {
             $label = $new->label !== '' ?

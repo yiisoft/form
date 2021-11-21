@@ -30,7 +30,7 @@ final class CheckboxTest extends TestCase
     public function testImmutability(): void
     {
         $checkbox = Checkbox::widget();
-        $this->assertNotSame($checkbox, $checkbox->enclosedByLabel());
+        $this->assertNotSame($checkbox, $checkbox->enclosedByLabel(false));
         $this->assertNotSame($checkbox, $checkbox->label(''));
         $this->assertNotSame($checkbox, $checkbox->labelAttributes([]));
         $this->assertNotSame($checkbox, $checkbox->uncheckValue('0'));
