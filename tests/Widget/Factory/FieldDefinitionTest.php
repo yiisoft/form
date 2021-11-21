@@ -9,7 +9,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\AttributesValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +18,7 @@ final class FieldDefinitionTest extends TestCase
 
     public function definitionDataProvider(): array
     {
-        $definitions = [
+        return [
             [
                 'checkbox',
                 ['value' => '1'],
@@ -119,8 +118,6 @@ final class FieldDefinitionTest extends TestCase
                 ],
             ],
         ];
-
-        return $definitions;
     }
 
     /**
@@ -166,7 +163,7 @@ final class FieldDefinitionTest extends TestCase
                     'addInvalidClass()' => [$invalidClass],
                     'addLabelClass()' => [$labelClass],
                     'addValidClass()' => [$validClass],
-                ]
+                ],
             ]
         );
 
