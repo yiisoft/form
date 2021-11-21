@@ -26,7 +26,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'number')->number(['class' => 'test-class'])->render(),
+            Field::widget()->for($this->formModel, 'number')->number([], ['class' => 'test-class'])->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'number')->number(['max' => 8])->render(),
+            Field::widget()->for($this->formModel, 'number')->number([], ['max' => 8])->render(),
         );
     }
 
@@ -54,7 +54,7 @@ final class FieldNumberTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'number')->number(['min' => 4])->render(),
+            Field::widget()->for($this->formModel, 'number')->number([], ['min' => 4])->render(),
         );
     }
 
@@ -70,7 +70,7 @@ final class FieldNumberTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'number')
-                ->number(['placeholder' => 'PlaceHolder Text'])
+                ->number([], ['placeholder' => 'PlaceHolder Text'])
                 ->render(),
         );
     }

@@ -27,23 +27,15 @@ final class FieldTextTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['dirname' => 'test.dir'])->render(),
+            Field::widget()->for($this->formModel, 'string')->text([], ['dirname' => 'test.dir'])->render(),
         );
     }
 
-    public function testForm(): void
+    public function testDirnameException(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-string">String</label>
-        <input type="text" id="typeform-string" name="TypeForm[string]" form="form-id" placeholder="Typed your text string.">
-        <div>Write your text string.</div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['form' => 'form-id'])->render(),
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The value cannot be empty.');
+        Field::widget()->for($this->formModel, 'string')->text(['dirname()' => ['']])->render();
     }
 
     public function testMaxLength(): void
@@ -57,7 +49,7 @@ final class FieldTextTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['maxlength' => 10])->render(),
+            Field::widget()->for($this->formModel, 'string')->text([], ['maxlength' => 10])->render(),
         );
     }
 
@@ -72,7 +64,7 @@ final class FieldTextTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['minlength' => 4])->render(),
+            Field::widget()->for($this->formModel, 'string')->text([], ['minlength' => 4])->render(),
         );
     }
 
@@ -87,7 +79,7 @@ final class FieldTextTest extends TestCase
         HTML;
         $html = Field::widget()
             ->for($this->formModel, 'string')
-            ->text(['pattern' => '[A-Za-z]', 'title' => 'Only accepts uppercase and lowercase letters.'])
+            ->text([], ['pattern' => '[A-Za-z]', 'title' => 'Only accepts uppercase and lowercase letters.'])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -103,7 +95,7 @@ final class FieldTextTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['placeholder' => 'PlaceHolder Text'])->render(),
+            Field::widget()->for($this->formModel, 'string')->text([], ['placeholder' => 'PlaceHolder Text'])->render(),
         );
     }
 
@@ -118,7 +110,7 @@ final class FieldTextTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['readonly' => true])->render(),
+            Field::widget()->for($this->formModel, 'string')->text([], ['readonly' => true])->render(),
         );
     }
 
@@ -148,7 +140,7 @@ final class FieldTextTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->text(['size' => 10])->render(),
+            Field::widget()->for($this->formModel, 'string')->text([], ['size' => 10])->render(),
         );
     }
 

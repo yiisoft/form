@@ -26,7 +26,7 @@ final class FieldHintTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->hint([], ['hint()' => [null]])->render(),
+            Field::widget()->for($this->formModel, 'string')->hint(['hint()' => [null]])->render(),
         );
     }
 
@@ -41,7 +41,7 @@ final class FieldHintTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->hint(['class' => 'test-class'])->render(),
+            Field::widget()->for($this->formModel, 'string')->hint([], ['class' => 'test-class'])->render(),
         );
     }
 
@@ -58,7 +58,7 @@ final class FieldHintTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'string')
-                ->hint([], ['encode()' => [false], 'hint()' => ['Write&nbsp;your&nbsp;text.']])
+                ->hint(['encode()' => [false], 'hint()' => ['Write&nbsp;your&nbsp;text.']])
                 ->render(),
         );
     }
@@ -76,7 +76,7 @@ final class FieldHintTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'string')
-                ->hint(['class' => 'test-class'], ['hint()' => ['Custom hint text.']])
+                ->hint(['hint()' => ['Custom hint text.']], ['class' => 'test-class'])
                 ->render(),
         );
     }
@@ -107,7 +107,7 @@ final class FieldHintTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->hint([], ['tag()' => ['span']])->render(),
+            Field::widget()->for($this->formModel, 'string')->hint(['tag()' => ['span']])->render(),
         );
     }
 
@@ -115,7 +115,7 @@ final class FieldHintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
-        Field::widget()->for($this->formModel, 'string')->hint([], ['tag()' => ['']])->render();
+        Field::widget()->for($this->formModel, 'string')->hint(['tag()' => ['']])->render();
     }
 
     protected function setUp(): void

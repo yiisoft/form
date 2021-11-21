@@ -24,7 +24,7 @@ final class FieldSubmitButtonTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->submitButton([], ['autoIdPrefix()' => ['s-']])->render(),
+            Field::widget()->submitButton(['autoIdPrefix()' => ['s-']])->render(),
         );
     }
 
@@ -35,7 +35,7 @@ final class FieldSubmitButtonTest extends TestCase
         <input type="submit" id="submit-1" name="submit-1" disabled>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton(['disabled' => true])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton([], ['disabled' => true])->render());
     }
 
     public function testId(): void
@@ -45,7 +45,7 @@ final class FieldSubmitButtonTest extends TestCase
         <input type="submit" id="test-id" name="test-id">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton(['id' => 'test-id'])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton([], ['id' => 'test-id'])->render());
     }
 
     public function testName(): void
@@ -55,7 +55,7 @@ final class FieldSubmitButtonTest extends TestCase
         <input type="submit" id="submit-1" name="test-name">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton(['name' => 'test-name'])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton([], ['name' => 'test-name'])->render());
     }
 
     public function testRender(): void
@@ -75,7 +75,7 @@ final class FieldSubmitButtonTest extends TestCase
         <input type="submit" id="submit-1" name="submit-1" value="Save">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton(['value' => 'Save'])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->submitButton([], ['value' => 'Save'])->render());
     }
 
     protected function setUp(): void

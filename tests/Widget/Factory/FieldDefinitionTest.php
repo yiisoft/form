@@ -180,7 +180,7 @@ final class FieldDefinitionTest extends TestCase
             // Check test.
             $this->assertEqualsWithoutLE(
                 $expected['expected'],
-                Field::widget()->for($this->formModel, $type)->$type($attributes)->render(),
+                Field::widget()->for($this->formModel, $type)->$type([], $attributes)->render(),
             );
         }
     }
@@ -219,7 +219,7 @@ final class FieldDefinitionTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'toNull')
-                ->radioList([], ['items()' => [[1 => 'Female', 2 => 'Male']]])
+                ->radioList(['items()' => [[1 => 'Female', 2 => 'Male']]])
                 ->render(),
         );
     }

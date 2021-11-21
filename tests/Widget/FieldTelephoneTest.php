@@ -27,7 +27,7 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->telephone(['maxlength' => 10])->render(),
+            Field::widget()->for($this->formModel, 'string')->telephone([], ['maxlength' => 10])->render(),
         );
     }
 
@@ -42,7 +42,7 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->telephone(['minlength' => 4])->render(),
+            Field::widget()->for($this->formModel, 'string')->telephone([], ['minlength' => 4])->render(),
         );
     }
 
@@ -57,7 +57,7 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->telephone(['pattern' => '[789][0-9]{9}'])->render(),
+            Field::widget()->for($this->formModel, 'string')->telephone([], ['pattern' => '[789][0-9]{9}'])->render(),
         );
     }
 
@@ -72,7 +72,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->telephone(['placeholder' => 'PlaceHolder Text'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'string')
+                ->telephone([], ['placeholder' => 'PlaceHolder Text'])
+                ->render(),
         );
     }
 

@@ -27,23 +27,15 @@ final class FieldTextAreaTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->textArea(['dirname' => 'test.dir'])->render(),
+            Field::widget()->for($this->formModel, 'string')->textArea([], ['dirname' => 'test.dir'])->render(),
         );
     }
 
-    public function testForm(): void
+    public function testDirnameException(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-string">String</label>
-        <textarea id="typeform-string" name="TypeForm[string]" form="form-id" placeholder="Typed your text string."></textarea>
-        <div>Write your text string.</div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'string')->textArea(['form' => 'form-id'])->render(),
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The value cannot be empty.');
+        Field::widget()->for($this->formModel, 'string')->textArea(['dirname()' => ['']])->render();
     }
 
     public function testMaxLength(): void
@@ -57,7 +49,7 @@ final class FieldTextAreaTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->textArea(['maxLength' => 100])->render(),
+            Field::widget()->for($this->formModel, 'string')->textArea([], ['maxLength' => 100])->render(),
         );
     }
 
@@ -72,7 +64,7 @@ final class FieldTextAreaTest extends TestCase
         HTML;
         $html = Field::widget()
             ->for($this->formModel, 'string')
-            ->textArea(['placeholder' => 'PlaceHolder Text'])
+            ->textArea([], ['placeholder' => 'PlaceHolder Text'])
             ->render();
         $this->assertEqualsWithoutLE($expected, $html);
     }
@@ -103,7 +95,7 @@ final class FieldTextAreaTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->textArea(['readonly' => true])->render(),
+            Field::widget()->for($this->formModel, 'string')->textArea([], ['readonly' => true])->render(),
         );
     }
 
@@ -155,7 +147,7 @@ final class FieldTextAreaTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->textArea(['wrap' => 'hard'])->render(),
+            Field::widget()->for($this->formModel, 'string')->textArea([], ['wrap' => 'hard'])->render(),
         );
 
         /** soft value */
@@ -168,8 +160,15 @@ final class FieldTextAreaTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->textArea(['wrap' => 'soft'])->render(),
+            Field::widget()->for($this->formModel, 'string')->textArea([], ['wrap' => 'soft'])->render(),
         );
+    }
+
+    public function testWrapException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid wrap value. Valid values are: hard, soft.');
+        Field::widget()->for($this->formModel, 'string')->textArea(['wrap()' => ['exception']]);
     }
 
     protected function setUp(): void

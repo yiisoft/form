@@ -36,7 +36,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['containerAttributes()' => [['class' => 'test-class']], 'items()' => [$this->sex]])
+                ->checkboxList(['containerAttributes()' => [['class' => 'test-class']], 'items()' => [$this->sex]])
                 ->render(),
         );
     }
@@ -56,7 +56,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['containerTag()' => ['span'], 'items()' => [$this->sex]])
+                ->checkboxList(['containerTag()' => ['span'], 'items()' => [$this->sex]])
                 ->render(),
         );
     }
@@ -74,7 +74,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['containerTag()' => [null], 'items()' => [$this->sex]])
+                ->checkboxList(['containerTag()' => [null], 'items()' => [$this->sex]])
                 ->render(),
         );
     }
@@ -95,7 +95,6 @@ final class FieldCheckBoxListTest extends TestCase
             Field::widget()
                 ->for($this->formModel, 'array')
                 ->checkboxList(
-                    [],
                     [
                         'individualItemsAttributes()' => [[1 => ['disabled' => true], 2 => ['class' => 'test-class']]],
                         'items()' => [$this->sex],
@@ -121,7 +120,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['items()' => [$this->sex], 'itemsAttributes()' => [['class' => 'test-class']]])
+                ->checkboxList(['items()' => [$this->sex], 'itemsAttributes()' => [['class' => 'test-class']]])
                 ->render(),
         );
 
@@ -139,7 +138,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['itemsAttributes()' => [['disabled' => true]], 'items()' => [$this->sex]])
+                ->checkboxList(['itemsAttributes()' => [['disabled' => true]], 'items()' => [$this->sex]])
                 ->render(),
         );
 
@@ -157,7 +156,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['itemsAttributes()' => [['readonly' => true]], 'items()' => [$this->sex]])
+                ->checkboxList(['itemsAttributes()' => [['readonly' => true]], 'items()' => [$this->sex]])
                 ->render(),
         );
     }
@@ -178,7 +177,6 @@ final class FieldCheckBoxListTest extends TestCase
             Field::widget()
                 ->for($this->formModel, 'array')
                 ->checkboxList(
-                    [],
                     [
                         'items()' => [$this->sex],
                         'itemsFormatter()' => [
@@ -210,7 +208,9 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['itemsFromValues()' => [$this->sex], 'itemsAttributes()' => [['class' => 'test-class']]])
+                ->checkboxList(
+                    ['itemsFromValues()' => [$this->sex], 'itemsAttributes()' => [['class' => 'test-class']]]
+                )
                 ->render(),
         );
     }
@@ -228,7 +228,7 @@ final class FieldCheckBoxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->checkboxList([], ['items()' => [$this->sex]])->render(),
+            Field::widget()->for($this->formModel, 'array')->checkboxList(['items()' => [$this->sex]])->render(),
         );
     }
 
@@ -246,7 +246,7 @@ final class FieldCheckBoxListTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->checkboxList([], ['items()' => [$this->sex], 'separator()' => ['&#9866;']])
+                ->checkboxList(['items()' => [$this->sex], 'separator()' => ['&#9866;']])
                 ->render(),
         );
     }
@@ -266,7 +266,7 @@ final class FieldCheckBoxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->checkboxList([], ['items()' => [$this->sex]])->render(),
+            Field::widget()->for($this->formModel, 'array')->checkboxList(['items()' => [$this->sex]])->render(),
         );
 
         // value iterable
@@ -282,7 +282,7 @@ final class FieldCheckBoxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->checkboxList([], ['items()' => [$this->sex]])->render(),
+            Field::widget()->for($this->formModel, 'array')->checkboxList(['items()' => [$this->sex]])->render(),
         );
     }
 

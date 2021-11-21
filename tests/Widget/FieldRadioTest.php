@@ -27,22 +27,9 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['enclosedByLabel()' => [false]])
-                ->label([], ['label()' => [null]])
+                ->radio(['enclosedByLabel()' => [false]], ['value' => true])
+                ->label(['label()' => [null]])
                 ->render(),
-        );
-    }
-
-    public function testAttributes(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label><input type="radio" id="typeform-bool" class="test-class" name="TypeForm[bool]" checked> Bool</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'bool')->radio(['class' => 'test-class'])->render(),
         );
     }
 
@@ -59,7 +46,7 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['enclosedByLabel()' => [false]])
+                ->radio(['enclosedByLabel()' => [false]], ['value' => true])
                 ->render(),
         );
 
@@ -71,7 +58,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'bool')->radio(['value' => true])->render(),
+            Field::widget()->for($this->formModel, 'bool')->radio([], ['value' => true])->render(),
         );
     }
 
@@ -88,8 +75,8 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['enclosedByLabel()' => [false]])
-                ->label(['class' => 'test-class'])
+                ->radio(['enclosedByLabel()' => [false]], ['value' => true])
+                ->label([], ['class' => 'test-class'])
                 ->render(),
         );
 
@@ -103,7 +90,7 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['labelAttributes()' => [['class' => 'test-class']]])
+                ->radio(['labelAttributes()' => [['class' => 'test-class']]], ['value' => true])
                 ->render(),
         );
     }
@@ -121,8 +108,8 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['enclosedByLabel()' => [false]])
-                ->label([], ['label()' => ['test-text-label']])
+                ->radio(['enclosedByLabel()' => [false]], ['value' => true])
+                ->label(['label()' => ['test-text-label']])
                 ->render(),
         );
 
@@ -136,7 +123,7 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['label()' => ['test-text-label']])
+                ->radio(['label()' => ['test-text-label']], ['value' => true])
                 ->render(),
         );
     }
@@ -150,7 +137,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'bool')->radio(['form' => 'form-id', 'value' => true])->render(),
+            Field::widget()->for($this->formModel, 'bool')->radio([], ['form' => 'form-id', 'value' => true])->render(),
         );
     }
 
@@ -163,7 +150,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->radio(['value' => 1])->render()
+            Field::widget()->for($this->formModel, 'int')->radio([], ['value' => 1])->render()
         );
     }
 
@@ -178,7 +165,7 @@ final class FieldRadioTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'bool')
-                ->radio(['value' => true], ['uncheckValue()' => ['0']])
+                ->radio(['uncheckValue()' => ['0']], ['value' => true])
                 ->render(),
         );
     }
@@ -194,7 +181,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'bool')->radio(['value' => false])->render(),
+            Field::widget()->for($this->formModel, 'bool')->radio([], ['value' => false])->render(),
         );
 
         // value bool true
@@ -205,7 +192,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'bool')->radio(['value' => true])->render(),
+            Field::widget()->for($this->formModel, 'bool')->radio([], ['value' => true])->render(),
         );
 
         // value int 0
@@ -217,7 +204,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->radio(['value' => 0])->render(),
+            Field::widget()->for($this->formModel, 'int')->radio([], ['value' => 0])->render(),
         );
 
         // value int 1
@@ -228,7 +215,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->radio(['value' => 1])->render(),
+            Field::widget()->for($this->formModel, 'int')->radio([], ['value' => 1])->render(),
         );
 
         // value string 'inactive'
@@ -241,7 +228,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->radio(['value' => 'inactive'])->render(),
+            Field::widget()->for($this->formModel, 'string')->radio([], ['value' => 'inactive'])->render(),
         );
 
         // value string 'active'
@@ -253,7 +240,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->radio(['value' => 'active'])->render(),
+            Field::widget()->for($this->formModel, 'string')->radio([], ['value' => 'active'])->render(),
         );
 
         // value null
@@ -265,7 +252,7 @@ final class FieldRadioTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'toNull')->radio(['value' => null])->render(),
+            Field::widget()->for($this->formModel, 'toNull')->radio([], ['value' => null])->render(),
         );
     }
 

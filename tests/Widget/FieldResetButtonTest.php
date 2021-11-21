@@ -24,7 +24,7 @@ final class FieldResetButtonTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->resetButton([], ['autoIdPrefix()' => ['s-']])->render()
+            Field::widget()->resetButton(['autoIdPrefix()' => ['s-']])->render()
         );
     }
 
@@ -35,7 +35,7 @@ final class FieldResetButtonTest extends TestCase
         <input type="reset" id="reset-1" name="reset-1" disabled>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['disabled' => true])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['disabled' => true])->render());
     }
 
     public function testId(): void
@@ -45,7 +45,7 @@ final class FieldResetButtonTest extends TestCase
         <input type="reset" id="test-id" name="test-id">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['id' => 'test-id'])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['id' => 'test-id'])->render());
     }
 
     public function testName(): void
@@ -55,7 +55,7 @@ final class FieldResetButtonTest extends TestCase
         <input type="reset" id="reset-1" name="test-name">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['name' => 'test-name'])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['name' => 'test-name'])->render());
     }
 
     public function testRender(): void
@@ -75,7 +75,7 @@ final class FieldResetButtonTest extends TestCase
         <input type="reset" id="reset-1" name="reset-1" value="Reseteable">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton(['value' => 'Reseteable'])->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['value' => 'Reseteable'])->render());
     }
 
     protected function setUp(): void

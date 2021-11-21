@@ -17,7 +17,7 @@ final class ResetButton extends Widget
 {
     use GlobalAttributes;
 
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * The HTML attributes. The following special options are recognized.

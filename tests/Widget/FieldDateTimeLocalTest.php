@@ -28,7 +28,7 @@ final class FieldDateTimeLocalTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'toDate')
-                ->dateTimeLocal(['max' => '1985-04-12T23:20:50.52'])
+                ->dateTimeLocal([], ['max' => '1985-04-12T23:20:50.52'])
                 ->render(),
         );
     }
@@ -45,7 +45,7 @@ final class FieldDateTimeLocalTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'toDate')
-                ->dateTimeLocal(['min' => '1985-04-12T23:20:50.52'])
+                ->dateTimeLocal([], ['min' => '1985-04-12T23:20:50.52'])
                 ->render(),
         );
     }
@@ -62,7 +62,7 @@ final class FieldDateTimeLocalTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'toDate')
-                ->dateTimeLocal(['readonly' => true])
+                ->dateTimeLocal([], ['readonly' => true])
                 ->render(),
         );
     }

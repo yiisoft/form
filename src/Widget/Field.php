@@ -74,12 +74,12 @@ final class Field extends AbstractWidget
      *
      * This method will generate the `checked` tag attribute according to the model attribute value.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function checkbox(array $attributes = [], array $config = []): self
+    public function checkbox(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -99,12 +99,12 @@ final class Field extends AbstractWidget
      * A checkbox list allows multiple selection, As a result, the corresponding submitted value is an array.
      * The selection of the checkbox list is taken from the value of the model attribute.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function checkboxList(array $attributes = [], array $config = []): self
+    public function checkboxList(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_CHECKBOX_LIST, $attributes, $config);
@@ -113,12 +113,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a date widget.
      *
-     * @param array $attributes the HTML attributes for the date widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
      */
-    public function date(array $attributes = [], array $config = []): self
+    public function date(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_DATE, $attributes, $config);
@@ -127,12 +127,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a date time widget.
      *
-     * @param array $attributes the HTML attributes for the date widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
      */
-    public function dateTime(array $attributes = [], array $config = []): self
+    public function dateTime(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_DATE_TIME, $attributes, $config);
@@ -141,12 +141,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a date time local widget.
      *
-     * @param array $attributes the HTML attributes for the date widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
      */
-    public function dateTimeLocal(array $attributes = [], array $config = []): self
+    public function dateTimeLocal(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_DATE_TIME_LOCAL, $attributes, $config);
@@ -155,12 +155,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a email widget.
      *
-     * @param array $attributes the HTML attributes for the date widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
      */
-    public function email(array $attributes = [], array $config = []): self
+    public function email(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_EMAIL, $attributes, $config);
@@ -171,12 +171,12 @@ final class Field extends AbstractWidget
      *
      * Note that even if there is no validation error, this method will still return an empty error tag.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function error(array $attributes = [], array $config = []): self
+    public function error(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -192,12 +192,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a file widget.
      *
-     * @param array $attributes the HTML attributes for the date widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
      */
-    public function file(array $attributes = [], array $config = []): self
+    public function file(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_FILE, $attributes, $config);
@@ -206,12 +206,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a hidden widget.
      *
-     * @param array $attributes the HTML attributes for the date widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
      */
-    public function hidden(array $attributes = [], array $config = []): self
+    public function hidden(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         $new->parts['{label}'] = '';
@@ -223,12 +223,12 @@ final class Field extends AbstractWidget
     /**
      * Renders the hint tag.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function hint(array $attributes = [], array $config = []): self
+    public function hint(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -248,14 +248,14 @@ final class Field extends AbstractWidget
     /**
      * Renders a image widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @throws InvalidConfigException
      *
      * @return static the field object itself.
      */
-    public function image(array $attributes = [], array $config = []): self
+    public function image(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -270,12 +270,12 @@ final class Field extends AbstractWidget
     /**
      * Generates a label tag.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function label(array $attributes = [], array $config = []): self
+    public function label(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -291,12 +291,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a number widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
      */
-    public function number(array $attributes = [], array $config = []): self
+    public function number(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_NUMBER, $attributes, $config);
@@ -305,12 +305,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a password widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
      */
-    public function password(array $attributes = [], array $config = []): self
+    public function password(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_PASSWORD, $attributes, $config);
@@ -319,12 +319,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a radio widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
      */
-    public function radio(array $attributes = [], array $config = []): self
+    public function radio(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -341,12 +341,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a radio list widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
      */
-    public function radiolist(array $attributes = [], array $config = []): self
+    public function radiolist(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_RADIO_LIST, $attributes, $config);
@@ -355,12 +355,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a range widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
      */
-    public function range(array $attributes = [], array $config = []): self
+    public function range(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_RANGE, $attributes, $config);
@@ -369,14 +369,14 @@ final class Field extends AbstractWidget
     /**
      * Renders a reset button widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @throws InvalidConfigException
      *
      * @return static the field object itself.
      */
-    public function resetButton(array $attributes = [], array $config = []): self
+    public function resetButton(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -391,12 +391,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a select widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
      */
-    public function select(array $attributes = [], array $config = []): self
+    public function select(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_SELECT, $attributes, $config);
@@ -405,14 +405,14 @@ final class Field extends AbstractWidget
     /**
      * Renders a submit button widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @throws InvalidConfigException
      *
      * @return static the field object itself.
      */
-    public function submitButton(array $attributes = [], array $config = []): self
+    public function submitButton(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
 
@@ -429,12 +429,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a text widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function telephone(array $attributes = [], array $config = []): self
+    public function telephone(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_TELEPHONE, $attributes, $config);
@@ -443,12 +443,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a text widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function text(array $attributes = [], array $config = []): self
+    public function text(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_TEXT, $attributes, $config);
@@ -457,12 +457,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a text area widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function textArea(array $attributes = [], array $config = []): self
+    public function textArea(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_TEXT_AREA, $attributes, $config);
@@ -471,12 +471,12 @@ final class Field extends AbstractWidget
     /**
      * Renders a url widget.
      *
-     * @param array $attributes the HTML attributes for the widget.
      * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
      */
-    public function url(array $attributes = [], array $config = []): self
+    public function url(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
         return $new->build(self::TYPE_URL, $attributes, $config);

@@ -48,7 +48,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'int')
-                ->select([], ['items()' => [$this->citiesGroups], 'groups()' => [$this->groups]])
+                ->select(['items()' => [$this->citiesGroups], 'groups()' => [$this->groups]])
                 ->render(),
         );
     }
@@ -78,7 +78,6 @@ final class FieldSelectTest extends TestCase
             Field::widget()
                 ->for($this->formModel, 'int')
                 ->select(
-                    [],
                     [
                         'items()' => [$this->citiesGroups],
                         'groups()' => [$this->groups],
@@ -107,7 +106,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->select(['multiple' => true], ['items()' => [$this->cities], 'unselectValue()' => ['0']])
+                ->select(['items()' => [$this->cities], 'unselectValue()' => ['0']], ['multiple' => true])
                 ->render(),
         );
     }
@@ -136,7 +135,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'int')
-                ->select([], ['optionsData()' => [$cities], 'encode()' => [false]])
+                ->select(['optionsData()' => [$cities], 'encode()' => [false]])
                 ->render(),
         );
 
@@ -162,7 +161,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'int')
-                ->select([], ['optionsData()' => [$cities], 'encode()' => [true]])
+                ->select(['optionsData()' => [$cities], 'encode()' => [true]])
                 ->render(),
         );
     }
@@ -192,7 +191,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'int')
-                ->select([], ['items()' => [$this->cities], 'prompt()' => [$prompt]])
+                ->select(['items()' => [$this->cities], 'prompt()' => [$prompt]])
                 ->render(),
         );
     }
@@ -212,7 +211,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'int')->select(['items()' => [$this->cities]])->render(),
         );
     }
 
@@ -234,7 +233,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'int')
-                ->select(['multiple' => true, 'size' => 4], ['items()' => [$this->cities]])
+                ->select(['items()' => [$this->cities]], ['multiple' => true, 'size' => 4])
                 ->render(),
         );
     }
@@ -258,7 +257,7 @@ final class FieldSelectTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->select(['multiple' => true], ['items()' => [$this->cities], 'unselectValue()' => ['0']])
+                ->select(['items()' => [$this->cities], 'unselectValue()' => ['0']], ['multiple' => true])
                 ->render(),
         );
     }
@@ -280,7 +279,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'int')->select(['items()' => [$this->cities]])->render(),
         );
 
         // value int 2.
@@ -298,7 +297,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'int')->select(['items()' => [$this->cities]])->render(),
         );
 
         // value iterable [2, 3].
@@ -316,7 +315,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'array')->select(['items()' => [$this->cities]])->render(),
         );
 
         // value string '1'
@@ -335,7 +334,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'string')->select(['items()' => [$this->cities]])->render(),
         );
 
         // value string '2'
@@ -354,7 +353,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'string')->select(['items()' => [$this->cities]])->render(),
         );
 
         // value null
@@ -372,7 +371,7 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->select([], ['items()' => [$this->cities]])->render(),
+            Field::widget()->for($this->formModel, 'int')->select(['items()' => [$this->cities]])->render(),
         );
     }
 

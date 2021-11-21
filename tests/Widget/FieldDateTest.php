@@ -26,7 +26,7 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'toDate')->date(['max' => '1996-12-19'])->render(),
+            Field::widget()->for($this->formModel, 'toDate')->date([], ['max' => '1996-12-19'])->render(),
         );
     }
 
@@ -40,7 +40,7 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'toDate')->date(['min' => '1996-12-19'])->render(),
+            Field::widget()->for($this->formModel, 'toDate')->date([], ['min' => '1996-12-19'])->render(),
         );
     }
 
@@ -54,7 +54,7 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'toDate')->date(['readonly' => true])->render(),
+            Field::widget()->for($this->formModel, 'toDate')->date([], ['readonly' => true])->render(),
         );
     }
 

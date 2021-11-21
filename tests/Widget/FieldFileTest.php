@@ -25,7 +25,7 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->file(['accept' => 'image/*'], [])->render(),
+            Field::widget()->for($this->formModel, 'array')->file([], ['accept' => 'image/*'])->render(),
         );
     }
 
@@ -39,7 +39,7 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->file(['class' => 'test-class'], [])->render(),
+            Field::widget()->for($this->formModel, 'array')->file([], ['class' => 'test-class'], [])->render(),
         );
     }
 
@@ -55,7 +55,7 @@ final class FieldFileTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'array')
-                ->file([], ['uncheckValue()' => ['0'], 'hiddenAttributes()' => [['id' => 'test-id']]])
+                ->file(['uncheckValue()' => ['0'], 'hiddenAttributes()' => [['id' => 'test-id']]])
                 ->render(),
         );
     }
@@ -70,7 +70,7 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->file(['multiple' => true], [])->render(),
+            Field::widget()->for($this->formModel, 'array')->file([], ['multiple' => true])->render(),
         );
     }
 
@@ -98,7 +98,7 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'array')->file([], ['uncheckValue()' => ['0']])->render(),
+            Field::widget()->for($this->formModel, 'array')->file(['uncheckValue()' => ['0']])->render(),
         );
     }
 

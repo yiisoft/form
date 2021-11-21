@@ -17,22 +17,6 @@ final class FieldRangeTest extends TestCase
 {
     use TestTrait;
 
-    public function testAttributes(): void
-    {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-int">Int</label>
-        <input type="range" id="typeform-int" class="test-class" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
-        <output id="i1" name="i1" for="TypeForm[int]">0</output>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'int')->range(['class' => 'test-class'])->render(),
-        );
-    }
-
     public function testMax(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
@@ -45,7 +29,7 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->range(['max' => 8])->render(),
+            Field::widget()->for($this->formModel, 'int')->range([], ['max' => 8])->render(),
         );
     }
 
@@ -61,7 +45,7 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->range(['min' => 4])->render(),
+            Field::widget()->for($this->formModel, 'int')->range([], ['min' => 4])->render(),
         );
     }
 
@@ -79,7 +63,7 @@ final class FieldRangeTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'int')
-                ->range([], ['outputAttributes()' => [['class' => 'test-class']]])
+                ->range(['outputAttributes()' => [['class' => 'test-class']]])
                 ->render(),
         );
     }
@@ -96,7 +80,7 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'int')->range([], ['outputTag()' => ['p']])->render(),
+            Field::widget()->for($this->formModel, 'int')->range(['outputTag()' => ['p']])->render(),
         );
     }
 
@@ -104,7 +88,7 @@ final class FieldRangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The output tag name it cannot be empty value.');
-        Field::widget()->for($this->formModel, 'int')->range([], ['outputTag()' => ['']])->render();
+        Field::widget()->for($this->formModel, 'int')->range(['outputTag()' => ['']])->render();
     }
 
     public function testRender(): void

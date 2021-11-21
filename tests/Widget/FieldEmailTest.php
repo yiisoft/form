@@ -27,7 +27,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->email(['maxlength' => 10])->render(),
+            Field::widget()->for($this->formModel, 'string')->email([], ['maxlength' => 10])->render(),
         );
     }
 
@@ -42,7 +42,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->email(['minlength' => 4])->render(),
+            Field::widget()->for($this->formModel, 'string')->email([], ['minlength' => 4])->render(),
         );
     }
 
@@ -58,7 +58,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->email(['multiple' => true])->render(),
+            Field::widget()->for($this->formModel, 'string')->email([], ['multiple' => true])->render(),
         );
     }
 
@@ -75,7 +75,7 @@ final class FieldEmailTest extends TestCase
             $expected,
             Field::widget()
                 ->for($this->formModel, 'string')
-                ->email(['pattern' => '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}'])
+                ->email([], ['pattern' => '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}'])
                 ->render(),
         );
     }
@@ -91,7 +91,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->email(['placeholder' => 'PlaceHolder Text'])->render(),
+            Field::widget()
+                ->for($this->formModel, 'string')
+                ->email([], ['placeholder' => 'PlaceHolder Text'])
+                ->render(),
         );
     }
 
@@ -121,7 +124,7 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'string')->email(['size' => 20])->render(),
+            Field::widget()->for($this->formModel, 'string')->email([], ['size' => 20])->render(),
         );
     }
 

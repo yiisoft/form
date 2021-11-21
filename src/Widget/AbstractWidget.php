@@ -44,11 +44,7 @@ abstract class AbstractWidget extends Widget
     public function attributes(array $value): self
     {
         $new = clone $this;
-
-        if ($value !== []) {
-            $new->attributes = $value;
-        }
-
+        $new->attributes = $value;
         return $new;
     }
 
