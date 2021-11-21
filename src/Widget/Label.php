@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Label as LabelTag;
  *
  * @psalm-suppress MissingConstructor
  */
-final class Label extends AbstractWidget
+final class Label extends AbstractForm
 {
     private ?string $label = '';
 

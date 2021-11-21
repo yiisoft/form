@@ -13,7 +13,7 @@ use Yiisoft\Html\Tag\CustomTag;
  *
  * @psalm-suppress MissingConstructor
  */
-final class Hint extends AbstractWidget
+final class Hint extends AbstractForm
 {
     private ?string $hint = '';
     private string $tag = 'div';

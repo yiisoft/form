@@ -16,7 +16,7 @@ use function strtr;
  *
  * @psalm-suppress MissingConstructor
  */
-final class Field extends AbstractWidget
+final class Field extends AbstractForm
 {
     use FieldAttributes;
 
@@ -551,7 +551,7 @@ final class Field extends AbstractWidget
             $attributes = $new->setInputAttributes($type, $attributes);
         }
 
-        /** @var AbstractWidget */
+        /** @var AbstractForm */
         $type = $type::widget($config);
         $new->parts[$parts] = $type->for($new->getFormModel(), $new->getAttribute())->attributes($attributes)->render();
         return $new;

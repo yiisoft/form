@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email
  */
-final class Email extends AbstractWidget
+final class Email extends AbstractForm
 {
     use GlobalAttributes;
 

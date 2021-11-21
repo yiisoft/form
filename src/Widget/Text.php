@@ -14,7 +14,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
  */
-final class Text extends AbstractWidget
+final class Text extends AbstractForm
 {
     use GlobalAttributes;
 

@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel
  */
-final class Telephone extends AbstractWidget
+final class Telephone extends AbstractForm
 {
     use GlobalAttributes;
 

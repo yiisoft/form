@@ -17,7 +17,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html
  */
-final class Range extends AbstractWidget
+final class Range extends AbstractForm
 {
     use GlobalAttributes;
 

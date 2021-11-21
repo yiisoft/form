@@ -76,7 +76,8 @@ final class HtmlFormErrors
      *
      * @param FormModelInterface $model the form object.
      *
-     * @return array the error message for all attributes. Empty array is returned if no error.
+     * @return array The first error message for each attribute in a model. Empty array is returned if there is no
+     * error.
      */
     public static function getFirstErrors(FormModelInterface $formModel): array
     {

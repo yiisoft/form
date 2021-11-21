@@ -17,7 +17,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListTag;
  *
  * A checkbox list allows multiple selection.
  */
-final class CheckboxList extends AbstractWidget
+final class CheckboxList extends AbstractForm
 {
     use GlobalAttributes;
 

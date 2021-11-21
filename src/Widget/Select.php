@@ -19,7 +19,7 @@ use Yiisoft\Html\Tag\Select as SelectTag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/select.html
  */
-final class Select extends AbstractWidget
+final class Select extends AbstractForm
 {
     use GlobalAttributes;
 

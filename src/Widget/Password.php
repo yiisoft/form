@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password
  */
-final class Password extends AbstractWidget
+final class Password extends AbstractForm
 {
     use GlobalAttributes;
 

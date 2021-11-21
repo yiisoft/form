@@ -15,7 +15,7 @@ use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
 /**
  * Generates a list of radio.
  */
-final class RadioList extends AbstractWidget
+final class RadioList extends AbstractForm
 {
     use GlobalAttributes;
 

@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends AbstractWidget
+final class Number extends AbstractForm
 {
     use GlobalAttributes;
 

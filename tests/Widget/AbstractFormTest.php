@@ -8,18 +8,18 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Widget\AbstractWidget;
+use Yiisoft\Form\Widget\AbstractForm;
 use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Html;
 
-final class AbstractWidgetTest extends TestCase
+final class AbstractFormTest extends TestCase
 {
     use TestTrait;
 
     public function testAddAttribute(): void
     {
-        $abstractWidget = $this->createAbstractWidget();
-        $this->assertSame('<test class="test">', $abstractWidget->addAttribute('class', 'test')->render());
+        $abstractForm = $this->createAbstractWidget();
+        $this->assertSame('<test class="test">', $abstractForm->addAttribute('class', 'test')->render());
     }
 
     public function testGetAttributeException(): void
@@ -40,23 +40,23 @@ final class AbstractWidgetTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Attribute "id" must be a string or null.');
-        $abstractWidget = $this->createAbstractWidget();
-        $abstractWidget = $abstractWidget->attributes(['id' => true]);
-        $this->invokeMethod($abstractWidget, 'getId');
+        $abstractForm = $this->createAbstractWidget();
+        $abstractForm = $abstractForm->attributes(['id' => true]);
+        $this->invokeMethod($abstractForm, 'getId');
     }
 
     public function testGetNameException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Attribute "name" must be a string.');
-        $abstractWidget = $this->createAbstractWidget();
-        $abstractWidget = $abstractWidget->for(new TypeForm(), 'string')->attributes(['name' => true]);
-        $this->invokeMethod($abstractWidget, 'getName');
+        $abstractForm = $this->createAbstractWidget();
+        $abstractForm = $abstractForm->for(new TypeForm(), 'string')->attributes(['name' => true]);
+        $this->invokeMethod($abstractForm, 'getName');
     }
 
-    private function createAbstractWidget(): AbstractWidget
+    private function createAbstractWidget(): AbstractForm
     {
-        return new class () extends AbstractWidget {
+        return new class () extends AbstractForm {
             use GlobalAttributes;
 
             public function run(): string

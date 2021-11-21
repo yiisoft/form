@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html
  */
-final class Url extends AbstractWidget
+final class Url extends AbstractForm
 {
     use GlobalAttributes;
 

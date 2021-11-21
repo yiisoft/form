@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.hidden.html#input.hidden
  */
-final class Hidden extends AbstractWidget
+final class Hidden extends AbstractForm
 {
     use GlobalAttributes;
 

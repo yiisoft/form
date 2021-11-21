@@ -10,7 +10,7 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Widget\Widget;
 
-abstract class AbstractWidget extends Widget
+abstract class AbstractForm extends Widget
 {
     protected array $attributes = [];
     private string $attribute = '';
@@ -18,10 +18,10 @@ abstract class AbstractWidget extends Widget
     private ?FormModelInterface $formModel = null;
 
     /**
-     * Add Html attribute.
+     * Add HTML attribute.
      *
-     * @param string $key attribute name.
-     * @param mixed $value attribute value.
+     * @param string $key Attribute name.
+     * @param mixed $value Attribute value.
      *
      * @return static
      */
@@ -35,16 +35,16 @@ abstract class AbstractWidget extends Widget
     /**
      * The HTML attributes. The following special options are recognized.
      *
-     * @param array $value
+     * @param array $values Attribute values indexed by attribute names.
      *
      * @return static
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function attributes(array $value): self
+    public function attributes(array $values): self
     {
         $new = clone $this;
-        $new->attributes = $value;
+        $new->attributes = $values;
         return $new;
     }
 

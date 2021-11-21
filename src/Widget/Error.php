@@ -12,7 +12,7 @@ use Yiisoft\Html\Tag\CustomTag;
  *
  * @psalm-suppress MissingConstructor
  */
-final class Error extends AbstractWidget
+final class Error extends AbstractForm
 {
     private string $message = '';
     private array $messageCallback = [];

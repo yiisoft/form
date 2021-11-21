@@ -16,7 +16,7 @@ use Yiisoft\Html\Tag\Input\Radio as RadioTag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html
  */
-final class Radio extends AbstractWidget
+final class Radio extends AbstractForm
 {
     use GlobalAttributes;
 

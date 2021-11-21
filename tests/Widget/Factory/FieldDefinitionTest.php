@@ -156,10 +156,10 @@ final class FieldDefinitionTest extends TestCase
         $this->FactoryWidget(
             [
                 Field::class => [
-                    'addContainerClass()' => [$containerClass],
-                    'addErrorClass()' => [$errorClass],
-                    'addHintClass()' => [$hintClass],
-                    'addInputClass()' => [$inputClass],
+                    'withContainerClass()' => [$containerClass],
+                    'withErrorClass()' => [$errorClass],
+                    'withHintClass()' => [$hintClass],
+                    'withInputClass()' => [$inputClass],
                     'addInvalidClass()' => [$invalidClass],
                     'addLabelClass()' => [$labelClass],
                     'addValidClass()' => [$validClass],

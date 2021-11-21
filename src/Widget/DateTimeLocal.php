@@ -15,7 +15,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime-local.html#input.datetime-local
  */
-final class DateTimeLocal extends AbstractWidget
+final class DateTimeLocal extends AbstractForm
 {
     use GlobalAttributes;
 

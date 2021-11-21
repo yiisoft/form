@@ -14,7 +14,7 @@ use Yiisoft\Html\Tag\Textarea as TextAreaTag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html
  */
-final class TextArea extends AbstractWidget
+final class TextArea extends AbstractForm
 {
     use GlobalAttributes;
 

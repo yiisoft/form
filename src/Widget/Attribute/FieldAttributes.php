@@ -48,82 +48,6 @@ trait FieldAttributes
     private ?FormModelInterface $formModel = null;
 
     /**
-     * Set container class each for field type.
-     *
-     * @param array $containerClass the container class to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $containerClass
-     */
-    public function addContainerClass(array $containerClass): self
-    {
-        $new = clone $this;
-        $new->containersClass = $containerClass;
-        return $new;
-    }
-
-    /**
-     * Set error class each for field type.
-     *
-     * @param array $errorClass the error class to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $errorClass
-     */
-    public function addErrorClass(array $errorClass): self
-    {
-        $new = clone $this;
-        $new->errorsClass = $errorClass;
-        return $new;
-    }
-
-    /**
-     * Set hint class each for field type.
-     *
-     * @param array $hintClass the hint class to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $hintClass
-     */
-    public function addHintClass(array $hintClass): self
-    {
-        $new = clone $this;
-        $new->hintsClass = $hintClass;
-        return $new;
-    }
-
-    /**
-     * Set input class each for field type.
-     *
-     * @param array $inputClass the input class to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $inputClass
-     */
-    public function addInputClass(array $inputClass): self
-    {
-        $new = clone $this;
-        $new->inputsClass = $inputClass;
-        return $new;
-    }
-
-    /**
      * Set invalid class each for field type.
      *
      * @param array $invalidClass the input class to be used to layout the field.
@@ -310,6 +234,82 @@ trait FieldAttributes
     {
         $new = clone $this;
         $new->validClass = $value;
+        return $new;
+    }
+
+    /**
+     * Set container class each for field type.
+     *
+     * @param array $containerClass The container class to be applied to fields's container tag.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $containerClass
+     */
+    public function withContainerClass(array $containerClass): self
+    {
+        $new = clone $this;
+        $new->containersClass = $containerClass;
+        return $new;
+    }
+
+    /**
+     * Set error class used for an invalid field.
+     *
+     * @param array $errorClass The error class to apply to an invalid field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $errorClass
+     */
+    public function withErrorClass(array $errorClass): self
+    {
+        $new = clone $this;
+        $new->errorsClass = $errorClass;
+        return $new;
+    }
+
+    /**
+     * Set hint class for a field.
+     *
+     * @param array $hintClass The hint class to be applied to a field.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $hintClass
+     */
+    public function withHintClass(array $hintClass): self
+    {
+        $new = clone $this;
+        $new->hintsClass = $hintClass;
+        return $new;
+    }
+
+    /**
+     * Set input class for a field.
+     *
+     * @param array $inputClass The input class to be applied field container.
+     *
+     * ```php
+     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     *
+     * @return static
+     *
+     * @psalm-param array<string, string> $inputClass
+     */
+    public function withInputClass(array $inputClass): self
+    {
+        $new = clone $this;
+        $new->inputsClass = $inputClass;
         return $new;
     }
 

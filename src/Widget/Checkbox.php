@@ -17,7 +17,7 @@ use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox
  */
-final class Checkbox extends AbstractWidget
+final class Checkbox extends AbstractForm
 {
     use GlobalAttributes;
 
