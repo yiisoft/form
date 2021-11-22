@@ -74,7 +74,14 @@ final class Field extends AbstractForm
      *
      * This method will generate the `checked` tag attribute according to the model attribute value.
      *
-     * @param array $config the configuration array for widget factory.
+     * @param array $config The configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'enclosedByLabel()' => [false],
+     *     'label()' => ['test-text-label']],
+     *     'labelAttributes()' => [['class' => 'test-class']],
+     *     'uncheckValue()' => ['0'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
@@ -100,6 +107,23 @@ final class Field extends AbstractForm
      * The selection of the checkbox list is taken from the value of the model attribute.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'containerAttributes()' => [['class' => 'test-class']],
+     *     'containerTag()' => ['span'],
+     *     'individualItemsAttributes()' => [[1 => ['disabled' => true], 2 => ['class' => 'test-class']],
+     *     'items()' => [[1 => 'Female', 2 => 'Male']],
+     *     'itemsAttributes()' => [['disabled' => true],
+     *     'itemsFormatter()' => [
+     *         static function (CheckboxItem $item) {
+     *             return $item->checked
+     *                 ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
+     *                 : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
+     *         },
+     *     ],
+     *     'itemsFromValues()' => [[1 => 'Female', 2 => 'Male']],
+     *     'separator()' => ['&#9866;'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
@@ -115,7 +139,12 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the date widget.
-     *
+     * Most used attributes:
+     * [
+     *     'max' => '2030-01-01',
+     *     'min' => '2010-01-01',
+     *     'readonly' => true,
+     * ]
      * @return static the field widget instance.
      */
     public function date(array $config = [], array $attributes = []): self
@@ -129,6 +158,12 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the date widget.
+     * Most used attributes:
+     * [
+     *     'max' => '1990-12-31T23:59:60Z'
+     *     'min' => '1990-12-31T23:59:60Z',
+     *     'readonly' => true,
+     * ]
      *
      * @return static the field widget instance.
      */
@@ -143,6 +178,12 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the date widget.
+     * Most used attributes:
+     * [
+     *     'max' => '1985-04-12T23:20:50.52',
+     *     'min' => '1985-04-12T23:20:50.52',
+     *     'readonly' => true,
+     * ]
      *
      * @return static the field widget instance.
      */
@@ -157,6 +198,15 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the date widget.
+     * Most used attributes:
+     * [
+     *     'maxlength' => 10,
+     *     'minlength' => 1,
+     *     'multiple' => true,
+     *     'pattern' => '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',
+     *     'placeholder' => 'test-placeholder',
+     *     'size' => 2,
+     * ]
      *
      * @return static the field widget instance.
      */
@@ -172,6 +222,13 @@ final class Field extends AbstractForm
      * Note that even if there is no validation error, this method will still return an empty error tag.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'encode()' => false,
+     *     'message()' => ['test-message'],
+     *     'messageCallback()' => [[$this->formModel, 'customError']],
+     *     'tag()' => ['div'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
@@ -193,7 +250,18 @@ final class Field extends AbstractForm
      * Renders a file widget.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'hiddenAttributes()' => [['id' => 'test-id']],
+     *     'uncheckValue()' => ['0'],
+     *
+     * ]
      * @param array $attributes the HTML attributes for the date widget.
+     * Most used attributes:
+     * [
+     *     'accept' => 'image/*',
+     *     'multiple' => true,
+     * ]
      *
      * @return static the field widget instance.
      */
@@ -207,6 +275,7 @@ final class Field extends AbstractForm
      * Renders a hidden widget.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
      * @param array $attributes the HTML attributes for the date widget.
      *
      * @return static the field widget instance.
@@ -224,6 +293,12 @@ final class Field extends AbstractForm
      * Renders the hint tag.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'encode()' => [false],
+     *     'hint()' => [null],
+     *     'tag()' => ['span'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field widget instance.
@@ -250,6 +325,13 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'alt' => 'test-alt',
+     *     'height' => '100%',
+     *     'src' => 'test-src',
+     *     'width' => '100%',
+     * ]
      *
      * @throws InvalidConfigException
      *
@@ -271,8 +353,16 @@ final class Field extends AbstractForm
      * Generates a label tag.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'encode()' => [false]
+     *     'label()' => ['Email:'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
-     *
+     * Most used attributes:
+     * [
+     *    'for' => 'test-id',
+     * ]
      * @return static the field widget instance.
      */
     public function label(array $config = [], array $attributes = []): self
@@ -293,6 +383,13 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'max' => 8,
+     *     'min' => 1,
+     *     'placeholder' => 'test-placeholder',
+     *     'readonly' => true,
+     * ]
      *
      * @return static the field object itself.
      */
@@ -307,6 +404,15 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'maxlength' => 16,
+     *     'minlength' => 8,
+     *     'pattern' => '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
+     *     'title' => 'Must contain at least one number and one uppercase and lowercase letter, and at ' .
+     *                'least 8 or more characters.',
+     *     'readonly' => true
+     * ]
      *
      * @return static the field object itself.
      */
@@ -320,6 +426,13 @@ final class Field extends AbstractForm
      * Renders a radio widget.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'enclosedByLabel()' => [false],
+     *     'label()' => ['Email:'],
+     *     'labelAttributes()' => [['class' => 'test-class']]
+     *     'uncheckValue()' => ['0'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
@@ -342,6 +455,24 @@ final class Field extends AbstractForm
      * Renders a radio list widget.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'containerAttributes()' => [['class' => 'test-class']],
+     *     'containerTag()' => ['span'],
+     *     'items()' => [[1 => 'Female', 2 => 'Male']],
+     *     'itemsAttributes()' => [['class' => 'test-class']],
+     *     'individualItemsAttributes()' => [[1 => ['disabled' => true], 2 => ['class' => 'test-class']]],
+     *     'itemsFormatter()' => [
+     *         static function (RadioItem $item) {
+     *             return $item->checked
+     *                 ? "<label><input type='checkbox' name='$item->name' value='$item->value' checked> $item->label</label>"
+     *                 : "<label><input type='checkbox' name='$item->name' value='$item->value'> $item->label</label>";
+     *         },
+     *     ],
+     *     'itemsFromValues()' => [[1 => 'Female', 2 => 'Male']],
+     *     'separator()' => [PHP_EOL],
+     *     'uncheckValue()' => ['0'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
      *
      * @return static the field object itself.
@@ -356,7 +487,17 @@ final class Field extends AbstractForm
      * Renders a range widget.
      *
      * @param array $config the configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'outputTag()' => ['p'],
+     *     'outputAttributes()' => [['class' => 'test-class']],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'max' => 8,
+     *     'min' => 1,
+     * ]
      *
      * @return static the field object itself.
      */
@@ -391,8 +532,23 @@ final class Field extends AbstractForm
     /**
      * Renders a select widget.
      *
-     * @param array $config the configuration array for widget factory.
+     * @param array $config The configuration array for widget factory.
+     * Available methods:
+     * [
+     *     'encode()' => [true],
+     *     'groups()' => [['1' => ['2' => ' Moscu', '3' => ' San Petersburgo']]],
+     *     'items()' => [['1' => 'Moscu', '2' => 'San Petersburgo']],
+     *     'itemsAttributes()' => [['2' => ['disabled' => true]],
+     *     'optionsData()' => [['1' => '<b>Moscu</b>', '2' => 'San Petersburgo']],
+     *     'prompt()' => [['text' => 'Select City Birth', 'attributes' => ['value' => '0', 'selected' => 'selected']]],
+     *     'unselectValue()' => ['0'],
+     * ]
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'multiple' => true,
+     *     'size' => '4',
+     * ]
      *
      * @return static the field object itself.
      */
@@ -431,6 +587,15 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'maxlength' => 10,
+     *     'minlength' => 5,
+     *     'pattern' => '\d+',
+     *     'placeholder' => 'Enter your name',
+     *     'readonly' => true,
+     *     'size' => 5,
+     * ]
      *
      * @return static the field widget instance.
      */
@@ -445,11 +610,18 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'dirname' => 'my-dir',
+     *     'maxlength' => 10,
+     *     'placeholder' => 'Enter your name',
+     *     'pattern' => '\d+',
+     *     'readonly' => true,
+     * ]
      *
      * @return static the field widget instance.
      */
-    public function text(array $config = [], array $attributes = []): self
-    {
+    public function text(array $config = [], array $attributes = []): self {
         $new = clone $this;
         return $new->build(self::TYPE_TEXT, $attributes, $config);
     }
@@ -459,6 +631,15 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * [
+     *     'cols' => 10,
+     *     'dirname' => 'my-dir',
+     *     'maxlength' => 10,
+     *     'placeholder' => 'Enter your name',
+     *     'readonly' => true,
+     *     'rows' => 5,
+     *     'wrap' => 'hard',
+     * ]
      *
      * @return static the field widget instance.
      */
@@ -473,6 +654,13 @@ final class Field extends AbstractForm
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
+     * Most used attributes:
+     * [
+     *     'maxlength' => 10,
+     *     'minlength' => 5,
+     *     'pattern' => '\d+',
+     *     'size' => 5,
+     * ]
      *
      * @return static the field widget instance.
      */

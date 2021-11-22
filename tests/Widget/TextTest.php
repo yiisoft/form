@@ -31,19 +31,10 @@ final class TextTest extends TestCase
         Text::widget()->for($this->formModel, 'string')->dirname('')->render();
     }
 
-    public function testForm(): void
-    {
-        $this->assertSame(
-            '<input type="text" id="typeform-string" name="TypeForm[string]" form="form-id">',
-            Text::widget()->for($this->formModel, 'string')->form('form-id')->render(),
-        );
-    }
-
     public function testImmutability(): void
     {
         $text = Text::widget();
         $this->assertNotSame($text, $text->dirname('test.dir'));
-        $this->assertNotSame($text, $text->form(''));
         $this->assertNotSame($text, $text->maxlength(0));
         $this->assertNotSame($text, $text->placeholder(''));
         $this->assertNotSame($text, $text->pattern(''));

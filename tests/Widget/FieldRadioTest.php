@@ -128,19 +128,6 @@ final class FieldRadioTest extends TestCase
         );
     }
 
-    public function testForm(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label><input type="radio" id="typeform-bool" name="TypeForm[bool]" value="1" form="form-id"> Bool</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'bool')->radio([], ['form' => 'form-id', 'value' => true])->render(),
-        );
-    }
-
     public function testRender(): void
     {
         $expected = <<<'HTML'

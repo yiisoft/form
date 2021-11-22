@@ -29,20 +29,6 @@ final class FieldFileTest extends TestCase
         );
     }
 
-    public function testAttributes(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="typeform-array">Array</label>
-        <input type="file" id="typeform-array" class="test-class" name="TypeForm[array][]">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'array')->file([], ['class' => 'test-class'], [])->render(),
-        );
-    }
-
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'

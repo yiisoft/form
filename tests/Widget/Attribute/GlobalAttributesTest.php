@@ -33,6 +33,11 @@ final class GlobalAttributesTest extends TestCase
         $this->assertSame('<test disabled>', GlobalAttributesWidget::widget()->disabled()->render());
     }
 
+    public function testFormId(): void
+    {
+        $this->assertSame('<test form="form-id">', GlobalAttributesWidget::widget()->form('form-id')->render());
+    }
+
     public function testId(): void
     {
         $this->assertSame('<test id="test-id">', GlobalAttributesWidget::widget()->id('test-id')->render());
@@ -47,6 +52,7 @@ final class GlobalAttributesTest extends TestCase
     {
         $inputAttributesWidget = GlobalAttributesWidget::widget();
         $this->assertNotSame($inputAttributesWidget, $inputAttributesWidget->autofocus());
+        $this->assertNotSame($inputAttributesWidget, $inputAttributesWidget->form(''));
         $this->assertNotSame($inputAttributesWidget, $inputAttributesWidget->id(null));
         $this->assertNotSame($inputAttributesWidget, $inputAttributesWidget->name(''));
         $this->assertNotSame($inputAttributesWidget, $inputAttributesWidget->tabindex(0));

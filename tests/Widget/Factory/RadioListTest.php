@@ -81,26 +81,6 @@ final class RadioListTest extends TestCase
         );
     }
 
-    public function testDisabled(): void
-    {
-        $expected = <<<'HTML'
-        <div id="typeform-int">
-        <label><input type="radio" name="TypeForm[int]" value="1" disabled> Moscu</label>
-        <label><input type="radio" name="TypeForm[int]" value="2" disabled> San Petersburgo</label>
-        <label><input type="radio" name="TypeForm[int]" value="3" disabled> Novosibirsk</label>
-        <label><input type="radio" name="TypeForm[int]" value="4" disabled> Ekaterinburgo</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            RadioList::widget([
-                'for()' => [$this->formModel, 'int'],
-                'items()' => [$this->cities],
-                'disabled()' => [true],
-            ])->render(),
-        );
-    }
-
     public function testIndividualItemsAttributes(): void
     {
         $this->formModel->setAttribute('int', 2);
@@ -127,13 +107,11 @@ final class RadioListTest extends TestCase
         $radioList = RadioList::widget();
         $this->assertNotSame($radioList, $radioList->containerAttributes([]));
         $this->assertNotSame($radioList, $radioList->containerTag());
-        $this->assertNotSame($radioList, $radioList->disabled());
         $this->assertNotSame($radioList, $radioList->individualItemsAttributes());
         $this->assertNotSame($radioList, $radioList->items());
         $this->assertNotSame($radioList, $radioList->itemsAttributes());
         $this->assertNotSame($radioList, $radioList->itemsFormatter(null));
         $this->assertNotSame($radioList, $radioList->itemsFromValues());
-        $this->assertNotSame($radioList, $radioList->readOnly());
         $this->assertNotSame($radioList, $radioList->separator());
         $this->assertNotSame($radioList, $radioList->uncheckValue(''));
     }
@@ -201,27 +179,6 @@ final class RadioListTest extends TestCase
             RadioList::widget([
                 'for()' => [$this->formModel, 'string'],
                 'itemsFromValues()' => [$this->cities],
-            ])->render(),
-        );
-    }
-
-    public function testReadOnly(): void
-    {
-        $this->formModel->setAttribute('int', 1);
-        $expected = <<<'HTML'
-        <div id="typeform-int">
-        <label><input type="radio" name="TypeForm[int]" value="1" checked readonly> Moscu</label>
-        <label><input type="radio" name="TypeForm[int]" value="2" readonly> San Petersburgo</label>
-        <label><input type="radio" name="TypeForm[int]" value="3" readonly> Novosibirsk</label>
-        <label><input type="radio" name="TypeForm[int]" value="4" readonly> Ekaterinburgo</label>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            RadioList::widget([
-                'for()' => [$this->formModel, 'int'],
-                'items()' => [$this->cities],
-                'readOnly()' => [],
             ])->render(),
         );
     }

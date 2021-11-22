@@ -64,28 +64,6 @@ final class RadioList extends AbstractForm
     }
 
     /**
-     * Set whether the element is disabled or not.
-     *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
-     * text.
-     * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
-     * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it too false to enable the element again, which is not the case.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
-     */
-    public function disabled(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->itemsAttributes['disabled'] = $value;
-        return $new;
-    }
-
-    /**
      * The specified attributes for items.
      *
      * @param array $value
@@ -171,21 +149,6 @@ final class RadioList extends AbstractForm
     {
         $new = clone $this;
         $new->itemsFromValues = $itemsFromValues;
-        return $new;
-    }
-
-    /**
-     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
-     * When specified, the element is not mutable.
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-     */
-    public function readonly(): self
-    {
-        $new = clone $this;
-        $new->itemsAttributes['readonly'] = true;
         return $new;
     }
 

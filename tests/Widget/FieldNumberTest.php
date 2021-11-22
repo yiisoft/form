@@ -16,20 +16,6 @@ final class FieldNumberTest extends TestCase
 {
     use TestTrait;
 
-    public function testAttributes(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-number">Number</label>
-        <input type="number" id="typeform-number" class="test-class" name="TypeForm[number]">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->for($this->formModel, 'number')->number([], ['class' => 'test-class'])->render(),
-        );
-    }
-
     public function testMax(): void
     {
         $expected = <<<'HTML'

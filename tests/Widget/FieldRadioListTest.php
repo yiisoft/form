@@ -81,26 +81,6 @@ final class FieldRadioListTest extends TestCase
         );
     }
 
-    public function testDisabled(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-int">Int</label>
-        <div id="typeform-int">
-        <label><input type="radio" name="TypeForm[int]" value="1" disabled> Female</label>
-        <label><input type="radio" name="TypeForm[int]" value="2" disabled> Male</label>
-        </div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()
-                ->for($this->formModel, 'int')
-                ->radioList(['disabled()' => [], 'items()' => [$this->sex]])
-                ->render(),
-        );
-    }
-
     public function testIndividualItemsAttributes(): void
     {
         $this->formModel->setAttribute('int', 2);
@@ -198,27 +178,6 @@ final class FieldRadioListTest extends TestCase
             Field::widget()
                 ->for($this->formModel, 'string')
                 ->radioList(['itemsFromValues()' => [$this->sex]])
-                ->render(),
-        );
-    }
-
-    public function testReadOnly(): void
-    {
-        $this->formModel->setAttribute('int', 1);
-        $expected = <<<'HTML'
-        <div>
-        <label for="typeform-int">Int</label>
-        <div id="typeform-int">
-        <label><input type="radio" name="TypeForm[int]" value="1" checked readonly> Female</label>
-        <label><input type="radio" name="TypeForm[int]" value="2" readonly> Male</label>
-        </div>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()
-                ->for($this->formModel, 'int')
-                ->radioList(['items()' => [$this->sex], 'readOnly()' => []])
                 ->render(),
         );
     }
