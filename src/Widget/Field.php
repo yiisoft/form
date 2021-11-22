@@ -145,6 +145,7 @@ final class Field extends AbstractForm
      *     'min' => '2010-01-01',
      *     'readonly' => true,
      * ]
+     *
      * @return static the field widget instance.
      */
     public function date(array $config = [], array $attributes = []): self
@@ -363,6 +364,7 @@ final class Field extends AbstractForm
      * [
      *    'for' => 'test-id',
      * ]
+     *
      * @return static the field widget instance.
      */
     public function label(array $config = [], array $attributes = []): self
@@ -621,7 +623,8 @@ final class Field extends AbstractForm
      *
      * @return static the field widget instance.
      */
-    public function text(array $config = [], array $attributes = []): self {
+    public function text(array $config = [], array $attributes = []): self
+    {
         $new = clone $this;
         return $new->build(self::TYPE_TEXT, $attributes, $config);
     }
