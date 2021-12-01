@@ -13,6 +13,13 @@ use Yiisoft\Validator\DataSetInterface;
 interface FormModelInterface extends DataSetInterface, FormMetadataInterface
 {
     /**
+     * Return array with names of all attributes
+     *
+     * @return array
+     */
+    public function attributes(): array;
+
+    /**
      * Returns the value for the specified attribute.
      *
      * @param string $attribute

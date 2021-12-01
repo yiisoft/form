@@ -39,6 +39,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->formErrors = $this->createFormErrors();
     }
 
+    /**
+     * @return array
+     */
+    public function attributes(): array
+    {
+        return array_keys($this->attributes);
+    }
+
     public function getAttributeHint(string $attribute): string
     {
         $attributeHints = $this->getAttributeHints();
