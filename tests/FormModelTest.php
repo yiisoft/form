@@ -344,6 +344,18 @@ final class FormModelTest extends TestCase
         $this->assertSame(1, $form->getAttributeValue('int'));
     }
 
+    public function testAttributeNames(): void
+    {
+        $form = new LoginForm();
+        $this->assertSame(['login', 'password', 'rememberMe'], $form->attributes());
+
+        $nestedForm = new FormWithNestedAttribute();
+        $this->assertSame(['id', 'user'], $nestedForm->attributes());
+
+        $typeForm = new TypeForm();
+        $this->assertSame(['array', 'bool', 'float', 'int', 'number', 'object', 'string', 'toCamelCase', 'toDate', 'toNull'], $typeForm->attributes());
+    }
+
     private function createValidatorMock(): ValidatorInterface
     {
         return new ValidatorMock();
