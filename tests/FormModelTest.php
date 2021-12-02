@@ -11,6 +11,7 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 
 use function str_repeat;
 
