@@ -10,6 +10,7 @@ use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\FieldFactoryConfig;
 use Yiisoft\Form\Tests\TestSupport\AssertTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldFactoryTest extends TestCase
@@ -89,9 +90,11 @@ final class FieldFactoryTest extends TestCase
 
     private function createFieldFactory(array $config = []): FieldFactory
     {
-        WidgetFactory::initialize();
+        $container = new SimpleContainer();
 
-        $factory = new Factory(null, [FieldFactoryConfig::class => $config]);
+        WidgetFactory::initialize($container);
+
+        $factory = new Factory($container, [FieldFactoryConfig::class => $config]);
 
         return new FieldFactory($factory->create(FieldFactoryConfig::class));
     }

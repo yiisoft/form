@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Yiisoft\Html\Tag\Label;
-
 final class FieldFactoryConfig
 {
     private ?string $template = null;
 
     private ?bool $setInputIdAttribute = null;
 
-    private ?Label $labelTag = null;
-    private ?bool $setLabelForAttribute = null;
+    private array $labelConfig = [];
+    private array $hintConfig = [];
 
     private array $inputTextConfig = [];
 
@@ -31,17 +29,17 @@ final class FieldFactoryConfig
         return $new;
     }
 
-    public function labelTag(?Label $tag): self
+    public function labelConfig(array $config): self
     {
         $new = clone $this;
-        $new->labelTag = $tag;
+        $new->labelConfig = $config;
         return $new;
     }
 
-    public function setLabelForAttribute(?bool $value): self
+    public function hintConfig(array $config): self
     {
         $new = clone $this;
-        $new->setLabelForAttribute = $value;
+        $new->hintConfig = $config;
         return $new;
     }
 
@@ -62,14 +60,14 @@ final class FieldFactoryConfig
         return $this->setInputIdAttribute;
     }
 
-    public function getLabelTag(): ?Label
+    public function getLabelConfig(): array
     {
-        return $this->labelTag;
+        return $this->labelConfig;
     }
 
-    public function getSetLabelForAttribute(): ?bool
+    public function getHintConfig(): array
     {
-        return $this->setLabelForAttribute;
+        return $this->hintConfig;
     }
 
     public function getInputTextConfig(): array

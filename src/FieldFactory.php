@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Form\Field\InputText;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Html\Tag\Label;
+use Yiisoft\Form\Field\Part\Label;
 
 final class FieldFactory
 {
@@ -14,8 +13,8 @@ final class FieldFactory
 
     private ?bool $setInputIdAttribute;
 
-    private ?Label $labelTag;
-    private ?bool $setLabelForAttribute;
+    private array $labelConfig;
+    private array $hintConfig;
 
     private array $inputTextConfig;
 
@@ -25,38 +24,30 @@ final class FieldFactory
 
         $this->setInputIdAttribute = $config->getSetInputIdAttribute();
 
-        $this->labelTag = $config->getLabelTag();
-        $this->setLabelForAttribute = $config->getSetLabelForAttribute();
+        $this->labelConfig = $config->getLabelConfig();
+        $this->hintConfig = $config->getHintConfig();
 
         $this->inputTextConfig = $config->getInputTextConfig();
     }
 
     public function label(FormModelInterface $formModel, string $attribute): Label
     {
-        $tag = $this->labelTag ?? Label::tag();
-        $tag = $tag->content(HtmlForm::getAttributeLabel($formModel, $attribute));
+        return Label::widget($this->makeLabelConfig())->attribute($formModel, $attribute);
+    }
 
-        if (
-            ($this->setLabelForAttribute ?? true)
-            && $tag->getAttribute('for') === null
-        ) {
-            $id = $this->getInputId($formModel, $attribute);
-            if ($id !== null) {
-                $tag = $tag->forId($id);
-            }
-        }
-
-        return $tag;
+    public function hint(FormModelInterface $formModel, string $attribute): Label
+    {
+        return Label::widget($this->hintConfig)->attribute($formModel, $attribute);
     }
 
     public function inputText(FormModelInterface $formModel, string $attribute): InputText
     {
         $config = array_merge(
-            $this->makeWidgetConfig([
+            $this->makeFieldConfig([
                 'template()',
                 'setInputIdAttribute()',
-                'labelTag()',
-                'setLabelForAttribute()',
+                'labelConfig()',
+                'hintConfig()',
             ]),
             $this->inputTextConfig
         );
@@ -64,7 +55,10 @@ final class FieldFactory
         return InputText::widget($config)->attribute($formModel, $attribute);
     }
 
-    private function makeWidgetConfig(array $keys): array
+    /**
+     * @param string[] $keys
+     */
+    private function makeFieldConfig(array $keys): array
     {
         $config = [];
         foreach ($keys as $key) {
@@ -81,15 +75,16 @@ final class FieldFactory
                     }
                     break;
 
-                case 'labelTag()':
-                    if ($this->labelTag !== null) {
-                        $config[$key] = [$this->labelTag];
+                case 'labelConfig()':
+                    $labelConfig = $this->makeLabelConfig();
+                    if ($labelConfig !== []) {
+                        $config[$key] = [$labelConfig];
                     }
                     break;
 
-                case 'setLabelForAttribute()':
-                    if ($this->setLabelForAttribute !== null) {
-                        $config[$key] = [$this->setLabelForAttribute];
+                case 'hintConfig()':
+                    if ($this->hintConfig !== []) {
+                        $config[$key] = [$this->hintConfig];
                     }
                     break;
             }
@@ -97,12 +92,14 @@ final class FieldFactory
         return $config;
     }
 
-    private function getInputId(FormModelInterface $formModel, string $attribute): ?string
+    private function makeLabelConfig(): array
     {
-        if (!($this->setInputIdAttribute ?? true)) {
-            return null;
+        $config = [];
+
+        if ($this->setInputIdAttribute !== null) {
+            $config['useInputIdAttribute()'] = [$this->setInputIdAttribute];
         }
 
-        return $this->inputId ?? HtmlForm::getInputId($formModel, $attribute);
+        return array_merge($config, $this->labelConfig);
     }
 }

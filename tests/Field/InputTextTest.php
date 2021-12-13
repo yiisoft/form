@@ -11,6 +11,7 @@ use Yiisoft\Form\Tests\TestSupport\AssertTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Html\Tag\Input;
+use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class InputTextTest extends TestCase
@@ -20,7 +21,7 @@ final class InputTextTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize();
+        WidgetFactory::initialize(new SimpleContainer());
     }
 
     public function testBase(): void
@@ -115,6 +116,44 @@ final class InputTextTest extends TestCase
         $result = InputText::widget()
             ->attribute(new TypeForm(), 'string')
             ->setInputIdAttribute(false)
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testHint(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <div>Modified hint.</div>
+        </div>
+        HTML;
+
+        $result = InputText::widget()
+            ->attribute(new TypeForm(), 'string')
+            ->hint('Modified hint.')
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testHintConfig(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+        <div class="red">Write your text string.</div>
+        </div>
+        HTML;
+
+        $result = InputText::widget()
+            ->attribute(new TypeForm(), 'string')
+            ->hintConfig([
+                'attributes()' => [['class' => 'red']],
+            ])
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);

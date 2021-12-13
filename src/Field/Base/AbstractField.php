@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
-use InvalidArgumentException;
-use Stringable;
-use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Field\Part\Hint;
+use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Tag\Base\ContentTagInterface;
 use Yiisoft\Html\Tag\Base\Tag;
 use Yiisoft\Html\Tag\Div;
-use Yiisoft\Html\Tag\Label;
 use Yiisoft\Widget\Widget;
 
 abstract class AbstractField extends Widget
 {
-    private ?FormModelInterface $formModel = null;
-    private string $attribute = '';
+    use FormAttributeTrait;
 
     private ?ContentTagInterface $containerTag = null;
     private bool $withoutContainer = false;
@@ -27,23 +24,8 @@ abstract class AbstractField extends Widget
     private ?string $inputId = null;
     private bool $setInputIdAttribute = true;
 
-    private ?Label $labelTag = null;
-    private ?string $labelContent = null;
-    private bool $setLabelForAttribute = true;
-
-    private ?ContentTagInterface $hintTag = null;
-    private ?string $hintContent = null;
-
-    /**
-     * @return static
-     */
-    final public function attribute(FormModelInterface $formModel, string $attribute): self
-    {
-        $new = clone $this;
-        $new->formModel = $formModel;
-        $new->attribute = $attribute;
-        return $new;
-    }
+    private array $labelConfig = [];
+    private array $hintConfig = [];
 
     final public function containerTag(?ContentTagInterface $tag): self
     {
@@ -76,10 +58,10 @@ abstract class AbstractField extends Widget
     /**
      * @return static
      */
-    final public function id(?string $id): self
+    final public function inputId(?string $inputId): self
     {
         $new = clone $this;
-        $new->inputId = $id;
+        $new->inputId = $inputId;
         return $new;
     }
 
@@ -96,10 +78,10 @@ abstract class AbstractField extends Widget
     /**
      * @return static
      */
-    final public function labelTag(?Label $tag): self
+    final public function labelConfig(array $config): self
     {
         $new = clone $this;
-        $new->labelTag = $tag;
+        $new->labelConfig = $config;
         return $new;
     }
 
@@ -109,41 +91,25 @@ abstract class AbstractField extends Widget
     final public function label(?string $content): self
     {
         $new = clone $this;
-        $new->labelContent = $content;
+        $new->labelConfig['content()'] = [$content];
         return $new;
     }
 
     /**
      * @return static
      */
-    final public function setLabelForAttribute(bool $value): self
+    final public function hintConfig(array $config): self
     {
         $new = clone $this;
-        $new->setLabelForAttribute = $value;
-        return $new;
-    }
-
-    final public function hintTag(?ContentTagInterface $tag): self
-    {
-        $new = clone $this;
-        $new->hintTag = $tag;
+        $new->hintConfig = $config;
         return $new;
     }
 
     final public function hint(?string $content): self
     {
         $new = clone $this;
-        $new->hintContent = $content;
+        $new->hintConfig['content()'] = [$content];
         return $new;
-    }
-
-    final protected function getFormModel(): FormModelInterface
-    {
-        if ($this->formModel === null) {
-            throw new InvalidArgumentException('Form model is not set.');
-        }
-
-        return $this->formModel;
     }
 
     final protected function getInputName(): string
@@ -158,29 +124,6 @@ abstract class AbstractField extends Widget
         }
 
         return $this->inputId ?? HtmlForm::getInputId($this->getFormModel(), $this->attribute);
-    }
-
-    /**
-     * @return bool|float|int|iterable|object|string|Stringable|null
-     */
-    final protected function getAttributeValue()
-    {
-        return HtmlForm::getAttributeValue($this->getFormModel(), $this->attribute);
-    }
-
-    final protected function getAttributeLabel(): string
-    {
-        return HtmlForm::getAttributeLabel($this->getFormModel(), $this->attribute);
-    }
-
-    final protected function getAttributeHint(): string
-    {
-        return HtmlForm::getAttributeHint($this->getFormModel(), $this->attribute);
-    }
-
-    final protected function getAttributePlaceholder(): ?string
-    {
-        return $this->getFormModel()->getAttributePlaceholder($this->attribute);
     }
 
     final protected function prepareIdInInputTag(Tag $tag): Tag
@@ -229,38 +172,25 @@ abstract class AbstractField extends Widget
 
     private function generateLabel(): string
     {
-        $tag = $this->labelTag ?? Label::tag();
-
-        if ($this->labelContent !== null) {
-            $tag = $tag->content($this->labelContent);
-        } elseif ($tag->getContent() === '') {
-            $tag = $tag->content($this->getAttributeLabel());
-        }
+        $config = $this->labelConfig;
 
         if (
-            $this->setLabelForAttribute
-            && $tag->getAttribute('for') === null
+            $this->setInputIdAttribute === false
+            && ($config['useInputIdAttribute()'] ?? [null]) === [null]
         ) {
-            $id = $this->getInputId();
-            if ($id !== null) {
-                $tag = $tag->forId($id);
-            }
+            $config['useInputIdAttribute()'] = [false];
         }
 
-        return $tag->render();
+        return Label::widget($config)
+            ->attribute($this->getFormModel(), $this->attribute)
+            ->render();
     }
 
     private function generateHint(): string
     {
-        $tag = $this->hintTag ?? Div::tag();
-
-        if ($this->hintContent !== null) {
-            $tag = $tag->content($this->hintContent);
-        } elseif ($tag->getContent() === '') {
-            $tag = $tag->content($this->getAttributeHint());
-        }
-
-        return $tag->render();
+        return Hint::widget($this->hintConfig)
+            ->attribute($this->getFormModel(), $this->attribute)
+            ->render();
     }
 
     private function generateError(): string
