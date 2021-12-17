@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\TestSupport;
+namespace Yiisoft\Form\Tests\Support;
 
 use PHPUnit\Framework\Constraint\StringContains;
 use PHPUnit\Framework\ExpectationFailedException;

@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\InputText;
-use Yiisoft\Form\Tests\TestSupport\AssertTrait;
+use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
@@ -154,7 +154,7 @@ final class InputTextTest extends TestCase
         $result = InputText::widget()
             ->attribute(new TypeForm(), 'string')
             ->hintConfig([
-                'attributes()' => [['class' => 'red']],
+                'tagAttributes()' => [['class' => 'red']],
             ])
             ->render();
 

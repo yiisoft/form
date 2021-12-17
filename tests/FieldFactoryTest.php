@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Factory\Factory;
 use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\FieldFactoryConfig;
-use Yiisoft\Form\Tests\TestSupport\AssertTrait;
+use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;

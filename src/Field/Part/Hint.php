@@ -45,7 +45,10 @@ final class Hint extends Widget
         return $new;
     }
 
-    public function attributes(array $attributes): self
+    /**
+     * @return static
+     */
+    public function tagAttributes(array $attributes): self
     {
         $new = clone $this;
         $new->attributes = $attributes;
@@ -80,11 +83,16 @@ final class Hint extends Widget
 
     protected function run(): string
     {
-        return Html::tag(
-            $this->tag,
-            $this->content ?? $this->getAttributeHint(),
-            $this->attributes
-        )
+        if ($this->content !== null) {
+            $content = $this->content;
+        } else {
+            $content = $this->getAttributeHint();
+            if ($content === '') {
+                return '';
+            }
+        }
+
+        return Html::tag($this->tag, $content, $this->attributes)
             ->encode($this->encode)
             ->render();
     }
