@@ -205,7 +205,7 @@ final class InputTextTest extends TestCase
             ->attribute(new InputTextForm(), 'name')
             ->hintConfig([
                 'tag()' => ['b'],
-                'tagAttributes()' => [['class' => 'red']]
+                'tagAttributes()' => [['class' => 'red']],
             ])
             ->render();
 
