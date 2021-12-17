@@ -48,7 +48,7 @@ final class Error extends Widget
         return $new;
     }
 
-    public function attributes(array $attributes): self
+    public function tagAttributes(array $attributes): self
     {
         $new = clone $this;
         $new->attributes = $attributes;
@@ -108,22 +108,23 @@ final class Error extends Widget
      */
     protected function run(): string
     {
-        $content = $this->getFirstError();
-        if ($content === null) {
+        $message = $this->getFirstError();
+        if ($message === null) {
             return '';
         }
 
         if ($this->message !== null) {
-            $content = $this->message;
+            $message = $this->message;
         }
 
         if ($this->messageCallback !== null) {
-            $content = call_user_func($this->messageCallback, $this->formModel, $this->attribute);
+            /** @var string $message */
+            $message = call_user_func($this->messageCallback, $this->getFormModel(), $this->attribute, $message);
         }
 
         return CustomTag::name($this->tag)
             ->attributes($this->attributes)
-            ->content($content)
+            ->content($message)
             ->encode($this->encode)
             ->render();
     }
