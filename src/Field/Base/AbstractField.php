@@ -4,35 +4,57 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+use InvalidArgumentException;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Html\Tag\Base\ContentTagInterface;
 use Yiisoft\Html\Tag\Base\Tag;
-use Yiisoft\Html\Tag\Div;
+use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
 abstract class AbstractField extends Widget
 {
     use FormAttributeTrait;
 
-    private ?ContentTagInterface $containerTag = null;
+    /**
+     * @psalm-var non-empty-string
+     */
+    private string $containerTag = 'div';
+    private array $containerTagAttributes = [];
     private bool $withoutContainer = false;
 
     private string $template = "{label}\n{input}\n{hint}\n{error}";
 
     private ?string $inputId = null;
+    private ?string $inputIdFromTag = null;
     private bool $setInputIdAttribute = true;
 
     private array $labelConfig = [];
     private array $hintConfig = [];
     private array $errorConfig = [];
 
-    final public function containerTag(?ContentTagInterface $tag): self
+    /**
+     * @return static
+     */
+    final public function containerTag(string $tag): self
     {
+        if ($tag === '') {
+            throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
         $new = clone $this;
         $new->containerTag = $tag;
+        return $new;
+    }
+
+    /**
+     * @return static
+     */
+    final public function containerTagAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->containerTagAttributes = $attributes;
         return $new;
     }
 
@@ -129,24 +151,19 @@ abstract class AbstractField extends Widget
         return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
     }
 
-    final protected function getInputId(): ?string
-    {
-        if (!$this->setInputIdAttribute) {
-            return null;
-        }
-
-        return $this->inputId ?? HtmlForm::getInputId($this->getFormModel(), $this->attribute);
-    }
-
     final protected function prepareIdInInputTag(Tag $tag): Tag
     {
-        if (
-            $this->setInputIdAttribute
-            && $tag->getAttribute('id') === null
-        ) {
-            $id = $this->getInputId();
-            if ($id !== null) {
-                $tag = $tag->id($id);
+        /** @var mixed $idFromTag */
+        $idFromTag = $tag->getAttribute('id');
+        if ($idFromTag !== null) {
+            $this->inputIdFromTag = (string) $idFromTag;
+        }
+
+        if ($this->setInputIdAttribute) {
+            if ($this->inputId !== null) {
+                $tag = $tag->id($this->inputId);
+            } elseif ($idFromTag === null) {
+                $tag = $tag->id($this->getInputId());
             }
         }
 
@@ -159,7 +176,10 @@ abstract class AbstractField extends Widget
             return $this->generateContent();
         }
 
-        $containerTag = $this->containerTag ?? Div::tag();
+        $containerTag = CustomTag::name($this->containerTag);
+        if ($this->containerTagAttributes !== []) {
+            $containerTag = $containerTag->attributes($this->containerTagAttributes);
+        }
 
         return $containerTag->open()
             . PHP_EOL
@@ -173,8 +193,8 @@ abstract class AbstractField extends Widget
     private function generateContent(): string
     {
         $parts = [
-            '{label}' => $this->generateLabel(),
             '{input}' => $this->generateInput(),
+            '{label}' => $this->generateLabel(),
             '{hint}' => $this->generateHint(),
             '{error}' => $this->generateError(),
         ];
@@ -184,18 +204,20 @@ abstract class AbstractField extends Widget
 
     private function generateLabel(): string
     {
-        $config = $this->labelConfig;
+        $label = Label::widget($this->labelConfig)
+            ->attribute($this->getFormModel(), $this->attribute);
 
-        if (
-            $this->setInputIdAttribute === false
-            && ($config['useInputIdAttribute()'] ?? [null]) === [null]
-        ) {
-            $config['useInputIdAttribute()'] = [false];
+        if ($this->setInputIdAttribute === false) {
+            $label = $label->useInputIdAttribute(false);
         }
 
-        return Label::widget($config)
-            ->attribute($this->getFormModel(), $this->attribute)
-            ->render();
+        if ($this->inputId !== null) {
+            $label = $label->forId($this->inputId);
+        } elseif ($this->inputIdFromTag !== null) {
+            $label = $label->forId($this->inputIdFromTag);
+        }
+
+        return $label->render();
     }
 
     private function generateHint(): string

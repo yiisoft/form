@@ -8,24 +8,28 @@ use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Html\Tag\Input;
 
 use function is_string;
 
+/**
+ * @psalm-import-type HtmlAttributes from Html
+ */
 final class InputText extends AbstractField
 {
     use PlaceholderTrait;
 
-    private ?Input $tag = null;
+    /**
+     * @psalm-var HtmlAttributes
+     */
+    private array $inputTagAttributes = [];
 
-    public function inputTag(?Input $tag): self
+    /**
+     * @psalm-param HtmlAttributes $attributes
+     */
+    public function inputTagAttributes(array $attributes): self
     {
-        if ($tag !== null && $tag->getAttribute('type') !== 'text') {
-            throw new InvalidArgumentException('Input tag should be with type "text".');
-        }
-
         $new = clone $this;
-        $new->tag = $tag;
+        $new->inputTagAttributes = $attributes;
         return $new;
     }
 
@@ -37,9 +41,7 @@ final class InputText extends AbstractField
             throw new InvalidArgumentException('Text widget must be a string or null value.');
         }
 
-        $tag = $this->tag === null
-            ? Html::textInput($this->getInputName(), $value)
-            : $this->tag->name($this->getInputName())->value($value);
+        $tag = Html::textInput($this->getInputName(), $value, $this->inputTagAttributes);
 
         $tag = $this->prepareIdInInputTag($tag);
         $tag = $this->preparePlaceholderInInputTag($tag);

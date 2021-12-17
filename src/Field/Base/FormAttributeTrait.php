@@ -59,7 +59,8 @@ trait FormAttributeTrait
 
     final protected function getAttributePlaceholder(): ?string
     {
-        return $this->getFormModel()->getAttributePlaceholder($this->getAttributeName());
+        $placeholder = $this->getFormModel()->getAttributePlaceholder($this->getAttributeName());
+        return $placeholder === '' ? null : $placeholder;
     }
 
     final protected function getInputId(): string
