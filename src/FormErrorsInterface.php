@@ -81,12 +81,12 @@ interface FormErrorsInterface
      *
      * @param string $attribute attribute name.
      *
-     * @return string the error message. Empty string is returned if there is no error.
+     * @return string the error message. `null` is returned if there is no error.
      *
      * {@see getErrors()}
      * {@see getFirstErrors()}
      */
-    public function getFirstError(string $attribute): string;
+    public function getFirstError(string $attribute): ?string;
 
     /**
      * Returns the first error of every attribute in the model.

@@ -34,6 +34,11 @@ trait FormAttributeTrait
         return $this->formModel;
     }
 
+    final protected function getAttributeName(): string
+    {
+        return HtmlForm::getAttributeName($this->getFormModel(), $this->attribute);
+    }
+
     /**
      * @return bool|float|int|iterable|object|string|Stringable|null
      */
@@ -54,11 +59,16 @@ trait FormAttributeTrait
 
     final protected function getAttributePlaceholder(): ?string
     {
-        return $this->getFormModel()->getAttributePlaceholder($this->attribute);
+        return $this->getFormModel()->getAttributePlaceholder($this->getAttributeName());
     }
 
     final protected function getInputId(): string
     {
         return HtmlForm::getInputId($this->getFormModel(), $this->attribute);
+    }
+
+    final protected function getFirstError(): ?string
+    {
+        return $this->getFormModel()->getFormErrors()->getFirstError($this->getAttributeName());
     }
 }

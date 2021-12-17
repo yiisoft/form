@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Form\Field\InputText;
+use Yiisoft\Form\Field\Part\Error;
+use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 
 final class FieldFactory
@@ -15,6 +17,7 @@ final class FieldFactory
 
     private array $labelConfig;
     private array $hintConfig;
+    private array $errorConfig;
 
     private array $inputTextConfig;
 
@@ -26,6 +29,7 @@ final class FieldFactory
 
         $this->labelConfig = $config->getLabelConfig();
         $this->hintConfig = $config->getHintConfig();
+        $this->errorConfig = $config->getErrorConfig();
 
         $this->inputTextConfig = $config->getInputTextConfig();
     }
@@ -35,9 +39,14 @@ final class FieldFactory
         return Label::widget($this->makeLabelConfig())->attribute($formModel, $attribute);
     }
 
-    public function hint(FormModelInterface $formModel, string $attribute): Label
+    public function hint(FormModelInterface $formModel, string $attribute): Hint
     {
-        return Label::widget($this->hintConfig)->attribute($formModel, $attribute);
+        return Hint::widget($this->hintConfig)->attribute($formModel, $attribute);
+    }
+
+    public function error(FormModelInterface $formModel, string $attribute): Error
+    {
+        return Error::widget($this->errorConfig)->attribute($formModel, $attribute);
     }
 
     public function inputText(FormModelInterface $formModel, string $attribute): InputText
@@ -85,6 +94,12 @@ final class FieldFactory
                 case 'hintConfig()':
                     if ($this->hintConfig !== []) {
                         $config[$key] = [$this->hintConfig];
+                    }
+                    break;
+
+                case 'errorConfig()':
+                    if ($this->errorConfig !== []) {
+                        $config[$key] = [$this->errorConfig];
                     }
                     break;
             }

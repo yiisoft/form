@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Helper\HtmlForm;
@@ -26,6 +27,7 @@ abstract class AbstractField extends Widget
 
     private array $labelConfig = [];
     private array $hintConfig = [];
+    private array $errorConfig = [];
 
     final public function containerTag(?ContentTagInterface $tag): self
     {
@@ -112,6 +114,16 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
+    /**
+     * @return static
+     */
+    final public function errorConfig(array $config): self
+    {
+        $new = clone $this;
+        $new->errorConfig = $config;
+        return $new;
+    }
+
     final protected function getInputName(): string
     {
         return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
@@ -195,6 +207,8 @@ abstract class AbstractField extends Widget
 
     private function generateError(): string
     {
-        return '';
+        return Error::widget($this->errorConfig)
+            ->attribute($this->getFormModel(), $this->attribute)
+            ->render();
     }
 }

@@ -8,7 +8,9 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\InputText;
 use Yiisoft\Form\Tests\TestSupport\AssertTrait;
+use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -154,6 +156,27 @@ final class InputTextTest extends TestCase
             ->hintConfig([
                 'attributes()' => [['class' => 'red']],
             ])
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testError(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="personalform-name">Name</label>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" value placeholder>
+        <div>Write your first name.</div>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $form = new PersonalForm();
+        (new ValidatorMock())->validate($form);
+
+        $result = InputText::widget()
+            ->attribute($form, 'name')
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);

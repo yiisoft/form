@@ -12,6 +12,7 @@ final class FieldFactoryConfig
 
     private array $labelConfig = [];
     private array $hintConfig = [];
+    private array $errorConfig = [];
 
     private array $inputTextConfig = [];
 
@@ -43,6 +44,13 @@ final class FieldFactoryConfig
         return $new;
     }
 
+    public function errorConfig(array $config): self
+    {
+        $new = clone $this;
+        $new->errorConfig = $config;
+        return $new;
+    }
+
     public function inputTextConfig(array $config): self
     {
         $new = clone $this;
@@ -68,6 +76,11 @@ final class FieldFactoryConfig
     public function getHintConfig(): array
     {
         return $this->hintConfig;
+    }
+
+    public function getErrorConfig(): array
+    {
+        return $this->errorConfig;
     }
 
     public function getInputTextConfig(): array
