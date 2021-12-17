@@ -23,22 +23,7 @@ final class Label extends Widget
      */
     private $content = null;
 
-    protected function run(): string
-    {
-        $tag = LabelTag::tag()->content(
-            $this->content ?? $this->getAttributeLabel()
-        );
-
-        if (
-            $this->setForAttribute
-            && $this->useInputIdAttribute
-            && $tag->getAttribute('for') === null
-        ) {
-            $tag = $tag->forId($this->forId ?? $this->getInputId());
-        }
-
-        return $tag->render();
-    }
+    private bool $encode = true;
 
     public function setForAttribute(bool $value): self
     {
@@ -77,5 +62,42 @@ final class Label extends Widget
         $new = clone $this;
         $new->content = $content;
         return $new;
+    }
+
+    /**
+     * Whether content should be HTML-encoded.
+     *
+     * @param bool $value
+     *
+     * @return static
+     */
+    public function encode(bool $value): self
+    {
+        $new = clone $this;
+        $new->encode = $value;
+        return $new;
+    }
+
+    protected function run(): string
+    {
+        $tag = LabelTag::tag()->content(
+            $this->content ?? $this->getAttributeLabel()
+        );
+
+        if ($this->setForAttribute) {
+            $id = $this->forId;
+            if ($id === null && $this->useInputIdAttribute) {
+                $id = $this->getInputId();
+            }
+            if ($id !== null) {
+                $tag = $tag->forId($id);
+            }
+        }
+
+        if (!$this->encode) {
+            $tag = $tag->encode(false);
+        }
+
+        return $tag->render();
     }
 }
