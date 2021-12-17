@@ -111,8 +111,8 @@ final class FieldFactory
     {
         $config = [];
 
-        if ($this->setInputIdAttribute !== null) {
-            $config['useInputIdAttribute()'] = [$this->setInputIdAttribute];
+        if ($this->setInputIdAttribute === false) {
+            $config['useInputIdAttribute()'] = [false];
         }
 
         return array_merge($config, $this->labelConfig);
