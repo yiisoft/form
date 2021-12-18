@@ -9,7 +9,6 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Html\Tag\Base\Tag;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
@@ -151,23 +150,21 @@ abstract class AbstractField extends Widget
         return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
     }
 
-    final protected function prepareIdInInputTag(Tag $tag): Tag
+    final protected function prepareIdInInputTagAttributes(array &$attributes): void
     {
         /** @var mixed $idFromTag */
-        $idFromTag = $tag->getAttribute('id');
+        $idFromTag = $attributes['id'] ?? null;
         if ($idFromTag !== null) {
             $this->inputIdFromTag = (string) $idFromTag;
         }
 
         if ($this->setInputIdAttribute) {
             if ($this->inputId !== null) {
-                $tag = $tag->id($this->inputId);
+                $attributes['id'] = $this->inputId;
             } elseif ($idFromTag === null) {
-                $tag = $tag->id($this->getInputId());
+                $attributes['id'] = $this->getInputId();
             }
         }
-
-        return $tag;
     }
 
     final protected function run(): string

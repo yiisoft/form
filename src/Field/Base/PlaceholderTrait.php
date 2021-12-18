@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
-use Yiisoft\Html\Tag\Base\Tag;
-
 trait PlaceholderTrait
 {
     private ?string $placeholder = null;
@@ -25,18 +23,16 @@ trait PlaceholderTrait
         return $new;
     }
 
-    protected function preparePlaceholderInInputTag(Tag $tag): Tag
+    protected function preparePlaceholderInInputTagAttributes(array &$attributes): void
     {
         if (
             $this->setPlaceholder
-            && $tag->getAttribute('placeholder') === null
+            && !isset($attributes['placeholder'])
         ) {
             $placeholder = $this->placeholder ?? $this->getAttributePlaceholder();
             if ($placeholder !== null) {
-                $tag = $tag->attribute('placeholder', $placeholder);
+                $attributes['placeholder'] = $placeholder;
             }
         }
-
-        return $tag;
     }
 }

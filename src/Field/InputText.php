@@ -11,21 +11,12 @@ use Yiisoft\Html\Html;
 
 use function is_string;
 
-/**
- * @psalm-import-type HtmlAttributes from Html
- */
 final class InputText extends AbstractField
 {
     use PlaceholderTrait;
 
-    /**
-     * @psalm-var HtmlAttributes
-     */
     private array $inputTagAttributes = [];
 
-    /**
-     * @psalm-param HtmlAttributes $attributes
-     */
     public function inputTagAttributes(array $attributes): self
     {
         $new = clone $this;
@@ -41,11 +32,11 @@ final class InputText extends AbstractField
             throw new InvalidArgumentException('Text widget must be a string or null value.');
         }
 
-        $tag = Html::textInput($this->getInputName(), $value, $this->inputTagAttributes);
+        $tagAttributes = $this->inputTagAttributes;
 
-        $tag = $this->prepareIdInInputTag($tag);
-        $tag = $this->preparePlaceholderInInputTag($tag);
+        $this->prepareIdInInputTagAttributes($tagAttributes);
+        $this->preparePlaceholderInInputTagAttributes($tagAttributes);
 
-        return $tag->render();
+        return Html::textInput($this->getInputName(), $value, $tagAttributes)->render();
     }
 }
