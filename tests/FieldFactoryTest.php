@@ -172,10 +172,7 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($config);
 
-        $form = new InputTextForm();
-        (new Validator())->validate($form);
-
-        $result = $field->inputText($form, $attribute)->render();
+        $result = $field->inputText(InputTextForm::validated(), $attribute)->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
@@ -291,10 +288,7 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($config);
 
-        $form = new InputTextForm();
-        (new Validator())->validate($form);
-
-        $result = $field->error($form, 'name')->render();
+        $result = $field->error(InputTextForm::validated(), 'name')->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }

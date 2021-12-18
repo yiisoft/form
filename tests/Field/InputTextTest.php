@@ -35,7 +35,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
@@ -49,7 +49,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->useContainer(false)
             ->render();
 
@@ -66,7 +66,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->containerTag('section')
             ->render();
 
@@ -78,7 +78,7 @@ final class InputTextTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
         InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->containerTag('');
     }
 
@@ -92,7 +92,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->containerTagAttributes(['class' => 'wrapper', 'id' => 'main'])
             ->render();
 
@@ -113,7 +113,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->template("<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>")
             ->render();
 
@@ -130,7 +130,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->inputId('CustomID')
             ->render();
 
@@ -147,7 +147,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->setInputIdAttribute(false)
             ->render();
 
@@ -164,7 +164,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->labelConfig([
                 'setForAttribute()' => [false],
                 'content()' => ['Your job'],
@@ -184,7 +184,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->label('Your job')
             ->render();
 
@@ -242,7 +242,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->errorConfig([
                 'tag()' => ['b'],
                 'tagAttributes()' => [['class' => 'red']],
@@ -264,7 +264,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->placeholder('Input your pretty name')
             ->render();
 
@@ -283,7 +283,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->usePlaceholder(false)
             ->render();
 
@@ -300,7 +300,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'job')
+            ->attribute(InputTextForm::validated(), 'job')
             ->formElementTagAttributes(['class' => 'red'])
             ->render();
 
@@ -319,7 +319,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->formElementTagAttributes(['placeholder' => 'Input your pretty name'])
             ->render();
 
@@ -338,7 +338,7 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->formElementTagAttributes(['id' => 'MyID'])
             ->render();
 
@@ -357,18 +357,11 @@ final class InputTextTest extends TestCase
         HTML;
 
         $result = InputText::widget()
-            ->attribute($this->createValidatedInputTextForm(), 'name')
+            ->attribute(InputTextForm::validated(), 'name')
             ->inputId('CustomID')
             ->formElementTagAttributes(['id' => 'MyID'])
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
-    }
-
-    private function createValidatedInputTextForm(): InputTextForm
-    {
-        $form = new InputTextForm();
-        (new Validator())->validate($form);
-        return $form;
     }
 }

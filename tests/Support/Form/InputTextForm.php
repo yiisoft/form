@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Support\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Validator;
 
 final class InputTextForm extends FormModel
 {
@@ -40,5 +41,12 @@ final class InputTextForm extends FormModel
         return [
             'name' => 'Typed your name here',
         ];
+    }
+
+    public static function validated(): self
+    {
+        $form = new InputTextForm();
+        (new Validator())->validate($form);
+        return $form;
     }
 }
