@@ -76,11 +76,12 @@ final class FieldFactoryTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label>Job</label>
-                <input type="text" name="InputTextForm[job]" value>
+                <input type="text" class="form-control" name="InputTextForm[job]" value>
                 </div>
                 HTML,
                 [
                     'setInputIdAttribute()' => [false],
+                    'formElementTagAttributes()' => [['class' => 'form-control']],
                 ],
                 'job',
             ],
@@ -139,6 +140,27 @@ final class FieldFactoryTest extends TestCase
                     'usePlaceholder()' => [false],
                 ],
                 'name',
+            ],
+            [
+                <<<'HTML'
+                <div class="wrapper" data-value="42">
+                <label for="inputtextform-job">Job</label>
+                <input type="text" id="inputtextform-job" name="InputTextForm[job]" value data-type="field" data-kind="input-text">
+                </div>
+                HTML,
+                [
+                    'containerTag()' => ['section'],
+                    'containerTagAttributes()' => [['class' => 'wrapper']],
+                    'formElementTagAttributes()' => [['data-type' => 'field']],
+                    'inputTextConfig()' => [
+                        [
+                            'containerTag()' => ['div'],
+                            'containerTagAttributes()' => [['data-value' => 42]],
+                            'formElementTagAttributes()' => [['data-kind' => 'input-text']],
+                        ]
+                    ],
+                ],
+                'job',
             ],
         ];
     }

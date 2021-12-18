@@ -9,9 +9,16 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 
+use function in_array;
+
 final class FieldFactory
 {
     private const PLACEHOLDER = 1;
+
+    private const TAG_ATTRIBUTES_PROPERTIES = [
+        'containerTagAttributes()',
+        'formElementTagAttributes()',
+    ];
 
     //
     // Common
@@ -24,6 +31,8 @@ final class FieldFactory
     private ?string $template;
 
     private ?bool $setInputIdAttribute;
+
+    private array $formElementTagAttributes;
 
     private array $labelConfig;
     private array $hintConfig;
@@ -57,6 +66,8 @@ final class FieldFactory
 
         $this->setInputIdAttribute = $config->getSetInputIdAttribute();
 
+        $this->formElementTagAttributes = $config->getFormElementTagAttributes();
+
         $this->labelConfig = $config->getLabelConfig();
         $this->hintConfig = $config->getHintConfig();
         $this->errorConfig = $config->getErrorConfig();
@@ -83,12 +94,28 @@ final class FieldFactory
 
     public function inputText(FormModelInterface $formModel, string $attribute): InputText
     {
-        $config = array_merge(
+        $config = $this->mergeFieldConfigs(
             $this->makeFieldConfig(self::PLACEHOLDER),
             $this->inputTextConfig
         );
 
         return InputText::widget($config)->attribute($formModel, $attribute);
+    }
+
+    private function mergeFieldConfigs(array $a, array $b): array
+    {
+        $c = [];
+
+        foreach ($a as $key => $value) {
+            if (
+                in_array($key, self::TAG_ATTRIBUTES_PROPERTIES, true)
+                && isset($b[$key])
+            ) {
+                $c[$key] = [array_merge($value[0], $b[$key][0])];
+            }
+        }
+
+        return array_merge($a, $b, $c);
     }
 
     private function makeFieldConfig(int ...$supports): array
@@ -129,6 +156,10 @@ final class FieldFactory
 
             if ($this->setInputIdAttribute !== null) {
                 $this->baseFieldConfig['setInputIdAttribute()'] = [$this->setInputIdAttribute];
+            }
+
+            if ($this->formElementTagAttributes !== []) {
+                $this->baseFieldConfig['formElementTagAttributes()'] = [$this->formElementTagAttributes];
             }
 
             $labelConfig = $this->makeLabelConfig();

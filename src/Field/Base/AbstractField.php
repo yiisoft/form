@@ -29,6 +29,8 @@ abstract class AbstractField extends Widget
     private ?string $inputIdFromTag = null;
     private bool $setInputIdAttribute = true;
 
+    private array $formElementTagAttributes = [];
+
     private array $labelConfig = [];
     private array $hintConfig = [];
     private array $errorConfig = [];
@@ -98,6 +100,13 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
+    final public function formElementTagAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->formElementTagAttributes = $attributes;
+        return $new;
+    }
+
     /**
      * @return static
      */
@@ -150,7 +159,12 @@ abstract class AbstractField extends Widget
         return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
     }
 
-    final protected function prepareIdInInputTagAttributes(array &$attributes): void
+    final protected function getFormElementTagAttributes(): array
+    {
+        return $this->formElementTagAttributes;
+    }
+
+    final protected function prepareIdInFormElementTagAttributes(array &$attributes): void
     {
         /** @var mixed $idFromTag */
         $idFromTag = $attributes['id'] ?? null;

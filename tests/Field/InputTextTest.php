@@ -290,7 +290,7 @@ final class InputTextTest extends TestCase
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
-    public function testInputTagAttributes(): void
+    public function testFormElementTagAttributes(): void
     {
         $expected = <<<'HTML'
         <div>
@@ -301,13 +301,13 @@ final class InputTextTest extends TestCase
 
         $result = InputText::widget()
             ->attribute($this->createValidatedInputTextForm(), 'job')
-            ->inputTagAttributes(['class' => 'red'])
+            ->formElementTagAttributes(['class' => 'red'])
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
-    public function testInputTagAttributesOverridePlaceholderFromForm(): void
+    public function testFormElementTagAttributesOverridePlaceholderFromForm(): void
     {
         $expected = <<<'HTML'
         <div>
@@ -320,13 +320,13 @@ final class InputTextTest extends TestCase
 
         $result = InputText::widget()
             ->attribute($this->createValidatedInputTextForm(), 'name')
-            ->inputTagAttributes(['placeholder' => 'Input your pretty name'])
+            ->formElementTagAttributes(['placeholder' => 'Input your pretty name'])
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
-    public function testInputTagAttributesOverrideIdFromForm(): void
+    public function testFormElementTagAttributesOverrideIdFromForm(): void
     {
         $expected = <<<'HTML'
         <div>
@@ -339,7 +339,7 @@ final class InputTextTest extends TestCase
 
         $result = InputText::widget()
             ->attribute($this->createValidatedInputTextForm(), 'name')
-            ->inputTagAttributes(['id' => 'MyID'])
+            ->formElementTagAttributes(['id' => 'MyID'])
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
@@ -359,7 +359,7 @@ final class InputTextTest extends TestCase
         $result = InputText::widget()
             ->attribute($this->createValidatedInputTextForm(), 'name')
             ->inputId('CustomID')
-            ->inputTagAttributes(['id' => 'MyID'])
+            ->formElementTagAttributes(['id' => 'MyID'])
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);

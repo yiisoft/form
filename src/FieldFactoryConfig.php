@@ -18,6 +18,8 @@ final class FieldFactoryConfig
 
     private ?bool $setInputIdAttribute = null;
 
+    private array $formElementTagAttributes = [];
+
     private array $labelConfig = [];
     private array $hintConfig = [];
     private array $errorConfig = [];
@@ -66,6 +68,13 @@ final class FieldFactoryConfig
     {
         $new = clone $this;
         $new->setInputIdAttribute = $value;
+        return $new;
+    }
+
+    public function formElementTagAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->formElementTagAttributes = $attributes;
         return $new;
     }
 
@@ -127,6 +136,11 @@ final class FieldFactoryConfig
     public function getSetInputIdAttribute(): ?bool
     {
         return $this->setInputIdAttribute;
+    }
+
+    public function getFormElementTagAttributes(): array
+    {
+        return $this->formElementTagAttributes;
     }
 
     public function getLabelConfig(): array

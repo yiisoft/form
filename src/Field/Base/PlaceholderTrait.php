@@ -23,7 +23,7 @@ trait PlaceholderTrait
         return $new;
     }
 
-    protected function preparePlaceholderInInputTagAttributes(array &$attributes): void
+    protected function preparePlaceholderInFormElementTagAttributes(array &$attributes): void
     {
         if (
             $this->usePlaceholder

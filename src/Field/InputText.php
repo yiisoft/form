@@ -15,15 +15,6 @@ final class InputText extends AbstractField
 {
     use PlaceholderTrait;
 
-    private array $inputTagAttributes = [];
-
-    public function inputTagAttributes(array $attributes): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes = $attributes;
-        return $new;
-    }
-
     protected function generateInput(): string
     {
         $value = $this->getAttributeValue();
@@ -32,10 +23,10 @@ final class InputText extends AbstractField
             throw new InvalidArgumentException('Text widget must be a string or null value.');
         }
 
-        $tagAttributes = $this->inputTagAttributes;
+        $tagAttributes = $this->getFormElementTagAttributes();
 
-        $this->prepareIdInInputTagAttributes($tagAttributes);
-        $this->preparePlaceholderInInputTagAttributes($tagAttributes);
+        $this->prepareIdInFormElementTagAttributes($tagAttributes);
+        $this->preparePlaceholderInFormElementTagAttributes($tagAttributes);
 
         return Html::textInput($this->getInputName(), $value, $tagAttributes)->render();
     }
