@@ -11,7 +11,6 @@ use Yiisoft\Form\FieldFactoryConfig;
 use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\InputTextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldFactoryTest extends TestCase
@@ -98,17 +97,17 @@ final class FieldFactoryTest extends TestCase
                     'labelConfig()' => [
                         [
                             'setForAttribute()' => [false],
-                        ]
+                        ],
                     ],
                     'hintConfig()' => [
                         [
-                            'tagAttributes()' => [['class' => 'info']]
-                        ]
+                            'tagAttributes()' => [['class' => 'info']],
+                        ],
                     ],
                     'errorConfig()' => [
                         [
-                            'tagAttributes()' => [['class' => 'red']]
-                        ]
+                            'tagAttributes()' => [['class' => 'red']],
+                        ],
                     ],
                 ],
                 'name',
@@ -157,7 +156,7 @@ final class FieldFactoryTest extends TestCase
                             'containerTag()' => ['div'],
                             'containerTagAttributes()' => [['data-value' => 42]],
                             'formElementTagAttributes()' => [['data-kind' => 'input-text']],
-                        ]
+                        ],
                     ],
                 ],
                 'job',
@@ -202,7 +201,7 @@ final class FieldFactoryTest extends TestCase
                     'labelConfig()' => [
                         [
                             'setForAttribute()' => [false],
-                        ]
+                        ],
                     ],
                 ],
             ],

@@ -45,7 +45,7 @@ final class InputTextForm extends FormModel
 
     public static function validated(): self
     {
-        $form = new InputTextForm();
+        $form = new self();
         (new Validator())->validate($form);
         return $form;
     }

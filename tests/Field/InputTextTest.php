@@ -10,7 +10,6 @@ use Yiisoft\Form\Field\InputText;
 use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\InputTextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
 final class InputTextTest extends TestCase
