@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Field\Base;
 trait PlaceholderTrait
 {
     private ?string $placeholder = null;
-    private bool $setPlaceholder = true;
+    private bool $usePlaceholder = true;
 
     public function placeholder(?string $placeholder): self
     {
@@ -16,17 +16,17 @@ trait PlaceholderTrait
         return $new;
     }
 
-    public function doNotSetPlaceholder(): self
+    public function usePlaceholder(bool $use): self
     {
         $new = clone $this;
-        $new->setPlaceholder = false;
+        $new->usePlaceholder = $use;
         return $new;
     }
 
     protected function preparePlaceholderInInputTagAttributes(array &$attributes): void
     {
         if (
-            $this->setPlaceholder
+            $this->usePlaceholder
             && !isset($attributes['placeholder'])
         ) {
             $placeholder = $this->placeholder ?? $this->getAttributePlaceholder();

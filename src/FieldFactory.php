@@ -11,6 +11,16 @@ use Yiisoft\Form\Field\Part\Label;
 
 final class FieldFactory
 {
+    private const PLACEHOLDER = 1;
+
+    //
+    // Common
+    //
+
+    private ?string $containerTag;
+    private array $containerTagAttributes;
+    private ?bool $useContainer;
+
     private ?string $template;
 
     private ?bool $setInputIdAttribute;
@@ -19,10 +29,30 @@ final class FieldFactory
     private array $hintConfig;
     private array $errorConfig;
 
+    //
+    // Placeholder
+    //
+
+    private ?bool $usePlaceholder;
+
+    //
+    // Field configurations
+    //
+
     private array $inputTextConfig;
+
+    //
+    // Internal properties
+    //
+
+    private ?array $baseFieldConfig = null;
 
     public function __construct(FieldFactoryConfig $config)
     {
+        $this->containerTag = $config->getContainerTag();
+        $this->containerTagAttributes = $config->getContainerTagAttributes();
+        $this->useContainer = $config->getUseContainer();
+
         $this->template = $config->getTemplate();
 
         $this->setInputIdAttribute = $config->getSetInputIdAttribute();
@@ -30,6 +60,8 @@ final class FieldFactory
         $this->labelConfig = $config->getLabelConfig();
         $this->hintConfig = $config->getHintConfig();
         $this->errorConfig = $config->getErrorConfig();
+
+        $this->usePlaceholder = $config->getUsePlaceholder();
 
         $this->inputTextConfig = $config->getInputTextConfig();
     }
@@ -52,59 +84,67 @@ final class FieldFactory
     public function inputText(FormModelInterface $formModel, string $attribute): InputText
     {
         $config = array_merge(
-            $this->makeFieldConfig([
-                'template()',
-                'setInputIdAttribute()',
-                'labelConfig()',
-                'hintConfig()',
-            ]),
+            $this->makeFieldConfig(self::PLACEHOLDER),
             $this->inputTextConfig
         );
 
         return InputText::widget($config)->attribute($formModel, $attribute);
     }
 
-    /**
-     * @param string[] $keys
-     */
-    private function makeFieldConfig(array $keys): array
+    private function makeFieldConfig(int ...$supports): array
     {
-        $config = [];
-        foreach ($keys as $key) {
-            switch ($key) {
-                case 'template()':
-                    if ($this->template !== null) {
-                        $config[$key] = [$this->template];
-                    }
-                    break;
-
-                case 'setInputIdAttribute()':
-                    if ($this->setInputIdAttribute !== null) {
-                        $config[$key] = [$this->setInputIdAttribute];
-                    }
-                    break;
-
-                case 'labelConfig()':
-                    $labelConfig = $this->makeLabelConfig();
-                    if ($labelConfig !== []) {
-                        $config[$key] = [$labelConfig];
-                    }
-                    break;
-
-                case 'hintConfig()':
-                    if ($this->hintConfig !== []) {
-                        $config[$key] = [$this->hintConfig];
-                    }
-                    break;
-
-                case 'errorConfig()':
-                    if ($this->errorConfig !== []) {
-                        $config[$key] = [$this->errorConfig];
+        $config = $this->makeBaseFieldConfig();
+        foreach ($supports as $support) {
+            switch ($support) {
+                case self::PLACEHOLDER:
+                    if ($this->usePlaceholder !== null) {
+                        $config['usePlaceholder()'] = [$this->usePlaceholder];
                     }
                     break;
             }
         }
         return $config;
+    }
+
+    private function makeBaseFieldConfig(): array
+    {
+        if ($this->baseFieldConfig === null) {
+            $this->baseFieldConfig = [];
+
+            if ($this->containerTag !== null) {
+                $this->baseFieldConfig['containerTag()'] = [$this->containerTag];
+            }
+
+            if ($this->containerTagAttributes !== []) {
+                $this->baseFieldConfig['containerTagAttributes()'] = [$this->containerTagAttributes];
+            }
+
+            if ($this->useContainer !== null) {
+                $this->baseFieldConfig['useContainer()'] = [$this->useContainer];
+            }
+
+            if ($this->template !== null) {
+                $this->baseFieldConfig['template()'] = [$this->template];
+            }
+
+            if ($this->setInputIdAttribute !== null) {
+                $this->baseFieldConfig['setInputIdAttribute()'] = [$this->setInputIdAttribute];
+            }
+
+            $labelConfig = $this->makeLabelConfig();
+            if ($labelConfig !== []) {
+                $this->baseFieldConfig['labelConfig()'] = [$labelConfig];
+            }
+
+            if ($this->hintConfig !== []) {
+                $this->baseFieldConfig['hintConfig()'] = [$this->hintConfig];
+            }
+
+            if ($this->errorConfig !== []) {
+                $this->baseFieldConfig['errorConfig()'] = [$this->errorConfig];
+            }
+        }
+        return $this->baseFieldConfig;
     }
 
     private function makeLabelConfig(): array

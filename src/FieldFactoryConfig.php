@@ -6,6 +6,14 @@ namespace Yiisoft\Form;
 
 final class FieldFactoryConfig
 {
+    //
+    // Common
+    //
+
+    private ?string $containerTag = null;
+    private array $containerTagAttributes = [];
+    private ?bool $useContainer = null;
+
     private ?string $template = null;
 
     private ?bool $setInputIdAttribute = null;
@@ -14,7 +22,38 @@ final class FieldFactoryConfig
     private array $hintConfig = [];
     private array $errorConfig = [];
 
+    //
+    // Placeholder
+    //
+
+    private ?bool $usePlaceholder = null;
+
+    //
+    // Field configurations
+    //
+
     private array $inputTextConfig = [];
+
+    public function containerTag(?string $tag): self
+    {
+        $new = clone $this;
+        $new->containerTag = $tag;
+        return $new;
+    }
+
+    public function containerTagAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->containerTagAttributes = $attributes;
+        return $new;
+    }
+
+    public function useContainer(?bool $use): self
+    {
+        $new = clone $this;
+        $new->useContainer = $use;
+        return $new;
+    }
 
     public function template(?string $template): self
     {
@@ -51,11 +90,33 @@ final class FieldFactoryConfig
         return $new;
     }
 
+    public function usePlaceholder(?bool $use): self
+    {
+        $new = clone $this;
+        $new->usePlaceholder = $use;
+        return $new;
+    }
+
     public function inputTextConfig(array $config): self
     {
         $new = clone $this;
         $new->inputTextConfig = $config;
         return $new;
+    }
+
+    public function getContainerTag(): ?string
+    {
+        return $this->containerTag;
+    }
+
+    public function getContainerTagAttributes(): array
+    {
+        return $this->containerTagAttributes;
+    }
+
+    public function getUseContainer(): ?bool
+    {
+        return $this->useContainer;
     }
 
     public function getTemplate(): ?string
@@ -81,6 +142,11 @@ final class FieldFactoryConfig
     public function getErrorConfig(): array
     {
         return $this->errorConfig;
+    }
+
+    public function getUsePlaceholder(): ?bool
+    {
+        return $this->usePlaceholder;
     }
 
     public function getInputTextConfig(): array

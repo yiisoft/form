@@ -21,7 +21,7 @@ abstract class AbstractField extends Widget
      */
     private string $containerTag = 'div';
     private array $containerTagAttributes = [];
-    private bool $withoutContainer = false;
+    private bool $useContainer = true;
 
     private string $template = "{label}\n{input}\n{hint}\n{error}";
 
@@ -57,10 +57,10 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    final public function withoutContainer(): self
+    final public function useContainer(bool $use): self
     {
         $new = clone $this;
-        $new->withoutContainer = true;
+        $new->useContainer = $use;
         return $new;
     }
 
@@ -169,7 +169,7 @@ abstract class AbstractField extends Widget
 
     final protected function run(): string
     {
-        if ($this->withoutContainer) {
+        if (!$this->useContainer) {
             return $this->generateContent();
         }
 

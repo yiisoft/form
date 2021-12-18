@@ -9,8 +9,9 @@ use Yiisoft\Factory\Factory;
 use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\FieldFactoryConfig;
 use Yiisoft\Form\Tests\Support\AssertTrait;
-use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\Support\Form\InputTextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldFactoryTest extends TestCase
@@ -21,57 +22,123 @@ final class FieldFactoryTest extends TestCase
     {
         return [
             [
-                'string',
+                <<<'HTML'
+                <div>
+                <label for="inputtextform-name">Name</label>
+                <input type="text" id="inputtextform-name" name="InputTextForm[name]" value placeholder="Typed your name here">
+                <div>Input your full name.</div>
+                <div>Value cannot be blank.</div>
+                </div>
+                HTML,
                 [],
-                <<<'HTML'
-                <div>
-                <label for="typeform-string">String</label>
-                <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
-                <div>Write your text string.</div>
-                </div>
-                HTML
+                'name',
             ],
             [
-                'string',
+                <<<'HTML'
+                <section class="wrapper">
+                <label for="inputtextform-job">Job</label>
+                <input type="text" id="inputtextform-job" name="InputTextForm[job]" value>
+                </section>
+                HTML,
                 [
-                    'template()' => ["{hint}\n{error}\n{input}\n{label}"],
+                    'containerTag()' => ['section'],
+                    'containerTagAttributes()' => [['class' => 'wrapper']],
                 ],
-                <<<'HTML'
-                <div>
-                <div>Write your text string.</div>
-                <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
-                <label for="typeform-string">String</label>
-                </div>
-                HTML
+                'job',
             ],
             [
-                'string',
+                <<<'HTML'
+                <label for="inputtextform-job">Job</label>
+                <input type="text" id="inputtextform-job" name="InputTextForm[job]" value>
+                HTML,
+                [
+                    'useContainer()' => [false],
+                ],
+                'job',
+            ],
+            [
+                <<<'HTML'
+                <div>
+                <div class="wrap">
+                <div>Input your full name.</div>
+                <label for="inputtextform-name">Name</label>
+                <div>Value cannot be blank.</div>
+                <input type="text" id="inputtextform-name" name="InputTextForm[name]" value placeholder="Typed your name here">
+                </div>
+                </div>
+                HTML,
+                [
+                    'template()' => ["<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>"],
+                ],
+                'name',
+            ],
+            [
+                <<<'HTML'
+                <div>
+                <label>Job</label>
+                <input type="text" name="InputTextForm[job]" value>
+                </div>
+                HTML,
                 [
                     'setInputIdAttribute()' => [false],
                 ],
-                <<<'HTML'
-                <div>
-                <label>String</label>
-                <input type="text" name="TypeForm[string]" value placeholder="Typed your text string.">
-                <div>Write your text string.</div>
-                </div>
-                HTML
+                'job',
             ],
             [
-                'string',
-                [
-                    'template()' => ["{hint}\n{error}\n{input}\n{label}"],
-                    'inputTextConfig()' => [
-                        [
-                            'template()' => ['{input}'],
-                        ],
-                    ],
-                ],
                 <<<'HTML'
                 <div>
-                <input type="text" id="typeform-string" name="TypeForm[string]" value placeholder="Typed your text string.">
+                <label>Name</label>
+                <input type="text" id="inputtextform-name" name="InputTextForm[name]" value placeholder="Typed your name here">
+                <div class="info">Input your full name.</div>
+                <div class="red">Value cannot be blank.</div>
                 </div>
-                HTML
+                HTML,
+                [
+                    'labelConfig()' => [
+                        [
+                            'setForAttribute()' => [false],
+                        ]
+                    ],
+                    'hintConfig()' => [
+                        [
+                            'tagAttributes()' => [['class' => 'info']]
+                        ]
+                    ],
+                    'errorConfig()' => [
+                        [
+                            'tagAttributes()' => [['class' => 'red']]
+                        ]
+                    ],
+                ],
+                'name',
+            ],
+            [
+                <<<'HTML'
+                <div>
+                <label for="inputtextform-name">Name</label>
+                <input type="text" id="inputtextform-name" name="InputTextForm[name]" value>
+                <div>Input your full name.</div>
+                <div>Value cannot be blank.</div>
+                </div>
+                HTML,
+                [
+                    'usePlaceholder()' => [false],
+                ],
+                'name',
+            ],
+            [
+                <<<'HTML'
+                <div>
+                <label for="inputtextform-name">Name</label>
+                <input type="text" id="inputtextform-name" name="InputTextForm[name]" value>
+                <div>Input your full name.</div>
+                <div>Value cannot be blank.</div>
+                </div>
+                HTML,
+                [
+                    'usePlaceholder()' => [false],
+                ],
+                'name',
             ],
         ];
     }
@@ -79,11 +146,14 @@ final class FieldFactoryTest extends TestCase
     /**
      * @dataProvider dataInputText
      */
-    public function testInputText(string $attribute, array $config, string $expected): void
+    public function testInputText(string $expected, array $config, string $attribute): void
     {
         $field = $this->createFieldFactory($config);
 
-        $result = $field->inputText(new TypeForm(), $attribute)->render();
+        $form = new InputTextForm();
+        (new Validator())->validate($form);
+
+        $result = $field->inputText($form, $attribute)->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }

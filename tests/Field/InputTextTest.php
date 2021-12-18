@@ -50,7 +50,7 @@ final class InputTextTest extends TestCase
 
         $result = InputText::widget()
             ->attribute($this->createValidatedInputTextForm(), 'job')
-            ->withoutContainer()
+            ->useContainer(false)
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
@@ -284,7 +284,7 @@ final class InputTextTest extends TestCase
 
         $result = InputText::widget()
             ->attribute($this->createValidatedInputTextForm(), 'name')
-            ->doNotSetPlaceholder()
+            ->usePlaceholder(false)
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
