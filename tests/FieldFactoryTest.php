@@ -143,9 +143,9 @@ final class FieldFactoryTest extends TestCase
             ],
             [
                 <<<'HTML'
-                <div class="wrapper" data-value="42">
+                <div class="main-wrapper">
                 <label for="inputtextform-job">Job</label>
-                <input type="text" id="inputtextform-job" name="InputTextForm[job]" value data-type="field" data-kind="input-text">
+                <input type="text" id="inputtextform-job" name="InputTextForm[job]" value data-type="input-text">
                 </div>
                 HTML,
                 [
@@ -155,8 +155,8 @@ final class FieldFactoryTest extends TestCase
                     'inputTextConfig()' => [
                         [
                             'containerTag()' => ['div'],
-                            'containerTagAttributes()' => [['data-value' => 42]],
-                            'formElementTagAttributes()' => [['data-kind' => 'input-text']],
+                            'containerTagAttributes()' => [['class' => 'main-wrapper']],
+                            'formElementTagAttributes()' => [['data-type' => 'input-text']],
                         ]
                     ],
                 ],

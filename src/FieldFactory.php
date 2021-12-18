@@ -9,16 +9,9 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 
-use function in_array;
-
 final class FieldFactory
 {
     private const PLACEHOLDER = 1;
-
-    private const TAG_ATTRIBUTES_PROPERTIES = [
-        'containerTagAttributes()',
-        'formElementTagAttributes()',
-    ];
 
     //
     // Common
@@ -77,45 +70,41 @@ final class FieldFactory
         $this->inputTextConfig = $config->getInputTextConfig();
     }
 
-    public function label(FormModelInterface $formModel, string $attribute): Label
+    public function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
     {
-        return Label::widget($this->makeLabelConfig())->attribute($formModel, $attribute);
-    }
-
-    public function hint(FormModelInterface $formModel, string $attribute): Hint
-    {
-        return Hint::widget($this->hintConfig)->attribute($formModel, $attribute);
-    }
-
-    public function error(FormModelInterface $formModel, string $attribute): Error
-    {
-        return Error::widget($this->errorConfig)->attribute($formModel, $attribute);
-    }
-
-    public function inputText(FormModelInterface $formModel, string $attribute): InputText
-    {
-        $config = $this->mergeFieldConfigs(
-            $this->makeFieldConfig(self::PLACEHOLDER),
-            $this->inputTextConfig
+        $widgetConfig = array_merge(
+            $this->makeLabelConfig(),
+            $config,
         );
-
-        return InputText::widget($config)->attribute($formModel, $attribute);
+        return Label::widget($widgetConfig)->attribute($formModel, $attribute);
     }
 
-    private function mergeFieldConfigs(array $a, array $b): array
+    public function hint(FormModelInterface $formModel, string $attribute, array $config = []): Hint
     {
-        $c = [];
+        $widgetConfig = array_merge(
+            $this->hintConfig,
+            $config,
+        );
+        return Hint::widget($widgetConfig)->attribute($formModel, $attribute);
+    }
 
-        foreach ($a as $key => $value) {
-            if (
-                in_array($key, self::TAG_ATTRIBUTES_PROPERTIES, true)
-                && isset($b[$key])
-            ) {
-                $c[$key] = [array_merge($value[0], $b[$key][0])];
-            }
-        }
+    public function error(FormModelInterface $formModel, string $attribute, array $config = []): Error
+    {
+        $widgetConfig = array_merge(
+            $this->errorConfig,
+            $config,
+        );
+        return Error::widget($widgetConfig)->attribute($formModel, $attribute);
+    }
 
-        return array_merge($a, $b, $c);
+    public function inputText(FormModelInterface $formModel, string $attribute, array $config = []): InputText
+    {
+        $config = array_merge(
+            $this->makeFieldConfig(self::PLACEHOLDER),
+            $this->inputTextConfig,
+            $config,
+        );
+        return InputText::widget($config)->attribute($formModel, $attribute);
     }
 
     private function makeFieldConfig(int ...$supports): array
