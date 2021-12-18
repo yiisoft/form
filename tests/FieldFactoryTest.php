@@ -180,6 +180,125 @@ final class FieldFactoryTest extends TestCase
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function dataLabel(): array
+    {
+        return [
+            [
+                <<<'HTML'
+                <label for="inputtextform-job">Job</label>
+                HTML,
+                [],
+            ],
+            [
+                <<<'HTML'
+                <label>Job</label>
+                HTML,
+                [
+                    'setInputIdAttribute()' => [false],
+                ],
+            ],
+            [
+                <<<'HTML'
+                <label>Job</label>
+                HTML,
+                [
+                    'labelConfig()' => [
+                        [
+                            'setForAttribute()' => [false],
+                        ]
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataLabel
+     */
+    public function testLabel(string $expected, array $config): void
+    {
+        $field = $this->createFieldFactory($config);
+
+        $result = $field->label(new InputTextForm(), 'job')->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function dataHint(): array
+    {
+        return [
+            [
+                <<<'HTML'
+                <div>Input your full name.</div>
+                HTML,
+                [],
+            ],
+            [
+                <<<'HTML'
+                <b>Input your full name.</b>
+                HTML,
+                [
+                    'hintConfig()' => [
+                        [
+                            'tag()' => ['b'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataHint
+     */
+    public function testHint(string $expected, array $config): void
+    {
+        $field = $this->createFieldFactory($config);
+
+        $result = $field->hint(new InputTextForm(), 'name')->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function dataError(): array
+    {
+        return [
+            [
+                <<<'HTML'
+                <div>Value cannot be blank.</div>
+                HTML,
+                [],
+            ],
+            [
+                <<<'HTML'
+                <b>Value cannot be blank.</b>
+                HTML,
+                [
+                    'errorConfig()' => [
+                        [
+                            'tag()' => ['b'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataError
+     */
+    public function testError(string $expected, array $config): void
+    {
+        $field = $this->createFieldFactory($config);
+
+        $form = new InputTextForm();
+        (new Validator())->validate($form);
+
+        $result = $field->error($form, 'name')->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
     private function createFieldFactory(array $config = []): FieldFactory
     {
         $container = new SimpleContainer();
