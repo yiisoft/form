@@ -161,7 +161,15 @@ abstract class AbstractField extends Widget
 
     final protected function getFormElementTagAttributes(): array
     {
-        return $this->formElementTagAttributes;
+        $attributes = $this->formElementTagAttributes;
+
+        $this->prepareIdInFormElementTagAttributes($attributes);
+
+        if ($this instanceof PlaceholderInterface) {
+            $this->preparePlaceholderInFormElementTagAttributes($attributes);
+        }
+
+        return $attributes;
     }
 
     final protected function prepareIdInFormElementTagAttributes(array &$attributes): void

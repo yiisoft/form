@@ -26,9 +26,6 @@ final class InputText extends AbstractField implements PlaceholderInterface
 
         $tagAttributes = $this->getFormElementTagAttributes();
 
-        $this->prepareIdInFormElementTagAttributes($tagAttributes);
-        $this->preparePlaceholderInFormElementTagAttributes($tagAttributes);
-
         return Html::textInput($this->getInputName(), $value, $tagAttributes)->render();
     }
 }
