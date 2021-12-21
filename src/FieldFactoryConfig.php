@@ -106,7 +106,7 @@ final class FieldFactoryConfig
         return $new;
     }
 
-    public function addFieldConfigs(array ...$configs): self
+    public function addFieldConfigs(array $configs): self
     {
         $new = clone $this;
         $new->fieldConfigs = array_merge($this->fieldConfigs, $configs);

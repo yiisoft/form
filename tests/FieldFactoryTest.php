@@ -153,11 +153,13 @@ final class FieldFactoryTest extends TestCase
                     'containerTagAttributes()' => [['class' => 'wrapper']],
                     'formElementTagAttributes()' => [['data-type' => 'field']],
                     'addFieldConfigs()' => [
-                        InputText::class => [
-                            'containerTag()' => ['div'],
-                            'containerTagAttributes()' => [['class' => 'main-wrapper']],
-                            'formElementTagAttributes()' => [['data-type' => 'input-text']],
-                        ],
+                        [
+                            InputText::class => [
+                                'containerTag()' => ['div'],
+                                'containerTagAttributes()' => [['class' => 'main-wrapper']],
+                                'formElementTagAttributes()' => [['data-type' => 'input-text']],
+                            ],
+                        ]
                     ],
                 ],
                 'job',
