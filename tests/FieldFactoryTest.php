@@ -159,7 +159,7 @@ final class FieldFactoryTest extends TestCase
                                 'containerTagAttributes()' => [['class' => 'main-wrapper']],
                                 'formElementTagAttributes()' => [['data-type' => 'input-text']],
                             ],
-                        ]
+                        ],
                     ],
                 ],
                 'job',
