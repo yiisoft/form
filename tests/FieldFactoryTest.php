@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Factory\Factory;
+use Yiisoft\Form\Field\InputText;
 use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\FieldFactoryConfig;
 use Yiisoft\Form\Tests\Support\AssertTrait;
@@ -151,8 +152,8 @@ final class FieldFactoryTest extends TestCase
                     'containerTag()' => ['section'],
                     'containerTagAttributes()' => [['class' => 'wrapper']],
                     'formElementTagAttributes()' => [['data-type' => 'field']],
-                    'inputTextConfig()' => [
-                        [
+                    'addFieldConfigs()' => [
+                        InputText::class => [
                             'containerTag()' => ['div'],
                             'containerTagAttributes()' => [['class' => 'main-wrapper']],
                             'formElementTagAttributes()' => [['data-type' => 'input-text']],
@@ -171,7 +172,7 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($config);
 
-        $result = $field->inputText(InputTextForm::validated(), $attribute)->render();
+        $result = $field->widget(InputText::class, InputTextForm::validated(), $attribute)->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }

@@ -34,7 +34,7 @@ final class FieldFactoryConfig
     // Field configurations
     //
 
-    private array $inputTextConfig = [];
+    private array $fieldConfigs = [];
 
     public function containerTag(?string $tag): self
     {
@@ -106,10 +106,10 @@ final class FieldFactoryConfig
         return $new;
     }
 
-    public function inputTextConfig(array $config): self
+    public function addFieldConfigs(array ...$configs): self
     {
         $new = clone $this;
-        $new->inputTextConfig = $config;
+        $new->fieldConfigs = array_merge($this->fieldConfigs, $configs);
         return $new;
     }
 
@@ -163,8 +163,8 @@ final class FieldFactoryConfig
         return $this->usePlaceholder;
     }
 
-    public function getInputTextConfig(): array
+    public function getFieldConfigs(): array
     {
-        return $this->inputTextConfig;
+        return $this->fieldConfigs;
     }
 }

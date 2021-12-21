@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Yiisoft\Form\Field\Base\PlaceholderInterface;
 use Yiisoft\Form\Field\InputText;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -41,7 +42,7 @@ final class FieldFactory
     // Field configurations
     //
 
-    private array $inputTextConfig;
+    private array $fieldConfigs;
 
     //
     // Internal properties
@@ -67,7 +68,7 @@ final class FieldFactory
 
         $this->usePlaceholder = $config->getUsePlaceholder();
 
-        $this->inputTextConfig = $config->getInputTextConfig();
+        $this->fieldConfigs = $config->getFieldConfigs();
     }
 
     public function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
@@ -97,17 +98,29 @@ final class FieldFactory
         return Error::widget($widgetConfig)->attribute($formModel, $attribute);
     }
 
-    public function inputText(FormModelInterface $formModel, string $attribute, array $config = []): InputText
-    {
+    public function widget(
+        string $class,
+        FormModelInterface $formModel,
+        string $attribute,
+        array $config = []
+    ): object {
+        $supports = [];
+        if (is_subclass_of($class, PlaceholderInterface::class)) {
+            $supports[] = self::PLACEHOLDER;
+        }
+
         $config = array_merge(
-            $this->makeFieldConfig(self::PLACEHOLDER),
-            $this->inputTextConfig,
+            $this->makeFieldConfig($supports),
+            $this->fieldConfigs[$class] ?? [],
             $config,
         );
         return InputText::widget($config)->attribute($formModel, $attribute);
     }
 
-    private function makeFieldConfig(int ...$supports): array
+    /**
+     * @param int[] $supports
+     */
+    private function makeFieldConfig(array $supports): array
     {
         $config = $this->makeBaseFieldConfig();
         foreach ($supports as $support) {
