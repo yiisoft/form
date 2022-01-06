@@ -11,6 +11,7 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 
 use function str_repeat;
 
@@ -342,6 +343,18 @@ final class FormModelTest extends TestCase
 
         $form->setAttribute('int', 1);
         $this->assertSame(1, $form->getAttributeValue('int'));
+    }
+
+    public function testAttributeNames(): void
+    {
+        $form = new LoginForm();
+        $this->assertSame(['login', 'password', 'rememberMe'], $form->attributes());
+
+        $nestedForm = new FormWithNestedAttribute();
+        $this->assertSame(['id', 'user'], $nestedForm->attributes());
+
+        $typeForm = new TypeForm();
+        $this->assertSame(['array', 'bool', 'float', 'int', 'number', 'object', 'string', 'toCamelCase', 'toDate', 'toNull'], $typeForm->attributes());
     }
 
     private function createValidatorMock(): ValidatorInterface
