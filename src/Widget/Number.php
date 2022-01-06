@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
+use Yiisoft\Form\Widget\Validator\NumberInterface;
 use Yiisoft\Html\Tag\Input;
 
 /**
@@ -15,19 +15,8 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends AbstractForm
+final class Number extends InputAttributes implements NumberInterface
 {
-    use GlobalAttributes;
-
-    /**
-     * The expected upper bound for the element’s value.
-     *
-     * @param int $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.max
-     */
     public function max(int $value): self
     {
         $new = clone $this;
@@ -35,15 +24,6 @@ final class Number extends AbstractForm
         return $new;
     }
 
-    /**
-     * The expected lower bound for the element’s value.
-     *
-     * @param int $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.min
-     */
     public function min(int $value): self
     {
         $new = clone $this;
@@ -68,40 +48,20 @@ final class Number extends AbstractForm
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
-     * When specified, the element is not mutable.
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.readonly
-     */
-    public function readonly(): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = true;
-        return $new;
-    }
-
-    /**
      * @return string the generated input tag.
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->build($this->attributes);
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (!is_numeric($value) && null !== $value) {
             throw new InvalidArgumentException('Number widget must be a numeric or null value.');
         }
 
-        return Input::tag()
-            ->type('number')
-            ->attributes($new->attributes)
-            ->id($new->getId())
-            ->name($new->getName())
-            ->value($value)
-            ->render();
+        return Input::tag()->type('number')->attributes($attributes)->value($value)->render();
     }
 }

@@ -31,10 +31,7 @@ final class FieldErrorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()
-                ->for($this->formModel, 'name')
-                ->error(['message()' => ['This is custom error message.']])
-                ->render(),
+            Field::widget()->error('This is custom error message.')->for($this->formModel, 'name')->render(),
         );
     }
 
@@ -55,8 +52,8 @@ final class FieldErrorTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
+                ->errorMessageCallback([$this->formModel, 'customError'])
                 ->for($this->formModel, 'name')
-                ->error(['messageCallback()' => [[$this->formModel, 'customError']]])
                 ->render(),
         );
     }
@@ -78,8 +75,9 @@ final class FieldErrorTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()
+                ->encode(false)
+                ->errorMessageCallback([$this->formModel, 'customErrorWithIcon'])
                 ->for($this->formModel, 'name')
-                ->error(['encode()' => [false], 'messageCallback()' => [[$this->formModel, 'customErrorWithIcon']]])
                 ->render(),
         );
     }
@@ -137,7 +135,7 @@ final class FieldErrorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->for($this->formModel, 'name')->error(['tag()' => ['span']])->render(),
+            Field::widget()->for($this->formModel, 'name')->errorTag('span')->render(),
         );
     }
 

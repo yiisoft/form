@@ -7,20 +7,46 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use StdClass;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Select;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
+use Yiisoft\Html\Tag\Option;
 
 final class SelectTest extends TestCase
 {
     use TestTrait;
 
-    private array $cities = [];
-    private array $citiesGroups = [];
-    private array $groups = [];
+    private array $cities = [
+        '1' => 'Moscu',
+        '2' => 'San Petersburgo',
+        '3' => 'Novosibirsk',
+        '4' => 'Ekaterinburgo',
+    ];
+    private array $citiesGroups = [
+        '1' => [
+            '2' => ' Moscu',
+            '3' => ' San Petersburgo',
+            '4' => ' Novosibirsk',
+            '5' => ' Ekaterinburgo',
+        ],
+        '2' => [
+            '6' => 'Santiago',
+            '7' => 'Concepcion',
+            '8' => 'Chillan',
+        ],
+    ];
+    private array $groups = [
+        '1' => ['label' => 'Russia'],
+        '2' => ['label' => 'Chile'],
+    ];
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $select = Select::widget();
@@ -29,11 +55,15 @@ final class SelectTest extends TestCase
         $this->assertNotSame($select, $select->itemsAttributes());
         $this->assertNotSame($select, $select->multiple());
         $this->assertNotSame($select, $select->optionsData([]));
-        $this->assertNotSame($select, $select->prompt());
+        $this->assertNotSame($select, $select->prompt(''));
+        $this->assertNotSame($select, $select->promptTag(null));
         $this->assertNotSame($select, $select->size(0));
         $this->assertNotSame($select, $select->unselectValue(null));
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testGroups(): void
     {
         $expected = <<<'HTML'
@@ -53,14 +83,13 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()
-                ->for($this->formModel, 'int')
-                ->groups($this->groups)
-                ->items($this->citiesGroups)
-                ->render(),
+            Select::widget()->for(new TypeForm(), 'int')->groups($this->groups)->items($this->citiesGroups)->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testGroupsItemsAttributes(): void
     {
         $expected = <<<'HTML'
@@ -81,7 +110,7 @@ final class SelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()
-                ->for($this->formModel, 'int')
+                ->for(new TypeForm(), 'int')
                 ->items($this->citiesGroups)
                 ->itemsAttributes(['2' => ['disabled' => true]])
                 ->groups($this->groups)
@@ -89,9 +118,13 @@ final class SelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testMultiple(): void
     {
-        $this->formModel->setAttribute('array', [1, 4]);
+        $formModel = new TypeForm();
+        $formModel->setAttribute('array', [1, 4]);
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[array]" value="0">
         <select id="typeform-array" name="TypeForm[array][]" multiple size="4">
@@ -104,7 +137,7 @@ final class SelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()
-                ->for($this->formModel, 'array')
+                ->for($formModel, 'array')
                 ->multiple()
                 ->items($this->cities)
                 ->unselectValue('0')
@@ -112,6 +145,9 @@ final class SelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testOptionsDataEncode(): void
     {
         $cities = [
@@ -130,20 +166,36 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'int')->encode(true)->optionsData($cities)->render(),
+            Select::widget()->for(new TypeForm(), 'int')->encode(true)->optionsData($cities)->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testPrompt(): void
     {
-        $prompt = [
-            'text' => 'Select City Birth',
-            'attributes' => [
-                'value' => '0',
-                'selected' => 'selected',
-            ],
-        ];
         $expected = <<<'HTML'
+        <select id="typeform-int" name="TypeForm[int]">
+        <option value>Select City Birth</option>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()->for(new TypeForm(), 'int')->items($this->cities)->prompt('Select City Birth')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testPromptTag(): void
+    {
+        $expected = <<<HTML
         <select id="typeform-int" name="TypeForm[int]">
         <option value="0" selected>Select City Birth</option>
         <option value="1">Moscu</option>
@@ -155,13 +207,16 @@ final class SelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()
-                ->for($this->formModel, 'int')
+                ->for(new TypeForm(), 'int')
                 ->items($this->cities)
-                ->prompt($prompt)
+                ->promptTag(Option::tag()->content('Select City Birth')->value(0))
                 ->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testRender(): void
     {
         $expected = <<<'HTML'
@@ -174,10 +229,13 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for(new TypeForm(), 'int')->items($this->cities)->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testSizeWithMultiple(): void
     {
         $expected = <<<'HTML'
@@ -191,15 +249,13 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()
-                ->for($this->formModel, 'int')
-                ->items($this->cities)
-                ->multiple()
-                ->size(3)
-                ->render(),
+            Select::widget()->for(new TypeForm, 'int')->items($this->cities)->multiple()->size(3)->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testUnselectValueWithMultiple(): void
     {
         $expected = <<<'HTML'
@@ -214,7 +270,7 @@ final class SelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()
-                ->for($this->formModel, 'array')
+                ->for(new TypeForm(), 'array')
                 ->items($this->cities)
                 ->multiple(true)
                 ->unselectValue('0')
@@ -222,10 +278,27 @@ final class SelectTest extends TestCase
         );
     }
 
-    public function testValues(): void
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testValueException(): void
     {
-        // value int 1.
-        $this->formModel->setAttribute('int', 1);
+        $formModel = new TypeForm();
+        $formModel->setAttribute('object', new StdClass());
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Select widget value can not be an object.');
+        Select::widget()->for($formModel, 'object')->render();
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testValueWithFormModel(): void
+    {
+        $formModel = new TypeForm();
+
+        // Value int `1`.
+        $formModel->setAttribute('int', 1);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1" selected>Moscu</option>
@@ -236,11 +309,11 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($formModel, 'int')->items($this->cities)->render(),
         );
 
-        // value int 2.
-        $this->formModel->setAttribute('int', 2);
+        // Value int `2`.
+        $formModel->setAttribute('int', 2);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1">Moscu</option>
@@ -251,11 +324,11 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($formModel, 'int')->items($this->cities)->render(),
         );
 
-        // value iterable [2, 3].
-        $this->formModel->setAttribute('array', [2, 3]);
+        // Value iterable `[2, 3]`.
+        $formModel->setAttribute('array', [2, 3]);
         $expected = <<<'HTML'
         <select id="typeform-array" name="TypeForm[array]">
         <option value="1">Moscu</option>
@@ -266,11 +339,11 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'array')->items($this->cities)->render(),
+            Select::widget()->for($formModel, 'array')->items($this->cities)->render(),
         );
 
-        // value string '1'.
-        $this->formModel->setAttribute('string', '1');
+        // Value string `1`.
+        $formModel->setAttribute('string', '1');
         $expected = <<<'HTML'
         <select id="typeform-string" name="TypeForm[string]">
         <option value="1" selected>Moscu</option>
@@ -281,11 +354,11 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'string')->items($this->cities)->render(),
+            Select::widget()->for($formModel, 'string')->items($this->cities)->render(),
         );
 
-        // value string '2'
-        $this->formModel->setAttribute('string', 2);
+        // Value string '2'.
+        $formModel->setAttribute('string', 2);
         $expected = <<<'HTML'
         <select id="typeform-string" name="TypeForm[string]">
         <option value="1">Moscu</option>
@@ -296,11 +369,11 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'string')->items($this->cities)->render(),
+            Select::widget()->for($formModel, 'string')->items($this->cities)->render(),
         );
 
-        // value null.
-        $this->formModel->setAttribute('int', null);
+        // Value `null`.
+        $formModel->setAttribute('int', null);
         $expected = <<<'HTML'
         <select id="typeform-int" name="TypeForm[int]">
         <option value="1">Moscu</option>
@@ -311,45 +384,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for($this->formModel, 'int')->items($this->cities)->render(),
+            Select::widget()->for($formModel, 'int')->items($this->cities)->render(),
         );
-    }
-
-    public function testValueException(): void
-    {
-        $this->formModel->setAttribute('object', new StdClass());
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Select widget value can not be an object.');
-        Select::widget()->for($this->formModel, 'object')->render();
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->cities = [
-            '1' => 'Moscu',
-            '2' => 'San Petersburgo',
-            '3' => 'Novosibirsk',
-            '4' => 'Ekaterinburgo',
-        ];
-        $this->citiesGroups = [
-            '1' => [
-                '2' => ' Moscu',
-                '3' => ' San Petersburgo',
-                '4' => ' Novosibirsk',
-                '5' => ' Ekaterinburgo',
-            ],
-            '2' => [
-                '6' => 'Santiago',
-                '7' => 'Concepcion',
-                '8' => 'Chillan',
-            ],
-        ];
-        $this->groups = [
-            '1' => ['label' => 'Russia'],
-            '2' => ['label' => 'Chile'],
-        ];
-        $this->createFormModel(TypeForm::class);
     }
 }

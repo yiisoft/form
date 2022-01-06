@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
+use Yiisoft\Form\Widget\Validator\HasLengthInterface;
+use Yiisoft\Form\Widget\Validator\MatchRegularInterface;
 use Yiisoft\Html\Tag\Input;
 
 /**
@@ -15,22 +16,8 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password
  */
-final class Password extends AbstractForm
+final class Password extends InputAttributes implements HasLengthInterface, MatchRegularInterface
 {
-    use GlobalAttributes;
-
-    /**
-     * The maxlength attribute defines the maximum number of characters (as UTF-16 code units) the user can enter into
-     * a tag input.
-     *
-     * If no maxlength is specified, or an invalid value is specified, the tag input has no maximum length.
-     *
-     * @param int $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.maxlength
-     */
     public function maxlength(int $value): self
     {
         $new = clone $this;
@@ -38,18 +25,6 @@ final class Password extends AbstractForm
         return $new;
     }
 
-    /**
-     * The minimum number of characters (as UTF-16 code units) the user can enter into the text input.
-     *
-     * This must be a non-negative integer value smaller than or equal to the value specified by maxlength.
-     * If no minlength is specified, or an invalid value is specified, the text input has no minimum length.
-     *
-     * @param int $value
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-     */
     public function minlength(int $value): self
     {
         $new = clone $this;
@@ -57,17 +32,6 @@ final class Password extends AbstractForm
         return $new;
     }
 
-    /**
-     * The pattern attribute, when specified, is a regular expression that the input's value must match in order for
-     * the value to pass constraint validation. It must be a valid JavaScript regular expression, as used by the
-     * RegExp type.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.pattern
-     */
     public function pattern(string $value): self
     {
         $new = clone $this;
@@ -88,24 +52,6 @@ final class Password extends AbstractForm
     {
         $new = clone $this;
         $new->attributes['placeholder'] = $value;
-        return $new;
-    }
-
-    /**
-     * A Boolean attribute which, if present, means this field cannot be edited by the user.
-     * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
-     * property.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.readonly
-     */
-    public function readOnly(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = $value;
         return $new;
     }
 
@@ -132,18 +78,16 @@ final class Password extends AbstractForm
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->build($this->attributes);
 
-        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.password.html#input.password.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.value */
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
-        if (!is_string($value) && null !== $value) {
+        if (null !== $value && !is_string($value)) {
             throw new InvalidArgumentException('Password widget must be a string or null value.');
         }
 
-        return Input::password($new->getName(), $value === '' ? null : $value)
-            ->attributes($new->attributes)
-            ->id($new->getId())
-            ->render();
+        return Input::tag()->type('password')->attributes($attributes)->value($value === '' ? null : $value)->render();
     }
 }

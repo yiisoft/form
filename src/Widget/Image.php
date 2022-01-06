@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Widget\Widget;
 
@@ -18,24 +19,6 @@ use Yiisoft\Widget\Widget;
 final class Image extends Widget
 {
     use GlobalAttributes;
-
-    private array $attributes = [];
-
-    /**
-     * The HTML attributes. The following special options are recognized.
-     *
-     * @param array $value
-     *
-     * @return static
-     *
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function attributes(array $value): self
-    {
-        $new = clone $this;
-        $new->attributes = $value;
-        return $new;
-    }
 
     /**
      * Provides a textual label for an alternative button for users and UAs who cannot use the image specified by the
@@ -107,17 +90,30 @@ final class Image extends Widget
      */
     protected function run(): string
     {
-        $new = clone $this;
-        $img = Input::tag()->type('image');
+        $attributes = $this->build($this->attributes, '-image');
+        return Input::tag()->type('image')->attributes($attributes)->render();
+    }
 
-        if ($new->autoIdPrefix === '') {
-            $new->autoIdPrefix = 'image-';
+    /**
+     * Set build attributes for the widget.
+     *
+     * @param array $attributes $value
+     * @param string $suffix The suffix of the attribute name.
+     *
+     * @return array
+     */
+    private function build(array $attributes, string $suffix): array
+    {
+        $id = Html::generateId('w') . $suffix;
+
+        if (!array_key_exists('id', $attributes)) {
+            $attributes['id'] = $id;
         }
 
-        $id = $new->getIdWithoutModel();
-        /** @var string|null */
-        $name = $new->attributes['name'] ?? $id;
+        if (!array_key_exists('name', $attributes)) {
+            $attributes['name'] = $id;
+        }
 
-        return $img->attributes($new->attributes)->id($id)->name($name)->render();
+        return $attributes;
     }
 }

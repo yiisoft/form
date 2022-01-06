@@ -17,6 +17,7 @@ final class FieldResetButtonTest extends TestCase
 
     public function testAutoIdPrefix(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
         <input type="reset" id="s-1" name="s-1">
@@ -30,9 +31,10 @@ final class FieldResetButtonTest extends TestCase
 
     public function testAttributes(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-1" name="reset-1" disabled>
+        <input type="reset" id="w1-reset" name="w1-reset" disabled>
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['disabled' => true])->render());
@@ -40,9 +42,10 @@ final class FieldResetButtonTest extends TestCase
 
     public function testId(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="test-id" name="test-id">
+        <input type="reset" id="test-id" name="w1-reset">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['id' => 'test-id'])->render());
@@ -50,9 +53,10 @@ final class FieldResetButtonTest extends TestCase
 
     public function testName(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-1" name="test-name">
+        <input type="reset" id="w1-reset" name="test-name">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['name' => 'test-name'])->render());
@@ -60,9 +64,10 @@ final class FieldResetButtonTest extends TestCase
 
     public function testRender(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-1" name="reset-1">
+        <input type="reset" id="w1-reset" name="w1-reset">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton()->render());
@@ -70,9 +75,10 @@ final class FieldResetButtonTest extends TestCase
 
     public function testValue(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="reset" id="reset-1" name="reset-1" value="Reseteable">
+        <input type="reset" id="w1-reset" name="w1-reset" value="Reseteable">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->resetButton([], ['value' => 'Reseteable'])->render());

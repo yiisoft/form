@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input;
 
 /**
@@ -15,10 +14,8 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.hidden.html#input.hidden
  */
-final class Hidden extends AbstractForm
+final class Hidden extends InputAttributes
 {
-    use GlobalAttributes;
-
     /**
      * Generates a hidden input tag for the given form attribute.
      *
@@ -26,15 +23,20 @@ final class Hidden extends AbstractForm
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->attributes;
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.hidden.html#input.hidden.attrs.value */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (!is_string($value)) {
             throw new InvalidArgumentException('Hidden widget requires a string value.');
         }
 
-        return Input::hidden($new->getId(), $value === '' ? null : $value)->attributes($new->attributes)->render();
+        if (!array_key_exists('name', $attributes)) {
+            $attributes['name'] = $this->getInputId();
+        }
+
+        return Input::tag()->type('hidden')->attributes($attributes)->value($value === '' ? null : $value)->render();
     }
 }

@@ -7,18 +7,15 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
 
 /**
  * Generates a list of radio.
  */
-final class RadioList extends AbstractForm
+final class RadioList extends ChoiceAttributes
 {
-    use GlobalAttributes;
-
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
     /** @psalm-var array[] */
@@ -32,6 +29,23 @@ final class RadioList extends AbstractForm
     private array $itemsFromValues = [];
     private string $separator = '';
     private ?string $uncheckValue = null;
+
+    /**
+     * Focus on the control (put cursor into it) when the page loads.
+     * Only one form element could be in focus at the same time.
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function autofocus(): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['autofocus'] = true;
+        return $new;
+    }
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -60,6 +74,24 @@ final class RadioList extends AbstractForm
     {
         $new = clone $this;
         $new->containerTag = $name;
+        return $new;
+    }
+
+    /**
+     * Set the ID of container the widget.
+     *
+     * @param string|null $id
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function id(?string $id): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['id'] = $id;
         return $new;
     }
 
@@ -167,6 +199,35 @@ final class RadioList extends AbstractForm
     }
 
     /**
+     * The tabindex global attribute indicates that its element can be focused, and where it participates in sequential
+     * keyboard navigation (usually with the Tab key, hence the name).
+     *
+     * It accepts an integer as a value, with different results depending on the integer's value:
+     *
+     * - A negative value (usually tabindex="-1") means that the element is not reachable via sequential keyboard
+     * navigation, but could be focused with Javascript or visually. It's mostly useful to create accessible widgets
+     * with JavaScript.
+     * - tabindex="0" means that the element should be focusable in sequential keyboard navigation, but its order is
+     * defined by the document's source order.
+     * - A positive value means the element should be focusable in sequential keyboard navigation, with its order
+     * defined by the value of the number. That is, tabindex="4" is focused before tabindex="5", but after tabindex="3".
+     *
+     * @param int $value
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function tabIndex(int $value): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['tabindex'] = $value;
+        return $new;
+    }
+
+    /**
      * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
      *
      * @return static
@@ -187,42 +248,51 @@ final class RadioList extends AbstractForm
      */
     protected function run(): string
     {
-        $new = clone $this;
+        /** @psalm-var array[] */
+        [$attributes, $containerAttributes] = $this->buildList($this->attributes, $this->containerAttributes);
 
         /**
          * @var iterable<int, scalar|Stringable>|scalar|Stringable|null
          *
          * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
          */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('RadioList widget value can not be an iterable or an object.');
         }
 
-        $radioList = RadioListTag::create($new->getName());
+        $name = $this->getInputName();
 
         /** @var string */
-        $new->containerAttributes['id'] ??= $new->getId();
-
-        if ($new->items !== []) {
-            $radioList = $radioList->items($new->items, $new->getEncode());
-        } elseif ($new->itemsFromValues !== []) {
-            $radioList = $radioList->itemsFromValues($new->itemsFromValues, $new->getEncode());
+        if (!empty($attributes['name']) && is_string($attributes['name'])) {
+            $name = $attributes['name'];
         }
 
-        if ($new->separator !== '') {
-            $radioList = $radioList->separator($new->separator);
+        $radioList = RadioListTag::create($name);
+
+        if ($this->items !== []) {
+            $radioList = $radioList->items($this->items, $this->getEncode());
+        } elseif ($this->itemsFromValues !== []) {
+            $radioList = $radioList->itemsFromValues($this->itemsFromValues, $this->getEncode());
+        }
+
+        if ($this->separator !== '') {
+            $radioList = $radioList->separator($this->separator);
+        }
+
+        if ($this->itemsAttributes !== []) {
+            $radioList = $radioList->replaceRadioAttributes($this->itemsAttributes);
         }
 
         return $radioList
-            ->containerAttributes($new->containerAttributes)
-            ->containerTag($new->containerTag)
-            ->individualInputAttributes($new->individualItemsAttributes)
-            ->itemFormatter($new->itemsFormatter)
-            ->radioAttributes($new->attributes)
-            ->replaceRadioAttributes($new->itemsAttributes)
-            ->uncheckValue($new->uncheckValue)
+            ->containerAttributes($containerAttributes)
+            ->containerTag($this->containerTag)
+            ->individualInputAttributes($this->individualItemsAttributes)
+            ->itemFormatter($this->itemsFormatter)
+            ->radioAttributes($attributes)
+            ->uncheckValue($this->uncheckValue)
             ->value(is_bool($value) ? (int) $value : $value)
             ->render();
     }

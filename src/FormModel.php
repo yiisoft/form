@@ -196,11 +196,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function processValidationResult(ResultSet $resultSet): void
     {
         $this->validated = false;
-        $this->formErrors->clear();
 
-        /** @var array<array-key, Resultset> $resultSet */
+        /** @var array<string, Resultset> $resultSet */
         foreach ($resultSet as $attribute => $result) {
             if ($result->isValid() === false) {
+                $this->formErrors->clear($attribute);
                 /** @psalm-suppress InvalidArgument */
                 $this->addErrors([$attribute => $result->getErrors()]);
             }

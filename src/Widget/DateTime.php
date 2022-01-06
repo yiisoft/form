@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input;
 
 /**
@@ -15,10 +14,8 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime
  */
-final class DateTime extends AbstractForm
+final class DateTime extends InputAttributes
 {
-    use GlobalAttributes;
-
     /**
      * The latest acceptable date.
      *
@@ -52,31 +49,17 @@ final class DateTime extends AbstractForm
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
-     * When specified, the element is not mutable.
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.readonly
-     */
-    public function readonly(): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = true;
-        return $new;
-    }
-
-    /**
      * Generates a datepicker tag together with a label for the given form attribute.
      *
      * @return string the generated checkbox tag.
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->build($this->attributes);
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.value */
-        $value = HtmlForm::getAttributeValue($this->getFormModel(), $this->getAttribute());
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('DateTime widget requires a string or null value.');
@@ -84,9 +67,7 @@ final class DateTime extends AbstractForm
 
         return Input::tag()
             ->type('datetime')
-            ->attributes($this->attributes)
-            ->id($new->getId())
-            ->name($new->getName())
+            ->attributes($attributes)
             ->value($value === '' ? null : $value)
             ->render();
     }

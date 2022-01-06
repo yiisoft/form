@@ -27,71 +27,74 @@ final class HtmlFormErrorsTest extends TestCase
 
     public function testGetAllErrors(): void
     {
+        $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
-        $this->assertTrue($this->formModel->load($this->data));
-        $this->assertFalse($validator->validate($this->formModel)->isValid());
-        $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($this->formModel));
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
     }
 
     public function testGetErrors(): void
     {
+        $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
-        $this->assertTrue($this->formModel->load($this->data));
-        $this->assertFalse($validator->validate($this->formModel)->isValid());
-        $this->assertSame(['This value is not a valid email address.'], HtmlFormErrors::getErrors($this->formModel, 'login'));
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertSame(['This value is not a valid email address.'], HtmlFormErrors::getErrors($formModel, 'login'));
     }
 
     public function testGetErrorSummary(): void
     {
+        $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
-        $this->assertTrue($this->formModel->load($this->data));
-        $this->assertFalse($validator->validate($this->formModel)->isValid());
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
         $this->assertSame(
             ['This value is not a valid email address.', 'Is too short.'],
-            HtmlFormErrors::getErrorSummary($this->formModel),
+            HtmlFormErrors::getErrorSummary($formModel),
         );
     }
 
     public function testGetErrorSummaryFirstErrors(): void
     {
+        $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
-        $this->assertTrue($this->formModel->load($this->data));
-        $this->assertFalse($validator->validate($this->formModel)->isValid());
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
         $this->assertSame(
             ['login' => 'This value is not a valid email address.', 'password' => 'Is too short.'],
-            HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel),
+            HtmlFormErrors::getErrorSummaryFirstErrors($formModel),
         );
     }
 
     public function testGetFirstError(): void
     {
+        $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
-        $this->assertTrue($this->formModel->load($this->data));
-        $this->assertFalse($validator->validate($this->formModel)->isValid());
-        $this->assertSame('This value is not a valid email address.', HtmlFormErrors::getFirstError($this->formModel, 'login'));
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertSame(
+            'This value is not a valid email address.',
+            HtmlFormErrors::getFirstError($formModel, 'login'),
+        );
     }
 
     public function testGetFirstErrorEmpty(): void
     {
-        $this->assertSame('', HtmlFormErrors::getFirstError($this->formModel, 'login'));
+        $this->assertSame('', HtmlFormErrors::getFirstError(new LoginForm(), 'login'));
     }
 
     public function testGetFirstErrorsEmpty(): void
     {
-        $this->assertSame([], HtmlFormErrors::getFirstErrors($this->formModel));
+        $this->assertSame([], HtmlFormErrors::getFirstErrors(new LoginForm()));
     }
 
     public function testHasError(): void
     {
+        $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
-        $this->assertTrue($this->formModel->load($this->data));
-        $this->assertFalse($validator->validate($this->formModel)->isValid());
-        $this->assertTrue(HtmlFormErrors::hasErrors($this->formModel));
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->createFormModel(LoginForm::class);
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertTrue(HtmlFormErrors::hasErrors($formModel));
     }
 }

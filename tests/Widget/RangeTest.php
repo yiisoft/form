@@ -6,17 +6,22 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Range;
 use Yiisoft\Html\Html;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class RangeTest extends TestCase
 {
     use TestTrait;
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $range = Range::widget();
@@ -26,6 +31,9 @@ final class RangeTest extends TestCase
         $this->assertNotSame($range, $range->outputTag(''));
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testMax(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
@@ -35,104 +43,81 @@ final class RangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->for($this->formModel, 'int')->max(8)->render(),
+            Range::widget()->for(new TypeForm(), 'int')->max(8)->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testMin(): void
     {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 1]);
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" min="4" oninput="i2.value=this.value">
-        <output id="i2" name="i2" for="TypeForm[int]">0</output>
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" min="4" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="TypeForm[int]">0</output>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->for($this->formModel, 'int')->min(4)->render(),
+            Range::widget()->for(new TypeForm(), 'int')->min(4)->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testOutputAttributes(): void
     {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 2]);
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i3.value=this.value">
-        <output id="i3" class="test-class" name="i3" for="TypeForm[int]">0</output>
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
+        <output id="i1" class="test-class" name="i1" for="TypeForm[int]">0</output>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->for($this->formModel, 'int')->outputAttributes(['class' => 'test-class'])->render(),
+            Range::widget()->for(new TypeForm(), 'int')->outputAttributes(['class' => 'test-class'])->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testOutputTag(): void
     {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 3]);
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i4.value=this.value">
-        <p id="i4" name="i4" for="TypeForm[int]">0</p>
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
+        <p id="i1" name="i1" for="TypeForm[int]">0</p>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->for($this->formModel, 'int')->outputTag('p')->render(),
+            Range::widget()->for(new TypeForm(), 'int')->outputTag('p')->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testOutputTagException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The output tag name it cannot be empty value.');
-        Range::widget()->for($this->formModel, 'int')->outputTag('')->render();
+        Range::widget()->for(new TypeForm(), 'int')->outputTag('')->render();
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testRender(): void
     {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 5]);
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i6.value=this.value">
-        <output id="i6" name="i6" for="TypeForm[int]">0</output>
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="TypeForm[int]">0</output>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Range::widget()->for($this->formModel, 'int')->render(),
-        );
-    }
-
-    public function testValue(): void
-    {
-        // value null
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 6]);
-        $expected = <<<'HTML'
-        <input type="range" id="typeform-tonull" name="TypeForm[toNull]" oninput="i7.value=this.value">
-        <output id="i7" name="i7" for="TypeForm[toNull]"></output>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Range::widget()->for($this->formModel, 'toNull')->render(),
-        );
-
-        // value string numeric `1`
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 7]);
-        $this->formModel->setAttribute('string', '1');
-        $expected = <<<'HTML'
-        <input type="range" id="typeform-string" name="TypeForm[string]" value="1" oninput="i8.value=this.value">
-        <output id="i8" name="i8" for="TypeForm[string]">1</output>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Range::widget()->for($this->formModel, 'string')->render(),
-        );
-
-        // value int 1
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', ['i' => 8]);
-        $this->formModel->setAttribute('int', '1');
-        $expected = <<<'HTML'
-        <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i9.value=this.value">
-        <output id="i9" name="i9" for="TypeForm[int]">1</output>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Range::widget()->for($this->formModel, 'int')->render(),
+            Range::widget()->for(new TypeForm(), 'int')->render(),
         );
     }
 
@@ -140,13 +125,41 @@ final class RangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range widget must be a numeric or null value.');
-        Range::widget()->for($this->formModel, 'array')->render();
+        Range::widget()->for(new TypeForm(), 'array')->render();
     }
 
-    protected function setUp(): void
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testValueWithFormModel(): void
     {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->createFormModel(TypeForm::class);
+        $formModel = new TypeForm();
+
+        // Value numeric string `1`.
+        $formModel->setAttribute('string', '1');
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<'HTML'
+        <input type="range" id="typeform-string" name="TypeForm[string]" value="1" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="TypeForm[string]">1</output>
+        HTML;
+        $this->assertEqualsWithoutLE($expected, Range::widget()->for($formModel, 'string')->render());
+
+        // Value int `1`.
+        $formModel->setAttribute('int', 1);
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<'HTML'
+        <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="TypeForm[int]">1</output>
+        HTML;
+        $this->assertEqualsWithoutLE($expected, Range::widget()->for($formModel, 'int')->render());
+
+        // Value `null`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $formModel->setAttribute('string', null);
+        $expected = <<<'HTML'
+        <input type="range" id="typeform-string" name="TypeForm[string]" value="0" oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="TypeForm[string]">0</output>
+        HTML;
+        $this->assertEqualsWithoutLE($expected, Range::widget()->for($formModel, 'string')->render());
     }
 }

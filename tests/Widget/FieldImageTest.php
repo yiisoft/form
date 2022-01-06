@@ -17,9 +17,10 @@ final class FieldImageTest extends TestCase
 
     public function testAlt(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" name="image-1" alt="Submit">
+        <input type="image" id="w1-image" name="w1-image" alt="Submit">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['alt' => 'Submit'])->render());
@@ -27,9 +28,10 @@ final class FieldImageTest extends TestCase
 
     public function testAttributes(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" class="test-class" name="image-1">
+        <input type="image" id="w1-image" class="test-class" name="w1-image">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['class' => 'test-class'])->render());
@@ -37,6 +39,7 @@ final class FieldImageTest extends TestCase
 
     public function testAutoIdPrefix(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
         <input type="image" id="s-1" name="s-1">
@@ -47,9 +50,10 @@ final class FieldImageTest extends TestCase
 
     public function testId(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="test-id" name="test-id">
+        <input type="image" id="test-id" name="w1-image">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['id' => 'test-id'])->render());
@@ -57,9 +61,10 @@ final class FieldImageTest extends TestCase
 
     public function testHeight(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" name="image-1" height="20">
+        <input type="image" id="w1-image" name="w1-image" height="20">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['height' => '20'])->render());
@@ -67,9 +72,10 @@ final class FieldImageTest extends TestCase
 
     public function testName(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" name="test-name">
+        <input type="image" id="w1-image" name="test-name">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['name' => 'test-name'])->render());
@@ -77,9 +83,10 @@ final class FieldImageTest extends TestCase
 
     public function testRender(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" name="image-1">
+        <input type="image" id="w1-image" name="w1-image">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image()->render());
@@ -87,9 +94,10 @@ final class FieldImageTest extends TestCase
 
     public function testSrc(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" name="image-1" src="img_submit.gif">
+        <input type="image" id="w1-image" name="w1-image" src="img_submit.gif">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['src' => 'img_submit.gif'])->render());
@@ -97,9 +105,10 @@ final class FieldImageTest extends TestCase
 
     public function testWidth(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<'HTML'
         <div>
-        <input type="image" id="image-1" name="image-1" width="20px">
+        <input type="image" id="w1-image" name="w1-image" width="20px">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->image([], ['width' => '20px'])->render());

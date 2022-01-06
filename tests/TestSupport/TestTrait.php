@@ -7,14 +7,14 @@ namespace Yiisoft\Form\Tests\TestSupport;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
-use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
+use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Widget\WidgetFactory;
 
 trait TestTrait
 {
-    private FormModelInterface $formModel;
-
     /**
      * Asserting two strings equality ignoring line endings.
      *
@@ -30,18 +30,13 @@ trait TestTrait
         $this->assertEquals($expected, $actual, $message);
     }
 
-    public function createFormModel(string $class): void
-    {
-        $this->formModel = new $class();
-    }
-
     private function createValidatorMock(): ValidatorInterface
     {
         return new ValidatorMock();
     }
 
     /**
-     * Invokes a inaccessible method.
+     * Invokes an inaccessible method.
      *
      * @param object $object
      * @param string $method
@@ -91,6 +86,15 @@ trait TestTrait
         if ($revoke) {
             $property->setAccessible(false);
         }
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
     }
 }
 

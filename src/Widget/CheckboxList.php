@@ -7,8 +7,7 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListTag;
 
@@ -17,10 +16,8 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListTag;
  *
  * A checkbox list allows multiple selection.
  */
-final class CheckboxList extends AbstractForm
+final class CheckboxList extends ChoiceAttributes
 {
-    use GlobalAttributes;
-
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
     /** @psalm-var array[] $value */
@@ -28,13 +25,29 @@ final class CheckboxList extends AbstractForm
     /** @var string[] */
     private array $items = [];
     /** @var bool[]|float[]|int[]|string[]|Stringable[] */
-    private array $itemsAsValues = [];
     private array $itemsAttributes = [];
     /** @psalm-var Closure(CheckboxItem):string|null */
     private ?Closure $itemsFormatter = null;
     /** @var bool[]|float[]|int[]|string[]|Stringable[] */
     private array $itemsFromValues = [];
     private string $separator = "\n";
+
+    /**
+     * Focus on the control (put cursor into it) when the page loads.
+     * Only one form element could be in focus at the same time.
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function autofocus(): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['autofocus'] = true;
+        return $new;
+    }
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -63,6 +76,24 @@ final class CheckboxList extends AbstractForm
     {
         $new = clone $this;
         $new->containerTag = $tag;
+        return $new;
+    }
+
+    /**
+     * Set the ID of container the widget.
+     *
+     * @param string|null $id
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function id(?string $id): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['id'] = $id;
         return $new;
     }
 
@@ -106,6 +137,8 @@ final class CheckboxList extends AbstractForm
      * @return static
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     *
+     *  @psalm-param bool[]|float[]|int[]|string[]|Stringable[] $attributes
      */
     public function itemsAttributes(array $attributes = []): self
     {
@@ -168,44 +201,80 @@ final class CheckboxList extends AbstractForm
     }
 
     /**
+     * The tabindex global attribute indicates that its element can be focused, and where it participates in sequential
+     * keyboard navigation (usually with the Tab key, hence the name).
+     *
+     * It accepts an integer as a value, with different results depending on the integer's value:
+     *
+     * - A negative value (usually tabindex="-1") means that the element is not reachable via sequential keyboard
+     * navigation, but could be focused with Javascript or visually. It's mostly useful to create accessible widgets
+     * with JavaScript.
+     * - tabindex="0" means that the element should be focusable in sequential keyboard navigation, but its order is
+     * defined by the document's source order.
+     * - A positive value means the element should be focusable in sequential keyboard navigation, with its order
+     * defined by the value of the number. That is, tabindex="4" is focused before tabindex="5", but after tabindex="3".
+     *
+     * @param int $value
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function tabIndex(int $value): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['tabindex'] = $value;
+        return $new;
+    }
+
+    /**
      * @return string the generated checkbox list.
      */
     protected function run(): string
     {
-        $new = clone $this;
+        /** @psalm-var array[] */
+        [$attributes, $containerAttributes] = $this->buildList($this->attributes, $this->containerAttributes);
 
         /**
          *  @var iterable<int, scalar|Stringable>|scalar|Stringable|null
          *
          *  @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
          */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (!is_iterable($value) && null !== $value) {
             throw new InvalidArgumentException('CheckboxList widget must be a array or null value.');
         }
 
-        $checkboxList = CheckboxListTag::create($new->getName());
+        $name = $this->getInputName();
 
-        $new->containerAttributes['id'] ??= $new->getId();
-
-        if ($new->items !== []) {
-            $checkboxList = $checkboxList->items($new->items, $new->getEncode());
-        } elseif ($new->itemsFromValues !== []) {
-            $checkboxList = $checkboxList->itemsFromValues($new->itemsFromValues, $new->getEncode());
+        /** @var string */
+        if (!empty($attributes['name']) && is_string($attributes['name'])) {
+            $name = $attributes['name'];
         }
 
-        if ($new->itemsAttributes !== []) {
-            $checkboxList = $checkboxList->replaceCheckboxAttributes($new->itemsAttributes);
+        $checkboxList = CheckboxListTag::create($name);
+
+        if ($this->items !== []) {
+            $checkboxList = $checkboxList->items($this->items, $this->getEncode());
+        } elseif ($this->itemsFromValues !== []) {
+            $checkboxList = $checkboxList->itemsFromValues($this->itemsFromValues, $this->getEncode());
+        }
+
+        if ($this->itemsAttributes !== []) {
+            $checkboxList = $checkboxList->replaceCheckboxAttributes($this->itemsAttributes);
         }
 
         return $checkboxList
-            ->checkboxAttributes($new->attributes)
-            ->containerAttributes($new->containerAttributes)
-            ->containerTag($new->containerTag)
-            ->individualInputAttributes($new->individualItemsAttributes)
-            ->itemFormatter($new->itemsFormatter)
-            ->separator($new->separator)
+            ->checkboxAttributes($attributes)
+            ->containerAttributes($containerAttributes)
+            ->containerTag($this->containerTag)
+            ->individualInputAttributes($this->individualItemsAttributes)
+            ->itemFormatter($this->itemsFormatter)
+            ->separator($this->separator)
             ->values($value ?? [])
             ->render();
     }

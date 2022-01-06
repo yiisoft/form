@@ -17,16 +17,7 @@ final class ResetButtonTest extends TestCase
 
     public function testRender(): void
     {
-        $this->assertSame(
-            '<input type="reset" id="reset-1" name="reset-1">',
-            ResetButton::widget()->render(),
-        );
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame('<input type="reset" id="w1-reset" name="w1-reset">', ResetButton::widget()->render());
     }
 }

@@ -6,8 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
@@ -19,16 +18,15 @@ use Yiisoft\Html\Tag\Select as SelectTag;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/select.html
  */
-final class Select extends AbstractForm
+final class Select extends ChoiceAttributes
 {
-    use GlobalAttributes;
-
     private array $items = [];
     private array $itemsAttributes = [];
     private array $groups = [];
     /** @var string[] */
     private array $optionsData = [];
-    private array $prompt = [];
+    private string $prompt = '';
+    private ?Option $promptTag = null;
     private ?string $unselectValue = null;
 
     /**
@@ -74,7 +72,7 @@ final class Select extends AbstractForm
      *     '2' => 'Concepcion',
      *     '3' => 'Chillan',
      *     '4' => 'Moscu'
-     *     '5' => 'San Petersburgo',
+     *     '5' => 'San Petersburg',
      *     '6' => 'Novosibirsk',
      *     '7' => 'Ekaterinburgo'
      * ];
@@ -90,7 +88,7 @@ final class Select extends AbstractForm
      *     ],
      *     '2' => [
      *         '4' => 'Moscu',
-     *         '5' => 'San Petersburgo',
+     *         '5' => 'San Petersburg',
      *         '6' => 'Novosibirsk',
      *         '7' => 'Ekaterinburgo'
      *     ],
@@ -156,29 +154,32 @@ final class Select extends AbstractForm
     }
 
     /**
-     * Prompt text to be displayed as the first option, you can use an array to override the value and to set other
-     * tag attributes:
+     * The prompt option can be used to define a string that will be displayed on the first line of the drop-down list
+     * widget.
      *
-     * ```php
-     * [
-     *     'prompt' => [
-     *         'text' => 'Select City Birth',
-     *         'options' => [
-     *             'value' => '0',
-     *             'selected' => 'selected'
-     *         ],
-     *     ],
-     * ]
-     * ```
-     *
-     * @param array $value
+     * @param string $value
      *
      * @return static
      */
-    public function prompt(array $value = []): self
+    public function prompt(string $value): self
     {
         $new = clone $this;
         $new->prompt = $value;
+        return $new;
+    }
+
+    /**
+     * The prompt option tag can be used to define an object Stringable that will be displayed on the first line of the
+     * drop-down list widget.
+     *
+     * @param Option|null $value
+     *
+     * @return static
+     */
+    public function promptTag(?Option $value): self
+    {
+        $new = clone $this;
+        $new->promptTag = $value;
         return $new;
     }
 
@@ -210,28 +211,28 @@ final class Select extends AbstractForm
      */
     private function renderItems(array $values = []): array
     {
-        $new = clone $this;
         $items = [];
+        $itemsAttributes = $this->itemsAttributes;
 
         /** @var array|string $content */
         foreach ($values as $value => $content) {
             if (is_array($content)) {
                 /** @var array */
-                $groupAttrs = $new->groups[$value] ?? [];
+                $groupAttrs = $this->groups[$value] ?? [];
                 $options = [];
 
                 /** @var string $c */
                 foreach ($content as $v => $c) {
                     /** @var array */
-                    $new->itemsAttributes[$v] ??= [];
-                    $options[] = Option::tag()->attributes($new->itemsAttributes[$v])->content($c)->value($v);
+                    $itemsAttributes[$v] ??= [];
+                    $options[] = Option::tag()->attributes($itemsAttributes[$v])->content($c)->value($v);
                 }
 
                 $items[] = Optgroup::tag()->attributes($groupAttrs)->options(...$options);
             } else {
                 /** @var array */
-                $new->itemsAttributes[$value] ??= [];
-                $items[] = Option::tag()->attributes($new->itemsAttributes[$value])->content($content)->value($value);
+                $itemsAttributes[$value] ??= [];
+                $items[] = Option::tag()->attributes($itemsAttributes[$value])->content($content)->value($value);
             }
         }
 
@@ -243,14 +244,15 @@ final class Select extends AbstractForm
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->build($this->attributes);
 
         /**
-         * @var iterable<int, scalar|Stringable>|scalar|Stringable|null
+         * @psalm-var iterable<int, Stringable|scalar>|scalar|null $value
          *
          * @link https://www.w3.org/TR/2011/WD-html5-20110525/association-of-controls-and-forms.html#concept-fe-value
          */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->getAttribute());
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (is_object($value)) {
             throw new InvalidArgumentException('Select widget value can not be an object.');
@@ -258,26 +260,22 @@ final class Select extends AbstractForm
 
         $select = SelectTag::tag();
 
-        if (isset($new->attributes['multiple']) && !isset($new->attributes['size'])) {
-            $new->attributes['size'] = 4;
+        if (array_key_exists('multiple', $attributes) && !array_key_exists('size', $attributes)) {
+            $attributes['size'] = 4;
         }
 
-        $promptOption = null;
-
-        if ($new->prompt !== []) {
-            /** @var string */
-            $promptText = $new->prompt['text'] ?? '';
-
-            /** @var array */
-            $promptAttributes = $new->prompt['attributes'] ?? [];
-
-            $promptOption = Option::tag()->attributes($promptAttributes)->content($promptText);
+        if ($this->prompt !== '') {
+            $select = $select->prompt($this->prompt);
         }
 
-        if ($new->items !== []) {
-            $select = $select->items(...$new->renderItems($new->items));
-        } elseif ($new->optionsData !== []) {
-            $select = $select->optionsData($new->optionsData, $new->getEncode());
+        if ($this->promptTag !== null) {
+            $select = $select->promptOption($this->promptTag);
+        }
+
+        if ($this->items !== []) {
+            $select = $select->items(...$this->renderItems($this->items));
+        } elseif ($this->optionsData !== []) {
+            $select = $select->optionsData($this->optionsData, $this->getEncode());
         }
 
         if (is_iterable($value)) {
@@ -286,12 +284,6 @@ final class Select extends AbstractForm
             $select = $select->value($value);
         }
 
-        return $select
-            ->attributes($new->attributes)
-            ->id($new->getId())
-            ->name($new->getName())
-            ->promptOption($promptOption)
-            ->unselectValue($new->unselectValue)
-            ->render();
+        return $select->attributes($attributes)->unselectValue($this->unselectValue)->render();
     }
 }

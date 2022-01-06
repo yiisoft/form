@@ -74,9 +74,13 @@ final class FormErrors implements FormErrorsInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
-    public function clear(): void
+    public function clear(string $attribute = null): void
     {
-        $this->attributesErrors = [];
+        if ($attribute !== null) {
+            unset($this->attributesErrors[$attribute]);
+        } else {
+            $this->attributesErrors = [];
+        }
     }
 
     private function renderErrorSumary(array $errors): array

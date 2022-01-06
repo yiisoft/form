@@ -35,7 +35,7 @@ final class HtmlFormErrors
     }
 
     /**
-     * Returns the firts errors for all attributes as a one-dimensional array.
+     * Returns the firsts errors for all attributes as a one-dimensional array.
      *
      * @param FormModelInterface $formModel the form object.
      *
@@ -74,7 +74,7 @@ final class HtmlFormErrors
     /**
      * Returns the first error of every attribute in the model.
      *
-     * @param FormModelInterface $model the form object.
+     * @param FormModelInterface $formModel the form object.
      *
      * @return array The first error message for each attribute in a model. Empty array is returned if there is no
      * error.

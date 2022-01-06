@@ -4,10 +4,23 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
+use Yiisoft\Arrays\ArrayHelper;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Widget\Attribute\ButtonAttributes;
 use Yiisoft\Form\Widget\Attribute\FieldAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
+use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
+use Yiisoft\Form\Widget\Attribute\WidgetAttributes;
+use Yiisoft\Form\Widget\FieldPart\Error;
+use Yiisoft\Form\Widget\FieldPart\Hint;
+use Yiisoft\Form\Widget\FieldPart\Label;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Div;
+use Yiisoft\Widget\Widget;
 
 use function strtr;
 
@@ -16,77 +29,34 @@ use function strtr;
  *
  * @psalm-suppress MissingConstructor
  */
-final class Field extends AbstractForm
+final class Field extends FieldAttributes
 {
-    use FieldAttributes;
-
-    public const TYPE_CHECKBOX = Checkbox::class;
-    public const TYPE_CHECKBOX_LIST = CheckboxList::class;
-    public const TYPE_DATE = Date::class;
-    public const TYPE_DATE_TIME = DateTime::class;
-    public const TYPE_DATE_TIME_LOCAL = DateTimeLocal::class;
-    public const TYPE_EMAIL = Email::class;
-    public const TYPE_ERROR = Error::class;
-    public const TYPE_FILE = File::class;
-    public const TYPE_HIDDEN = Hidden::class;
-    public const TYPE_HINT = Hint::class;
-    public const TYPE_LABEL = Label::class;
-    public const TYPE_NUMBER = Number::class;
-    public const TYPE_PASSWORD = Password::class;
-    public const TYPE_RADIO = Radio::class;
-    public const TYPE_RADIO_LIST = RadioList::class;
-    public const TYPE_RANGE = Range::class;
-    public const TYPE_SELECT = Select::class;
-    public const TYPE_SUBMIT_BUTTON = SubmitButton::class;
-    public const TYPE_TELEPHONE = Telephone::class;
-    public const TYPE_TEXT = Text::class;
-    public const TYPE_TEXT_AREA = TextArea::class;
-    public const TYPE_URL = Url::class;
-    private const HAS_LENGTH_TYPES = [
-        self::TYPE_EMAIL,
-        self::TYPE_PASSWORD,
-        self::TYPE_TELEPHONE,
-        self::TYPE_TEXT,
-        self::TYPE_TEXT_AREA,
-        self::TYPE_URL,
-    ];
-    private const MATCH_REGULAR_EXPRESSION_TYPES = [
-        self::TYPE_EMAIL,
-        self::TYPE_PASSWORD,
-        self::TYPE_TELEPHONE,
-        self::TYPE_TEXT,
-        self::TYPE_TEXT_AREA,
-        self::TYPE_URL,
-    ];
-    private const NO_PLACEHOLDER_TYPES = [
-        self::TYPE_CHECKBOX,
-        self::TYPE_HIDDEN,
-        self::TYPE_RADIO,
-        self::TYPE_SELECT,
-    ];
-    private const NUMBER_TYPES = [
-        self::TYPE_NUMBER,
-        self::TYPE_RANGE,
-    ];
+    /** @psalm-var ButtonAttributes[] */
+    private array $buttons = [];
+    private array $containerAttributes = [];
+    private WidgetAttributes $widget;
 
     /**
      * Renders a checkbox.
      *
      * This method will generate the `checked` tag attribute according to the model attribute value.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config The configuration array for widget factory.
      * Available methods:
      * [
      *     'enclosedByLabel()' => [false],
-     *     'label()' => ['test-text-label']],
+     *     'label()' => ['test-text-label'],
      *     'labelAttributes()' => [['class' => 'test-class']],
      *     'uncheckValue()' => ['0'],
      * ]
-     * @param array $attributes the HTML attributes for the widget.
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function checkbox(array $config = [], array $attributes = []): self
+    public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
 
@@ -97,15 +67,19 @@ final class Field extends AbstractForm
             $new->parts['{label}'] = '';
         }
 
-        return $new->build(self::TYPE_CHECKBOX, $attributes, $config);
+        $new->widget = Checkbox::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a list of checkboxes.
      *
      * A checkbox list allows multiple selection, As a result, the corresponding submitted value is an array.
+     *
      * The selection of the checkbox list is taken from the value of the model attribute.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
      * Available methods:
      * [
@@ -124,131 +98,95 @@ final class Field extends AbstractForm
      *     'itemsFromValues()' => [[1 => 'Female', 2 => 'Male']],
      *     'separator()' => ['&#9866;'],
      * ]
-     * @param array $attributes the HTML attributes for the widget.
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function checkboxList(array $config = [], array $attributes = []): self
+    public function checkboxList(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_CHECKBOX_LIST, $attributes, $config);
+        $new->widget = CheckboxList::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a date widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the date widget.
-     * Most used attributes:
-     * [
-     *     'max' => '2030-01-01',
-     *     'min' => '2010-01-01',
-     *     'readonly' => true,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     *
      * @return static the field widget instance.
      */
-    public function date(array $config = [], array $attributes = []): self
+    public function date(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_DATE, $attributes, $config);
+        $new->widget = Date::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a date time widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the date widget.
-     * Most used attributes:
-     * [
-     *     'max' => '1990-12-31T23:59:60Z'
-     *     'min' => '1990-12-31T23:59:60Z',
-     *     'readonly' => true,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function dateTime(array $config = [], array $attributes = []): self
+    public function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_DATE_TIME, $attributes, $config);
+        $new->widget = DateTime::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a date time local widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the date widget.
-     * Most used attributes:
-     * [
-     *     'max' => '1985-04-12T23:20:50.52',
-     *     'min' => '1985-04-12T23:20:50.52',
-     *     'readonly' => true,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function dateTimeLocal(array $config = [], array $attributes = []): self
+    public function dateTimeLocal(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_DATE_TIME_LOCAL, $attributes, $config);
+        $new->widget = DateTimeLocal::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a email widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the date widget.
-     * Most used attributes:
-     * [
-     *     'maxlength' => 10,
-     *     'minlength' => 1,
-     *     'multiple' => true,
-     *     'pattern' => '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',
-     *     'placeholder' => 'test-placeholder',
-     *     'size' => 2,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function email(array $config = [], array $attributes = []): self
+    public function email(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_EMAIL, $attributes, $config);
-    }
-
-    /**
-     * Generates a tag that contains the first validation error of {@see attribute}.
-     *
-     * Note that even if there is no validation error, this method will still return an empty error tag.
-     *
-     * @param array $config the configuration array for widget factory.
-     * Available methods:
-     * [
-     *     'encode()' => false,
-     *     'message()' => ['test-message'],
-     *     'messageCallback()' => [[$this->formModel, 'customError']],
-     *     'tag()' => ['div'],
-     * ]
-     * @param array $attributes the HTML attributes for the widget.
-     *
-     * @return static the field widget instance.
-     */
-    public function error(array $config = [], array $attributes = []): self
-    {
-        $new = clone $this;
-
-        $errorClass = $new->errorsClass[$new->type] ?? $new->errorClass;
-
-        if ($errorClass !== '') {
-            Html::addCssClass($attributes, $errorClass);
-        }
-
-        return $new->build(self::TYPE_ERROR, $attributes, $config, '{error}');
+        $new->widget = Email::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a file widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
      * Available methods:
      * [
@@ -256,72 +194,41 @@ final class Field extends AbstractForm
      *     'uncheckValue()' => ['0'],
      *
      * ]
-     * @param array $attributes the HTML attributes for the date widget.
-     * Most used attributes:
-     * [
-     *     'accept' => 'image/*',
-     *     'multiple' => true,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function file(array $config = [], array $attributes = []): self
+    public function file(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_FILE, $attributes, $config);
+        $new->widget = File::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a hidden widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * Available methods:
-     * @param array $attributes the HTML attributes for the date widget.
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function hidden(array $config = [], array $attributes = []): self
+    public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
         $new->parts['{label}'] = '';
         $new->parts['{hint}'] = '';
         $new->parts['{error}'] = '';
-        return $new->build(self::TYPE_HIDDEN, $attributes, $config);
+        $new->widget = Hidden::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
-     * Renders the hint tag.
-     *
-     * @param array $config the configuration array for widget factory.
-     * Available methods:
-     * [
-     *     'encode()' => [false],
-     *     'hint()' => [null],
-     *     'tag()' => ['span'],
-     * ]
-     * @param array $attributes the HTML attributes for the widget.
-     *
-     * @return static the field widget instance.
-     */
-    public function hint(array $config = [], array $attributes = []): self
-    {
-        $new = clone $this;
-
-        if ($new->ariaDescribedBy === true) {
-            $attributes['id'] = $new->getId();
-        }
-
-        $hintClass = $new->hintsClass[$new->type] ?? $new->hintClass;
-
-        if ($hintClass !== '') {
-            Html::addCssClass($attributes, $hintClass);
-        }
-
-        return $new->build(self::TYPE_HINT, $attributes, $config, '{hint}');
-    }
-
-    /**
-     * Renders a image widget.
+     * Renders an image widget.
      *
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
@@ -333,98 +240,63 @@ final class Field extends AbstractForm
      *     'width' => '100%',
      * ]
      *
-     * @throws InvalidConfigException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
+     *
+     * @psalm-suppress InvalidPropertyAssignmentValue
      */
     public function image(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
-
-        $new->parts['{error}'] = '';
-        $new->parts['{hint}'] = '';
         $new->parts['{label}'] = '';
-        $new->parts['{input}'] = Image::widget($config)->attributes($attributes)->render();
-
+        $new->parts['{hint}'] = '';
+        $new->parts['{error}'] = '';
+        $new->widget = Image::widget($config)->attributes($attributes);
         return $new;
-    }
-
-    /**
-     * Generates a label tag.
-     *
-     * @param array $config the configuration array for widget factory.
-     * Available methods:
-     * [
-     *     'encode()' => [false]
-     *     'label()' => ['Email:'],
-     * ]
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *    'for' => 'test-id',
-     * ]
-     * @return static the field widget instance.
-     */
-    public function label(array $config = [], array $attributes = []): self
-    {
-        $new = clone $this;
-
-        $labelClass = $new->labelsClass[$new->type] ?? $new->labelClass;
-
-        if ($labelClass !== '') {
-            Html::addCssClass($attributes, $labelClass);
-        }
-
-        return $new->build(self::TYPE_LABEL, $attributes, $config, '{label}');
     }
 
     /**
      * Renders a number widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'max' => 8,
-     *     'min' => 1,
-     *     'placeholder' => 'test-placeholder',
-     *     'readonly' => true,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
-    public function number(array $config = [], array $attributes = []): self
+    public function number(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_NUMBER, $attributes, $config);
+        $new->widget = Number::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a password widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'maxlength' => 16,
-     *     'minlength' => 8,
-     *     'pattern' => '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}',
-     *     'title' => 'Must contain at least one number and one uppercase and lowercase letter, and at ' .
-     *                'least 8 or more characters.',
-     *     'readonly' => true
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
-    public function password(array $config = [], array $attributes = []): self
+    public function password(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_PASSWORD, $attributes, $config);
+        $new->widget = Password::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a radio widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
      * Available methods:
      * [
@@ -433,11 +305,12 @@ final class Field extends AbstractForm
      *     'labelAttributes()' => [['class' => 'test-class']]
      *     'uncheckValue()' => ['0'],
      * ]
-     * @param array $attributes the HTML attributes for the widget.
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
-    public function radio(array $config = [], array $attributes = []): self
+    public function radio(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
 
@@ -448,12 +321,15 @@ final class Field extends AbstractForm
             $new->parts['{label}'] = '';
         }
 
-        return $new->build(self::TYPE_RADIO, $attributes, $config);
+        $new->widget = Radio::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a radio list widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
      * Available methods:
      * [
@@ -473,38 +349,39 @@ final class Field extends AbstractForm
      *     'separator()' => [PHP_EOL],
      *     'uncheckValue()' => ['0'],
      * ]
-     * @param array $attributes the HTML attributes for the widget.
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
-    public function radiolist(array $config = [], array $attributes = []): self
+    public function radioList(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_RADIO_LIST, $attributes, $config);
+        $new->widget = RadioList::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a range widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
      * Available methods:
      * [
      *     'outputTag()' => ['p'],
      *     'outputAttributes()' => [['class' => 'test-class']],
      * ]
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'max' => 8,
-     *     'min' => 1,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
-    public function range(array $config = [], array $attributes = []): self
+    public function range(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_RANGE, $attributes, $config);
+        $new->widget = Range::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
@@ -513,49 +390,43 @@ final class Field extends AbstractForm
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
      *
-     * @throws InvalidConfigException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
     public function resetButton(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
-
-        $new->parts['{error}'] = '';
-        $new->parts['{hint}'] = '';
-        $new->parts['{label}'] = '';
-        $new->parts['{input}'] = ResetButton::widget($config)->attributes($attributes)->render();
-
+        $new->buttons[] = ResetButton::widget($config)->attributes($attributes);
         return $new;
     }
 
     /**
      * Renders a select widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config The configuration array for widget factory.
      * Available methods:
      * [
      *     'encode()' => [true],
-     *     'groups()' => [['1' => ['2' => ' Moscu', '3' => ' San Petersburgo']]],
-     *     'items()' => [['1' => 'Moscu', '2' => 'San Petersburgo']],
+     *     'groups()' => [['1' => ['2' => 'Moscu', '3' => 'San Petersburg']]],
+     *     'items()' => [['1' => 'Moscu', '2' => 'San Petersburg']],
      *     'itemsAttributes()' => [['2' => ['disabled' => true]],
-     *     'optionsData()' => [['1' => '<b>Moscu</b>', '2' => 'San Petersburgo']],
+     *     'optionsData()' => [['1' => '<b>Moscu</b>', '2' => 'San Petersburg']],
      *     'prompt()' => [['text' => 'Select City Birth', 'attributes' => ['value' => '0', 'selected' => 'selected']]],
      *     'unselectValue()' => ['0'],
      * ]
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'multiple' => true,
-     *     'size' => '4',
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
-    public function select(array $config = [], array $attributes = []): self
+    public function select(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_SELECT, $attributes, $config);
+        $new->widget = Select::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
@@ -564,110 +435,87 @@ final class Field extends AbstractForm
      * @param array $config the configuration array for widget factory.
      * @param array $attributes the HTML attributes for the widget.
      *
-     * @throws InvalidConfigException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
      */
     public function submitButton(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
-
-        $new->type = self::TYPE_SUBMIT_BUTTON;
-
-        $new->parts['{error}'] = '';
-        $new->parts['{hint}'] = '';
-        $new->parts['{label}'] = '';
-        $new->parts['{input}'] = SubmitButton::widget($config)->attributes($attributes)->render();
-
+        $new->buttons[] = SubmitButton::widget($config)->attributes($attributes);
         return $new;
     }
 
     /**
      * Renders a text widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'maxlength' => 10,
-     *     'minlength' => 5,
-     *     'pattern' => '\d+',
-     *     'placeholder' => 'Enter your name',
-     *     'readonly' => true,
-     *     'size' => 5,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function telephone(array $config = [], array $attributes = []): self
+    public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_TELEPHONE, $attributes, $config);
+        $new->widget = Telephone::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a text widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'dirname' => 'my-dir',
-     *     'maxlength' => 10,
-     *     'placeholder' => 'Enter your name',
-     *     'pattern' => '\d+',
-     *     'readonly' => true,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function text(array $config = [], array $attributes = []): self {
+    public function text(FormModelInterface $formModel, string $attribute, array $config = []): self
+    {
         $new = clone $this;
-        return $new->build(self::TYPE_TEXT, $attributes, $config);
+        $new->widget = Text::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a text area widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the widget.
-     * [
-     *     'cols' => 10,
-     *     'dirname' => 'my-dir',
-     *     'maxlength' => 10,
-     *     'placeholder' => 'Enter your name',
-     *     'readonly' => true,
-     *     'rows' => 5,
-     *     'wrap' => 'hard',
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function textArea(array $config = [], array $attributes = []): self
+    public function textArea(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_TEXT_AREA, $attributes, $config);
+        $new->widget = TextArea::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
      * Renders a url widget.
      *
+     * @param FormModelInterface $formModel The model object.
+     * @param string $attribute The attribute name or expression.
      * @param array $config the configuration array for widget factory.
-     * @param array $attributes the HTML attributes for the widget.
-     * Most used attributes:
-     * [
-     *     'maxlength' => 10,
-     *     'minlength' => 5,
-     *     'pattern' => '\d+',
-     *     'size' => 5,
-     * ]
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field widget instance.
      */
-    public function url(array $config = [], array $attributes = []): self
+    public function url(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        return $new->build(self::TYPE_URL, $attributes, $config);
+        $new->widget = Url::widget($config)->for($formModel, $attribute);
+        return $new;
     }
 
     /**
@@ -679,69 +527,192 @@ final class Field extends AbstractForm
      * If (not set), the default methods will be called to generate the label and input tag, and use them as the
      * content.
      *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     *
      * @return string the rendering result.
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $content = '';
 
         $div = Div::tag();
 
-        if (!isset($new->parts['{input}'])) {
-            $new->type = self::TYPE_TEXT;
-            $new = $new->text();
+        if ($this->getContainerClass() !== '') {
+            $div = $div->class($this->getContainerClass());
         }
 
-        if (!isset($new->parts['{label}'])) {
-            $new = $new->label();
+        if ($this->getContainerAttributes() !== []) {
+            $div = $div->attributes($this->getContainerAttributes());
         }
 
-        if (!isset($new->parts['{hint}'])) {
-            $new = $new->hint();
+        if (!empty($this->widget)) {
+            $content .= $this->renderField();
         }
 
-        if (!isset($new->parts['{error}'])) {
-            $new = $new->error();
+        $renderButtons = $this->renderButtons();
+
+        if ($renderButtons !== '') {
+            $content .= $renderButtons;
         }
 
-        $containerClass = $new->containersClass[$new->type] ?? $new->containerClass;
+        return $this->getContainer() ? $div->content(PHP_EOL . $content . PHP_EOL)->encode(false)->render() : $content;
+    }
 
-        if ($containerClass !== '') {
-            $div = $div->class($containerClass);
+    private function buildField(): self
+    {
+        $new = clone $this;
+
+        // Set ariadescribedby.
+        if ($new->getAriaDescribedBy() === true && $new->widget instanceof InputAttributes) {
+            $new->widget = $new->widget->ariaDescribedBy($new->widget->getAttribute() . 'Help');
         }
 
-        $template = $new->templates[$new->type] ?? $new->template;
-        $content = preg_replace('/^\h*\v+/m', '', trim(strtr($template, $new->parts)));
+        // Set encode.
+        $new->widget = $new->widget->encode($new->getEncode());
 
-        return $div->content(PHP_EOL . $content . PHP_EOL)->encode(false)->render();
+        // Set input class.
+        if ($new->inputClass !== '') {
+            $new->widget = $new->widget->class($new->inputClass);
+        }
+
+        // Set label settings for the radio and checkbox fields.
+        if ($new->widget instanceof Radio || $new->widget instanceof Checkbox) {
+            $new->widget = $new->widget->label($new->getLabel())->labelAttributes($new->getLabelAttributes());
+        }
+
+        // Set placeholder.
+        $new->placeholder ??= $new->widget->getAttributePlaceHolder();
+
+        if ($new->widget instanceof PlaceholderInterface && $new->placeholder !== '') {
+            $new->widget = $new->widget->attributes(['placeholder' => $new->placeholder]);
+        }
+
+        // Set valid class and invalid class.
+        if ($new->invalidClass !== '' && $new->widget->hasError()) {
+            $new->widget = $new->widget->class($new->invalidClass);
+        } elseif ($new->validClass !== '' && $new->widget->isValidated()) {
+            $new->widget = $new->widget->class($new->validClass);
+        }
+
+        return $new;
+    }
+
+    private function renderButtons(): string
+    {
+        $buttons = '';
+
+        foreach ($this->buttons as $key => $button) {
+            $buttonsAttributes = $this->getButtonsIndividualAttributes((string) $key) ?? $this->attributes;
+
+            // Set input class.
+            if ($this->inputClass !== '') {
+                $button = $button->class($this->inputClass);
+            }
+
+            $buttons .= $button->attributes($buttonsAttributes)->render();
+        }
+
+        return $buttons;
     }
 
     /**
-     * Build input tag field.
-     *
-     * @param string $type the type of tag.
-     * @param array $attributes the HTML attributes for the tag.
-     * @param array $config the configuration array for widget factory.
-     * @param string $parts the parts of tag.
-     *
-     * @return static the field widget instance.
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    private function build(
-        string $type,
-        array $attributes = [],
-        array $config = [],
-        string $parts = '{input}'
-    ): self {
-        $new = clone $this;
+    private function renderError(): string
+    {
+        $errorAttributes = $this->getErrorAttributes();
+        $errorClass = $this->getErrorIndividualClass($this->type) ?? $this->getErrorClass();
 
-        if ($parts === '{input}') {
-            $new->type = $type;
-            $attributes = $new->setInputAttributes($type, $attributes);
+        if ($errorClass !== '') {
+            Html::addCssClass($errorAttributes, $errorClass);
         }
 
-        /** @var AbstractForm */
-        $type = $type::widget($config);
-        $new->parts[$parts] = $type->for($new->getFormModel(), $new->getAttribute())->attributes($attributes)->render();
-        return $new;
+        return Error::widget()
+            ->attributes($errorAttributes)
+            ->encode($this->getEncode())
+            ->for($this->widget->getFormModel(), $this->widget->getAttribute())
+            ->message($this->getError() ?? '')
+            ->messageCallback($this->getErrorMessageCallback())
+            ->tag($this->getErrorTag())
+            ->render();
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    private function renderField(): string
+    {
+        $new = clone $this;
+
+        $new = $new->buildField();
+        $new->widget = $new->widget->attributes($this->attributes);
+
+        if (!array_key_exists('{input}', $new->parts)) {
+            $new->parts['{input}'] = $new->widget->render();
+        }
+
+        if (!array_key_exists('{error}', $new->parts)) {
+            $new->parts['{error}'] = $this->getError() !== null ? $new->renderError() : '';
+        }
+
+        if (!array_key_exists('{hint}', $new->parts)) {
+            $new->parts['{hint}'] = $new->renderHint();
+        }
+
+        if (!array_key_exists('{label}', $new->parts)) {
+            $new->parts['{label}'] = $new->renderLabel();
+        }
+
+        return preg_replace('/^\h*\v+/m', '', trim(strtr($new->template, $new->parts)));
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    private function renderHint(): string
+    {
+        $hintAttributes = $this->getHintAttributes();
+        $hintClass = $this->getHintIndividualClass($this->type) ?? $this->getHintClass();
+
+        if ($hintClass !== '') {
+            Html::addCssClass($hintAttributes, $hintClass);
+        }
+
+        if ($this->getAriaDescribedBy() === true) {
+            $hintAttributes['id'] = $this->widget->getInputId();
+        }
+
+        return Hint::widget()
+            ->attributes($hintAttributes)
+            ->encode($this->getEncode())
+            ->for($this->widget->getFormModel(), $this->widget->getAttribute())
+            ->hint($this->getHint())
+            ->tag($this->getHintTag())
+            ->render();
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    private function renderLabel(): string
+    {
+        $labelAttributes = $this->getLabelAttributes();
+        $labelClass = $this->getLabelIndividualClass($this->type) ?? $this->getLabelClass();
+
+        if (!array_key_exists('for', $labelAttributes)) {
+            /** @var string */
+            $labelAttributes['for'] = ArrayHelper::getValue($this->attributes, 'id', $this->widget->getInputId());
+        }
+
+        if ($labelClass !== '') {
+            Html::addCssClass($labelAttributes, $labelClass);
+        }
+
+        return Label::widget()
+            ->attributes($labelAttributes)
+            ->encode($this->getEncode())
+            ->for($this->widget->getFormModel(), $this->widget->getAttribute())
+            ->label($this->getLabel())
+            ->render();
     }
 }

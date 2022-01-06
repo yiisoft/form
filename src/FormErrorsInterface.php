@@ -20,7 +20,7 @@ interface FormErrorsInterface
     /**
      * Removes errors for all attributes.
      */
-    public function clear(): void;
+    public function clear(string $attribute = null): void;
 
     /**
      * Returns errors for all attributes.

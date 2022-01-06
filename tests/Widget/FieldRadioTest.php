@@ -234,7 +234,7 @@ final class FieldRadioTest extends TestCase
         $this->formModel->setAttribute('toNull', null);
         $expected = <<<'HTML'
         <div>
-        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]" checked> To Null</label>
+        <label><input type="radio" id="typeform-tonull" name="TypeForm[toNull]"> To Null</label>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

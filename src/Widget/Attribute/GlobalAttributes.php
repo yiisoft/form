@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Html\Html;
 
 trait GlobalAttributes
 {
-    private string $autoIdPrefix = '';
+    protected array $attributes = [];
 
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -29,16 +27,32 @@ trait GlobalAttributes
     }
 
     /**
-     * The prefix to the automatically generated widget IDs.
+     * The HTML attributes. The following special options are recognized.
      *
-     * @param string $value
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function attributes(array $values): self
+    {
+        $new = clone $this;
+        $new->attributes = array_merge($new->attributes, $values);
+        return $new;
+    }
+
+    /**
+     * Set CSS class of the field widget.
+     *
+     * @param string $class
      *
      * @return static
      */
-    public function autoIdPrefix(string $value): self
+    public function class(string $class): self
     {
         $new = clone $this;
-        $new->autoIdPrefix = $value;
+        Html::addCssClass($new->attributes, $class);
         return $new;
     }
 
@@ -59,23 +73,6 @@ trait GlobalAttributes
     {
         $new = clone $this;
         $new->attributes['disabled'] = true;
-        return $new;
-    }
-
-    /**
-     * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
-     * attribute of a {@see Form} element in the same document.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
-     */
-    public function form(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['form'] = $value;
         return $new;
     }
 
@@ -108,20 +105,6 @@ trait GlobalAttributes
     {
         $new = clone $this;
         $new->attributes['name'] = $value;
-        return $new;
-    }
-
-    /**
-     * If it is required to fill in a value in order to submit the form.
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
-     */
-    public function required(): self
-    {
-        $new = clone $this;
-        $new->attributes['required'] = true;
         return $new;
     }
 
@@ -182,25 +165,5 @@ trait GlobalAttributes
         $new = clone $this;
         $new->attributes['value'] = $value;
         return $new;
-    }
-
-    /**
-     * Generates a unique ID for the attribute without model, if it does not have one yet.
-     *
-     * @return string
-     */
-    private function getIdWithoutModel(): ?string
-    {
-        $id = ArrayHelper::remove($this->attributes, 'id', '');
-
-        if (!is_string($id) && null !== $id) {
-            throw new InvalidArgumentException('Attribute "id" must be a string or null.');
-        }
-
-        if ($id === '') {
-            $id = Html::generateId($this->autoIdPrefix);
-        }
-
-        return $id === null ? null : $id;
     }
 }

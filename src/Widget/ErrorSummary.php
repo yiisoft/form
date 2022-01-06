@@ -9,6 +9,8 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
+use Yiisoft\Html\Tag\P;
+use Yiisoft\Html\Tag\Ul;
 use Yiisoft\Widget\Widget;
 
 use function array_unique;
@@ -24,8 +26,8 @@ final class ErrorSummary extends Widget
     private array $attributes = [];
     private bool $encode = true;
     private FormModelInterface $formModel;
-    private ?string $footer = null;
-    private ?string $header = '<p>' . 'Please fix the following errors:' . '</p>';
+    private string $footer = '';
+    private string $header = '';
     private bool $showAllErrors = false;
     /** @psalm-param non-empty-string */
     private string $tag = 'div';
@@ -63,11 +65,11 @@ final class ErrorSummary extends Widget
     /**
      * Set the footer text for the error summary
      *
-     * @param string|null $value
+     * @param string $value
      *
      * return static
      */
-    public function footer(?string $value): self
+    public function footer(string $value): self
     {
         $new = clone $this;
         $new->footer = $value;
@@ -77,11 +79,11 @@ final class ErrorSummary extends Widget
     /**
      * Set the header text for the error summary
      *
-     * @param string|null $value
+     * @param string $value
      *
      * return static
      */
-    public function header(?string $value): self
+    public function header(string $value): self
     {
         $new = clone $this;
         $new->header = $value;
@@ -141,6 +143,7 @@ final class ErrorSummary extends Widget
     {
         $new = clone $this;
         $errors = HtmlFormErrors::getErrorSummaryFirstErrors($new->formModel);
+        $errorMessages = [];
 
         if ($new->showAllErrors) {
             $errors = HtmlFormErrors::getErrorSummary($new->formModel);
@@ -154,12 +157,14 @@ final class ErrorSummary extends Widget
 
         if ($new->encode) {
             /** @var string $line */
-            foreach ($lines as &$line) {
-                $line = Html::encode($line);
+            foreach ($lines as $line) {
+                if (!empty($line)) {
+                    $errorMessages[] = Html::encode($line);
+                }
             }
         }
 
-        return $lines;
+        return $errorMessages;
     }
 
     /**
@@ -169,32 +174,33 @@ final class ErrorSummary extends Widget
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->attributes;
+        $content = '';
 
-        if ($new->tag === '') {
+        if ($this->tag === '') {
             throw new InvalidArgumentException('Tag name cannot be empty.');
         }
 
-        /** @var array<string, string> */
-        $lines = $new->collectErrors();
-
-        if (empty($lines)) {
-            /** still render the placeholder for client-side validation use */
-            $content = '<ul></ul>';
-            $new->attributes['style'] = isset($new->attributes['style'])
-                ? rtrim((string)$new->attributes['style'], ';') . '; display:none' : 'display:none';
+        if ($this->header === '') {
+            $content .= P::tag()->content('Please fix the following errors:')->render() . PHP_EOL;
         } else {
-            $content = '<ul><li>' . implode("</li>\n<li>", $lines) . '</li></ul>';
+            $content .= $this->header . PHP_EOL;
         }
 
-        if ($new->header !== null) {
-            $content = $new->header . $content;
+        /** @var array<string, string> */
+        $lines = $this->collectErrors();
+        $content .= Ul::tag()->strings($lines)->render();
+
+        if ($this->footer !== '') {
+            $content .= PHP_EOL . $this->footer;
         }
 
-        if ($new->footer !== null) {
-            $content .= $new->footer;
-        }
-
-        return CustomTag::name($new->tag)->attributes($new->attributes)->encode(false)->content($content)->render();
+        return $lines !== []
+            ? CustomTag::name($this->tag)
+                ->attributes($attributes)
+                ->encode(false)
+                ->content(PHP_EOL . $content . PHP_EOL)
+                ->render()
+            : '';
     }
 }
