@@ -31,6 +31,11 @@ trait FieldTrait
         return FieldStaticFactory::factory()->error($formModel, $attribute, $config);
     }
 
+    /**
+     * @psalm-template T
+     * @psalm-param class-string<T> $class
+     * @psalm-return T
+     */
     public static function widget(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
     {
         return FieldStaticFactory::factory()->widget($class, $formModel, $attribute, $config);

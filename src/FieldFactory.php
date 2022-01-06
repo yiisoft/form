@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Yiisoft\Form\Field\Base\PlaceholderInterface;
-use Yiisoft\Form\Field\InputText;
+use RuntimeException;
+use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Widget\WidgetFactory;
+
+use function in_array;
 
 final class FieldFactory
 {
@@ -42,6 +46,9 @@ final class FieldFactory
     // Field configurations
     //
 
+    /**
+     * @var array[]
+     */
     private array $fieldConfigs;
 
     //
@@ -98,14 +105,24 @@ final class FieldFactory
         return Error::widget($widgetConfig)->attribute($formModel, $attribute);
     }
 
+    /**
+     * @psalm-template T
+     * @psalm-param class-string<T> $class
+     * @psalm-return T
+     */
     public function widget(
         string $class,
         FormModelInterface $formModel,
         string $attribute,
         array $config = []
     ): object {
+        $traits = class_uses($class);
+        if ($traits === false) {
+            throw new RuntimeException('Invalid field class.');
+        }
+
         $supports = [];
-        if (is_subclass_of($class, PlaceholderInterface::class)) {
+        if (in_array(PlaceholderTrait::class, $traits, true)) {
             $supports[] = self::PLACEHOLDER;
         }
 
@@ -113,8 +130,13 @@ final class FieldFactory
             $this->makeFieldConfig($supports),
             $this->fieldConfigs[$class] ?? [],
             $config,
+            ['class' => $class],
         );
-        return InputText::widget($config)->attribute($formModel, $attribute);
+
+        /** @psalm-var T&AbstractField $widget */
+        $widget = WidgetFactory::createWidget($config);
+
+        return $widget->attribute($formModel, $attribute);
     }
 
     /**

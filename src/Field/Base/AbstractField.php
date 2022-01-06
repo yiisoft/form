@@ -12,6 +12,11 @@ use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
+use function in_array;
+
+/**
+ * @psalm-import-type HtmlAttributes from \Yiisoft\Html\Html
+ */
 abstract class AbstractField extends Widget
 {
     use FormAttributeTrait;
@@ -29,6 +34,9 @@ abstract class AbstractField extends Widget
     private ?string $inputIdFromTag = null;
     private bool $setInputIdAttribute = true;
 
+    /**
+     * @psalm-var HtmlAttributes
+     */
     private array $formElementTagAttributes = [];
 
     private array $labelConfig = [];
@@ -100,6 +108,9 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
+    /**
+     * @psalm-param HtmlAttributes $attributes
+     */
     final public function formElementTagAttributes(array $attributes): self
     {
         $new = clone $this;
@@ -159,15 +170,21 @@ abstract class AbstractField extends Widget
         return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
     }
 
+    /**
+     * @psalm-return HtmlAttributes
+     */
     final protected function getFormElementTagAttributes(): array
     {
         $attributes = $this->formElementTagAttributes;
 
         $this->prepareIdInFormElementTagAttributes($attributes);
 
-        if ($this instanceof PlaceholderInterface) {
+        if ($this->isUsePlaceholder()) {
+            /** @psalm-suppress UndefinedMethod */
             $this->preparePlaceholderInFormElementTagAttributes($attributes);
         }
+
+        /** @psalm-var HtmlAttributes $attributes */
 
         return $attributes;
     }
@@ -251,5 +268,11 @@ abstract class AbstractField extends Widget
         return Error::widget($this->errorConfig)
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
+    }
+
+    private function isUsePlaceholder(): bool
+    {
+        $traits = class_uses($this);
+        return in_array(PlaceholderTrait::class, $traits, true);
     }
 }

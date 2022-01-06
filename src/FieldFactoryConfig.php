@@ -34,6 +34,9 @@ final class FieldFactoryConfig
     // Field configurations
     //
 
+    /**
+     * @var array[]
+     */
     private array $fieldConfigs = [];
 
     public function containerTag(?string $tag): self
@@ -106,6 +109,9 @@ final class FieldFactoryConfig
         return $new;
     }
 
+    /**
+     * @param array[] $configs
+     */
     public function addFieldConfigs(array $configs): self
     {
         $new = clone $this;
@@ -163,6 +169,9 @@ final class FieldFactoryConfig
         return $this->usePlaceholder;
     }
 
+    /**
+     * @return array[]
+     */
     public function getFieldConfigs(): array
     {
         return $this->fieldConfigs;

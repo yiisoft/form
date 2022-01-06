@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+/**
+ * @psalm-import-type HtmlAttributes from \Yiisoft\Html\Html
+ * @psalm-require-extends AbstractField
+ */
 trait PlaceholderTrait
 {
     private ?string $placeholder = null;
@@ -23,6 +27,9 @@ trait PlaceholderTrait
         return $new;
     }
 
+    /**
+     * @psalm-param HtmlAttributes $attributes
+     */
     protected function preparePlaceholderInFormElementTagAttributes(array &$attributes): void
     {
         if (
@@ -34,5 +41,6 @@ trait PlaceholderTrait
                 $attributes['placeholder'] = $placeholder;
             }
         }
+        /** @psalm-var HtmlAttributes $attributes */
     }
 }

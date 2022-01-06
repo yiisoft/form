@@ -6,13 +6,12 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\AbstractField;
-use Yiisoft\Form\Field\Base\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
 
-final class InputText extends AbstractField implements PlaceholderInterface
+final class InputText extends AbstractField
 {
     use PlaceholderTrait;
 
