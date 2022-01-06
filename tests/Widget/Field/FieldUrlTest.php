@@ -228,7 +228,7 @@ final class FieldUrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testReadOnly(): void
+    public function testReadonly(): void
     {
         $expected = <<<HTML
         <div>

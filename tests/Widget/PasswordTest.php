@@ -11,6 +11,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Password;
 
@@ -19,7 +20,84 @@ final class PasswordTest extends TestCase
     use TestTrait;
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testAutofocus(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="typeform-string" name="TypeForm[string]" autofocus>',
+            Password::widget()->autofocus()->for(new TypeForm(), 'string')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testDisabled(): void
+    {
+        $this->assertEqualsWithoutLE(
+            '<input type="password" id="typeform-string" name="TypeForm[string]" disabled>',
+            Password::widget()->disabled()->for(new TypeForm(), 'string')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testGetValidatorMatchRegularExpression(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">',
+            Password::widget()->for(new ValidatorForm(), 'matchregular')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testGetValidatorAttributeMaxLength(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">',
+            Password::widget()->for(new ValidatorForm(), 'maxlength')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testGetValidatorAttributeMinLength(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">',
+            Password::widget()->for(new ValidatorForm(), 'minlength')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="validatorform-required" name="ValidatorForm[required]" required>',
+            Password::widget()->for(new ValidatorForm(), 'required')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testId(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="id-test" name="TypeForm[string]">',
+            Password::widget()->for(new TypeForm(), 'string')->id('id-test')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
     public function testImmutability(): void
     {
@@ -33,7 +111,7 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
     public function testMaxLength(): void
     {
@@ -44,7 +122,7 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
     public function testMinLength(): void
     {
@@ -55,42 +133,48 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
-    public function testPattern(): void
+    public function testName(): void
     {
-        $expected = <<<'HTML'
-        <input type="password" id="typeform-string" name="TypeForm[string]" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-        HTML;
-        $html = Password::widget()
-            ->for(new TypeForm(), 'string')
-            ->pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
-            ->title(
-                'Must contain at least one number and one uppercase and lowercase letter, and at ' .
-                'least 8 or more characters.'
-            )
-            ->render();
-        $this->assertSame($expected, $html);
+        $this->assertSame(
+            '<input type="password" id="typeform-string" name="name-test">',
+            Password::widget()->for(new TypeForm(), 'string')->name('name-test')->render(),
+        );
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
-    public function testPlaceholder(): void
+    public function testPattern(): void
     {
+        $expected = <<<HTML
+        <input type="password" id="typeform-string" name="TypeForm[string]" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+        HTML;
         $this->assertSame(
-            '<input type="password" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
+            $expected,
             Password::widget()
                 ->for(new TypeForm(), 'string')
-                ->placeholder('PlaceHolder Text')
+                ->pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}')
                 ->render(),
         );
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
-    public function testReadOnly(): void
+    public function testPlaceholder(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
+            Password::widget()->for(new TypeForm(), 'string')->placeholder('PlaceHolder Text')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testReadonly(): void
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" readonly>',
@@ -99,7 +183,18 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testRequired(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="typeform-string" name="TypeForm[string]" required>',
+            Password::widget()->for(new TypeForm(), 'string')->required()->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
     public function testRender(): void
     {
@@ -110,7 +205,7 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
     public function testSize(): void
     {
@@ -121,7 +216,36 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testTabIndex(): void
+    {
+        $this->assertEqualsWithoutLE(
+            '<input type="password" id="typeform-string" name="TypeForm[string]" tabindex="1">',
+            Password::widget()->for(new TypeForm(), 'string')->tabIndex(1)->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testValue(): void
+    {
+        // Value string `1234??`.
+        $this->assertSame(
+            '<input type="password" id="typeform-string" name="TypeForm[string]" value="1234??">',
+            Password::widget()->for(new TypeForm(), 'string')->value('1234??')->render(),
+        );
+
+        // Value `null`.
+        $this->assertSame(
+            '<input type="password" id="typeform-string" name="TypeForm[string]">',
+            Password::widget()->for(new TypeForm(), 'string')->value(null)->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
     public function testValueException(): void
     {
@@ -131,11 +255,12 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
      */
-    public function testValueWithFormModel(): void
+    public function testValueWithForm(): void
     {
         $formModel = new TypeForm();
+
         // Value string `1234??`.
         $formModel->setAttribute('string', '1234??');
         $this->assertSame(
@@ -148,6 +273,28 @@ final class PasswordTest extends TestCase
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]">',
             Password::widget()->for($formModel, 'string')->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testWithoutId(): void
+    {
+        $this->assertSame(
+            '<input type="password" name="TypeForm[string]">',
+            Password::widget()->for(new TypeForm(), 'string')->id(null)->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testWithoutName(): void
+    {
+        $this->assertSame(
+            '<input type="password" id="typeform-string">',
+            Password::widget()->for(new TypeForm(), 'string')->name(null)->render(),
         );
     }
 }

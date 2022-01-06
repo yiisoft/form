@@ -182,7 +182,7 @@ final class UrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testReadOnly(): void
+    public function testReadonly(): void
     {
         $this->assertSame(
             '<input type="url" id="typeform-string" name="TypeForm[string]" readonly>',

@@ -7,9 +7,14 @@ namespace Yiisoft\Form\Tests\Widget;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use StdClass;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Html\Tag\Option;
 
 final class FieldSelectTest extends TestCase
 {
@@ -42,9 +47,56 @@ final class FieldSelectTest extends TestCase
         '2' => ['label' => 'Chile'],
     ];
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testAutofocus(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]" autofocus>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->autofocus()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testDisabled(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]" disabled>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->disabled()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testGroups(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -70,9 +122,12 @@ final class FieldSelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testGroupsItemsAttributes(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -106,9 +161,34 @@ final class FieldSelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testId(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="id-test">Int</label>
+        <select id="id-test" name="TypeForm[int]">
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->id('id-test')->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testMultiple(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-array">Array</label>
         <input type="hidden" name="TypeForm[array]" value="0">
@@ -132,20 +212,16 @@ final class FieldSelectTest extends TestCase
         );
     }
 
-    public function testOptionsDataEncode(): void
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testName(): void
     {
-        // encode false.
-        $cities = [
-            '1' => '<b>Moscu</b>',
-            '2' => 'San Petersburgo',
-            '3' => 'Novosibirsk',
-            '4' => 'Ekaterinburgo',
-        ];
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
-        <select id="typeform-int" name="TypeForm[int]">
-        <option value="1"><b>Moscu</b></option>
+        <select id="typeform-int" name="name-test">
+        <option value="1">Moscu</option>
         <option value="2">San Petersburgo</option>
         <option value="3">Novosibirsk</option>
         <option value="4">Ekaterinburgo</option>
@@ -154,20 +230,23 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()
-                ->encode(false)
-                ->select(new TypeForm(), 'int', ['optionsData()' => [$cities]])
-                ->render(),
+            Field::widget()->name('name-test')->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
         );
+    }
 
-        // encode true.
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testOptionsDataWithEncode(): void
+    {
         $cities = [
             '1' => '<b>Moscu</b>',
             '2' => 'San Petersburgo',
             '3' => 'Novosibirsk',
             '4' => 'Ekaterinburgo',
         ];
-        $expected = <<<'HTML'
+
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -180,16 +259,16 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()
-                ->encode(true)
-                ->select(new TypeForm(), 'int', ['optionsData()' => [$cities]])
-                ->render(),
+            Field::widget()->encode(true)->select(new TypeForm(), 'int', ['optionsData()' => [$cities]])->render(),
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testPrompt(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -209,9 +288,66 @@ final class FieldSelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testPromptTag(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]">
+        <option value="0" selected>Select City Birth</option>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->select(
+                    new TypeForm(),
+                    'int',
+                    [
+                        'items()' => [$this->cities],
+                        'promptTag()' => [Option::tag()->content('Select City Birth')->value(0)]
+                    ],
+                )
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testRequired(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]" required>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->required()->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testRender(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -228,9 +364,12 @@ final class FieldSelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testSizeWithMultiple(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <input type="hidden" name="TypeForm[int]" value>
@@ -250,9 +389,34 @@ final class FieldSelectTest extends TestCase
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testTabIndex(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]" tabindex="1">
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->tabindex(1)->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testUnselectValueWithMultiple(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-array">Array</label>
         <input type="hidden" name="TypeForm[array]" value="0">
@@ -270,28 +434,145 @@ final class FieldSelectTest extends TestCase
                 ->select(
                     new TypeForm(),
                     'array',
-                    ['items()' => [$this->cities], 'unselectValue()' => ['0'], 'multiple()' => [true]]
+                    ['items()' => [$this->cities], 'unselectValue()' => ['0'], 'multiple()' => [true]],
                 )
                 ->render(),
         );
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testValue(): void
+    {
+        // Value int `1`.
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]">
+        <option value="1" selected>Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->value(1)->render(),
+        );
+
+        // Value int `2`.
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]">
+        <option value="1">Moscu</option>
+        <option value="2" selected>San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->value(2)->render(),
+        );
+
+        // Value iterable `[2, 3]`.
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-array">Array</label>
+        <select id="typeform-array" name="TypeForm[array]">
+        <option value="1">Moscu</option>
+        <option value="2" selected>San Petersburgo</option>
+        <option value="3" selected>Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'array', ['items()' => [$this->cities]])->value([2, 3])->render(),
+        );
+
+        // Value string `1`.
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-string">String</label>
+        <select id="typeform-string" name="TypeForm[string]">
+        <option value="1" selected>Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'string', ['items()' => [$this->cities]])->value('1')->render(),
+        );
+
+        // Value string `2`.
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-string">String</label>
+        <select id="typeform-string" name="TypeForm[string]">
+        <option value="1">Moscu</option>
+        <option value="2" selected>San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'string', ['items()' => [$this->cities]])->value('2')->render(),
+        );
+
+        // Value `null`.
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int" name="TypeForm[int]">
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->value(null)->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testValueException(): void
     {
         $formModel = new TypeForm();
+
+        // Value object `stdClass`.
         $formModel->setAttribute('object', new StdClass());
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select widget value can not be an object.');
         Field::widget()->select($formModel, 'object')->render();
     }
 
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
     public function testValueWithFormModel(): void
     {
         $formModel = new TypeForm();
 
         // Value int `1`.
         $formModel->setAttribute('int', 1);
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -309,7 +590,7 @@ final class FieldSelectTest extends TestCase
 
         // Value int `2`.
         $formModel->setAttribute('int', 2);
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -327,7 +608,7 @@ final class FieldSelectTest extends TestCase
 
         // Value iterable `[2, 3]`.
         $formModel->setAttribute('array', [2, 3]);
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-array">Array</label>
         <select id="typeform-array" name="TypeForm[array]">
@@ -345,7 +626,7 @@ final class FieldSelectTest extends TestCase
 
         // Value string `1`.
         $formModel->setAttribute('string', '1');
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-string">String</label>
         <select id="typeform-string" name="TypeForm[string]">
@@ -361,9 +642,9 @@ final class FieldSelectTest extends TestCase
             Field::widget()->select($formModel, 'string', ['items()' => [$this->cities]])->render(),
         );
 
-        // Value string `2`.
+        // Value string '2'.
         $formModel->setAttribute('string', '2');
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-string">String</label>
         <select id="typeform-string" name="TypeForm[string]">
@@ -379,9 +660,9 @@ final class FieldSelectTest extends TestCase
             Field::widget()->select($formModel, 'string', ['items()' => [$this->cities]])->render(),
         );
 
-        // Value `null`
+        // Value `null`.
         $formModel->setAttribute('int', null);
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <label for="typeform-int">Int</label>
         <select id="typeform-int" name="TypeForm[int]">
@@ -395,6 +676,50 @@ final class FieldSelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->select($formModel, 'int', ['items()' => [$this->cities]])->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testWithoutId(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label>Int</label>
+        <select name="TypeForm[int]">
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->id(null)->render(),
+        );
+    }
+
+    /**
+     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     */
+    public function testWithoutName(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-int">Int</label>
+        <select id="typeform-int">
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->name(null)->render(),
         );
     }
 }

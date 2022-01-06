@@ -575,11 +575,6 @@ final class Field extends FieldAttributes
             $new->widget = $new->widget->class($new->inputClass);
         }
 
-        // Set label settings for the radio and checkbox fields.
-        if ($new->widget instanceof Radio || $new->widget instanceof Checkbox) {
-            $new->widget = $new->widget->label($new->getLabel())->labelAttributes($new->getLabelAttributes());
-        }
-
         // Set placeholder.
         $new->placeholder ??= $new->widget->getAttributePlaceHolder();
 

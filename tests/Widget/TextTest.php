@@ -194,7 +194,7 @@ final class TextTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testReadOnly(): void
+    public function testReadonly(): void
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" readonly>',

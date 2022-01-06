@@ -157,7 +157,7 @@ final class TextAreaTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testReadOnly(): void
+    public function testReadonly(): void
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" readonly></textarea>',
