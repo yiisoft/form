@@ -11,7 +11,12 @@ use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
+use Yiisoft\Validator\ValidatorInterface;
+
+use function str_repeat;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
@@ -36,15 +41,6 @@ final class FormModelTest extends TestCase
     {
         $form = new DefaultFormNameForm();
         $this->assertSame('DefaultFormNameForm', $form->getFormName());
-    }
-
-    public function testsFormErrorsException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Form errors class must implement Yiisoft\Form\FormErrorsInterface');
-        $form = new class () extends FormModel {
-            protected string $formErrorsClass = \stdClass::class;
-        };
     }
 
     public function testGetAttributeHint(): void
@@ -259,7 +255,22 @@ final class FormModelTest extends TestCase
         $this->assertSame(1, $form->getAttributeValue('int'));
     }
 
-    public function testUnknownPropertyType(): void
+    public function testAttributeNames(): void
+    {
+        $form = new LoginForm();
+        $this->assertSame(['login', 'password', 'rememberMe'], $form->attributes());
+
+        $nestedForm = new FormWithNestedAttribute();
+        $this->assertSame(['id', 'user'], $nestedForm->attributes());
+
+        $typeForm = new TypeForm();
+        $this->assertSame(
+            ['array', 'bool', 'float', 'int', 'number', 'object', 'string', 'toCamelCase', 'toDate', 'toNull'],
+            $typeForm->attributes(),
+        );
+    }
+
+    private function createValidatorMock(): ValidatorInterface
     {
         $form = new class () extends FormModel {
             private $property;

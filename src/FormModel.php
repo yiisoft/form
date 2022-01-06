@@ -25,7 +25,7 @@ use function strpos;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
-    protected string $formErrorsClass = FormErrors::class;
+    private string $formErrorsClass = FormErrors::class;
     private array $attributes;
     /** @psalm-var array<string, array<array-key, string>> */
     private array $attributesErrors = [];
@@ -37,6 +37,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $this->attributes = $this->collectAttributes();
         $this->formErrors = $this->createFormErrors($this->formErrorsClass);
+    }
+
+    public function attributes(): array
+    {
+        return array_keys($this->attributes);
     }
 
     public function getAttributeHint(string $attribute): string
