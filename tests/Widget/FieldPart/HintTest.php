@@ -30,7 +30,7 @@ final class HintTest extends TestCase
                 ->encode(false)
                 ->hint('Write&nbsp;your&nbsp;text.')
                 ->render(),
-            );
+        );
     }
 
     /**

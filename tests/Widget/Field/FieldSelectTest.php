@@ -11,7 +11,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
 
-
 final class FieldSelectTest extends TestCase
 {
     use TestTrait;

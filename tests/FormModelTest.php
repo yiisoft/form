@@ -13,10 +13,7 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Validator\ValidatorInterface;
-
-use function str_repeat;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 

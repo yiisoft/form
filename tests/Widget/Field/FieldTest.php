@@ -9,20 +9,18 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
-use Yiisoft\Form\Tests\TestSupport\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeWithHintForm;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Html\Html;
-use Yiisoft\Html\Tag\Span;
 
 final class FieldTest extends TestCase
 {
     use TestTrait;
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testAttributes(): void
     {
@@ -39,7 +37,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testButtonsIndividualAttributes(): void
     {
@@ -61,7 +59,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testContainerAttributes(): void
     {
@@ -78,7 +76,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testContainerId(): void
     {
@@ -95,7 +93,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testContainerName(): void
     {
@@ -112,7 +110,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testHintAttributes(): void
     {
@@ -134,7 +132,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testHint(): void
     {
@@ -152,7 +150,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testHintTag(): void
     {
@@ -170,7 +168,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testHintWithClass(): void
     {
@@ -188,7 +186,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testLabel(): void
     {
@@ -205,7 +203,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testLabelFor(): void
     {
@@ -222,7 +220,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testLabelWithLabelClass(): void
     {
@@ -239,7 +237,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testWithoutContainer(): void
     {
@@ -254,7 +252,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testWithoutHint(): void
     {
@@ -271,7 +269,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testWithoutLabel(): void
     {
@@ -287,7 +285,7 @@ final class FieldTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testWithoutLabelFor(): void
     {

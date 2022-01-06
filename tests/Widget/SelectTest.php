@@ -249,7 +249,7 @@ final class SelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Select::widget()->for(new TypeForm, 'int')->items($this->cities)->multiple()->size(3)->render(),
+            Select::widget()->for(new TypeForm(), 'int')->items($this->cities)->multiple()->size(3)->render(),
         );
     }
 

@@ -14,8 +14,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Text;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class TextTest extends TestCase
 {
@@ -140,7 +138,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" maxlength="10">',
-            Text::widget()->for(new TypeForm, 'string')->maxlength(10)->render(),
+            Text::widget()->for(new TypeForm(), 'string')->maxlength(10)->render(),
         );
     }
 
@@ -151,7 +149,7 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" minlength="4">',
-            Text::widget()->for(new TypeForm, 'string')->minlength(4)->render(),
+            Text::widget()->for(new TypeForm(), 'string')->minlength(4)->render(),
         );
     }
 

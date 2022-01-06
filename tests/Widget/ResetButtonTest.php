@@ -8,8 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ResetButton;
 use Yiisoft\Html\Html;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class ResetButtonTest extends TestCase
 {
