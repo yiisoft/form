@@ -59,7 +59,6 @@ final class FieldImageTest extends TestCase
         $this->assertEqualsWithoutLE($expected, Field::widget()->disabled()->image()->render());
     }
 
-
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */

@@ -189,7 +189,6 @@ final class FieldDateTest extends TestCase
         );
     }
 
-
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */

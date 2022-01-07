@@ -119,7 +119,7 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="name-test[]">',
-           File::widget()->for(new TypeForm(), 'array')->name('name-test')->render(),
+            File::widget()->for(new TypeForm(), 'array')->name('name-test')->render(),
         );
     }
 
