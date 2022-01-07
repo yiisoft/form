@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Widget;
+namespace Yiisoft\Form\Tests\Widget\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -12,6 +12,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Html\Tag\Option;
@@ -88,6 +89,28 @@ final class FieldSelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->disabled()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="validatorform-required">Required</label>
+        <select id="validatorform-required" name="ValidatorForm[required]" required>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->select(new ValidatorForm(), 'required', ['items()' => [$this->cities]])->render(),
         );
     }
 

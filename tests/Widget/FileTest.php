@@ -10,6 +10,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\File;
 
@@ -31,6 +32,39 @@ final class FileTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testAutofocus(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="typeform-array" name="TypeForm[array][]" autofocus>',
+            File::widget()->for(new TypeForm(), 'array')->autofocus()->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testDisabled(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="typeform-array" name="TypeForm[array][]" disabled>',
+            File::widget()->for(new TypeForm(), 'array')->disabled()->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="validatorform-required" name="ValidatorForm[required][]" required>',
+            File::widget()->for(new ValidatorForm(), 'required')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'
@@ -42,6 +76,17 @@ final class FileTest extends TestCase
             ->uncheckValue('0')
             ->render();
         $this->assertSame($expected, $html);
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testId(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="id-test" name="TypeForm[array][]">',
+            File::widget()->for(new TypeForm(), 'array')->id('id-test')->render(),
+        );
     }
 
     /**
@@ -70,11 +115,44 @@ final class FileTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testName(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="typeform-array" name="name-test[]">',
+           File::widget()->for(new TypeForm(), 'array')->name('name-test')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testRequired(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="typeform-array" name="TypeForm[array][]" required>',
+            File::widget()->for(new TypeForm(), 'array')->required()->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testRender(): void
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]">',
             File::widget()->for(new TypeForm(), 'array')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testTabIndex(): void
+    {
+        $this->assertEqualsWithoutLE(
+            '<input type="file" id="typeform-array" name="TypeForm[array][]" tabindex="1">',
+            File::widget()->for(new TypeForm(), 'array')->tabIndex(1)->render(),
         );
     }
 
@@ -88,5 +166,27 @@ final class FileTest extends TestCase
         HTML;
         $html = File::widget()->for(new TypeForm(), 'array')->uncheckValue('0')->render();
         $this->assertSame($expected, $html);
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testWithoutId(): void
+    {
+        $this->assertSame(
+            '<input type="file" name="TypeForm[array][]">',
+            File::widget()->for(new TypeForm(), 'array')->id(null)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testWithoutName(): void
+    {
+        $this->assertSame(
+            '<input type="file" id="typeform-array" name="TypeForm[array][]">',
+            File::widget()->for(new TypeForm(), 'array')->name(null)->render(),
+        );
     }
 }

@@ -12,6 +12,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Select;
 use Yiisoft\Html\Tag\Option;
@@ -79,6 +80,25 @@ final class SelectTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Select::widget()->disabled()->for(new TypeForm(), 'int')->items($this->cities)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $expected = <<<HTML
+        <select id="validatorform-required" name="ValidatorForm[required]" required>
+        <option value="1">Moscu</option>
+        <option value="2">San Petersburgo</option>
+        <option value="3">Novosibirsk</option>
+        <option value="4">Ekaterinburgo</option>
+        </select>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()->for(new validatorForm(), 'required')->items($this->cities)->required()->render(),
         );
     }
 

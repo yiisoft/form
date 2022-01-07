@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
+use Yiisoft\Form\Widget\Validator\FieldValidator;
+
 abstract class ChoiceAttributes extends WidgetAttributes
 {
     /**
@@ -37,7 +39,14 @@ abstract class ChoiceAttributes extends WidgetAttributes
             $attributes['name'] = $this->getInputName();
         }
 
-        return $attributes;
+        $fieldValidator = new FieldValidator();
+
+        return $fieldValidator->getValidatorAttributes(
+            $this,
+            $this->getFormModel(),
+            $this->getAttribute(),
+            $attributes,
+        );
     }
 
     /**

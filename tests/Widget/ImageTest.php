@@ -32,6 +32,41 @@ final class ImageTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testAutofocus(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image" name="w1-image" autofocus>',
+            Image::widget()->autofocus()->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testDisabled(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image" name="w1-image" disabled>',
+            Image::widget()->disabled()->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testId(): void
+    {
+        $this->assertSame(
+            '<input type="image" id="id-test" name="w2-image">',
+            Image::widget()->id('id-test')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $image = Image::widget();
@@ -56,12 +91,43 @@ final class ImageTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testName(): void
+    {
+        $this->assertSame(
+            '<input type="image" id="w2-image" name="name-test">',
+            Image::widget()->name('name-test')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testRender(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame('<input type="image" id="w1-image" name="w1-image">', Image::widget()->render());
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testSrc(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" src="img_submit.gif">',
             Image::widget()->src('img_submit.gif')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testTabIndex(): void
+    {
+        $this->assertEqualsWithoutLE(
+            '<input type="image" id="w2-image" name="w2-image" tabindex="1">',
+            Image::widget()->tabIndex(1)->render(),
         );
     }
 
@@ -80,9 +146,24 @@ final class ImageTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testRender(): void
+    public function testWithoutId(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-        $this->assertSame('<input type="image" id="w1-image" name="w1-image">', Image::widget()->render());
+        $this->assertSame(
+            '<input type="image" name="w1-image">',
+            Image::widget()->id(null)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testWithoutName(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image">',
+            Image::widget()->name(null)->render(),
+        );
     }
 }

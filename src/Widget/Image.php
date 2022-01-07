@@ -16,10 +16,8 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image
  */
-final class Image extends Widget
+final class Image extends GlobalAttributes
 {
-    use GlobalAttributes;
-
     /**
      * Provides a textual label for an alternative button for users and UAs who cannot use the image specified by the
      * src attribute.

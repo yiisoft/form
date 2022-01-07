@@ -11,6 +11,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Checkbox;
 
@@ -29,6 +30,20 @@ final class CheckboxTest extends TestCase
         $this->assertSame(
             $expected,
             Checkbox::widget()->autofocus()->for(new TypeForm(), 'bool')->value(true)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testChecked(): void
+    {
+        $expected = <<<HTML
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
+        HTML;
+        $this->assertSame(
+            $expected,
+            Checkbox::widget()->checked()->for(new TypeForm(), 'bool')->value(true)->render(),
         );
     }
 
@@ -57,6 +72,20 @@ final class CheckboxTest extends TestCase
         $this->assertSame(
             $expected,
             Checkbox::widget()->for(new TypeForm(), 'bool')->enclosedByLabel(false)->value(true)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $expected = <<<HTML
+        <input type="hidden" name="ValidatorForm[required]" value="0"><label><input type="checkbox" id="validatorform-required" name="ValidatorForm[required]" required> Required</label>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Checkbox::widget()->for(new ValidatorForm(), 'required')->render(),
         );
     }
 

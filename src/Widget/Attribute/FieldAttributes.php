@@ -9,12 +9,10 @@ abstract class FieldAttributes extends WidgetAttributes
     private bool $ariaDescribedBy = false;
     /** @psalm-var array[][] */
     private array $buttonsIndividualAttributes = [];
-
     private bool $container = true;
     private array $containerAttributes = [];
     private string $containerClass = '';
     private array $containerIndividualClass = [];
-
     private ?string $error = '';
     private array $errorAttributes = [];
     private string $errorClass = '';
@@ -22,24 +20,20 @@ abstract class FieldAttributes extends WidgetAttributes
     private array $errorIndividualClass = [];
     private array $errorMessageCallback = [];
     private string $errorTag = 'div';
-
     private ?string $hint = '';
     private array $hintAttributes = [];
     private string $hintClass = '';
     /** @psalm-var string[] */
     protected array $hintIndividualClass = [];
     private string $hintTag = 'div';
-
     protected string $id = '';
     protected string $inputClass = '';
     protected array $inputsClass = [];
-
     private ?string $label = '';
     private array $labelAttributes = [];
     private string $labelClass = '';
     /** @psalm-var string[] */
     private array $labelIndividualClass = [];
-
     protected string $invalidClass = '';
     /** @psalm-var array<string, string> */
     protected array $invalidsClass = [];

@@ -98,6 +98,17 @@ final class TextAreaTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $this->assertSame(
+            '<textarea id="validatorform-required" name="ValidatorForm[required]" required></textarea>',
+            TextArea::widget()->for(new ValidatorForm(), 'required')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $textArea = TextArea::widget();

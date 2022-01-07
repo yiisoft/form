@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
+use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\HasLengthInterface;
 use Yiisoft\Form\Widget\Validator\MatchRegularInterface;
 use Yiisoft\Html\Tag\Input;
@@ -16,7 +17,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email
  */
-final class Email extends InputAttributes implements HasLengthInterface, MatchRegularInterface
+final class Email extends InputAttributes implements HasLengthInterface, MatchRegularInterface, PlaceholderInterface
 {
     public function maxlength(int $value): self
     {

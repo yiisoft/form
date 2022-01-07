@@ -13,6 +13,7 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Attribute\ButtonAttributes;
 use Yiisoft\Form\Widget\Attribute\FieldAttributes;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Attribute\WidgetAttributes;
 use Yiisoft\Form\Widget\FieldPart\Error;
@@ -20,7 +21,6 @@ use Yiisoft\Form\Widget\FieldPart\Hint;
 use Yiisoft\Form\Widget\FieldPart\Label;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Div;
-use Yiisoft\Widget\Widget;
 
 use function strtr;
 
@@ -33,8 +33,8 @@ final class Field extends FieldAttributes
 {
     /** @psalm-var ButtonAttributes[] */
     private array $buttons = [];
-    private array $containerAttributes = [];
-    private WidgetAttributes $widget;
+    private WidgetAttributes $inputWidget;
+    private GlobalAttributes $widget;
 
     /**
      * Renders a checkbox.
@@ -67,7 +67,7 @@ final class Field extends FieldAttributes
             $new->parts['{label}'] = '';
         }
 
-        $new->widget = Checkbox::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Checkbox::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -106,7 +106,7 @@ final class Field extends FieldAttributes
     public function checkboxList(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = CheckboxList::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = CheckboxList::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -124,7 +124,7 @@ final class Field extends FieldAttributes
     public function date(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Date::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Date::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -142,7 +142,7 @@ final class Field extends FieldAttributes
     public function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = DateTime::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = DateTime::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -160,7 +160,7 @@ final class Field extends FieldAttributes
     public function dateTimeLocal(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = DateTimeLocal::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = DateTimeLocal::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -178,7 +178,7 @@ final class Field extends FieldAttributes
     public function email(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Email::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Email::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -202,7 +202,7 @@ final class Field extends FieldAttributes
     public function file(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = File::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = File::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -223,7 +223,7 @@ final class Field extends FieldAttributes
         $new->parts['{label}'] = '';
         $new->parts['{hint}'] = '';
         $new->parts['{error}'] = '';
-        $new->widget = Hidden::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Hidden::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -243,8 +243,6 @@ final class Field extends FieldAttributes
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
      * @return static the field object itself.
-     *
-     * @psalm-suppress InvalidPropertyAssignmentValue
      */
     public function image(array $config = [], array $attributes = []): self
     {
@@ -270,7 +268,7 @@ final class Field extends FieldAttributes
     public function number(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Number::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Number::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -288,7 +286,7 @@ final class Field extends FieldAttributes
     public function password(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Password::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Password::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -321,7 +319,7 @@ final class Field extends FieldAttributes
             $new->parts['{label}'] = '';
         }
 
-        $new->widget = Radio::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Radio::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -357,7 +355,7 @@ final class Field extends FieldAttributes
     public function radioList(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = RadioList::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = RadioList::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -380,7 +378,7 @@ final class Field extends FieldAttributes
     public function range(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Range::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Range::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -425,7 +423,7 @@ final class Field extends FieldAttributes
     public function select(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Select::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Select::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -460,7 +458,7 @@ final class Field extends FieldAttributes
     public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Telephone::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Telephone::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -478,7 +476,7 @@ final class Field extends FieldAttributes
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Text::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Text::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -496,7 +494,7 @@ final class Field extends FieldAttributes
     public function textArea(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = TextArea::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = TextArea::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -514,7 +512,7 @@ final class Field extends FieldAttributes
     public function url(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
         $new = clone $this;
-        $new->widget = Url::widget($config)->for($formModel, $attribute);
+        $new->inputWidget = Url::widget($config)->for($formModel, $attribute);
         return $new;
     }
 
@@ -545,8 +543,12 @@ final class Field extends FieldAttributes
             $div = $div->attributes($this->getContainerAttributes());
         }
 
+        if (!empty($this->inputWidget)) {
+            $content .= $this->renderInputWidget();
+        }
+
         if (!empty($this->widget)) {
-            $content .= $this->renderField();
+            $content .= $this->widget->attributes($this->attributes)->render();
         }
 
         $renderButtons = $this->renderButtons();
@@ -563,31 +565,34 @@ final class Field extends FieldAttributes
         $new = clone $this;
 
         // Set ariadescribedby.
-        if ($new->getAriaDescribedBy() === true && $new->widget instanceof InputAttributes) {
-            $new->widget = $new->widget->ariaDescribedBy($new->widget->getAttribute() . 'Help');
+        if ($new->getAriaDescribedBy() === true && $new->inputWidget instanceof InputAttributes) {
+            $new->inputWidget = $new->inputWidget->ariaDescribedBy($new->inputWidget->getAttribute() . 'Help');
         }
 
         // Set encode.
-        $new->widget = $new->widget->encode($new->getEncode());
+        $new->inputWidget = $new->inputWidget->encode($new->getEncode());
 
         // Set input class.
         if ($new->inputClass !== '') {
-            $new->widget = $new->widget->class($new->inputClass);
+            $new->inputWidget = $new->inputWidget->class($new->inputClass);
         }
 
         // Set placeholder.
-        $new->placeholder ??= $new->widget->getAttributePlaceHolder();
+        $new->placeholder ??= $new->inputWidget->getAttributePlaceHolder();
 
-        if ($new->widget instanceof PlaceholderInterface && $new->placeholder !== '') {
-            $new->widget = $new->widget->attributes(['placeholder' => $new->placeholder]);
+        if ($new->inputWidget instanceof PlaceholderInterface && $new->placeholder !== '') {
+            $new->inputWidget = $new->inputWidget->attributes(['placeholder' => $new->placeholder]);
         }
 
         // Set valid class and invalid class.
-        if ($new->invalidClass !== '' && $new->widget->hasError()) {
-            $new->widget = $new->widget->class($new->invalidClass);
-        } elseif ($new->validClass !== '' && $new->widget->isValidated()) {
-            $new->widget = $new->widget->class($new->validClass);
+        if ($new->invalidClass !== '' && $new->inputWidget->hasError()) {
+            $new->inputWidget = $new->inputWidget->class($new->invalidClass);
+        } elseif ($new->validClass !== '' && $new->inputWidget->isValidated()) {
+            $new->inputWidget = $new->inputWidget->class($new->validClass);
         }
+
+        // Set attributes.
+        $new->inputWidget = $new->inputWidget->attributes($this->attributes);
 
         return $new;
     }
@@ -625,7 +630,7 @@ final class Field extends FieldAttributes
         return Error::widget()
             ->attributes($errorAttributes)
             ->encode($this->getEncode())
-            ->for($this->widget->getFormModel(), $this->widget->getAttribute())
+            ->for($this->inputWidget->getFormModel(), $this->inputWidget->getAttribute())
             ->message($this->getError() ?? '')
             ->messageCallback($this->getErrorMessageCallback())
             ->tag($this->getErrorTag())
@@ -635,15 +640,14 @@ final class Field extends FieldAttributes
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    private function renderField(): string
+    private function renderInputWidget(): string
     {
         $new = clone $this;
 
         $new = $new->buildField();
-        $new->widget = $new->widget->attributes($this->attributes);
 
         if (!array_key_exists('{input}', $new->parts)) {
-            $new->parts['{input}'] = $new->widget->render();
+            $new->parts['{input}'] = $new->inputWidget->render();
         }
 
         if (!array_key_exists('{error}', $new->parts)) {
@@ -674,13 +678,13 @@ final class Field extends FieldAttributes
         }
 
         if ($this->getAriaDescribedBy() === true) {
-            $hintAttributes['id'] = $this->widget->getInputId();
+            $hintAttributes['id'] = $this->inputWidget->getInputId();
         }
 
         return Hint::widget()
             ->attributes($hintAttributes)
             ->encode($this->getEncode())
-            ->for($this->widget->getFormModel(), $this->widget->getAttribute())
+            ->for($this->inputWidget->getFormModel(), $this->inputWidget->getAttribute())
             ->hint($this->getHint())
             ->tag($this->getHintTag())
             ->render();
@@ -696,7 +700,7 @@ final class Field extends FieldAttributes
 
         if (!array_key_exists('for', $labelAttributes)) {
             /** @var string */
-            $labelAttributes['for'] = ArrayHelper::getValue($this->attributes, 'id', $this->widget->getInputId());
+            $labelAttributes['for'] = ArrayHelper::getValue($this->attributes, 'id', $this->inputWidget->getInputId());
         }
 
         if ($labelClass !== '') {
@@ -706,7 +710,7 @@ final class Field extends FieldAttributes
         return Label::widget()
             ->attributes($labelAttributes)
             ->encode($this->getEncode())
-            ->for($this->widget->getFormModel(), $this->widget->getAttribute())
+            ->for($this->inputWidget->getFormModel(), $this->inputWidget->getAttribute())
             ->label($this->getLabel())
             ->render();
     }

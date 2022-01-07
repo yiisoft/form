@@ -16,6 +16,7 @@ final class ValidatorForm extends FormModel
     private ?string $login = '';
     private ?string $password = '';
     private int $number = 0;
+    private int $numberRequired = 0;
     private string $matchregular = '';
     private string $maxlength = '';
     private string $minlength = '';
@@ -29,6 +30,7 @@ final class ValidatorForm extends FormModel
             'maxlength' => [HasLength::rule()->max(50)],
             'minlength' => [HasLength::rule()->min(15)],
             'number' => [Number::rule()->min(3)->max(5)],
+            'numberRequired' => [Required::rule()],
             'required' => [Required::rule()],
             'url' => [Url::rule()],
         ];

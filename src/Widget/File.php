@@ -90,18 +90,9 @@ final class File extends InputAttributes
      */
     protected function run(): string
     {
-        $attributes = $this->attributes;
-        $name = '';
-
-        if (!array_key_exists('id', $attributes)) {
-            $attributes['id'] = $this->getInputId();
-        }
-
-        if (!array_key_exists('name', $attributes)) {
-            /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file.attrs.name */
-            $name = $this->getInputName();
-        }
-
+        $attributes = $this->build($this->attributes);
+        /** @var string */
+        $name = $attributes['name'] ?? $this->getInputName();
         $hiddenInput = '';
 
         /**

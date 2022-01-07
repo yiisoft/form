@@ -44,7 +44,7 @@ final class PasswordTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorMatchRegularExpression(): void
+    public function testGetValidatorAttributeMatchRegularExpression(): void
     {
         $this->assertSame(
             '<input type="password" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">',

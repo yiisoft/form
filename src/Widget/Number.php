@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
+use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\NumberInterface;
 use Yiisoft\Html\Tag\Input;
 
@@ -15,7 +16,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends InputAttributes implements NumberInterface
+final class Number extends InputAttributes implements NumberInterface, PlaceholderInterface
 {
     public function max(int $value): self
     {
@@ -31,15 +32,6 @@ final class Number extends InputAttributes implements NumberInterface
         return $new;
     }
 
-    /**
-     * It allows defining placeholder.
-     *
-     * @param string $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.placeholder
-     */
     public function placeholder(string $value): self
     {
         $new = clone $this;

@@ -27,7 +27,9 @@ final class ErrorSummary extends Widget
     private bool $encode = true;
     private FormModelInterface $formModel;
     private string $footer = '';
+    private array $footerAttributes = [];
     private string $header = '';
+    private array $headerAttributes = [];
     private bool $showAllErrors = false;
     /** @psalm-param non-empty-string */
     private string $tag = 'div';
@@ -77,6 +79,22 @@ final class ErrorSummary extends Widget
     }
 
     /**
+     * Set footer attributes for the error summary.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function footerAttributes(array $values): self
+    {
+        $new = clone $this;
+        $new->footerAttributes = $values;
+        return $new;
+    }
+
+    /**
      * Set the header text for the error summary
      *
      * @param string $value
@@ -87,6 +105,22 @@ final class ErrorSummary extends Widget
     {
         $new = clone $this;
         $new->header = $value;
+        return $new;
+    }
+
+    /**
+     * Set header attributes for the error summary.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function headerAttributes(array $values): self
+    {
+        $new = clone $this;
+        $new->headerAttributes = $values;
         return $new;
     }
 
@@ -141,12 +175,11 @@ final class ErrorSummary extends Widget
      */
     private function collectErrors(): array
     {
-        $new = clone $this;
-        $errors = HtmlFormErrors::getErrorSummaryFirstErrors($new->formModel);
+        $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
         $errorMessages = [];
 
-        if ($new->showAllErrors) {
-            $errors = HtmlFormErrors::getErrorSummary($new->formModel);
+        if ($this->showAllErrors) {
+            $errors = HtmlFormErrors::getErrorSummary($this->formModel);
         }
 
         /**
@@ -155,7 +188,7 @@ final class ErrorSummary extends Widget
          */
         $lines = array_values(array_unique($errors));
 
-        if ($new->encode) {
+        if ($this->encode) {
             /** @var string $line */
             foreach ($lines as $line) {
                 if (!empty($line)) {
@@ -182,9 +215,9 @@ final class ErrorSummary extends Widget
         }
 
         if ($this->header === '') {
-            $content .= P::tag()->content('Please fix the following errors:')->render() . PHP_EOL;
+            $content .= P::tag()->attributes($this->headerAttributes)->content('Please fix the following errors:')->render() . PHP_EOL;
         } else {
-            $content .= $this->header . PHP_EOL;
+            $content .=  P::tag()->attributes($this->headerAttributes)->content($this->header)->render() . PHP_EOL;
         }
 
         /** @var array<string, string> */
@@ -192,7 +225,7 @@ final class ErrorSummary extends Widget
         $content .= Ul::tag()->strings($lines)->render();
 
         if ($this->footer !== '') {
-            $content .= PHP_EOL . $this->footer;
+            $content .= PHP_EOL . P::tag()->attributes($this->footerAttributes)->content($this->footer)->render();
         }
 
         return $lines !== []

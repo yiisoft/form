@@ -6,11 +6,13 @@ namespace Yiisoft\Form\Tests\Widget;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ErrorSummary;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorSummaryTest extends TestCase
 {
@@ -19,41 +21,57 @@ final class ErrorSummaryTest extends TestCase
     public function dataProviderErrorSummary(): array
     {
         return [
-            [
-                'Jack Ryan',
-                'jack@example.com',
-                'A258*fgh',
-                [],
-                '',
-                '',
-                true,
-                '<div style="display:none"><p>Please fix the following errors:</p><ul></ul></div>',
-            ],
-            [
-                'Jack Ryan',
-                'jack@example.com',
-                'A258*fgh',
-                ['style' => 'color: red'],
-                'Custom header',
-                'Custom footer',
-                false,
-                '<div style="color: red; display:none">Custom header<ul></ul>Custom footer</div>',
-            ],
+            // Default settings.
             [
                 'jac',
                 'jack@.com',
                 'A258*f',
                 [],
                 '',
+                ['class' => 'text-danger'],
                 '',
+                [],
                 true,
-                '<div><p>Please fix the following errors:</p><ul><li>Is too short.</li>' . "\n" .
-                '<li>This value is not a valid email address.</li>' . "\n" .
-                '<li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li></ul></div>',
+                <<<HTML
+                <div>
+                <p class="text-danger">Please fix the following errors:</p>
+                <ul>
+                <li>Is too short.</li>
+                <li>This value is not a valid email address.</li>
+                <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
+                </ul>
+                </div>
+                HTML,
+            ],
+            // Set custom header and custom footer.
+            [
+                'jac',
+                'jack@.com',
+                'A258*f',
+                [],
+                'Custom header',
+                ['class' => 'text-danger'],
+                'Custom footer',
+                ['class' => 'text-primary'],
+                true,
+                <<<HTML
+                <div>
+                <p class="text-danger">Custom header</p>
+                <ul>
+                <li>Is too short.</li>
+                <li>This value is not a valid email address.</li>
+                <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
+                </ul>
+                <p class="text-primary">Custom footer</p>
+                </div>
+                HTML,
             ],
         ];
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $errorSummary = ErrorSummary::widget();
@@ -61,7 +79,7 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($errorSummary, $errorSummary->encode(false));
         $this->assertNotSame($errorSummary, $errorSummary->footer(''));
         $this->assertNotSame($errorSummary, $errorSummary->header(''));
-        $this->assertNotSame($errorSummary, $errorSummary->model($this->formModel));
+        $this->assertNotSame($errorSummary, $errorSummary->model(new PersonalForm()));
         $this->assertNotSame($errorSummary, $errorSummary->showAllErrors(false));
         $this->assertNotSame($errorSummary, $errorSummary->tag('div'));
     }
@@ -74,9 +92,13 @@ final class ErrorSummaryTest extends TestCase
      * @param string $password
      * @param array $attributes
      * @param string $header
+     * @param array $headerAttributes
      * @param string $footer
-     * @param string $showAllErrors
+     * @param array $footerAttributes
+     * @param bool $showAllErrors
      * @param string $expected
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testErrorSummary(
         string $name,
@@ -84,10 +106,14 @@ final class ErrorSummaryTest extends TestCase
         string $password,
         array $attributes,
         string $header,
+        array $headerAttributes,
         string $footer,
+        array $footerAttributes,
         bool $showAllErrors,
         string $expected
     ): void {
+        $formModel = new PersonalForm();
+
         $record = [
             'PersonalForm' => [
                 'name' => $name,
@@ -96,15 +122,17 @@ final class ErrorSummaryTest extends TestCase
             ],
         ];
 
-        $this->formModel->load($record);
+        $formModel->load($record);
 
         $validator = $this->createValidatorMock();
-        $validator->validate($this->formModel);
+        $validator->validate($formModel);
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->model($this->formModel)
+            ->model($formModel)
             ->footer($footer)
+            ->footerAttributes($footerAttributes)
+            ->headerAttributes($headerAttributes)
             ->showAllErrors($showAllErrors);
 
         $errorSummary = $header !== '' ? $errorSummary->header($header) : $errorSummary;
@@ -112,17 +140,13 @@ final class ErrorSummaryTest extends TestCase
         $this->assertEqualsWithoutLE($expected, $errorSummary->render());
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testTagException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
         ErrorSummary::widget()->tag('')->render();
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
-        $this->createFormModel(PersonalForm::class);
     }
 }

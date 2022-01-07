@@ -6,8 +6,9 @@ namespace Yiisoft\Form\Widget\Attribute;
 
 use Stringable;
 use Yiisoft\Html\Html;
+use Yiisoft\Widget\Widget;
 
-trait GlobalAttributes
+abstract class GlobalAttributes extends Widget
 {
     protected array $attributes = [];
 

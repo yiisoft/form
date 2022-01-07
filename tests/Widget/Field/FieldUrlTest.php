@@ -73,7 +73,7 @@ final class FieldUrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorMatchRegularExpression(): void
+    public function testGetValidatorAttributeMatchRegularExpression(): void
     {
         $expected = <<<HTML
         <div>

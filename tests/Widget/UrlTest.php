@@ -44,7 +44,7 @@ final class UrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorMatchRegularExpression(): void
+    public function testGetValidatorAttributeMatchRegularExpression(): void
     {
         $this->assertSame(
             '<input type="url" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">',
@@ -77,17 +77,6 @@ final class UrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testId(): void
-    {
-        $this->assertSame(
-            '<input type="url" id="id-test" name="TypeForm[string]">',
-            Url::widget()->for(new TypeForm(), 'string')->id('id-test')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testGetValidatorAttributeRequired(): void
     {
         $this->assertSame(
@@ -105,6 +94,17 @@ final class UrlTest extends TestCase
         <input type="url" id="validatorform-url" name="ValidatorForm[url]" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
         HTML;
         $this->assertSame($expected, Url::widget()->for(new ValidatorForm(), 'url')->render());
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testId(): void
+    {
+        $this->assertSame(
+            '<input type="url" id="id-test" name="TypeForm[string]">',
+            Url::widget()->for(new TypeForm(), 'string')->id('id-test')->render(),
+        );
     }
 
     /**

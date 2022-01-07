@@ -7,10 +7,8 @@ namespace Yiisoft\Form\Widget\Attribute;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
-abstract class ButtonAttributes extends Widget
+abstract class ButtonAttributes extends GlobalAttributes
 {
-    use GlobalAttributes;
-
     /**
      * Set whether the element is disabled or not.
      *

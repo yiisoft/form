@@ -11,6 +11,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
 
@@ -51,6 +52,22 @@ final class FieldRadioTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->autofocus()->radio(new TypeForm(), 'int')->value(1)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testChecked(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label><input type="radio" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->radio(new TypeForm(), 'int', ['checked()' => []])->value(1)->render(),
         );
     }
 
@@ -162,6 +179,22 @@ final class FieldRadioTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->radio(new TypeForm(), 'bool', ['label()' => ['test-text-label']])->value(true)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label><input type="radio" id="validatorform-required" name="ValidatorForm[required]" required> Required</label>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->radio(new ValidatorForm(), 'required')->render(),
         );
     }
 

@@ -53,7 +53,7 @@ final class FieldPasswordTest extends TestCase
         );
     }
 
-    public function testGetValidatorMatchRegularExpression(): void
+    public function testGetValidatorAttributeMatchRegularExpression(): void
     {
         $expected = <<<HTML
         <div>

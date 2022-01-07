@@ -26,7 +26,6 @@ final class RangeTest extends TestCase
     public function testAutofocus(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" autofocus oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -40,7 +39,6 @@ final class RangeTest extends TestCase
     public function testDisabled(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" disabled oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -54,7 +52,6 @@ final class RangeTest extends TestCase
     public function testGetValidatorAttributeNumber(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="validatorform-number" name="ValidatorForm[number]" value="0" max="5" min="3" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="ValidatorForm[number]">0</output>
@@ -65,10 +62,25 @@ final class RangeTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testGetValidatorAttributeRequired(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<HTML
+        <input type="range" id="validatorform-required" name="ValidatorForm[required]" value="0" required oninput="i1.value=this.value">
+        <output id="i1" name="i1" for="ValidatorForm[required]">0</output>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Range::widget()->for(new ValidatorForm(), 'required')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testId(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="id-test" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -94,7 +106,6 @@ final class RangeTest extends TestCase
     public function testMax(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" max="8" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -177,7 +188,6 @@ final class RangeTest extends TestCase
     public function testRequired(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" required oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -191,7 +201,6 @@ final class RangeTest extends TestCase
     public function testRender(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -205,7 +214,6 @@ final class RangeTest extends TestCase
     public function testTabindex(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" tabindex="1" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -218,27 +226,24 @@ final class RangeTest extends TestCase
      */
     public function testValue(): void
     {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         // Value string numeric `1`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <input type="range" id="typeform-string" name="TypeForm[string]" value="1" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[string]">1</output>
         HTML;
         $this->assertEqualsWithoutLE($expected, Range::widget()->for(new TypeForm(), 'string')->value('1')->render());
 
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         // Value int `1`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">1</output>
         HTML;
         $this->assertEqualsWithoutLE($expected, Range::widget()->for(new TypeForm(), 'int')->value(1)->render());
 
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         // Value `null`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -263,33 +268,27 @@ final class RangeTest extends TestCase
     {
         $formModel = new TypeForm();
 
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         // Value int `1`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $formModel->setAttribute('int', 1);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="1" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">1</output>
         HTML;
         $this->assertEqualsWithoutLE($expected, Range::widget()->for($formModel, 'int')->render());
 
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         // Value string numeric `1`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $formModel->setAttribute('string', '1');
-
         $expected = <<<HTML
         <input type="range" id="typeform-string" name="TypeForm[string]" value="1" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[string]">1</output>
         HTML;
         $this->assertEqualsWithoutLE($expected, Range::widget()->for($formModel, 'string')->render());
 
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         // Value `null`.
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $formModel->setAttribute('int', null);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -303,7 +302,6 @@ final class RangeTest extends TestCase
     public function testWithoutId(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" name="TypeForm[int]" value="0" oninput="i1.value=this.value">
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
@@ -317,7 +315,6 @@ final class RangeTest extends TestCase
     public function testWithoutName(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
         $expected = <<<HTML
         <input type="range" id="typeform-int" value="0" oninput="i1.value=this.value">
         <output id="i1" name="i1">0</output>

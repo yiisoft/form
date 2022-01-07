@@ -9,12 +9,9 @@ use Stringable;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Helper\HtmlFormErrors;
-use Yiisoft\Widget\Widget;
 
-abstract class WidgetAttributes extends Widget
+abstract class WidgetAttributes extends GlobalAttributes
 {
-    use GlobalAttributes;
-
     private string $attribute = '';
     private bool $encode = true;
     private ?FormModelInterface $formModel = null;
