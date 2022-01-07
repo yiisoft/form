@@ -93,8 +93,9 @@ final class ImageTest extends TestCase
      */
     public function testName(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
-            '<input type="image" id="w2-image" name="name-test">',
+            '<input type="image" id="w1-image" name="name-test">',
             Image::widget()->name('name-test')->render(),
         );
     }
