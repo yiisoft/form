@@ -13,8 +13,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Form\Widget\ResetButton;
-use Yiisoft\Form\Widget\SubmitButton;
 use Yiisoft\Html\Html;
 
 final class DefaultValuesTest extends TestCase
@@ -977,7 +975,7 @@ final class DefaultValuesTest extends TestCase
                         'text' => [
                             'label' => 'label-text',
                             'labelAttributes' => ['class' => 'text-primary'],
-                            'labelClass' => 'label-class'
+                            'labelClass' => 'label-class',
                         ],
                     ],
                 )
@@ -1005,7 +1003,7 @@ final class DefaultValuesTest extends TestCase
                         'text' => [
                             'label' => 'label-text',
                             'labelAttributes' => ['class' => 'text-primary'],
-                            'labelClass' => 'label-class'
+                            'labelClass' => 'label-class',
                         ],
                     ],
                 )

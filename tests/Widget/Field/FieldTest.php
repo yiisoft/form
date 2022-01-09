@@ -11,9 +11,7 @@ use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
-use Yiisoft\Form\Tests\TestSupport\Form\TypeWithHintForm;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Html\Html;
 
 final class FieldTest extends TestCase
 {

@@ -27,7 +27,7 @@ abstract class FieldAttributes extends WidgetAttributes
     private string $invalidClass = '';
     private string $validClass = '';
     private ?string $placeholder = null;
-    private string $template = "";
+    private string $template = '';
     private string $type = '';
 
     /**
@@ -496,7 +496,6 @@ abstract class FieldAttributes extends WidgetAttributes
         return $buttonAttributes;
     }
 
-
     /**
      * Return enabled, disabled container for field.
      *
@@ -640,7 +639,6 @@ abstract class FieldAttributes extends WidgetAttributes
         return $errorMessageCallback;
     }
 
-
     /**
      * Return error tag for the field.
      *
@@ -660,7 +658,6 @@ abstract class FieldAttributes extends WidgetAttributes
 
         return $errorTag === '' ? 'div' : $errorTag;
     }
-
 
     /**
      * Return hint for field.
@@ -693,7 +690,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $hintAttributes = $this->hintAttributes;
         $hintDefault = $this->getDefaultValue($this->type, 'hintAttributes') ?? [];
 
-        if ($hintAttributes === [] && (is_array($hintDefault) && $hintDefault !== []) ) {
+        if ($hintAttributes === [] && (is_array($hintDefault) && $hintDefault !== [])) {
             $hintAttributes = $hintDefault;
         }
 
@@ -916,7 +913,6 @@ abstract class FieldAttributes extends WidgetAttributes
     private function getDefaultValue(string $type, string $key)
     {
         /** @var array|string|null */
-        $defaultValue = $this->defaultValues[$type][$key] ?? null;
-        return $defaultValue;
+        return $this->defaultValues[$type][$key] ?? null;
     }
 }
