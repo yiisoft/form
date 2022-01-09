@@ -99,9 +99,7 @@ final class ErrorTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $validator = $this->createValidatorMock();
-        $validator->validate($formModel);
-
+        $validator = $this->createValidatorMock()->validate($formModel);
         return $formModel;
     }
 }

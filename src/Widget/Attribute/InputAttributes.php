@@ -56,17 +56,6 @@ abstract class InputAttributes extends WidgetAttributes
     }
 
     /**
-     * Return aria-describedby attribute.
-     *
-     * @return string
-     */
-    public function getAriaDescribedBy(): string
-    {
-        /** @var string */
-        return $this->attributes['aria-describedby'] ?? '';
-    }
-
-    /**
      * A Boolean attribute which, if present, means this field cannot be edited by the user.
      * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
      * property.

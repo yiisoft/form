@@ -6,134 +6,57 @@ namespace Yiisoft\Form\Widget\Attribute;
 
 abstract class FieldAttributes extends WidgetAttributes
 {
-    private bool $ariaDescribedBy = false;
-    /** @psalm-var array[][] */
-    private array $buttonsIndividualAttributes = [];
-    private bool $container = true;
+    private ?bool $ariaDescribedBy = null;
+    private ?bool $container = null;
     private array $containerAttributes = [];
     private string $containerClass = '';
-    private array $containerIndividualClass = [];
+    private array $defaultValues = [];
     private ?string $error = '';
     private array $errorAttributes = [];
     private string $errorClass = '';
-    /** @psalm-var string[] */
-    private array $errorIndividualClass = [];
     private array $errorMessageCallback = [];
-    private string $errorTag = 'div';
+    private string $errorTag = '';
     private ?string $hint = '';
     private array $hintAttributes = [];
     private string $hintClass = '';
-    /** @psalm-var string[] */
-    protected array $hintIndividualClass = [];
-    private string $hintTag = 'div';
-    protected string $id = '';
-    protected string $inputClass = '';
-    protected array $inputsClass = [];
+    private string $hintTag = '';
+    private string $inputClass = '';
     private ?string $label = '';
     private array $labelAttributes = [];
     private string $labelClass = '';
-    /** @psalm-var string[] */
-    private array $labelIndividualClass = [];
-    protected string $invalidClass = '';
-    /** @psalm-var array<string, string> */
-    protected array $invalidsClass = [];
-    protected string $validClass = '';
-    /** @psalm-var array<string, string> */
-    protected array $validsClass = [];
-    protected string $template = "{label}\n{input}\n{hint}\n{error}";
-    /** @psalm-var array<string, string> */
-    protected array $templates = [];
-    protected array $parts = [];
-    protected string $type = '';
-    protected ?string $placeholder = null;
-
-    /**
-     * Set invalid class each for field type.
-     *
-     * @param array $invalidClass the input class to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $invalidClass
-     */
-    public function addInvalidClass(array $invalidClass): self
-    {
-        $new = clone $this;
-        $new->invalidsClass = $invalidClass;
-        return $new;
-    }
-
-    /**
-     * Set layout template for render a field with label, input, hint and error.
-     *
-     * @param array $template the template to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => '{input}', Field::TYPE_SUBMIT_BUTTON => '<div>{input}</div>']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $template
-     */
-    public function addTemplate(array $template): self
-    {
-        $new = clone $this;
-        $new->templates = $template;
-        return $new;
-    }
-
-    /**
-     * Set invalid class each for field type.
-     *
-     * @param array $validsClass the input class to be used to layout the field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $validsClass
-     */
-    public function addValidClass(array $validsClass): self
-    {
-        $new = clone $this;
-        $new->validsClass = $validsClass;
-        return $new;
-    }
+    private string $invalidClass = '';
+    private string $validClass = '';
+    private ?string $placeholder = null;
+    private string $template = "";
+    private string $type = '';
 
     /**
      * Set aria-describedby attribute.
+     *
+     * @param bool $value Whether to set aria-describedby attribute.
      *
      * @return static
      *
      * @link https://www.w3.org/TR/WCAG20-TECHS/ARIA1.html
      */
-    public function ariaDescribedBy(): self
+    public function ariaDescribedBy(bool $value): self
     {
         $new = clone $this;
-        $new->ariaDescribedBy = true;
+        $new->ariaDescribedBy = $value;
         return $new;
     }
 
     /**
-     * Set individual attributes for the buttons widgets.
+     * Enable, disabled container for field.
      *
-     * @param array $values Attribute values indexed by attribute names.
-     * ```php
-     * [0 => ['value' => 'Submit'], 1 => ['value' => 'Reseteable']]
-     * ```
+     * @param bool $value Is the container disabled or not.
      *
      * @return static
-     *
-     * @psalm-param array[][] $values
      */
-    public function buttonsIndividualAttributes(array $values): self
+    public function container(bool $value): self
     {
         $new = clone $this;
-        $new->buttonsIndividualAttributes = $values;
+        $new->container = $value;
         return $new;
     }
 
@@ -198,6 +121,27 @@ abstract class FieldAttributes extends WidgetAttributes
     }
 
     /**
+     * Set default values for field widget.
+     *
+     * @param array $values The default values indexed by field type.
+     *
+     * ```php
+     * [
+     *     Text::class => [
+     *         'label' => 'label-test',
+     *     ],
+     * ];
+     *
+     * @return static
+     */
+    public function defaultValues(array $values): self
+    {
+        $new = clone $this;
+        $new->defaultValues = $values;
+        return $new;
+    }
+
+    /**
      * Set error message for the field.
      *
      * @param string|null $value the error message.
@@ -242,26 +186,6 @@ abstract class FieldAttributes extends WidgetAttributes
     }
 
     /**
-     * Set error class used for an invalid field.
-     *
-     * @param array $errorClass The error class to apply to an invalid field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     * ```
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $errorClass
-     */
-    public function errorIndividualClass(array $errorClass): self
-    {
-        $new = clone $this;
-        $new->errorIndividualClass = $errorClass;
-        return $new;
-    }
-
-    /**
      * Callback that will be called to obtain an error message.
      *
      * The signature of the callback must be:
@@ -295,106 +219,6 @@ abstract class FieldAttributes extends WidgetAttributes
         $new = clone $this;
         $new->errorTag = $value;
         return $new;
-    }
-
-    public function getAriaDescribedBy(): bool
-    {
-        return $this->ariaDescribedBy;
-    }
-
-    public function getButtonsIndividualAttributes(string $index): ?array
-    {
-        return $this->buttonsIndividualAttributes[$index] ?? null;
-    }
-
-    public function getContainer(): bool
-    {
-        return $this->container;
-    }
-
-    public function getContainerAttributes(): array
-    {
-        return $this->containerAttributes;
-    }
-
-    public function getContainerClass(): string
-    {
-        return $this->containerClass;
-    }
-
-    public function getError(): ?string
-    {
-        return $this->error;
-    }
-
-    public function getErrorAttributes(): array
-    {
-        return $this->errorAttributes;
-    }
-
-    public function getErrorClass(): string
-    {
-        return $this->errorClass;
-    }
-
-    public function getErrorIndividualClass(string $type): ?string
-    {
-        return $this->errorIndividualClass[$type] ?? null;
-    }
-
-    public function getErrorMessageCallback(): array
-    {
-        return $this->errorMessageCallback;
-    }
-
-    public function getErrorTag(): string
-    {
-        return $this->errorTag;
-    }
-
-    public function getHint(): ?string
-    {
-        return $this->hint;
-    }
-
-    public function getHintAttributes(): array
-    {
-        return $this->hintAttributes;
-    }
-
-    public function getHintClass(): string
-    {
-        return $this->hintClass;
-    }
-
-    public function getHintIndividualClass(string $type): ?string
-    {
-        return $this->hintIndividualClass[$type] ?? null;
-    }
-
-    public function getHintTag(): string
-    {
-        return $this->hintTag;
-    }
-
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    public function getLabelAttributes(): array
-    {
-        return $this->labelAttributes;
-    }
-
-    public function getLabelClass(): string
-    {
-        return $this->labelClass;
-    }
-
-    public function getLabelIndividualClass(string $type): ?string
-    {
-        return $this->labelIndividualClass[$type] ?? null;
     }
 
     /**
@@ -448,25 +272,6 @@ abstract class FieldAttributes extends WidgetAttributes
     {
         $new = clone $this;
         $new->hintTag = $value;
-        return $new;
-    }
-
-    /**
-     * Set hint class for a field.
-     *
-     * @param array $hintClass The hint class to be applied to a field.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $hintClass
-     */
-    public function hintIndividualClass(array $hintClass): self
-    {
-        $new = clone $this;
-        $new->hintIndividualClass = $hintClass;
         return $new;
     }
 
@@ -631,52 +436,487 @@ abstract class FieldAttributes extends WidgetAttributes
     }
 
     /**
-     * Set container class each for field type.
+     * Return aria described by field.
      *
-     * @param array $containerClass The container class to be applied to field's container tag.
+     * if aria described by is not set, and aria described by default is set, then return aria described by default.
      *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
+     * @return bool|null
+     */
+    protected function getAriaDescribedBy(): ?bool
+    {
+        $ariaDescribedBy = $this->ariaDescribedBy;
+        $ariaDescribedByDefault = $this->getDefaultValue($this->type, 'ariaDescribedBy');
+
+        if ($ariaDescribedBy === null && is_bool($ariaDescribedByDefault)) {
+            $ariaDescribedBy = $ariaDescribedByDefault;
+        }
+
+        return $ariaDescribedBy;
+    }
+
+    /**
+     * Return attributes for field.
+     *
+     * if attributes is empty string, and attributes default value is not empty string, then return attributes default
+     * value.
+     *
+     * @return array
+     */
+    protected function getAttributes(): array
+    {
+        $attributes = $this->attributes;
+        $attributesDefault = $this->getDefaultValue($this->type, 'attributes');
+
+        if ($attributes === [] && (is_array($attributesDefault) && $attributesDefault !== [])) {
+            $attributes = $attributesDefault;
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Return attributes button for the field.
+     *
+     * if attributes button is empty string, and attributes button default value is not empty string, then return
+     * attributes default value.
+     *
+     * @param string $index The index of the attributes button.
+     *
+     * @return array
+     */
+    protected function getButtonsAttributes(string $index): array
+    {
+        $buttonAttributes = $this->attributes;
+        $butonDefaultAttributes = $this->getDefaultValue($index, 'attributes');
+
+        if ($buttonAttributes === [] && (is_array($butonDefaultAttributes) && $butonDefaultAttributes !== [])) {
+            $buttonAttributes = $butonDefaultAttributes;
+        }
+
+        return $buttonAttributes;
+    }
+
+
+    /**
+     * Return enabled, disabled container for field.
+     *
+     * if container is not set, and container default value is bool, then return container default value.
+     *
+     * @return bool
+     */
+    protected function getContainer(): ?bool
+    {
+        $container = $this->container;
+        $containerDefault = $this->getDefaultValue($this->type, 'container');
+
+        if ($container === null && is_bool($containerDefault)) {
+            $container = $containerDefault;
+        }
+
+        return $container ?? true;
+    }
+
+    /**
+     * Return attributes for container for field.
+     *
+     * if attributes container is empty array, and attributes container default value is not empty array, then return
+     * attributes container default value.
+     *
+     * @return array
+     */
+    protected function getContainerAttributes(): array
+    {
+        $containerAttributes = $this->containerAttributes;
+        $containerDefaultAttributes = $this->getDefaultValue($this->type, 'containerAttributes');
+
+        if (
+            $containerAttributes === []
+            && (is_array($containerDefaultAttributes) && $containerDefaultAttributes !== [])
+        ) {
+            $containerAttributes = $containerDefaultAttributes;
+        }
+
+        return $containerAttributes;
+    }
+
+    /**
+     * Return class for container field.
+     *
+     * if container class is empty string, and container class default value is not empty string, then return container
+     * class default value.
+     *
+     * @return string
+     */
+    protected function getContainerClass(): string
+    {
+        $containerClass = $this->containerClass;
+        $containerDefaultClass = $this->getDefaultValue($this->type, 'containerClass');
+
+        if ($containerClass === '' && (is_string($containerDefaultClass) && $containerDefaultClass !== '')) {
+            $containerClass = $containerDefaultClass;
+        }
+
+        return $containerClass;
+    }
+
+    /**
+     * Return error message for the field.
+     *
+     * if error message is empty string, and error message default value is not empty string, then return error message
+     * default value.
+     *
+     * @return string
+     */
+    protected function getError(): ?string
+    {
+        $error = $this->error;
+        $errorDefault = $this->getDefaultValue($this->type, 'error');
+
+        if ($error === '' && (is_string($errorDefault) && $errorDefault !== '')) {
+            $error = $errorDefault;
+        }
+
+        return $error;
+    }
+
+    /**
+     * Return error attribute for the field.
+     *
+     * if error attribute is empty string, and error attribute default value is not empty string, then return error
+     * attribute default value.
+     *
+     * @return array
+     */
+    protected function getErrorAttributes(): array
+    {
+        $errorAttributes = $this->errorAttributes;
+        $errorAttributesDefault = $this->getDefaultValue($this->type, 'errorAttributes');
+
+        if ($errorAttributes === [] && (is_array($errorAttributesDefault) && $errorAttributesDefault !== [])) {
+            $errorAttributes = $errorAttributesDefault;
+        }
+
+        return $errorAttributes;
+    }
+
+    /**
+     * Return error class for the field.
+     *
+     * if error class is empty string, and error class default value is not empty string, then return error class
+     * default value.
+     *
+     * @return string
+     */
+    protected function getErrorClass(): string
+    {
+        $errorClass = $this->errorClass;
+        $errorClassDefault = $this->getDefaultValue($this->type, 'errorClass');
+
+        if ($errorClass === '' && (is_string($errorClassDefault) && $errorClassDefault !== '')) {
+            $errorClass = $errorClassDefault;
+        }
+
+        return $errorClass;
+    }
+
+    /**
+     * Return error message callback for the field.
+     *
+     * if error message callback is empty array, and error message callback default value is not empty array, then
+     * return error message callback default value.
+     */
+    protected function getErrorMessageCallback(): array
+    {
+        $errorMessageCallback = $this->errorMessageCallback;
+        $errorMessageCallbackDefault = $this->getDefaultValue($this->type, 'errorMessageCallback');
+
+        if (
+            $errorMessageCallback === []
+            && (is_array($errorMessageCallbackDefault) && $errorMessageCallbackDefault !== [])
+        ) {
+            $errorMessageCallback = $errorMessageCallbackDefault;
+        }
+
+        return $errorMessageCallback;
+    }
+
+
+    /**
+     * Return error tag for the field.
+     *
+     * if error tag is empty string, and error tag default value is not empty string, then return error tag default
+     * value.
+     *
+     * @return string
+     */
+    protected function getErrorTag(): string
+    {
+        $errorTag = $this->errorTag;
+        $errorTagDefault = $this->getDefaultValue($this->type, 'errorTag');
+
+        if ($errorTag === '' && (is_string($errorTagDefault) && $errorTagDefault !== '')) {
+            $errorTag = $errorTagDefault;
+        }
+
+        return $errorTag === '' ? 'div' : $errorTag;
+    }
+
+
+    /**
+     * Return hint for field.
+     *
+     * if hint is empty string, and hint default value is not empty string, then return hint default value.
+     *
+     * @return string
+     */
+    protected function getHint(): ?string
+    {
+        $hint = $this->hint;
+        $hintDefault = $this->getDefaultValue($this->type, 'hint') ?? '';
+
+        if ($hint === '' && (is_string($hintDefault) && $hintDefault !== '')) {
+            $hint = $hintDefault;
+        }
+
+        return $hint;
+    }
+
+    /**
+     * Return hint attributes for field.
+     *
+     * if hint attributes is empty array, and hint default value is not empty array, then return hint default value.
+     *
+     * @return array
+     */
+    protected function getHintAttributes(): array
+    {
+        $hintAttributes = $this->hintAttributes;
+        $hintDefault = $this->getDefaultValue($this->type, 'hintAttributes') ?? [];
+
+        if ($hintAttributes === [] && (is_array($hintDefault) && $hintDefault !== []) ) {
+            $hintAttributes = $hintDefault;
+        }
+
+        return $hintAttributes;
+    }
+
+    /**
+     * Return hint class for field.
+     *
+     * if hint class is empty string, and hint default value is not empty string, then return hint default value.
+     *
+     * @return string
+     */
+    protected function getHintClass(): string
+    {
+        $hintClass = $this->hintClass;
+        $hintDefault = $this->getDefaultValue($this->type, 'hintClass') ?? '';
+
+        if ($hintClass === '' && (is_string($hintDefault) && $hintDefault !== '')) {
+            $hintClass = $hintDefault;
+        }
+
+        return $hintClass;
+    }
+
+    /**
+     * Return hint tag for field.
+     *
+     * if hint tag is empty string, and hint default value is not empty string, then return hint default value.
+     *
+     * @return string
+     */
+    protected function getHintTag(): string
+    {
+        $hintTag = $this->hintTag;
+        $hintDefault = $this->getDefaultValue($this->type, 'hintTag') ?? '';
+
+        if ($hintTag === '' && (is_string($hintDefault) && $hintDefault !== '')) {
+            $hintTag = $hintDefault;
+        }
+
+        return $hintTag === '' ? 'div' : $hintTag;
+    }
+
+    /**
+     * Return input class for field.
+     *
+     * if input class is empty string, and input class default value is not empty string, then return input class
+     * default value.
+     *
+     * @return string
+     */
+    protected function getInputClass(): string
+    {
+        $inputClass = $this->inputClass;
+        $inputDefaultClass = $this->getDefaultValue($this->type, 'inputClass');
+
+        if ($inputClass === '' && (is_string($inputDefaultClass) && $inputDefaultClass !== '')) {
+            $inputClass = $inputDefaultClass;
+        }
+
+        return $inputClass;
+    }
+
+    /**
+     * Return invalid class for field.
+     *
+     * if invalid class is empty string, and invalid class default value is not empty string, then return invalid class
+     * default value.
+     *
+     * @return string
+     */
+    protected function getInvalidClass(): string
+    {
+        $invalidClass = $this->invalidClass;
+        $invalidDefaultClass = $this->getDefaultValue($this->type, 'invalidClass');
+
+        if ($invalidClass === '' && (is_string($invalidDefaultClass) && $invalidDefaultClass !== '')) {
+            $invalidClass = $invalidDefaultClass;
+        }
+
+        return $invalidClass;
+    }
+
+    /**
+     * Return label for field.
+     *
+     * if label is empty string, and label default value is not empty string, then return label default value.
+     *
+     * @return string|null
+     */
+    protected function getLabel(): ?string
+    {
+        $label = $this->label;
+        $labelDefault = $this->getDefaultValue($this->type, 'label') ?? '';
+
+        if ($label === '' && (is_string($labelDefault) && $labelDefault !== '')) {
+            $label = $labelDefault;
+        }
+
+        return $label;
+    }
+
+    /**
+     * Return label attributes for field.
+     *
+     * if label attributes is empty array, and label attributes default value is not empty array, then return label
+     * attributes default value.
+     *
+     * @return array
+     */
+    protected function getLabelAttributes(): array
+    {
+        $labelAttributes = $this->labelAttributes;
+        $labelAttributesDefault = $this->getDefaultValue($this->type, 'labelAttributes') ?? [];
+
+        if ($labelAttributes === [] && (is_array($labelAttributesDefault) && $labelAttributesDefault !== [])) {
+            $labelAttributes = $labelAttributesDefault;
+        }
+
+        return $labelAttributes;
+    }
+
+    /**
+     * Return label css class for field.
+     *
+     * if label css class is empty string, and label css class default value is not null, then return label css class
+     * default value.
+     *
+     * @return string
+     */
+    protected function getLabelClass(): string
+    {
+        $labelClass = $this->labelClass;
+        $labelClassDefault = $this->getDefaultValue($this->type, 'labelClass') ?? '';
+
+        if ($labelClass === '' && (is_string($labelClassDefault) && $labelClassDefault !== '')) {
+            $labelClass = $labelClassDefault;
+        }
+
+        return $labelClass;
+    }
+
+    /**
+     * Return placeholder for field.
+     *
+     * if placeholder is empty string, and placeholder default value is not empty string, then return placeholder
+     * default value.
+     *
+     * @return string
+     */
+    protected function getPlaceholder(): ?string
+    {
+        $placeholder = $this->placeholder;
+        $placeholderDefault = $this->getDefaultValue($this->type, 'placeholder') ?? '';
+
+        if ($placeholder === null && (is_string($placeholderDefault) && $placeholderDefault !== '')) {
+            $placeholder = $placeholderDefault;
+        }
+
+        return $placeholder;
+    }
+
+    /**
+     * Return template for field.
+     *
+     * if template is empty string, and template default value is not empty string, then return template default value.
+     *
+     * @return string
+     */
+    protected function getTemplate(): string
+    {
+        $template = $this->template;
+        $templateDefault = $this->getDefaultValue($this->type, 'template') ?? '';
+
+        if ($template === '' && (is_string($templateDefault) && $templateDefault !== '')) {
+            $template = $templateDefault;
+        }
+
+        return $template === '' ? "{label}\n{input}\n{hint}\n{error}" : $template;
+    }
+
+    /**
+     * Return valid class for field.
+     *
+     * if valid class is empty string, and valid class default value is not empty string, then return valid class
+     * default value.
+     *
+     * @return string
+     */
+    protected function getValidClass(): string
+    {
+        $validClass = $this->validClass;
+        $validDefaultClass = $this->getDefaultValue($this->type, 'validClass') ?? '';
+
+        if ($validClass === '' && (is_string($validDefaultClass) && $validDefaultClass !== '')) {
+            $validClass = $validDefaultClass;
+        }
+
+        return $validClass;
+    }
+
+    /**
+     * Set type class of the field.
+     *
+     * @param string $value The type class of the field.
      *
      * @return static
-     *
-     * @psalm-param array<string, string> $containerClass
      */
-    public function containerIndividualClass(array $containerClass): self
+    protected function type(string $type): self
     {
         $new = clone $this;
-        $new->containerIndividualClass = $containerClass;
+        $new->type = $type;
         return $new;
     }
 
     /**
-     * Disabled container for field.
-     *
-     * @return static
+     * @return array|bool|string|null
      */
-    public function withoutContainer(): self
+    private function getDefaultValue(string $type, string $key)
     {
-        $new = clone $this;
-        $new->container = false;
-        return $new;
-    }
-
-    /**
-     * Set input class for a field.
-     *
-     * @param array $inputClass The input class to be applied field container.
-     *
-     * ```php
-     * [Field::TYPE_TEXT => 'test-class-1', Field::TYPE_SUBMIT_BUTTON => 'test-class-2']
-     *
-     * @return static
-     *
-     * @psalm-param array<string, string> $inputClass
-     */
-    public function withInputClass(array $inputClass): self
-    {
-        $new = clone $this;
-        $new->inputsClass = $inputClass;
-        return $new;
+        /** @var array|string|null */
+        $defaultValue = $this->defaultValues[$type][$key] ?? null;
+        return $defaultValue;
     }
 }
