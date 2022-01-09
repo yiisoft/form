@@ -58,8 +58,9 @@ final class ImageTest extends TestCase
      */
     public function testId(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
-            '<input type="image" id="id-test" name="w2-image">',
+            '<input type="image" id="id-test" name="w1-image">',
             Image::widget()->id('id-test')->render(),
         );
     }
@@ -126,8 +127,9 @@ final class ImageTest extends TestCase
      */
     public function testTabIndex(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertEqualsWithoutLE(
-            '<input type="image" id="w2-image" name="w2-image" tabindex="1">',
+            '<input type="image" id="w1-image" name="w1-image" tabindex="1">',
             Image::widget()->tabIndex(1)->render(),
         );
     }
