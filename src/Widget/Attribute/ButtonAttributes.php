@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget\Attribute;
 
 use Yiisoft\Html\Html;
-use Yiisoft\Widget\Widget;
 
 abstract class ButtonAttributes extends GlobalAttributes
 {

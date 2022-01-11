@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Yiisoft\Form\Widget\Attribute\ButtonAttributes;
-use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Html\Tag\Div;
 
@@ -54,7 +53,7 @@ final class ButtonGroup extends ButtonAttributes
      * - type: string, optional, the button type.
      * - visible: bool, optional, whether this button is visible. Defaults to true.
      *
-     * @param array $values The buttons configuration.
+     * @param array $values The buttons' configuration.
      *
      * @return self
      */

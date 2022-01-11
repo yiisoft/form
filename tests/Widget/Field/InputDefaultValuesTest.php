@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yii\Extension\Simple\Forms\Tests\Field;
+namespace Yiisoft\Form\Tests\Widget\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
@@ -21,7 +21,7 @@ final class InputDefaultValuesTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testgetAriaDescribedByDefinitions(): void
+    public function testAriaDescribedByDefinitions(): void
     {
         $expected = <<<HTML
         <div>
@@ -39,7 +39,7 @@ final class InputDefaultValuesTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testgetAriaDescribedByDefaultValues(): void
+    public function testAriaDescribedByDefaultValues(): void
     {
         $expected = <<<HTML
         <div>
@@ -635,7 +635,7 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => 'samdark']]);
-        $validator = $this->createValidatorMock()->validate($formModel);
+        $this->createValidatorMock()->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>

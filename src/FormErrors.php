@@ -35,12 +35,12 @@ final class FormErrors implements FormErrorsInterface
 
     public function getErrorSummary(): array
     {
-        return $this->renderErrorSumary($this->getAllErrors());
+        return $this->renderErrorSummary($this->getAllErrors());
     }
 
     public function getErrorSummaryFirstErrors(): array
     {
-        return $this->renderErrorSumary([$this->getFirstErrors()]);
+        return $this->renderErrorSummary([$this->getFirstErrors()]);
     }
 
     public function getFirstError(string $attribute): string
@@ -83,7 +83,7 @@ final class FormErrors implements FormErrorsInterface
         }
     }
 
-    private function renderErrorSumary(array $errors): array
+    private function renderErrorSummary(array $errors): array
     {
         $lines = [];
 

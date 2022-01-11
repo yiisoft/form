@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "image" represents either an image from which the UA enables a
@@ -88,7 +87,7 @@ final class Image extends GlobalAttributes
      */
     protected function run(): string
     {
-        $attributes = $this->build($this->attributes, '-image');
+        $attributes = $this->build($this->attributes);
         return Input::tag()->type('image')->attributes($attributes)->render();
     }
 
@@ -96,13 +95,12 @@ final class Image extends GlobalAttributes
      * Set build attributes for the widget.
      *
      * @param array $attributes $value
-     * @param string $suffix The suffix of the attribute name.
      *
      * @return array
      */
-    private function build(array $attributes, string $suffix): array
+    private function build(array $attributes): array
     {
-        $id = Html::generateId('w') . $suffix;
+        $id = Html::generateId('w') . '-image';
 
         if (!array_key_exists('id', $attributes)) {
             $attributes['id'] = $id;

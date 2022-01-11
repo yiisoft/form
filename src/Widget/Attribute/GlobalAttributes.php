@@ -175,7 +175,7 @@ abstract class GlobalAttributes extends Widget
     /**
      * The value of the radio button.
      *
-     * @param scalar|Stringable|null $value
+     * @param array|scalar|Stringable|null $value
      *
      * @return static
      *

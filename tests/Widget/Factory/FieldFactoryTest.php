@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget\Factory;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\AttributesValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
@@ -79,6 +83,8 @@ final class FieldFactoryTest extends TestCase
      * @param array $definitions
      * @param array $defaultValues
      * @param array $expecteds
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testDefinition(
         string $type,
@@ -97,7 +103,7 @@ final class FieldFactoryTest extends TestCase
         );
 
         /** @psalm-var string[][] $expecteds */
-        foreach ($expecteds as $key => $expected) {
+        foreach ($expecteds as $expected) {
             // Create form model object.
             $formModel = new AttributesValidatorForm();
             // Set field attribute value.
@@ -112,6 +118,9 @@ final class FieldFactoryTest extends TestCase
         }
     }
 
+    /**
+     * @throws InvalidConfigException
+     */
     private function factoryWidget(array $definitions): void
     {
         WidgetFactory::initialize(new SimpleContainer(), $definitions);

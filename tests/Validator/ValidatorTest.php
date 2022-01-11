@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Validator;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ErrorSummary;
@@ -21,6 +25,9 @@ final class ValidatorTest extends TestCase
         'validClass()' => ['is-valid'],
     ];
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testLoginAndPasswordValidatorInvalid(): void
     {
         $loginValidatorForm = new loginValidatorForm();
@@ -48,6 +55,9 @@ final class ValidatorTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testLoginAndPasswordValidatorValid(): void
     {
         $loginValidatorForm = new loginValidatorForm();
@@ -74,6 +84,9 @@ final class ValidatorTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testLoginAndPasswordValidatorInvalidWithErrorSummary(): void
     {
         $loginValidatorForm = new loginValidatorForm();
@@ -113,6 +126,9 @@ final class ValidatorTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testLoginAndPasswordValidatorValidWithErrorSummary(): void
     {
         $loginValidatorForm = new loginValidatorForm();

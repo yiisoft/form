@@ -899,7 +899,7 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set type class of the field.
      *
-     * @param string $value The type class of the field.
+     * @param string $type The type class of the field.
      *
      * @return static
      */
