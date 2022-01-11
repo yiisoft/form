@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Tests\Widget\Factory;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\TestSupport\Form\AttributesValidatorForm;
-use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +17,7 @@ final class FieldFactoryTest extends TestCase
 
     public function definitionDataProvider(): array
     {
-        $definitions = [
+        return [
             [
                 // Set field type.
                 'checkbox',
@@ -71,9 +69,8 @@ final class FieldFactoryTest extends TestCase
                 ],
             ],
         ];
-
-        return $definitions;
     }
+
     /**
      * @dataProvider definitionDataProvider
      *
@@ -95,7 +92,7 @@ final class FieldFactoryTest extends TestCase
             [
                 Field::class => [
                     'defaultValues()' => [$defaultValues],
-                ]
+                ],
             ]
         );
 
