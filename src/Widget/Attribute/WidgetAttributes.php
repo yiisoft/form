@@ -13,22 +13,7 @@ use Yiisoft\Form\Helper\HtmlFormErrors;
 abstract class WidgetAttributes extends GlobalAttributes
 {
     private string $attribute = '';
-    private bool $encode = true;
     private ?FormModelInterface $formModel = null;
-
-    /**
-     * Whether content should be HTML-encoded.
-     *
-     * @param bool $value
-     *
-     * @return static
-     */
-    public function encode(bool $value): self
-    {
-        $new = clone $this;
-        $new->encode = $value;
-        return $new;
-    }
 
     /**
      * @return static
@@ -88,11 +73,6 @@ abstract class WidgetAttributes extends GlobalAttributes
     protected function getAttributeValue()
     {
         return HtmlForm::getAttributeValue($this->getFormModel(), $this->getAttribute());
-    }
-
-    protected function getEncode(): bool
-    {
-        return $this->encode;
     }
 
     /**

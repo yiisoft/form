@@ -11,6 +11,7 @@ use Yiisoft\Widget\Widget;
 abstract class GlobalAttributes extends Widget
 {
     protected array $attributes = [];
+    private bool $encode = true;
 
     /**
      * Focus on the control (put cursor into it) when the page loads.
@@ -78,6 +79,20 @@ abstract class GlobalAttributes extends Widget
     }
 
     /**
+     * Whether content should be HTML-encoded.
+     *
+     * @param bool $value
+     *
+     * @return static
+     */
+    public function encode(bool $value): self
+    {
+        $new = clone $this;
+        $new->encode = $value;
+        return $new;
+    }
+
+    /**
      * Set the ID of the widget.
      *
      * @param string|null $id
@@ -91,6 +106,11 @@ abstract class GlobalAttributes extends Widget
         $new = clone $this;
         $new->attributes['id'] = $id;
         return $new;
+    }
+
+    protected function getEncode(): bool
+    {
+        return $this->encode;
     }
 
     /**

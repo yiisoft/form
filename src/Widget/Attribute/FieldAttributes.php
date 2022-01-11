@@ -447,7 +447,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $ariaDescribedBy = $this->ariaDescribedBy;
         $ariaDescribedByDefault = $this->getDefaultValue($this->type, 'ariaDescribedBy');
 
-        if ($ariaDescribedBy === null && is_bool($ariaDescribedByDefault)) {
+        if (is_bool($ariaDescribedByDefault)) {
             $ariaDescribedBy = $ariaDescribedByDefault;
         }
 
@@ -467,7 +467,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $attributes = $this->attributes;
         $attributesDefault = $this->getDefaultValue($this->type, 'attributes');
 
-        if ($attributes === [] && (is_array($attributesDefault) && $attributesDefault !== [])) {
+        if (is_array($attributesDefault) && $attributesDefault !== []) {
             $attributes = $attributesDefault;
         }
 
@@ -487,10 +487,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getButtonsAttributes(string $index): array
     {
         $buttonAttributes = $this->attributes;
-        $butonDefaultAttributes = $this->getDefaultValue($index, 'attributes');
+        $butonAttributesDefault = $this->getDefaultValue($index, 'attributes');
 
-        if ($buttonAttributes === [] && (is_array($butonDefaultAttributes) && $butonDefaultAttributes !== [])) {
-            $buttonAttributes = $butonDefaultAttributes;
+        if (is_array($butonAttributesDefault) && $butonAttributesDefault !== []) {
+            $buttonAttributes = $butonAttributesDefault;
         }
 
         return $buttonAttributes;
@@ -508,7 +508,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $container = $this->container;
         $containerDefault = $this->getDefaultValue($this->type, 'container');
 
-        if ($container === null && is_bool($containerDefault)) {
+        if (is_bool($containerDefault)) {
             $container = $containerDefault;
         }
 
@@ -528,10 +528,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $containerAttributes = $this->containerAttributes;
         $containerDefaultAttributes = $this->getDefaultValue($this->type, 'containerAttributes');
 
-        if (
-            $containerAttributes === []
-            && (is_array($containerDefaultAttributes) && $containerDefaultAttributes !== [])
-        ) {
+        if ((is_array($containerDefaultAttributes) && $containerDefaultAttributes !== [])) {
             $containerAttributes = $containerDefaultAttributes;
         }
 
@@ -551,11 +548,20 @@ abstract class FieldAttributes extends WidgetAttributes
         $containerClass = $this->containerClass;
         $containerDefaultClass = $this->getDefaultValue($this->type, 'containerClass');
 
-        if ($containerClass === '' && (is_string($containerDefaultClass) && $containerDefaultClass !== '')) {
+        if ((is_string($containerDefaultClass) && $containerDefaultClass !== '')) {
             $containerClass = $containerDefaultClass;
         }
 
         return $containerClass;
+    }
+
+    /**
+     * Return definition for field.
+     */
+    public function getDefinitions(): array
+    {
+        $definitions = $this->getDefaultValue($this->type, 'definitions') ?? [];
+        return  is_array($definitions) ? $definitions : [];
     }
 
     /**
@@ -571,7 +577,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $error = $this->error;
         $errorDefault = $this->getDefaultValue($this->type, 'error');
 
-        if ($error === '' && (is_string($errorDefault) && $errorDefault !== '')) {
+        if (is_string($errorDefault) && $errorDefault !== '') {
             $error = $errorDefault;
         }
 
@@ -591,7 +597,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorAttributes = $this->errorAttributes;
         $errorAttributesDefault = $this->getDefaultValue($this->type, 'errorAttributes');
 
-        if ($errorAttributes === [] && (is_array($errorAttributesDefault) && $errorAttributesDefault !== [])) {
+        if (is_array($errorAttributesDefault) && $errorAttributesDefault !== []) {
             $errorAttributes = $errorAttributesDefault;
         }
 
@@ -611,7 +617,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorClass = $this->errorClass;
         $errorClassDefault = $this->getDefaultValue($this->type, 'errorClass');
 
-        if ($errorClass === '' && (is_string($errorClassDefault) && $errorClassDefault !== '')) {
+        if (is_string($errorClassDefault) && $errorClassDefault !== '') {
             $errorClass = $errorClassDefault;
         }
 
@@ -629,10 +635,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorMessageCallback = $this->errorMessageCallback;
         $errorMessageCallbackDefault = $this->getDefaultValue($this->type, 'errorMessageCallback');
 
-        if (
-            $errorMessageCallback === []
-            && (is_array($errorMessageCallbackDefault) && $errorMessageCallbackDefault !== [])
-        ) {
+        if (is_array($errorMessageCallbackDefault) && $errorMessageCallbackDefault !== []) {
             $errorMessageCallback = $errorMessageCallbackDefault;
         }
 
@@ -652,7 +655,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorTag = $this->errorTag;
         $errorTagDefault = $this->getDefaultValue($this->type, 'errorTag');
 
-        if ($errorTag === '' && (is_string($errorTagDefault) && $errorTagDefault !== '')) {
+        if (is_string($errorTagDefault) && $errorTagDefault !== '') {
             $errorTag = $errorTagDefault;
         }
 
@@ -671,7 +674,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $hint = $this->hint;
         $hintDefault = $this->getDefaultValue($this->type, 'hint') ?? '';
 
-        if ($hint === '' && (is_string($hintDefault) && $hintDefault !== '')) {
+        if (is_string($hintDefault) && $hintDefault !== '') {
             $hint = $hintDefault;
         }
 
@@ -688,10 +691,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getHintAttributes(): array
     {
         $hintAttributes = $this->hintAttributes;
-        $hintDefault = $this->getDefaultValue($this->type, 'hintAttributes') ?? [];
+        $hintAttributesDefault = $this->getDefaultValue($this->type, 'hintAttributes') ?? [];
 
-        if ($hintAttributes === [] && (is_array($hintDefault) && $hintDefault !== [])) {
-            $hintAttributes = $hintDefault;
+        if (is_array($hintAttributesDefault) && $hintAttributesDefault !== []) {
+            $hintAttributes = $hintAttributesDefault;
         }
 
         return $hintAttributes;
@@ -707,10 +710,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getHintClass(): string
     {
         $hintClass = $this->hintClass;
-        $hintDefault = $this->getDefaultValue($this->type, 'hintClass') ?? '';
+        $hintClassDefault = $this->getDefaultValue($this->type, 'hintClass') ?? '';
 
-        if ($hintClass === '' && (is_string($hintDefault) && $hintDefault !== '')) {
-            $hintClass = $hintDefault;
+        if (is_string($hintClassDefault) && $hintClassDefault !== '') {
+            $hintClass = $hintClassDefault;
         }
 
         return $hintClass;
@@ -726,10 +729,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getHintTag(): string
     {
         $hintTag = $this->hintTag;
-        $hintDefault = $this->getDefaultValue($this->type, 'hintTag') ?? '';
+        $hintTagDefault = $this->getDefaultValue($this->type, 'hintTag') ?? '';
 
-        if ($hintTag === '' && (is_string($hintDefault) && $hintDefault !== '')) {
-            $hintTag = $hintDefault;
+        if (is_string($hintTagDefault) && $hintTagDefault !== '') {
+            $hintTag = $hintTagDefault;
         }
 
         return $hintTag === '' ? 'div' : $hintTag;
@@ -746,10 +749,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getInputClass(): string
     {
         $inputClass = $this->inputClass;
-        $inputDefaultClass = $this->getDefaultValue($this->type, 'inputClass');
+        $inputClassDefault = $this->getDefaultValue($this->type, 'inputClass');
 
-        if ($inputClass === '' && (is_string($inputDefaultClass) && $inputDefaultClass !== '')) {
-            $inputClass = $inputDefaultClass;
+        if (is_string($inputClassDefault) && $inputClassDefault !== '') {
+            $inputClass = $inputClassDefault;
         }
 
         return $inputClass;
@@ -766,10 +769,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getInvalidClass(): string
     {
         $invalidClass = $this->invalidClass;
-        $invalidDefaultClass = $this->getDefaultValue($this->type, 'invalidClass');
+        $invalidClassDefault = $this->getDefaultValue($this->type, 'invalidClass');
 
-        if ($invalidClass === '' && (is_string($invalidDefaultClass) && $invalidDefaultClass !== '')) {
-            $invalidClass = $invalidDefaultClass;
+        if (is_string($invalidClassDefault) && $invalidClassDefault !== '') {
+            $invalidClass = $invalidClassDefault;
         }
 
         return $invalidClass;
@@ -787,7 +790,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $label = $this->label;
         $labelDefault = $this->getDefaultValue($this->type, 'label') ?? '';
 
-        if ($label === '' && (is_string($labelDefault) && $labelDefault !== '')) {
+        if (is_string($labelDefault) && $labelDefault !== '') {
             $label = $labelDefault;
         }
 
@@ -807,7 +810,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $labelAttributes = $this->labelAttributes;
         $labelAttributesDefault = $this->getDefaultValue($this->type, 'labelAttributes') ?? [];
 
-        if ($labelAttributes === [] && (is_array($labelAttributesDefault) && $labelAttributesDefault !== [])) {
+        if (is_array($labelAttributesDefault) && $labelAttributesDefault !== []) {
             $labelAttributes = $labelAttributesDefault;
         }
 
@@ -827,7 +830,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $labelClass = $this->labelClass;
         $labelClassDefault = $this->getDefaultValue($this->type, 'labelClass') ?? '';
 
-        if ($labelClass === '' && (is_string($labelClassDefault) && $labelClassDefault !== '')) {
+        if (is_string($labelClassDefault) && $labelClassDefault !== '') {
             $labelClass = $labelClassDefault;
         }
 
@@ -847,7 +850,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $placeholder = $this->placeholder;
         $placeholderDefault = $this->getDefaultValue($this->type, 'placeholder') ?? '';
 
-        if ($placeholder === null && (is_string($placeholderDefault) && $placeholderDefault !== '')) {
+        if (is_string($placeholderDefault) && $placeholderDefault !== '') {
             $placeholder = $placeholderDefault;
         }
 
@@ -866,7 +869,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $template = $this->template;
         $templateDefault = $this->getDefaultValue($this->type, 'template') ?? '';
 
-        if ($template === '' && (is_string($templateDefault) && $templateDefault !== '')) {
+        if (is_string($templateDefault) && $templateDefault !== '') {
             $template = $templateDefault;
         }
 
@@ -886,7 +889,7 @@ abstract class FieldAttributes extends WidgetAttributes
         $validClass = $this->validClass;
         $validDefaultClass = $this->getDefaultValue($this->type, 'validClass') ?? '';
 
-        if ($validClass === '' && (is_string($validDefaultClass) && $validDefaultClass !== '')) {
+        if (is_string($validDefaultClass) && $validDefaultClass !== '') {
             $validClass = $validDefaultClass;
         }
 

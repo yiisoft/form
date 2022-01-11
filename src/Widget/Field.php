@@ -31,11 +31,37 @@ use function strtr;
  */
 final class Field extends FieldAttributes
 {
-    /** @psalm-var ButtonAttributes[] */
-    private array $buttons = [];
+    private ButtonAttributes $button;
     protected array $parts = [];
     private WidgetAttributes $inputWidget;
     private GlobalAttributes $widget;
+
+    /**
+     * Renders a button group widget.
+     *
+     * @param array $buttons List of buttons. Each array element represents a single button which can be specified as a
+     * string or an array of the following structure:
+     * - label: string, required, the button label.
+     * - attributes: array, optional, the HTML attributes of the button.
+     * - type: string, optional, the button type.
+     * - visible: bool, optional, whether this button is visible. Defaults to true.
+     * @param array $config the configuration array for widget factory.
+     * @param array $attributes the HTML attributes for the widget.
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     *
+     * @return static the field object itself.
+     *
+     * @psalm-param array<string, array|string> $buttons
+     */
+    public function buttonGroup(array $buttons, array $config = [], array $attributes = []): self
+    {
+        $new = clone $this;
+        $new = $new->type('buttonGroup');
+        $config = array_merge($new->getDefinitions(), $config);
+        $new->button = ButtonGroup::widget($config)->attributes($attributes)->buttons($buttons)->container(false);
+        return $new;
+    }
 
     /**
      * Renders a checkbox.
@@ -61,6 +87,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('checkbox');
+        $config = array_merge($new->getDefinitions(), $config);
 
         /** @var array */
         $enclosedByLabel = $config['enclosedByLabel()'] ?? [true];
@@ -109,6 +136,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('checkboxList');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = CheckboxList::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -128,6 +156,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('date');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Date::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -147,6 +176,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('dateTime');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = DateTime::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -166,6 +196,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('dateTimeLocal');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = DateTimeLocal::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -185,6 +216,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('email');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Email::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -210,6 +242,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('file');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = File::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -232,6 +265,7 @@ final class Field extends FieldAttributes
         $new->parts['{label}'] = '';
         $new->parts['{hint}'] = '';
         $new->parts['{error}'] = '';
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Hidden::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -260,6 +294,7 @@ final class Field extends FieldAttributes
         $new->parts['{label}'] = '';
         $new->parts['{hint}'] = '';
         $new->parts['{error}'] = '';
+        $config = array_merge($new->getDefinitions(), $config);
         $new->widget = Image::widget($config)->attributes($attributes);
         return $new;
     }
@@ -279,6 +314,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('number');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Number::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -298,6 +334,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('password');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Password::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -324,6 +361,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('radio');
+        $config = array_merge($new->getDefinitions(), $config);
 
         /** @var array */
         $enclosedByLabel = $config['enclosedByLabel()'] ?? [true];
@@ -369,6 +407,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('radioList');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = RadioList::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -393,6 +432,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('range');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Range::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -410,8 +450,9 @@ final class Field extends FieldAttributes
     public function resetButton(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
-        $new = $new->type('buttons');
-        $new->buttons[] = ResetButton::widget($config)->attributes($attributes);
+        $new = $new->type('reset');
+        $config = array_merge($new->getDefinitions(), $config);
+        $new->button = ResetButton::widget($config)->attributes($attributes);
         return $new;
     }
 
@@ -440,6 +481,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('select');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Select::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -457,8 +499,9 @@ final class Field extends FieldAttributes
     public function submitButton(array $config = [], array $attributes = []): self
     {
         $new = clone $this;
-        $new = $new->type('buttons');
-        $new->buttons[] = SubmitButton::widget($config)->attributes($attributes);
+        $new = $new->type('submit');
+        $config = array_merge($new->getDefinitions(), $config);
+        $new->button = SubmitButton::widget($config)->attributes($attributes);
         return $new;
     }
 
@@ -477,6 +520,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('telephone');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Telephone::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -496,6 +540,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('text');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Text::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -515,6 +560,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('textArea');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = TextArea::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -534,6 +580,7 @@ final class Field extends FieldAttributes
     {
         $new = clone $this;
         $new = $new->type('url');
+        $config = array_merge($new->getDefinitions(), $config);
         $new->inputWidget = Url::widget($config)->for($formModel, $attribute);
         return $new;
     }
@@ -565,10 +612,8 @@ final class Field extends FieldAttributes
             $content .= $this->widget->attributes($this->getAttributes())->render();
         }
 
-        $renderButtons = $this->renderButtons();
-
-        if ($renderButtons !== '') {
-            $content .= $renderButtons;
+        if (!empty($this->button)) {
+            $content .= $this->button->attributes($this->getAttributes())->render();
         }
 
         if ($this->getContainerClass() !== '') {
@@ -622,27 +667,6 @@ final class Field extends FieldAttributes
         $new->inputWidget = $new->inputWidget->attributes($this->getAttributes());
 
         return $new;
-    }
-
-    private function renderButtons(): string
-    {
-        $buttons = '';
-
-        foreach ($this->buttons as $button) {
-            $nameButton = get_class($button) === SubmitButton::class ? 'submit' : 'reset';
-            $buttonsAttributes = $this->getButtonsAttributes($nameButton);
-
-            // Set input class.
-            $inputClass = $this->getInputClass();
-
-            if ($inputClass !== '') {
-                $button = $button->class($inputClass);
-            }
-
-            $buttons .= $button->attributes($buttonsAttributes)->render();
-        }
-
-        return $buttons;
     }
 
     /**
