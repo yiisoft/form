@@ -11,7 +11,6 @@ use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ButtonGroup;
-use Yiisoft\Form\Widget\SubmitButton;
 use Yiisoft\Html\Html;
 
 final class ButtonGroupTest extends TestCase
@@ -316,7 +315,7 @@ final class ButtonGroupTest extends TestCase
                 ->buttons(
                     [
                         ['label' => 'Submit', 'type' => 'Submit', 'visible' => false],
-                        ['label' => 'Reset', 'type' => 'Reset']
+                        ['label' => 'Reset', 'type' => 'Reset'],
                     ]
                 )
                 ->render(),
@@ -383,5 +382,4 @@ final class ButtonGroupTest extends TestCase
                 ->render(),
         );
     }
-
 }

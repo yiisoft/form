@@ -13,7 +13,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
-use Yiisoft\Html\Html;
 
 final class InputDefaultValuesTest extends TestCase
 {
