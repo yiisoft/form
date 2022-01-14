@@ -197,6 +197,21 @@ final class ButtonGroupTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testImmutability(): void
+    {
+        $buttonGroup = ButtonGroup::widget();
+        $this->assertNotSame($buttonGroup, $buttonGroup->buttons([]));
+        $this->assertNotSame($buttonGroup, $buttonGroup->container(true));
+        $this->assertNotSame($buttonGroup, $buttonGroup->containerAttributes([]));
+        $this->assertNotSame($buttonGroup, $buttonGroup->containerClass(''));
+        $this->assertNotSame($buttonGroup, $buttonGroup->containerId(null));
+        $this->assertNotSame($buttonGroup, $buttonGroup->containerName(null));
+        $this->assertNotSame($buttonGroup, $buttonGroup->individualButtonAttributes([]));
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testIndividualButtonAttributes(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
