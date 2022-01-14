@@ -111,7 +111,7 @@ final class Radio extends ChoiceAttributes
         $value = $this->getAttributeValue();
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $valueDefault = array_key_exists('value', $attributes) ? $attributes['value'] : null;
+        $valueDefault = $attributes['value'] ?? null;
 
         if (is_iterable($value) || is_object($value) || is_iterable($valueDefault) || is_object($valueDefault)) {
             throw new InvalidArgumentException('Radio widget value can not be an iterable or an object.');
@@ -119,7 +119,7 @@ final class Radio extends ChoiceAttributes
 
         $radio = RadioTag::tag();
 
-        if ($this->enclosedByLabel === true) {
+        if ($this->enclosedByLabel) {
             $radio = $radio->label(
                 empty($this->label) ? $this->getAttributeLabel() : $this->label,
                 $this->labelAttributes,

@@ -77,24 +77,6 @@ final class Text extends InputAttributes implements HasLengthInterface, MatchReg
     }
 
     /**
-     * A Boolean attribute which, if present, means this field cannot be edited by the user.
-     * Its value can, however, still be changed by JavaScript code directly setting the HTMLInputElement.value
-     * property.
-     *
-     * @param bool $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.readonly
-     */
-    public function readonly(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->attributes['readonly'] = $value;
-        return $new;
-    }
-
-    /**
      * The height of the input with multiple is true.
      *
      * @param int $value

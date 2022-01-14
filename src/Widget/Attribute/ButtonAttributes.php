@@ -9,26 +9,6 @@ use Yiisoft\Html\Html;
 abstract class ButtonAttributes extends GlobalAttributes
 {
     /**
-     * Set whether the element is disabled or not.
-     *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
-     * text.
-     * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
-     * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to `false` to enable the element again, which is not the case.
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
-     */
-    public function disabled(): self
-    {
-        $new = clone $this;
-        $new->attributes['disabled'] = true;
-        return $new;
-    }
-
-    /**
      * Specifies the form element the tag input element belongs to. The value of this attribute must be the id
      * attribute of a {@see Form} element in the same document.
      *

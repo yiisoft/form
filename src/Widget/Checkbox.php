@@ -115,7 +115,7 @@ final class Checkbox extends InputAttributes
         $value = $this->getAttributeValue();
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $valueDefault = array_key_exists('value', $attributes) ? $attributes['value'] : null;
+        $valueDefault = $attributes['value'] ?? null;
 
         if (is_iterable($value) || is_object($value) || is_iterable($valueDefault) || is_object($valueDefault)) {
             throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');
@@ -123,7 +123,7 @@ final class Checkbox extends InputAttributes
 
         $checkbox = CheckboxTag::tag();
 
-        if ($this->enclosedByLabel === true) {
+        if ($this->enclosedByLabel) {
             $checkbox = $checkbox->label(
                 empty($this->label) ? $this->getAttributeLabel() : $this->label,
                 $this->labelAttributes,

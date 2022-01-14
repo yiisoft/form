@@ -342,12 +342,12 @@ abstract class FieldAttributes extends WidgetAttributes
     }
 
     /**
-     * The id of a labelable form-related element in the same document as the tag label element.
+     * The id of a label-able form-related element in the same document as the tag label element.
      *
      * The first element in the document with an id matching the value of the for attribute is the labeled control for
-     * this label element, if it is a labelable element.
+     * this label element, if it is a label-able element.
      *
-     * @param string|null $value The id of a labelable form-related element in the same document as the tag label
+     * @param string|null $value The id of a label-able form-related element in the same document as the tag label
      * element. If null, the attribute will be removed.
      *
      * @return static
@@ -487,10 +487,10 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getButtonsAttributes(string $index): array
     {
         $buttonAttributes = $this->attributes;
-        $butonAttributesDefault = $this->getDefaultValue($index, 'attributes');
+        $defaultButtonAttributes = $this->getDefaultValue($index, 'attributes');
 
-        if (is_array($butonAttributesDefault) && $butonAttributesDefault !== []) {
-            $buttonAttributes = $butonAttributesDefault;
+        if (is_array($defaultButtonAttributes) && $defaultButtonAttributes !== []) {
+            $buttonAttributes = $defaultButtonAttributes;
         }
 
         return $buttonAttributes;

@@ -32,7 +32,7 @@ use function strtr;
 final class Field extends FieldAttributes
 {
     private ButtonAttributes $button;
-    protected array $parts = [];
+    private array $parts = [];
     private WidgetAttributes $inputWidget;
     private GlobalAttributes $widget;
 

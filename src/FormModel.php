@@ -27,8 +27,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 {
     private string $formErrorsClass = FormErrors::class;
     private array $attributes;
-    /** @psalm-var array<string, array<array-key, string>> */
-    private array $attributesErrors = [];
     private FormErrorsInterface $formErrors;
     private ?Inflector $inflector = null;
     private bool $validated = false;
@@ -258,13 +256,13 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     private function createFormErrors(string $formErrorsClass): FormErrorsInterface
     {
-        $formErrorsClass = new $formErrorsClass();
+        $formErrors = new $formErrorsClass();
 
-        if (!$formErrorsClass instanceof FormErrorsInterface) {
+        if (!$formErrors instanceof FormErrorsInterface) {
             throw new InvalidArgumentException('Form errors class must implement ' . FormErrorsInterface::class);
         }
 
-        return $formErrorsClass;
+        return $formErrors;
     }
 
     private function getInflector(): Inflector

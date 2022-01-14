@@ -57,11 +57,5 @@
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
         "test-watch": "phpunit-watcher watch"
-    },
-    "repositories": [
-        {
-            "type": "github",
-            "url": "https://github.com/terabytesoftw/yii-bulma"
-        }
-    ]
+    }
 }

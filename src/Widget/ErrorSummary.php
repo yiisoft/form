@@ -28,7 +28,7 @@ final class ErrorSummary extends Widget
     private FormModelInterface $formModel;
     private string $footer = '';
     private array $footerAttributes = [];
-    private string $header = '';
+    private string $header = 'Please fix the following errors:';
     private array $headerAttributes = [];
     private bool $showAllErrors = false;
     /** @psalm-param non-empty-string */
@@ -69,7 +69,7 @@ final class ErrorSummary extends Widget
      *
      * @param string $value
      *
-     * return static
+     * @return static
      */
     public function footer(string $value): self
     {
@@ -214,11 +214,7 @@ final class ErrorSummary extends Widget
             throw new InvalidArgumentException('Tag name cannot be empty.');
         }
 
-        if ($this->header === '') {
-            $content .= P::tag()->attributes($this->headerAttributes)->content('Please fix the following errors:')->render() . PHP_EOL;
-        } else {
-            $content .=  P::tag()->attributes($this->headerAttributes)->content($this->header)->render() . PHP_EOL;
-        }
+        $content .=  P::tag()->attributes($this->headerAttributes)->content($this->header)->render() . PHP_EOL;
 
         /** @var array<string, string> */
         $lines = $this->collectErrors();
