@@ -10,7 +10,6 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
-use Yiisoft\Form\Widget\Field;
 
 final class GlobalAttributeTest extends TestCase
 {

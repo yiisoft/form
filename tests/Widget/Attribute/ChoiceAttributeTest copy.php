@@ -10,7 +10,6 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
-use Yiisoft\Form\Widget\Field;
 
 final class ChoiceAttributeTest extends TestCase
 {

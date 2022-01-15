@@ -10,9 +10,8 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Widget\Attribute\ButtonAttributes;
-use Yiisoft\Form\Widget\Field;
 
-final class ButtonAttributesTest extends TestCase
+final class ButtonAttributeTest extends TestCase
 {
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException

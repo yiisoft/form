@@ -10,9 +10,8 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
-use Yiisoft\Form\Widget\Field;
 
-final class InputAttributeTest extends TestCase
+final class InputAttributes extends TestCase
 {
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException

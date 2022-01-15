@@ -11,7 +11,6 @@ use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Widget\Attribute\WidgetAttributes;
-use Yiisoft\Form\Widget\Field;
 
 final class InputAttributeTest extends TestCase
 {
