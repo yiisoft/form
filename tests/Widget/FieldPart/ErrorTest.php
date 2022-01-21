@@ -9,6 +9,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\FieldPart\Error;
@@ -20,10 +21,22 @@ final class ErrorTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testGetFormModelException(): void
+    {
+        $this->expectException(FormModelNotSetException::class);
+        $this->expectExceptionMessage('Failed to create widget because form model is not set.');
+        $this->invokeMethod(Error::widget(), 'getFormModel');
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $error = Error::widget();
+        $this->assertNotSame($error, $error->attributes([]));
         $this->assertNotSame($error, $error->encode(false));
+        $this->assertNotSame($error, $error->for(new PersonalForm(), 'name'));
         $this->assertNotSame($error, $error->message(''));
         $this->assertNotSame($error, $error->messageCallback([]));
         $this->assertNotSame($error, $error->tag('div'));

@@ -222,14 +222,17 @@ final class CheckboxListTest extends TestCase
     public function testImmutability(): void
     {
         $checkboxList = CheckboxList::widget();
+        $this->assertNotSame($checkboxList, $checkboxList->autofocus());
         $this->assertNotSame($checkboxList, $checkboxList->containerAttributes([]));
         $this->assertNotSame($checkboxList, $checkboxList->containerTag());
+        $this->assertNotSame($checkboxList, $checkboxList->id(null));
         $this->assertNotSame($checkboxList, $checkboxList->individualItemsAttributes());
         $this->assertNotSame($checkboxList, $checkboxList->items());
         $this->assertNotSame($checkboxList, $checkboxList->itemsAttributes());
         $this->assertNotSame($checkboxList, $checkboxList->itemsFormatter(null));
         $this->assertNotSame($checkboxList, $checkboxList->itemsFromValues());
         $this->assertNotSame($checkboxList, $checkboxList->separator(''));
+        $this->assertNotSame($checkboxList, $checkboxList->tabindex(1));
     }
 
     /**

@@ -125,6 +125,7 @@ final class TextTest extends TestCase
         $text = Text::widget();
         $this->assertNotSame($text, $text->dirname('test.dir'));
         $this->assertNotSame($text, $text->maxlength(0));
+        $this->assertNotSame($text, $text->minlength(0));
         $this->assertNotSame($text, $text->placeholder(''));
         $this->assertNotSame($text, $text->pattern(''));
         $this->assertNotSame($text, $text->readOnly());

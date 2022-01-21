@@ -168,14 +168,17 @@ final class RadioListTest extends TestCase
     public function testImmutability(): void
     {
         $radioList = RadioList::widget();
+        $this->assertNotSame($radioList, $radioList->autofocus());
         $this->assertNotSame($radioList, $radioList->containerAttributes([]));
         $this->assertNotSame($radioList, $radioList->containerTag());
+        $this->assertNotSame($radioList, $radioList->id(null));
         $this->assertNotSame($radioList, $radioList->individualItemsAttributes());
         $this->assertNotSame($radioList, $radioList->items());
         $this->assertNotSame($radioList, $radioList->itemsAttributes());
         $this->assertNotSame($radioList, $radioList->itemsFormatter(null));
         $this->assertNotSame($radioList, $radioList->itemsFromValues());
         $this->assertNotSame($radioList, $radioList->separator());
+        $this->assertNotSame($radioList, $radioList->tabindex(1));
         $this->assertNotSame($radioList, $radioList->uncheckValue(''));
     }
 

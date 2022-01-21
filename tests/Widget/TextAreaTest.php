@@ -115,6 +115,7 @@ final class TextAreaTest extends TestCase
         $this->assertNotSame($textArea, $textArea->cols(0));
         $this->assertNotSame($textArea, $textArea->dirname('test.dir'));
         $this->assertNotSame($textArea, $textArea->maxlength(0));
+        $this->assertNotSame($textArea, $textArea->minlength(0));
         $this->assertNotSame($textArea, $textArea->placeholder(''));
         $this->assertNotSame($textArea, $textArea->readOnly());
         $this->assertNotSame($textArea, $textArea->rows(0));

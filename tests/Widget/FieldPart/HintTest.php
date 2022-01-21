@@ -10,6 +10,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeWithHintForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\FieldPart\Hint;
@@ -36,6 +37,16 @@ final class HintTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testGetFormModelException(): void
+    {
+        $this->expectException(FormModelNotSetException::class);
+        $this->expectExceptionMessage('Failed to create widget because form model is not set.');
+        $this->invokeMethod(Hint::widget(), 'getFormModel');
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testHint(): void
     {
         $this->assertSame(
@@ -50,7 +61,9 @@ final class HintTest extends TestCase
     public function testImmutability(): void
     {
         $hint = Hint::widget();
+        $this->assertNotSame($hint, $hint->attributes([]));
         $this->assertNotSame($hint, $hint->encode(false));
+        $this->assertNotSame($hint, $hint->for(new TypeWithHintForm(), 'login'));
         $this->assertNotSame($hint, $hint->hint(null));
         $this->assertNotSame($hint, $hint->tag(''));
     }
