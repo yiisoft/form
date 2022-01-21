@@ -18,9 +18,9 @@ final class AttributeNotSetException extends InvalidArgumentException implements
     {
         return <<<SOLUTION
             You can configure the `attribute` in two ways, the first way is through the widgets using the `for()`
-        method `Text::widget()->for($formModel, $attribute)`, where the second argument is the `attribute`,
+        method `Text::widget()->for(FormModel::class, attribute)`, where the second argument is the `attribute`,
         the second way is through the `Field::class` where in each field type the second argument is the
-        `attribute`, `Field::widget->text($formModel, $attribute)`.
+        `attribute`, `Field::widget->text(FormModel::class, attribute)`.
         SOLUTION;
     }
 }
