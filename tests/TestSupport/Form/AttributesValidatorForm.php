@@ -14,6 +14,7 @@ use Yiisoft\Validator\Rule\Url;
 
 final class AttributesValidatorForm extends FormModel
 {
+    private string $checkbox = '';
     private string $email = '';
     private string $number = '';
     private string $password = '';
@@ -21,11 +22,15 @@ final class AttributesValidatorForm extends FormModel
     private string $required = '';
     private string $telephone = '';
     private string $text = '';
+    private string $textArea = '';
     private string $url = '';
 
     public function getRules(): array
     {
         return [
+            'checkbox' => [
+                Required::rule(),
+            ],
             'email' => [
                 Required::rule(),
                 HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
@@ -56,6 +61,11 @@ final class AttributesValidatorForm extends FormModel
                 HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(6)->tooLongMessage('Is too long.'),
                 MatchRegularExpression::rule('/^[a-zA-Z0-9_.-]+$/')->message('Is not a valid text.'),
             ],
+            'textArea' => [
+                Required::rule(),
+                HasLength::rule()->min(10)->tooShortMessage('Is too short.')->max(100)->tooLongMessage('Is too long.'),
+                MatchRegularExpression::rule('/^[a-zA-Z ]*$/')->message('Is not a valid text.'),
+            ],
             'url' => [
                 Required::rule(),
                 HasLength::rule()->min(15)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
@@ -69,6 +79,6 @@ final class AttributesValidatorForm extends FormModel
 
     public function getAttributeHints(): array
     {
-        return ['email' => 'Write your email.'];
+        return ['checkbox' => 'Mark the checkbox.', 'email' => 'Write your email.'];
     }
 }

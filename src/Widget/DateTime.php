@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\DateAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "datetime" represents a control for setting the element’s
@@ -18,11 +14,39 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime
  */
-final class DateTime extends Widget
+final class DateTime extends InputAttributes
 {
-    use CommonAttributes;
-    use DateAttributes;
-    use ModelAttributes;
+    /**
+     * The latest acceptable date.
+     *
+     * @param string|null $value
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.max
+     */
+    public function max(?string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['max'] = $value;
+        return $new;
+    }
+
+    /**
+     * The earliest acceptable date.
+     *
+     * @param string|null $value
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.min
+     */
+    public function min(?string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['min'] = $value;
+        return $new;
+    }
 
     /**
      * Generates a datepicker tag together with a label for the given form attribute.
@@ -31,8 +55,11 @@ final class DateTime extends Widget
      */
     protected function run(): string
     {
-        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.date.html#input.date.attrs.value */
-        $value = HtmlForm::getAttributeValue($this->getFormModel(), $this->attribute);
+        $attributes = $this->build($this->attributes);
+
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.value */
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (!is_string($value) && null !== $value) {
             throw new InvalidArgumentException('DateTime widget requires a string or null value.');
@@ -40,9 +67,7 @@ final class DateTime extends Widget
 
         return Input::tag()
             ->type('datetime')
-            ->attributes($this->attributes)
-            ->id($this->getId())
-            ->name(HtmlForm::getInputName($this->getFormModel(), $this->attribute))
+            ->attributes($attributes)
             ->value($value === '' ? null : $value)
             ->render();
     }

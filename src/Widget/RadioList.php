@@ -7,19 +7,15 @@ namespace Yiisoft\Form\Widget;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * Generates a list of radio.
  */
-final class RadioList extends Widget
+final class RadioList extends ChoiceAttributes
 {
-    use ModelAttributes;
-
     private array $containerAttributes = [];
     private ?string $containerTag = 'div';
     /** @psalm-var array[] */
@@ -33,6 +29,23 @@ final class RadioList extends Widget
     private array $itemsFromValues = [];
     private string $separator = '';
     private ?string $uncheckValue = null;
+
+    /**
+     * Focus on the control (put cursor into it) when the page loads.
+     * Only one form element could be in focus at the same time.
+     *
+     * @return static
+     *
+     * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function autofocus(): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['autofocus'] = true;
+        return $new;
+    }
 
     /**
      * The container attributes for generating the list of checkboxes tag using {@see CheckBoxList}.
@@ -65,24 +78,20 @@ final class RadioList extends Widget
     }
 
     /**
-     * Set whether the element is disabled or not.
+     * Set the ID of container the widget.
      *
-     * If this attribute is set to `true`, the element is disabled. Disabled elements are usually drawn with grayed-out
-     * text.
-     * If the element is disabled, it does not respond to user actions, it cannot be focused, and the command event
-     * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
-     * this will suggest you can set it to false to enable the element again, which is not the case.
-     *
-     * @param bool $value
+     * @param string|null $id
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
+     *
+     * @psalm-suppress MethodSignatureMismatch
      */
-    public function disabled(bool $value = true): self
+    public function id(?string $id): self
     {
         $new = clone $this;
-        $new->itemsAttributes['disabled'] = $value;
+        $new->containerAttributes['id'] = $id;
         return $new;
     }
 
@@ -176,21 +185,6 @@ final class RadioList extends Widget
     }
 
     /**
-     * The readonly attribute is a boolean attribute that controls whether the user can edit the form control.
-     * When specified, the element is not mutable.
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-     */
-    public function readonly(): self
-    {
-        $new = clone $this;
-        $new->itemsAttributes['readonly'] = true;
-        return $new;
-    }
-
-    /**
      * The HTML code that separates items.
      *
      * @param string $value
@@ -201,6 +195,35 @@ final class RadioList extends Widget
     {
         $new = clone $this;
         $new->separator = $value;
+        return $new;
+    }
+
+    /**
+     * The tabindex global attribute indicates that its element can be focused, and where it participates in sequential
+     * keyboard navigation (usually with the Tab key, hence the name).
+     *
+     * It accepts an integer as a value, with different results depending on the integer's value:
+     *
+     * - A negative value (usually tabindex="-1") means that the element is not reachable via sequential keyboard
+     * navigation, but could be focused with Javascript or visually. It's mostly useful to create accessible widgets
+     * with JavaScript.
+     * - tabindex="0" means that the element should be focusable in sequential keyboard navigation, but its order is
+     * defined by the document's source order.
+     * - A positive value means the element should be focusable in sequential keyboard navigation, with its order
+     * defined by the value of the number. That is, tabindex="4" is focused before tabindex="5", but after tabindex="3".
+     *
+     * @param int $value
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
+     *
+     * @psalm-suppress MethodSignatureMismatch
+     */
+    public function tabIndex(int $value): self
+    {
+        $new = clone $this;
+        $new->containerAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -225,43 +248,51 @@ final class RadioList extends Widget
      */
     protected function run(): string
     {
-        $new = clone $this;
-        $radioList = RadioListTag::create(HtmlForm::getInputName($new->getFormModel(), $new->attribute));
+        /** @psalm-var array[] */
+        [$attributes, $containerAttributes] = $this->buildList($this->attributes, $this->containerAttributes);
 
-        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /**
+         * @var iterable<int, scalar|Stringable>|scalar|Stringable|null
+         *
+         * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
+         */
+        $value = $attributes['value'] ?? $this->getAttributeValue();
+        unset($attributes['value']);
 
         if (is_iterable($value) || is_object($value)) {
             throw new InvalidArgumentException('RadioList widget value can not be an iterable or an object.');
         }
 
+        $name = $this->getInputName();
+
         /** @var string */
-        $new->containerAttributes['id'] = $new->containerAttributes['id'] ?? $new->getId();
-
-        /** @var bool */
-        $itemsEncodeLabels = $new->attributes['itemsEncodeLabels'] ?? true;
-
-        /** @var bool */
-        $itemsAsEncodeLabels = $new->attributes['itemsAsEncodeLabels'] ?? true;
-
-        if ($new->items !== []) {
-            $radioList = $radioList->items($new->items, $itemsEncodeLabels);
-        } elseif ($new->itemsFromValues !== []) {
-            $radioList = $radioList->itemsFromValues($new->itemsFromValues, $itemsAsEncodeLabels);
+        if (!empty($attributes['name']) && is_string($attributes['name'])) {
+            $name = $attributes['name'];
         }
 
-        if ($new->separator !== '') {
-            $radioList = $radioList->separator($new->separator);
+        $radioList = RadioListTag::create($name);
+
+        if ($this->items !== []) {
+            $radioList = $radioList->items($this->items, $this->getEncode());
+        } elseif ($this->itemsFromValues !== []) {
+            $radioList = $radioList->itemsFromValues($this->itemsFromValues, $this->getEncode());
+        }
+
+        if ($this->separator !== '') {
+            $radioList = $radioList->separator($this->separator);
+        }
+
+        if ($this->itemsAttributes !== []) {
+            $radioList = $radioList->replaceRadioAttributes($this->itemsAttributes);
         }
 
         return $radioList
-            ->containerAttributes($new->containerAttributes)
-            ->containerTag($new->containerTag)
-            ->individualInputAttributes($new->individualItemsAttributes)
-            ->itemFormatter($new->itemsFormatter)
-            ->radioAttributes($new->attributes)
-            ->replaceRadioAttributes($new->itemsAttributes)
-            ->uncheckValue($new->uncheckValue)
+            ->containerAttributes($containerAttributes)
+            ->containerTag($this->containerTag)
+            ->individualInputAttributes($this->individualItemsAttributes)
+            ->itemFormatter($this->itemsFormatter)
+            ->radioAttributes($attributes)
+            ->uncheckValue($this->uncheckValue)
             ->value(is_bool($value) ? (int) $value : $value)
             ->render();
     }

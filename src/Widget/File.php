@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "file" represents a list of file items, each consisting of a
@@ -18,11 +15,8 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.file.html#input.file
  */
-final class File extends Widget
+final class File extends InputAttributes
 {
-    use CommonAttributes;
-    use ModelAttributes;
-
     private array $hiddenAttributes = [];
     /** @var bool|float|int|string|Stringable|null */
     private $uncheckValue = null;
@@ -96,9 +90,10 @@ final class File extends Widget
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->build($this->attributes);
+        /** @var string */
+        $name = $attributes['name'] ?? $this->getInputName();
         $hiddenInput = '';
-        $name = HtmlForm::getInputName($new->getFormModel(), $new->attribute);
 
         /**
          * Add a hidden field so that if a form only has a file field, we can still use isset($body[$formClass]) to
@@ -108,15 +103,12 @@ final class File extends Widget
          *
          * Note: For file-field-only form with `disabled` option set to `true` input submitting detection won't work.
          */
-        if ($new->uncheckValue !== null) {
-            $hiddenInput = Input::hidden($name, $new->uncheckValue)->attributes($new->hiddenAttributes)->render();
+        if ($this->uncheckValue !== null) {
+            $hiddenInput = Input::hidden($name, $this->uncheckValue)->attributes($this->hiddenAttributes)->render();
         }
 
-        return $hiddenInput .
-            Input::file(Html::getArrayableName($name))
-                ->attributes($new->attributes)
-                ->id($new->getId())
-                ->value(null)
-                ->render();
+        return
+            $hiddenInput .
+            Input::file($name)->attributes($attributes)->name(Html::getArrayableName($name))->value(null)->render();
     }
 }

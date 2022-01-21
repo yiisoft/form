@@ -127,11 +127,13 @@ final class Form extends Widget
     }
 
     /**
-     * The HTML attributes for the form. The following special options are recognized.
+     * The HTML attributes. The following special options are recognized.
      *
-     * @param array $value the HTML attributes for the form.
+     * @param array $value
      *
      * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function attributes(array $value): self
     {

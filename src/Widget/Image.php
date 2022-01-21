@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\WithoutModelAttribute;
+use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
+use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "image" represents either an image from which the UA enables a
@@ -16,11 +15,8 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image
  */
-final class Image extends Widget
+final class Image extends GlobalAttributes
 {
-    use CommonAttributes;
-    use WithoutModelAttribute;
-
     /**
      * Provides a textual label for an alternative button for users and UAs who cannot use the image specified by the
      * src attribute.
@@ -91,13 +87,29 @@ final class Image extends Widget
      */
     protected function run(): string
     {
-        $new = clone $this;
-        $img = Input::tag()->type('image');
+        $attributes = $this->build($this->attributes);
+        return Input::tag()->type('image')->attributes($attributes)->render();
+    }
 
-        if ($new->autoIdPrefix === '') {
-            $new->autoIdPrefix = 'image-';
+    /**
+     * Set build attributes for the widget.
+     *
+     * @param array $attributes $value
+     *
+     * @return array
+     */
+    private function build(array $attributes): array
+    {
+        $id = Html::generateId('w') . '-image';
+
+        if (!array_key_exists('id', $attributes)) {
+            $attributes['id'] = $id;
         }
 
-        return $img->attributes($new->attributes)->id($new->getId())->name($new->getName())->render();
+        if (!array_key_exists('name', $attributes)) {
+            $attributes['name'] = $id;
+        }
+
+        return $attributes;
     }
 }

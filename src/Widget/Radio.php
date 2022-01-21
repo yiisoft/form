@@ -6,11 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
 use Yiisoft\Html\Tag\Input\Radio as RadioTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "radio" represents a selection of one item from a list of
@@ -18,17 +15,27 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html
  */
-final class Radio extends Widget
+final class Radio extends ChoiceAttributes
 {
-    use CommonAttributes;
-    use ModelAttributes;
-
+    private bool $checked = false;
     private bool $enclosedByLabel = true;
-    private string $label = '';
+    private ?string $label = '';
     private array $labelAttributes = [];
-    /** @var scalar|Stringable|null */
-    private $value = null;
     private ?string $uncheckValue = null;
+
+    /**
+     * Check the radio button.
+     *
+     * @param bool $value Whether the radio button is checked.
+     *
+     * @return static
+     */
+    public function checked(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->checked = $value;
+        return $new;
+    }
 
     /**
      * If the widget should be enclosed by label.
@@ -37,7 +44,7 @@ final class Radio extends Widget
      *
      * @return static
      */
-    public function enclosedByLabel(bool $value = true): self
+    public function enclosedByLabel(bool $value): self
     {
         $new = clone $this;
         $new->enclosedByLabel = $value;
@@ -52,11 +59,11 @@ final class Radio extends Widget
      *
      * When this option is specified, the radio will be enclosed by a label tag.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return static
      */
-    public function label(string $value): self
+    public function label(?string $value): self
     {
         $new = clone $this;
         $new->label = $value;
@@ -92,52 +99,42 @@ final class Radio extends Widget
     }
 
     /**
-     * The value of the radio button.
-     *
-     * @param scalar|Stringable|null $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html#input.radio.attrs.value
-     */
-    public function value($value): self
-    {
-        $new = clone $this;
-        $new->value = $value;
-        return $new;
-    }
-
-    /**
      * Generates a radio button tag together with a label for the given form attribute.
      *
      * @return string the generated radio button tag.
      */
     protected function run(): string
     {
-        $new = clone $this;
-        $radio = RadioTag::tag();
+        $attributes = $this->build($this->attributes);
 
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html#input.radio.attrs.value */
+        $value = $this->getAttributeValue();
 
-        if (is_iterable($value) || is_object($value)) {
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
+        $valueDefault = $attributes['value'] ?? null;
+
+        if (is_iterable($value) || is_object($value) || is_iterable($valueDefault) || is_object($valueDefault)) {
             throw new InvalidArgumentException('Radio widget value can not be an iterable or an object.');
         }
 
-        /** @var scalar|Stringable|null */
-        $valueDefault = array_key_exists('value', $new->attributes) ? $new->attributes['value'] : $new->value;
+        $radio = RadioTag::tag();
 
-        if ($new->enclosedByLabel === true) {
-            $label = $new->label !== ''
-                ? $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
-            $radio = $radio->label($label, $new->labelAttributes);
+        if ($this->enclosedByLabel) {
+            $radio = $radio->label(
+                empty($this->label) ? $this->getAttributeLabel() : $this->label,
+                $this->labelAttributes,
+            );
+        }
+
+        if (empty($value)) {
+            $radio = $radio->checked($this->checked);
+        } else {
+            $radio = $radio->checked("$value" === "$valueDefault");
         }
 
         return $radio
-            ->checked("$value" === "$valueDefault")
-            ->attributes($new->attributes)
-            ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
-            ->uncheckValue($new->uncheckValue)
+            ->attributes($attributes)
+            ->uncheckValue($this->uncheckValue)
             ->value(is_bool($valueDefault) ? (int) $valueDefault : $valueDefault)
             ->render();
     }

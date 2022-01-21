@@ -7,6 +7,11 @@ namespace Yiisoft\Form\Tests\TestSupport;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\ValidatorInterface;
+use Yiisoft\Widget\WidgetFactory;
 
 trait TestTrait
 {
@@ -25,13 +30,13 @@ trait TestTrait
         $this->assertEquals($expected, $actual, $message);
     }
 
-    public function createFormModel(string $class): void
+    private function createValidatorMock(): ValidatorInterface
     {
-        $this->formModel = new $class();
+        return new ValidatorMock();
     }
 
     /**
-     * Invokes a inaccessible method.
+     * Invokes an inaccessible method.
      *
      * @param object $object
      * @param string $method
@@ -61,7 +66,7 @@ trait TestTrait
      *
      * @param object $object
      * @param string $propertyName
-     * @param $value
+     * @param mixed $value
      * @param bool $revoke whether to make property inaccessible after setting
      */
     protected function setInaccessibleProperty(object $object, string $propertyName, $value, bool $revoke = true): void
@@ -81,6 +86,15 @@ trait TestTrait
         if ($revoke) {
             $property->setAccessible(false);
         }
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer(), []);
     }
 }
 

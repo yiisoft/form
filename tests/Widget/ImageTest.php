@@ -5,32 +5,69 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Widget;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Image;
 use Yiisoft\Html\Html;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class ImageTest extends TestCase
 {
     use TestTrait;
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testAlt(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
-            '<input type="image" id="image-1" name="image-1" alt="Submit">',
+            '<input type="image" id="w1-image" name="w1-image" alt="Submit">',
             Image::widget()->alt('Submit')->render(),
         );
     }
 
-    public function testHeight(): void
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testAutofocus(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
-            '<input type="image" id="image-1" name="image-1" height="20">',
-            Image::widget()->height('20')->render(),
+            '<input type="image" id="w1-image" name="w1-image" autofocus>',
+            Image::widget()->autofocus()->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testDisabled(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image" name="w1-image" disabled>',
+            Image::widget()->disabled()->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testId(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="id-test" name="w1-image">',
+            Image::widget()->id('id-test')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $image = Image::widget();
@@ -40,31 +77,96 @@ final class ImageTest extends TestCase
         $this->assertNotSame($image, $image->width(''));
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testHeight(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image" name="w1-image" height="20">',
+            Image::widget()->height('20')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testName(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image" name="name-test">',
+            Image::widget()->name('name-test')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testRender(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame('<input type="image" id="w1-image" name="w1-image">', Image::widget()->render());
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testSrc(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
-            '<input type="image" id="image-1" name="image-1" src="img_submit.gif">',
+            '<input type="image" id="w1-image" name="w1-image" src="img_submit.gif">',
             Image::widget()->src('img_submit.gif')->render(),
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testTabIndex(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertEqualsWithoutLE(
+            '<input type="image" id="w1-image" name="w1-image" tabindex="1">',
+            Image::widget()->tabIndex(1)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testWidth(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
-            '<input type="image" id="image-1" name="image-1" width="20%">',
+            '<input type="image" id="w1-image" name="w1-image" width="20%">',
             Image::widget()->width('20%')->render(),
         );
     }
 
-    public function testRender(): void
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testWithoutId(): void
     {
-        $this->assertSame('<input type="image" id="image-1" name="image-1">', Image::widget()->render());
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" name="w1-image">',
+            Image::widget()->id(null)->render(),
+        );
     }
 
-    protected function setUp(): void
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testWithoutName(): void
     {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $this->assertSame(
+            '<input type="image" id="w1-image">',
+            Image::widget()->name(null)->render(),
+        );
     }
 }

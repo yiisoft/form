@@ -6,11 +6,8 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Widget\Attribute\CommonAttributes;
-use Yiisoft\Form\Widget\Attribute\ModelAttributes;
+use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
-use Yiisoft\Widget\Widget;
 
 /**
  * The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.
@@ -19,18 +16,28 @@ use Yiisoft\Widget\Widget;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox
  */
-final class Checkbox extends Widget
+final class Checkbox extends InputAttributes
 {
-    use CommonAttributes;
-    use ModelAttributes;
-
+    private bool $checked = false;
     private bool $enclosedByLabel = true;
-    private string $label = '';
+    private ?string $label = '';
     private array $labelAttributes = [];
     /** @var bool|float|int|string|Stringable|null */
     private $uncheckValue = '0';
-    /** @var scalar|Stringable|null */
-    private $value = '1';
+
+    /**
+     * Check the checkbox button.
+     *
+     * @param bool $value Whether the checkbox button is checked.
+     *
+     * @return static
+     */
+    public function checked(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->checked = $value;
+        return $new;
+    }
 
     /**
      * If the widget should be enclosed by label.
@@ -39,7 +46,7 @@ final class Checkbox extends Widget
      *
      * @return static
      */
-    public function enclosedByLabel(bool $value = true): self
+    public function enclosedByLabel(bool $value): self
     {
         $new = clone $this;
         $new->enclosedByLabel = $value;
@@ -54,13 +61,13 @@ final class Checkbox extends Widget
      *
      * When this option is specified, the checkbox will be enclosed by a label tag.
      *
-     * @param string $value
+     * @param string|null $value
      *
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
-    public function label(string $value): self
+    public function label(?string $value): self
     {
         $new = clone $this;
         $new->label = $value;
@@ -98,52 +105,41 @@ final class Checkbox extends Widget
     }
 
     /**
-     * The value of the radio button.
-     *
-     * @param scalar|Stringable|null $value
-     *
-     * @return static
-     *
-     * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox.attrs.value
-     */
-    public function value($value): self
-    {
-        $new = clone $this;
-        $new->attributes['value'] = $value;
-        return $new;
-    }
-
-    /**
      * @return string the generated checkbox tag.
      */
     protected function run(): string
     {
-        $new = clone $this;
+        $attributes = $this->build($this->attributes);
 
-        $checkbox = CheckboxTag::tag();
-        $value = HtmlForm::getAttributeValue($new->getFormModel(), $new->attribute);
+        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.checkbox.html#input.checkbox.attrs.value */
+        $value = $this->getAttributeValue();
 
-        if (is_iterable($value) || is_object($value)) {
+        /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */
+        $valueDefault = $attributes['value'] ?? null;
+
+        if (is_iterable($value) || is_object($value) || is_iterable($valueDefault) || is_object($valueDefault)) {
             throw new InvalidArgumentException('Checkbox widget value can not be an iterable or an object.');
         }
 
-        /** @var scalar|Stringable|null */
-        $valueDefault = array_key_exists('value', $new->attributes) ? $new->attributes['value'] : $new->value;
-        $valueDefault = is_bool($valueDefault) ? (int) $valueDefault : $valueDefault;
+        $checkbox = CheckboxTag::tag();
 
-        if ($new->enclosedByLabel === true) {
-            $label = $new->label !== '' ?
-                $new->label : HtmlForm::getAttributeLabel($new->getFormModel(), $new->attribute);
-            $checkbox = $checkbox->label($label, $new->labelAttributes);
+        if ($this->enclosedByLabel) {
+            $checkbox = $checkbox->label(
+                empty($this->label) ? $this->getAttributeLabel() : $this->label,
+                $this->labelAttributes,
+            );
+        }
+
+        if (empty($value)) {
+            $checkbox = $checkbox->checked($this->checked);
+        } else {
+            $checkbox = $checkbox->checked("$value" === "$valueDefault");
         }
 
         return $checkbox
-            ->checked("$value" === "$valueDefault")
-            ->attributes($new->attributes)
-            ->id($new->getId())
-            ->name(HtmlForm::getInputName($new->getFormModel(), $new->attribute))
-            ->uncheckValue($new->uncheckValue)
-            ->value($valueDefault)
+            ->attributes($attributes)
+            ->uncheckValue($this->uncheckValue)
+            ->value(is_bool($valueDefault) ? (int) $valueDefault : $valueDefault)
             ->render();
     }
 }

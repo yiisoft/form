@@ -19,8 +19,10 @@ interface FormErrorsInterface
 
     /**
      * Removes errors for all attributes.
+     *
+     * @param string $attribute Attribute name. If not set, removes errors for all attributes.
      */
-    public function clear(): void;
+    public function clear(string $attribute = null): void;
 
     /**
      * Returns errors for all attributes.

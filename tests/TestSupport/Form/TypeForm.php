@@ -18,18 +18,4 @@ final class TypeForm extends FormModel
     private string $toCamelCase = '';
     private ?string $toDate = '';
     private ?string $toNull = null;
-
-    public function getAttributeHints(): array
-    {
-        return [
-            'string' => 'Write your text string.',
-        ];
-    }
-
-    public function getAttributePlaceholders(): array
-    {
-        return [
-            'string' => 'Typed your text string.',
-        ];
-    }
 }

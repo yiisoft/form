@@ -35,7 +35,7 @@ final class HtmlFormErrors
     }
 
     /**
-     * Returns the firts errors for all attributes as a one-dimensional array.
+     * Returns first errors for all attributes as a one-dimensional array.
      *
      * @param FormModelInterface $formModel the form object.
      *
@@ -69,6 +69,19 @@ final class HtmlFormErrors
     public static function getFirstError(FormModelInterface $formModel, string $attribute): string
     {
         return $formModel->getFormErrors()->getFirstError(HtmlForm::getAttributeName($formModel, $attribute));
+    }
+
+    /**
+     * Returns the first error of every attribute in the model.
+     *
+     * @param FormModelInterface $formModel the form object.
+     *
+     * @return array The first error message for each attribute in a model. Empty array is returned if there is no
+     * error.
+     */
+    public static function getFirstErrors(FormModelInterface $formModel): array
+    {
+        return $formModel->getFormErrors()->getFirstErrors();
     }
 
     /**

@@ -35,12 +35,12 @@ final class FormErrors implements FormErrorsInterface
 
     public function getErrorSummary(): array
     {
-        return $this->renderErrorSumary($this->getAllErrors());
+        return $this->renderErrorSummary($this->getAllErrors());
     }
 
     public function getErrorSummaryFirstErrors(): array
     {
-        return $this->renderErrorSumary([$this->getFirstErrors()]);
+        return $this->renderErrorSummary([$this->getFirstErrors()]);
     }
 
     public function getFirstError(string $attribute): string
@@ -74,12 +74,16 @@ final class FormErrors implements FormErrorsInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
-    public function clear(): void
+    public function clear(string $attribute = null): void
     {
-        $this->attributesErrors = [];
+        if ($attribute !== null) {
+            unset($this->attributesErrors[$attribute]);
+        } else {
+            $this->attributesErrors = [];
+        }
     }
 
-    private function renderErrorSumary(array $errors): array
+    private function renderErrorSummary(array $errors): array
     {
         $lines = [];
 
