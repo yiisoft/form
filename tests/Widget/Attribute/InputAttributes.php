@@ -26,7 +26,7 @@ final class InputAttributes extends TestCase
         $this->assertNotSame($inputAttributes, $inputAttributes->required());
     }
 
-    private function createWidget(): InputAttributes
+    private function createWidget(): self
     {
         return new class () extends InputAttributes {
             protected function run(): string
