@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Exception\AttributeNotSetException;
 use Yiisoft\Form\Exception\FormModelNotSetException;
