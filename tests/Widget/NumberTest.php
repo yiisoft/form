@@ -196,7 +196,7 @@ final class NumberTest extends TestCase
 
         // Value `null`.
         $this->assertSame(
-            '<input type="number" id="typeform-int" name="TypeForm[int]" value="0">',
+            '<input type="number" id="typeform-int" name="TypeForm[int]">',
             Number::widget()->for(new TypeForm(), 'int')->value(null)->render(),
         );
     }
