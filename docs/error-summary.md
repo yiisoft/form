@@ -68,11 +68,11 @@ use Yiisoft\Form\Widget\Text;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Text::widget()->config($formModel, 'name') ?>
-    <?= Text::widget()->config($formModel, 'email') ?>
+    <?= Text::widget()->for($formModel, 'name') ?>
+    <?= Text::widget()->for($formModel, 'email') ?>
     <?= ErrorSummary::widget()->model($formModel) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= SubmitButton::widget()->attributes(['class' => 'button is-block is-info is-fullwidth'])->value('Save') ?>
 <?= Form::end(); ?>
 ```
 
@@ -81,32 +81,28 @@ That would generate the following code before validation:
 ```html
 <form action="widgets" method="POST" _csrf="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
     <input type="hidden" name="_csrf" value="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
-    <input type="text" id="testform-name" name="TestForm[name]">
+    <input type="text" id="testform-name" name="TestForm[name]" minlength="4">
     <input type="text" id="testform-email" name="TestForm[email]">
-    <div style="display:none"><p>Please fix the following errors:</p><ul></ul></div>
     <hr class="mt-3">
-    <div>
-        <input type="submit" id="submit-14082948982001" class="button is-block is-info is-fullwidth" name="submit-14082948982001" value="Save">
-    </div>
+    <input type="submit" id="w1-submit" class="button is-block is-info is-fullwidth" name="w1-submit" value="Save">
 </form>
 ```
 
 That would generate the following code after validation:
 ```html
-<form action="widgets" method="POST" _csrf="9moR1LM6d8JXgqYRLTD_ba2D-fQNRSyXTddnFUQIU1XFXWi61m408iDU_mhMaJ4127TIjk4fQ-MLsDUhDUkZPg==">
-    <input type="hidden" name="_csrf" value="9moR1LM6d8JXgqYRLTD_ba2D-fQNRSyXTddnFUQIU1XFXWi61m408iDU_mhMaJ4127TIjk4fQ-MLsDUhDUkZPg==">
-    <input type="text" id="testform-name" name="TestForm[name]">
+<form action="widgets" method="POST" _csrf="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+    <input type="hidden" name="_csrf" value="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+    <input type="text" id="testform-name" name="TestForm[name]" minlength="4">
     <input type="text" id="testform-email" name="TestForm[email]">
-    <div><p>Please fix the following errors:</p>
+    <div>
+        <p>Please fix the following errors:</p>
         <ul>
             <li>This value is not a valid email address.</li>
             <li>Is too short.</li>
         </ul>
     </div>
     <hr class="mt-3">
-    <div>
-        <input type="submit" id="submit-14687568353001" class="button is-block is-info is-fullwidth" name="submit-14687568353001" value="Save">
-    </div>
+    <input type="submit" id="w1-submit" class="button is-block is-info is-fullwidth" name="w1-submit" value="Save">
 </form>
 ```
 
@@ -132,8 +128,8 @@ use Yiisoft\Form\Widget\Text;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
-    <?= Text::widget()->config($formModel, 'name') ?>
-    <?= Text::widget()->config($formModel, 'email') ?>
+    <?= Text::widget()->for($formModel, 'name') ?>
+    <?= Text::widget()->for($formModel, 'email') ?>
     <?= ErrorSummary::widget()
         ->attributes(['class' => 'has-text-danger'])
         ->footer('Custom Footer:')
@@ -141,44 +137,74 @@ use Yiisoft\Form\Widget\Text;
         ->model($formModel)
     ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= SubmitButton::widget()->attributes(['class' => 'button is-block is-info is-fullwidth'])->value('Save') ?>
 <?= Form::end(); ?>
-```
-
-That would generate the following code before validation:
-
-```html
-<form action="widgets" method="POST" _csrf="SNh_ZumgopPv9wpiFCMw3IioeIbaQ9w54dYmh0XRanl77wYIjPTho5ihUht1e1GE_p9J_JkZs02nsXSzDJAgEg==">    
-    <input type="hidden" name="_csrf" value="SNh_ZumgopPv9wpiFCMw3IioeIbaQ9w54dYmh0XRanl77wYIjPTho5ihUht1e1GE_p9J_JkZs02nsXSzDJAgEg==">
-    <input type="text" id="testform-name" name="TestForm[name]">
-    <input type="text" id="testform-email" name="TestForm[email]">
-    <div class="has-text-danger" style="display:none">Custom Header:<ul></ul>Custom Footer:</div>
-    <hr class="mt-3">
-    <div>
-        <input type="submit" id="submit-20289061442001" class="button is-block is-info is-fullwidth" name="submit-20289061442001" value="Save">
-    </div>
-</form>
 ```
 
 That would generate the following code after validation:
 
 ```html
-<form action="widgets" method="POST" _csrf="PwqhEiBBULqjUwjVQFBIGDt2iral9LmaJNOkfEJe-BcMPdh8RRUTitQFUKwhCClATUG7zOau1u5itPZICx-yfA==">
-    <input type="hidden" name="_csrf" value="PwqhEiBBULqjUwjVQFBIGDt2iral9LmaJNOkfEJe-BcMPdh8RRUTitQFUKwhCClATUG7zOau1u5itPZICx-yfA==">
-    <input type="text" id="testform-name" name="TestForm[name]">
+<form action="widgets" method="POST" _csrf="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+    <input type="hidden" name="_csrf" value="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+    <input type="text" id="testform-name" name="TestForm[name]" minlength="4">
     <input type="text" id="testform-email" name="TestForm[email]">
     <div class="has-text-danger">
-        Custom Header:
+        <p>Custom Header:</p>
         <ul>
             <li>This value is not a valid email address.</li>
             <li>Is too short.</li>
         </ul>
-        Custom Footer:
+        <p>Custom Footer:</p>
     </div>
     <hr class="mt-3">
-    <div>
-        <input type="submit" id="submit-21602903539001" class="button is-block is-info is-fullwidth" name="submit-21602903539001" value="Save">
+    <input type="submit" id="w1-submit" class="button is-block is-info is-fullwidth" name="w1-submit" value="Save">
+</form>
+```
+
+### Exclude attributes
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Widget\ErrorSummary;
+use Yiisoft\Form\Widget\Field;
+use Yiisoft\Form\Widget\Form;
+use Yiisoft\Form\Widget\Text;
+
+/**
+ * @var FormModelInterface $data
+ * @var object $csrf
+ */
+?>
+
+<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
+    <?= Text::widget()->for($formModel, 'name') ?>
+    <?= Text::widget()->for($formModel, 'email') ?>
+    <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->excludeAttributes(['name'])->model($formModel) ?>
+    <hr class="mt-3">
+    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+<?= Form::end(); ?>
+```
+
+
+That would generate the following code after validation:
+
+```html
+<form action="widgets" method="POST" _csrf="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+    <input type="hidden" name="_csrf" value="vWob09HzPhcTDuhOHVU71VJQAAymEm2Hysn_8QN1Y8qOXWK9tKd9J2RYsDd8DVqNJGcxduVIAvOMrq3FSjQpoQ==">
+    <input type="text" id="testform-name" name="TestForm[name]" minlength="4">
+    <input type="text" id="testform-email" name="TestForm[email]">
+    <div class="has-text-danger">
+        <p>Please fix the following errors:</p>
+        <ul>
+            <li>This value is not a valid email address.</li>
+        </ul>
     </div>
+    <hr class="mt-3">
+    <input type="submit" id="w1-submit" class="button is-block is-info is-fullwidth" name="w1-submit" value="Save">
 </form>
 ```
 
@@ -188,6 +214,7 @@ Method | Description | Default
 -------|-------------|---------
 `attributes(array $value)` | Sets the HTML attributes for the error summary. | `[]`
 `encode(bool $value)` | Whether to encode the error summary. | `true`
+`excludeAttributes(array $value)` | Exclude specific attributes from the error summary. | `[]`
 `footer(string $value)` | Set the footer text for the error summary. | `''`
 `header(string $value)` | Set the header text for the error summary. | `''`
 `model(FormModelInterface $formModel)` | Set the model for the error summary. | `null`
