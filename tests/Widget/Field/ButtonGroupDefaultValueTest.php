@@ -184,7 +184,7 @@ final class ButtonGroupDefaultValueTest extends TestCase
                         [
                             'buttonGroup' => [
                                 'definitions' => [
-                                    'container()' => [false]
+                                    'container()' => [false],
                                 ],
                             ],
                         ],
