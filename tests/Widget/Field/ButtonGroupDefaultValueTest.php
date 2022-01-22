@@ -25,8 +25,10 @@ final class ButtonGroupDefaultValueTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <div>
+        <div>
         <input type="button" id="w1-button" class="btn btn-primary" name="w1-button" value="Submit">
         <input type="button" id="w2-button" class="btn btn-primary" name="w2-button" value="Reset">
+        </div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -45,8 +47,10 @@ final class ButtonGroupDefaultValueTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <div>
+        <div>
         <input type="button" id="w1-button" class="btn btn-success" name="w1-button" value="Submit">
         <input type="button" id="w2-button" class="btn btn-success" name="w2-button" value="Reset">
+        </div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -66,8 +70,10 @@ final class ButtonGroupDefaultValueTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <div class="container-class-definitions">
+        <div>
         <input type="button" id="w1-button" name="w1-button" value="Submit">
         <input type="button" id="w2-button" name="w2-button" value="Reset">
+        </div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -81,13 +87,15 @@ final class ButtonGroupDefaultValueTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testContainerAttributesDefaultValues(): void
+    public function testFieldContainerAttributesDefaultValues(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <div class="container-class-widget">
+        <div>
         <input type="button" id="w1-button" name="w1-button" value="Submit">
         <input type="button" id="w2-button" name="w2-button" value="Reset">
+        </div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -108,13 +116,15 @@ final class ButtonGroupDefaultValueTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testContainerClassDefinitions(): void
+    public function testFieldContainerClassDefinitions(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <div class="container-class-definitions">
+        <div>
         <input type="button" id="w1-button" name="w1-button" value="Submit">
         <input type="button" id="w2-button" name="w2-button" value="Reset">
+        </div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -133,8 +143,10 @@ final class ButtonGroupDefaultValueTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $expected = <<<HTML
         <div class="container-class-widget">
+        <div>
         <input type="button" id="w1-button" name="w1-button" value="Submit">
         <input type="button" id="w2-button" name="w2-button" value="Reset">
+        </div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -165,7 +177,20 @@ final class ButtonGroupDefaultValueTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['container()' => [false]])
+            Field::widget(
+                [
+                    'container()' => [false],
+                    'defaultValues()' => [
+                        [
+                            'buttonGroup' => [
+                                'definitions' => [
+                                    'container()' => [false]
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            )
                 ->buttonGroup([['label' => 'Submit'], ['label' => 'Reset']])
                 ->render(),
         );
@@ -183,8 +208,73 @@ final class ButtonGroupDefaultValueTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['container()' => [true]])
-                ->defaultValues(['buttonGroup' => ['container' => false]])
+            Field::widget()
+                ->container(false)
+                ->defaultValues(['buttonGroup' => ['definitions' => ['container()' => [false]]]])
+                ->buttonGroup([['label' => 'Submit'], ['label' => 'Reset']])
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testFieldAndButtonContainerAttributesDefaultValues(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<HTML
+        <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+        <input type="button" id="w1-button" name="w1-button" value="Submit">
+        <input type="button" id="w2-button" name="w2-button" value="Reset">
+        </div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget(['containerClass()' => ['row']])
+                ->defaultValues(
+                    [
+                        'buttonGroup' => [
+                            'definitions' => [
+                                'containerClass()' => ['col-sm-10 offset-sm-2'],
+                            ],
+                        ],
+                    ],
+                )
+                ->buttonGroup([['label' => 'Submit'], ['label' => 'Reset']])
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testFieldAndButtonContainerClassDefinitions(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<HTML
+        <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+        <input type="button" id="w1-button" name="w1-button" value="Submit">
+        <input type="button" id="w2-button" name="w2-button" value="Reset">
+        </div>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget([
+                'containerClass()' => ['row'],
+                'defaultValues()' => [
+                    [
+                        'buttonGroup' => [
+                            'definitions' => [
+                                'containerClass()' => ['col-sm-10 offset-sm-2'],
+                            ],
+                        ],
+                    ],
+                ],
+            ])
                 ->buttonGroup([['label' => 'Submit'], ['label' => 'Reset']])
                 ->render(),
         );
