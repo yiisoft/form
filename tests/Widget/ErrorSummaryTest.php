@@ -155,7 +155,7 @@ final class ErrorSummaryTest extends TestCase
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->excludeAttributes($excludeAttributes)
+            ->excludeAttributes(...$excludeAttributes)
             ->footer($footer)
             ->footerAttributes($footerAttributes)
             ->headerAttributes($headerAttributes)

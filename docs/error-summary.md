@@ -183,7 +183,7 @@ use Yiisoft\Form\Widget\Text;
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <?= Text::widget()->for($formModel, 'email') ?>
-    <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->excludeAttributes(['name'])->model($formModel) ?>
+    <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->excludeAttributes('name')->model($formModel) ?>
     <hr class="mt-3">
     <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
 <?= Form::end(); ?>

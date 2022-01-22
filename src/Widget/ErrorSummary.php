@@ -72,7 +72,7 @@ final class ErrorSummary extends Widget
      *
      * @return static
      */
-    public function excludeAttributes(array $values): self
+    public function excludeAttributes(string ...$values): self
     {
         $new = clone $this;
         $new->excludeAttributes = $values;
