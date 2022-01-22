@@ -32,6 +32,7 @@ final class ErrorSummaryTest extends TestCase
                 '',
                 [],
                 true,
+                [],
                 <<<HTML
                 <div>
                 <p class="text-danger">Please fix the following errors:</p>
@@ -54,6 +55,7 @@ final class ErrorSummaryTest extends TestCase
                 'Custom footer',
                 ['class' => 'text-primary'],
                 true,
+                [],
                 <<<HTML
                 <div>
                 <p class="text-danger">Custom header</p>
@@ -61,6 +63,28 @@ final class ErrorSummaryTest extends TestCase
                 <li>Is too short.</li>
                 <li>This value is not a valid email address.</li>
                 <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
+                </ul>
+                <p class="text-primary">Custom footer</p>
+                </div>
+                HTML,
+            ],
+            // Set filter attributes.
+            [
+                'jac',
+                'jack@.com',
+                'A258*f',
+                [],
+                'Custom header',
+                ['class' => 'text-danger'],
+                'Custom footer',
+                ['class' => 'text-primary'],
+                true,
+                ['email', 'password'],
+                <<<HTML
+                <div>
+                <p class="text-danger">Custom header</p>
+                <ul>
+                <li>Is too short.</li>
                 </ul>
                 <p class="text-primary">Custom footer</p>
                 </div>
@@ -96,6 +120,7 @@ final class ErrorSummaryTest extends TestCase
      * @param string $footer
      * @param array $footerAttributes
      * @param bool $showAllErrors
+     * @param array $excludeAttributes
      * @param string $expected
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
@@ -110,6 +135,7 @@ final class ErrorSummaryTest extends TestCase
         string $footer,
         array $footerAttributes,
         bool $showAllErrors,
+        array $excludeAttributes,
         string $expected
     ): void {
         $formModel = new PersonalForm();
@@ -129,10 +155,11 @@ final class ErrorSummaryTest extends TestCase
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->model($formModel)
+            ->excludeAttributes($excludeAttributes)
             ->footer($footer)
             ->footerAttributes($footerAttributes)
             ->headerAttributes($headerAttributes)
+            ->model($formModel)
             ->showAllErrors($showAllErrors);
 
         $errorSummary = $header !== '' ? $errorSummary->header($header) : $errorSummary;

@@ -25,6 +25,7 @@ final class ErrorSummary extends Widget
 {
     private array $attributes = [];
     private bool $encode = true;
+    private array $excludeAttributes = [];
     private FormModelInterface $formModel;
     private string $footer = '';
     private array $footerAttributes = [];
@@ -61,6 +62,20 @@ final class ErrorSummary extends Widget
     {
         $new = clone $this;
         $new->encode = $value;
+        return $new;
+    }
+
+    /**
+     * Exclude specific attributes from the error summary.
+     *
+     * @param array $values The attributes to exclude.
+     *
+     * @return static
+     */
+    public function excludeAttributes(array $values): self
+    {
+        $new = clone $this;
+        $new->excludeAttributes = $values;
         return $new;
     }
 
@@ -178,8 +193,10 @@ final class ErrorSummary extends Widget
         $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
         $errorMessages = [];
 
-        if ($this->showAllErrors) {
+        if ($this->showAllErrors && $this->excludeAttributes === []) {
             $errors = HtmlFormErrors::getErrorSummary($this->formModel);
+        } elseif ($this->excludeAttributes !== []) {
+            $errors = array_diff_key($errors, array_flip($this->excludeAttributes));
         }
 
         /**
