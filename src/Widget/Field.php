@@ -59,7 +59,7 @@ final class Field extends FieldAttributes
         $new = clone $this;
         $new = $new->type('buttonGroup');
         $config = array_merge($new->getDefinitions(), $config);
-        $new->button = ButtonGroup::widget($config)->attributes($attributes)->buttons($buttons)->container(false);
+        $new->button = ButtonGroup::widget($config)->attributes($attributes)->buttons($buttons);
         return $new;
     }
 
