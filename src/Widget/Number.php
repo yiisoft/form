@@ -47,7 +47,7 @@ final class Number extends InputAttributes implements NumberInterface, Placehold
         $attributes = $this->build($this->attributes);
 
         /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html#input.number.attrs.value */
-        $value = $attributes['value'] ?? $this->getAttributeValue();
+        $value = array_key_exists('value', $attributes) ? $attributes['value'] : $this->getAttributeValue();
         unset($attributes['value']);
 
         if (!is_numeric($value) && null !== $value) {
