@@ -13,6 +13,7 @@ use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Html\Tag\Span;
+use Yiisoft\Html\Tag\Input;
 
 final class FieldTest extends TestCase
 {
@@ -80,6 +81,31 @@ final class FieldTest extends TestCase
                 )
                 ->inputClass('form-control')
                 ->template("{before}\n{input}\n{after}\n{hint}\n{error}")
+                ->text(new TypeForm(), 'string')
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testDefaultTokensWithOverrideToken(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="typeform-string">String</label>
+        <input type="color" id="typeform-string" name="TypeForm[string]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->defaultTokens(
+                    [
+                        '{input}' => Input::tag()->id('typeform-string')->name('TypeForm[string]')->type('color'),
+                    ]
+                )
+                ->template("{label}\n{input}\n{hint}\n{error}")
                 ->text(new TypeForm(), 'string')
                 ->render(),
         );

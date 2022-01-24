@@ -717,7 +717,7 @@ final class Field extends FieldAttributes
         }
 
         if ($new->getDefaultTokens() !== []) {
-            $new->parts = array_merge($new->getDefaultTokens(), $new->parts);
+            $new->parts = array_merge($new->parts, $new->getDefaultTokens());
         }
 
         return preg_replace('/^\h*\v+/m', '', trim(strtr($new->getTemplate(), $new->parts)));
