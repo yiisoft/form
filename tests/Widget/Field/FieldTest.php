@@ -70,7 +70,7 @@ final class FieldTest extends TestCase
             $expected,
             Field::widget()
                 ->ariaDescribedBy(true)
-                ->ariaLabel("Amount (to the nearest dollar)")
+                ->ariaLabel('Amount (to the nearest dollar)')
                 ->containerClass('input-group mb-3')
                 ->defaultTokens(
                     [
