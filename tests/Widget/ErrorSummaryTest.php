@@ -79,7 +79,7 @@ final class ErrorSummaryTest extends TestCase
                 'Custom footer',
                 ['class' => 'text-primary'],
                 true,
-                ['email', 'password'],
+                ['name'],
                 <<<HTML
                 <div>
                 <p class="text-danger">Custom header</p>
@@ -105,6 +105,7 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($errorSummary, $errorSummary->header(''));
         $this->assertNotSame($errorSummary, $errorSummary->model(new PersonalForm()));
         $this->assertNotSame($errorSummary, $errorSummary->showAllErrors(false));
+        $this->assertNotSame($errorSummary, $errorSummary->onlyAttributes(''));
         $this->assertNotSame($errorSummary, $errorSummary->tag('div'));
     }
 
@@ -120,7 +121,7 @@ final class ErrorSummaryTest extends TestCase
      * @param string $footer
      * @param array $footerAttributes
      * @param bool $showAllErrors
-     * @param array $excludeAttributes
+     * @param array $onlyAttributes
      * @param string $expected
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
@@ -135,7 +136,7 @@ final class ErrorSummaryTest extends TestCase
         string $footer,
         array $footerAttributes,
         bool $showAllErrors,
-        array $excludeAttributes,
+        array $onlyAttributes,
         string $expected
     ): void {
         $formModel = new PersonalForm();
@@ -155,7 +156,7 @@ final class ErrorSummaryTest extends TestCase
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->excludeAttributes(...$excludeAttributes)
+            ->onlyAttributes(...$onlyAttributes)
             ->footer($footer)
             ->footerAttributes($footerAttributes)
             ->headerAttributes($headerAttributes)

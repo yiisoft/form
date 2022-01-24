@@ -25,12 +25,12 @@ final class ErrorSummary extends Widget
 {
     private array $attributes = [];
     private bool $encode = true;
-    private array $excludeAttributes = [];
     private FormModelInterface $formModel;
     private string $footer = '';
     private array $footerAttributes = [];
     private string $header = 'Please fix the following errors:';
     private array $headerAttributes = [];
+    private array $onlyAttributes = [];
     private bool $showAllErrors = false;
     /** @psalm-param non-empty-string */
     private string $tag = 'div';
@@ -62,20 +62,6 @@ final class ErrorSummary extends Widget
     {
         $new = clone $this;
         $new->encode = $value;
-        return $new;
-    }
-
-    /**
-     * Exclude specific attributes from the error summary.
-     *
-     * @param array $values The attributes to exclude.
-     *
-     * @return static
-     */
-    public function excludeAttributes(string ...$values): self
-    {
-        $new = clone $this;
-        $new->excludeAttributes = $values;
         return $new;
     }
 
@@ -168,6 +154,20 @@ final class ErrorSummary extends Widget
     }
 
     /**
+     * Specific attributes to be included in error summary.
+     *
+     * @param array $values The attributes to be included in error summary.
+     *
+     * @return static
+     */
+    public function onlyAttributes(string ...$values): self
+    {
+        $new = clone $this;
+        $new->onlyAttributes = $values;
+        return $new;
+    }
+
+    /**
      * Set the container tag name for the error summary.
      *
      * Empty to render error messages without container {@see Html::tag()}.
@@ -193,10 +193,10 @@ final class ErrorSummary extends Widget
         $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
         $errorMessages = [];
 
-        if ($this->showAllErrors && $this->excludeAttributes === []) {
+        if ($this->showAllErrors && $this->onlyAttributes === []) {
             $errors = HtmlFormErrors::getErrorSummary($this->formModel);
-        } elseif ($this->excludeAttributes !== []) {
-            $errors = array_diff_key($errors, array_flip($this->excludeAttributes));
+        } elseif ($this->onlyAttributes !== []) {
+            $errors = array_intersect_key($errors, array_flip($this->onlyAttributes));
         }
 
         /**

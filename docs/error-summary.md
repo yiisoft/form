@@ -161,7 +161,7 @@ That would generate the following code after validation:
 </form>
 ```
 
-### Exclude attributes
+### Only attributes
 
 ```php
 <?php
@@ -183,7 +183,7 @@ use Yiisoft\Form\Widget\Text;
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <?= Text::widget()->for($formModel, 'email') ?>
-    <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->excludeAttributes('name')->model($formModel) ?>
+    <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->onlyAttributes('name')->model($formModel) ?>
     <hr class="mt-3">
     <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
 <?= Form::end(); ?>
@@ -214,9 +214,9 @@ Method | Description | Default
 -------|-------------|---------
 `attributes(array $value)` | Sets the HTML attributes for the error summary. | `[]`
 `encode(bool $value)` | Whether to encode the error summary. | `true`
-`excludeAttributes(array $value)` | Exclude specific attributes from the error summary. | `[]`
 `footer(string $value)` | Set the footer text for the error summary. | `''`
 `header(string $value)` | Set the header text for the error summary. | `''`
 `model(FormModelInterface $formModel)` | Set the model for the error summary. | `null`
 `showAllErrors(bool $value)` | Whether to show all errors. | `false`
-`function tag(string $value)` | Set the container tag name for the error summary. | `'div'`
+`onlyAttributes(array $value)` | Specific attributes to be included in error summary. | `''`
+`tag(string $value)` | Set the container tag name for the error summary. | `'div'`
