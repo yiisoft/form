@@ -9,9 +9,10 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
-use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
+use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Html\Tag\Span;
 
 final class FieldTest extends TestCase
 {
@@ -48,6 +49,39 @@ final class FieldTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             Field::widget()->containerName('name-test')->text(new TypeForm(), 'string')->render(),
+        );
+    }
+
+    /**
+     * @link https://getbootstrap.com/docs/5.0/forms/input-group/
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testDefaultTokens(): void
+    {
+        $expected = <<<HTML
+        <div class="input-group mb-3">
+        <span class="input-group-text">.00</span>
+        <input type="text" id="typeform-string" class="form-control" name="TypeForm[string]" aria-describedby="typeform-string-help" aria-label="Amount (to the nearest dollar)">
+        <span class="input-group-text">$</span>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->ariaDescribedBy(true)
+                ->ariaLabel("Amount (to the nearest dollar)")
+                ->containerClass('input-group mb-3')
+                ->defaultTokens(
+                    [
+                        '{after}' => Span::tag()->class('input-group-text')->content('$'),
+                        '{before}' => Span::tag()->class('input-group-text')->content('.00'),
+                    ]
+                )
+                ->inputClass('form-control')
+                ->template("{before}\n{input}\n{after}\n{hint}\n{error}")
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 

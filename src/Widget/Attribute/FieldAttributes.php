@@ -48,6 +48,20 @@ abstract class FieldAttributes extends WidgetAttributes
     }
 
     /**
+     * Set aria-label attribute.
+     *
+     * @param string $value
+     *
+     * @return static
+     */
+    public function ariaLabel(string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['aria-label'] = $value;
+        return $new;
+    }
+
+    /**
      * Enable, disabled container for field.
      *
      * @param bool $value Is the container disabled or not.
