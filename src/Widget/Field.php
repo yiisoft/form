@@ -716,6 +716,10 @@ final class Field extends FieldAttributes
             $new->parts['{label}'] = $new->renderLabel();
         }
 
+        if ($new->getDefaultTokens() !== []) {
+            $new->parts = array_merge($new->getDefaultTokens(), $new->parts);
+        }
+
         return preg_replace('/^\h*\v+/m', '', trim(strtr($new->getTemplate(), $new->parts)));
     }
 

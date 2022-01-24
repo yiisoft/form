@@ -10,6 +10,7 @@ abstract class FieldAttributes extends WidgetAttributes
     private ?bool $container = null;
     private array $containerAttributes = [];
     private string $containerClass = '';
+    private array $defaultTokens = [];
     private array $defaultValues = [];
     private ?string $error = '';
     private array $errorAttributes = [];
@@ -117,6 +118,20 @@ abstract class FieldAttributes extends WidgetAttributes
     {
         $new = clone $this;
         $new->containerAttributes['name'] = $id;
+        return $new;
+    }
+
+    /**
+     * Set default tokens.
+     *
+     * @param array $values Token values indexed by token names.
+     *
+     * @return static
+     */
+    public function defaultTokens(array $values): self
+    {
+        $new = clone $this;
+        $new->defaultTokens = $values;
         return $new;
     }
 
@@ -553,6 +568,14 @@ abstract class FieldAttributes extends WidgetAttributes
         }
 
         return $containerClass;
+    }
+
+    /**
+     * Return default tokens for field.
+     */
+    protected function getDefaultTokens(): array
+    {
+        return $this->defaultTokens;
     }
 
     /**
