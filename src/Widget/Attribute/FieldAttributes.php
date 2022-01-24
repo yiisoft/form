@@ -586,10 +586,20 @@ abstract class FieldAttributes extends WidgetAttributes
 
     /**
      * Return default tokens for field.
+     *
+     * if default tokens is empty array, and default tokens default value is not empty array, then return default tokens
+     * default value.
      */
     protected function getDefaultTokens(): array
     {
-        return $this->defaultTokens;
+        $defaultTokens = $this->defaultTokens;
+        $defaultTokensDefault = $this->getDefaultValue($this->type, 'defaultTokens');
+
+        if (is_array($defaultTokensDefault) && $defaultTokensDefault !== []) {
+            $defaultTokens = $defaultTokensDefault;
+        }
+
+        return $defaultTokens;
     }
 
     /**

@@ -86,6 +86,62 @@ final class FieldTest extends TestCase
     }
 
     /**
+     * @link https://getbootstrap.com/docs/5.0/forms/input-group/
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testDefaultTokensWithDefaultValues(): void
+    {
+        $factoryConfig = [
+            'defaultValues()' => [
+                [
+                    'text' => [
+                        'defaultTokens' => [
+                            '{after}' => Span::tag()->class('input-group-text')->content('$'),
+                            '{before}' => Span::tag()->class('input-group-text')->content('.00'),
+                        ],
+                        'template' => "{before}\n{input}\n{after}\n{error}",
+                    ],
+                    'textArea' => [
+                        'defaultTokens' => [
+                            '{before}' => Span::tag()->class('input-group-text')->content('With textarea'),
+                        ],
+                        'template' => "{before}\n{input}\n{error}",
+                    ],
+                ],
+            ],
+        ];
+
+        $field = Field::widget($factoryConfig);
+
+        $expected = <<<HTML
+        <div class="input-group mb-3">
+        <span class="input-group-text">.00</span>
+        <input type="text" id="typeform-string" class="form-control" name="TypeForm[string]" aria-describedby="typeform-string-help" aria-label="Amount (to the nearest dollar)">
+        <span class="input-group-text">$</span>
+        </div>
+        <div class="input-group">
+        <span class="input-group-text">With textarea</span>
+        <textarea id="typeform-string" name="TypeForm[string]"></textarea>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            $field
+                ->ariaDescribedBy(true)
+                ->ariaLabel('Amount (to the nearest dollar)')
+                ->containerClass('input-group mb-3')
+                ->inputClass('form-control')
+                ->text(new TypeForm(), 'string')
+                ->render() . PHP_EOL .
+            $field
+                ->containerClass('input-group')
+                ->textArea(new TypeForm(), 'string')
+                ->render(),
+        );
+    }
+
+    /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testLabelFor(): void
