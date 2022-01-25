@@ -50,12 +50,13 @@ final class HtmlFormErrors
      * Returns the errors for all attributes as a one-dimensional array.
      *
      * @param FormModelInterface $formModel the form object.
+     * @param array $onlyAttributes list of attributes whose errors should be returned.
      *
      * @return array errors for all attributes as a one-dimensional array. Empty array is returned if no error.
      */
-    public static function getErrorSummary(FormModelInterface $formModel): array
+    public static function getErrorSummary(FormModelInterface $formModel, array $onlyAttributes = []): array
     {
-        return $formModel->getFormErrors()->getErrorSummary();
+        return $formModel->getFormErrors()->getErrorSummary($onlyAttributes);
     }
 
     /**

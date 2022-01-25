@@ -25,6 +25,7 @@ final class ErrorSummary extends Widget
 {
     private array $attributes = [];
     private bool $encode = true;
+    private array $onlyAttributes = [];
     private FormModelInterface $formModel;
     private string $footer = '';
     private array $footerAttributes = [];
@@ -153,6 +154,20 @@ final class ErrorSummary extends Widget
     }
 
     /**
+     * Specific attributes to be filtered out when rendering the error summary.
+     *
+     * @param array $values The attributes to be included in error summary.
+     *
+     * @return static
+     */
+    public function onlyAttributes(string ...$values): self
+    {
+        $new = clone $this;
+        $new->onlyAttributes = $values;
+        return $new;
+    }
+
+    /**
      * Set the container tag name for the error summary.
      *
      * Empty to render error messages without container {@see Html::tag()}.
@@ -179,7 +194,9 @@ final class ErrorSummary extends Widget
         $errorMessages = [];
 
         if ($this->showAllErrors) {
-            $errors = HtmlFormErrors::getErrorSummary($this->formModel);
+            $errors = HtmlFormErrors::getErrorSummary($this->formModel, $this->onlyAttributes);
+        } elseif ($this->onlyAttributes !== []) {
+            $errors = array_intersect_key($errors, array_flip($this->onlyAttributes));
         }
 
         /**

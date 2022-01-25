@@ -33,9 +33,15 @@ final class FormErrors implements FormErrorsInterface
         return $this->attributesErrors[$attribute] ?? [];
     }
 
-    public function getErrorSummary(): array
+    public function getErrorSummary(array $onlyAttributes = []): array
     {
-        return $this->renderErrorSummary($this->getAllErrors());
+        $errors = $this->getAllErrors();
+
+        if ($onlyAttributes !== []) {
+            $errors = array_intersect_key($errors, array_flip($onlyAttributes));
+        }
+
+        return $this->renderErrorSummary($errors);
     }
 
     public function getErrorSummaryFirstErrors(): array

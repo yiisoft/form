@@ -32,6 +32,7 @@ final class ErrorSummaryTest extends TestCase
                 '',
                 [],
                 true,
+                [],
                 <<<HTML
                 <div>
                 <p class="text-danger">Please fix the following errors:</p>
@@ -54,6 +55,7 @@ final class ErrorSummaryTest extends TestCase
                 'Custom footer',
                 ['class' => 'text-primary'],
                 true,
+                [],
                 <<<HTML
                 <div>
                 <p class="text-danger">Custom header</p>
@@ -63,6 +65,48 @@ final class ErrorSummaryTest extends TestCase
                 <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
                 </ul>
                 <p class="text-primary">Custom footer</p>
+                </div>
+                HTML,
+            ],
+            // Set only attributes with showAllErros its `true`.
+            [
+                'jac',
+                'jack@.com',
+                'A258*f',
+                [],
+                '',
+                ['class' => 'text-danger'],
+                '',
+                ['class' => 'text-primary'],
+                true,
+                ['name'],
+                <<<HTML
+                <div>
+                <p class="text-danger">Please fix the following errors:</p>
+                <ul>
+                <li>Is too short.</li>
+                </ul>
+                </div>
+                HTML,
+            ],
+            // Set only attributes with showAllErros `false`.
+            [
+                'jac',
+                'jack@.com',
+                'A258*f',
+                [],
+                '',
+                ['class' => 'text-danger'],
+                '',
+                ['class' => 'text-primary'],
+                false,
+                ['password'],
+                <<<HTML
+                <div>
+                <p class="text-danger">Please fix the following errors:</p>
+                <ul>
+                <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
+                </ul>
                 </div>
                 HTML,
             ],
@@ -80,6 +124,7 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($errorSummary, $errorSummary->footer(''));
         $this->assertNotSame($errorSummary, $errorSummary->header(''));
         $this->assertNotSame($errorSummary, $errorSummary->model(new PersonalForm()));
+        $this->assertNotSame($errorSummary, $errorSummary->onlyAttributes(''));
         $this->assertNotSame($errorSummary, $errorSummary->showAllErrors(false));
         $this->assertNotSame($errorSummary, $errorSummary->tag('div'));
     }
@@ -96,6 +141,7 @@ final class ErrorSummaryTest extends TestCase
      * @param string $footer
      * @param array $footerAttributes
      * @param bool $showAllErrors
+     * @param array $onlyAttributes
      * @param string $expected
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
@@ -110,6 +156,7 @@ final class ErrorSummaryTest extends TestCase
         string $footer,
         array $footerAttributes,
         bool $showAllErrors,
+        array $onlyAttributes,
         string $expected
     ): void {
         $formModel = new PersonalForm();
@@ -129,10 +176,11 @@ final class ErrorSummaryTest extends TestCase
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->model($formModel)
+            ->onlyAttributes(...$onlyAttributes)
             ->footer($footer)
             ->footerAttributes($footerAttributes)
             ->headerAttributes($headerAttributes)
+            ->model($formModel)
             ->showAllErrors($showAllErrors);
 
         $errorSummary = $header !== '' ? $errorSummary->header($header) : $errorSummary;
