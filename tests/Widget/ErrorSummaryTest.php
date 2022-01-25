@@ -101,11 +101,11 @@ final class ErrorSummaryTest extends TestCase
         $errorSummary = ErrorSummary::widget();
         $this->assertNotSame($errorSummary, $errorSummary->attributes([]));
         $this->assertNotSame($errorSummary, $errorSummary->encode(false));
+        $this->assertNotSame($errorSummary, $errorSummary->firstErrorsOfAttributes(''));
         $this->assertNotSame($errorSummary, $errorSummary->footer(''));
         $this->assertNotSame($errorSummary, $errorSummary->header(''));
         $this->assertNotSame($errorSummary, $errorSummary->model(new PersonalForm()));
         $this->assertNotSame($errorSummary, $errorSummary->showAllErrors(false));
-        $this->assertNotSame($errorSummary, $errorSummary->onlyAttributes(''));
         $this->assertNotSame($errorSummary, $errorSummary->tag('div'));
     }
 
@@ -121,7 +121,7 @@ final class ErrorSummaryTest extends TestCase
      * @param string $footer
      * @param array $footerAttributes
      * @param bool $showAllErrors
-     * @param array $onlyAttributes
+     * @param array $firstErrorsOfAttributes
      * @param string $expected
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
@@ -136,7 +136,7 @@ final class ErrorSummaryTest extends TestCase
         string $footer,
         array $footerAttributes,
         bool $showAllErrors,
-        array $onlyAttributes,
+        array $firstErrorsOfAttributes,
         string $expected
     ): void {
         $formModel = new PersonalForm();
@@ -156,7 +156,7 @@ final class ErrorSummaryTest extends TestCase
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->onlyAttributes(...$onlyAttributes)
+            ->firstErrorsOfAttributes(...$firstErrorsOfAttributes)
             ->footer($footer)
             ->footerAttributes($footerAttributes)
             ->headerAttributes($headerAttributes)
