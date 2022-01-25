@@ -97,4 +97,20 @@ final class HtmlFormErrorsTest extends TestCase
         $this->assertFalse($validator->validate($formModel)->isValid());
         $this->assertTrue(HtmlFormErrors::hasErrors($formModel));
     }
+
+    public function testGetErrorSummaryOnlyAttributes(): void
+    {
+        $formModel = new LoginForm();
+        $validator = $this->createValidatorMock();
+        $this->assertTrue($formModel->load($this->data));
+        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertSame(
+            ['This value is not a valid email address.'],
+            HtmlFormErrors::getErrorSummary($formModel, ['login']),
+        );
+        $this->assertSame(
+            ['Is too short.'],
+            HtmlFormErrors::getErrorSummary($formModel, ['password']),
+        );
+    }
 }

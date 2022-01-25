@@ -68,25 +68,45 @@ final class ErrorSummaryTest extends TestCase
                 </div>
                 HTML,
             ],
-            // Set filter attributes.
+            // Set only attributes with showAllErros its `true`.
             [
                 'jac',
                 'jack@.com',
                 'A258*f',
                 [],
-                'Custom header',
+                '',
                 ['class' => 'text-danger'],
-                'Custom footer',
+                '',
                 ['class' => 'text-primary'],
-                false,
+                true,
                 ['name'],
                 <<<HTML
                 <div>
-                <p class="text-danger">Custom header</p>
+                <p class="text-danger">Please fix the following errors:</p>
                 <ul>
                 <li>Is too short.</li>
                 </ul>
-                <p class="text-primary">Custom footer</p>
+                </div>
+                HTML,
+            ],
+            // Set only attributes with showAllErros `false`.
+            [
+                'jac',
+                'jack@.com',
+                'A258*f',
+                [],
+                '',
+                ['class' => 'text-danger'],
+                '',
+                ['class' => 'text-primary'],
+                false,
+                ['password'],
+                <<<HTML
+                <div>
+                <p class="text-danger">Please fix the following errors:</p>
+                <ul>
+                <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
+                </ul>
                 </div>
                 HTML,
             ],
@@ -101,10 +121,10 @@ final class ErrorSummaryTest extends TestCase
         $errorSummary = ErrorSummary::widget();
         $this->assertNotSame($errorSummary, $errorSummary->attributes([]));
         $this->assertNotSame($errorSummary, $errorSummary->encode(false));
-        $this->assertNotSame($errorSummary, $errorSummary->firstErrorsOfAttributes(''));
         $this->assertNotSame($errorSummary, $errorSummary->footer(''));
         $this->assertNotSame($errorSummary, $errorSummary->header(''));
         $this->assertNotSame($errorSummary, $errorSummary->model(new PersonalForm()));
+        $this->assertNotSame($errorSummary, $errorSummary->onlyAttributes(''));
         $this->assertNotSame($errorSummary, $errorSummary->showAllErrors(false));
         $this->assertNotSame($errorSummary, $errorSummary->tag('div'));
     }
@@ -121,7 +141,7 @@ final class ErrorSummaryTest extends TestCase
      * @param string $footer
      * @param array $footerAttributes
      * @param bool $showAllErrors
-     * @param array $firstErrorsOfAttributes
+     * @param array $onlyAttributes
      * @param string $expected
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
@@ -136,7 +156,7 @@ final class ErrorSummaryTest extends TestCase
         string $footer,
         array $footerAttributes,
         bool $showAllErrors,
-        array $firstErrorsOfAttributes,
+        array $onlyAttributes,
         string $expected
     ): void {
         $formModel = new PersonalForm();
@@ -156,7 +176,7 @@ final class ErrorSummaryTest extends TestCase
 
         $errorSummary = ErrorSummary::widget()
             ->attributes($attributes)
-            ->firstErrorsOfAttributes(...$firstErrorsOfAttributes)
+            ->onlyAttributes(...$onlyAttributes)
             ->footer($footer)
             ->footerAttributes($footerAttributes)
             ->headerAttributes($headerAttributes)
