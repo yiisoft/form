@@ -193,7 +193,7 @@ final class ErrorSummary extends Widget
         $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
         $errorMessages = [];
 
-        if ($this->showAllErrors && $this->onlyAttributes === []) {
+        if ($this->showAllErrors) {
             $errors = HtmlFormErrors::getErrorSummary($this->formModel);
         } elseif ($this->onlyAttributes !== []) {
             $errors = array_intersect_key($errors, array_flip($this->onlyAttributes));

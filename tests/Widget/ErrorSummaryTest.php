@@ -78,7 +78,7 @@ final class ErrorSummaryTest extends TestCase
                 ['class' => 'text-danger'],
                 'Custom footer',
                 ['class' => 'text-primary'],
-                true,
+                false,
                 ['name'],
                 <<<HTML
                 <div>
