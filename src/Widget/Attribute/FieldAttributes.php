@@ -10,6 +10,7 @@ abstract class FieldAttributes extends WidgetAttributes
     private ?bool $container = null;
     private array $containerAttributes = [];
     private string $containerClass = '';
+    private array $defaultTokens = [];
     private array $defaultValues = [];
     private ?string $error = '';
     private array $errorAttributes = [];
@@ -43,6 +44,20 @@ abstract class FieldAttributes extends WidgetAttributes
     {
         $new = clone $this;
         $new->ariaDescribedBy = $value;
+        return $new;
+    }
+
+    /**
+     * Set aria-label attribute.
+     *
+     * @param string $value
+     *
+     * @return static
+     */
+    public function ariaLabel(string $value): self
+    {
+        $new = clone $this;
+        $new->attributes['aria-label'] = $value;
         return $new;
     }
 
@@ -117,6 +132,20 @@ abstract class FieldAttributes extends WidgetAttributes
     {
         $new = clone $this;
         $new->containerAttributes['name'] = $id;
+        return $new;
+    }
+
+    /**
+     * Set default tokens.
+     *
+     * @param array $values Token values indexed by token names.
+     *
+     * @return static
+     */
+    public function defaultTokens(array $values): self
+    {
+        $new = clone $this;
+        $new->defaultTokens = $values;
         return $new;
     }
 
@@ -553,6 +582,23 @@ abstract class FieldAttributes extends WidgetAttributes
         }
 
         return $containerClass;
+    }
+
+    /**
+     * Return default tokens.
+     *
+     * The value is used in case tokens array is empty.
+     */
+    protected function getDefaultTokens(): array
+    {
+        $defaultTokens = $this->defaultTokens;
+        $defaultTokensDefault = $this->getDefaultValue($this->type, 'defaultTokens');
+
+        if (is_array($defaultTokensDefault) && $defaultTokensDefault !== []) {
+            $defaultTokens = $defaultTokensDefault;
+        }
+
+        return $defaultTokens;
     }
 
     /**
