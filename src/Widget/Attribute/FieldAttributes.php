@@ -585,10 +585,9 @@ abstract class FieldAttributes extends WidgetAttributes
     }
 
     /**
-     * Return default tokens for field.
+     * Return default tokens.
      *
-     * if default tokens is empty array, and default tokens default value is not empty array, then return default tokens
-     * default value.
+     * The value is used in case tokens array is empty.
      */
     protected function getDefaultTokens(): array
     {
