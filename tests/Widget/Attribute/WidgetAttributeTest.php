@@ -26,7 +26,7 @@ final class WidgetAttributeTest extends TestCase
     {
         $widgetAttributes = $this->createWidget();
         $this->expectException(AttributeNotSetException::class);
-        $this->expectExceptionMessage('Failed to create widget because attribute is not set.');
+        $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
         $this->invokeMethod($widgetAttributes, 'getAttribute');
     }
 

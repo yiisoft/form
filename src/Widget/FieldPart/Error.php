@@ -145,7 +145,7 @@ final class Error extends Widget
     private function getAttribute(): string
     {
         if ($this->attribute === '') {
-            throw new AttributeNotSetException('Failed to create widget because attribute is not set.');
+            throw new AttributeNotSetException();
         }
 
         return $this->attribute;
@@ -159,7 +159,7 @@ final class Error extends Widget
     private function getFormModel(): FormModelInterface
     {
         if ($this->formModel === null) {
-            throw new FormModelNotSetException('Failed to create widget because form model is not set.');
+            throw new FormModelNotSetException();
         }
 
         return $this->formModel;
