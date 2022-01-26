@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Html\Html;
+use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Http\Method;
 use Yiisoft\Widget\Widget;
 
@@ -27,6 +28,10 @@ final class Form extends Widget
     private array $attributes = [];
     private string $csrfName = '';
     private string $csrfToken = '';
+    private bool $fieldset = false;
+    private array $fieldsetAttributes = [];
+    private ?string $legend = null;
+    private array $legendAttributes = [];
     private string $id = '';
     private string $method = Method::POST;
 
@@ -39,26 +44,23 @@ final class Form extends Widget
     {
         parent::begin();
 
-        $new = clone $this;
-
+        $attributes = $this->attributes;
+        $action = $this->action;
         $hiddenInputs = [];
 
-        /** @var string */
-        $new->attributes['id'] = $new->attributes['id'] ?? $new->id;
-
-        if ($new->attributes['id'] === '') {
-            unset($new->attributes['id']);
+        if (!array_key_exists('id', $attributes) && $this->id !== '') {
+            $attributes['id'] = $this->id;
         }
 
-        if ($new->csrfToken !== '' && $new->method === Method::POST) {
-            $hiddenInputs[] = Html::hiddenInput($new->csrfName, $new->csrfToken);
+        if ($this->csrfToken !== '' && $this->method === Method::POST) {
+            $hiddenInputs[] = Html::hiddenInput($this->csrfName, $this->csrfToken);
         }
 
-        if ($new->method === Method::GET && ($pos = strpos($new->action, '?')) !== false) {
+        if ($this->method === Method::GET && ($pos = strpos($action, '?')) !== false) {
             /**
              * Query parameters in the action are ignored for GET method we use hidden fields to add them back.
              */
-            foreach (explode('&', substr($new->action, $pos + 1)) as $pair) {
+            foreach (explode('&', substr($action, $pos + 1)) as $pair) {
                 if (($pos1 = strpos($pair, '=')) !== false) {
                     $hiddenInputs[] = Html::hiddenInput(
                         urldecode(substr($pair, 0, $pos1)),
@@ -69,20 +71,32 @@ final class Form extends Widget
                 }
             }
 
-            $new->action = substr($new->action, 0, $pos);
+            $action = substr($action, 0, $pos);
         }
 
-        if ($new->action !== '') {
-            $new->attributes['action'] = $new->action;
+        if ($action !== '') {
+            $attributes['action'] = $action;
         }
 
-        $new->attributes['method'] = $new->method;
+        $attributes['method'] = $this->method;
 
-        if ($new->csrfToken !== '') {
-            $new->attributes[$new->csrfName] = $new->csrfToken;
+        if ($this->csrfToken !== '') {
+            /** @var string */
+            $attributes[$this->csrfName] = $this->csrfToken;
         }
 
-        $form = Html::openTag('form', $new->attributes);
+        $form = Html::openTag('form', $attributes);
+
+        if ($this->fieldset) {
+            $form .= PHP_EOL . Html::openTag('fieldset', $this->fieldsetAttributes);
+        }
+
+        if ($this->legend !== null) {
+            $form .= PHP_EOL . CustomTag::name('legend')
+                ->attributes($this->legendAttributes)
+                ->content($this->legend)
+                ->render();
+        }
 
         if (!empty($hiddenInputs)) {
             $form .= PHP_EOL . implode(PHP_EOL, $hiddenInputs);
@@ -198,6 +212,38 @@ final class Form extends Widget
     }
 
     /**
+     * The <fieldset> HTML element is used to group several controls as well as labels (<label>) within a web form.
+     *
+     * @param bool $value whether the fieldset is enabled or disabled.
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element
+     */
+    public function fieldset(bool $value): self
+    {
+        $new = clone $this;
+        $new->fieldset = $value;
+        return $new;
+    }
+
+    /**
+     * The HTML attributes. The following special options are recognized.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function fieldsetAttributes(array $values): self
+    {
+        $new = clone $this;
+        $new->fieldsetAttributes = $values;
+        return $new;
+    }
+
+    /**
      * The id content attribute is a unique identifier for the element.
      *
      * @param string $value the id attribute value.
@@ -208,6 +254,38 @@ final class Form extends Widget
     {
         $new = clone $this;
         $new->id = $value;
+        return $new;
+    }
+
+    /**
+     * The <legend> HTML element represents a caption for the content of its parent <fieldset>.
+     *
+     * @param string|null $value whether the legend is enabled or disabled.
+     *
+     * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-legend-element
+     */
+    public function legend(?string $value): self
+    {
+        $new = clone $this;
+        $new->legend = $value;
+        return $new;
+    }
+
+    /**
+     * The HTML attributes. The following special options are recognized.
+     *
+     * @param array $values Attribute values indexed by attribute names.
+     *
+     * @return static
+     *
+     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     */
+    public function legendAttributes(array $values): self
+    {
+        $new = clone $this;
+        $new->legendAttributes = $values;
         return $new;
     }
 
@@ -268,6 +346,12 @@ final class Form extends Widget
      */
     protected function run(): string
     {
-        return Html::closeTag('form');
+        $html = '';
+
+        if ($this->fieldset) {
+            $html .= Html::closeTag('fieldset') . PHP_EOL;
+        }
+
+        return $html . Html::closeTag('form');
     }
 }
