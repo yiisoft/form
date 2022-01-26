@@ -20,7 +20,7 @@ final class FormTest extends TestCase
     use TestTrait;
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testAcceptCharset(): void
     {
@@ -31,7 +31,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testAction(): void
     {
@@ -39,7 +39,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testAttributes(): void
     {
@@ -50,7 +50,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testAutocomplete(): void
     {
@@ -67,7 +67,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testBegin(): void
     {
@@ -132,7 +132,7 @@ final class FormTest extends TestCase
      * @param string|Stringable $csrfToken
      * @param string $csrfName
      *
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testCsrf(string $expected, string $method, $csrfToken, string $csrfName): void
     {
@@ -143,7 +143,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testCsrfExceptionNotString(): void
     {
@@ -153,7 +153,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testCsrfExceptionNotStringable(): void
     {
@@ -163,7 +163,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testEnd(): void
     {
@@ -172,7 +172,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testEnctype(): void
     {
@@ -183,7 +183,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testFieldset(): void
     {
@@ -200,7 +200,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testFieldsetAttributes(): void
     {
@@ -218,7 +218,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testId(): void
     {
@@ -230,7 +230,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testImmutability(): void
     {
@@ -250,7 +250,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testLegend(): void
     {
@@ -268,7 +268,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testLegendAttributes(): void
     {
@@ -291,7 +291,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testMethod(): void
     {
@@ -300,7 +300,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testNoHtmlValidatation(): void
     {
@@ -308,7 +308,7 @@ final class FormTest extends TestCase
     }
 
     /**
-     * @throws InvalidConfigException|NotFoundException|NotInstantiableException|CircularReferenceException
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testTarget(): void
     {
