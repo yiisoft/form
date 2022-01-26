@@ -244,6 +244,8 @@ final class FormTest extends TestCase
         $this->assertNotSame($form, $form->fieldset(false));
         $this->assertNotSame($form, $form->fieldsetAttributes([]));
         $this->assertNotSame($form, $form->id(''));
+        $this->assertNotSame($form, $form->legend(''));
+        $this->assertNotSame($form, $form->legendAttributes([]));
         $this->assertNotSame($form, $form->method(''));
         $this->assertNotSame($form, $form->noHtmlValidation());
         $this->assertNotSame($form, $form->target(''));
