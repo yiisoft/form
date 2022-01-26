@@ -35,6 +35,7 @@ jobs:
         php:
           - 7.4
           - 8.0
+          - 8.1
 
     steps:
       - name: Checkout
@@ -57,6 +58,7 @@ jobs:
           key: php${{ matrix.php }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: |
             php${{ matrix.php }}-composer-
+
       - name: Update composer
         run: composer self-update
 
