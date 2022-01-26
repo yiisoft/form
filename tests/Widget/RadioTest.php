@@ -88,6 +88,7 @@ final class RadioTest extends TestCase
     public function testImmutability(): void
     {
         $radio = Radio::widget();
+        $this->assertNotSame($radio, $radio->checked(false));
         $this->assertNotSame($radio, $radio->enclosedByLabel(false));
         $this->assertNotSame($radio, $radio->label(''));
         $this->assertNotSame($radio, $radio->labelAttributes());

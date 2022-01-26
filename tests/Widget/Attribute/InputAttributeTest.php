@@ -11,7 +11,7 @@ use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 
-final class InputAttributes extends TestCase
+final class InputAttributeTest extends TestCase
 {
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
@@ -26,7 +26,7 @@ final class InputAttributes extends TestCase
         $this->assertNotSame($inputAttributes, $inputAttributes->required());
     }
 
-    private function createWidget(): self
+    private function createWidget(): InputAttributes
     {
         return new class () extends InputAttributes {
             protected function run(): string

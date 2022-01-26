@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use InvalidArgumentException;
 use Stringable;
+use Yiisoft\Form\Exception\AttributeNotSetException;
+use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Helper\HtmlFormErrors;
@@ -29,7 +30,7 @@ abstract class WidgetAttributes extends GlobalAttributes
     protected function getAttribute(): string
     {
         if ($this->attribute === '') {
-            throw new InvalidArgumentException('Attribute is not set.');
+            throw new AttributeNotSetException();
         }
 
         return $this->attribute;
@@ -83,7 +84,7 @@ abstract class WidgetAttributes extends GlobalAttributes
     protected function getFormModel(): FormModelInterface
     {
         if ($this->formModel === null) {
-            throw new InvalidArgumentException('Form model is not set.');
+            throw new FormModelNotSetException();
         }
 
         return $this->formModel;

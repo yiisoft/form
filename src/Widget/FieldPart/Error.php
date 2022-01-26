@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\FieldPart;
 
-use InvalidArgumentException;
+use Yiisoft\Form\Exception\AttributeNotSetException;
+use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Tag\CustomTag;
@@ -144,7 +145,7 @@ final class Error extends Widget
     private function getAttribute(): string
     {
         if ($this->attribute === '') {
-            throw new InvalidArgumentException('Attribute is not set.');
+            throw new AttributeNotSetException();
         }
 
         return $this->attribute;
@@ -158,7 +159,7 @@ final class Error extends Widget
     private function getFormModel(): FormModelInterface
     {
         if ($this->formModel === null) {
-            throw new InvalidArgumentException('Form model is not set.');
+            throw new FormModelNotSetException();
         }
 
         return $this->formModel;

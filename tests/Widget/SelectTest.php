@@ -194,6 +194,7 @@ final class SelectTest extends TestCase
         $this->assertNotSame($select, $select->multiple());
         $this->assertNotSame($select, $select->optionsData([]));
         $this->assertNotSame($select, $select->prompt(''));
+        $this->assertNotSame($select, $select->promptTag(null));
         $this->assertNotSame($select, $select->size(0));
         $this->assertNotSame($select, $select->unselectValue(null));
     }

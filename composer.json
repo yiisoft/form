@@ -19,6 +19,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4|^8.0",
+        "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^2.2",
         "yiisoft/http": "^1.2",
         "yiisoft/strings": "^2.0",
@@ -48,11 +49,7 @@
         }
     },
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "infection/extension-installer": true
-        }
+        "sort-packages": true
     },
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
