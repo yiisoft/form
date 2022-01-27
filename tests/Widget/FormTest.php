@@ -8,15 +8,20 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use StdClass;
 use Stringable;
+use Yiisoft\Definitions\Exception\CircularReferenceException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
+use Yiisoft\Definitions\Exception\NotInstantiableException;
+use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Form;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class FormTest extends TestCase
 {
     use TestTrait;
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testAcceptCharset(): void
     {
         $this->assertSame(
@@ -25,11 +30,17 @@ final class FormTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testAction(): void
     {
         $this->assertSame('<form action="/test" method="POST">', Form::widget()->action('/test')->begin());
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testAttributes(): void
     {
         $this->assertSame(
@@ -38,6 +49,9 @@ final class FormTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testAutocomplete(): void
     {
         /** on value */
@@ -52,6 +66,9 @@ final class FormTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testBegin(): void
     {
         $this->assertSame('<form method="POST">', Form::widget()->begin());
@@ -114,6 +131,8 @@ final class FormTest extends TestCase
      * @param string $method
      * @param string|Stringable $csrfToken
      * @param string $csrfName
+     *
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testCsrf(string $expected, string $method, $csrfToken, string $csrfName): void
     {
@@ -123,6 +142,9 @@ final class FormTest extends TestCase
         $this->assertSame($expected, $formWidget);
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testCsrfExceptionNotString(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -130,6 +152,9 @@ final class FormTest extends TestCase
         Form::widget()->action('/foo')->csrf(1)->begin();
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testCsrfExceptionNotStringable(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -137,12 +162,18 @@ final class FormTest extends TestCase
         Form::widget()->action('/foo')->csrf(new StdClass())->begin();
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testEnd(): void
     {
         Form::widget()->begin();
         $this->assertSame('</form>', Form::end());
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testEnctype(): void
     {
         $this->assertSame(
@@ -151,6 +182,9 @@ final class FormTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testId(): void
     {
         $this->assertSame('<form id="form-id" method="POST">', Form::widget()->id('form-id')->begin());
@@ -160,6 +194,9 @@ final class FormTest extends TestCase
         );
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $form = Form::widget();
@@ -168,6 +205,7 @@ final class FormTest extends TestCase
         $this->assertNotSame($form, $form->attributes([]));
         $this->assertNotSame($form, $form->autocomplete());
         $this->assertNotSame($form, $form->csrf(''));
+        $this->assertNotSame($form, $form->class(''));
         $this->assertNotSame($form, $form->enctype(''));
         $this->assertNotSame($form, $form->id(''));
         $this->assertNotSame($form, $form->method(''));
@@ -175,25 +213,28 @@ final class FormTest extends TestCase
         $this->assertNotSame($form, $form->target(''));
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testMethod(): void
     {
         $this->assertSame('<form method="GET">', Form::widget()->method('get')->begin());
         $this->assertSame('<form method="POST">', Form::widget()->method('post')->begin());
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testNoHtmlValidatation(): void
     {
         $this->assertSame('<form method="POST" novalidate>', Form::widget()->noHtmlValidation()->begin());
     }
 
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testTarget(): void
     {
         $this->assertSame('<form method="POST" target="_blank">', Form::widget()->target('_blank')->begin());
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer(), []);
     }
 }

@@ -39,26 +39,19 @@ final class Form extends Widget
     {
         parent::begin();
 
-        $new = clone $this;
-
+        $attributes = $this->attributes;
+        $action = $this->action;
         $hiddenInputs = [];
 
-        /** @var string */
-        $new->attributes['id'] = $new->attributes['id'] ?? $new->id;
-
-        if ($new->attributes['id'] === '') {
-            unset($new->attributes['id']);
+        if ($this->csrfToken !== '' && $this->method === Method::POST) {
+            $hiddenInputs[] = Html::hiddenInput($this->csrfName, $this->csrfToken);
         }
 
-        if ($new->csrfToken !== '' && $new->method === Method::POST) {
-            $hiddenInputs[] = Html::hiddenInput($new->csrfName, $new->csrfToken);
-        }
-
-        if ($new->method === Method::GET && ($pos = strpos($new->action, '?')) !== false) {
+        if ($this->method === Method::GET && ($pos = strpos($action, '?')) !== false) {
             /**
              * Query parameters in the action are ignored for GET method we use hidden fields to add them back.
              */
-            foreach (explode('&', substr($new->action, $pos + 1)) as $pair) {
+            foreach (explode('&', substr($action, $pos + 1)) as $pair) {
                 if (($pos1 = strpos($pair, '=')) !== false) {
                     $hiddenInputs[] = Html::hiddenInput(
                         urldecode(substr($pair, 0, $pos1)),
@@ -69,20 +62,21 @@ final class Form extends Widget
                 }
             }
 
-            $new->action = substr($new->action, 0, $pos);
+            $action = substr($action, 0, $pos);
         }
 
-        if ($new->action !== '') {
-            $new->attributes['action'] = $new->action;
+        if ($action !== '') {
+            $attributes['action'] = $action;
         }
 
-        $new->attributes['method'] = $new->method;
+        $attributes['method'] = $this->method;
 
-        if ($new->csrfToken !== '') {
-            $new->attributes[$new->csrfName] = $new->csrfToken;
+        if ($this->csrfToken !== '') {
+            /** @var string */
+            $attributes[$this->csrfName] = $this->csrfToken;
         }
 
-        $form = Html::openTag('form', $new->attributes);
+        $form = Html::openTag('form', $attributes);
 
         if (!empty($hiddenInputs)) {
             $form .= PHP_EOL . implode(PHP_EOL, $hiddenInputs);
@@ -182,6 +176,20 @@ final class Form extends Widget
     }
 
     /**
+     * Set CSS class of the field widget.
+     *
+     * @param string $class
+     *
+     * @return static
+     */
+    public function class(string $class): self
+    {
+        $new = clone $this;
+        Html::addCssClass($new->attributes, $class);
+        return $new;
+    }
+
+    /**
      * The formenctype content attribute specifies the content type of the form submission.
      *
      * @param string $value the formenctype attribute value.
@@ -193,21 +201,23 @@ final class Form extends Widget
     public function enctype(string $value): self
     {
         $new = clone $this;
-        $new->id = $value;
+        $new->attributes['id'] = $value;
         return $new;
     }
 
     /**
-     * The id content attribute is a unique identifier for the element.
+     * Set the ID of the widget.
      *
-     * @param string $value the id attribute value.
+     * @param string|null $id
      *
      * @return static
+     *
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
-    public function id(string $value): self
+    public function id(?string $id): self
     {
         $new = clone $this;
-        $new->id = $value;
+        $new->attributes['id'] = $id;
         return $new;
     }
 
