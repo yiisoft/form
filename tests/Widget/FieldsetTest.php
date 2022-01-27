@@ -128,7 +128,7 @@ final class FieldsetTest extends TestCase
         <legend>Action</legend>
         <div>
         <input type="submit" id="w2-button" class="pure-button pure-button-primary" name="w2-button" value="Submit">
-        <input type="submit" id="w3-button" class="pure-button pure-button-danger" name="w3-button" value="Cance;">
+        <input type="submit" id="w3-button" class="pure-button pure-button-danger" name="w3-button" value="Cancel">
         </div>
         </fieldset>
         </form>
@@ -182,7 +182,7 @@ final class FieldsetTest extends TestCase
                         ->buttonGroup(
                             [
                                 ['label' => 'Submit', 'type' => 'submit'],
-                                ['label' => 'Cance;', 'type' => 'submit'],
+                                ['label' => 'Cancel', 'type' => 'submit'],
                             ],
                             [
                                 'individualButtonAttributes()' => [
