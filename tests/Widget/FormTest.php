@@ -185,41 +185,6 @@ final class FormTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testFieldset(): void
-    {
-        $expected = <<<'HTML'
-        <form method="POST">
-        <fieldset>
-        </fieldset>
-        </form>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Form::widget()->fieldset(true)->begin() . PHP_EOL . Form::widget()->end(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testFieldsetAttributes(): void
-    {
-        $expected = <<<'HTML'
-        <form method="POST">
-        <fieldset class="test-class">
-        </fieldset>
-        </form>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Form::widget()->fieldset(true)->fieldsetAttributes(['class' => 'test-class'])->begin() . PHP_EOL .
-            Form::widget()->end(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->assertSame('<form id="form-id" method="POST">', Form::widget()->id('form-id')->begin());
@@ -240,56 +205,12 @@ final class FormTest extends TestCase
         $this->assertNotSame($form, $form->attributes([]));
         $this->assertNotSame($form, $form->autocomplete());
         $this->assertNotSame($form, $form->csrf(''));
+        $this->assertNotSame($form, $form->class(''));
         $this->assertNotSame($form, $form->enctype(''));
-        $this->assertNotSame($form, $form->fieldset(false));
-        $this->assertNotSame($form, $form->fieldsetAttributes([]));
         $this->assertNotSame($form, $form->id(''));
-        $this->assertNotSame($form, $form->legend(''));
-        $this->assertNotSame($form, $form->legendAttributes([]));
         $this->assertNotSame($form, $form->method(''));
         $this->assertNotSame($form, $form->noHtmlValidation());
         $this->assertNotSame($form, $form->target(''));
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testLegend(): void
-    {
-        $expected = <<<'HTML'
-        <form method="POST">
-        <fieldset>
-        <legend>This is a test form.</legend>
-        </fieldset>
-        </form>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Form::widget()->fieldset(true)->legend('This is a test form.')->begin() . PHP_EOL . Form::widget()->end(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testLegendAttributes(): void
-    {
-        $expected = <<<'HTML'
-        <form method="POST">
-        <fieldset>
-        <legend class="test-class">This is a test form.</legend>
-        </fieldset>
-        </form>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Form::widget()
-                ->fieldset(true)
-                ->legend('This is a test form.')
-                ->legendAttributes(['class' => 'test-class'])
-                ->begin() . PHP_EOL .
-            Form::widget()->end(),
-        );
     }
 
     /**

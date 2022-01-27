@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Html\Html;
-use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Http\Method;
 use Yiisoft\Widget\Widget;
 
@@ -28,10 +27,6 @@ final class Form extends Widget
     private array $attributes = [];
     private string $csrfName = '';
     private string $csrfToken = '';
-    private bool $fieldset = false;
-    private array $fieldsetAttributes = [];
-    private ?string $legend = null;
-    private array $legendAttributes = [];
     private string $id = '';
     private string $method = Method::POST;
 
@@ -47,10 +42,6 @@ final class Form extends Widget
         $attributes = $this->attributes;
         $action = $this->action;
         $hiddenInputs = [];
-
-        if (!array_key_exists('id', $attributes) && $this->id !== '') {
-            $attributes['id'] = $this->id;
-        }
 
         if ($this->csrfToken !== '' && $this->method === Method::POST) {
             $hiddenInputs[] = Html::hiddenInput($this->csrfName, $this->csrfToken);
@@ -86,17 +77,6 @@ final class Form extends Widget
         }
 
         $form = Html::openTag('form', $attributes);
-
-        if ($this->fieldset) {
-            $form .= PHP_EOL . Html::openTag('fieldset', $this->fieldsetAttributes);
-        }
-
-        if ($this->legend !== null) {
-            $form .= PHP_EOL . CustomTag::name('legend')
-                ->attributes($this->legendAttributes)
-                ->content($this->legend)
-                ->render();
-        }
 
         if (!empty($hiddenInputs)) {
             $form .= PHP_EOL . implode(PHP_EOL, $hiddenInputs);
@@ -196,6 +176,20 @@ final class Form extends Widget
     }
 
     /**
+     * Set CSS class of the field widget.
+     *
+     * @param string $class
+     *
+     * @return static
+     */
+    public function class(string $class): self
+    {
+        $new = clone $this;
+        Html::addCssClass($new->attributes, $class);
+        return $new;
+    }
+
+    /**
      * The formenctype content attribute specifies the content type of the form submission.
      *
      * @param string $value the formenctype attribute value.
@@ -207,85 +201,23 @@ final class Form extends Widget
     public function enctype(string $value): self
     {
         $new = clone $this;
-        $new->id = $value;
+        $new->attributes['id'] = $value;
         return $new;
     }
 
     /**
-     * The <fieldset> HTML element is used to group several controls as well as labels (<label>) within a web form.
+     * Set the ID of the widget.
      *
-     * @param bool $value whether the fieldset is enabled or disabled.
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element
-     */
-    public function fieldset(bool $value): self
-    {
-        $new = clone $this;
-        $new->fieldset = $value;
-        return $new;
-    }
-
-    /**
-     * The HTML attributes. The following special options are recognized.
-     *
-     * @param array $values Attribute values indexed by attribute names.
+     * @param string|null $id
      *
      * @return static
      *
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
-    public function fieldsetAttributes(array $values): self
+    public function id(?string $id): self
     {
         $new = clone $this;
-        $new->fieldsetAttributes = $values;
-        return $new;
-    }
-
-    /**
-     * The id content attribute is a unique identifier for the element.
-     *
-     * @param string $value the id attribute value.
-     *
-     * @return static
-     */
-    public function id(string $value): self
-    {
-        $new = clone $this;
-        $new->id = $value;
-        return $new;
-    }
-
-    /**
-     * The <legend> HTML element represents a caption for the content of its parent <fieldset>.
-     *
-     * @param string|null $value whether the legend is enabled or disabled.
-     *
-     * @return static
-     *
-     * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-legend-element
-     */
-    public function legend(?string $value): self
-    {
-        $new = clone $this;
-        $new->legend = $value;
-        return $new;
-    }
-
-    /**
-     * The HTML attributes. The following special options are recognized.
-     *
-     * @param array $values Attribute values indexed by attribute names.
-     *
-     * @return static
-     *
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
-     */
-    public function legendAttributes(array $values): self
-    {
-        $new = clone $this;
-        $new->legendAttributes = $values;
+        $new->attributes['id'] = $id;
         return $new;
     }
 
@@ -346,12 +278,6 @@ final class Form extends Widget
      */
     protected function run(): string
     {
-        $html = '';
-
-        if ($this->fieldset) {
-            $html .= Html::closeTag('fieldset') . PHP_EOL;
-        }
-
-        return $html . Html::closeTag('form');
+        return Html::closeTag('form');
     }
 }
