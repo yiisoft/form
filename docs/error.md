@@ -146,8 +146,8 @@ That would generate the following code after validation:
 Method | Description | Default
 -------|-------------|---------
 `attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
-`encode(bool $value)` | Whether to encode the error message. | `true`
-`for(FormModelInterface $formModel, string $attribute)` | Configures the widget. |
-`message(string $value)` | Error message to display. | `''`
-`messageCallback(array $value)` | Callback that will be called to obtain an error message. | `[]`
-`tag(string $value)` | Tag to use to display the error. | `'div'`
+`encode(bool $value)` | Whether to encode the error message | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`message(string $value)` | Error message to display | `''`
+`messageCallback(array $value)` | Callback that will be called to obtain an error message | `[]`
+`tag(string $value)` | Tag to use to display the error | `'div'`

@@ -68,15 +68,15 @@ Method | Description | Default
 
 Method | Description | Default
 -------|-------------|---------
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
 `attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
 `class(string $class)` | The CSS class for the widget | `''`
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`disabled(bool $value = true)` | Set the disabled attribute | `false`
 `encode(bool $value)` | Whether content should be HTML-encoded | `true`
-`for(FormModelInterface $formModel, string $attribute)` | Configures the widget. |
-`id(string $value)` | Sets the id attribute | `''`
-`name(string $value)` | Sets the name attribute. | `''`
-`tabIndex(int $value)` | Sets the tabindex attribute | ``
-`title(string $value)` | Sets the title attribute | `''`
-`value(string $value)` | Sets the value attribute | `''`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute. | `''`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
+`title(string $value)` | Set the title attribute | `''`
+`value(string $value)` | Set the value attribute | `''`

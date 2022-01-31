@@ -61,26 +61,26 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`maxlength(int $length)` | Sets the maximum length of the input | ``
-`minlength(int $length)` | Sets the minimum length of the input | ``
-`multiple(bool $value = true)` | Specifies that the element allows multiple values | ``
-`pattern(string $value)` | Specifies a regular expression for validate the input | ``
-`placeholder(string $value)` | Sets the placeholder of the input | ``
-`size(int $size)` | The height with multiple is true | ``
+`maxlength(int $length)` | Set the maximum length of the input | `''`
+`minlength(int $length)` | Set the minimum length of the input | `''`
+`multiple(bool $value = true)` | Specifies that the element allows multiple values | `''`
+`pattern(string $value)` | Specifies a regular expression for validate the input | `''`
+`placeholder(string $value)` | Set the placeholder of the input | `''`
+`size(int $size)` | The height with multiple is true | `''`
 
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
 `attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
 `class(string $class)` | The CSS class for the widget | `''`
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`disabled(bool $value = true)` | Set the disabled attribute | `false`
 `encode(bool $value)` | Whether content should be HTML-encoded | `true`
-`for(FormModelInterface $formModel, string $attribute)` | Configures the widget. |
-`id(string $value)` | Sets the id attribute | `''`
-`name(string $value)` | Sets the name attribute. | `''`
-`tabIndex(int $value)` | Sets the tabindex attribute | ``
-`title(string $value)` | Sets the title attribute | `''`
-`value(string $value)` | Sets the value attribute | `''`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute. | `''`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
+`title(string $value)` | Set the title attribute | `''`
+`value(string $value)` | Set the value attribute | `''`

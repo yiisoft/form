@@ -74,6 +74,6 @@ Method | Description | Default
 `for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
 `id(string $value)` | Set the id attribute | `''`
 `name(string $value)` | Set the name attribute. | `''`
-`tabIndex(int $value)` | Set the tabindex attribute | ``
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
 `title(string $value)` | Set the title attribute | `''`
 `value(string $value)` | Set the value attribute | `''`

@@ -140,7 +140,7 @@ Method | Description | Default
 `itemsFromValues(array $values = [])` | List of checkbox items for array values. | `[]`
 `separator(string $separator)` | HTML to insert between each checkbox element. | `&nbsp;`
 `uncheckValue($value):` | A value for uncheck option. | `null`
-`tabIndex(int $value)` | Set the tabindex attribute | ``
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
 
 ### `Common` methods:
 

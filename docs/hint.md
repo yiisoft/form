@@ -115,8 +115,8 @@ That would generate the following code:
 Method | Description | Default
 -------|-------------|---------
 `attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
-`encode(bool $value)` | Whether to encode the error message. | `true`
-`for(FormModelInterface $formModel, string $attribute)` | Configures the widget. |
-`id(string $value)` | Sets the id attribute | `''`
-`hint(?string $value)` | Sets the hint text. | `''`
-`tag(string $value)` | Sets the tag name. | `'div'`
+`encode(bool $value)` | Whether to encode the error message | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`id(string $value)` | Set the id attribute | `''`
+`hint(?string $value)` | Set the hint text | `''`
+`tag(string $value)` | Set the tag name | `'div'`

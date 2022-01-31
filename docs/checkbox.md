@@ -190,7 +190,7 @@ Method | Description | Default
 `label(string $value)` | The label text | `''`
 `labelAttributes(array $attributes = [])` | The HTML attributes for the label tag | `[]`
 `uncheckValue($value)` | The value that will be returned when the checkbox is not checked | `0`
-`tabIndex(int $value)` | Set the tabindex attribute | `0`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
 
 ### `Common` methods:
 
@@ -199,7 +199,7 @@ Method | Description | Default
 `attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
 `autofocus(bool $value = true)` | Set the autofocus attribute | `false`
 `charset(string $value)` | Set the charset attribute | `UTF-8`
-`class(string $value)` | The widget CSS class | ``
+`class(string $value)` | The widget CSS class | `''`
 `disabled()` | Set whether the element is disabled or not | `false`
 `encode(bool $value)` | Whether content should be HTML-encoded | `true`
 `for(FormModelInterface $formModel, string $attribute)` | Configure the widget |

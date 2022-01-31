@@ -192,10 +192,10 @@ use Yiisoft\Form\Widget\Radio;
 Method | Description | Default
 -------|-------------|---------
 `checked(bool $value = true)` | Check the radio button | `false`
-`enclosedByLabel(bool $value = true)` | If the widget should be enclosed by label. | `true`
-`label(string $value)` | The label text. | `''`
+`enclosedByLabel(bool $value = true)` | If the widget should be enclosed by label | `true`
+`label(string $value)` | The label text | `''`
 `labelAttributes(array $attributes = [])` | HTML attributes for the label tag. | `[]`
-`uncheckValue($value)` | The value that is returned when the radio button is not checked. | `null`
+`uncheckValue($value)` | The value that is returned when the radio button is not checked | `null`
 
 ### `Common` methods:
 

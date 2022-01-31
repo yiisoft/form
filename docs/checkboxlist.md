@@ -132,7 +132,7 @@ Method | Description | Default
 `itemsFormatter(?Closure $formatter)` | Formatter for the checkbox items | `null`
 `itemsFromValues(array $itemsFromValues = [])` | List of checkbox items for array values | `[]`
 `separator(string $separator)` | HTML to add between each checkbox element | `&nbsp;`
-`tabIndex(int $value)` | Set the tabindex attribute | ``
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
 
 ### `Common` methods:
 
