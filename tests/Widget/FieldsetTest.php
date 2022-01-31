@@ -14,6 +14,7 @@ use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\Field;
 use Yiisoft\Form\Widget\Fieldset;
 use Yiisoft\Form\Widget\Form;
+use Yiisoft\Html\Html;
 
 final class FieldsetTest extends TestCase
 {
@@ -96,6 +97,8 @@ final class FieldsetTest extends TestCase
      */
     public function testRender(): void
     {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+
         $expected = <<<HTML
         <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
         <div class="pure-g" style="position: absolute;top: 50%;left: 50%;transform:translate(-50%,-50%);">
@@ -127,8 +130,8 @@ final class FieldsetTest extends TestCase
         <fieldset name="field-set-control">
         <legend>Action</legend>
         <div>
-        <input type="submit" id="w2-button" class="pure-button pure-button-primary" name="w2-button" value="Submit">
-        <input type="submit" id="w3-button" class="pure-button pure-button-danger" name="w3-button" value="Cancel">
+        <input type="submit" id="w1-button" class="pure-button pure-button-primary" name="w1-button" value="Submit">
+        <input type="submit" id="w2-button" class="pure-button pure-button-danger" name="w2-button" value="Cancel">
         </div>
         </fieldset>
         </form>
