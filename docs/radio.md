@@ -41,9 +41,9 @@ use Yiisoft\Form\Widget\Radio;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Radio::widget()->config($data, 'active',)->value(true) ?>
+    <?= Radio::widget()->for($data, 'active',)->value(true) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -106,9 +106,9 @@ use Yiisoft\Form\Widget\Radio;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Radio::widget()->config($data, 'number')->uncheckValue(0)->value(5) ?>
+    <?= Radio::widget()->for($data, 'number')->uncheckValue(0)->value(5) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -165,10 +165,10 @@ use Yiisoft\Form\Widget\Radio;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Radio::widget()->config($data, 'active')->label('inactive')->uncheckValue("")->value('inactive') ?>
-    <?= Radio::widget()->config($data, 'active')->value('active') ?>
+    <?= Radio::widget()->for($data, 'active')->label('inactive')->uncheckValue("")->value('inactive') ?>
+    <?= Radio::widget()->for($data, 'active')->value('active') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -191,23 +191,27 @@ use Yiisoft\Form\Widget\Radio;
 
 Method | Description | Default
 -------|-------------|---------
+`checked(bool $value = true)` | Check the radio button | `false`
 `enclosedByLabel(bool $value = true)` | If the widget should be enclosed by label. | `true`
 `label(string $value)` | The label text. | `''`
 `labelAttributes(array $attributes = [])` | HTML attributes for the label tag. | `[]`
 `uncheckValue($value)` | The value that is returned when the radio button is not checked. | `null`
-`value($value)` | The value that is returned when the radio button is checked. | `null`
 
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | ``
-`id(string $value)` | Sets the id attribute | `''`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`readonly()` | Sets the readonly attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`class(string $value)` | The widget CSS class | ``
+`disabled()` | Set whether the element is disabled or not | `false`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute | `''`
+`readonly()` | Set the readonly attribute | `false`
+`required(bool $value = true)` | Set the required attribute | `false`
+`title(string $value)` | Set the title attribute | `''`
+`value($value)` | The value content attribute gives the default value of the field | `''`
 

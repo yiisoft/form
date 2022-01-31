@@ -38,9 +38,9 @@ use Yiisoft\Form\Widget\Form;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= DateTime::widget()->config($data, 'dateOfBirth') ?>
+    <?= DateTime::widget()->for($data, 'dateOfBirth') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -57,18 +57,26 @@ That would generate the following code:
 </form>
 ```
 
+### `DateTime` methods: 
+
+Method | Description | Default
+-------|-------------|---------
+`max(?string $value)` | The latest acceptable date | `''`
+`min(?string $value)` | The earliest acceptable date | `''`
+
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
 `autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`class(string $class)` | The CSS class for the widget | `''`
 `charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
 `disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | `''`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configures the widget. |
 `id(string $value)` | Sets the id attribute | `''`
-`min(?string $value)` | The earliest acceptable date | `''`
-`max(?string $value)` | The latest acceptable date | `''`
-`readonly()` | Sets the readonly attribute | `false`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`name(string $value)` | Sets the name attribute. | `''`
+`tabIndex(int $value)` | Sets the tabindex attribute | ``
+`title(string $value)` | Sets the title attribute | `''`
+`value(string $value)` | Sets the value attribute | `''`

@@ -9,13 +9,13 @@ use Yiisoft\Form\Widget\Validator\FieldValidator;
 abstract class InputAttributes extends WidgetAttributes
 {
     /**
-     * Set aria-describedby attribute.
+     * Identifies the element (or elements) that describes the element on which the attribute is set.
      *
      * @param string $value
      *
      * @return static
      *
-     * @link https://www.w3.org/TR/WCAG20-TECHS/ARIA1.html
+     * @link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby
      */
     public function ariaDescribedBy(string $value): self
     {
@@ -25,11 +25,13 @@ abstract class InputAttributes extends WidgetAttributes
     }
 
     /**
-     * Set aria-label attribute.
+     * Defines a string value that labels an interactive element.
      *
      * @param string $value
      *
      * @return static
+     *
+     * @link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
      */
     public function ariaLabel(string $value): self
     {

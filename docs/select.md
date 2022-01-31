@@ -63,9 +63,9 @@ $citiesGroups = [
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Select::widget()->config($data, 'cityOfBirth')->groups($groups)->items($citiesGroups)->prompt($prompt) ?>
+    <?= Select::widget()->for($data, 'cityOfBirth')->groups($groups)->items($citiesGroups)->prompt($prompt) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -99,25 +99,29 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`groups(array $value = [])` | Sets the groups of the select list. | `[]`
-`items(array $value = [])` | Sets the items of the select list. | `[]`
-`itemsAttributes(array $value = [])` | Sets the attributes of the items of the select list. | `[]`
-`multiple(bool $value = true)` | If set, means the widget accepts one or more values. | `false`
-`optionsData(array $data, bool $encode)` | Whether option content should be HTML-encoded. | `[]`
-`prompt(array $value = [])` | Sets the prompt of the select list. | `[]`
-`size(int $value = 0)` | The height of the select list with multiple is true. | `0`
-`unselectValue(?string $value)` | Sets the value of the unselect option. | `null`
+`groups(array $value = [])` | Set the groups of the select list | `[]`
+`items(array $value = [])` | Set the items of the select list | `[]`
+`itemsAttributes(array $value = [])` | Set the attributes of the items of the select list | `[]`
+`multiple(bool $value = true)` | If set, means the widget accepts one or more values | `false`
+`optionsData(array $data, bool $encode)` | Whether option content should be HTML-encoded | `[]`
+`prompt(array $value = [])` | Set the prompt of the select list | `[]`
+`promptTag(?Option $value)` | The prompt option tag can be used to define an object Stringable that will be displayed on the first line of the drop-down list widget | `null`
+`size(int $value = 0)` | The height of the select list with multiple is true | `0`
+`unselectValue(?string $value)` | Set the value of the unselect option | `null`
 
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | `''`
-`id(string $value)` | Sets the id attribute | `''`
-`readonly()` | Sets the readonly attribute | `false`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`class(string $class)` | The CSS class for the widget | `''`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`disabled(bool $value = true)` | Set the disabled attribute | `false`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute. | `''`
+`tabIndex(int $value)` | Set the tabindex attribute | ``
+`title(string $value)` | Set the title attribute | `''`
+`value(string $value)` | Set the value attribute | `''`
