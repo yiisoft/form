@@ -429,7 +429,7 @@ abstract class FieldAttributes extends WidgetAttributes
      * Replace individual one token for current field instance.
      *
      * @param string $token
-     * @param string|Stringable $value
+     * @param mixed|string|Stringable $value
      *
      * @return static
      */
