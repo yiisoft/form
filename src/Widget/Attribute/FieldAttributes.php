@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
+use InvalidArgumentException;
+use Stringable;
+
 abstract class FieldAttributes extends WidgetAttributes
 {
     private ?bool $ariaDescribedBy = null;
@@ -419,6 +422,27 @@ abstract class FieldAttributes extends WidgetAttributes
     {
         $new = clone $this;
         $new->attributes['readonly'] = $value;
+        return $new;
+    }
+
+    /**
+     * Replace individual one token for current field instance.
+     *
+     * @param string $token
+     * @param string|Stringable $value
+     *
+     * @return static
+     */
+    public function replaceIndividualToken(string $token, $value): self
+    {
+        $new = clone $this;
+
+        if (is_string($value) || (is_object($value) && method_exists($value, '__toString'))) {
+            $new->defaultTokens[$token] = (string) $value;
+        } else {
+            throw new InvalidArgumentException('$token must be a string or \Stringable object.');
+        }
+
         return $new;
     }
 
