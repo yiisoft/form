@@ -108,11 +108,6 @@ abstract class GlobalAttributes extends Widget
         return $new;
     }
 
-    protected function getEncode(): bool
-    {
-        return $this->encode;
-    }
-
     /**
      * The name part of the name/value pair associated with this element for the purposes of form submission.
      *
@@ -173,7 +168,7 @@ abstract class GlobalAttributes extends Widget
     }
 
     /**
-     * The value of the radio button.
+     * The value content attribute gives the default value of the field.
      *
      * @param array|scalar|Stringable|null $value
      *
@@ -186,5 +181,10 @@ abstract class GlobalAttributes extends Widget
         $new = clone $this;
         $new->attributes['value'] = $value;
         return $new;
+    }
+
+    protected function getEncode(): bool
+    {
+        return $this->encode;
     }
 }

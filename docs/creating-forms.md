@@ -107,7 +107,6 @@ use Yiisoft\Translator\Translator;
 use Yiisoft\View\WebView;
 
 /**
- * @var Field $field
  * @var FormModel $formModel
  * @var object $csrf
  * @var Translator $translator
@@ -115,7 +114,7 @@ use Yiisoft\View\WebView;
  * @var WebView $this
  */
 
-$title = Html::encode($translator->translate('Log in'));
+$title = $translator->translate('Log in');
 
 /** @psalm-suppress InvalidScope */
 $this->setTitle($title);
@@ -123,7 +122,7 @@ $this->setTitle($title);
 
 <div class="card shadow mx-auto col-md-4">
     <h1 class="card-header fw-normal h3 text-center">
-        <?= $title ?>
+        <?= Html::encode($title) ?>
     </h1>
     <div class="card-body mt-2">
         <?= Form::widget()
@@ -132,19 +131,15 @@ $this->setTitle($title);
             ->id('form-auth-login')
             ->begin() ?>
 
-            <?= $field->config($formModel, 'login')->text(['autofocus' => true, 'tabindex' => 1]) ?>
-
-            <?= $field->config($formModel, 'password')->password(['tabindex' => 2]) ?>
-
-            <?= $field->containerClass('d-grid gap-2 form-floating')
-                ->submitButton(
-                    [
-                        'class' => 'btn btn-primary btn-lg mt-3',
-                        'id' => 'login-button',
-                        'tabindex' => 3,
-                        'value' => $translator->translate('Log in'),
-                    ]
-                )
+            <?= Field::widget()->autofocus()->text($formModel, 'login')->tabindex(1) ?>
+            <?= Field::widget()->password($formModel, 'password')->tabindex(2) ?>
+            <?= Field::widget()
+                ->class('btn btn-primary btn-lg mt-3')
+                ->containerClass('d-grid gap-2 form-floating')
+                ->id('login-button')
+                ->submitButton()
+                ->tabindex(3)
+                ->value($translator->translate('Log in'))
             ?>
         <?= Form::end() ?>
     </div>
@@ -154,5 +149,3 @@ $this->setTitle($title);
 ### Wrapping with and `begin()` `end()`
 
 In the above code, `Form::begin()` not only creates a form instance, but also marks the beginning of the `form`. All of the content placed between `Form::begin()` and `Form::end()` will be wrapped within the `HTML` tag, `<form>content<form>`.
-
-

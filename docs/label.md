@@ -35,8 +35,8 @@ declare(strict_types=1);
 
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Form\Widget\FieldPart\Label;
 use Yiisoft\Form\Widget\Form;
-use Yiisoft\Form\Widget\Label;
 use Yiisoft\Form\Widget\Text;
 
 /**
@@ -46,10 +46,10 @@ use Yiisoft\Form\Widget\Text;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Label::widget()->config($formModel, 'name') ?>
-    <?= Text::widget()->config($formModel, 'name') ?>
+    <?= Label::widget()->for($formModel, 'name') ?>
+    <?= Text::widget()->for($formModel, 'name') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -78,8 +78,8 @@ declare(strict_types=1);
 
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Field;
+use Yiisoft\Form\Widget\FieldPart\Label;
 use Yiisoft\Form\Widget\Form;
-use Yiisoft\Form\Widget\Label;
 use Yiisoft\Form\Widget\Text;
 
 /**
@@ -89,10 +89,10 @@ use Yiisoft\Form\Widget\Text;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Label::widget()->config($formModel, 'name')->label('Name:') ?>
-    <?= Text::widget()->config($formModel, 'name') ?>
+    <?= Label::widget()->for($formModel, 'name')->label('Name:') ?>
+    <?= Text::widget()->for($formModel, 'name') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -114,8 +114,8 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`config(FormModelInterface $formModel, string $attribute)` | Configure the widget. |
-`encode(bool $value)` | Whether to encode the error message. | `true`
-`for(?string $value)` | The ID of a form element to associate label with. | `''`
-`label(?string $value)` | The text of the label. | `''`
-`tagAttributes(array $value)` | Attributes to use to display the error. | `[]`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`encode(bool $value)` | Whether to encode the error message | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`forId(?string $value)` | The ID of a form element to associate label with | `''`
+`label(?string $value)` | The text of the label | `''`

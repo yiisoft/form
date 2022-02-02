@@ -41,9 +41,9 @@ use Yiisoft\Form\Widget\Label;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= CheckboxList::widget()->config($data, 'fruits')->items(['0' => 'Apple', '1' => 'Banana']) ?>
+    <?= CheckboxList::widget()->for($data, 'fruits')->items(['0' => 'Apple', '1' => 'Banana']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -96,9 +96,9 @@ use Yiisoft\Form\Widget\Label;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= CheckboxList::widget()->config($data, 'fruits')->itemsFromValues(['0' => 'Apple', '1' => 'Banana']) ?>
+    <?= CheckboxList::widget()->for($data, 'fruits')->itemsFromValues(['0' => 'Apple', '1' => 'Banana']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -122,27 +122,26 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`containerAttributes(array $attributes)` | HTML attributes for the container tag. | `[]`
-`containerTag(?string $tag = null)` | Tag name of the container element. | `div`
-`disabled(bool $value = true)` | Set whether the element is disabled or not. | `false`
-`individualItemsAttributes(array $attributes = [])` | HTML attributes for individual checkbox elements. | `[]`
-`items(array $items = [])` | List of checkbox items for array keys. | `[]`
-`itemsAttributes(array $attributes = [])` | HTML attributes for checkbox elements. | `[]`
-`itemsFormatter(?Closure $formatter)` | Formatter for the checkbox items. | `null`
-`itemsFromValues(array $itemsFromValues = [])` | List of checkbox items for array values. | `[]`
-`readonly()` | Set whether the element is readonly or not. | `false`
-`separator(string $separator)` | HTML to add between each checkbox element. | `&nbsp;`
+`autofocus(bool $value = true)` | Set the autofocus widget | `false`
+`containerAttributes(array $attributes)` | HTML attributes for the container tag | `[]`
+`containerTag(?string $tag = null)` | Tag name of the container element | `div`
+`id(?string $id = null)` | Set the ID of container the widget | `null`
+`individualItemsAttributes(array $attributes = [])` | HTML attributes for individual checkbox elements | `[]`
+`items(array $items = [])` | List of checkbox items for array keys | `[]`
+`itemsAttributes(array $attributes = [])` | HTML attributes for checkbox elements | `[]`
+`itemsFormatter(?Closure $formatter)` | Formatter for the checkbox items | `null`
+`itemsFromValues(array $itemsFromValues = [])` | List of checkbox items for array values | `[]`
+`separator(string $separator)` | HTML to add between each checkbox element | `&nbsp;`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
 
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
 `charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | ``
-`id(string $value)` | Sets the id attribute | `''`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`readonly()` | Sets the readonly attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`disabled()` | Set whether the element is disabled or not | `false`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`name(string $value)` | Set the name attribute | `''`
+`value($value)` | The value content attribute gives the default value of the field | `''`

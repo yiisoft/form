@@ -23,7 +23,7 @@ use Yiisoft\Form\Widget\ResetButton;
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
     <?= ResetButton::widget()->value('Reset Form') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -44,8 +44,14 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`autoIdPrefix(string $value)` | Sets the prefix for generating automatic IDs | `'reset-'`
-`attributes(array $value)` | Sets the HTML attributes | `[]``
-`id(string $id)` | Sets the ID attribute | `''`
-`name(string $name)` | Sets the name attribute | `''`
-`value(string $value)` | Sets the value attribute | `''`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`class(string $class)` | The CSS class for the widget | `''`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`disabled(bool $value = true)` | Set the disabled attribute | `false`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute. | `''`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
+`title(string $value)` | Set the title attribute | `''`
+`value(string $value)` | Set the value attribute | `''`

@@ -72,7 +72,7 @@ use Yiisoft\Form\Widget\Text;
     <?= Text::widget()->for($formModel, 'email') ?>
     <?= ErrorSummary::widget()->model($formModel) ?>
     <hr class="mt-3">
-    <?= SubmitButton::widget()->attributes(['class' => 'button is-block is-info is-fullwidth'])->value('Save') ?>
+    <?= SubmitButton::widget()->class('button is-block is-info is-fullwidth')->value('Save') ?>
 <?= Form::end(); ?>
 ```
 
@@ -137,7 +137,7 @@ use Yiisoft\Form\Widget\Text;
         ->model($formModel)
     ?>
     <hr class="mt-3">
-    <?= SubmitButton::widget()->attributes(['class' => 'button is-block is-info is-fullwidth'])->value('Save') ?>
+    <?= SubmitButton::widget()->class('button is-block is-info is-fullwidth')->value('Save') ?>
 <?= Form::end(); ?>
 ```
 
@@ -185,7 +185,7 @@ use Yiisoft\Form\Widget\Text;
     <?= Text::widget()->for($formModel, 'email') ?>
     <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->onlyAttributes('email')->model($formModel) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']); ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end(); ?>
 ```
 

@@ -38,9 +38,9 @@ use Yiisoft\Form\Widget\Text;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Text::widget()->config($data, 'text') ?>
+    <?= Text::widget()->for($data, 'text') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -61,22 +61,25 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`dirname(string $value)` | Enables submission of a value for the directionality of the element. | `''`
-`maxlength(int $value)` | Specifies the maximum number of characters allowed in the element. | `null`
-`placeholder(string $value)` | Specifies a short hint that describes the expected value of an element. | `''`
-`pattern(string $value)` | Specifies a regular expression for the element. | `''`
-`size(int $value = 4)` | The height of the input with multiple is true. | `4`
+`dirname(string $value)` | Enables submission of a value for the directionality of the element | `''`
+`maxlength(int $value)` | Set the maximum number of characters the user can enter | `null`
+`minlength(int $value)` | Set the minimum number of characters the user can enter | `null`
+`pattern(string $value)` | Set the regular expression pattern the user's input must match | `null`
+`placeholder(string $value)` | Set the placeholder text to be displayed in the input | `null`
+`size(int $value)` | Set the height of the input | `null`
 
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | `''`
-`id(string $value)` | Sets the id attribute | `''`
-`readonly()` | Sets the readonly attribute | `false`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`class(string $class)` | The CSS class for the widget | `''`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`disabled(bool $value = true)` | Set the disabled attribute | `false`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute. | `''`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
+`title(string $value)` | Set the title attribute | `''`
+`value(string $value)` | Set the value attribute | `''`

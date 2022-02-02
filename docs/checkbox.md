@@ -43,9 +43,9 @@ use Yiisoft\Form\Widget\Label;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Checkbox::widget()->config($data, 'active') ?>
+    <?= Checkbox::widget()->for($data, 'active') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -102,9 +102,9 @@ use Yiisoft\Form\Widget\Label;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Checkbox::widget()->config($data, 'active', ['uncheckValue' => null]) ?>
+    <?= Checkbox::widget()->for($data, 'active')->uncheckValue(null) ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -160,9 +160,9 @@ use Yiisoft\Form\Widget\Label;
 ?>
 
 <?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Checkbox::widget()->config($data, 'active', ['uncheckValue' => 'inactive', 'value' => 'active']) ?>
+    <?= Checkbox::widget()->for($data, 'active')->uncheckValue('inactive')->value('active') ?>
     <hr class="mt-3">
-    <?= Field::widget()->submitButton(['class' => 'button is-block is-info is-fullwidth', 'value' => 'Save']) ?>
+    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -185,22 +185,27 @@ That would generate the following code:
 
 Method | Description | Default
 -------|-------------|---------
-`enclosedByLabel(bool $value = true)` | If the widget should be enclosed by label. | `true`
-`label(string $value)` | The label text. | `''`
-`labelAttributes(array $attributes = [])` | The HTML attributes for the label tag. | `[]`
-`uncheckValue($value)` | The value that will be returned when the checkbox is not checked. | `0`
-`value($value)` | The value that will be returned when the checkbox is checked. | `1`
+`checked(bool $value = true)` |  Check the checkbox button | `false`
+`enclosedByLabel(bool $value = true)` | If the widget should be enclosed by label | `true`
+`label(string $value)` | The label text | `''`
+`labelAttributes(array $attributes = [])` | The HTML attributes for the label tag | `[]`
+`uncheckValue($value)` | The value that will be returned when the checkbox is not checked | `0`
+`tabIndex(int $value)` | Set the tabindex attribute | `''`
 
 ### `Common` methods:
 
 Method | Description | Default
 -------|-------------|---------
-`charset(string $value)` | Sets the charset attribute | `UTF-8`
-`config(FormModelInterface $formModel, string $attribute, array $attributes = [])` | Configures the widget. |
-`autofocus(bool $value = true)` | Sets the autofocus attribute | `false`
-`disabled(bool $value = true)` | Sets the disabled attribute | `false`
-`form(string $value)` | Sets the form attribute | ``
-`id(string $value)` | Sets the id attribute | `''`
-`required(bool $value = true)` | Sets the required attribute | `false`
-`readonly()` | Sets the readonly attribute | `false`
-`tabIndex(int $value = 0)` | Sets the tabindex attribute | `0`
+`attributes(array $attributes = [])` | The HTML attributes for the widget | `[]`
+`autofocus(bool $value = true)` | Set the autofocus attribute | `false`
+`charset(string $value)` | Set the charset attribute | `UTF-8`
+`class(string $value)` | The widget CSS class | `''`
+`disabled()` | Set whether the element is disabled or not | `false`
+`encode(bool $value)` | Whether content should be HTML-encoded | `true`
+`for(FormModelInterface $formModel, string $attribute)` | Configure the widget |
+`id(string $value)` | Set the id attribute | `''`
+`name(string $value)` | Set the name attribute | `''`
+`readonly()` | Set the readonly attribute | `false`
+`required(bool $value = true)` | Set the required attribute | `false`
+`title(string $value)` | Set the title attribute | `''`
+`value($value)` | The value content attribute gives the default value of the field | `''`
