@@ -25,10 +25,12 @@ use function strpos;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
-    private string $formErrorsClass = FormErrors::class;
     private array $attributes;
+    private string $formErrorsClass = FormErrors::class;
     private FormErrorsInterface $formErrors;
     private ?Inflector $inflector = null;
+    /** @psalm-var array<string, string|array> */
+    private array $rawData = [];
     private bool $validated = false;
 
     public function __construct()
@@ -101,9 +103,17 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     /**
      * @return iterable|object|scalar|Stringable|null
      */
-    public function getAttributeValue(string $attribute)
+    public function getAttributeCastValue(string $attribute)
     {
         return $this->readProperty($attribute);
+    }
+
+    /**
+     * @return iterable|object|scalar|Stringable|null
+     */
+    public function getAttributeValue(string $attribute)
+    {
+        return $this->rawData[$attribute] ?? $this->getAttributeCastValue($attribute);
     }
 
     /**
@@ -141,29 +151,26 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      * @param string|null $formName
      *
      * @return bool
+     *
+     * @psalm-param array<string, string|array> $data
      */
     public function load(array $data, ?string $formName = null): bool
     {
+        $this->rawData = [];
         $scope = $formName ?? $this->getFormName();
 
-        /**
-         * @psalm-var array<string, scalar|Stringable|null>
-         */
-        $values = [];
-
         if ($scope === '' && !empty($data)) {
-            $values = $data;
+            $this->rawData = $data;
         } elseif (isset($data[$scope])) {
-            /** @var mixed */
-            $values = $data[$scope];
+            /** @var array<string, string> */
+            $this->rawData = $data[$scope];
         }
 
-        /** @var array<string, scalar|Stringable|null> $values */
-        foreach ($values as $name => $value) {
+        foreach ($this->rawData as $name => $value) {
             $this->setAttribute($name, $value);
         }
 
-        return $values !== [];
+        return $this->rawData !== [];
     }
 
     /**
@@ -312,7 +319,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         /** @psalm-suppress MixedMethodCall */
         $getter = static fn (FormModelInterface $class, string $attribute) => $nested === null
             ? $class->$attribute
-            : $class->$attribute->getAttributeValue($nested);
+            : $class->$attribute->getAttributeCastValue($nested);
 
         $getter = Closure::bind($getter, null, $this);
 
@@ -375,7 +382,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         if ($nested !== null) {
             /** @var FormModelInterface $attributeNestedValue */
-            $attributeNestedValue = $this->getAttributeValue($attribute);
+            $attributeNestedValue = $this->getAttributeCastValue($attribute);
             /** @var string */
             $result = $attributeNestedValue->$method($nested);
         }
