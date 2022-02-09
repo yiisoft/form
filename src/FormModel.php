@@ -18,6 +18,7 @@ use Yiisoft\Validator\RulesProviderInterface;
 use function array_key_exists;
 use function explode;
 use function is_subclass_of;
+use function property_exists;
 use function strpos;
 
 /**
@@ -133,6 +134,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function hasAttribute(string $attribute): bool
     {
+        if (strpos($attribute, '.') !== false) {
+            [, $nested] = $this->getNestedAttribute($attribute);
+            return $nested !== null ? true : false;
+        }
+
         return array_key_exists($attribute, $this->attributes);
     }
 
@@ -200,11 +206,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $this->validated = false;
 
-        $errors = $result->getErrorsIndexedByPath();
+        $errors = $result->getErrorObjects();
 
-        foreach ($errors as $attribute => $error) {
-            $this->formErrors->clear($attribute);
-            $this->addErrors([$attribute => $error]);
+        foreach ($errors as $error) {
+            /** @var string|null */
+            $attribute = $error->getValuePath()[0] ?? null;
+
+            if ($attribute !== null && $this->hasAttribute($attribute)) {
+                $this->formErrors->addError($attribute, $error->getMessage());
+            }
         }
 
         $this->validated = true;
@@ -239,18 +249,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return $attributes;
-    }
-
-    /**
-     * @psalm-param array<string, array<array-key, string>> $items
-     */
-    private function addErrors(array $items): void
-    {
-        foreach ($items as $attribute => $errors) {
-            foreach ($errors as $error) {
-                $this->formErrors->addError($attribute, $error);
-            }
-        }
     }
 
     private function createFormErrors(string $formErrorsClass): FormErrorsInterface
@@ -356,11 +354,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         [$attribute, $nested] = explode('.', $attribute, 2);
 
-        /** @var object|string */
-        $attributeNested = $this->attributes[$attribute] ?? null;
+        /** @var string */
+        $attributeNested = $this->attributes[$attribute] ?? '';
 
         if (!is_subclass_of($attributeNested, self::class)) {
             throw new InvalidArgumentException("Attribute \"$attribute\" is not a nested attribute.");
+        }
+
+        if (!property_exists($attributeNested, $nested)) {
+            return [$attribute, null];
         }
 
         return [$attribute, $nested];

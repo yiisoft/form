@@ -153,6 +153,17 @@ final class FormModelTest extends TestCase
         $this->assertFalse($form->hasAttribute('extraField'));
     }
 
+    public function testHasNestedAttribute(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->assertTrue($form->hasAttribute('user.login'));
+        $this->assertTrue($form->hasAttribute('user.password'));
+        $this->assertTrue($form->hasAttribute('user.rememberMe'));
+        $this->assertFalse($form->hasAttribute('user.noExist'));
+        $this->assertFalse($form->hasAttribute('noexist'));
+    }
+
     public function testLoad(): void
     {
         $form = new LoginForm();
