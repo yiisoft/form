@@ -12,7 +12,7 @@ use Stringable;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
-use Yiisoft\Validator\ResultSet;
+use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
@@ -196,18 +196,17 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
     }
 
-    public function processValidationResult(ResultSet $resultSet): void
+    public function processValidationResult(Result $result): void
     {
         $this->validated = false;
 
-        /** @var array<string, Resultset> $resultSet */
-        foreach ($resultSet as $attribute => $result) {
-            if ($result->isValid() === false) {
-                $this->formErrors->clear($attribute);
-                /** @psalm-suppress InvalidArgument */
-                $this->addErrors([$attribute => $result->getErrors()]);
-            }
+        $errors = $result->getErrorsIndexedByPath();
+
+        foreach ($errors as $attribute => $error) {
+            $this->formErrors->clear($attribute);
+            $this->addErrors([$attribute => $error]);
         }
+
         $this->validated = true;
     }
 
