@@ -134,12 +134,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function hasAttribute(string $attribute): bool
     {
-        if (strpos($attribute, '.') !== false) {
-            [, $nested] = $this->getNestedAttribute($attribute);
-            return $nested !== null ? true : false;
-        }
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return array_key_exists($attribute, $this->attributes);
+        return $nested !== null ? true : array_key_exists($attribute, $this->attributes);
     }
 
     /**
@@ -205,15 +202,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function processValidationResult(Result $result): void
     {
         $this->validated = false;
+        $errors = $result->getErrorsIndexedByAttribute();
 
-        $errors = $result->getErrorObjects();
-
-        foreach ($errors as $error) {
-            /** @var string|null */
-            $attribute = $error->getValuePath()[0] ?? null;
-
-            if ($attribute !== null && $this->hasAttribute($attribute)) {
-                $this->formErrors->addError($attribute, $error->getMessage());
+        foreach ($errors as $attribute => $errors) {
+            if (is_string($attribute) && $this->hasAttribute($attribute)) {
+                $this->formErrors->clear($attribute);
+                $this->addErrors([$attribute => $errors]);
             }
         }
 
@@ -249,6 +243,20 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         return $attributes;
+    }
+
+    /**
+     * @psalm-param non-empty-array<string, non-empty-list<int|string>> $items
+     */
+    private function addErrors(array $items): void
+    {
+        foreach ($items as $attribute => $errors) {
+            foreach ($errors as $error) {
+                if (is_string($error)) {
+                    $this->formErrors->addError($attribute, $error);
+                }
+            }
+        }
     }
 
     private function createFormErrors(string $formErrorsClass): FormErrorsInterface
@@ -362,7 +370,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         if (!property_exists($attributeNested, $nested)) {
-            return [$attribute, null];
+            throw new InvalidArgumentException("Undefined property: \"$attributeNested::$nested\".");
         }
 
         return [$attribute, $nested];

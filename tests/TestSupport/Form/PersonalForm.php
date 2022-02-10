@@ -36,8 +36,8 @@ final class PersonalForm extends FormModel
     public function getRules(): array
     {
         return [
-            'name' => [Required::rule(), HasLength::rule()->min(4)->tooShortMessage('Is too short.')],
             'email' => [Email::rule()],
+            'name' => [Required::rule(), HasLength::rule()->min(4)->tooShortMessage('Is too short.')],
             'password' => [
                 Required::rule(),
                 (MatchRegularExpression::rule("/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/"))

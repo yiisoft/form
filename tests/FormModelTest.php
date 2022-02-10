@@ -160,8 +160,16 @@ final class FormModelTest extends TestCase
         $this->assertTrue($form->hasAttribute('user.login'));
         $this->assertTrue($form->hasAttribute('user.password'));
         $this->assertTrue($form->hasAttribute('user.rememberMe'));
-        $this->assertFalse($form->hasAttribute('user.noExist'));
         $this->assertFalse($form->hasAttribute('noexist'));
+    }
+
+    public function testHasNestedAttributeException(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noexist".');
+        $form->hasAttribute('user.noexist');
     }
 
     public function testLoad(): void
