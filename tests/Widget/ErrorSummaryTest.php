@@ -23,8 +23,8 @@ final class ErrorSummaryTest extends TestCase
         return [
             // Default settings.
             [
-                'jac',
                 'jack@.com',
+                'jac',
                 'A258*f',
                 [],
                 '',
@@ -37,8 +37,8 @@ final class ErrorSummaryTest extends TestCase
                 <div>
                 <p class="text-danger">Please fix the following errors:</p>
                 <ul>
-                <li>Is too short.</li>
                 <li>This value is not a valid email address.</li>
+                <li>Is too short.</li>
                 <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
                 </ul>
                 </div>
@@ -46,8 +46,8 @@ final class ErrorSummaryTest extends TestCase
             ],
             // Set custom header and custom footer.
             [
-                'jac',
                 'jack@.com',
+                'jac',
                 'A258*f',
                 [],
                 'Custom header',
@@ -60,8 +60,8 @@ final class ErrorSummaryTest extends TestCase
                 <div>
                 <p class="text-danger">Custom header</p>
                 <ul>
-                <li>Is too short.</li>
                 <li>This value is not a valid email address.</li>
+                <li>Is too short.</li>
                 <li>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.</li>
                 </ul>
                 <p class="text-primary">Custom footer</p>
@@ -70,8 +70,8 @@ final class ErrorSummaryTest extends TestCase
             ],
             // Set only attributes with showAllErros its `true`.
             [
-                'jac',
                 'jack@.com',
+                'jac',
                 'A258*f',
                 [],
                 '',
@@ -91,8 +91,8 @@ final class ErrorSummaryTest extends TestCase
             ],
             // Set only attributes with showAllErros `false`.
             [
-                'jac',
                 'jack@.com',
+                'jac',
                 'A258*f',
                 [],
                 '',
@@ -147,8 +147,8 @@ final class ErrorSummaryTest extends TestCase
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
     public function testErrorSummary(
-        string $name,
         string $email,
+        string $name,
         string $password,
         array $attributes,
         string $header,
@@ -163,8 +163,8 @@ final class ErrorSummaryTest extends TestCase
 
         $record = [
             'PersonalForm' => [
-                'name' => $name,
                 'email' => $email,
+                'name' => $name,
                 'password' => $password,
             ],
         ];
