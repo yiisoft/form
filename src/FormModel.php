@@ -202,10 +202,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function processValidationResult(Result $result): void
     {
         $this->validated = false;
-        $errors = $result->getErrorsIndexedByAttribute();
 
-        foreach ($errors as $attribute => $errors) {
-            if (is_string($attribute) && $this->hasAttribute($attribute)) {
+        foreach ($result->getErrorMessagesIndexedByAttribute() as $attribute => $errors) {
+            if ($this->hasAttribute($attribute)) {
                 $this->formErrors->clear($attribute);
                 $this->addErrors([$attribute => $errors]);
             }
@@ -246,15 +245,13 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @psalm-param non-empty-array<string, non-empty-list<int|string>> $items
+     * @psalm-param  non-empty-array<string, non-empty-list<string>> $items
      */
     private function addErrors(array $items): void
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                if (is_string($error)) {
-                    $this->formErrors->addError($attribute, $error);
-                }
+                $this->formErrors->addError($attribute, $error);
             }
         }
     }
