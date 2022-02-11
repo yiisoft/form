@@ -27,8 +27,7 @@ use function strpos;
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
     private array $attributes;
-    private string $formErrorsClass = FormErrors::class;
-    private FormErrorsInterface $formErrors;
+    private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
     /** @psalm-var array<string, string|array> */
     private array $rawData = [];
@@ -37,7 +36,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function __construct()
     {
         $this->attributes = $this->collectAttributes();
-        $this->formErrors = $this->createFormErrors($this->formErrorsClass);
     }
 
     public function attributes(): array
@@ -122,6 +120,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function getFormErrors(): FormErrorsInterface
     {
+        if ($this->formErrors === null) {
+            $this->formErrors = new FormErrors();
+        }
+
         return $this->formErrors;
     }
 
@@ -212,7 +214,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         foreach ($result->getErrorMessagesIndexedByAttribute() as $attribute => $errors) {
             if ($this->hasAttribute($attribute)) {
-                $this->formErrors->clear($attribute);
+                $this->getFormErrors()->clear($attribute);
                 $this->addErrors([$attribute => $errors]);
             }
         }
@@ -223,6 +225,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function getRules(): array
     {
         return [];
+    }
+
+    public function setFormErrors(FormErrorsInterface $formErrors): void
+    {
+        $this->formErrors = $formErrors;
     }
 
     /**
@@ -258,20 +265,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this->formErrors->addError($attribute, $error);
+                $this->getFormErrors()->addError($attribute, $error);
             }
         }
-    }
-
-    private function createFormErrors(string $formErrorsClass): FormErrorsInterface
-    {
-        $formErrors = new $formErrorsClass();
-
-        if (!$formErrors instanceof FormErrorsInterface) {
-            throw new InvalidArgumentException('Form errors class must implement ' . FormErrorsInterface::class);
-        }
-
-        return $formErrors;
     }
 
     private function getInflector(): Inflector
