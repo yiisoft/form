@@ -50,7 +50,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
     },
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
