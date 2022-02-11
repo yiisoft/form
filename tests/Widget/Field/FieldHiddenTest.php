@@ -23,7 +23,7 @@ final class FieldHiddenTest extends TestCase
      */
     public function testRender(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-string">
         </div>
@@ -39,7 +39,7 @@ final class FieldHiddenTest extends TestCase
      */
     public function testValue(): void
     {
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-string" value="1">
         </div>
@@ -50,7 +50,7 @@ final class FieldHiddenTest extends TestCase
             Field::widget()->hidden(new TypeForm(), 'string')->value('1')->render(),
         );
 
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-int" value="1">
         </div>
@@ -61,7 +61,7 @@ final class FieldHiddenTest extends TestCase
             Field::widget()->hidden(new TypeForm(), 'int')->value(1)->render(),
         );
 
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-string">
         </div>
@@ -92,7 +92,7 @@ final class FieldHiddenTest extends TestCase
 
         // Value string `1`.
         $formModel->setAttribute('string', '1');
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-string" value="1">
         </div>
@@ -104,7 +104,7 @@ final class FieldHiddenTest extends TestCase
 
         // Value integer 1.
         $formModel->setAttribute('int', 1);
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-int" value="1">
         </div>
@@ -116,7 +116,7 @@ final class FieldHiddenTest extends TestCase
 
         // Value `null`.
         $formModel->setAttribute('string', null);
-        $expected = <<<'HTML'
+        $expected = <<<HTML
         <div>
         <input type="hidden" name="typeform-string">
         </div>
