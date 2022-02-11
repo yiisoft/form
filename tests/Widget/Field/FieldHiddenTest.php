@@ -37,10 +37,93 @@ final class FieldHiddenTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testValue(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="typeform-string" value="1">
+        </div>
+        HTML;
+        // Value string `1`.
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->hidden(new TypeForm(), 'string')->value('1')->render(),
+        );
+
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="typeform-int" value="1">
+        </div>
+        HTML;
+        // Value integer 1.
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->hidden(new TypeForm(), 'int')->value(1)->render(),
+        );
+
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="typeform-string">
+        </div>
+        HTML;
+        // Value null.
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->hidden(new TypeForm(), 'string')->value(null)->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testValueException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Hidden widget requires a string value.');
+        $this->expectExceptionMessage('Hidden widget requires a string, numeric or null value.');
         Field::widget()->hidden(new TypeForm(), 'array')->render();
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testValueWithFormModel(): void
+    {
+        $formModel = new TypeForm();
+
+        // Value string `1`.
+        $formModel->setAttribute('string', '1');
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="typeform-string" value="1">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->hidden($formModel, 'string')->render(),
+        );
+
+        // Value integer 1.
+        $formModel->setAttribute('int', 1);
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="typeform-int" value="1">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->hidden($formModel, 'int')->render(),
+        );
+
+        // Value `null`.
+        $formModel->setAttribute('string', null);
+        $expected = <<<'HTML'
+        <div>
+        <input type="hidden" name="typeform-string">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->hidden($formModel, 'string')->render(),
+        );
     }
 }
