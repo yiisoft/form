@@ -29,7 +29,7 @@ final class Hidden extends InputAttributes
         $value = $attributes['value'] ?? $this->getAttributeValue();
         unset($attributes['value']);
 
-        if (!is_string($value) && !is_numeric($value) && !is_null($value)) {
+        if (!is_string($value) && !is_numeric($value) && null !== $value) {
             throw new InvalidArgumentException('Hidden widget requires a string, numeric or null value.');
         }
 
