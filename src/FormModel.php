@@ -200,7 +200,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         $this->validated = false;
 
-        foreach ($result->getErrorsIndexedByAttribute() as $attribute => $errors) {
+        foreach ($result->getErrorMessagesIndexedByAttribute() as $attribute => $errors) {
             $this->formErrors->clear($attribute);
             /** @psalm-suppress InvalidArgument */
             $this->addErrors([$attribute => $errors]);

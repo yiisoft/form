@@ -80,7 +80,7 @@ final class FormErrors implements FormErrorsInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
-    public function clear(string $attribute = null): void
+    public function clear(?string $attribute = null): void
     {
         if ($attribute !== null) {
             unset($this->attributesErrors[$attribute]);
