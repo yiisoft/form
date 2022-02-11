@@ -233,10 +233,18 @@ final class FormModelTest extends TestCase
             'bool' => 'false',
             'string' => 555,
         ], '');
-        $this->assertIsInt($form->getAttributeValue('int'));
-        $this->assertIsFloat($form->getAttributeValue('float'));
-        $this->assertIsBool($form->getAttributeValue('bool'));
-        $this->assertIsString($form->getAttributeValue('string'));
+
+        // check row data value.
+        $this->assertIsString($form->getAttributeValue('int'));
+        $this->assertIsString($form->getAttributeValue('float'));
+        $this->assertIsString($form->getAttributeValue('bool'));
+        $this->assertIsInt($form->getAttributeValue('string'));
+
+        // chech cast data value.
+        $this->assertIsInt($form->getAttributeCastValue('int'));
+        $this->assertIsFloat($form->getAttributeCastValue('float'));
+        $this->assertIsBool($form->getAttributeCastValue('bool'));
+        $this->assertIsString($form->getAttributeCastValue('string'));
     }
 
     public function testLoadWithNestedAttribute(): void
@@ -264,11 +272,14 @@ final class FormModelTest extends TestCase
         $form = new class () extends FormModel {
             public int $int = 1;
         };
-        $form->load(['int' => '2']);
-        $this->assertSame(2, $form->getAttributeValue('int'));
 
+        // check row data value.
+        $form->load(['int' => '2']);
+        $this->assertSame('2', $form->getAttributeValue('int'));
+
+        // chech cast data value.
         $form->setAttribute('int', 1);
-        $this->assertSame(1, $form->getAttributeValue('int'));
+        $this->assertSame(1, $form->getAttributeCastValue('int'));
     }
 
     public function testAttributeNames(): void
