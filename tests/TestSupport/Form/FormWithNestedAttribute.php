@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
 
 final class FormWithNestedAttribute extends FormModel
@@ -42,7 +43,11 @@ final class FormWithNestedAttribute extends FormModel
     public function getRules(): array
     {
         return [
-            'id' => Required::rule(),
+            'id' => [Required::rule()],
+            'user.login' => [
+                Required::rule(),
+                HasLength::rule()->min(3)->tooShortMessage('Is too short.'),
+            ],
         ];
     }
 

@@ -18,6 +18,7 @@ use Yiisoft\Validator\RulesProviderInterface;
 use function array_key_exists;
 use function explode;
 use function is_subclass_of;
+use function property_exists;
 use function strpos;
 
 /**
@@ -133,7 +134,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function hasAttribute(string $attribute): bool
     {
-        return array_key_exists($attribute, $this->attributes);
+        [$attribute, $nested] = $this->getNestedAttribute($attribute);
+
+        return $nested !== null ? true : array_key_exists($attribute, $this->attributes);
     }
 
     /**
@@ -201,9 +204,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->validated = false;
 
         foreach ($result->getErrorMessagesIndexedByAttribute() as $attribute => $errors) {
-            $this->formErrors->clear($attribute);
-            /** @psalm-suppress InvalidArgument */
-            $this->addErrors([$attribute => $errors]);
+            if ($this->hasAttribute($attribute)) {
+                $this->formErrors->clear($attribute);
+                $this->addErrors([$attribute => $errors]);
+            }
         }
 
         $this->validated = true;
@@ -241,7 +245,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @psalm-param array<string, array<array-key, string>> $items
+     * @psalm-param  non-empty-array<string, non-empty-list<string>> $items
      */
     private function addErrors(array $items): void
     {
@@ -355,11 +359,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         [$attribute, $nested] = explode('.', $attribute, 2);
 
-        /** @var object|string */
-        $attributeNested = $this->attributes[$attribute] ?? null;
+        /** @var string */
+        $attributeNested = $this->attributes[$attribute] ?? '';
 
         if (!is_subclass_of($attributeNested, self::class)) {
             throw new InvalidArgumentException("Attribute \"$attribute\" is not a nested attribute.");
+        }
+
+        if (!property_exists($attributeNested, $nested)) {
+            throw new InvalidArgumentException("Undefined property: \"$attributeNested::$nested\".");
         }
 
         return [$attribute, $nested];
