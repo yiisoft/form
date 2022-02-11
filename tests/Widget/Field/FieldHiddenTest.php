@@ -21,11 +21,27 @@ final class FieldHiddenTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testName(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <input type="hidden" name="ActiveField[form_action]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()->name('ActiveField[form_action]')->hidden(new TypeForm(), 'string')->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testRender(): void
     {
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-string">
+        <input type="hidden" name="TypeForm[string]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -41,7 +57,7 @@ final class FieldHiddenTest extends TestCase
     {
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-string" value="1">
+        <input type="hidden" name="TypeForm[string]" value="1">
         </div>
         HTML;
         // Value string `1`.
@@ -52,7 +68,7 @@ final class FieldHiddenTest extends TestCase
 
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-int" value="1">
+        <input type="hidden" name="TypeForm[int]" value="1">
         </div>
         HTML;
         // Value integer 1.
@@ -63,7 +79,7 @@ final class FieldHiddenTest extends TestCase
 
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-string">
+        <input type="hidden" name="TypeForm[string]">
         </div>
         HTML;
         // Value null.
@@ -94,7 +110,7 @@ final class FieldHiddenTest extends TestCase
         $formModel->setAttribute('string', '1');
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-string" value="1">
+        <input type="hidden" name="TypeForm[string]" value="1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -106,7 +122,7 @@ final class FieldHiddenTest extends TestCase
         $formModel->setAttribute('int', 1);
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-int" value="1">
+        <input type="hidden" name="TypeForm[int]" value="1">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -118,7 +134,7 @@ final class FieldHiddenTest extends TestCase
         $formModel->setAttribute('string', null);
         $expected = <<<HTML
         <div>
-        <input type="hidden" name="typeform-string">
+        <input type="hidden" name="TypeForm[string]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

@@ -34,7 +34,7 @@ final class Hidden extends InputAttributes
         }
 
         if (!array_key_exists('name', $attributes)) {
-            $attributes['name'] = $this->getInputId();
+            $attributes['name'] = $this->getInputName();
         }
 
         return Input::tag()->type('hidden')->attributes($attributes)->value($value === '' ? null : $value)->render();
