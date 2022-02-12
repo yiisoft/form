@@ -29,12 +29,12 @@ final class Hidden extends InputAttributes
         $value = $attributes['value'] ?? $this->getAttributeValue();
         unset($attributes['value']);
 
-        if (!is_string($value)) {
-            throw new InvalidArgumentException('Hidden widget requires a string value.');
+        if (!is_string($value) && !is_numeric($value) && null !== $value) {
+            throw new InvalidArgumentException('Hidden widget requires a string, numeric or null value.');
         }
 
         if (!array_key_exists('name', $attributes)) {
-            $attributes['name'] = $this->getInputId();
+            $attributes['name'] = $this->getInputName();
         }
 
         return Input::tag()->type('hidden')->attributes($attributes)->value($value === '' ? null : $value)->render();
