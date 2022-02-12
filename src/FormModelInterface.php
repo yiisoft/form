@@ -128,4 +128,9 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * @param iterable|object|scalar|Stringable|null $value
      */
     public function setAttribute(string $name, $value): void;
+
+    /**
+     * Set custom form errors instance.
+     */
+    public function setFormErrors(FormErrorsInterface $formErrors): void;
 }

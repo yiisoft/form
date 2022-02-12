@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
@@ -295,6 +296,15 @@ final class FormModelTest extends TestCase
             ['array', 'bool', 'float', 'int', 'number', 'object', 'string', 'toCamelCase', 'toDate', 'toNull'],
             $typeForm->attributes(),
         );
+    }
+
+    public function testSetFormErrors(): void
+    {
+        $formErrors = new CustomFormErrors();
+        $formModel = new LoginForm();
+
+        $formModel->setFormErrors($formErrors);
+        $this->assertSame($formErrors, $formModel->getFormErrors());
     }
 
     private function createValidatorMock(): ValidatorInterface
