@@ -19,12 +19,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^2.2",
         "yiisoft/http": "^1.2",
         "yiisoft/strings": "^2.0",
-        "yiisoft/validator": "^3.0@dev",
+        "yiisoft/validator": "dev-77-php-attributes",
         "yiisoft/widget": "^1.0"
     },
     "require-dev": {

@@ -26,13 +26,13 @@ final class ValidatorForm extends FormModel
     public function getRules(): array
     {
         return [
-            'matchregular' => [MatchRegularExpression::rule('/\w+/')],
-            'maxlength' => [HasLength::rule()->max(50)],
-            'minlength' => [HasLength::rule()->min(15)],
-            'number' => [Number::rule()->min(3)->max(5)],
-            'numberRequired' => [Required::rule()],
-            'required' => [Required::rule()],
-            'url' => [Url::rule()],
+            'matchregular' => [new MatchRegularExpression('/\w+/')],
+            'maxlength' => [new HasLength(max: 50)],
+            'minlength' => [new HasLength(min: 15)],
+            'number' => [new Number(min: 3, max: 5)],
+            'numberRequired' => [new Required()],
+            'required' => [new Required()],
+            'url' => [new Url()],
         ];
     }
 }

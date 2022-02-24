@@ -36,15 +36,15 @@ final class PersonalForm extends FormModel
     public function getRules(): array
     {
         return [
-            'email' => [Email::rule()],
-            'name' => [Required::rule(), HasLength::rule()->min(4)->tooShortMessage('Is too short.')],
+            'email' => [new Email()],
+            'name' => [new Required(), new HasLength(min: 4, tooShortMessage: 'Is too short.')],
             'password' => [
-                Required::rule(),
-                (MatchRegularExpression::rule("/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/"))
-                    ->message(
-                        'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or ' .
-                        'more characters.'
-                    ),
+                new Required(),
+                new MatchRegularExpression(
+                    '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/',
+                    message: 'Must contain at least one number and one uppercase and lowercase letter, and at least ' .
+                    '8 or more characters.'
+                ),
             ],
         ];
     }

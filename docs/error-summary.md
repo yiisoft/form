@@ -23,8 +23,8 @@ final class TestForm extends FormModel
     public function getRules(): array
     {
         return [
-            'email' => [Email::rule()],
-            'name' => [HasLength::rule()->min(4)->tooShortMessage('Is too short.')],
+            'email' => [new Email()],
+            'name' => [new HasLength(min: 4, tooShortMessage: 'Is too short.'),
         ];
     } 
 }

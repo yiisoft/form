@@ -29,50 +29,55 @@ final class AttributesValidatorForm extends FormModel
     {
         return [
             'checkbox' => [
-                Required::rule(),
+                new Required(),
             ],
             'email' => [
-                Required::rule(),
-                HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/')
-                    ->message('Is not a valid email address.'),
-                Email::rule(),
+                new Required(),
+                new HasLength(min: 8, max: 20, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new MatchRegularExpression(
+                    '/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
+                    message: 'Is not a valid email address.'
+                ),
+                new Email(),
             ],
             'number' => [
-                Required::rule(),
-                Number::rule()->min(3)->tooSmallMessage('Is too small.')->max(5)->tooBigMessage('Is too big.'),
+                new Required(),
+                new Number(min: 3, max: 5, tooSmallMessage: 'Is too small.', tooBigMessage: 'Is too big.'),
             ],
             'pattern' => [
-                MatchRegularExpression::rule('/\w+/'),
+                new MatchRegularExpression('/\w+/'),
             ],
             'password' => [
-                Required::rule(),
-                HasLength::rule()->min(4)->tooShortMessage('Is too short.')->max(8)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/')
-                    ->message('Is not a valid password.'),
+                new Required(),
+                new HasLength(min: 4, max: 8, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new MatchRegularExpression(
+                    '/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/',
+                    message: 'Is not a valid password.'
+                ),
             ],
             'telephone' => [
-                Required::rule(),
-                HasLength::rule()->min(8)->tooShortMessage('Is too short.')->max(16)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/[^0-9+\(\)-]/')->message('Is not a valid telephone number.'),
+                new Required(),
+                new HasLength(min: 8, max: 16, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new MatchRegularExpression('/[^0-9+\(\)-]/', message: 'Is not a valid telephone number.'),
             ],
             'text' => [
-                Required::rule(),
-                HasLength::rule()->min(3)->tooShortMessage('Is too short.')->max(6)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/^[a-zA-Z0-9_.-]+$/')->message('Is not a valid text.'),
+                new Required(),
+                new HasLength(min: 3, max: 6, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new MatchRegularExpression('/^[a-zA-Z0-9_.-]+$/', message: 'Is not a valid text.'),
             ],
             'textArea' => [
-                Required::rule(),
-                HasLength::rule()->min(10)->tooShortMessage('Is too short.')->max(100)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule('/^[a-zA-Z ]*$/')->message('Is not a valid text.'),
+                new Required(),
+                new HasLength(min: 10, max: 100, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new MatchRegularExpression('/^[a-zA-Z ]*$/', message: 'Is not a valid text.'),
             ],
             'url' => [
-                Required::rule(),
-                HasLength::rule()->min(15)->tooShortMessage('Is too short.')->max(20)->tooLongMessage('Is too long.'),
-                MatchRegularExpression::rule(
-                    '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/'
-                )->message('Is not a valid URL.'),
-                Url::rule(),
+                new Required(),
+                new HasLength(min: 15, max: 20, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new MatchRegularExpression(
+                    '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/',
+                    message: 'Is not a valid URL.',
+                ),
+                new Url(),
             ],
         ];
     }

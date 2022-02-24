@@ -43,10 +43,10 @@ final class FormWithNestedAttribute extends FormModel
     public function getRules(): array
     {
         return [
-            'id' => [Required::rule()],
+            'id' => [new Required()],
             'user.login' => [
-                Required::rule(),
-                HasLength::rule()->min(3)->tooShortMessage('Is too short.'),
+                new Required(),
+                new HasLength(min: 3, tooShortMessage: 'Is too short.'),
             ],
         ];
     }

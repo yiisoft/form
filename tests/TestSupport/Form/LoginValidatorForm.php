@@ -17,7 +17,7 @@ final class LoginValidatorForm extends FormModel
     public function getRules(): array
     {
         return [
-            'login' => [Required::rule()],
+            'login' => [new Required()],
             'password' => $this->passwordRules(),
         ];
     }
@@ -28,8 +28,9 @@ final class LoginValidatorForm extends FormModel
         $login = $this->login;
         $password = $this->password;
         $users = $this->users;
+
         return [
-            Required::rule(),
+            new Required(),
             static function () use ($formErrors, $login, $password, $users): Result {
                 $result = new Result();
 
