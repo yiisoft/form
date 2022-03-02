@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Each;
 use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\RuleSet;
 
 final class EachForm extends FormModel
 {
