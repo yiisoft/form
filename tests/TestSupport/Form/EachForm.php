@@ -15,6 +15,6 @@ final class EachForm extends FormModel
 
     public function getRules(): array
     {
-        return ['names' => [new Each(new RuleSet([new HasLength(max: 10)]))]];
+        return ['names' => [new Each([new HasLength(max: 10)])]];
     }
 }

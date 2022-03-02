@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\Rule\MatchRegularExpression;
+use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 
 final class PersonalForm extends FormModel
@@ -40,7 +40,7 @@ final class PersonalForm extends FormModel
             'name' => [new Required(), new HasLength(min: 4, tooShortMessage: 'Is too short.')],
             'password' => [
                 new Required(),
-                new MatchRegularExpression(
+                new Regex(
                     '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/',
                     message: 'Must contain at least one number and one uppercase and lowercase letter, and at least ' .
                     '8 or more characters.'

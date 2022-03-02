@@ -44,11 +44,11 @@ final class UrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeMatchRegularExpression(): void
+    public function testGetValidatorAttributeRegex(): void
     {
         $this->assertSame(
-            '<input type="url" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">',
-            Url::widget()->for(new ValidatorForm(), 'matchregular')->render(),
+            '<input type="url" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
+            Url::widget()->for(new ValidatorForm(), 'regex')->render(),
         );
     }
 

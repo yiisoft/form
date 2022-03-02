@@ -44,11 +44,11 @@ final class EmailTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeMatchRegularExpression(): void
+    public function testGetValidatorAttributeRegex(): void
     {
         $this->assertSame(
-            '<input type="email" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">',
-            Email::widget()->for(new ValidatorForm(), 'matchregular')->render(),
+            '<input type="email" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
+            Email::widget()->for(new ValidatorForm(), 'regex')->render(),
         );
     }
 

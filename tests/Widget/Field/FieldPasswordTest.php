@@ -53,17 +53,17 @@ final class FieldPasswordTest extends TestCase
         );
     }
 
-    public function testGetValidatorAttributeMatchRegularExpression(): void
+    public function testGetValidatorAttributeRegex(): void
     {
         $expected = <<<HTML
         <div>
-        <label for="validatorform-matchregular">Matchregular</label>
-        <input type="password" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">
+        <label for="validatorform-regex">Regex</label>
+        <input type="password" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new ValidatorForm(), 'matchregular')->render(),
+            Field::widget()->password(new ValidatorForm(), 'regex')->render(),
         );
     }
 

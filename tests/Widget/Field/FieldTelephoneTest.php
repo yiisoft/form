@@ -56,17 +56,17 @@ final class FieldTelephoneTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeMatchRegularExpression(): void
+    public function testGetValidatorAttributeRegex(): void
     {
         $expected = <<<HTML
         <div>
-        <label for="validatorform-matchregular">Matchregular</label>
-        <input type="tel" id="validatorform-matchregular" name="ValidatorForm[matchregular]" pattern="\w+">
+        <label for="validatorform-regex">Regex</label>
+        <input type="tel" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new ValidatorForm(), 'matchregular')->render(),
+            Field::widget()->telephone(new ValidatorForm(), 'regex')->render(),
         );
     }
 

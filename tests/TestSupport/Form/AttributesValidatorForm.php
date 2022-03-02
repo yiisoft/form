@@ -7,9 +7,9 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Url;
 
 final class AttributesValidatorForm extends FormModel
@@ -34,7 +34,7 @@ final class AttributesValidatorForm extends FormModel
             'email' => [
                 new Required(),
                 new HasLength(min: 8, max: 20, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
-                new MatchRegularExpression(
+                new Regex(
                     '/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
                     message: 'Is not a valid email address.'
                 ),
@@ -45,12 +45,12 @@ final class AttributesValidatorForm extends FormModel
                 new Number(min: 3, max: 5, tooSmallMessage: 'Is too small.', tooBigMessage: 'Is too big.'),
             ],
             'pattern' => [
-                new MatchRegularExpression('/\w+/'),
+                new Regex('/\w+/'),
             ],
             'password' => [
                 new Required(),
                 new HasLength(min: 4, max: 8, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
-                new MatchRegularExpression(
+                new Regex(
                     '/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/',
                     message: 'Is not a valid password.'
                 ),
@@ -58,22 +58,22 @@ final class AttributesValidatorForm extends FormModel
             'telephone' => [
                 new Required(),
                 new HasLength(min: 8, max: 16, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
-                new MatchRegularExpression('/[^0-9+\(\)-]/', message: 'Is not a valid telephone number.'),
+                new Regex('/[^0-9+\(\)-]/', message: 'Is not a valid telephone number.'),
             ],
             'text' => [
                 new Required(),
                 new HasLength(min: 3, max: 6, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
-                new MatchRegularExpression('/^[a-zA-Z0-9_.-]+$/', message: 'Is not a valid text.'),
+                new Regex('/^[a-zA-Z0-9_.-]+$/', message: 'Is not a valid text.'),
             ],
             'textArea' => [
                 new Required(),
                 new HasLength(min: 10, max: 100, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
-                new MatchRegularExpression('/^[a-zA-Z ]*$/', message: 'Is not a valid text.'),
+                new Regex('/^[a-zA-Z ]*$/', message: 'Is not a valid text.'),
             ],
             'url' => [
                 new Required(),
                 new HasLength(min: 15, max: 20, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
-                new MatchRegularExpression(
+                new Regex(
                     '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/',
                     message: 'Is not a valid URL.',
                 ),
