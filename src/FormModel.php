@@ -148,7 +148,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return $nested !== null ? true : array_key_exists($attribute, $this->attributes);
+        return $nested !== null || array_key_exists($attribute, $this->attributes);
     }
 
     /**
