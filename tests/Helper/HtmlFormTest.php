@@ -9,6 +9,7 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Form\DynamicFieldsForm;
 
 final class HtmlFormTest extends TestCase
 {
@@ -80,5 +81,20 @@ final class HtmlFormTest extends TestCase
 
         $this->expectExceptionMessage('formName() cannot be empty for tabular inputs.');
         HtmlForm::getInputName($anonymousForm, '[0]dates[0]');
+    }
+
+    public function testUUIDInputName(): void
+    {
+        $fields = [
+            '7aeceb9b-fa64-4a83-ae6a-5f602772c01b' => null,
+            'test_field' => null,
+        ];
+
+        $form = new DynamicFieldsForm($fields);
+
+        foreach ($fields as $name => $value) {
+            $inputName = HtmlForm::getInputName($form, $name);
+            $this->assertSame('DynamicFieldsForm[' . $name . ']', $inputName);
+        }
     }
 }

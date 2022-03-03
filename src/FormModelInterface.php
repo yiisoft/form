@@ -20,6 +20,15 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
     public function attributes(): array;
 
     /**
+     * Check for attribute exists in model
+     *
+     * @param string $attribute
+     *
+     * @return bool
+     */
+    public function hasAttribute(string $attribute): bool;
+
+    /**
      * Returns the value for the specified attribute.
      *
      * @param string $attribute
