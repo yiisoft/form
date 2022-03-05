@@ -13,6 +13,20 @@ use Yiisoft\Form\Tests\TestSupport\Form\DynamicFieldsForm;
 
 final class HtmlFormTest extends TestCase
 {
+    public function dynamicFieldsProvider(string $formName): array
+    {
+        return [
+            '7aeceb9b-fa64-4a83-ae6a-5f602772c01b' => [
+                'value' => 'some uuid value',
+                'expected' => $formName . '[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
+            ],
+            'test_field' => [
+                'value' => 'some test value',
+                'expected' => $formName . '[test_field]',
+            ],
+        ];
+    }
+
     public function testGetAttributeHint(): void
     {
         $formModel = new LoginForm();
@@ -85,16 +99,18 @@ final class HtmlFormTest extends TestCase
 
     public function testUUIDInputName(): void
     {
-        $fields = [
-            '7aeceb9b-fa64-4a83-ae6a-5f602772c01b' => null,
-            'test_field' => null,
-        ];
+        $fields = $this->dynamicFieldsProvider('DynamicFieldsForm');
+        $keys = array_keys($fields);
+        $form = new DynamicFieldsForm(array_fill_keys($keys, null));
 
-        $form = new DynamicFieldsForm($fields);
-
-        foreach ($fields as $name => $value) {
+        foreach ($fields as $name => $field) {
             $inputName = HtmlForm::getInputName($form, $name);
-            $this->assertSame('DynamicFieldsForm[' . $name . ']', $inputName);
+            $this->assertSame($field['expected'], $inputName);
+            $this->assertTrue($form->hasAttribute($name));
+            $this->assertNull($form->getAttributeValue($name));
+
+            $form->setAttribute($name, $field['value']);
+            $this->assertSame($field['value'], $form->getAttributeValue($name));
         }
     }
 }

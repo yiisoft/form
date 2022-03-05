@@ -33,7 +33,7 @@ final class DynamicFieldsForm extends FormModel
             return $this->fields[$attribute];
         }
 
-        return parent::getAttributeValue();
+        return parent::getAttributeValue($attribute);
     }
 
     public function setAttribute(string $name, $value): void
