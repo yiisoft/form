@@ -20,28 +20,22 @@ final class DynamicFieldsForm extends FormModel
 
     public function hasAttribute(string $attribute): bool
     {
-        if (ArrayHelper::keyExists($this->fields, $attribute)) {
-            return true;
-        }
-
-        return parent::hasAttribute($attribute);
+        return ArrayHelper::keyExists($this->fields, $attribute);
     }
 
     public function getAttributeValue(string $attribute)
     {
-        if (ArrayHelper::keyExists($this->fields, $attribute)) {
+        if ($this->hasAttribute($attribute)) {
             return $this->fields[$attribute];
         }
 
-        return parent::getAttributeValue($attribute);
+        return null;
     }
 
     public function setAttribute(string $name, $value): void
     {
-        if (ArrayHelper::keyExists($this->fields, $name)) {
+        if ($this->hasAttribute($name)) {
             $this->fields[$name] = $value;
-        } else {
-            parent::setAttribute($name, $value);
         }
     }
 }
