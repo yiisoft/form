@@ -13,16 +13,22 @@ use Yiisoft\Form\Tests\TestSupport\Form\DynamicFieldsForm;
 
 final class HtmlFormTest extends TestCase
 {
-    public function dynamicFieldsProvider(string $formName): array
+    public function dynamicFieldsProvider(): array
     {
         return [
-            '7aeceb9b-fa64-4a83-ae6a-5f602772c01b' => [
-                'value' => 'some uuid value',
-                'expected' => $formName . '[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
-            ],
-            'test_field' => [
-                'value' => 'some test value',
-                'expected' => $formName . '[test_field]',
+            [
+                [
+                    [
+                        'name' => '7aeceb9b-fa64-4a83-ae6a-5f602772c01b',
+                        'value' => 'some uuid value',
+                        'expected' => 'DynamicFieldsForm[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
+                    ],
+                    [
+                        'name' => 'test_field',
+                        'value' => 'some test value',
+                        'expected' => 'DynamicFieldsForm[test_field]',
+                    ],
+                ],
             ],
         ];
     }
@@ -97,20 +103,22 @@ final class HtmlFormTest extends TestCase
         HtmlForm::getInputName($anonymousForm, '[0]dates[0]');
     }
 
-    public function testUUIDInputName(): void
+    /**
+     * @dataProvider dynamicFieldsProvider
+     */
+    public function testUUIDInputName(array $fields): void
     {
-        $fields = $this->dynamicFieldsProvider('DynamicFieldsForm');
-        $keys = array_keys($fields);
+        $keys = array_column($fields, 'name');
         $form = new DynamicFieldsForm(array_fill_keys($keys, null));
 
-        foreach ($fields as $name => $field) {
-            $inputName = HtmlForm::getInputName($form, $name);
+        foreach ($fields as $field) {
+            $inputName = HtmlForm::getInputName($form, $field['name']);
             $this->assertSame($field['expected'], $inputName);
-            $this->assertTrue($form->hasAttribute($name));
-            $this->assertNull($form->getAttributeValue($name));
+            $this->assertTrue($form->hasAttribute($field['name']));
+            $this->assertNull($form->getAttributeValue($field['name']));
 
-            $form->setAttribute($name, $field['value']);
-            $this->assertSame($field['value'], $form->getAttributeValue($name));
+            $form->setAttribute($field['name'], $field['value']);
+            $this->assertSame($field['value'], $form->getAttributeValue($field['name']));
         }
     }
 }
