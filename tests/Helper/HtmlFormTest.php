@@ -9,9 +9,30 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Form\DynamicFieldsForm;
 
 final class HtmlFormTest extends TestCase
 {
+    public function dynamicFieldsProvider(): array
+    {
+        return [
+            [
+                [
+                    [
+                        'name' => '7aeceb9b-fa64-4a83-ae6a-5f602772c01b',
+                        'value' => 'some uuid value',
+                        'expected' => 'DynamicFieldsForm[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
+                    ],
+                    [
+                        'name' => 'test_field',
+                        'value' => 'some test value',
+                        'expected' => 'DynamicFieldsForm[test_field]',
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function testGetAttributeHint(): void
     {
         $formModel = new LoginForm();
@@ -80,5 +101,24 @@ final class HtmlFormTest extends TestCase
 
         $this->expectExceptionMessage('formName() cannot be empty for tabular inputs.');
         HtmlForm::getInputName($anonymousForm, '[0]dates[0]');
+    }
+
+    /**
+     * @dataProvider dynamicFieldsProvider
+     */
+    public function testUUIDInputName(array $fields): void
+    {
+        $keys = array_column($fields, 'name');
+        $form = new DynamicFieldsForm(array_fill_keys($keys, null));
+
+        foreach ($fields as $field) {
+            $inputName = HtmlForm::getInputName($form, $field['name']);
+            $this->assertSame($field['expected'], $inputName);
+            $this->assertTrue($form->hasAttribute($field['name']));
+            $this->assertNull($form->getAttributeValue($field['name']));
+
+            $form->setAttribute($field['name'], $field['value']);
+            $this->assertSame($field['value'], $form->getAttributeValue($field['name']));
+        }
     }
 }
