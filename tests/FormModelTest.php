@@ -261,6 +261,22 @@ final class FormModelTest extends TestCase
         $this->assertSame('admin', $form->getUserLogin());
     }
 
+    public function testLoadWithNestedAttributeArray(): void
+    {
+        $form = new FormWithNestedAttribute();
+
+        $data = [
+            'FormWithNestedAttribute' => [
+                'user' => [
+                    'login' => 'admin',
+                ],
+            ],
+        ];
+
+        $this->assertTrue($form->load($data));
+        $this->assertSame('admin', $form->getUserLogin());
+    }
+
     public function testNonNamespacedFormName(): void
     {
         $form = new \NonNamespacedForm();

@@ -8,6 +8,8 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
+use RuntimeException;
+use Stringable;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
@@ -306,18 +308,27 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        /** @psalm-suppress MixedMethodCall */
-        $setter = static function (FormModelInterface $class, string $attribute, mixed $value, ?string $nested): void {
-            match ($nested) {
-                null => $class->$attribute = $value,
-                default => $class->$attribute->setAttribute($nested, $value),
-            };
+        /**
+         * @psalm-suppress MissingClosureParamType
+         * @psalm-suppress MixedMethodCall
+         */
+        $setter = static function (FormModelInterface $class, string $attribute, $value, ?string $nested) {
+            if (is_a($class->$attribute, __CLASS__)) {
+                if ($nested) {
+                    $class->$attribute->setAttribute($nested, $value);
+                } elseif (is_array($value)) {
+                    $class->$attribute->load($value, '');
+                } else {
+                    throw new RuntimeException('$value must be array for using as nested attribute');
+                }
+            } else {
+                $class->$attribute = $value;
+            }
         };
 
-        $setter = Closure::bind($setter, null, $this);
-
-        /** @var Closure $setter */
-        $setter($this, $attribute, $value, $nested);
+        $closure = Closure::bind($setter, null, $this);
+        /** @var Closure $closure */
+        $closure($this, $attribute, $value, $nested);
     }
 
     /**
