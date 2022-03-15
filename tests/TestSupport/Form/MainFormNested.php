@@ -10,8 +10,8 @@ use Yiisoft\Validator\Rule\Required;
 
 final class MainFormNested extends FormModel
 {
-    protected string $value = '';
-    protected NestedForm $nestedForm;
+    private string $value = '';
+    private NestedForm $nestedForm;
 
     public function __construct()
     {

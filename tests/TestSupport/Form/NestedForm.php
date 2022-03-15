@@ -9,7 +9,7 @@ use Yiisoft\Validator\Rule\Number;
 
 final class NestedForm extends FormModel
 {
-    protected ?int $number = null;
+    public ?int $number = null;
 
     public function getRules(): array
     {
