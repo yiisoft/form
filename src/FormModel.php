@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
 use Stringable;
-use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
@@ -113,7 +112,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function getAttributeValue(string $attribute)
     {
-        return ArrayHelper::getValue($this->rawData, $attribute, $this->getAttributeCastValue($attribute));
+        return $this->rawData[$attribute] ?? $this->getAttributeCastValue($attribute);
     }
 
     /**
