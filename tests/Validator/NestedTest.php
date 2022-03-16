@@ -54,7 +54,7 @@ final class NestedTest extends TestCase
         $this->assertSame(2, $form->getAttributeValue('nestedForm.number')); // 2 is valid.
         $this->assertSame('main-form', $form->getAttributeValue('value')); // main-form is valid.
         $this->assertFalse($validator->validate($form)->isValid()); // return false.
-        $this->assertSame(['nestedForm.number' => ['Value cannot be blank.']], HtmlFormErrors::getAllErrors($form));
+        $this->assertSame(['nestedForm' => ['Value cannot be blank.']], HtmlFormErrors::getAllErrors($form));
     }
 
     public function testAttributeNestedValidationInvalidNumber(): void
@@ -76,6 +76,6 @@ final class NestedTest extends TestCase
         $this->assertSame('x', $form->getAttributeValue('nestedForm.number')); // 'x' is invalid.
         $this->assertSame('main-form', $form->getAttributeValue('value')); // main-form is valid.
         $this->assertFalse($validator->validate($form)->isValid()); // return false.
-        $this->assertSame(['nestedForm.number' => ['Value must be an integer.']], HtmlFormErrors::getAllErrors($form));
+        $this->assertSame(['nestedForm' => ['Value must be an integer.']], HtmlFormErrors::getAllErrors($form));
     }
 }
