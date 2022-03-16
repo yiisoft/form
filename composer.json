@@ -24,7 +24,7 @@
         "yiisoft/html": "^2.2",
         "yiisoft/http": "^1.2",
         "yiisoft/strings": "^2.0",
-        "yiisoft/validator": "^3.0@dev",
+        "yiisoft/validator": "dev-tests-nested-support-forms as 3.0",
         "yiisoft/widget": "^1.0"
     },
     "require-dev": {
@@ -58,5 +58,11 @@
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
         "test-watch": "phpunit-watcher watch"
-    }
+    },
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/terabytesoftw/validator"
+        }
+    ]
 }
