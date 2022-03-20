@@ -104,18 +104,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return [];
     }
 
-    /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeCastValue(string $attribute, string ...$nested)
+    public function getAttributeCastValue(string $attribute, string ...$nested): mixed
     {
         return $this->readProperty($attribute, ...$nested);
     }
 
-    /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeRawValue(string $attribute, string ...$nested)
+    public function getAttributeRawValue(string $attribute, string ...$nested): mixed
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute, ...$nested);
 
@@ -126,10 +120,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->rawData[$attribute] ?? null;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAttributeValue(string $attribute, string ...$nested)
+    public function getAttributeValue(string $attribute, string ...$nested): mixed
     {
         return $this->getAttributeRawValue($attribute, ...$nested) ?? $this->getAttributeCastValue($attribute, ...$nested);
     }

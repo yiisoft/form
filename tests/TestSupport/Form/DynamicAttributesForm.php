@@ -13,12 +13,12 @@ final class DynamicAttributesForm extends FormModel
     {
     }
 
-    public function hasAttribute(string $attribute): bool
+    public function hasAttribute(string $attribute, string ...$nested): bool
     {
         return ArrayHelper::keyExists($this->attributes, $attribute);
     }
 
-    public function getAttributeValue(string $attribute): iterable|int|float|string|bool|object|null
+    public function getAttributeValue(string $attribute, string ...$nested): mixed
     {
         if ($this->hasAttribute($attribute)) {
             return $this->attributes[$attribute];
