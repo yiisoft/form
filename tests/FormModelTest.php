@@ -11,6 +11,7 @@ use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
+use Yiisoft\Form\Tests\TestSupport\Form\FormWithDeepNested;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -84,6 +85,7 @@ final class FormModelTest extends TestCase
         $form = new FormWithNestedAttribute();
 
         $this->assertSame('Write your id or email.', $form->getAttributeHint('user.login'));
+        $this->assertSame('Write your id or email.', $form->getAttributeHint('user', 'login'));
     }
 
     public function testGetNestedAttributeLabel(): void
@@ -91,6 +93,7 @@ final class FormModelTest extends TestCase
         $form = new FormWithNestedAttribute();
 
         $this->assertSame('Login:', $form->getAttributeLabel('user.login'));
+        $this->assertSame('Login:', $form->getAttributeLabel('user', 'login'));
     }
 
     public function testGetNestedAttributePlaceHolder(): void
@@ -98,6 +101,7 @@ final class FormModelTest extends TestCase
         $form = new FormWithNestedAttribute();
 
         $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
+        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('user', 'login'));
     }
 
     public function testGetAttributePlaceHolder(): void
@@ -140,6 +144,7 @@ final class FormModelTest extends TestCase
 
         $form->setUserLogin('admin');
         $this->assertSame('admin', $form->getAttributeValue('user.login'));
+        $this->assertSame('admin', $form->getAttributeValue('user', 'login'));
     }
 
     public function testHasAttribute(): void
@@ -160,6 +165,9 @@ final class FormModelTest extends TestCase
         $this->assertTrue($form->hasAttribute('user.login'));
         $this->assertTrue($form->hasAttribute('user.password'));
         $this->assertTrue($form->hasAttribute('user.rememberMe'));
+        $this->assertTrue($form->hasAttribute('user', 'login'));
+        $this->assertTrue($form->hasAttribute('user', 'password'));
+        $this->assertTrue($form->hasAttribute('user', 'rememberMe'));
         $this->assertFalse($form->hasAttribute('noexist'));
     }
 
@@ -333,6 +341,34 @@ final class FormModelTest extends TestCase
 
         $formModel->setFormErrors($formErrors);
         $this->assertSame($formErrors, $formModel->getFormErrors());
+    }
+
+    public function testDeepNestedForm(): void
+    {
+        $form = new FormWithDeepNested();
+        $form->load([
+            'intValue' => 1,
+            'nestedForm.id' => 10,
+            'nestedForm.user.login' => 'test',
+            'nestedForm' => [
+                'user' => [
+                    'rememberMe' => true
+                ]
+            ]
+        ], '');
+
+        $form->setAttribute('personalForm.email', 'test@test.com');
+
+        $this->assertTrue($form->hasAttribute('nestedForm', 'user', 'password'));
+        $this->assertTrue($form->getAttributeValue('nestedForm.user.rememberMe'));
+        $this->assertTrue($form->getAttributeValue('nestedForm', 'user', 'rememberMe'));
+        $this->assertSame(1, $form->getAttributeValue('intValue'));
+        $this->assertSame(10, $form->getAttributeValue('nestedForm.id'));
+        $this->assertSame(10, $form->getAttributeValue('nestedForm', 'id'));
+        $this->assertSame('test', $form->getAttributeValue('nestedForm.user.login'));
+        $this->assertSame('test', $form->getAttributeValue('nestedForm', 'user', 'login'));
+        $this->assertSame('test@test.com', $form->getAttributeValue('personalForm.email'));
+        $this->assertSame('test@test.com', $form->getAttributeValue('personalForm', 'email'));
     }
 
     public function testSetAttribute(): void
