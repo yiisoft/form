@@ -21,13 +21,14 @@ final class TestForm extends FormModel
     public function getRules(): array
     {
         return [
-            'name' => [HasLength::rule()->min(4)->tooShortMessage('Is too short.')],
+            'name' => [new HasLength(min: 4)],
         ];
     } 
 }
 ```
 
 Controller action:
+
 ```php
 public function widget(
     TestForm $testForm,

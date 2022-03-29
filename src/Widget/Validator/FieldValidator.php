@@ -10,8 +10,8 @@ use Yiisoft\Form\Widget\Url;
 use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule;
 use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\Rule\MatchRegularExpression;
 use Yiisoft\Validator\Rule\Number;
+use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\Url as UrlValidator;
 
@@ -48,7 +48,7 @@ final class FieldValidator
                 $attributes['minlength'] = $rule->getOptions()['min'] !== 0 ? $rule->getOptions()['min'] : null;
             }
 
-            if ($rule instanceof MatchRegularExpression && $widget instanceof MatchRegularInterface) {
+            if ($rule instanceof Regex && $widget instanceof MatchRegularInterface) {
                 /** @var string */
                 $pattern = $rule->getOptions()['pattern'];
                 $attributes['pattern'] = Html::normalizeRegexpPattern($pattern);
