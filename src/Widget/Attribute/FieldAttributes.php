@@ -511,10 +511,11 @@ abstract class FieldAttributes extends WidgetAttributes
         $ariaDescribedBy = $this->ariaDescribedBy;
         $ariaDescribedByDefault = $this->getDefaultValue($this->type, 'ariaDescribedBy');
 
-        return match (is_bool($ariaDescribedByDefault)) {
-            true => $ariaDescribedByDefault,
-            false => $ariaDescribedBy,
-        };
+        if (is_bool($ariaDescribedByDefault)) {
+            $ariaDescribedBy = $ariaDescribedByDefault;
+        }
+
+        return $ariaDescribedBy;
     }
 
     /**
@@ -615,11 +616,7 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getDefinitions(): array
     {
         $definitions = $this->getDefaultValue($this->type, 'definitions') ?? [];
-
-        return match (is_array($definitions)) {
-            true => $definitions,
-            false => [],
-        };
+        return  is_array($definitions) ? $definitions : [];
     }
 
     /**
