@@ -23,6 +23,27 @@ final class FieldTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testContainerAttributes(): void
+    {
+        $expected = <<<HTML
+        <div id="id-test" class="test-class">
+        <label for="typeform-string">String</label>
+        <input type="text" id="typeform-string" name="TypeForm[string]">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget()
+                ->containerId('id-test')
+                ->containerAttributes(['class' => 'test-class'])
+                ->text(new TypeForm(), 'string')
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testContainerId(): void
     {
         $expected = <<<HTML
@@ -218,15 +239,5 @@ final class FieldTest extends TestCase
                 ->text(new TypeForm(), 'string')
                 ->render(),
         );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testReplaceIndividualTokenException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$token must be a string or \Stringable object.');
-        Field::widget()->replaceIndividualToken('{after}', 1);
     }
 }

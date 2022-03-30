@@ -9,6 +9,10 @@ use Stringable;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input\Checkbox as CheckboxTag;
 
+use function is_bool;
+use function is_iterable;
+use function is_object;
+
 /**
  * The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.
  *
@@ -22,15 +26,14 @@ final class Checkbox extends InputAttributes
     private bool $enclosedByLabel = true;
     private ?string $label = '';
     private array $labelAttributes = [];
-    /** @var bool|float|int|string|Stringable|null */
-    private $uncheckValue = '0';
+    private string|int|bool|Stringable|null|float $uncheckValue = '0';
 
     /**
      * Check the checkbox button.
      *
      * @param bool $value Whether the checkbox button is checked.
      *
-     * @return static
+     * @return self
      */
     public function checked(bool $value = true): self
     {
@@ -44,7 +47,7 @@ final class Checkbox extends InputAttributes
      *
      * @param bool $value If the widget should be en closed by label.
      *
-     * @return static
+     * @return self
      */
     public function enclosedByLabel(bool $value): self
     {
@@ -63,7 +66,7 @@ final class Checkbox extends InputAttributes
      *
      * @param string|null $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
@@ -81,7 +84,7 @@ final class Checkbox extends InputAttributes
      *
      * @param array $attributes
      *
-     * @return static
+     * @return self
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -93,11 +96,11 @@ final class Checkbox extends InputAttributes
     }
 
     /**
-     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
+     * @param float|Stringable|bool|int|string|null $value Value that corresponds to "unchecked" state of the input.
      *
-     * @return static
+     * @return self
      */
-    public function uncheckValue($value): self
+    public function uncheckValue(float|Stringable|bool|int|string|null $value): self
     {
         $new = clone $this;
         $new->uncheckValue = is_bool($value) ? (int) $value : $value;

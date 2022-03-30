@@ -8,7 +8,6 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
-use Stringable;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
@@ -16,10 +15,13 @@ use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
+use function array_keys;
 use function explode;
 use function is_subclass_of;
 use function property_exists;
-use function strpos;
+use function str_contains;
+use function strrchr;
+use function substr;
 
 /**
  * Form model represents an HTML form: its data, validation and presentation.
@@ -99,18 +101,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return [];
     }
 
-    /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeCastValue(string $attribute)
+    public function getAttributeCastValue(string $attribute): iterable|int|float|string|bool|object|null
     {
         return $this->readProperty($attribute);
     }
 
-    /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    public function getAttributeValue(string $attribute)
+    public function getAttributeValue(string $attribute): iterable|int|float|string|bool|object|null
     {
         return $this->rawData[$attribute] ?? $this->getAttributeCastValue($attribute);
     }
@@ -132,7 +128,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function getFormName(): string
     {
-        if (strpos(static::class, '@anonymous') !== false) {
+        if (str_contains(static::class, '@anonymous')) {
             return '';
         }
 
@@ -179,32 +175,25 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @param iterable|object|scalar|Stringable|null $value
+     * @param string $name
+     * @param iterable|int|float|string|bool|object|null $value
      *
-     * @psalm-suppress PossiblyInvalidCast
+     * @psalm-suppress InvalidCast
      */
-    public function setAttribute(string $name, $value): void
+    public function setAttribute(string $name, iterable|int|float|string|bool|object|null $value): void
     {
         [$realName] = $this->getNestedAttribute($name);
 
         if (isset($this->attributes[$realName])) {
-            switch ($this->attributes[$realName]) {
-                case 'bool':
-                    $this->writeProperty($name, (bool) $value);
-                    break;
-                case 'float':
-                    $this->writeProperty($name, (float) $value);
-                    break;
-                case 'int':
-                    $this->writeProperty($name, (int) $value);
-                    break;
-                case 'string':
-                    $this->writeProperty($name, (string) $value);
-                    break;
-                default:
-                    $this->writeProperty($name, $value);
-                    break;
-            }
+            $value = match ($this->attributes[$realName]) {
+                'bool' => (bool) $value,
+                'float' => (float) $value,
+                'int' => (int) $value,
+                'string' => (string) $value,
+                default => $value,
+            };
+
+            $this->writeProperty($name, $value);
         }
     }
 
@@ -279,7 +268,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * Generates a user friendly attribute label based on the give attribute name.
+     * Generates a user-friendly attribute label based on the give attribute name.
      *
      * This is done by replacing underscores, dashes and dots with blanks and changing the first letter of each word to
      * upper case.
@@ -298,13 +287,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     }
 
     /**
-     * @return iterable|scalar|Stringable|null
-     *
      * @psalm-suppress MixedReturnStatement
      * @psalm-suppress MixedInferredReturnType
      * @psalm-suppress MissingClosureReturnType
      */
-    private function readProperty(string $attribute)
+    private function readProperty(string $attribute): iterable|int|float|string|bool|object|null
     {
         $class = static::class;
 
@@ -327,21 +314,20 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     /**
      * @param string $attribute
-     * @param iterable|object|scalar|Stringable|null $value
+     * @param iterable|int|float|string|bool|object|null $value
      *
      * @psalm-suppress MissingClosureReturnType
      */
-    private function writeProperty(string $attribute, $value): void
+    private function writeProperty(string $attribute, iterable|int|float|string|bool|object|null $value): void
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        /**
-         * @psalm-suppress MissingClosureParamType
-         * @psalm-suppress MixedMethodCall
-         */
-        $setter = static fn (FormModelInterface $class, string $attribute, $value) => $nested === null
-            ? $class->$attribute = $value
-            : $class->$attribute->setAttribute($nested, $value);
+        /** @psalm-suppress MixedMethodCall */
+        $setter = static fn (
+            FormModelInterface $class,
+            string $attribute,
+            iterable|int|float|string|bool|object|null $value
+        ) => $nested === null ? $class->$attribute = $value : $class->$attribute->setAttribute($nested, $value);
 
         $setter = Closure::bind($setter, null, $this);
 
@@ -356,7 +342,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     private function getNestedAttribute(string $attribute): array
     {
-        if (strpos($attribute, '.') === false) {
+        if (!str_contains($attribute, '.')) {
             return [$attribute, null];
         }
 

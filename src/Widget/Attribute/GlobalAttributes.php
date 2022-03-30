@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use Stringable;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -21,7 +20,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
      */
-    public function autofocus(): self
+    public function autofocus(): static
     {
         $new = clone $this;
         $new->attributes['autofocus'] = true;
@@ -37,7 +36,7 @@ abstract class GlobalAttributes extends Widget
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
-    public function attributes(array $values): self
+    public function attributes(array $values): static
     {
         $new = clone $this;
         $new->attributes = array_merge($new->attributes, $values);
@@ -51,7 +50,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @return static
      */
-    public function class(string $class): self
+    public function class(string $class): static
     {
         $new = clone $this;
         Html::addCssClass($new->attributes, $class);
@@ -71,7 +70,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
      */
-    public function disabled(): self
+    public function disabled(): static
     {
         $new = clone $this;
         $new->attributes['disabled'] = true;
@@ -85,7 +84,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @return static
      */
-    public function encode(bool $value): self
+    public function encode(bool $value): static
     {
         $new = clone $this;
         $new->encode = $value;
@@ -101,7 +100,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
-    public function id(?string $id): self
+    public function id(?string $id): static
     {
         $new = clone $this;
         $new->attributes['id'] = $id;
@@ -117,7 +116,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name
      */
-    public function name(?string $value): self
+    public function name(?string $value): static
     {
         $new = clone $this;
         $new->attributes['name'] = $value;
@@ -144,7 +143,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
      */
-    public function tabIndex(int $value): self
+    public function tabIndex(int $value): static
     {
         $new = clone $this;
         $new->attributes['tabindex'] = $value;
@@ -160,7 +159,7 @@ abstract class GlobalAttributes extends Widget
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#attr-title
      */
-    public function title(string $value): self
+    public function title(string $value): static
     {
         $new = clone $this;
         $new->attributes['title'] = $value;
@@ -170,13 +169,13 @@ abstract class GlobalAttributes extends Widget
     /**
      * The value content attribute gives the default value of the field.
      *
-     * @param array|scalar|Stringable|null $value
+     * @param iterable|int|float|string|bool|object|null $value
      *
      * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
      */
-    public function value($value): self
+    public function value(iterable|int|float|string|bool|object|null $value): static
     {
         $new = clone $this;
         $new->attributes['value'] = $value;

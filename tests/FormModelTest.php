@@ -14,7 +14,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Validator\ValidatorInterface;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
@@ -307,7 +306,7 @@ final class FormModelTest extends TestCase
         $this->assertSame($formErrors, $formModel->getFormErrors());
     }
 
-    private function createValidatorMock(): ValidatorInterface
+    public function testSetAttribute(): void
     {
         $form = new class () extends FormModel {
             private $property;

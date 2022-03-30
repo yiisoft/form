@@ -11,6 +11,8 @@ use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Html\Tag\Input;
 
+use function is_numeric;
+
 /**
  * The input element with a type attribute whose value is "range" represents an imprecise control for setting the
  * element’s value to a string representing a number.
@@ -41,7 +43,7 @@ final class Range extends InputAttributes implements NumberInterface
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -59,7 +61,7 @@ final class Range extends InputAttributes implements NumberInterface
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      */
     public function outputTag(string $value): self
     {

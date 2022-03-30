@@ -8,6 +8,10 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input;
 
+use function array_key_exists;
+use function is_numeric;
+use function is_string;
+
 /**
  * The input element with a type attribute whose value is "hidden" represents a value that is not intended to be
  * examined or manipulated by the user.

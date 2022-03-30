@@ -9,6 +9,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\Exception\AttributeNotSetException;
 use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -17,6 +18,16 @@ use Yiisoft\Form\Widget\FieldPart\Error;
 final class ErrorTest extends TestCase
 {
     use TestTrait;
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetAttributeException(): void
+    {
+        $this->expectException(AttributeNotSetException::class);
+        $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
+        Error::widget()->for($this->validation(), '')->render();
+    }
 
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException

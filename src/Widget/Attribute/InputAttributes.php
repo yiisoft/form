@@ -17,7 +17,7 @@ abstract class InputAttributes extends WidgetAttributes
      *
      * @link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-describedby
      */
-    public function ariaDescribedBy(string $value): self
+    public function ariaDescribedBy(string $value): static
     {
         $new = clone $this;
         $new->attributes['aria-describedby'] = $value;
@@ -33,7 +33,7 @@ abstract class InputAttributes extends WidgetAttributes
      *
      * @link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
      */
-    public function ariaLabel(string $value): self
+    public function ariaLabel(string $value): static
     {
         $new = clone $this;
         $new->attributes['aria-label'] = $value;
@@ -50,7 +50,7 @@ abstract class InputAttributes extends WidgetAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
      */
-    public function form(string $value): self
+    public function form(string $value): static
     {
         $new = clone $this;
         $new->attributes['form'] = $value;
@@ -68,7 +68,7 @@ abstract class InputAttributes extends WidgetAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#the-readonly-attribute
      */
-    public function readonly(bool $value = true): self
+    public function readonly(bool $value = true): static
     {
         $new = clone $this;
         $new->attributes['readonly'] = $value;
@@ -82,7 +82,7 @@ abstract class InputAttributes extends WidgetAttributes
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
-    public function required(): self
+    public function required(): static
     {
         $new = clone $this;
         $new->attributes['required'] = true;

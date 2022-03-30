@@ -37,6 +37,11 @@ final class ValidatorTest extends TestCase
         $loginValidatorForm->setAttribute('password', '123456');
         $validator->validate($loginValidatorForm);
 
+        $config = array_merge(
+            $this->fieldConfig,
+            ['defaultValues()' => [['text' => ['errorAttributes' => ['class' => 'test-class']]]]],
+        );
+
         $expected = <<<HTML
         <div>
         <label for="loginvalidatorform-login">Login</label>
@@ -45,13 +50,13 @@ final class ValidatorTest extends TestCase
         <div>
         <label for="loginvalidatorform-password">Password</label>
         <input type="text" id="loginvalidatorform-password" class="is-invalid" name="LoginValidatorForm[password]" value="123456" required>
-        <div class="hasError">invalid login password</div>
+        <div class="test-class hasError">invalid login password</div>
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
-            Field::widget($this->fieldConfig)->text($loginValidatorForm, 'password')->render()
+            Field::widget($config)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
+            Field::widget($config)->text($loginValidatorForm, 'password')->render()
         );
     }
 

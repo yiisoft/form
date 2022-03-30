@@ -98,7 +98,7 @@ final class FileTest extends TestCase
         $this->assertNotSame($fileInput, $fileInput->accept(''));
         $this->assertNotSame($fileInput, $fileInput->hiddenAttributes([]));
         $this->assertNotSame($fileInput, $fileInput->multiple());
-        $this->assertNotSame($fileInput, $fileInput->uncheckValue(null));
+        $this->assertNotSame($fileInput, $fileInput->uncheckValue(true));
     }
 
     /**
@@ -165,6 +165,12 @@ final class FileTest extends TestCase
         <input type="hidden" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
         HTML;
         $html = File::widget()->for(new TypeForm(), 'array')->uncheckValue('0')->render();
+        $this->assertSame($expected, $html);
+
+        $expected = <<<'HTML'
+        <input type="hidden" name="TypeForm[array]" value="1"><input type="file" id="typeform-array" name="TypeForm[array][]">
+        HTML;
+        $html = File::widget()->for(new TypeForm(), 'array')->uncheckValue(true)->render();
         $this->assertSame($expected, $html);
     }
 

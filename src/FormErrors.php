@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use function array_flip;
+use function array_intersect_key;
+use function array_merge;
+use function reset;
+
 /**
  * FormErrors represents a form validation errors collection.
  */
@@ -80,13 +85,9 @@ final class FormErrors implements FormErrorsInterface
         return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
     }
 
-    public function clear(?string $attribute = null): void
+    public function clear(string $attribute): void
     {
-        if ($attribute !== null) {
-            unset($this->attributesErrors[$attribute]);
-        } else {
-            $this->attributesErrors = [];
-        }
+        unset($this->attributesErrors[$attribute]);
     }
 
     private function renderErrorSummary(array $errors): array

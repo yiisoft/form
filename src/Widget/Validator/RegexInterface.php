@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Validator;
 
-interface MatchRegularInterface
+interface RegexInterface
 {
     /**
      * The pattern attribute, when specified, is a regular expression that the input's value must match in order for

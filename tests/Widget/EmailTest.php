@@ -104,7 +104,7 @@ final class EmailTest extends TestCase
         $email = Email::widget();
         $this->assertNotSame($email, $email->maxlength(0));
         $this->assertNotSame($email, $email->minlength(0));
-        $this->assertNotSame($email, $email->multiple());
+        $this->assertNotSame($email, $email->multiple(true));
         $this->assertNotSame($email, $email->pattern(''));
         $this->assertNotSame($email, $email->placeholder(''));
         $this->assertNotSame($email, $email->size(0));
@@ -138,10 +138,19 @@ final class EmailTest extends TestCase
     public function testMultiple(): void
     {
         $this->assertSame(
+            '<input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com">',
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->multiple(false)
+                ->value('email1@example.com')
+                ->render(),
+        );
+
+        $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;email2@example.com;" multiple>',
             Email::widget()
                 ->for(new TypeForm(), 'string')
-                ->multiple(true)
+                ->multiple()
                 ->value('email1@example.com;email2@example.com;')
                 ->render(),
         );

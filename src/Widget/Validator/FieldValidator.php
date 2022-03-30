@@ -43,12 +43,12 @@ final class FieldValidator
 
             if ($rule instanceof HasLength && $widget instanceof HasLengthInterface) {
                 /** @var int|null */
-                $attributes['maxlength'] = $rule->getOptions()['max'] !== 0 ? $rule->getOptions()['max'] : null;
+                $attributes['maxlength'] = $rule->getOptions()['max'] !== null ? $rule->getOptions()['max'] : null;
                 /** @var int|null */
-                $attributes['minlength'] = $rule->getOptions()['min'] !== 0 ? $rule->getOptions()['min'] : null;
+                $attributes['minlength'] = $rule->getOptions()['min'] !== null ? $rule->getOptions()['min'] : null;
             }
 
-            if ($rule instanceof Regex && $widget instanceof MatchRegularInterface) {
+            if ($rule instanceof Regex && $widget instanceof RegexInterface) {
                 /** @var string */
                 $pattern = $rule->getOptions()['pattern'];
                 $attributes['pattern'] = Html::normalizeRegexpPattern($pattern);
@@ -56,9 +56,9 @@ final class FieldValidator
 
             if ($rule instanceof Number && $widget instanceof NumberInterface) {
                 /** @var int|null */
-                $attributes['max'] = $rule->getOptions()['max'] !== 0 ? $rule->getOptions()['max'] : null;
+                $attributes['max'] = $rule->getOptions()['max'] !== null ? $rule->getOptions()['max'] : null;
                 /** @var int|null */
-                $attributes['min'] = $rule->getOptions()['min'] !== 0 ? $rule->getOptions()['min'] : null;
+                $attributes['min'] = $rule->getOptions()['min'] !== null ? $rule->getOptions()['min'] : null;
             }
 
             if ($rule instanceof UrlValidator && $widget instanceof Url) {

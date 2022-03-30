@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use Stringable;
 use Yiisoft\Form\Exception\AttributeNotSetException;
 use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\FormModelInterface;
@@ -16,10 +15,7 @@ abstract class WidgetAttributes extends GlobalAttributes
     private string $attribute = '';
     private ?FormModelInterface $formModel = null;
 
-    /**
-     * @return static
-     */
-    public function for(FormModelInterface $formModel, string $attribute): self
+    public function for(FormModelInterface $formModel, string $attribute): static
     {
         $new = clone $this;
         $new->formModel = $formModel;
@@ -37,16 +33,6 @@ abstract class WidgetAttributes extends GlobalAttributes
     }
 
     /**
-     * Generate hint attribute.
-     *
-     * @return string
-     */
-    protected function getAttributeHint(): string
-    {
-        return HtmlForm::getAttributeHint($this->getFormModel(), $this->getAttribute());
-    }
-
-    /**
      * Generate label attribute.
      *
      * @return string
@@ -61,7 +47,7 @@ abstract class WidgetAttributes extends GlobalAttributes
      *
      * @return string
      */
-    public function getAttributePlaceHolder(): string
+    protected function getAttributePlaceHolder(): string
     {
         return HtmlForm::getAttributePlaceHolder($this->getFormModel(), $this->getAttribute());
     }
@@ -69,9 +55,9 @@ abstract class WidgetAttributes extends GlobalAttributes
     /**
      * Return value of attribute.
      *
-     * @return bool|float|int|iterable|object|string|Stringable|null
+     * @return iterable|int|float|string|bool|object|null
      */
-    protected function getAttributeValue()
+    protected function getAttributeValue(): iterable|int|float|string|bool|object|null
     {
         return HtmlForm::getAttributeValue($this->getFormModel(), $this->getAttribute());
     }
@@ -92,8 +78,10 @@ abstract class WidgetAttributes extends GlobalAttributes
 
     /**
      * Generate input id attribute.
+     *
+     * @return string
      */
-    public function getInputId(): string
+    protected function getInputId(): string
     {
         return HtmlForm::getInputId($this->getFormModel(), $this->getAttribute());
     }
@@ -103,15 +91,17 @@ abstract class WidgetAttributes extends GlobalAttributes
      *
      * @return string
      */
-    public function getInputName(): string
+    protected function getInputName(): string
     {
         return HtmlForm::getInputName($this->getFormModel(), $this->getAttribute());
     }
 
     /**
      * Return if there is a validation error in the attribute.
+     *
+     * @return bool
      */
-    public function hasError(): bool
+    protected function hasError(): bool
     {
         return HtmlFormErrors::hasErrors($this->getFormModel(), $this->getAttribute());
     }
@@ -121,7 +111,7 @@ abstract class WidgetAttributes extends GlobalAttributes
      *
      * @return bool
      */
-    public function isValidated(): bool
+    protected function isValidated(): bool
     {
         return $this->getFormModel()->isValidated();
     }

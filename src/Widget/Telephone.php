@@ -8,8 +8,11 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\MatchRegularInterface;
+use Yiisoft\Form\Widget\Validator\RegexInterface;
 use Yiisoft\Html\Tag\Input;
+
+use function is_int;
+use function is_string;
 
 /**
  * The input element with a type attribute whose value is "tel" represents a one-line plain-text edit control for
@@ -17,7 +20,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel
  */
-final class Telephone extends InputAttributes implements HasLengthInterface, MatchRegularInterface, PlaceholderInterface
+final class Telephone extends InputAttributes implements HasLengthInterface, RegexInterface, PlaceholderInterface
 {
     public function maxlength(int $value): self
     {
@@ -45,7 +48,7 @@ final class Telephone extends InputAttributes implements HasLengthInterface, Mat
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.placeholder
      */
@@ -61,7 +64,7 @@ final class Telephone extends InputAttributes implements HasLengthInterface, Mat
      *
      * @param int $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.tel.html#input.tel.attrs.size
      */

@@ -185,6 +185,26 @@ final class SelectTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testItems(): void
+    {
+        $expected = <<<HTML
+        <select id="typeform-int" name="TypeForm[int]">
+        <option class="test-class" value="1">Moscu</option>
+        </select>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Select::widget()
+                ->for(new TypeForm(), 'int')
+                ->items([1 => 'Moscu'])
+                ->itemsAttributes([1 => ['class' => 'test-class']])
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $select = Select::widget();

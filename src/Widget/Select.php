@@ -11,6 +11,11 @@ use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
 
+use function array_key_exists;
+use function is_array;
+use function is_iterable;
+use function is_object;
+
 /**
  * Generates a drop-down list for the given form attribute.
  *
@@ -46,7 +51,7 @@ final class Select extends ChoiceAttributes
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/optgroup.html#optgroup
      */
@@ -97,7 +102,7 @@ final class Select extends ChoiceAttributes
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      */
     public function items(array $value = []): self
     {
@@ -111,7 +116,7 @@ final class Select extends ChoiceAttributes
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -130,7 +135,7 @@ final class Select extends ChoiceAttributes
      *
      * @param bool $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-select-multiple
      */
@@ -144,7 +149,7 @@ final class Select extends ChoiceAttributes
     /**
      * @param string[] $data
      *
-     * @return static
+     * @return self
      */
     public function optionsData(array $data): self
     {
@@ -159,7 +164,7 @@ final class Select extends ChoiceAttributes
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      */
     public function prompt(string $value): self
     {
@@ -174,7 +179,7 @@ final class Select extends ChoiceAttributes
      *
      * @param Option|null $value
      *
-     * @return static
+     * @return self
      */
     public function promptTag(?Option $value): self
     {
@@ -188,7 +193,7 @@ final class Select extends ChoiceAttributes
      *
      * @param int $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-select-size
      */
@@ -207,7 +212,7 @@ final class Select extends ChoiceAttributes
     }
 
     /**
-     * @return Optgroup[]|Option[]
+     * @psalm-return Optgroup[]|Option[]
      */
     private function renderItems(array $values = []): array
     {

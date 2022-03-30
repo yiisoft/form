@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Helper;
 
 use InvalidArgumentException;
-use Stringable;
 use UnexpectedValueException;
 use Yiisoft\Form\FormModelInterface;
 
@@ -95,10 +94,12 @@ final class HtmlForm
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
      *
-     * @return iterable|object|scalar|Stringable|null the corresponding attribute value.
+     * @return iterable|int|float|string|bool|object|null the corresponding attribute value.
      */
-    public static function getAttributeValue(FormModelInterface $formModel, string $attribute)
-    {
+    public static function getAttributeValue(
+        FormModelInterface $formModel,
+        string $attribute
+    ): iterable|int|float|string|bool|object|null {
         return $formModel->getAttributeValue(self::getAttributeName($formModel, $attribute));
     }
 

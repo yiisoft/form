@@ -13,6 +13,8 @@ use Yiisoft\Html\Tag\P;
 use Yiisoft\Html\Tag\Ul;
 use Yiisoft\Widget\Widget;
 
+use function array_flip;
+use function array_intersect_key;
 use function array_unique;
 use function array_values;
 
@@ -40,7 +42,7 @@ final class ErrorSummary extends Widget
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -56,7 +58,7 @@ final class ErrorSummary extends Widget
      *
      * @param bool $value
      *
-     * @return static
+     * @return self
      */
     public function encode(bool $value): self
     {
@@ -70,7 +72,7 @@ final class ErrorSummary extends Widget
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      */
     public function footer(string $value): self
     {
@@ -84,7 +86,7 @@ final class ErrorSummary extends Widget
      *
      * @param array $values Attribute values indexed by attribute names.
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -100,7 +102,7 @@ final class ErrorSummary extends Widget
      *
      * @param string $value
      *
-     * return static
+     * @return self
      */
     public function header(string $value): self
     {
@@ -114,7 +116,7 @@ final class ErrorSummary extends Widget
      *
      * @param array $values Attribute values indexed by attribute names.
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -130,7 +132,7 @@ final class ErrorSummary extends Widget
      *
      * @param FormModelInterface $formModel
      *
-     * @return static
+     * @return self
      */
     public function model(FormModelInterface $formModel): self
     {
@@ -144,7 +146,7 @@ final class ErrorSummary extends Widget
      *
      * @param bool $value
      *
-     * @return static
+     * @return self
      */
     public function showAllErrors(bool $value): self
     {
@@ -158,7 +160,7 @@ final class ErrorSummary extends Widget
      *
      * @param array $values The attributes to be included in error summary.
      *
-     * @return static
+     * @return self
      */
     public function onlyAttributes(string ...$values): self
     {
@@ -174,7 +176,7 @@ final class ErrorSummary extends Widget
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      */
     public function tag(string $value): self
     {

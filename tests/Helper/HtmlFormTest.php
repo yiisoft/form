@@ -9,11 +9,11 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\Form\DynamicFieldsForm;
+use Yiisoft\Form\Tests\TestSupport\Form\DynamicAttributesForm;
 
 final class HtmlFormTest extends TestCase
 {
-    public function dynamicFieldsProvider(): array
+    public function dynamicAttributesProvider(): array
     {
         return [
             [
@@ -21,12 +21,12 @@ final class HtmlFormTest extends TestCase
                     [
                         'name' => '7aeceb9b-fa64-4a83-ae6a-5f602772c01b',
                         'value' => 'some uuid value',
-                        'expected' => 'DynamicFieldsForm[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
+                        'expected' => 'DynamicAttributesForm[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
                     ],
                     [
                         'name' => 'test_field',
                         'value' => 'some test value',
-                        'expected' => 'DynamicFieldsForm[test_field]',
+                        'expected' => 'DynamicAttributesForm[test_field]',
                     ],
                 ],
             ],
@@ -104,12 +104,12 @@ final class HtmlFormTest extends TestCase
     }
 
     /**
-     * @dataProvider dynamicFieldsProvider
+     * @dataProvider dynamicAttributesProvider
      */
     public function testUUIDInputName(array $fields): void
     {
         $keys = array_column($fields, 'name');
-        $form = new DynamicFieldsForm(array_fill_keys($keys, null));
+        $form = new DynamicAttributesForm(array_fill_keys($keys, null));
 
         foreach ($fields as $field) {
             $inputName = HtmlForm::getInputName($form, $field['name']);

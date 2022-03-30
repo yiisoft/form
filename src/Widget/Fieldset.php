@@ -46,7 +46,7 @@ final class Fieldset extends Widget
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -61,7 +61,7 @@ final class Fieldset extends Widget
      * Focus on the control (put cursor into it) when the page loads.
      * Only one form element could be in focus at the same time.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
      */
@@ -77,7 +77,7 @@ final class Fieldset extends Widget
      *
      * @param string $class
      *
-     * @return static
+     * @return self
      */
     public function class(string $class): self
     {
@@ -95,7 +95,7 @@ final class Fieldset extends Widget
      * will not fire. In the case of form elements, it will not be submitted. Do not set the attribute to true, as
      * this will suggest you can set it to `false` to enable the element again, which is not the case.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-disabledformelements-disabled
      */
@@ -111,7 +111,7 @@ final class Fieldset extends Widget
      *
      * @param string|null $id
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
@@ -127,7 +127,7 @@ final class Fieldset extends Widget
      *
      * @param string|null $value whether the legend is enabled or disabled.
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-legend-element
      */
@@ -143,7 +143,7 @@ final class Fieldset extends Widget
      *
      * @param array $values Attribute values indexed by attribute names.
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -159,7 +159,7 @@ final class Fieldset extends Widget
      *
      * @param string|null The name of the widget.
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name
      */
@@ -175,7 +175,7 @@ final class Fieldset extends Widget
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#attr-title
      */

@@ -18,11 +18,11 @@ interface FormErrorsInterface
     public function addError(string $attribute, string $error): void;
 
     /**
-     * Removes errors for all attributes.
+     * Removes error for attributes.
      *
-     * @param string|null $attribute Attribute name. If not set, removes errors for all attributes.
+     * @param string $attribute Attribute name.
      */
-    public function clear(?string $attribute = null): void;
+    public function clear(string $attribute): void;
 
     /**
      * Returns errors for all attributes.

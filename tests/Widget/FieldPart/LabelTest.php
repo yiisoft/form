@@ -9,6 +9,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\Exception\AttributeNotSetException;
 use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -24,9 +25,23 @@ final class LabelTest extends TestCase
     public function testForId(): void
     {
         $this->assertSame(
-            '<label for="test-id">String</label>',
-            Label::widget()->for(new TypeForm(), 'string')->forId('test-id')->render(),
+            '<label class="test-class" for="id-test">String</label>',
+            Label::widget()
+                ->for(new TypeForm(), 'string')
+                ->forId('id-test')
+                ->attributes(['class' => 'test-class'])
+                ->render(),
         );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetAttributeException(): void
+    {
+        $this->expectException(AttributeNotSetException::class);
+        $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
+        Label::widget()->for(new TypeForm(), '')->render();
     }
 
     /**

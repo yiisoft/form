@@ -145,26 +145,6 @@ final class FormTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testCsrfExceptionNotString(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$csrfToken must be a string or \Stringable object.');
-        Form::widget()->action('/foo')->csrf(1)->begin();
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testCsrfExceptionNotStringable(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$csrfToken must be a string or \Stringable object.');
-        Form::widget()->action('/foo')->csrf(new StdClass())->begin();
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testEnd(): void
     {
         Form::widget()->begin();

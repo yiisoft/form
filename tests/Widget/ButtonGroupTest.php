@@ -12,6 +12,7 @@ use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ButtonGroup;
 use Yiisoft\Html\Html;
+use Yiisoft\Html\Tag\Button;
 
 final class ButtonGroupTest extends TestCase
 {
@@ -267,6 +268,26 @@ final class ButtonGroupTest extends TestCase
             $expected,
             ButtonGroup::widget()
                 ->buttons([['label' => 'Submit', 'type' => 'Submit'], ['label' => 'Reset', 'type' => 'Reset']])
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testRenderWithTag(): void
+    {
+        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
+        $expected = <<<'HTML'
+        <div>
+        <button type="submit">Send</button>
+        <button type="reset">Reset</button>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            ButtonGroup::widget()
+                ->buttons([Button::tag()->type('submit')->content('Send'), Button::tag()->type('reset')->content('Reset')])
                 ->render(),
         );
     }
