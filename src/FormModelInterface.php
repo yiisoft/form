@@ -23,7 +23,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      *
      * @param string $attribute
      *
-     * @return iterable|int|float|string|bool|object|null
+     * @return bool|float|int|iterable|object|string|null
      */
     public function getAttributeValue(string $attribute): iterable|int|float|string|bool|object|null;
 
@@ -133,7 +133,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * Set specified attribute
      *
      * @param string $name of the attribute to set
-     * @param iterable|int|float|string|bool|object|null $value
+     * @param bool|float|int|iterable|object|string|null $value
      */
     public function setAttribute(string $name, iterable|int|float|string|bool|object|null $value): void;
 

@@ -91,7 +91,7 @@ final class Radio extends ChoiceAttributes
     }
 
     /**
-     * @param float|Stringable|bool|int|string|null $value Value that corresponds to "unchecked" state of the input.
+     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
      *
      * @return self
      */

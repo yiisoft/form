@@ -8,7 +8,6 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\RegexInterface;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
 
 use function in_array;

@@ -55,7 +55,7 @@ abstract class WidgetAttributes extends GlobalAttributes
     /**
      * Return value of attribute.
      *
-     * @return iterable|int|float|string|bool|object|null
+     * @return bool|float|int|iterable|object|string|null
      */
     protected function getAttributeValue(): iterable|int|float|string|bool|object|null
     {

@@ -94,7 +94,7 @@ final class HtmlForm
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
      *
-     * @return iterable|int|float|string|bool|object|null the corresponding attribute value.
+     * @return bool|float|int|iterable|object|string|null the corresponding attribute value.
      */
     public static function getAttributeValue(
         FormModelInterface $formModel,

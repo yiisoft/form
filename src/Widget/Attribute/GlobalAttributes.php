@@ -169,7 +169,7 @@ abstract class GlobalAttributes extends Widget
     /**
      * The value content attribute gives the default value of the field.
      *
-     * @param iterable|int|float|string|bool|object|null $value
+     * @param bool|float|int|iterable|object|string|null $value
      *
      * @return static
      *

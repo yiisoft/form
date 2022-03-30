@@ -176,7 +176,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     /**
      * @param string $name
-     * @param iterable|int|float|string|bool|object|null $value
+     * @param bool|float|int|iterable|object|string|null $value
      *
      * @psalm-suppress InvalidCast
      */
@@ -314,7 +314,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     /**
      * @param string $attribute
-     * @param iterable|int|float|string|bool|object|null $value
+     * @param bool|float|int|iterable|object|string|null $value
      *
      * @psalm-suppress MissingClosureReturnType
      */

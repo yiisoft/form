@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Exception;
 
-use Throwable;
 use InvalidArgumentException;
 use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
 final class FormModelNotSetException extends InvalidArgumentException implements FriendlyExceptionInterface
 {
-    final public function __construct()
+    public function __construct()
     {
         parent::__construct($this->getName());
     }
