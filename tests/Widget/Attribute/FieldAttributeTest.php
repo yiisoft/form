@@ -52,5 +52,6 @@ final class FieldAttributeTest extends TestCase
         $this->assertNotSame($field, $field->required(true));
         $this->assertNotSame($field, $field->template(''));
         $this->assertNotSame($field, $field->validClass(''));
+        $this->assertNotSame($field, $this->invokeMethod($field, 'type', ['']));
     }
 }
