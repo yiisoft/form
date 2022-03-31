@@ -111,7 +111,11 @@ final class Radio extends ChoiceAttributes
     {
         $attributes = $this->build($this->attributes);
 
-        /** @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html#input.radio.attrs.value */
+        /**
+         * @var mixed
+         *
+         * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.radio.html#input.radio.attrs.value
+         */
         $value = $this->getAttributeValue();
 
         /** @var iterable<int, scalar|Stringable>|scalar|Stringable|null */

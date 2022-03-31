@@ -453,7 +453,7 @@ abstract class FieldAttributes extends WidgetAttributes
     public function replaceIndividualToken(string $token, string|Stringable $value): static
     {
         $new = clone $this;
-        $new->defaultTokens[$token] = $value instanceof Stringable ? $value->__toString() : $value;
+        $new->defaultTokens[$token] = (string) $value;
         return $new;
     }
 

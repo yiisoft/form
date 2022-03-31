@@ -103,7 +103,7 @@ final class Form extends Widget
     }
 
     /**
-     * The action and formation content attributes, if specified, must have a value that is a valid non-empty URL
+     * The action and form-action content attributes, if specified, must have a value that is a valid non-empty URL
      * potentially surrounded by spaces.
      *
      * @param string $value the action attribute value.
@@ -163,7 +163,7 @@ final class Form extends Widget
     public function csrf(string|Stringable $csrfToken, string $csrfName = '_csrf'): self
     {
         $new = clone $this;
-        $new->csrfToken = $csrfToken instanceof Stringable ? $csrfToken->__toString() : $csrfToken;
+        $new->csrfToken = (string) $csrfToken;
         $new->csrfName = $csrfName;
         return $new;
     }

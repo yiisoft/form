@@ -55,9 +55,9 @@ abstract class WidgetAttributes extends GlobalAttributes
     /**
      * Return value of attribute.
      *
-     * @return bool|float|int|iterable|object|string|null
+     * @return mixed
      */
-    protected function getAttributeValue(): iterable|int|float|string|bool|object|null
+    protected function getAttributeValue(): mixed
     {
         return HtmlForm::getAttributeValue($this->getFormModel(), $this->getAttribute());
     }

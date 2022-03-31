@@ -23,9 +23,9 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      *
      * @param string $attribute
      *
-     * @return bool|float|int|iterable|object|string|null
+     * @return mixed
      */
-    public function getAttributeValue(string $attribute): iterable|int|float|string|bool|object|null;
+    public function getAttributeValue(string $attribute): mixed;
 
     /**
      * If there is such attribute in the set.
@@ -133,9 +133,9 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * Set specified attribute
      *
      * @param string $name of the attribute to set
-     * @param bool|float|int|iterable|object|string|null $value
+     * @param mixed $value
      */
-    public function setAttribute(string $name, iterable|int|float|string|bool|object|null $value): void;
+    public function setAttribute(string $name, mixed $value): void;
 
     /**
      * Set custom form errors instance.

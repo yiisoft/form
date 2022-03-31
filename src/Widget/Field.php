@@ -467,10 +467,10 @@ final class Field extends FieldAttributes
      * Available methods:
      * [
      *     'encode()' => [true],
-     *     'groups()' => [['1' => ['2' => 'Moscow', '3' => 'San Petersburg']]],
-     *     'items()' => [['1' => 'Moscow', '2' => 'San Petersburg']],
+     *     'groups()' => [['1' => ['2' => 'Moscu', '3' => 'San Petersburg']]],
+     *     'items()' => [['1' => 'Moscu', '2' => 'San Petersburg']],
      *     'itemsAttributes()' => [['2' => ['disabled' => true]],
-     *     'optionsData()' => [['1' => '<b>Moscow</b>', '2' => 'San Petersburg']],
+     *     'optionsData()' => [['1' => '<b>Moscu</b>', '2' => 'San Petersburg']],
      *     'prompt()' => [['text' => 'Select City Birth', 'attributes' => ['value' => '0', 'selected' => 'selected']]],
      *     'unselectValue()' => ['0'],
      * ]
