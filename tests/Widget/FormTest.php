@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Widget;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use StdClass;
 use Stringable;
 use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
@@ -140,26 +138,6 @@ final class FormTest extends TestCase
             ? Form::widget()->action('/foo')->csrf($csrfToken, $csrfName)->method($method)->begin()
             : Form::widget()->action('/foo')->csrf($csrfToken)->method($method)->begin();
         $this->assertSame($expected, $formWidget);
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testCsrfExceptionNotString(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$csrfToken must be a string or \Stringable object.');
-        Form::widget()->action('/foo')->csrf(1)->begin();
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testCsrfExceptionNotStringable(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$csrfToken must be a string or \Stringable object.');
-        Form::widget()->action('/foo')->csrf(new StdClass())->begin();
     }
 
     /**

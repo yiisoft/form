@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget\Attribute;
 
-use InvalidArgumentException;
 use Stringable;
 
 abstract class FieldAttributes extends WidgetAttributes
@@ -43,7 +42,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @link https://www.w3.org/TR/WCAG20-TECHS/ARIA1.html
      */
-    public function ariaDescribedBy(bool $value): self
+    public function ariaDescribedBy(bool $value): static
     {
         $new = clone $this;
         $new->ariaDescribedBy = $value;
@@ -57,7 +56,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function ariaLabel(string $value): self
+    public function ariaLabel(string $value): static
     {
         $new = clone $this;
         $new->attributes['aria-label'] = $value;
@@ -71,7 +70,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function container(bool $value): self
+    public function container(bool $value): static
     {
         $new = clone $this;
         $new->container = $value;
@@ -91,7 +90,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @psalm-param array<string, string> $values
      */
-    public function containerAttributes(array $values): self
+    public function containerAttributes(array $values): static
     {
         $new = clone $this;
         $new->containerAttributes = array_merge($new->containerAttributes, $values);
@@ -101,9 +100,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set container css class.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function containerClass(string $value): self
+    public function containerClass(string $value): static
     {
         $new = clone $this;
         $new->containerClass = $value;
@@ -117,7 +118,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function containerId(?string $id): self
+    public function containerId(?string $id): static
     {
         $new = clone $this;
         $new->containerAttributes['id'] = $id;
@@ -131,7 +132,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function containerName(?string $id): self
+    public function containerName(?string $id): static
     {
         $new = clone $this;
         $new->containerAttributes['name'] = $id;
@@ -145,7 +146,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function defaultTokens(array $values): self
+    public function defaultTokens(array $values): static
     {
         $new = clone $this;
         $new->defaultTokens = $values;
@@ -166,7 +167,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function defaultValues(array $values): self
+    public function defaultValues(array $values): static
     {
         $new = clone $this;
         $new->defaultValues = $values;
@@ -180,7 +181,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static The field widget instance.
      */
-    public function error(?string $value): self
+    public function error(?string $value): static
     {
         $new = clone $this;
         $new->error = $value;
@@ -198,7 +199,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static The field widget instance.
      */
-    public function errorAttributes(array $values): self
+    public function errorAttributes(array $values): static
     {
         $new = clone $this;
         $new->errorAttributes = $values;
@@ -208,9 +209,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set error css class.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function errorClass(string $value): self
+    public function errorClass(string $value): static
     {
         $new = clone $this;
         $new->errorClass = $value;
@@ -230,7 +233,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function errorMessageCallback(array $value): self
+    public function errorMessageCallback(array $value): static
     {
         $new = clone $this;
         $new->errorMessageCallback = $value;
@@ -246,7 +249,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function errorTag(string $value): self
+    public function errorTag(string $value): static
     {
         $new = clone $this;
         $new->errorTag = $value;
@@ -256,9 +259,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set hint message for the field.
      *
+     * @param string|null $value
+     *
      * @return static
      */
-    public function hint(?string $value): self
+    public function hint(?string $value): static
     {
         $new = clone $this;
         $new->hint = $value;
@@ -276,7 +281,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static The field widget instance.
      */
-    public function hintAttributes(array $values): self
+    public function hintAttributes(array $values): static
     {
         $new = clone $this;
         $new->hintAttributes = $values;
@@ -286,9 +291,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set hint css class.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function hintClass(string $value): self
+    public function hintClass(string $value): static
     {
         $new = clone $this;
         $new->hintClass = $value;
@@ -298,9 +305,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set hint tag name.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function hintTag(string $value): self
+    public function hintTag(string $value): static
     {
         $new = clone $this;
         $new->hintTag = $value;
@@ -310,9 +319,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set input css class.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function inputClass(string $value): self
+    public function inputClass(string $value): static
     {
         $new = clone $this;
         $new->inputClass = $value;
@@ -322,9 +333,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set invalid css class.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function invalidClass(string $value): self
+    public function invalidClass(string $value): static
     {
         $new = clone $this;
         $new->invalidClass = $value;
@@ -334,9 +347,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set label message for the field.
      *
+     * @param string|null $value
+     *
      * @return static
      */
-    public function label(?string $value): self
+    public function label(?string $value): static
     {
         $new = clone $this;
         $new->label = $value;
@@ -354,7 +369,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static The field widget instance.
      */
-    public function labelAttributes(array $values): self
+    public function labelAttributes(array $values): static
     {
         $new = clone $this;
         $new->labelAttributes = $values;
@@ -364,9 +379,11 @@ abstract class FieldAttributes extends WidgetAttributes
     /**
      * Set the label css class.
      *
+     * @param string $value
+     *
      * @return static
      */
-    public function labelClass(string $value): self
+    public function labelClass(string $value): static
     {
         $new = clone $this;
         $new->labelClass = $value;
@@ -384,7 +401,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function labelFor(?string $value): self
+    public function labelFor(?string $value): static
     {
         $new = clone $this;
         $new->labelAttributes['for'] = $value;
@@ -400,7 +417,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#the-placeholder-attribute
      */
-    public function placeholder(string $value): self
+    public function placeholder(string $value): static
     {
         $new = clone $this;
         $new->placeholder = $value;
@@ -418,7 +435,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#the-readonly-attribute
      */
-    public function readonly(bool $value = true): self
+    public function readonly(bool $value = true): static
     {
         $new = clone $this;
         $new->attributes['readonly'] = $value;
@@ -429,20 +446,14 @@ abstract class FieldAttributes extends WidgetAttributes
      * Replace individual one token for current field instance.
      *
      * @param string $token
-     * @param mixed|string|Stringable $value
+     * @param string|Stringable $value
      *
      * @return static
      */
-    public function replaceIndividualToken(string $token, $value): self
+    public function replaceIndividualToken(string $token, string|Stringable $value): static
     {
         $new = clone $this;
-
-        if (is_string($value) || (is_object($value) && method_exists($value, '__toString'))) {
-            $new->defaultTokens[$token] = (string) $value;
-        } else {
-            throw new InvalidArgumentException('$token must be a string or \Stringable object.');
-        }
-
+        $new->defaultTokens[$token] = $value;
         return $new;
     }
 
@@ -453,7 +464,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
-    public function required(): self
+    public function required(): static
     {
         $new = clone $this;
         $new->attributes['required'] = true;
@@ -467,7 +478,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function template(string $value): self
+    public function template(string $value): static
     {
         $new = clone $this;
         $new->template = $value;
@@ -481,7 +492,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    public function validClass(string $value): self
+    public function validClass(string $value): static
     {
         $new = clone $this;
         $new->validClass = $value;
@@ -520,33 +531,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $attributes = $this->attributes;
         $attributesDefault = $this->getDefaultValue($this->type, 'attributes');
 
-        if (is_array($attributesDefault) && $attributesDefault !== []) {
-            $attributes = $attributesDefault;
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * Return attributes button for the field.
-     *
-     * if attributes button is empty string, and attributes button default value is not empty string, then return
-     * attributes default value.
-     *
-     * @param string $index The index of the attributes button.
-     *
-     * @return array
-     */
-    protected function getButtonsAttributes(string $index): array
-    {
-        $buttonAttributes = $this->attributes;
-        $defaultButtonAttributes = $this->getDefaultValue($index, 'attributes');
-
-        if (is_array($defaultButtonAttributes) && $defaultButtonAttributes !== []) {
-            $buttonAttributes = $defaultButtonAttributes;
-        }
-
-        return $buttonAttributes;
+        return match (is_array($attributesDefault) && $attributesDefault !== []) {
+            true => $attributesDefault,
+            false => $attributes,
+        };
     }
 
     /**
@@ -554,7 +542,7 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * if container is not set, and container default value is bool, then return container default value.
      *
-     * @return bool
+     * @return bool|null
      */
     protected function getContainer(): ?bool
     {
@@ -581,11 +569,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $containerAttributes = $this->containerAttributes;
         $containerDefaultAttributes = $this->getDefaultValue($this->type, 'containerAttributes');
 
-        if ((is_array($containerDefaultAttributes) && $containerDefaultAttributes !== [])) {
-            $containerAttributes = $containerDefaultAttributes;
-        }
-
-        return $containerAttributes;
+        return match (is_array($containerDefaultAttributes) && $containerDefaultAttributes !== []) {
+            true => $containerDefaultAttributes,
+            false => $containerAttributes,
+        };
     }
 
     /**
@@ -601,11 +588,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $containerClass = $this->containerClass;
         $containerDefaultClass = $this->getDefaultValue($this->type, 'containerClass');
 
-        if ((is_string($containerDefaultClass) && $containerDefaultClass !== '')) {
-            $containerClass = $containerDefaultClass;
-        }
-
-        return $containerClass;
+        return match (is_string($containerDefaultClass) && $containerDefaultClass !== '') {
+            true => $containerDefaultClass,
+            false => $containerClass,
+        };
     }
 
     /**
@@ -618,11 +604,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $defaultTokens = $this->defaultTokens;
         $defaultTokensDefault = $this->getDefaultValue($this->type, 'defaultTokens');
 
-        if (is_array($defaultTokensDefault) && $defaultTokensDefault !== []) {
-            $defaultTokens = $defaultTokensDefault;
-        }
-
-        return $defaultTokens;
+        return match (is_array($defaultTokensDefault) && $defaultTokensDefault !== []) {
+            true => $defaultTokensDefault,
+            false => $defaultTokens,
+        };
     }
 
     /**
@@ -640,18 +625,17 @@ abstract class FieldAttributes extends WidgetAttributes
      * if error message is empty string, and error message default value is not empty string, then return error message
      * default value.
      *
-     * @return string
+     * @return string|null
      */
     protected function getError(): ?string
     {
         $error = $this->error;
         $errorDefault = $this->getDefaultValue($this->type, 'error');
 
-        if (is_string($errorDefault) && $errorDefault !== '') {
-            $error = $errorDefault;
-        }
-
-        return $error;
+        return match (is_string($errorDefault) && $errorDefault !== '') {
+            true => $errorDefault,
+            false => $error,
+        };
     }
 
     /**
@@ -667,11 +651,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorAttributes = $this->errorAttributes;
         $errorAttributesDefault = $this->getDefaultValue($this->type, 'errorAttributes');
 
-        if (is_array($errorAttributesDefault) && $errorAttributesDefault !== []) {
-            $errorAttributes = $errorAttributesDefault;
-        }
-
-        return $errorAttributes;
+        return match (is_array($errorAttributesDefault) && $errorAttributesDefault !== []) {
+            true => $errorAttributesDefault,
+            false => $errorAttributes,
+        };
     }
 
     /**
@@ -687,11 +670,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorClass = $this->errorClass;
         $errorClassDefault = $this->getDefaultValue($this->type, 'errorClass');
 
-        if (is_string($errorClassDefault) && $errorClassDefault !== '') {
-            $errorClass = $errorClassDefault;
-        }
-
-        return $errorClass;
+        return match (is_string($errorClassDefault) && $errorClassDefault !== '') {
+            true => $errorClassDefault,
+            false => $errorClass,
+        };
     }
 
     /**
@@ -705,11 +687,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorMessageCallback = $this->errorMessageCallback;
         $errorMessageCallbackDefault = $this->getDefaultValue($this->type, 'errorMessageCallback');
 
-        if (is_array($errorMessageCallbackDefault) && $errorMessageCallbackDefault !== []) {
-            $errorMessageCallback = $errorMessageCallbackDefault;
-        }
-
-        return $errorMessageCallback;
+        return match (is_array($errorMessageCallbackDefault) && $errorMessageCallbackDefault !== []) {
+            true => $errorMessageCallbackDefault,
+            false => $errorMessageCallback,
+        };
     }
 
     /**
@@ -725,11 +706,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $errorTag = $this->errorTag;
         $errorTagDefault = $this->getDefaultValue($this->type, 'errorTag');
 
-        if (is_string($errorTagDefault) && $errorTagDefault !== '') {
-            $errorTag = $errorTagDefault;
-        }
-
-        return $errorTag === '' ? 'div' : $errorTag;
+        return match (is_string($errorTagDefault) && $errorTagDefault !== '') {
+            true => $errorTagDefault,
+            false => $errorTag === '' ? 'div' : $errorTag,
+        };
     }
 
     /**
@@ -737,18 +717,17 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * if hint is empty string, and hint default value is not empty string, then return hint default value.
      *
-     * @return string
+     * @return string|null
      */
     protected function getHint(): ?string
     {
         $hint = $this->hint;
         $hintDefault = $this->getDefaultValue($this->type, 'hint') ?? '';
 
-        if (is_string($hintDefault) && $hintDefault !== '') {
-            $hint = $hintDefault;
-        }
-
-        return $hint;
+        return match (is_string($hintDefault) && $hintDefault !== '') {
+            true => $hintDefault,
+            false => $hint,
+        };
     }
 
     /**
@@ -763,11 +742,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $hintAttributes = $this->hintAttributes;
         $hintAttributesDefault = $this->getDefaultValue($this->type, 'hintAttributes') ?? [];
 
-        if (is_array($hintAttributesDefault) && $hintAttributesDefault !== []) {
-            $hintAttributes = $hintAttributesDefault;
-        }
-
-        return $hintAttributes;
+        return match (is_array($hintAttributesDefault) && $hintAttributesDefault !== []) {
+            true => $hintAttributesDefault,
+            false => $hintAttributes,
+        };
     }
 
     /**
@@ -782,11 +760,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $hintClass = $this->hintClass;
         $hintClassDefault = $this->getDefaultValue($this->type, 'hintClass') ?? '';
 
-        if (is_string($hintClassDefault) && $hintClassDefault !== '') {
-            $hintClass = $hintClassDefault;
-        }
-
-        return $hintClass;
+        return match (is_string($hintClassDefault) && $hintClassDefault !== '') {
+            true => $hintClassDefault,
+            false => $hintClass,
+        };
     }
 
     /**
@@ -801,11 +778,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $hintTag = $this->hintTag;
         $hintTagDefault = $this->getDefaultValue($this->type, 'hintTag') ?? '';
 
-        if (is_string($hintTagDefault) && $hintTagDefault !== '') {
-            $hintTag = $hintTagDefault;
-        }
-
-        return $hintTag === '' ? 'div' : $hintTag;
+        return match (is_string($hintTagDefault) && $hintTagDefault !== '') {
+            true => $hintTagDefault,
+            false => $hintTag === '' ? 'div' : $hintTag,
+        };
     }
 
     /**
@@ -821,11 +797,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $inputClass = $this->inputClass;
         $inputClassDefault = $this->getDefaultValue($this->type, 'inputClass');
 
-        if (is_string($inputClassDefault) && $inputClassDefault !== '') {
-            $inputClass = $inputClassDefault;
-        }
-
-        return $inputClass;
+        return match (is_string($inputClassDefault) && $inputClassDefault !== '') {
+            true => $inputClassDefault,
+            false => $inputClass,
+        };
     }
 
     /**
@@ -841,11 +816,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $invalidClass = $this->invalidClass;
         $invalidClassDefault = $this->getDefaultValue($this->type, 'invalidClass');
 
-        if (is_string($invalidClassDefault) && $invalidClassDefault !== '') {
-            $invalidClass = $invalidClassDefault;
-        }
-
-        return $invalidClass;
+        return match (is_string($invalidClassDefault) && $invalidClassDefault !== '') {
+            true => $invalidClassDefault,
+            false => $invalidClass,
+        };
     }
 
     /**
@@ -860,11 +834,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $label = $this->label;
         $labelDefault = $this->getDefaultValue($this->type, 'label') ?? '';
 
-        if (is_string($labelDefault) && $labelDefault !== '') {
-            $label = $labelDefault;
-        }
-
-        return $label;
+        return match (is_string($labelDefault) && $labelDefault !== '') {
+            true => $labelDefault,
+            false => $label,
+        };
     }
 
     /**
@@ -880,11 +853,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $labelAttributes = $this->labelAttributes;
         $labelAttributesDefault = $this->getDefaultValue($this->type, 'labelAttributes') ?? [];
 
-        if (is_array($labelAttributesDefault) && $labelAttributesDefault !== []) {
-            $labelAttributes = $labelAttributesDefault;
-        }
-
-        return $labelAttributes;
+        return match (is_array($labelAttributesDefault) && $labelAttributesDefault !== []) {
+            true => $labelAttributesDefault,
+            false => $labelAttributes,
+        };
     }
 
     /**
@@ -900,11 +872,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $labelClass = $this->labelClass;
         $labelClassDefault = $this->getDefaultValue($this->type, 'labelClass') ?? '';
 
-        if (is_string($labelClassDefault) && $labelClassDefault !== '') {
-            $labelClass = $labelClassDefault;
-        }
-
-        return $labelClass;
+        return match (is_string($labelClassDefault) && $labelClassDefault !== '') {
+            true => $labelClassDefault,
+            false => $labelClass,
+        };
     }
 
     /**
@@ -913,18 +884,17 @@ abstract class FieldAttributes extends WidgetAttributes
      * if placeholder is empty string, and placeholder default value is not empty string, then return placeholder
      * default value.
      *
-     * @return string
+     * @return string|null
      */
     protected function getPlaceholder(): ?string
     {
         $placeholder = $this->placeholder;
         $placeholderDefault = $this->getDefaultValue($this->type, 'placeholder') ?? '';
 
-        if (is_string($placeholderDefault) && $placeholderDefault !== '') {
-            $placeholder = $placeholderDefault;
-        }
-
-        return $placeholder;
+        return match (is_string($placeholderDefault) && $placeholderDefault !== '') {
+            true => $placeholderDefault,
+            false => $placeholder,
+        };
     }
 
     /**
@@ -939,11 +909,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $template = $this->template;
         $templateDefault = $this->getDefaultValue($this->type, 'template') ?? '';
 
-        if (is_string($templateDefault) && $templateDefault !== '') {
-            $template = $templateDefault;
-        }
-
-        return $template === '' ? "{label}\n{input}\n{hint}\n{error}" : $template;
+        return match (is_string($templateDefault) && $templateDefault !== '') {
+            true => $templateDefault,
+            false => $template === '' ? "{label}\n{input}\n{hint}\n{error}" : $template,
+        };
     }
 
     /**
@@ -959,11 +928,10 @@ abstract class FieldAttributes extends WidgetAttributes
         $validClass = $this->validClass;
         $validDefaultClass = $this->getDefaultValue($this->type, 'validClass') ?? '';
 
-        if (is_string($validDefaultClass) && $validDefaultClass !== '') {
-            $validClass = $validDefaultClass;
-        }
-
-        return $validClass;
+        return match (is_string($validDefaultClass) && $validDefaultClass !== '') {
+            true => $validDefaultClass,
+            false => $validClass,
+        };
     }
 
     /**
@@ -973,19 +941,16 @@ abstract class FieldAttributes extends WidgetAttributes
      *
      * @return static
      */
-    protected function type(string $type): self
+    protected function type(string $type): static
     {
         $new = clone $this;
         $new->type = $type;
         return $new;
     }
 
-    /**
-     * @return array|bool|string|null
-     */
-    private function getDefaultValue(string $type, string $key)
+    private function getDefaultValue(string $type, string $key): array|bool|string|null
     {
-        /** @var array|string|null */
+        /** @var array|bool|string|null */
         return $this->defaultValues[$type][$key] ?? null;
     }
 }

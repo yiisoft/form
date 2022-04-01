@@ -8,15 +8,17 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\MatchRegularInterface;
+use Yiisoft\Form\Widget\Validator\RegexInterface;
 use Yiisoft\Html\Tag\Input;
+
+use function is_string;
 
 /**
  * Generates a text input tag for the given form attribute.
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
  */
-final class Text extends InputAttributes implements HasLengthInterface, MatchRegularInterface, PlaceholderInterface
+final class Text extends InputAttributes implements HasLengthInterface, RegexInterface, PlaceholderInterface
 {
     /**
      * Enables submission of a value for the directionality of the element, and gives the name of the field that
@@ -24,7 +26,7 @@ final class Text extends InputAttributes implements HasLengthInterface, MatchReg
      *
      * @param string $value Any string that is not empty.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.dirname
      */
@@ -58,7 +60,7 @@ final class Text extends InputAttributes implements HasLengthInterface, MatchReg
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.placeholder
      */
@@ -81,7 +83,7 @@ final class Text extends InputAttributes implements HasLengthInterface, MatchReg
      *
      * @param int $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text.attrs.size
      */

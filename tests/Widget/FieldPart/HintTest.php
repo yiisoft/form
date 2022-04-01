@@ -10,6 +10,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\Exception\AttributeNotSetException;
 use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeWithHintForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
@@ -37,6 +38,16 @@ final class HintTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testGetAttributeException(): void
+    {
+        $this->expectException(AttributeNotSetException::class);
+        $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
+        Hint::widget()->for(new TypeWithHintForm(), '')->render();
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testGetFormModelException(): void
     {
         $this->expectException(FormModelNotSetException::class);
@@ -58,6 +69,21 @@ final class HintTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
+    public function testId(): void
+    {
+        $this->assertSame(
+            '<div id="id-test" class="test-class">Please enter your login.</div>',
+            Hint::widget()
+                ->for(new TypeWithHintForm(), 'login')
+                ->id('id-test')
+                ->attributes(['class' => 'test-class'])
+                ->render(),
+        );
+    }
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
     public function testImmutability(): void
     {
         $hint = Hint::widget();
@@ -65,6 +91,7 @@ final class HintTest extends TestCase
         $this->assertNotSame($hint, $hint->encode(false));
         $this->assertNotSame($hint, $hint->for(new TypeWithHintForm(), 'login'));
         $this->assertNotSame($hint, $hint->hint(null));
+        $this->assertNotSame($hint, $hint->id(''));
         $this->assertNotSame($hint, $hint->tag(''));
     }
 

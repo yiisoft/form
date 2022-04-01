@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Stringable;
 use Yiisoft\Validator\DataSetInterface;
 
 /**
@@ -24,9 +23,9 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      *
      * @param string $attribute
      *
-     * @return iterable|object|scalar|Stringable|null
+     * @return mixed
      */
-    public function getAttributeValue(string $attribute);
+    public function getAttributeValue(string $attribute): mixed;
 
     /**
      * If there is such attribute in the set.
@@ -51,7 +50,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * If the form name is an empty string, then the input name would be "b".
      *
      * The purpose of the above naming schema is that for forms which contain multiple different models, the attributes
-     * of each model are grouped in sub-arrays of the POST-data and it is easier to differentiate between them.
+     * of each model are grouped in sub-arrays of the POST-data, and it is easier to differentiate between them.
      *
      * By default, this method returns the model class name (without the namespace part) as the form name. You may
      * override it when the model is used in different forms.
@@ -134,9 +133,9 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * Set specified attribute
      *
      * @param string $name of the attribute to set
-     * @param iterable|object|scalar|Stringable|null $value
+     * @param mixed $value
      */
-    public function setAttribute(string $name, $value): void;
+    public function setAttribute(string $name, mixed $value): void;
 
     /**
      * Set custom form errors instance.

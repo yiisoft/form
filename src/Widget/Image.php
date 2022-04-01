@@ -8,6 +8,8 @@ use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
 
+use function array_key_exists;
+
 /**
  * The input element with a type attribute whose value is "image" represents either an image from which the UA enables a
  * user to interactively select a pair of coordinates and submit the form, or alternatively a button from which the user
@@ -23,7 +25,7 @@ final class Image extends GlobalAttributes
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image.attrs.alt
      */
@@ -39,7 +41,7 @@ final class Image extends GlobalAttributes
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      *  @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image.attrs.height
      */
@@ -55,7 +57,7 @@ final class Image extends GlobalAttributes
      *
      * @param string $value The location of an image.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image.attrs.src
      */
@@ -71,7 +73,7 @@ final class Image extends GlobalAttributes
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.image.html#input.image.attrs.width
      */

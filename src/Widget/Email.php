@@ -8,8 +8,10 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\MatchRegularInterface;
+use Yiisoft\Form\Widget\Validator\RegexInterface;
 use Yiisoft\Html\Tag\Input;
+
+use function is_string;
 
 /**
  * The input element with a type attribute whose value is "email" represents a control for editing a list of e-mail
@@ -17,7 +19,7 @@ use Yiisoft\Html\Tag\Input;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email
  */
-final class Email extends InputAttributes implements HasLengthInterface, MatchRegularInterface, PlaceholderInterface
+final class Email extends InputAttributes implements HasLengthInterface, RegexInterface, PlaceholderInterface
 {
     public function maxlength(int $value): self
     {
@@ -38,7 +40,7 @@ final class Email extends InputAttributes implements HasLengthInterface, MatchRe
      *
      * @param bool $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.attrs.multiple
      */
@@ -61,7 +63,7 @@ final class Email extends InputAttributes implements HasLengthInterface, MatchRe
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.placeholder
      */
@@ -77,7 +79,7 @@ final class Email extends InputAttributes implements HasLengthInterface, MatchRe
      *
      * @param int $size
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.email.html#input.email.attrs.size
      */

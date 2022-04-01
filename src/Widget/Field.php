@@ -22,6 +22,8 @@ use Yiisoft\Form\Widget\FieldPart\Label;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Div;
 
+use function array_key_exists;
+use function array_merge;
 use function strtr;
 
 /**
@@ -50,7 +52,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      *
      * @psalm-param array<string, array|string> $buttons
      */
@@ -81,7 +83,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -130,7 +132,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function checkboxList(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -150,7 +152,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function date(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -170,7 +172,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -190,7 +192,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function dateTimeLocal(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -210,7 +212,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function email(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -236,7 +238,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function file(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -256,7 +258,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -285,7 +287,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function image(array $config = [], array $attributes = []): self
     {
@@ -308,7 +310,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function number(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -328,7 +330,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function password(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -355,7 +357,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function radio(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -401,7 +403,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function radioList(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -426,7 +428,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function range(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -445,7 +447,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function resetButton(array $config = [], array $attributes = []): self
     {
@@ -475,7 +477,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function select(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -494,7 +496,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field object itself.
+     * @return self the field object itself.
      */
     public function submitButton(array $config = [], array $attributes = []): self
     {
@@ -514,7 +516,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -534,7 +536,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -554,7 +556,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function textArea(FormModelInterface $formModel, string $attribute, array $config = []): self
     {
@@ -574,7 +576,7 @@ final class Field extends FieldAttributes
      *
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      *
-     * @return static the field widget instance.
+     * @return self the field widget instance.
      */
     public function url(FormModelInterface $formModel, string $attribute, array $config = []): self
     {

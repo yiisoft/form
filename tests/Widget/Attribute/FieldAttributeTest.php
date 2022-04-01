@@ -23,11 +23,13 @@ final class FieldAttributeTest extends TestCase
     {
         $field = Field::widget();
         $this->assertNotSame($field, $field->ariaDescribedBy(true));
+        $this->assertNotSame($field, $field->ariaLabel(''));
         $this->assertNotSame($field, $field->container(true));
         $this->assertNotSame($field, $field->containerAttributes([]));
         $this->assertNotSame($field, $field->containerClass(''));
         $this->assertNotSame($field, $field->containerId(null));
         $this->assertNotSame($field, $field->containerName(null));
+        $this->assertNotSame($field, $field->defaultTokens([]));
         $this->assertNotSame($field, $field->defaultValues([]));
         $this->assertNotSame($field, $field->error(null));
         $this->assertNotSame($field, $field->errorAttributes([]));
@@ -46,8 +48,10 @@ final class FieldAttributeTest extends TestCase
         $this->assertNotSame($field, $field->labelFor(null));
         $this->assertNotSame($field, $field->placeholder(''));
         $this->assertNotSame($field, $field->readonly(true));
+        $this->assertNotSame($field, $field->replaceIndividualToken('', ''));
         $this->assertNotSame($field, $field->required(true));
         $this->assertNotSame($field, $field->template(''));
         $this->assertNotSame($field, $field->validClass(''));
+        $this->assertNotSame($field, $this->invokeMethod($field, 'type', ['']));
     }
 }

@@ -11,6 +11,9 @@ use Yiisoft\Form\Widget\Attribute\ChoiceAttributes;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListTag;
 
+use function is_iterable;
+use function is_string;
+
 /*
  * Generates a list of checkboxes.
  *
@@ -42,7 +45,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @psalm-suppress MethodSignatureMismatch
      */
-    public function autofocus(): self
+    public function autofocus(): static
     {
         $new = clone $this;
         $new->containerAttributes['autofocus'] = true;
@@ -54,7 +57,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param array $attributes
      *
-     * @return static
+     * @return self
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -70,7 +73,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param string|null $tag tag name. if `null` disabled rendering.
      *
-     * @return static
+     * @return self
      */
     public function containerTag(?string $tag = null): self
     {
@@ -90,7 +93,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @psalm-suppress MethodSignatureMismatch
      */
-    public function id(?string $id): self
+    public function id(?string $id): static
     {
         $new = clone $this;
         $new->containerAttributes['id'] = $id;
@@ -102,7 +105,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param array $attributes
      *
-     * @return static
+     * @return self
      *
      * @psalm-param array[] $attributes
      */
@@ -120,7 +123,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param string[] $items
      *
-     * @return static
+     * @return self
      */
     public function items(array $items = []): self
     {
@@ -134,7 +137,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param array $attributes
      *
-     * @return static
+     * @return self
      *
      * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      *
@@ -159,7 +162,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param Closure|null $formatter
      *
-     * @return static
+     * @return self
      *
      * @psalm-param Closure(CheckboxItem):string|null $formatter
      */
@@ -177,7 +180,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param bool[]|float[]|int[]|string[]|Stringable[] $itemsFromValues
      *
-     * @return static
+     * @return self
      */
     public function itemsFromValues(array $itemsFromValues = []): self
     {
@@ -191,7 +194,7 @@ final class CheckboxList extends ChoiceAttributes
      *
      * @param string $separator
      *
-     * @return static
+     * @return self
      */
     public function separator(string $separator): self
     {
@@ -219,10 +222,8 @@ final class CheckboxList extends ChoiceAttributes
      * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-tabindex
-     *
-     * @psalm-suppress MethodSignatureMismatch
      */
-    public function tabIndex(int $value): self
+    public function tabIndex(int $value): static
     {
         $new = clone $this;
         $new->containerAttributes['tabindex'] = $value;

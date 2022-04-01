@@ -194,11 +194,27 @@ final class CheckboxTest extends TestCase
     public function testUncheckValue(): void
     {
         $expected = <<<HTML
-        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
+        <input type="hidden" name="TypeForm[bool]" value="1"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]"> Bool</label>
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue('0')->value(true)->render(),
+            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue('1')->render(),
+        );
+
+        $expected = <<<HTML
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]"> Bool</label>
+        HTML;
+        $this->assertSame(
+            $expected,
+            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue(0)->render(),
+        );
+
+        $expected = <<<HTML
+        <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]"> Bool</label>
+        HTML;
+        $this->assertSame(
+            $expected,
+            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue(false)->render(),
         );
     }
 

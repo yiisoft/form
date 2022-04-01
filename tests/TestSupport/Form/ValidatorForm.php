@@ -22,6 +22,7 @@ final class ValidatorForm extends FormModel
     private string $minlength = '';
     private string $required = '';
     private string $url = '';
+    private string $urlWithPattern = '';
 
     public function getRules(): array
     {
@@ -33,6 +34,9 @@ final class ValidatorForm extends FormModel
             'numberRequired' => [new Required()],
             'required' => [new Required()],
             'url' => [new Url()],
+            'urlWithPattern' => [new Url(
+                validSchemes: ['Http', 'Https'],
+            )],
         ];
     }
 }

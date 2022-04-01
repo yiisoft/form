@@ -18,7 +18,7 @@ abstract class ButtonAttributes extends GlobalAttributes
      *
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
      */
-    public function form(string $value): self
+    public function form(string $value): static
     {
         $new = clone $this;
         $new->attributes['form'] = $value;

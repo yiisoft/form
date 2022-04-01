@@ -8,22 +8,24 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\MatchRegularInterface;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
+
+use function in_array;
+use function is_string;
 
 /**
  * Generates a textarea tag for the given form attribute.
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html
  */
-final class TextArea extends InputAttributes implements HasLengthInterface, MatchRegularInterface, PlaceholderInterface
+final class TextArea extends InputAttributes implements HasLengthInterface, PlaceholderInterface
 {
     /**
      * The expected maximum number of characters per line of text for the UA to show.
      *
      * @param int $value Positive integer.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.cols
      */
@@ -40,7 +42,7 @@ final class TextArea extends InputAttributes implements HasLengthInterface, Matc
      *
      * @param string $value Any string that is not empty.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.dirname
      */
@@ -69,19 +71,12 @@ final class TextArea extends InputAttributes implements HasLengthInterface, Matc
         return $new;
     }
 
-    public function pattern(string $value): self
-    {
-        $new = clone $this;
-        $new->attributes['pattern'] = $value;
-        return $new;
-    }
-
     /**
      * It allows defining placeholder.
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.placeholder
      */
@@ -103,7 +98,7 @@ final class TextArea extends InputAttributes implements HasLengthInterface, Matc
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.readonly
      */
-    public function readonly(bool $value = true): self
+    public function readonly(bool $value = true): static
     {
         $new = clone $this;
         $new->attributes['readonly'] = $value;
@@ -115,7 +110,7 @@ final class TextArea extends InputAttributes implements HasLengthInterface, Matc
      *
      * @param int $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.rows
      */
@@ -132,7 +127,7 @@ final class TextArea extends InputAttributes implements HasLengthInterface, Matc
      *  more characters than the value specified by the cols attribute.
      * `soft` Instructs the UA to add no line breaks to the submitted value of the textarea.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.wrap.hard
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html#textarea.attrs.wrap.soft

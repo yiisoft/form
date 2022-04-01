@@ -14,7 +14,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Validator\ValidatorInterface;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
@@ -298,6 +297,19 @@ final class FormModelTest extends TestCase
         );
     }
 
+    public function testProtectedCollectAttributes(): void
+    {
+        $form = new class () extends FormModel {
+            protected int $int = 1;
+
+            public function collectAttributes(): array
+            {
+                return array_merge(parent::collectAttributes(), ['null' => 'null']);
+            }
+        };
+        $this->assertSame(['int' => 'int', 'null' => 'null'], $form->collectAttributes());
+    }
+
     public function testSetFormErrors(): void
     {
         $formErrors = new CustomFormErrors();
@@ -307,7 +319,7 @@ final class FormModelTest extends TestCase
         $this->assertSame($formErrors, $formModel->getFormErrors());
     }
 
-    private function createValidatorMock(): ValidatorInterface
+    public function testSetAttribute(): void
     {
         $form = new class () extends FormModel {
             private $property;

@@ -38,7 +38,7 @@ final class Error extends Widget
     public function attributes(array $values): self
     {
         $new = clone $this;
-        $new->attributes = array_merge($new->attributes, $values);
+        $new->attributes = $values;
         return $new;
     }
 

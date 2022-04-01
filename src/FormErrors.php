@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use function array_flip;
+use function array_intersect_key;
+use function array_merge;
+use function reset;
+
 /**
  * FormErrors represents a form validation errors collection.
  */

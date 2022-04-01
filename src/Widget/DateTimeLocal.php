@@ -8,6 +8,8 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input;
 
+use function is_string;
+
 /*
  * The input element with a type attribute whose value is "datetime-local" represents a control for setting the
  * element’s value to a string representing a local date and time (with no timezone information).
@@ -21,7 +23,7 @@ final class DateTimeLocal extends InputAttributes
      *
      * @param string|null $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime-local.html#input.datetime-local.attrs.max
      */
@@ -37,7 +39,7 @@ final class DateTimeLocal extends InputAttributes
      *
      * @param string|null $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime-local.html#input.datetime-local.attrs.min
      */

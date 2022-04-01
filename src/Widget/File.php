@@ -9,6 +9,8 @@ use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Input;
 
+use function is_bool;
+
 /**
  * The input element with a type attribute whose value is "file" represents a list of file items, each consisting of a
  * file name, a file type, and a file body (the contents of the file).
@@ -18,8 +20,7 @@ use Yiisoft\Html\Tag\Input;
 final class File extends InputAttributes
 {
     private array $hiddenAttributes = [];
-    /** @var bool|float|int|string|Stringable|null */
-    private $uncheckValue = null;
+    private string|int|bool|Stringable|null|float $uncheckValue = null;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -28,7 +29,7 @@ final class File extends InputAttributes
      *
      * @param string $value
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
      */
@@ -44,7 +45,7 @@ final class File extends InputAttributes
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -60,7 +61,7 @@ final class File extends InputAttributes
      *
      * @param bool $value
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple
      */
@@ -74,9 +75,9 @@ final class File extends InputAttributes
     /**
      * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
      *
-     * @return static
+     * @return self
      */
-    public function uncheckValue($value): self
+    public function uncheckValue(float|Stringable|bool|int|string|null $value): self
     {
         $new = clone $this;
         $new->uncheckValue = is_bool($value) ? (int) $value : $value;

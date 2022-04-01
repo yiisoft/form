@@ -8,6 +8,7 @@ use Yiisoft\Form\Widget\Attribute\ButtonAttributes;
 use Yiisoft\Html\Tag\Input;
 use Yiisoft\Html\Tag\Div;
 
+use function array_merge;
 use function implode;
 use function is_array;
 
@@ -61,7 +62,6 @@ final class ButtonGroup extends ButtonAttributes
     {
         $new = clone $this;
         $new->buttons = $values;
-
         return $new;
     }
 
@@ -70,7 +70,7 @@ final class ButtonGroup extends ButtonAttributes
      *
      * @param bool $value Is the container disabled or not.
      *
-     * @return static
+     * @return self
      */
     public function container(bool $value): self
     {
@@ -88,7 +88,7 @@ final class ButtonGroup extends ButtonAttributes
      * ['class' => 'test-class']
      * ```
      *
-     * @return static
+     * @return self
      *
      * @psalm-param array<string, string> $values
      */
@@ -102,7 +102,9 @@ final class ButtonGroup extends ButtonAttributes
     /**
      * Set container css class.
      *
-     * @return static
+     * @param string $value
+     *
+     * @return self
      */
     public function containerClass(string $value): self
     {
@@ -116,7 +118,7 @@ final class ButtonGroup extends ButtonAttributes
      *
      * @param string|null $id
      *
-     * @return static
+     * @return self
      */
     public function containerId(?string $id): self
     {
@@ -130,7 +132,7 @@ final class ButtonGroup extends ButtonAttributes
      *
      * @param string|null $id
      *
-     * @return static
+     * @return self
      */
     public function containerName(?string $id): self
     {
@@ -144,7 +146,7 @@ final class ButtonGroup extends ButtonAttributes
      *
      * @param array $values The button attributes.
      *
-     * @return static
+     * @return self
      *
      * @psalm-param array[] $values
      */

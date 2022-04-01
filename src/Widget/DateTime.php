@@ -8,6 +8,8 @@ use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Html\Tag\Input;
 
+use function is_string;
+
 /**
  * The input element with a type attribute whose value is "datetime" represents a control for setting the element’s
  * value to a string representing a global date and time (with timezone information).
@@ -21,7 +23,7 @@ final class DateTime extends InputAttributes
      *
      * @param string|null $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.max
      */
@@ -37,7 +39,7 @@ final class DateTime extends InputAttributes
      *
      * @param string|null $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.datetime.html#input.datetime.attrs.min
      */

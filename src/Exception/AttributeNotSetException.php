@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Exception;
 
 use InvalidArgumentException;
-use Throwable;
 use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
 final class AttributeNotSetException extends InvalidArgumentException implements FriendlyExceptionInterface
 {
-    public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
+    public function __construct()
     {
-        $message = $message === '' ? $this->getName() : $message;
-        parent::__construct($message, $code, $previous);
+        parent::__construct($this->getName());
     }
 
     public function getName(): string

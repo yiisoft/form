@@ -15,7 +15,7 @@ abstract class ChoiceAttributes extends WidgetAttributes
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-required-attribute
      */
-    public function required(): self
+    public function required(): static
     {
         $new = clone $this;
         $new->attributes['required'] = true;

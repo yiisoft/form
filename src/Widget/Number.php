@@ -10,6 +10,9 @@ use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
 use Yiisoft\Form\Widget\Validator\NumberInterface;
 use Yiisoft\Html\Tag\Input;
 
+use function array_key_exists;
+use function is_numeric;
+
 /**
  * The input element with a type attribute whose value is "number" represents a precise control for setting the
  * element’s value to a string representing a number.

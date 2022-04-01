@@ -8,12 +8,12 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Form\Tests\TestSupport\Form\DynamicAttributesForm;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\Form\DynamicFieldsForm;
 
 final class HtmlFormTest extends TestCase
 {
-    public function dynamicFieldsProvider(): array
+    public function dynamicAttributesProvider(): array
     {
         return [
             [
@@ -21,12 +21,12 @@ final class HtmlFormTest extends TestCase
                     [
                         'name' => '7aeceb9b-fa64-4a83-ae6a-5f602772c01b',
                         'value' => 'some uuid value',
-                        'expected' => 'DynamicFieldsForm[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
+                        'expected' => 'DynamicAttributesForm[7aeceb9b-fa64-4a83-ae6a-5f602772c01b]',
                     ],
                     [
                         'name' => 'test_field',
                         'value' => 'some test value',
-                        'expected' => 'DynamicFieldsForm[test_field]',
+                        'expected' => 'DynamicAttributesForm[test_field]',
                     ],
                 ],
             ],
@@ -103,13 +103,31 @@ final class HtmlFormTest extends TestCase
         HtmlForm::getInputName($anonymousForm, '[0]dates[0]');
     }
 
+    public function testMultibyteGetAttributeName(): void
+    {
+        $formModel = new class () extends FormModel {
+            private string $登录 = '';
+        };
+        $this->assertSame('登录', HtmlForm::getAttributeName($formModel, '[0]登录'));
+        $this->assertSame('登录', HtmlForm::getAttributeName($formModel, '登录[0]'));
+        $this->assertSame('登录', HtmlForm::getAttributeName($formModel, '[0]登录[0]'));
+    }
+
+    public function testMutlibyteGetInputId(): void
+    {
+        $formModel = new class () extends FormModel {
+            private string $mĄkA = '';
+        };
+        $this->assertSame('mąka', HtmlForm::getInputId($formModel, 'mĄkA'));
+    }
+
     /**
-     * @dataProvider dynamicFieldsProvider
+     * @dataProvider dynamicAttributesProvider
      */
     public function testUUIDInputName(array $fields): void
     {
         $keys = array_column($fields, 'name');
-        $form = new DynamicFieldsForm(array_fill_keys($keys, null));
+        $form = new DynamicAttributesForm(array_fill_keys($keys, null));
 
         foreach ($fields as $field) {
             $inputName = HtmlForm::getInputName($form, $field['name']);

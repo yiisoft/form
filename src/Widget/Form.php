@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Widget;
 
-use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Html\Html;
 use Yiisoft\Http\Method;
@@ -13,6 +12,7 @@ use Yiisoft\Widget\Widget;
 use function explode;
 use function implode;
 use function strpos;
+use function strtoupper;
 use function substr;
 use function urldecode;
 
@@ -27,7 +27,6 @@ final class Form extends Widget
     private array $attributes = [];
     private string $csrfName = '';
     private string $csrfToken = '';
-    private string $id = '';
     private string $method = Method::POST;
 
     /**
@@ -92,7 +91,7 @@ final class Form extends Widget
      *
      * @param string $value the accept-charset attribute value.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-accept-charset
      */
@@ -104,12 +103,12 @@ final class Form extends Widget
     }
 
     /**
-     * The action and formaction content attributes, if specified, must have a value that is a valid non-empty URL
+     * The action and form-action content attributes, if specified, must have a value that is a valid non-empty URL
      * potentially surrounded by spaces.
      *
      * @param string $value the action attribute value.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-action
      */
@@ -125,7 +124,7 @@ final class Form extends Widget
      *
      * @param array $value
      *
-     * @return static
+     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
@@ -142,7 +141,7 @@ final class Form extends Widget
      *
      * @param bool $value
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-autocompleteelements-autocomplete
      */
@@ -156,21 +155,15 @@ final class Form extends Widget
     /**
      * The CSRF-token content attribute token that are known to be safe to use for.
      *
-     * @param mixed|string|Stringable $csrfToken the CSRF-token attribute value.
+     * @param string|Stringable $csrfToken the CSRF-token attribute value.
      * @param string $csrfName the CSRF-token attribute name.
      *
-     * @return static
+     * @return self
      */
-    public function csrf($csrfToken, string $csrfName = '_csrf'): self
+    public function csrf(string|Stringable $csrfToken, string $csrfName = '_csrf'): self
     {
         $new = clone $this;
-
-        if (is_string($csrfToken) || (is_object($csrfToken) && method_exists($csrfToken, '__toString'))) {
-            $new->csrfToken = (string) $csrfToken;
-        } else {
-            throw new InvalidArgumentException('$csrfToken must be a string or \Stringable object.');
-        }
-
+        $new->csrfToken = (string) $csrfToken;
         $new->csrfName = $csrfName;
         return $new;
     }
@@ -180,7 +173,7 @@ final class Form extends Widget
      *
      * @param string $class
      *
-     * @return static
+     * @return self
      */
     public function class(string $class): self
     {
@@ -190,11 +183,11 @@ final class Form extends Widget
     }
 
     /**
-     * The formenctype content attribute specifies the content type of the form submission.
+     * The form-enctype content attribute specifies the content type of the form submission.
      *
-     * @param string $value the formenctype attribute value.
+     * @param string $value the form-enctype attribute value.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-enctype
      */
@@ -210,7 +203,7 @@ final class Form extends Widget
      *
      * @param string|null $id
      *
-     * @return static
+     * @return self
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
      */
@@ -226,7 +219,7 @@ final class Form extends Widget
      *
      * @param string $value the method attribute value.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-method
      */
@@ -238,10 +231,10 @@ final class Form extends Widget
     }
 
     /**
-     * The novalidate and formnovalidate content attributes are boolean attributes. If present, they indicate that the
+     * The novalidate and form-novalidate content attributes are boolean attributes. If present, they indicate that the
      * form is not to be validated during submission.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-novalidate
      */
@@ -253,12 +246,12 @@ final class Form extends Widget
     }
 
     /**
-     * The target and formtarget content attributes, if specified, must have values that are valid browsing context
+     * The target and form-target content attributes, if specified, must have values that are valid browsing context
      * names or keywords.
      *
      * @param string $value the target attribute value, for default its `_blank`.
      *
-     * @return static
+     * @return self
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#element-attrdef-form-target
      */
