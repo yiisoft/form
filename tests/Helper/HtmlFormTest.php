@@ -10,7 +10,6 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DynamicAttributesForm;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 
 final class HtmlFormTest extends TestCase
 {
