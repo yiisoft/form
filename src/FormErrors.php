@@ -56,11 +56,10 @@ final class FormErrors implements FormErrorsInterface
 
     public function getFirstError(string $attribute): string
     {
-        if (empty($this->attributesErrors[$attribute])) {
-            return '';
-        }
-
-        return reset($this->attributesErrors[$attribute]);
+        return match (empty($this->attributesErrors[$attribute])) {
+            true => '',
+            false => reset($this->attributesErrors[$attribute]),
+        };
     }
 
     public function getFirstErrors(): array
@@ -82,7 +81,10 @@ final class FormErrors implements FormErrorsInterface
 
     public function hasErrors(?string $attribute = null): bool
     {
-        return $attribute === null ? !empty($this->attributesErrors) : isset($this->attributesErrors[$attribute]);
+        return match ($attribute) {
+            null => !empty($this->attributesErrors),
+            default => isset($this->attributesErrors[$attribute]),
+        };
     }
 
     public function clear(?string $attribute = null): void

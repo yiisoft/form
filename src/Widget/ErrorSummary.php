@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
@@ -20,15 +21,13 @@ use function array_values;
 
 /**
  * The error summary widget displays a summary of the errors in a form.
- *
- * @psalm-suppress MissingConstructor
  */
 final class ErrorSummary extends Widget
 {
     private array $attributes = [];
     private bool $encode = true;
     private array $onlyAttributes = [];
-    private FormModelInterface $formModel;
+    private ?FormModelInterface $formModel = null;
     private string $footer = '';
     private array $footerAttributes = [];
     private string $header = 'Please fix the following errors:';
@@ -192,11 +191,11 @@ final class ErrorSummary extends Widget
      */
     private function collectErrors(): array
     {
-        $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
+        $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->getFormModel());
         $errorMessages = [];
 
         if ($this->showAllErrors) {
-            $errors = HtmlFormErrors::getErrorSummary($this->formModel, $this->onlyAttributes);
+            $errors = HtmlFormErrors::getErrorSummary($this->getFormModel(), $this->onlyAttributes);
         } elseif ($this->onlyAttributes !== []) {
             $errors = array_intersect_key($errors, array_flip($this->onlyAttributes));
         }
@@ -243,12 +242,26 @@ final class ErrorSummary extends Widget
             $content .= PHP_EOL . P::tag()->attributes($this->footerAttributes)->content($this->footer)->render();
         }
 
-        return $lines !== []
-            ? CustomTag::name($this->tag)
+        return match (empty($lines)) {
+            true => '',
+            false => CustomTag::name($this->tag)
                 ->attributes($attributes)
                 ->encode(false)
                 ->content(PHP_EOL . $content . PHP_EOL)
-                ->render()
-            : '';
+                ->render(),
+        };
+    }
+
+    /**
+     * Return FormModelInterface object.
+     *
+     * @return FormModelInterface
+     */
+    private function getFormModel(): FormModelInterface
+    {
+        return match (empty($this->formModel)) {
+            true => throw new FormModelNotSetException(),
+            false => $this->formModel,
+        };
     }
 }

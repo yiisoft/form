@@ -13,8 +13,6 @@ use Yiisoft\Widget\Widget;
 
 /**
  * The Error widget displays an error message.
- *
- * @psalm-suppress MissingConstructor
  */
 final class Error extends Widget
 {
@@ -133,22 +131,22 @@ final class Error extends Widget
             $error = call_user_func($this->messageCallback, $this->getFormModel(), $this->getAttribute());
         }
 
-        return $this->tag !== '' && $error !== ''
-            ? CustomTag::name($this->tag)
+        return match ($this->tag !== '' && $error !== '') {
+            true => CustomTag::name($this->tag)
                 ->attributes($this->attributes)
                 ->content($error)
                 ->encode($this->encode)
-                ->render()
-            : $error;
+                ->render(),
+            false => $error,
+        };
     }
 
     private function getAttribute(): string
     {
-        if ($this->attribute === '') {
-            throw new AttributeNotSetException();
-        }
-
-        return $this->attribute;
+        return match (empty($this->attribute)) {
+            true => throw new AttributeNotSetException(),
+            false => $this->attribute,
+        };
     }
 
     /**
@@ -158,10 +156,9 @@ final class Error extends Widget
      */
     private function getFormModel(): FormModelInterface
     {
-        if ($this->formModel === null) {
-            throw new FormModelNotSetException();
-        }
-
-        return $this->formModel;
+        return match (empty($this->formModel)) {
+            true => throw new FormModelNotSetException(),
+            false => $this->formModel,
+        };
     }
 }

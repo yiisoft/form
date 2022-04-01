@@ -116,11 +116,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
      */
     public function getFormErrors(): FormErrorsInterface
     {
-        if ($this->formErrors === null) {
-            $this->formErrors = new FormErrors();
-        }
-
-        return $this->formErrors;
+        return match (empty($this->formErrors)) {
+            true => $this->formErrors = new FormErrors(),
+            false => $this->formErrors,
+        };
     }
 
     /**
@@ -253,10 +252,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     private function getInflector(): Inflector
     {
-        if ($this->inflector === null) {
-            $this->inflector = new Inflector();
-        }
-        return $this->inflector;
+        return match (empty($this->inflector)) {
+            true => $this->inflector = new Inflector(),
+            false => $this->inflector,
+        };
     }
 
     /**

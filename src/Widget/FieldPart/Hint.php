@@ -14,8 +14,6 @@ use Yiisoft\Widget\Widget;
 
 /**
  * The widget for hint form.
- *
- * @psalm-suppress MissingConstructor
  */
 final class Hint extends Widget
 {
@@ -128,30 +126,29 @@ final class Hint extends Widget
             $hint = HtmlForm::getAttributeHint($this->getFormModel(), $this->getAttribute());
         }
 
-        return $hint !== null && $hint !== ''
-            ? CustomTag::name($this->tag)
+        return match ($hint !== null && $hint !== '') {
+            true => CustomTag::name($this->tag)
                 ->attributes($this->attributes)
                 ->content($hint)
                 ->encode($this->encode)
-                ->render()
-            : '';
+                ->render(),
+            false => '',
+        };
     }
 
     private function getAttribute(): string
     {
-        if ($this->attribute === '') {
-            throw new AttributeNotSetException();
-        }
-
-        return $this->attribute;
+        return match (empty($this->attribute)) {
+            true => throw new AttributeNotSetException(),
+            false => $this->attribute,
+        };
     }
 
     private function getFormModel(): FormModelInterface
     {
-        if ($this->formModel === null) {
-            throw new FormModelNotSetException();
-        }
-
-        return $this->formModel;
+        return match (empty($this->formModel)) {
+            true => throw new FormModelNotSetException(),
+            false => $this->formModel,
+        };
     }
 }

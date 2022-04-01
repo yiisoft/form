@@ -25,11 +25,10 @@ abstract class WidgetAttributes extends GlobalAttributes
 
     protected function getAttribute(): string
     {
-        if ($this->attribute === '') {
-            throw new AttributeNotSetException();
-        }
-
-        return $this->attribute;
+        return match (empty($this->attribute)) {
+            true => throw new AttributeNotSetException(),
+            false => $this->attribute,
+        };
     }
 
     /**
@@ -69,11 +68,10 @@ abstract class WidgetAttributes extends GlobalAttributes
      */
     protected function getFormModel(): FormModelInterface
     {
-        if ($this->formModel === null) {
-            throw new FormModelNotSetException();
-        }
-
-        return $this->formModel;
+        return match (empty($this->formModel)) {
+            true => throw new FormModelNotSetException(),
+            false => $this->formModel,
+        };
     }
 
     /**
