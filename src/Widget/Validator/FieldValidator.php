@@ -85,8 +85,8 @@ final class FieldValidator
     {
         $result = '';
 
-        for ($i = 0, $length = mb_strlen($scheme); $i < $length; $i++) {
-            $result .= '[' . mb_strtolower($scheme[$i]) . mb_strtoupper($scheme[$i]) . ']';
+        for ($i = 0, $length = strlen($scheme); $i < $length; $i++) {
+            $result .= '[' . strtolower($scheme[$i]) . strtoupper($scheme[$i]) . ']';
         }
 
         return $result;

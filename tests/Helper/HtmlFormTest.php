@@ -8,8 +8,9 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
-use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DynamicAttributesForm;
+use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
+use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 
 final class HtmlFormTest extends TestCase
 {
@@ -101,6 +102,24 @@ final class HtmlFormTest extends TestCase
 
         $this->expectExceptionMessage('formName() cannot be empty for tabular inputs.');
         HtmlForm::getInputName($anonymousForm, '[0]dates[0]');
+    }
+
+    public function testMultibyteGetAttributeName(): void
+    {
+        $formModel = new class () extends FormModel {
+            private string $登录 = '';
+        };
+        $this->assertSame('登录', HtmlForm::getAttributeName($formModel, '[0]登录'));
+        $this->assertSame('登录', HtmlForm::getAttributeName($formModel, '登录[0]'));
+        $this->assertSame('登录', HtmlForm::getAttributeName($formModel, '[0]登录[0]'));
+    }
+
+    public function testMutlibyteGetInputId(): void
+    {
+        $formModel = new class () extends FormModel {
+            private string $mĄkA = '';
+        };
+        $this->assertSame('mąka', HtmlForm::getInputId($formModel, 'mĄkA'));
     }
 
     /**

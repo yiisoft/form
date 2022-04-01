@@ -233,7 +233,35 @@ final class FieldTest extends TestCase
                 ->ariaLabel('Amount (to the nearest dollar)')
                 ->containerClass('input-group mb-3')
                 ->inputClass('form-control')
-                ->replaceIndividualToken('{after}', Span::tag()->class('input-group-text')->content('€'))
+                ->replaceIndividualToken('{after}', '<span class="input-group-text">€</span>')
+                ->template("{before}\n{input}\n{after}\n{hint}\n{error}")
+                ->text(new TypeForm(), 'string')
+                ->render(),
+        );
+
+        $expected = <<<HTML
+        <div class="input-group mb-3">
+        <span class="input-group-text">.00</span>
+        <input type="text" id="typeform-string" class="form-control" name="TypeForm[string]" aria-describedby="typeform-string-help" aria-label="Amount (to the nearest dollar)">
+        <span class="input-group-text">€</span>
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($factoryConfig)
+                ->ariaDescribedBy(true)
+                ->ariaLabel('Amount (to the nearest dollar)')
+                ->containerClass('input-group mb-3')
+                ->inputClass('form-control')
+                ->replaceIndividualToken(
+                    '{after}',
+                    new class () {
+                        public function __toString(): string
+                        {
+                            return '<span class="input-group-text">€</span>';
+                        }
+                    }
+                )
                 ->template("{before}\n{input}\n{after}\n{hint}\n{error}")
                 ->text(new TypeForm(), 'string')
                 ->render(),

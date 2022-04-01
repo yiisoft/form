@@ -10,6 +10,7 @@ use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginValidatorForm;
+use Yiisoft\Form\Tests\TestSupport\Form\ValidatorForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ErrorSummary;
 use Yiisoft\Form\Widget\Field;
@@ -158,6 +159,26 @@ final class ValidatorTest extends TestCase
             Field::widget($this->fieldConfig)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
             Field::widget($this->fieldConfig)->text($loginValidatorForm, 'password')->render() .
             ErrorSummary::widget()->model($loginValidatorForm)->render(),
+        );
+    }
+
+    public function testUrlValidatorPatternSchemeCaseInsensitive(): void
+    {
+        $validatorForm = new ValidatorForm();
+        $validator = $this->createValidatorMock();
+
+        $validatorForm->setAttribute('urlWithPattern', 'https://www.yiiframework.com/');
+        $validator->validate($validatorForm);
+
+        $expected = <<<HTML
+        <div>
+        <label for="validatorform-urlwithpattern">Url With Pattern</label>
+        <input type="url" id="validatorform-urlwithpattern" class="is-valid" name="ValidatorForm[urlWithPattern]" value="https://www.yiiframework.com/" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
+        </div>
+        HTML;
+        $this->assertEqualsWithoutLE(
+            $expected,
+            Field::widget($this->fieldConfig)->url($validatorForm, 'urlWithPattern')->render(),
         );
     }
 }

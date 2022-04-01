@@ -297,6 +297,19 @@ final class FormModelTest extends TestCase
         );
     }
 
+    public function testProtectedCollectAttributes(): void
+    {
+        $form = new class () extends FormModel {
+            protected int $int = 1;
+
+            public function collectAttributes(): array
+            {
+                return array_merge(parent::collectAttributes(), ['null' => 'null']);
+            }
+        };
+        $this->assertSame(['int' => 'int', 'null' => 'null'], $form->collectAttributes());
+    }
+
     public function testSetFormErrors(): void
     {
         $formErrors = new CustomFormErrors();
