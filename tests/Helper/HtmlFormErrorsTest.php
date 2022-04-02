@@ -103,7 +103,7 @@ final class HtmlFormErrorsTest extends TestCase
 
     public function testGetFirstErrorEmpty(): void
     {
-        $this->assertSame('', HtmlFormErrors::getFirstError(new LoginForm(), 'login'));
+        $this->assertNull(HtmlFormErrors::getFirstError(new LoginForm(), 'login'));
     }
 
     public function testGetFirstErrorsEmpty(): void

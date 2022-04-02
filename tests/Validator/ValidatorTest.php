@@ -29,7 +29,7 @@ final class ValidatorTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testLoginAndPasswordValidatorInvalid(): void
+    public function testLoginAndPasswordValidatorInvalid1(): void
     {
         $loginValidatorForm = new loginValidatorForm();
         $validator = $this->createValidatorMock();

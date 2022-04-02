@@ -124,16 +124,20 @@ final class Error extends Widget
     {
         $error = HtmlFormErrors::getFirstError($this->getFormModel(), $this->getAttribute());
 
-        if ($error !== '' && $this->message !== '') {
+        if ($error !== null && $this->message !== '') {
             $error = $this->message;
         }
 
-        if ($error !== '' && $this->messageCallback !== []) {
+        if ($error !== null && $this->messageCallback !== []) {
             /** @var string */
             $error = call_user_func($this->messageCallback, $this->getFormModel(), $this->getAttribute());
         }
 
-        return $this->tag !== '' && $error !== ''
+        if (empty($error)) {
+            return '';
+        }
+
+        return $this->tag !== ''
             ? CustomTag::name($this->tag)
                 ->attributes($this->attributes)
                 ->content($error)
