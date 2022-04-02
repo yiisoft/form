@@ -14,9 +14,10 @@ final class FieldStaticFactory
     {
     }
 
-    public static function initialize(?FieldFactory $factory = null): void
+    public static function initialize(array $parameters = []): void
     {
-        self::$factory = $factory ?? new FieldFactory();
+        /** @psalm-suppress MixedArgument */
+        self::$factory = new FieldFactory(...$parameters);
     }
 
     public static function factory(): FieldFactory

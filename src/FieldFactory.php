@@ -8,7 +8,6 @@ use RuntimeException;
 
 use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
-
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;

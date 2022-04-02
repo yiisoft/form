@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Factory\Factory;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\Tests\Support\AssertTrait;
@@ -286,7 +285,6 @@ final class FieldFactoryTest extends TestCase
 
         WidgetFactory::initialize($container);
 
-        return (new Factory($container, [FieldFactory::class => ['__construct()' => $parameters]]))
-            ->create(FieldFactory::class);
+        return new FieldFactory(...$parameters);
     }
 }
