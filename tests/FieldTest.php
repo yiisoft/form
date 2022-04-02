@@ -20,9 +20,9 @@ final class FieldTest extends TestCase
         parent::setUp();
     }
 
-    public function testInputText(): void
+    public function testText(): void
     {
-        $result = Field::inputText(new TextForm(), 'job')->render();
+        $result = Field::text(new TextForm(), 'job')->render();
         $this->assertStringContainsStringIgnoringLineEndings(
             <<<HTML
             <div>
@@ -34,13 +34,13 @@ final class FieldTest extends TestCase
         );
     }
 
-    public function testInputTextWithConfig(): void
+    public function testTextWithConfig(): void
     {
         $config = [
             'containerTag()' => ['section'],
             'containerTagAttributes()' => [['class' => 'wrapper']],
         ];
-        $result = Field::inputText(new TextForm(), 'job', $config)->render();
+        $result = Field::text(new TextForm(), 'job', $config)->render();
         $this->assertStringContainsStringIgnoringLineEndings(
             <<<HTML
             <section class="wrapper">

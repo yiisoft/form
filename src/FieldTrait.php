@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Part\Label;
 
 trait FieldTrait
 {
-    public static function inputText(FormModelInterface $formModel, string $attribute, array $config = []): Text
+    public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
         return self::widget(Text::class, $formModel, $attribute, $config);
     }

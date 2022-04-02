@@ -16,7 +16,7 @@ final class FieldFactoryTest extends TestCase
 {
     use AssertTrait;
 
-    public function dataInputText(): array
+    public function dataText(): array
     {
         return [
             [
@@ -158,9 +158,9 @@ final class FieldFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputText
+     * @dataProvider dataText
      */
-    public function testInputText(string $expected, array $factoryParameters, string $attribute): void
+    public function testText(string $expected, array $factoryParameters, string $attribute): void
     {
         $field = $this->createFieldFactory($factoryParameters);
 
