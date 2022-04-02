@@ -29,19 +29,13 @@ final class FieldFactory
         private ?string $containerTag = null,
         private array $containerTagAttributes = [],
         private ?bool $useContainer = null,
-
         private ?string $template = null,
-
         private ?bool $setInputIdAttribute = null,
-
         private array $inputTagAttributes = [],
-
         private array $labelConfig = [],
         private array $hintConfig = [],
         private array $errorConfig = [],
-
         private ?bool $usePlaceholder = null,
-
         private array $fieldConfigs = [],
     ) {
     }
