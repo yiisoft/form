@@ -324,7 +324,7 @@ final class FieldNumberTest extends TestCase
         $expected = <<<'HTML'
         <div>
         <label for="typeform-number">Number</label>
-        <input type="number" id="typeform-number" name="TypeForm[number]" value="0">
+        <input type="number" id="typeform-number" name="TypeForm[number]">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

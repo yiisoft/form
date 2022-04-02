@@ -8,8 +8,8 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
+use ReflectionUnionType;
 use RuntimeException;
-use Stringable;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
@@ -34,7 +34,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $nullable = [];
     private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
-    /** @psalm-var array<string, string|array> */
+    /** @psalm-var array<string, mixed> */
     private array $rawData = [];
     private bool $validated = false;
 
@@ -188,22 +188,37 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->rawData !== [];
     }
 
-    public function setAttribute(string $name, mixed $value): void
+    protected static function isEmpty(mixed $value): bool
     {
-        [$realName] = $this->getNestedAttribute($name);
-        $this->rawData[$realName] = $value;
+        return $value === null || $value === '' || $value === [];
+    }
 
-        if (isset($this->attributes[$realName])) {
-            /** @var mixed */
-            $value = match ($this->attributes[$realName]) {
+    protected function typeCast(string $attribute, mixed $value): mixed
+    {
+        if (isset($this->attributes[$attribute])) {
+            if (static::isEmpty($value) && in_array($attribute, $this->nullable, true)) {
+                return null;
+            }
+
+            return match ($this->attributes[$attribute]) {
                 'bool' => (bool) $value,
                 'float' => (float) $value,
                 'int' => (int) $value,
                 'string' => (string) $value,
                 default => $value,
             };
+        }
 
-            $this->writeProperty($name, $value);
+        return $value;
+    }
+
+    public function setAttribute(string $name, mixed $value): void
+    {
+        [$realName] = $this->getNestedAttribute($name);
+        $this->rawData[$realName] = $value;
+
+        if (isset($this->attributes[$realName])) {
+            $this->writeProperty($name, $this->typeCast($realName, $value));
         }
     }
 
@@ -245,13 +260,17 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 continue;
             }
 
-            /** @var ReflectionNamedType|null $type */
+            /** @var ReflectionNamedType|ReflectionUnionType|null $type */
             $type = $property->getType();
             $name = $property->getName();
 
-            $attributes[$name] = $type !== null ? $type->getName() : '';
+            if ($type instanceof ReflectionUnionType) {
+                $attributes[$name] = '';
+            } else {
+                $attributes[$name] = $type !== null ? $type->getName() : '';
+            }
 
-            if ($property->allowsNull()) {
+            if ($type && $type->allowsNull()) {
                 $this->nullable[] = $name;
             }
         }
@@ -298,14 +317,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         );
     }
 
-    /**
-     * @return iterable|scalar|Stringable|null
-     *
-     * @psalm-suppress MixedReturnStatement
-     * @psalm-suppress MixedInferredReturnType
-     * @psalm-suppress MissingClosureReturnType
-     */
-    private function readProperty(string $attribute, string ...$nested)
+    private function readProperty(string $attribute, string ...$nested): mixed
     {
         $class = static::class;
 
@@ -316,10 +328,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         /** @psalm-suppress MixedMethodCall */
-        $getter = static function (FormModelInterface $class, string $attribute, ?string $nested): mixed {
+        $getter = static function (FormModelInterface $class, string $attribute, ?array $nested): mixed {
             return match ($nested) {
                 null => $class->$attribute,
-                default => $class->$attribute->getAttributeCastValue($nested),
+                default => $class->$attribute->getAttributeCastValue(...$nested),
             };
         };
 
@@ -334,12 +346,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
         /**
-         * @psalm-suppress MissingClosureParamType
          * @psalm-suppress MixedMethodCall
          */
-        $setter = static function (FormModelInterface $class, string $attribute, $value, ?array $nested) {
+        $setter = static function (FormModelInterface $class, string $attribute, mixed $value, ?array $nested): void {
             if (is_a($class->$attribute, __CLASS__)) {
                 if ($nested) {
+                    /** @var array<array-key,string> $nested */
                     $class->$attribute->setAttribute(implode('.', $nested), $value);
                 } elseif (is_array($value)) {
                     $class->$attribute->load($value, '');
@@ -386,10 +398,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return [$attribute, $nested];
     }
 
-    /**
-     * @return iterable|object|scalar|Stringable|null
-     */
-    private function getNestedAttributeValue(string $method, string $attribute, string ...$nested)
+    private function getNestedAttributeValue(string $method, string $attribute, string ...$nested): mixed
     {
         $result = '';
 
