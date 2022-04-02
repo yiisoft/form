@@ -247,8 +247,13 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
             /** @var ReflectionNamedType|null $type */
             $type = $property->getType();
+            $name = $property->getName();
 
-            $attributes[$property->getName()] = $type !== null ? $type->getName() : '';
+            $attributes[$name] = $type !== null ? $type->getName() : '';
+
+            if ($property->allowsNull()) {
+                $this->nullable[] = $name;
+            }
         }
 
         return $attributes;
