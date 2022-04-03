@@ -42,6 +42,11 @@ trait FieldTrait
         string $attribute,
         array $config = []
     ): object {
-        return FieldStaticFactory::factory()->widget($class, $formModel, $attribute, $config);
+        return self::getFactory()->widget($class, $formModel, $attribute, $config);
+    }
+
+    protected static function getFactory(): FieldFactory
+    {
+        return FieldStaticFactory::factory();
     }
 }
