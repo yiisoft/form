@@ -52,6 +52,7 @@
             "source-directory": "config"
         },
         "config-plugin": {
+            "params": "params.php",
             "bootstrap": "bootstrap.php"
         }
     },

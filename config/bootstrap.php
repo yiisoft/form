@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Yiisoft\Form\FieldStaticFactory;
+use Yiisoft\Form\FormFields;
 
 /**
  * @var array $params
@@ -11,8 +11,9 @@ use Yiisoft\Form\FieldStaticFactory;
 
 return [
     static function (ContainerInterface $container) use ($params) {
-        FieldStaticFactory::initialize(
-            $params['yiisoft/form']['config'] ?? []
+        FormFields::initialize(
+            $params['yiisoft/form']['configs'],
+            $params['yiisoft/form']['defaultConfig'],
         );
     },
 ];

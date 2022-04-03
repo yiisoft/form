@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Form\Field\Text;
 use Yiisoft\Widget\WidgetFactory;
 
 use function in_array;
@@ -37,6 +38,11 @@ final class FieldFactory
         private ?bool $usePlaceholder = null,
         private array $fieldConfigs = [],
     ) {
+    }
+
+    public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
+    {
+        return $this->field(Text::class, $formModel, $attribute, $config);
     }
 
     public function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
@@ -71,7 +77,7 @@ final class FieldFactory
      * @psalm-param class-string<T> $class
      * @psalm-return T
      */
-    public function widget(
+    public function field(
         string $class,
         FormModelInterface $formModel,
         string $attribute,

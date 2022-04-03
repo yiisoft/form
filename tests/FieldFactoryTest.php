@@ -164,7 +164,7 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->widget(Text::class, TextForm::validated(), $attribute)->render();
+        $result = $field->text(TextForm::validated(), $attribute)->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
