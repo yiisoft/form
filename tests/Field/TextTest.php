@@ -40,6 +40,16 @@ final class TextTest extends TestCase
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function testInvalidValue(): void
+    {
+        $widget = Text::widget()
+            ->attribute(new TextForm(), 'age');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Text widget must be a string or null value.');
+        $widget->render();
+    }
+
     public function testWithoutContainer(): void
     {
         $expected = <<<'HTML'
@@ -362,5 +372,111 @@ final class TextTest extends TestCase
             ->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testDirname(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value dirname="test">
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->dirname('test')
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testEmptyDirname(): void
+    {
+        $widget = Text::widget()
+            ->attribute(new TextForm(), 'job');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The value cannot be empty.');
+        $widget->dirname('');
+    }
+
+    public function testMaxlength(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value maxlength="5">
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->maxlength(5)
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testMinlength(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value minlength="5">
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->minlength(5)
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testPattern(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value pattern="[0-9]{3}">
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->pattern('[0-9]{3}')
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testSize(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value size="12">
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->size(12)
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testImmutability(): void
+    {
+        $field = Text::widget();
+
+        $this->assertNotSame($field, $field->dirname('test'));
+        $this->assertNotSame($field, $field->maxlength(6));
+        $this->assertNotSame($field, $field->minlength(2));
+        $this->assertNotSame($field, $field->pattern('[a-z]'));
+        $this->assertNotSame($field, $field->size(5));
     }
 }

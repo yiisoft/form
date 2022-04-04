@@ -13,6 +13,7 @@ final class TextForm extends FormModel
 {
     public string $name = '';
     public string $job = '';
+    public int $age = 42;
 
     public function getRules(): array
     {

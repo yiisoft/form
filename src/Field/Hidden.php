@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Html\Html;
 
 use function is_string;
 
-final class Hidden extends AbstractField
+final class Hidden extends InputField
 {
     protected bool $useContainer = false;
     protected string $template = "{input}";

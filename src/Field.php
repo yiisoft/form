@@ -76,16 +76,6 @@ final class Field
     public static function getFactory(?string $name = null): FieldFactory
     {
         $name = $name ?? self::$defaultConfigName;
-        if ($name === null) {
-            if (self::$defaultConfigName === null) {
-                $name = array_key_first(self::$configs);
-                if ($name === null) {
-                    throw new RuntimeException('Not found default configuration of fields.');
-                }
-            } else {
-                $name = self::$defaultConfigName;
-            }
-        }
 
         if (!array_key_exists($name, self::$factories)) {
             if (!array_key_exists($name, self::$configs)) {
