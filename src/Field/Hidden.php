@@ -6,26 +6,26 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\AbstractField;
-use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
 
-final class Text extends AbstractField
+final class Hidden extends AbstractField
 {
-    use PlaceholderTrait;
+    protected bool $useContainer = false;
+    protected string $template = "{input}";
 
     protected function generateInput(): string
     {
         $value = $this->getAttributeValue();
 
-        if (!is_string($value) && $value !== null) {
-            throw new InvalidArgumentException('Text widget must be a string or null value.');
+        if (!is_string($value) && !is_numeric($value) && $value !== null) {
+            throw new InvalidArgumentException('Hidden widget requires a string, numeric or null value.');
         }
 
         $tagAttributes = $this->getInputTagAttributes();
 
         /** @psalm-suppress MixedArgumentTypeCoercion */
-        return Html::textInput($this->getInputName(), $value, $tagAttributes)->render();
+        return Html::hiddenInput($this->getInputName(), $value, $tagAttributes)->render();
     }
 }

@@ -21,21 +21,21 @@ abstract class AbstractField extends Widget
     /**
      * @psalm-var non-empty-string
      */
-    private string $containerTag = 'div';
-    private array $containerTagAttributes = [];
-    private bool $useContainer = true;
+    protected string $containerTag = 'div';
+    protected array $containerTagAttributes = [];
+    protected bool $useContainer = true;
 
-    private string $template = "{label}\n{input}\n{hint}\n{error}";
+    protected string $template = "{label}\n{input}\n{hint}\n{error}";
 
-    private ?string $inputId = null;
-    private ?string $inputIdFromTag = null;
-    private bool $setInputIdAttribute = true;
+    protected ?string $inputId = null;
+    protected ?string $inputIdFromTag = null;
+    protected bool $setInputIdAttribute = true;
 
-    private array $inputTagAttributes = [];
+    protected array $inputTagAttributes = [];
 
-    private array $labelConfig = [];
-    private array $hintConfig = [];
-    private array $errorConfig = [];
+    protected array $labelConfig = [];
+    protected array $hintConfig = [];
+    protected array $errorConfig = [];
 
     /**
      * @return static

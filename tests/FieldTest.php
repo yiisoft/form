@@ -7,11 +7,21 @@ namespace Yiisoft\Form\Tests;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Tests\Support\AssertTrait;
+use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 
 final class FieldTest extends TestCase
 {
     use AssertTrait;
+
+    public function testHidden(): void
+    {
+        $result = Field::hidden(new HiddenForm(), 'key')->render();
+        $this->assertSame(
+            '<input type="hidden" id="hiddenform-key" name="HiddenForm[key]" value="x100">',
+            $result
+        );
+    }
 
     public function testText(): void
     {

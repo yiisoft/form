@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use RuntimeException;
+use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
@@ -35,6 +36,11 @@ final class Field
     {
         self::$configs = array_merge(self::$configs, $configs);
         self::$defaultConfigName = $defaultConfigName;
+    }
+
+    public static function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
+    {
+        return self::getFactory()->hidden($formModel, $attribute, $config);
     }
 
     public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text

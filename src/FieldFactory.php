@@ -8,6 +8,7 @@ use RuntimeException;
 
 use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
@@ -38,6 +39,11 @@ final class FieldFactory
         private ?bool $usePlaceholder = null,
         private array $fieldConfigs = [],
     ) {
+    }
+
+    public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
+    {
+        return $this->field(Hidden::class, $formModel, $attribute, $config);
     }
 
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
