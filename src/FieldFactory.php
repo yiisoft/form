@@ -77,12 +77,8 @@ final class FieldFactory
      * @psalm-param class-string<T> $class
      * @psalm-return T
      */
-    public function field(
-        string $class,
-        FormModelInterface $formModel,
-        string $attribute,
-        array $config = []
-    ): object {
+    public function field(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
+    {
         $traits = class_uses($class);
         if ($traits === false) {
             throw new RuntimeException('Invalid field class.');
