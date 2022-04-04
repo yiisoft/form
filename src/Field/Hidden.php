@@ -13,7 +13,7 @@ use function is_string;
 final class Hidden extends InputField
 {
     protected bool $useContainer = false;
-    protected string $template = "{input}";
+    protected string $template = '{input}';
 
     protected function generateInput(): string
     {
