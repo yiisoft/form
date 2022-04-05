@@ -10,6 +10,7 @@ use Yiisoft\Definitions\Exception\CircularReferenceException;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Definitions\Exception\NotInstantiableException;
 use Yiisoft\Factory\NotFoundException;
+use Yiisoft\Form\Exception\FormModelNotSetException;
 use Yiisoft\Form\Tests\TestSupport\Form\PersonalForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Form\Widget\ErrorSummary;
@@ -17,6 +18,16 @@ use Yiisoft\Form\Widget\ErrorSummary;
 final class ErrorSummaryTest extends TestCase
 {
     use TestTrait;
+
+    /**
+     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
+     */
+    public function testGetFormModelException(): void
+    {
+        $this->expectException(FormModelNotSetException::class);
+        $this->expectExceptionMessage('Failed to create widget because form model is not set.');
+        $this->invokeMethod(ErrorSummary::widget(), 'getFormModel');
+    }
 
     public function dataProviderErrorSummary(): array
     {
