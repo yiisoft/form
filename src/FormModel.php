@@ -10,6 +10,7 @@ use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionUnionType;
 use RuntimeException;
+use Throwable;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
@@ -158,7 +159,18 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute, ...$nested);
 
-        return $nested !== null || array_key_exists($attribute, $this->attributes);
+        if ($nested === null) {
+            return array_key_exists($attribute, $this->attributes);
+        }
+
+        try {
+            /** @var bool */
+            return $this->getNestedAttributeValue('hasAttribute', $attribute, ...$nested);
+        } catch (InvalidArgumentException $ex) {
+            return false;
+        } catch (Throwable $ex) {
+            throw $ex;
+        }
     }
 
     /**
