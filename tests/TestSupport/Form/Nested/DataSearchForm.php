@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form\Nested;
 
 use Yiisoft\Form\FormModel;
-use function Safe\strtotime;
 
 final class DataSearchForm extends FormModel
 {
@@ -66,63 +65,5 @@ final class DataSearchForm extends FormModel
     public function getFormName(): string
     {
         return 'Search';
-    }
-
-    public function getMinPrice(): ?float
-    {
-        $min = $this->price[0] ?? null;
-
-        return filter_var($min, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
-    }
-
-    public function getMaxPrice(): ?float
-    {
-        $max = $this->price[1] ?? null;
-
-        return filter_var($max, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
-    }
-
-    public function getMinArea(): ?float
-    {
-        $min = $this->area[0] ?? null;
-
-        return filter_var($min, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
-    }
-
-    public function getMaxArea(): ?float
-    {
-        $max = $this->area[1] ?? null;
-
-        return filter_var($max, FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE);
-    }
-
-    private function getDateTime(?string $value): ?string
-    {
-        if (empty($value) || ($timestamp = strtotime($value)) === false) {
-            return null;
-        }
-
-        return date('Y-m-d\TH:i', $timestamp);
-    }
-
-    public function getMinAcceptingBid(): ?string
-    {
-        return $this->getDateTime($this->accepting_bid[0] ?? null);
-    }
-
-    public function getMaxAcceptingBid(): ?string
-    {
-        return $this->getDateTime($this->accepting_bid[1] ?? null);
-    }
-
-
-    public function getMinAuctionTime(): ?string
-    {
-        return $this->getDateTime($this->auction_time[0] ?? null);
-    }
-
-    public function getMaxAuctionTime(): ?string
-    {
-        return $this->getDateTime($this->auction_time[1] ?? null);
     }
 }

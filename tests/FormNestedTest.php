@@ -159,7 +159,7 @@ final class FormNestedTest extends TestCase
     public function testLoad(array $data, array $expected): void
     {
         $form = new DataSearchForm();
-        $form->load($data, '');
+        $this->assertTrue($form->load($data, ''));
 
         foreach ($expected as $name => $value) {
             $this->assertSame($value, $form->getAttributeValue($name));
