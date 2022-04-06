@@ -15,6 +15,7 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
+use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Url;
 
@@ -81,6 +82,11 @@ final class Field
     public static function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
     {
         return self::getFactory()->password($formModel, $attribute, $config);
+    }
+
+    public static function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone
+    {
+        return self::getFactory()->telephone($formModel, $attribute, $config);
     }
 
     public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text

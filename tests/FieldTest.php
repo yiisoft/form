@@ -14,6 +14,7 @@ use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
+use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\Form\UrlForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -120,6 +121,21 @@ final class FieldTest extends TestCase
             <label for="passwordform-old">Old password</label>
             <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
             <div>Enter your old password.</div>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testTelephone(): void
+    {
+        $result = Field::telephone(new TelephoneForm(), 'number')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="telephoneform-number">Phone</label>
+            <input type="tel" id="telephoneform-number" name="TelephoneForm[number]" value>
+            <div>Enter your phone.</div>
             </div>
             HTML,
             $result
