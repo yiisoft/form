@@ -9,6 +9,7 @@ use Yiisoft\Form\Field;
 use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
+use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 
@@ -38,6 +39,21 @@ final class FieldTest extends TestCase
             <label for="dateform-birthday">Your birthday</label>
             <input type="date" id="dateform-birthday" name="DateForm[birthday]" value="1996-12-19">
             <div>Birthday date.</div>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testDateTimeLocal(): void
+    {
+        $result = Field::dateTimeLocal(new DateTimeLocalForm(), 'partyDate')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="datetimelocalform-partydate">Date of party</label>
+            <input type="datetime-local" id="datetimelocalform-partydate" name="DateTimeLocalForm[partyDate]" value="2017-06-01T08:30">
+            <div>Party date.</div>
             </div>
             HTML,
             $result
