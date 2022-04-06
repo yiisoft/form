@@ -145,7 +145,7 @@ final class Checkbox extends AbstractField
         return $this->enclosedByLabel;
     }
 
-    private function prepareValue(bool|float|int|string|Stringable|null $value): ?string
+    private function prepareValue(mixed $value): ?string
     {
         if ($value === null) {
             return null;

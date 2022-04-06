@@ -35,7 +35,7 @@ final class Password extends AbstractField
         $value = $this->getAttributeValue();
 
         if (!is_string($value) && $value !== null) {
-            throw new InvalidArgumentException('Text widget must be a string or null value.');
+            throw new InvalidArgumentException('Password widget must be a string or null value.');
         }
 
         $tagAttributes = $this->getInputTagAttributes();
