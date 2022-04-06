@@ -169,13 +169,13 @@ abstract class GlobalAttributes extends Widget
     /**
      * The value content attribute gives the default value of the field.
      *
-     * @param bool|float|int|iterable|object|string|null $value
+     * @param mixed $value
      *
      * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-value
      */
-    public function value(iterable|int|float|string|bool|object|null $value): static
+    public function value(mixed $value): static
     {
         $new = clone $this;
         $new->attributes['value'] = $value;

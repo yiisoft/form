@@ -616,7 +616,7 @@ abstract class FieldAttributes extends WidgetAttributes
     protected function getDefinitions(): array
     {
         $definitions = $this->getDefaultValue($this->type, 'definitions') ?? [];
-        return  is_array($definitions) ? $definitions : [];
+        return is_array($definitions) ? $definitions : [];
     }
 
     /**

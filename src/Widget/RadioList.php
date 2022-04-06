@@ -42,8 +42,6 @@ final class RadioList extends ChoiceAttributes
      * @return static
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
-     *
-     * @psalm-suppress MethodSignatureMismatch
      */
     public function autofocus(): static
     {
@@ -90,8 +88,6 @@ final class RadioList extends ChoiceAttributes
      * @return static
      *
      * @link https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
-     *
-     * @psalm-suppress MethodSignatureMismatch
      */
     public function id(?string $id): static
     {
