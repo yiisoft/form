@@ -13,10 +13,7 @@ trait FormAttributeTrait
     private ?FormModelInterface $formModel = null;
     private string $attribute = '';
 
-    /**
-     * @return static
-     */
-    final public function attribute(FormModelInterface $formModel, string $attribute): self
+    final public function attribute(FormModelInterface $formModel, string $attribute): static
     {
         $new = clone $this;
         $new->formModel = $formModel;

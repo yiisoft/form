@@ -39,9 +39,43 @@ abstract class AbstractField extends Widget
     protected array $errorConfig = [];
 
     /**
-     * @return static
+     * Identifies the element (or elements) that describes the object.
+     *
+     * @link https://w3c.github.io/aria/#aria-describedby
      */
-    final public function containerTag(string $tag): self
+    final public function ariaDescribedBy(string $value): static
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['aria-describedby'] = $value;
+        return $new;
+    }
+
+    /**
+     * Defines a string value that labels the current element.
+     *
+     * @link https://w3c.github.io/aria/#aria-label
+     */
+    final public function ariaLabel(string $value): static
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['aria-label'] = $value;
+        return $new;
+    }
+
+    /**
+     * Specifies the form element the tag input element belongs to. The value of this attribute must be the ID
+     * attribute of a form element in the same document.
+     *
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
+     */
+    final public function form(string $value): static
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['form'] = $value;
+        return $new;
+    }
+
+    final public function containerTag(string $tag): static
     {
         if ($tag === '') {
             throw new InvalidArgumentException('Tag name cannot be empty.');
@@ -52,17 +86,14 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function containerTagAttributes(array $attributes): self
+    final public function containerTagAttributes(array $attributes): static
     {
         $new = clone $this;
         $new->containerTagAttributes = $attributes;
         return $new;
     }
 
-    final public function useContainer(bool $use): self
+    final public function useContainer(bool $use): static
     {
         $new = clone $this;
         $new->useContainer = $use;
@@ -71,96 +102,71 @@ abstract class AbstractField extends Widget
 
     /**
      * Set layout template for render a field.
-     *
-     * @param string $template
-     *
-     * @return static
      */
-    final public function template(string $template): self
+    final public function template(string $template): static
     {
         $new = clone $this;
         $new->template = $template;
         return $new;
     }
 
-    final public function hideLabel(?bool $hide = true): self
+    final public function hideLabel(?bool $hide = true): static
     {
         $new = clone $this;
         $new->hideLabel = $hide;
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function inputId(?string $inputId): self
+    final public function inputId(?string $inputId): static
     {
         $new = clone $this;
         $new->inputId = $inputId;
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function setInputIdAttribute(bool $value): self
+    final public function setInputIdAttribute(bool $value): static
     {
         $new = clone $this;
         $new->setInputIdAttribute = $value;
         return $new;
     }
 
-    final public function inputTagAttributes(array $attributes): self
+    final public function inputTagAttributes(array $attributes): static
     {
         $new = clone $this;
         $new->inputTagAttributes = $attributes;
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function labelConfig(array $config): self
+    final public function labelConfig(array $config): static
     {
         $new = clone $this;
         $new->labelConfig = $config;
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function label(?string $content): self
+    final public function label(?string $content): static
     {
         $new = clone $this;
         $new->labelConfig['content()'] = [$content];
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function hintConfig(array $config): self
+    final public function hintConfig(array $config): static
     {
         $new = clone $this;
         $new->hintConfig = $config;
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function hint(?string $content): self
+    final public function hint(?string $content): static
     {
         $new = clone $this;
         $new->hintConfig['content()'] = [$content];
         return $new;
     }
 
-    /**
-     * @return static
-     */
-    final public function errorConfig(array $config): self
+    final public function errorConfig(array $config): static
     {
         $new = clone $this;
         $new->errorConfig = $config;

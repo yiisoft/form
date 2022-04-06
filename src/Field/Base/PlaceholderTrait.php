@@ -12,14 +12,14 @@ trait PlaceholderTrait
     private ?string $placeholder = null;
     private bool $usePlaceholder = true;
 
-    public function placeholder(?string $placeholder): self
+    public function placeholder(?string $placeholder): static
     {
         $new = clone $this;
         $new->placeholder = $placeholder;
         return $new;
     }
 
-    public function usePlaceholder(bool $use): self
+    public function usePlaceholder(bool $use): static
     {
         $new = clone $this;
         $new->usePlaceholder = $use;
