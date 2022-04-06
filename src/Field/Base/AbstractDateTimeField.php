@@ -14,26 +14,7 @@ abstract class AbstractDateTimeField extends AbstractField
 {
     use ReadonlyTrait;
     use RequiredTrait;
-
-    /**
-     * The latest acceptable date.
-     */
-    final public function max(?string $date): static
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['max'] = $date;
-        return $new;
-    }
-
-    /**
-     * The earliest acceptable date.
-     */
-    final public function min(?string $date): static
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['min'] = $date;
-        return $new;
-    }
+    use MinMaxTrait;
 
     final protected function generateInput(): string
     {

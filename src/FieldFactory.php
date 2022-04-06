@@ -13,6 +13,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Field\Hidden;
+use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
@@ -68,6 +69,11 @@ final class FieldFactory
     public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
     {
         return $this->field(Hidden::class, $formModel, $attribute, $config);
+    }
+
+    public function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
+    {
+        return $this->field(Number::class, $formModel, $attribute, $config);
     }
 
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text

@@ -12,6 +12,7 @@ use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
 use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
+use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 
 final class FieldTest extends TestCase
@@ -81,6 +82,21 @@ final class FieldTest extends TestCase
         $result = Field::hidden(new HiddenForm(), 'key')->render();
         $this->assertSame(
             '<input type="hidden" id="hiddenform-key" name="HiddenForm[key]" value="x100">',
+            $result
+        );
+    }
+
+    public function testNumber(): void
+    {
+        $result = Field::number(new NumberForm(), 'age')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="numberform-age">Your age</label>
+            <input type="number" id="numberform-age" name="NumberForm[age]" value="42">
+            <div>Full years.</div>
+            </div>
+            HTML,
             $result
         );
     }
