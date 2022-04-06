@@ -7,12 +7,26 @@ namespace Yiisoft\Form\Tests;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Tests\Support\AssertTrait;
+use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 
 final class FieldTest extends TestCase
 {
     use AssertTrait;
+
+    public function testCheckbox(): void
+    {
+        $result = Field::checkbox(new CheckboxForm(), 'blue')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <input type="hidden" name="CheckboxForm[blue]" value="0"><label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>
+            </div>
+            HTML,
+            $result
+        );
+    }
 
     public function testHidden(): void
     {

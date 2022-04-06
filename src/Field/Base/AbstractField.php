@@ -26,6 +26,7 @@ abstract class AbstractField extends Widget
     protected bool $useContainer = true;
 
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
+    protected ?bool $hideLabel = null;
 
     protected ?string $inputId = null;
     protected ?string $inputIdFromTag = null;
@@ -79,6 +80,13 @@ abstract class AbstractField extends Widget
     {
         $new = clone $this;
         $new->template = $template;
+        return $new;
+    }
+
+    final public function hideLabel(?bool $hide = true): self
+    {
+        $new = clone $this;
+        $new->hideLabel = $hide;
         return $new;
     }
 
@@ -215,11 +223,16 @@ abstract class AbstractField extends Widget
 
     abstract protected function generateInput(): string;
 
+    protected function shouldHideLabel(): bool
+    {
+        return false;
+    }
+
     private function generateContent(): string
     {
         $parts = [
             '{input}' => $this->generateInput(),
-            '{label}' => $this->generateLabel(),
+            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
             '{hint}' => $this->generateHint(),
             '{error}' => $this->generateError(),
         ];

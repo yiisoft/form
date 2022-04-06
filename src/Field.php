@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use RuntimeException;
+use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -36,6 +37,11 @@ final class Field
     {
         self::$configs = array_merge(self::$configs, $configs);
         self::$defaultConfigName = $defaultConfigName;
+    }
+
+    public static function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
+    {
+        return self::getFactory()->checkbox($formModel, $attribute, $config);
     }
 
     public static function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
