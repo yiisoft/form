@@ -9,6 +9,7 @@ use Yiisoft\Form\FormModel;
 final class EmailForm extends FormModel
 {
     public string $main = '';
+
     public function getAttributeLabels(): array
     {
         return [

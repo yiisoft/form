@@ -17,7 +17,7 @@ final class CheckboxForm extends FormModel
         return [
             'red' => 'Red color',
             'blue' => 'Blue color',
-            'age' => 'Your age 42?'
+            'age' => 'Your age 42?',
         ];
     }
 
