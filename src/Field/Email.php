@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\AbstractField;
 
 use Yiisoft\Form\Field\Base\MinMaxLengthTrait;
+use Yiisoft\Form\Field\Base\MultipleTrait;
 use Yiisoft\Form\Field\Base\PatternTrait;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ReadonlyTrait;
@@ -20,25 +21,12 @@ use function is_string;
 final class Email extends AbstractField
 {
     use MinMaxLengthTrait;
+    use MultipleTrait;
     use PatternTrait;
     use PlaceholderTrait;
     use ReadonlyTrait;
     use RequiredTrait;
     use SizeTrait;
-
-    /**
-     * Allow to specify more than one value.
-     *
-     * @param bool $value Whether the user is to be allowed to specify more than one value.
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple
-     */
-    public function multiple(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['multiple'] = $value;
-        return $new;
-    }
 
     protected function generateInput(): string
     {
