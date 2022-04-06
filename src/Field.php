@@ -14,6 +14,7 @@ use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Text;
 
 use function array_key_exists;
@@ -74,6 +75,11 @@ final class Field
     public static function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
     {
         return self::getFactory()->number($formModel, $attribute, $config);
+    }
+
+    public static function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
+    {
+        return self::getFactory()->password($formModel, $attribute, $config);
     }
 
     public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text

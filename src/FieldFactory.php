@@ -17,6 +17,7 @@ use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -74,6 +75,11 @@ final class FieldFactory
     public function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
     {
         return $this->field(Number::class, $formModel, $attribute, $config);
+    }
+
+    public function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
+    {
+        return $this->field(Password::class, $formModel, $attribute, $config);
     }
 
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text

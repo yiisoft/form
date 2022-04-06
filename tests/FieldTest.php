@@ -13,11 +13,20 @@ use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
 use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
+use Yiisoft\Form\Tests\Support\Form\PasswordForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
+use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Widget\WidgetFactory;
 
 final class FieldTest extends TestCase
 {
     use AssertTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        WidgetFactory::initialize(new SimpleContainer());
+    }
 
     public function testCheckbox(): void
     {
@@ -95,6 +104,21 @@ final class FieldTest extends TestCase
             <label for="numberform-age">Your age</label>
             <input type="number" id="numberform-age" name="NumberForm[age]" value="42">
             <div>Full years.</div>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testPassword(): void
+    {
+        $result = Field::password(new PasswordForm(), 'old')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="passwordform-old">Old password</label>
+            <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
+            <div>Enter your old password.</div>
             </div>
             HTML,
             $result
