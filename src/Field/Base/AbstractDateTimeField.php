@@ -12,9 +12,9 @@ use function is_string;
 
 abstract class AbstractDateTimeField extends AbstractField
 {
+    use MinMaxTrait;
     use ReadonlyTrait;
     use RequiredTrait;
-    use MinMaxTrait;
 
     final protected function generateInput(): string
     {
