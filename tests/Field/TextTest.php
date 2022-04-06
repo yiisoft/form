@@ -391,16 +391,6 @@ final class TextTest extends TestCase
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
-    public function testEmptyDirname(): void
-    {
-        $widget = Text::widget()
-            ->attribute(new TextForm(), 'job');
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The value cannot be empty.');
-        $widget->dirname('');
-    }
-
     public function testMaxlength(): void
     {
         $expected = <<<'HTML'

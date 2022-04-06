@@ -20,6 +20,7 @@ use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Url;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -92,6 +93,11 @@ final class FieldFactory
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
         return $this->field(Text::class, $formModel, $attribute, $config);
+    }
+
+    public function textarea(FormModelInterface $formModel, string $attribute, array $config = []): Textarea
+    {
+        return $this->field(Textarea::class, $formModel, $attribute, $config);
     }
 
     public function url(FormModelInterface $formModel, string $attribute, array $config = []): Url

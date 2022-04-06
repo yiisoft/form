@@ -17,6 +17,7 @@ use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Url;
 
 use function array_key_exists;
@@ -92,6 +93,11 @@ final class Field
     public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
         return self::getFactory()->text($formModel, $attribute, $config);
+    }
+
+    public static function textarea(FormModelInterface $formModel, string $attribute, array $config = []): Textarea
+    {
+        return self::getFactory()->textarea($formModel, $attribute, $config);
     }
 
     public static function url(FormModelInterface $formModel, string $attribute, array $config = []): Url

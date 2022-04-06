@@ -15,6 +15,7 @@ use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
+use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\Form\UrlForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -150,6 +151,20 @@ final class FieldTest extends TestCase
             <div>
             <label for="textform-job">Job</label>
             <input type="text" id="textform-job" name="TextForm[job]" value>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testTextarea(): void
+    {
+        $result = Field::textarea(new TextareaForm(), 'desc')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="textareaform-desc">Description</label>
+            <textarea id="textareaform-desc" name="TextareaForm[desc]"></textarea>
             </div>
             HTML,
             $result
