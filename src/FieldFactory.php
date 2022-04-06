@@ -9,6 +9,7 @@ use RuntimeException;
 use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -45,6 +46,11 @@ final class FieldFactory
     public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
     {
         return $this->field(Checkbox::class, $formModel, $attribute, $config);
+    }
+
+    public function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
+    {
+        return $this->field(Date::class, $formModel, $attribute, $config);
     }
 
     public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
