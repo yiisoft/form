@@ -22,5 +22,4 @@ trait DirnameTrait
         $new->inputTagAttributes['dirname'] = $value;
         return $new;
     }
-
 }
