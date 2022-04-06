@@ -19,6 +19,7 @@ use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\Field\Url;
 use Yiisoft\Widget\WidgetFactory;
 
 use function in_array;
@@ -85,6 +86,11 @@ final class FieldFactory
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
         return $this->field(Text::class, $formModel, $attribute, $config);
+    }
+
+    public function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
+    {
+        return $this->field(Url::class, $formModel, $attribute, $config);
     }
 
     public function label(FormModelInterface $formModel, string $attribute, array $config = []): Label

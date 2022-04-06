@@ -16,6 +16,7 @@ use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\Field\Url;
 
 use function array_key_exists;
 
@@ -85,6 +86,11 @@ final class Field
     public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
         return self::getFactory()->text($formModel, $attribute, $config);
+    }
+
+    public static function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
+    {
+        return self::getFactory()->url($formModel, $attribute, $config);
     }
 
     public static function label(FormModelInterface $formModel, string $attribute, array $config = []): Label

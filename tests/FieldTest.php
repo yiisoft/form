@@ -15,6 +15,7 @@ use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
+use Yiisoft\Form\Tests\Support\Form\UrlForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -133,6 +134,21 @@ final class FieldTest extends TestCase
             <div>
             <label for="textform-job">Job</label>
             <input type="text" id="textform-job" name="TextForm[job]" value>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testUrl(): void
+    {
+        $result = Field::url(new UrlForm(), 'site')->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="urlform-site">Your site</label>
+            <input type="url" id="urlform-site" name="UrlForm[site]" value>
+            <div>Enter your site URL.</div>
             </div>
             HTML,
             $result
