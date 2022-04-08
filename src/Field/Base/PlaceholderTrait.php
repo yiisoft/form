@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 /**
- * @psalm-require-extends AbstractField
+ * @psalm-require-extends AbstractInputField
  */
 trait PlaceholderTrait
 {

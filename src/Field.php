@@ -131,9 +131,19 @@ final class Field
      * @psalm-param class-string<T> $class
      * @psalm-return T
      */
-    public function field(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
+    public function input(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
     {
-        return self::getFactory()->field($class, $formModel, $attribute, $config);
+        return self::getFactory()->input($class, $formModel, $attribute, $config);
+    }
+
+    /**
+     * @psalm-template T
+     * @psalm-param class-string<T> $class
+     * @psalm-return T
+     */
+    public function field(string $class, array $config = []): object
+    {
+        return self::getFactory()->field($class, $config);
     }
 
     public static function getFactory(?string $name = null): FieldFactory

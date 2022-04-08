@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\AbstractInputField;
 use Yiisoft\Html\Html;
 
 use function is_string;
@@ -16,7 +16,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#hidden-state-(type=hidden)
  */
-final class Hidden extends AbstractField
+final class Hidden extends AbstractInputField
 {
     protected bool $useContainer = false;
     protected string $template = '{input}';

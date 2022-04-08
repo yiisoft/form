@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use InvalidArgumentException;
 use RuntimeException;
 
+use Yiisoft\Form\Field\Base\AbstractInputField;
 use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Checkbox;
@@ -53,62 +55,62 @@ final class FieldFactory
 
     public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
     {
-        return $this->field(Checkbox::class, $formModel, $attribute, $config);
+        return $this->input(Checkbox::class, $formModel, $attribute, $config);
     }
 
     public function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
     {
-        return $this->field(Date::class, $formModel, $attribute, $config);
+        return $this->input(Date::class, $formModel, $attribute, $config);
     }
 
     public function dateTimeLocal(FormModelInterface $formModel, string $attribute, array $config = []): DateTimeLocal
     {
-        return $this->field(DateTimeLocal::class, $formModel, $attribute, $config);
+        return $this->input(DateTimeLocal::class, $formModel, $attribute, $config);
     }
 
     public function email(FormModelInterface $formModel, string $attribute, array $config = []): Email
     {
-        return $this->field(Email::class, $formModel, $attribute, $config);
+        return $this->input(Email::class, $formModel, $attribute, $config);
     }
 
     public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
     {
-        return $this->field(Hidden::class, $formModel, $attribute, $config);
+        return $this->input(Hidden::class, $formModel, $attribute, $config);
     }
 
     public function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
     {
-        return $this->field(Number::class, $formModel, $attribute, $config);
+        return $this->input(Number::class, $formModel, $attribute, $config);
     }
 
     public function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
     {
-        return $this->field(Password::class, $formModel, $attribute, $config);
+        return $this->input(Password::class, $formModel, $attribute, $config);
     }
 
     public function range(FormModelInterface $formModel, string $attribute, array $config = []): Range
     {
-        return $this->field(Range::class, $formModel, $attribute, $config);
+        return $this->input(Range::class, $formModel, $attribute, $config);
     }
 
     public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone
     {
-        return $this->field(Telephone::class, $formModel, $attribute, $config);
+        return $this->input(Telephone::class, $formModel, $attribute, $config);
     }
 
     public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
-        return $this->field(Text::class, $formModel, $attribute, $config);
+        return $this->input(Text::class, $formModel, $attribute, $config);
     }
 
     public function textarea(FormModelInterface $formModel, string $attribute, array $config = []): Textarea
     {
-        return $this->field(Textarea::class, $formModel, $attribute, $config);
+        return $this->input(Textarea::class, $formModel, $attribute, $config);
     }
 
     public function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
     {
-        return $this->field(Url::class, $formModel, $attribute, $config);
+        return $this->input(Url::class, $formModel, $attribute, $config);
     }
 
     public function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
@@ -143,7 +145,27 @@ final class FieldFactory
      * @psalm-param class-string<T> $class
      * @psalm-return T
      */
-    public function field(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
+    public function input(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
+    {
+        $widget = $this->field($class, $config);
+        if (!$widget instanceof AbstractInputField) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Input widget must be instance of "%s".',
+                    AbstractInputField::class
+                )
+            );
+        }
+
+        return $widget->attribute($formModel, $attribute);
+    }
+
+    /**
+     * @psalm-template T
+     * @psalm-param class-string<T> $class
+     * @psalm-return T
+     */
+    public function field(string $class, array $config = []): object
     {
         $traits = class_uses($class);
         if ($traits === false) {
@@ -162,10 +184,8 @@ final class FieldFactory
             ['class' => $class],
         );
 
-        /** @psalm-var T&AbstractField $widget */
-        $widget = WidgetFactory::createWidget($config);
-
-        return $widget->attribute($formModel, $attribute);
+        /** @psalm-var T&AbstractField */
+        return WidgetFactory::createWidget($config);
     }
 
     /**

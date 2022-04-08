@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\AbstractInputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Html\Html;
 
@@ -14,7 +14,7 @@ use Yiisoft\Html\Html;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#number-state-(type=number)
  */
-final class Number extends AbstractField
+final class Number extends AbstractInputField
 {
     use PlaceholderTrait;
 
