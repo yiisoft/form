@@ -342,41 +342,6 @@ final class Field extends FieldAttributes
     }
 
     /**
-     * Renders a radio widget.
-     *
-     * @param FormModelInterface $formModel The model object.
-     * @param string $attribute The attribute name or expression.
-     * @param array $config the configuration array for widget factory.
-     * Available methods:
-     * [
-     *     'enclosedByLabel()' => [false],
-     *     'label()' => ['Email:'],
-     *     'labelAttributes()' => [['class' => 'test-class']]
-     *     'uncheckValue()' => ['0'],
-     * ]
-     *
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     *
-     * @return self the field object itself.
-     */
-    public function radio(FormModelInterface $formModel, string $attribute, array $config = []): self
-    {
-        $new = clone $this;
-        $new = $new->type('radio');
-        $config = array_merge($new->getDefinitions(), $config);
-
-        /** @var array */
-        $enclosedByLabel = $config['enclosedByLabel()'] ?? [true];
-
-        if ($enclosedByLabel === [true]) {
-            $new->parts['{label}'] = '';
-        }
-
-        $new->inputWidget = Radio::widget($config)->for($formModel, $attribute);
-        return $new;
-    }
-
-    /**
      * Renders a radio list widget.
      *
      * @param FormModelInterface $formModel The model object.
