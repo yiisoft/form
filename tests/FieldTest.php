@@ -149,11 +149,12 @@ final class FieldTest extends TestCase
     public function testSubmitButton(): void
     {
         $result = Field::submitButton()
+            ->content('Go!')
             ->render();
         $this->assertStringContainsStringIgnoringLineEndings(
             <<<HTML
             <div>
-            <button type="submit"></button>
+            <button type="submit">Go!</button>
             </div>
             HTML,
             $result
