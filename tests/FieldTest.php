@@ -146,6 +146,21 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testResetButton(): void
+    {
+        $result = Field::resetButton()
+            ->content('Reset form')
+            ->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <button type="reset">Reset form</button>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
     public function testSubmitButton(): void
     {
         $result = Field::submitButton()

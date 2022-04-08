@@ -6,10 +6,10 @@ namespace Yiisoft\Form\Field;
 
 use Yiisoft\Form\Field\Base\AbstractButtonField;
 
-final class SubmitButton extends AbstractButtonField
+final class ResetButton extends AbstractButtonField
 {
     protected function getType(): string
     {
-        return 'submit';
+        return 'reset';
     }
 }
