@@ -137,7 +137,6 @@ final class Textarea extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         return Html::textarea($this->getInputName(), $value, $tagAttributes)->render();
     }
 }

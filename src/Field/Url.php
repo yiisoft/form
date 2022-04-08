@@ -114,9 +114,6 @@ final class Url extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        return Html::input('url', $this->getInputName(), $value)
-            ->attributes($tagAttributes)
-            ->render();
+        return Html::input('url', $this->getInputName(), $value, $tagAttributes)->render();
     }
 }

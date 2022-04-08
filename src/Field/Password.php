@@ -116,7 +116,6 @@ final class Password extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         return Html::passwordInput($this->getInputName(), $value, $tagAttributes)->render();
     }
 }

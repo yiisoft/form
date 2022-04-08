@@ -73,10 +73,7 @@ abstract class AbstractDateTimeField extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        return Html::input($this->getInputType(), $this->getInputName(), $value)
-            ->attributes($tagAttributes)
-            ->render();
+        return Html::input($this->getInputType(), $this->getInputName(), $value, $tagAttributes)->render();
     }
 
     abstract protected function getInputType(): string;

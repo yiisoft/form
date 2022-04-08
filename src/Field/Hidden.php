@@ -31,7 +31,6 @@ final class Hidden extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         return Html::hiddenInput($this->getInputName(), $value, $tagAttributes)->render();
     }
 }

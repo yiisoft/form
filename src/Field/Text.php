@@ -130,7 +130,6 @@ final class Text extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         return Html::textInput($this->getInputName(), $value, $tagAttributes)->render();
     }
 }

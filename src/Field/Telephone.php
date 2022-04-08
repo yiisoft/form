@@ -114,9 +114,6 @@ final class Telephone extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        return Html::input('tel', $this->getInputName(), $value)
-            ->attributes($tagAttributes)
-            ->render();
+        return Html::input('tel', $this->getInputName(), $value, $tagAttributes)->render();
     }
 }

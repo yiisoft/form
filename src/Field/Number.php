@@ -76,9 +76,6 @@ final class Number extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        return Html::input('number', $this->getInputName(), $value)
-            ->attributes($tagAttributes)
-            ->render();
+        return Html::input('number', $this->getInputName(), $value, $tagAttributes)->render();
     }
 }

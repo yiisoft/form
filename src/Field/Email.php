@@ -125,9 +125,6 @@ final class Email extends AbstractInputField
 
         $tagAttributes = $this->getInputTagAttributes();
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
-        return Html::input('email', $this->getInputName(), $value)
-            ->attributes($tagAttributes)
-            ->render();
+        return Html::input('email', $this->getInputName(), $value, $tagAttributes)->render();
     }
 }

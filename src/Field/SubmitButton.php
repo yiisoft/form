@@ -66,7 +66,7 @@ final class SubmitButton extends AbstractSimpleField
 
         if ($this->content !== null) {
             $button = $button
-                ->content($this->content)
+                ->content((string) $this->content)
                 ->encode($this->encode)
                 ->doubleEncode($this->doubleEncode);
         }

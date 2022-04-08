@@ -117,7 +117,6 @@ final class Checkbox extends AbstractInputField
         unset($tagAttributes['value']);
         $inputValue = $inputValue ?? '1';
 
-        /** @psalm-suppress MixedArgumentTypeCoercion */
         $checkbox = Html::checkbox($this->getInputName(), $inputValue, $tagAttributes);
 
         $label = $this->inputLabel ?? $this->getAttributeLabel();
