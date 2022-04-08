@@ -14,6 +14,7 @@ use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
+use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
@@ -122,6 +123,23 @@ final class FieldTest extends TestCase
             <label for="passwordform-old">Old password</label>
             <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
             <div>Enter your old password.</div>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testRange(): void
+    {
+        $result = Field::range(new RangeForm(), 'volume')
+            ->min(1)
+            ->max(100)
+            ->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="rangeform-volume">Volume level</label>
+            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100">
             </div>
             HTML,
             $result
