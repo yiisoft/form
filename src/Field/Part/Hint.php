@@ -78,7 +78,9 @@ final class Hint extends Widget
 
     protected function run(): string
     {
-        $content = $this->content ?? $this->getAttributeHint();
+        $content = $this->hasFormModelAndAttribute()
+            ? $this->content ?? $this->getAttributeHint()
+            : (string) $this->content;
 
         return $content === ''
             ? ''

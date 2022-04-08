@@ -15,18 +15,11 @@ abstract class AbstractInputField extends AbstractField
 {
     use FormAttributeTrait;
 
-    protected string $template = "{label}\n{input}\n{hint}\n{error}";
-    protected ?bool $hideLabel = null;
-
     protected ?string $inputId = null;
     protected ?string $inputIdFromTag = null;
     protected bool $setInputIdAttribute = true;
 
     protected array $inputTagAttributes = [];
-
-    protected array $labelConfig = [];
-    protected array $hintConfig = [];
-    protected array $errorConfig = [];
 
     /**
      * Identifies the element (or elements) that describes the object.
@@ -65,23 +58,6 @@ abstract class AbstractInputField extends AbstractField
         return $new;
     }
 
-    /**
-     * Set layout template for render a field.
-     */
-    final public function template(string $template): static
-    {
-        $new = clone $this;
-        $new->template = $template;
-        return $new;
-    }
-
-    final public function hideLabel(?bool $hide = true): static
-    {
-        $new = clone $this;
-        $new->hideLabel = $hide;
-        return $new;
-    }
-
     final public function inputId(?string $inputId): static
     {
         $new = clone $this;
@@ -100,41 +76,6 @@ abstract class AbstractInputField extends AbstractField
     {
         $new = clone $this;
         $new->inputTagAttributes = $attributes;
-        return $new;
-    }
-
-    final public function labelConfig(array $config): static
-    {
-        $new = clone $this;
-        $new->labelConfig = $config;
-        return $new;
-    }
-
-    final public function label(?string $content): static
-    {
-        $new = clone $this;
-        $new->labelConfig['content()'] = [$content];
-        return $new;
-    }
-
-    final public function hintConfig(array $config): static
-    {
-        $new = clone $this;
-        $new->hintConfig = $config;
-        return $new;
-    }
-
-    final public function hint(?string $content): static
-    {
-        $new = clone $this;
-        $new->hintConfig['content()'] = [$content];
-        return $new;
-    }
-
-    final public function errorConfig(array $config): static
-    {
-        $new = clone $this;
-        $new->errorConfig = $config;
         return $new;
     }
 
@@ -174,26 +115,7 @@ abstract class AbstractInputField extends AbstractField
         }
     }
 
-    abstract protected function generateInput(): string;
-
-    protected function shouldHideLabel(): bool
-    {
-        return false;
-    }
-
-    final protected function generateContent(): string
-    {
-        $parts = [
-            '{input}' => $this->generateInput(),
-            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
-            '{hint}' => $this->generateHint(),
-            '{error}' => $this->generateError(),
-        ];
-
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->template, $parts)));
-    }
-
-    private function generateLabel(): string
+    final protected function generateLabel(): string
     {
         $label = Label::widget($this->labelConfig)
             ->attribute($this->getFormModel(), $this->attribute);
@@ -211,14 +133,14 @@ abstract class AbstractInputField extends AbstractField
         return $label->render();
     }
 
-    private function generateHint(): string
+    final protected function generateHint(): string
     {
         return Hint::widget($this->hintConfig)
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
     }
 
-    private function generateError(): string
+    final protected function generateError(): string
     {
         return Error::widget($this->errorConfig)
             ->attribute($this->getFormModel(), $this->attribute)

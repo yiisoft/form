@@ -109,9 +109,8 @@ final class HintTest extends TestCase
 
     public function testWithoutAttribute(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Form model is not set.');
-        Hint::widget()->render();
+        $widget = Hint::widget();
+        $this->assertSame('', $widget->render());
     }
 
     public function testImmutability(): void

@@ -146,6 +146,20 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testSubmitButton(): void
+    {
+        $result = Field::submitButton()
+            ->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <button type="submit"></button>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
     public function testTelephone(): void
     {
         $result = Field::telephone(new TelephoneForm(), 'number')->render();

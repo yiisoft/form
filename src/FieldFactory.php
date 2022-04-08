@@ -21,6 +21,7 @@ use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Range;
+use Yiisoft\Form\Field\SubmitButton;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Textarea;
@@ -91,6 +92,11 @@ final class FieldFactory
     public function range(FormModelInterface $formModel, string $attribute, array $config = []): Range
     {
         return $this->input(Range::class, $formModel, $attribute, $config);
+    }
+
+    public function submitButton(array $config = []): SubmitButton
+    {
+        return $this->field(SubmitButton::class, $config);
     }
 
     public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone

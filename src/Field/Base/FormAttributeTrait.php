@@ -30,6 +30,11 @@ trait FormAttributeTrait
         return $this->formModel;
     }
 
+    final protected function hasFormModelAndAttribute(): bool
+    {
+        return $this->formModel !== null && $this->attribute !== '';
+    }
+
     final protected function getAttributeName(): string
     {
         return HtmlForm::getAttributeName($this->getFormModel(), $this->attribute);

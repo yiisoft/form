@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field\Part;
 
 use Stringable;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
-use Yiisoft\Html\Tag\Label as LabelTag;
+use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
 final class Label extends Widget
@@ -73,13 +73,21 @@ final class Label extends Widget
 
     protected function run(): string
     {
-        $tag = LabelTag::tag()->content(
-            $this->content ?? $this->getAttributeLabel()
-        );
+        $useModel = $this->hasFormModelAndAttribute();
+
+        $content = $useModel
+            ? $this->content ?? $this->getAttributeLabel()
+            : (string) $this->content;
+
+        if ($content === '') {
+            return '';
+        }
+
+        $tag = Html::label($content);
 
         if ($this->setForAttribute) {
             $id = $this->forId;
-            if ($id === null && $this->useInputIdAttribute) {
+            if ($useModel && $id === null && $this->useInputIdAttribute) {
                 $id = $this->getInputId();
             }
             if ($id !== null) {

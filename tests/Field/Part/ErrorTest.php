@@ -105,7 +105,7 @@ final class ErrorTest extends TestCase
             ->message('Invalid name.')
             ->render();
 
-        $this->assertSame('', $result);
+        $this->assertSame('<div>Invalid name.</div>', $result);
     }
 
     public function testMessageCallback(): void
@@ -113,7 +113,7 @@ final class ErrorTest extends TestCase
         $result = Error::widget()
             ->attribute($this->createValidatedErrorForm(), 'name')
             ->messageCallback(
-                static function (ErrorForm $form, string $attribute, string $message): string {
+                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
                     return 'Attribute "' . $attribute . '" error: ' . $message;
                 }
             )
@@ -128,7 +128,7 @@ final class ErrorTest extends TestCase
             ->attribute($this->createValidatedErrorForm(), 'name')
             ->message('Invalid value.')
             ->messageCallback(
-                static function (ErrorForm $form, string $attribute, string $message): string {
+                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
                     return 'Attribute "' . $attribute . '" error: ' . $message;
                 }
             )
@@ -143,13 +143,13 @@ final class ErrorTest extends TestCase
             ->attribute($this->createValidatedErrorForm(), 'age')
             ->message('Invalid value.')
             ->messageCallback(
-                static function (ErrorForm $form, string $attribute, string $message): string {
+                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
                     return 'Attribute "' . $attribute . '" error: ' . $message;
                 }
             )
             ->render();
 
-        $this->assertSame('', $result);
+        $this->assertSame('<div>Attribute "age" error: Invalid value.</div>', $result);
     }
 
     private function createValidatedErrorForm(): ErrorForm

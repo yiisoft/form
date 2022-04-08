@@ -84,12 +84,6 @@ final class Error extends Widget
     /**
      * Callback that will be called to obtain an error message.
      *
-     * The signature of the callback must be:
-     *
-     * ```php
-     * [$FormModel, function()]
-     * ```
-     *
      * @param callable|null $value
      *
      * @return static
@@ -108,18 +102,24 @@ final class Error extends Widget
      */
     protected function run(): string
     {
-        $message = $this->getFirstError();
+        $useModel = $this->hasFormModelAndAttribute();
+
+        $message = $useModel
+            ? $this->message ?? $this->getFirstError()
+            : $this->message;
+
         if ($message === null) {
             return '';
         }
 
-        if ($this->message !== null) {
-            $message = $this->message;
-        }
-
         if ($this->messageCallback !== null) {
             /** @var string $message */
-            $message = call_user_func($this->messageCallback, $this->getFormModel(), $this->attribute, $message);
+            $message = call_user_func(
+                $this->messageCallback,
+                $message,
+                $useModel ? $this->getFormModel() : null,
+                $useModel ? $this->attribute : null
+            );
         }
 
         return CustomTag::name($this->tag)

@@ -17,6 +17,13 @@ abstract class AbstractField extends Widget
     protected array $containerTagAttributes = [];
     protected bool $useContainer = true;
 
+    protected string $template = "{label}\n{input}\n{hint}\n{error}";
+    protected ?bool $hideLabel = null;
+
+    protected array $labelConfig = [];
+    protected array $hintConfig = [];
+    protected array $errorConfig = [];
+
     final public function containerTag(string $tag): static
     {
         if ($tag === '') {
@@ -42,6 +49,65 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
+    /**
+     * Set layout template for render a field.
+     */
+    final public function template(string $template): static
+    {
+        $new = clone $this;
+        $new->template = $template;
+        return $new;
+    }
+
+    final public function hideLabel(?bool $hide = true): static
+    {
+        $new = clone $this;
+        $new->hideLabel = $hide;
+        return $new;
+    }
+
+    final public function labelConfig(array $config): static
+    {
+        $new = clone $this;
+        $new->labelConfig = $config;
+        return $new;
+    }
+
+    final public function label(?string $content): static
+    {
+        $new = clone $this;
+        $new->labelConfig['content()'] = [$content];
+        return $new;
+    }
+
+    final public function hintConfig(array $config): static
+    {
+        $new = clone $this;
+        $new->hintConfig = $config;
+        return $new;
+    }
+
+    final public function hint(?string $content): static
+    {
+        $new = clone $this;
+        $new->hintConfig['content()'] = [$content];
+        return $new;
+    }
+
+    final public function errorConfig(array $config): static
+    {
+        $new = clone $this;
+        $new->errorConfig = $config;
+        return $new;
+    }
+
+    final public function error(?string $message): static
+    {
+        $new = clone $this;
+        $new->errorConfig['message()'] = [$message];
+        return $new;
+    }
+
     final protected function run(): string
     {
         if (!$this->useContainer) {
@@ -60,5 +126,28 @@ abstract class AbstractField extends Widget
             . $containerTag->close();
     }
 
-    abstract protected function generateContent(): string;
+    final protected function generateContent(): string
+    {
+        $parts = [
+            '{input}' => $this->generateInput(),
+            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
+            '{hint}' => $this->generateHint(),
+            '{error}' => $this->generateError(),
+        ];
+
+        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->template, $parts)));
+    }
+
+    protected function shouldHideLabel(): bool
+    {
+        return false;
+    }
+
+    abstract protected function generateInput(): string;
+
+    abstract protected function generateLabel(): string;
+
+    abstract protected function generateHint(): string;
+
+    abstract protected function generateError(): string;
 }

@@ -86,7 +86,7 @@ final class LabelTest extends TestCase
             ->content('')
             ->render();
 
-        $this->assertSame('<label for="labelform-name"></label>', $result);
+        $this->assertSame('', $result);
     }
 
     public function testContentAsStringableObject(): void
