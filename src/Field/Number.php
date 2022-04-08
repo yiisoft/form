@@ -6,10 +6,7 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\AbstractField;
-use Yiisoft\Form\Field\Base\MinMaxTrait;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
-use Yiisoft\Form\Field\Base\ReadonlyTrait;
-use Yiisoft\Form\Field\Base\RequiredTrait;
 use Yiisoft\Html\Html;
 
 /**
@@ -19,10 +16,55 @@ use Yiisoft\Html\Html;
  */
 final class Number extends AbstractField
 {
-    use MinMaxTrait;
     use PlaceholderTrait;
-    use ReadonlyTrait;
-    use RequiredTrait;
+
+    /**
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-max
+     */
+    public function max(?string $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['max'] = $value;
+        return $new;
+    }
+
+    /**
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-min
+     */
+    public function min(?string $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['min'] = $value;
+        return $new;
+    }
+
+    /**
+     * A boolean attribute that controls whether or not the user can edit the form control.
+     *
+     * @param bool $value Whether to allow the value to be edited by the user.
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
+     */
+    public function readonly(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['readonly'] = $value;
+        return $new;
+    }
+
+    /**
+     * A boolean attribute. When specified, the element is required.
+     *
+     * @param bool $value Whether the control is required for form submission.
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-required
+     */
+    public function required(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['required'] = $value;
+        return $new;
+    }
 
     protected function generateInput(): string
     {
