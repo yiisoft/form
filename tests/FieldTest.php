@@ -99,6 +99,22 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testImage(): void
+    {
+        $result = Field::image()
+            ->src('btn.png')
+            ->alt('Go')
+            ->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <input type="image" src="btn.png" alt="Go">
+            </div>
+            HTML,
+            $result
+        );
+    }
+
     public function testNumber(): void
     {
         $result = Field::number(new NumberForm(), 'age')->render();
