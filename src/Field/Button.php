@@ -7,12 +7,12 @@ namespace Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Base\AbstractButtonField;
 
 /**
- * @link https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type-submit-state
+ * @link https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type-button-state
  */
-final class SubmitButton extends AbstractButtonField
+final class Button extends AbstractButtonField
 {
     protected function getType(): string
     {
-        return 'submit';
+        return 'button';
     }
 }

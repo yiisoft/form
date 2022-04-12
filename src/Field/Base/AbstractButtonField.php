@@ -7,6 +7,9 @@ namespace Yiisoft\Form\Field\Base;
 use Stringable;
 use Yiisoft\Html\Tag\Button;
 
+/**
+ * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element
+ */
 abstract class AbstractButtonField extends AbstractSimpleField
 {
     private ?Button $button = null;

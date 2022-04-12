@@ -10,6 +10,7 @@ use RuntimeException;
 use Yiisoft\Form\Field\Base\AbstractInputField;
 use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
@@ -56,6 +57,11 @@ final class FieldFactory
         private ?bool $usePlaceholder = null,
         private array $fieldConfigs = [],
     ) {
+    }
+
+    public function button(array $config = []): Button
+    {
+        return $this->field(Button::class, $config);
     }
 
     public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox

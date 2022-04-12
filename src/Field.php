@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use RuntimeException;
+use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
@@ -51,6 +52,11 @@ final class Field
     {
         self::$configs = array_merge(self::$configs, $configs);
         self::$defaultConfigName = $defaultConfigName;
+    }
+
+    public static function button(array $config = []): Button
+    {
+        return self::getFactory()->button($config);
     }
 
     public static function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox

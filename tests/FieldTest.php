@@ -34,6 +34,21 @@ final class FieldTest extends TestCase
         WidgetFactory::initialize(new SimpleContainer());
     }
 
+    public function testButton(): void
+    {
+        $result = Field::button()
+            ->content('Show info')
+            ->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <button type="button">Show info</button>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
     public function testCheckbox(): void
     {
         $result = Field::checkbox(new CheckboxForm(), 'blue')->render();
