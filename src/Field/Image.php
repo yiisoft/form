@@ -51,6 +51,13 @@ final class Image extends AbstractSimpleField
         return $new;
     }
 
+    public function disabled(?bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
     public function inputTagAttributes(array $attributes): self
     {
         $new = clone $this;
