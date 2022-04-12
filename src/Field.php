@@ -18,6 +18,7 @@ use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Field\ResetButton;
+use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\Field\SubmitButton;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
@@ -102,6 +103,11 @@ final class Field
     public static function resetButton(array $config = []): ResetButton
     {
         return self::getFactory()->resetButton($config);
+    }
+
+    public static function select(FormModelInterface $formModel, string $attribute, array $config = []): Select
+    {
+        return self::getFactory()->select($formModel, $attribute, $config);
     }
 
     public static function submitButton(array $config = []): SubmitButton

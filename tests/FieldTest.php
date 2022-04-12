@@ -15,6 +15,7 @@ use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
+use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
@@ -171,6 +172,28 @@ final class FieldTest extends TestCase
             <<<HTML
             <div>
             <button type="reset">Reset form</button>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testSelect(): void
+    {
+        $result = Field::select(new SelectForm(), 'number')
+            ->optionsData([
+                1 => 'One',
+                2 => 'Two',
+            ])
+            ->render();
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <label for="selectform-number">Select number</label>
+            <select name="SelectForm[number]">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            </select>
             </div>
             HTML,
             $result
