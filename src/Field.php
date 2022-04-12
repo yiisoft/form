@@ -7,6 +7,7 @@ namespace Yiisoft\Form;
 use RuntimeException;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\Date;
+use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Field\Hidden;
@@ -60,6 +61,11 @@ final class Field
     public static function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
     {
         return self::getFactory()->date($formModel, $attribute, $config);
+    }
+
+    public static function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): DateTime
+    {
+        return self::getFactory()->dateTime($formModel, $attribute, $config);
     }
 
     public static function dateTimeLocal(

@@ -12,6 +12,7 @@ use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\Date;
+use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Field\Hidden;
@@ -65,6 +66,11 @@ final class FieldFactory
     public function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
     {
         return $this->input(Date::class, $formModel, $attribute, $config);
+    }
+
+    public function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): DateTime
+    {
+        return $this->input(DateTime::class, $formModel, $attribute, $config);
     }
 
     public function dateTimeLocal(FormModelInterface $formModel, string $attribute, array $config = []): DateTimeLocal
