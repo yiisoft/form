@@ -173,7 +173,7 @@ final class ValidatorTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="validatorform-urlwithpattern">Url With Pattern</label>
-        <input type="url" id="validatorform-urlwithpattern" class="is-valid" name="ValidatorForm[urlWithPattern]" value="https://www.yiiframework.com/" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
+        <input type="url" id="validatorform-urlwithpattern" class="is-valid" name="ValidatorForm[urlWithPattern]" value="https://www.yiiframework.com/" pattern="^((?i)Http|Https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(

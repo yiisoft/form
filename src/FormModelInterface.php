@@ -80,13 +80,13 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * private function loginRules(): array
      * {
      *   return [
-     *       new \Yiisoft\Validator\Rule\Required(),
-     *       (new \Yiisoft\Validator\Rule\HasLength())
+     *       new \Yiisoft\Validator\Rule\Required\Required(),
+     *       (new \Yiisoft\Validator\Rule\HasLength\HasLength())
      *       ->min(4)
      *       ->max(40)
      *       ->tooShortMessage('Is too short.')
      *       ->tooLongMessage('Is too long.'),
-     *       new \Yiisoft\Validator\Rule\Email()
+     *       new \Yiisoft\Validator\Rule\Email\Email()
      *   ];
      * }
      * ```

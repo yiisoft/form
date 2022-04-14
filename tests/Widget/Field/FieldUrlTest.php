@@ -134,7 +134,7 @@ final class FieldUrlTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="validatorform-url">Url</label>
-        <input type="url" id="validatorform-url" name="ValidatorForm[url]" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
+        <input type="url" id="validatorform-url" name="ValidatorForm[url]" pattern="^((?i)http|https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
         </div>
         HTML;
         $this->assertEqualsWithoutLE($expected, Field::widget()->url(new ValidatorForm(), 'url')->render());

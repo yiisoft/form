@@ -24,7 +24,7 @@
         "yiisoft/html": "^2.2",
         "yiisoft/http": "^1.2",
         "yiisoft/strings": "^2.0",
-        "yiisoft/validator": "^3.0@dev",
+        "yiisoft/validator": "dev-refactoring-v2",
         "yiisoft/widget": "^1.0"
     },
     "require-dev": {

@@ -8,12 +8,12 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Attribute\WidgetAttributes;
 use Yiisoft\Form\Widget\Url;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule;
-use Yiisoft\Validator\Rule\HasLength;
-use Yiisoft\Validator\Rule\Number;
-use Yiisoft\Validator\Rule\Regex;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\Rule\Url as UrlValidator;
+use Yiisoft\Validator\Rule\HasLength\HasLength;
+use Yiisoft\Validator\Rule\Number\Number;
+use Yiisoft\Validator\Rule\Regex\Regex;
+use Yiisoft\Validator\Rule\Required\Required;
+use Yiisoft\Validator\Rule\Url\Url as UrlRule;
+use Yiisoft\Validator\RuleInterface;
 
 /**
  * FieldValidator is a base class for validators that can be applied to a field.
@@ -33,7 +33,7 @@ final class FieldValidator
         string $attribute,
         array $attributes
     ): array {
-        /** @psalm-var array<array-key, Rule> */
+        /** @psalm-var array<array-key, RuleInterface> */
         $rules = $formModel->getRules()[$attribute] ?? [];
 
         foreach ($rules as $rule) {
@@ -61,7 +61,7 @@ final class FieldValidator
                 $attributes['min'] = $rule->getOptions()['min'] !== null ? $rule->getOptions()['min'] : null;
             }
 
-            if ($rule instanceof UrlValidator && $widget instanceof Url) {
+            if ($rule instanceof UrlRule && $widget instanceof Url) {
                 /** @var array<array-key, string> */
                 $validSchemes = $rule->getOptions()['validSchemes'];
 

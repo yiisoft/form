@@ -22,10 +22,10 @@ final class EachValidatorTest extends TestCase
         $validator = $this->createValidatorMock();
 
         $eachForm->setAttribute('names', ['wilmer', 'pedrovitelek', 'samdark']);
-        $result = $validator->validate($eachForm);
+        $validator->validate($eachForm);
 
         $this->assertSame(
-            ['names' => ['This value should contain at most {max, number} {max, plural, one{character} other{characters}}. pedrovitelek given.']],
+            ['names' => ['This value should contain at most {max, number} {max, plural, one{character} other{characters}}.']],
             HtmlFormErrors::getAllErrors($eachForm),
         );
     }
