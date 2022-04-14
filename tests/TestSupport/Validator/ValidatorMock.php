@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Validator;
 
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\Formatter;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\AtLeast\AtLeastValidator;
 use Yiisoft\Validator\Rule\Boolean\BooleanValidator;
