@@ -24,7 +24,7 @@ use Yiisoft\Validator\Rule\Regex\RegexHandler;
 use Yiisoft\Validator\Rule\Required\RequiredHandler;
 use Yiisoft\Validator\Rule\Subset\SubsetHandler;
 use Yiisoft\Validator\Rule\Url\UrlHandler;
-use Yiisoft\Validator\Tests\Stub\StaticRuleHandlerResolver;
+use Yiisoft\Validator\StaticRuleHandlerResolver;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Validator\ValidatorInterface;
 
