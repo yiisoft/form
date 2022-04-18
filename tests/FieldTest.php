@@ -147,6 +147,23 @@ final class FieldTest extends TestCase
         );
     }
 
+    public function testFieldset(): void
+    {
+        $result = Field::fieldset()
+            ->legend('Choose your color')
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <fieldset>
+        <legend>Choose your color</legend>
+        </fieldset>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
     public function testHidden(): void
     {
         $result = Field::hidden(new HiddenForm(), 'key')->render();

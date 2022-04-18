@@ -17,12 +17,16 @@ abstract class AbstractField extends Widget
     protected array $containerTagAttributes = [];
     protected bool $useContainer = true;
 
+    protected string $templateBegin = "{label}\n{input}";
+    protected string $templateEnd = "{input}\n{hint}\n{error}";
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
     protected ?bool $hideLabel = null;
 
     protected array $labelConfig = [];
     protected array $hintConfig = [];
     protected array $errorConfig = [];
+
+    private bool $isStartedByBegin = false;
 
     final public function containerTag(string $tag): static
     {
@@ -108,10 +112,15 @@ abstract class AbstractField extends Widget
         return $new;
     }
 
-    final protected function run(): string
+    final public function begin(): ?string
     {
+        parent::begin();
+        $this->isStartedByBegin = true;
+
+        $content = $this->generateBeginContent();
+
         if (!$this->useContainer) {
-            return $this->generateContent();
+            return $content;
         }
 
         $containerTag = CustomTag::name($this->containerTag);
@@ -120,13 +129,77 @@ abstract class AbstractField extends Widget
         }
 
         return $containerTag->open()
-            . PHP_EOL
-            . $this->generateContent()
+            . ($content === '' ? '' : (PHP_EOL . $content))
+            . PHP_EOL;
+    }
+
+    final protected function run(): string
+    {
+        if ($this->isStartedByBegin) {
+            $this->isStartedByBegin = false;
+            return $this->renderEnd();
+        }
+
+        $content = $this->generateContent();
+
+        if (!$this->useContainer) {
+            return $content;
+        }
+
+        $containerTag = CustomTag::name($this->containerTag);
+        if ($this->containerTagAttributes !== []) {
+            $containerTag = $containerTag->attributes($this->containerTagAttributes);
+        }
+
+        return $containerTag->open()
+            . ($content === '' ? '' : (PHP_EOL . $content))
             . PHP_EOL
             . $containerTag->close();
     }
 
-    final protected function generateContent(): string
+    protected function shouldHideLabel(): bool
+    {
+        return false;
+    }
+
+    private function renderEnd(): string
+    {
+        $content = $this->generateEndContent();
+
+        if (!$this->useContainer) {
+            return $content;
+        }
+
+        $containerTag = CustomTag::name($this->containerTag);
+
+        return
+            "\n" .
+            ($content !== '' ? $content . "\n" : '')
+            . $containerTag->close();
+    }
+
+    protected function generateInput(): string
+    {
+        return '';
+    }
+
+    protected function generateBeginInput(): string
+    {
+        return '';
+    }
+
+    protected function generateEndInput(): string
+    {
+        return '';
+    }
+
+    abstract protected function generateLabel(): string;
+
+    abstract protected function generateHint(): string;
+
+    abstract protected function generateError(): string;
+
+    private function generateContent(): string
     {
         $parts = [
             '{input}' => $this->generateInput(),
@@ -138,16 +211,27 @@ abstract class AbstractField extends Widget
         return preg_replace('/^\h*\v+/m', '', trim(strtr($this->template, $parts)));
     }
 
-    protected function shouldHideLabel(): bool
+    private function generateBeginContent(): string
     {
-        return false;
+        $parts = [
+            '{input}' => $this->generateBeginInput(),
+            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
+            '{hint}' => $this->generateHint(),
+            '{error}' => $this->generateError(),
+        ];
+
+        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateBegin, $parts)));
     }
 
-    abstract protected function generateInput(): string;
+    private function generateEndContent(): string
+    {
+        $parts = [
+            '{input}' => $this->generateEndInput(),
+            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
+            '{hint}' => $this->generateHint(),
+            '{error}' => $this->generateError(),
+        ];
 
-    abstract protected function generateLabel(): string;
-
-    abstract protected function generateHint(): string;
-
-    abstract protected function generateError(): string;
+        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateEnd, $parts)));
+    }
 }

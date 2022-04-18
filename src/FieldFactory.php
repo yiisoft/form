@@ -17,6 +17,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
+use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Image;
 use Yiisoft\Form\Field\Number;
@@ -96,6 +97,11 @@ final class FieldFactory
     public function email(FormModelInterface $formModel, string $attribute, array $config = []): Email
     {
         return $this->input(Email::class, $formModel, $attribute, $config);
+    }
+
+    public function fieldset(array $config = []): Fieldset
+    {
+        return $this->field(Fieldset::class, $config);
     }
 
     public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
