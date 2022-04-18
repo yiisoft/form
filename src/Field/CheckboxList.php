@@ -150,6 +150,7 @@ final class CheckboxList extends AbstractField
                 '"CheckboxList" field requires iterable or null value.'
             );
         }
+        /** @psalm-var iterable<int, Stringable|scalar> $value */
 
         return $this->widget
             ->name($this->getInputName())

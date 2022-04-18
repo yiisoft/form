@@ -153,6 +153,7 @@ final class RadioList extends AbstractField
                 '"RadioList" field requires a string, numeric, bool, Stringable or null value.'
             );
         }
+        /** @psalm-var Stringable|scalar $value */
 
         return $this->widget
             ->name($this->getInputName())
