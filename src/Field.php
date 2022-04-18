@@ -19,6 +19,7 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Password;
+use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Field\ResetButton;
 use Yiisoft\Form\Field\Select;
@@ -114,6 +115,11 @@ final class Field
     public static function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
     {
         return self::getFactory()->password($formModel, $attribute, $config);
+    }
+
+    public static function radioList(FormModelInterface $formModel, string $attribute, array $config = []): RadioList
+    {
+        return self::getFactory()->radioList($formModel, $attribute, $config);
     }
 
     public static function range(FormModelInterface $formModel, string $attribute, array $config = []): Range

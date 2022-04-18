@@ -16,6 +16,7 @@ use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
+use Yiisoft\Form\Tests\Support\Form\RadioListForm;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
@@ -199,6 +200,29 @@ final class FieldTest extends TestCase
             HTML,
             $result
         );
+    }
+
+    public function testRadioList(): void
+    {
+        $result = Field::radioList(new RadioListForm(), 'color')
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label>Select color</label>
+        <div>
+        <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
+        <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
+        </div>
+        <div>Color of box.</div>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
     public function testRange(): void
