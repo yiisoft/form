@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
+use Yiisoft\Form\Tests\Support\Form\CheckboxListForm;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\Tests\Support\Form\DateTimeForm;
 use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
@@ -60,6 +61,29 @@ final class FieldTest extends TestCase
             HTML,
             $result
         );
+    }
+
+    public function testCheckboxList(): void
+    {
+        $result = Field::checkboxList(new CheckboxListForm(), 'color')
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label>Select one or more colors</label>
+        <div>
+        <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
+        <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+        </div>
+        <div>Color of box.</div>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
     public function testDate(): void

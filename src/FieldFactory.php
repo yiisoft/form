@@ -12,6 +12,7 @@ use Yiisoft\Form\Field\Base\AbstractField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
@@ -67,6 +68,13 @@ final class FieldFactory
     public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
     {
         return $this->input(Checkbox::class, $formModel, $attribute, $config);
+    }
+
+    public function checkboxList(FormModelInterface $formModel, string $attribute, array $config = []): CheckboxList
+    {
+        return $this
+            ->field(CheckboxList::class, $config)
+            ->attribute($formModel, $attribute);
     }
 
     public function date(FormModelInterface $formModel, string $attribute, array $config = []): Date

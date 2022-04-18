@@ -7,6 +7,7 @@ namespace Yiisoft\Form;
 use RuntimeException;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
@@ -62,6 +63,14 @@ final class Field
     public static function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
     {
         return self::getFactory()->checkbox($formModel, $attribute, $config);
+    }
+
+    public static function checkboxList(
+        FormModelInterface $formModel,
+        string $attribute,
+        array $config = []
+    ): CheckboxList {
+        return self::getFactory()->checkboxList($formModel, $attribute, $config);
     }
 
     public static function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
