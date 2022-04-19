@@ -12,11 +12,10 @@ use Yiisoft\Html\Tag\Button;
  */
 abstract class AbstractButtonField extends AbstractSimpleField
 {
+    use FieldContentTrait;
+
     private ?Button $button = null;
     private array $attributes = [];
-    private int|float|string|Stringable|null $content = null;
-    private ?bool $encode = null;
-    private bool $doubleEncode = true;
 
     final public function button(?Button $button): static
     {
@@ -61,18 +60,6 @@ abstract class AbstractButtonField extends AbstractSimpleField
         return $new;
     }
 
-    final public function content(
-        int|float|string|Stringable|null $content,
-        ?bool $encode = null,
-        bool $doubleEncode = true
-    ): static {
-        $new = clone $this;
-        $new->content = $content;
-        $new->encode = $encode;
-        $new->doubleEncode = $doubleEncode;
-        return $new;
-    }
-
     final protected function generateInput(): string
     {
         $button = ($this->button ?? Button::tag())
@@ -82,11 +69,9 @@ abstract class AbstractButtonField extends AbstractSimpleField
             $button = $button->attributes($this->attributes);
         }
 
-        if ($this->content !== null) {
-            $button = $button
-                ->content((string) $this->content)
-                ->encode($this->encode)
-                ->doubleEncode($this->doubleEncode);
+        $content = $this->renderContent();
+        if ($content !== '') {
+            $button = $button->content($content);
         }
 
         return $button->render();

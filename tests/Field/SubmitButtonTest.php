@@ -142,6 +142,5 @@ final class SubmitButtonTest extends TestCase
         $this->assertNotSame($widget, $widget->replaceAttributes([]));
         $this->assertNotSame($widget, $widget->disabled());
         $this->assertNotSame($widget, $widget->form(null));
-        $this->assertNotSame($widget, $widget->content(null));
     }
 }
