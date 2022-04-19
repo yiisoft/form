@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\AbstractInputField;
+use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Html\Html;
 
@@ -16,7 +16,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search)
  */
-final class Text extends AbstractInputField
+final class Text extends InputField
 {
     use PlaceholderTrait;
 

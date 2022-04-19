@@ -10,7 +10,7 @@ use Yiisoft\Html\Html;
 
 use function is_string;
 
-abstract class AbstractDateTimeField extends AbstractInputField
+abstract class DateTimeInputField extends InputField
 {
     /**
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-max

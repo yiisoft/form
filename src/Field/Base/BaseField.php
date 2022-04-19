@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
-abstract class AbstractField extends Widget
+abstract class BaseField extends Widget
 {
     /**
      * @psalm-var non-empty-string

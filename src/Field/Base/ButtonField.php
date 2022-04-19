@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
-use Stringable;
 use Yiisoft\Html\Tag\Button;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-button-element
  */
-abstract class AbstractButtonField extends AbstractSimpleField
+abstract class ButtonField extends PartsField
 {
     use FieldContentTrait;
 

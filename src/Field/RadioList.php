@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Field;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\AbstractFullField;
+use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -19,7 +19,7 @@ use Yiisoft\Html\Widget\RadioList\RadioList as RadioListWidget;
 /**
  * @see RadioListWidget
  */
-final class RadioList extends AbstractFullField
+final class RadioList extends PartsField
 {
     use FormAttributeTrait;
 

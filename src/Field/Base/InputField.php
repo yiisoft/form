@@ -11,7 +11,7 @@ use Yiisoft\Form\Helper\HtmlForm;
 
 use function in_array;
 
-abstract class AbstractInputField extends AbstractFullField
+abstract class InputField extends PartsField
 {
     use FormAttributeTrait;
 

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\AbstractInputField;
+use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
 
-final class Textarea extends AbstractInputField
+final class Textarea extends InputField
 {
     use PlaceholderTrait;
 

@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\AbstractInputField;
+use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
@@ -16,7 +16,7 @@ use Yiisoft\Html\Tag\Select as SelectTag;
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
  */
-final class Select extends AbstractInputField
+final class Select extends InputField
 {
     private SelectTag $select;
 

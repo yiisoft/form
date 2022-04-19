@@ -7,8 +7,8 @@ namespace Yiisoft\Form;
 use InvalidArgumentException;
 use RuntimeException;
 
-use Yiisoft\Form\Field\Base\AbstractField;
-use Yiisoft\Form\Field\Base\AbstractInputField;
+use Yiisoft\Form\Field\Base\BaseField;
+use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
@@ -220,11 +220,11 @@ final class FieldFactory
     public function input(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
     {
         $widget = $this->field($class, $config);
-        if (!$widget instanceof AbstractInputField) {
+        if (!$widget instanceof InputField) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Input widget must be instance of "%s".',
-                    AbstractInputField::class
+                    InputField::class
                 )
             );
         }
@@ -256,7 +256,7 @@ final class FieldFactory
             ['class' => $class],
         );
 
-        /** @psalm-var T&AbstractField */
+        /** @psalm-var T&BaseField */
         return WidgetFactory::createWidget($config);
     }
 

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
 
-final class ErrorSummary extends AbstractField
+final class ErrorSummary extends BaseField
 {
     private ?FormModelInterface $formModel = null;
     private bool $encode = true;

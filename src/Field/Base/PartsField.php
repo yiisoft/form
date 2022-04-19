@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
-abstract class AbstractFullField extends AbstractField
+use Yiisoft\Form\Field\Part\Error;
+use Yiisoft\Form\Field\Part\Hint;
+use Yiisoft\Form\Field\Part\Label;
+
+abstract class PartsField extends BaseField
 {
     protected string $templateBegin = "{label}\n{input}";
     protected string $templateEnd = "{input}\n{hint}\n{error}";
@@ -94,11 +98,20 @@ abstract class AbstractFullField extends AbstractField
         return '';
     }
 
-    abstract protected function generateLabel(): string;
+    protected function generateLabel(): string
+    {
+        return Label::widget($this->labelConfig)->render();
+    }
 
-    abstract protected function generateHint(): string;
+    protected function generateHint(): string
+    {
+        return Hint::widget($this->hintConfig)->render();
+    }
 
-    abstract protected function generateError(): string;
+    protected function generateError(): string
+    {
+        return Error::widget($this->errorConfig)->render();
+    }
 
     final protected function generateContent(): ?string
     {

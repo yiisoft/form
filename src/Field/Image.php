@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use Stringable;
-use Yiisoft\Form\Field\Base\AbstractSimpleField;
+use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Html;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#image-button-state-(type=image)
  */
-final class Image extends AbstractSimpleField
+final class Image extends PartsField
 {
     private array $inputTagAttributes = [];
 

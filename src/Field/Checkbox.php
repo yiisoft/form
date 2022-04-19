@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\AbstractInputField;
+use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Html\Html;
 
 use function is_bool;
@@ -18,7 +18,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#checkbox-state-(type=checkbox)
  */
-final class Checkbox extends AbstractInputField
+final class Checkbox extends InputField
 {
     private ?string $uncheckValue = '0';
     private bool $enclosedByLabel = true;

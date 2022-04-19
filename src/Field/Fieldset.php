@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use Stringable;
-use Yiisoft\Form\Field\Base\AbstractSimpleField;
 use Yiisoft\Form\Field\Base\FieldContentTrait;
+use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Tag\Fieldset as FieldsetTag;
 use Yiisoft\Html\Tag\Legend;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element
  */
-final class Fieldset extends AbstractSimpleField
+final class Fieldset extends PartsField
 {
     use FieldContentTrait;
 

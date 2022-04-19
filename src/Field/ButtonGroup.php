@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
-use Yiisoft\Form\Field\Base\AbstractSimpleField;
+use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
 
 /**
  * `ButtonGroup` renders a button group widget.
  */
-final class ButtonGroup extends AbstractSimpleField
+final class ButtonGroup extends PartsField
 {
     private ButtonGroupWidget $widget;
 
