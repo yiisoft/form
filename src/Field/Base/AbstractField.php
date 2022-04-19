@@ -119,5 +119,4 @@ abstract class AbstractField extends Widget
             ($content !== '' ? $content . "\n" : '')
             . $containerTag->close();
     }
-
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
-use Yiisoft\Html\Tag\CustomTag;
-
 abstract class AbstractFullField extends AbstractField
 {
     protected string $templateBegin = "{label}\n{input}";
