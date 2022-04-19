@@ -6,6 +6,7 @@ namespace Yiisoft\Form;
 
 use RuntimeException;
 use Yiisoft\Form\Field\Button;
+use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\Date;
@@ -60,6 +61,11 @@ final class Field
     public static function button(array $config = []): Button
     {
         return self::getFactory()->button($config);
+    }
+
+    public static function buttonGroup(array $config = []): ButtonGroup
+    {
+        return self::getFactory()->buttonGroup($config);
     }
 
     public static function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox

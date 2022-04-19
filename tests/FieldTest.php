@@ -23,6 +23,7 @@ use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\Form\UrlForm;
+use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -45,6 +46,26 @@ final class FieldTest extends TestCase
             <<<HTML
             <div>
             <button type="button">Show info</button>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testButtonGroup(): void
+    {
+        $result = Field::buttonGroup()
+            ->buttons(
+                Html::resetButton('Reset Data'),
+                Html::submitButton('Send'),
+            )
+            ->render();
+
+        $this->assertStringContainsStringIgnoringLineEndings(
+            <<<HTML
+            <div>
+            <button type="reset">Reset Data</button>
+            <button type="submit">Send</button>
             </div>
             HTML,
             $result
