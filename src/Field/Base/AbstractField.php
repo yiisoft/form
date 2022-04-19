@@ -17,15 +17,6 @@ abstract class AbstractField extends Widget
     protected array $containerTagAttributes = [];
     protected bool $useContainer = true;
 
-    protected string $templateBegin = "{label}\n{input}";
-    protected string $templateEnd = "{input}\n{hint}\n{error}";
-    protected string $template = "{label}\n{input}\n{hint}\n{error}";
-    protected ?bool $hideLabel = null;
-
-    protected array $labelConfig = [];
-    protected array $hintConfig = [];
-    protected array $errorConfig = [];
-
     private bool $isStartedByBegin = false;
 
     final public function containerTag(string $tag): static
@@ -50,65 +41,6 @@ abstract class AbstractField extends Widget
     {
         $new = clone $this;
         $new->useContainer = $use;
-        return $new;
-    }
-
-    /**
-     * Set layout template for render a field.
-     */
-    final public function template(string $template): static
-    {
-        $new = clone $this;
-        $new->template = $template;
-        return $new;
-    }
-
-    final public function hideLabel(?bool $hide = true): static
-    {
-        $new = clone $this;
-        $new->hideLabel = $hide;
-        return $new;
-    }
-
-    final public function labelConfig(array $config): static
-    {
-        $new = clone $this;
-        $new->labelConfig = $config;
-        return $new;
-    }
-
-    final public function label(?string $content): static
-    {
-        $new = clone $this;
-        $new->labelConfig['content()'] = [$content];
-        return $new;
-    }
-
-    final public function hintConfig(array $config): static
-    {
-        $new = clone $this;
-        $new->hintConfig = $config;
-        return $new;
-    }
-
-    final public function hint(?string $content): static
-    {
-        $new = clone $this;
-        $new->hintConfig['content()'] = [$content];
-        return $new;
-    }
-
-    final public function errorConfig(array $config): static
-    {
-        $new = clone $this;
-        $new->errorConfig = $config;
-        return $new;
-    }
-
-    final public function error(?string $message): static
-    {
-        $new = clone $this;
-        $new->errorConfig['message()'] = [$message];
         return $new;
     }
 
@@ -141,6 +73,9 @@ abstract class AbstractField extends Widget
         }
 
         $content = $this->generateContent();
+        if ($content === null) {
+            return '';
+        }
 
         if (!$this->useContainer) {
             return $content;
@@ -157,9 +92,16 @@ abstract class AbstractField extends Widget
             . $containerTag->close();
     }
 
-    protected function shouldHideLabel(): bool
+    abstract protected function generateContent(): ?string;
+
+    protected function generateBeginContent(): string
     {
-        return false;
+        return '';
+    }
+
+    protected function generateEndContent(): string
+    {
+        return '';
     }
 
     private function renderEnd(): string
@@ -178,60 +120,4 @@ abstract class AbstractField extends Widget
             . $containerTag->close();
     }
 
-    protected function generateInput(): string
-    {
-        return '';
-    }
-
-    protected function generateBeginInput(): string
-    {
-        return '';
-    }
-
-    protected function generateEndInput(): string
-    {
-        return '';
-    }
-
-    abstract protected function generateLabel(): string;
-
-    abstract protected function generateHint(): string;
-
-    abstract protected function generateError(): string;
-
-    private function generateContent(): string
-    {
-        $parts = [
-            '{input}' => $this->generateInput(),
-            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
-            '{hint}' => $this->generateHint(),
-            '{error}' => $this->generateError(),
-        ];
-
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->template, $parts)));
-    }
-
-    private function generateBeginContent(): string
-    {
-        $parts = [
-            '{input}' => $this->generateBeginInput(),
-            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
-            '{hint}' => $this->generateHint(),
-            '{error}' => $this->generateError(),
-        ];
-
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateBegin, $parts)));
-    }
-
-    private function generateEndContent(): string
-    {
-        $parts = [
-            '{input}' => $this->generateEndInput(),
-            '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
-            '{hint}' => $this->generateHint(),
-            '{error}' => $this->generateError(),
-        ];
-
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateEnd, $parts)));
-    }
 }

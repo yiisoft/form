@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Field;
 use Closure;
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\AbstractFullField;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -19,7 +19,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
 /**
  * @see CheckboxListWidget
  */
-final class CheckboxList extends AbstractField
+final class CheckboxList extends AbstractFullField
 {
     use FormAttributeTrait;
 

@@ -13,6 +13,7 @@ use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\Tests\Support\Form\DateTimeForm;
 use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
 use Yiisoft\Form\Tests\Support\Form\EmailForm;
+use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
@@ -166,6 +167,23 @@ final class FieldTest extends TestCase
             HTML,
             $result
         );
+    }
+
+    public function testErrorSummary(): void
+    {
+        $result = Field::errorSummary(ErrorSummaryForm::validated())
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <p>Please fix the following errors:</p>
+        <ul>
+        <li>Value cannot be blank.</li>
+        </ul>
+        </div>
+        HTML;
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
     }
 
     public function testFieldset(): void

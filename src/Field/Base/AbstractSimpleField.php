@@ -8,7 +8,7 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 
-abstract class AbstractSimpleField extends AbstractField
+abstract class AbstractSimpleField extends AbstractFullField
 {
     final protected function generateLabel(): string
     {

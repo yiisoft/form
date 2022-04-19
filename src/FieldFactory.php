@@ -7,8 +7,8 @@ namespace Yiisoft\Form;
 use InvalidArgumentException;
 use RuntimeException;
 
-use Yiisoft\Form\Field\Base\AbstractInputField;
 use Yiisoft\Form\Field\Base\AbstractField;
+use Yiisoft\Form\Field\Base\AbstractInputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
@@ -18,6 +18,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
+use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Image;
@@ -103,6 +104,13 @@ final class FieldFactory
     public function email(FormModelInterface $formModel, string $attribute, array $config = []): Email
     {
         return $this->input(Email::class, $formModel, $attribute, $config);
+    }
+
+    public function errorSummary(FormModelInterface $formModel, array $config = []): ErrorSummary
+    {
+        return $this
+            ->field(ErrorSummary::class, $config)
+            ->formModel($formModel);
     }
 
     public function fieldset(array $config = []): Fieldset
