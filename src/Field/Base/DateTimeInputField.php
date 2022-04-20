@@ -60,6 +60,16 @@ abstract class DateTimeInputField extends InputField
         return $new;
     }
 
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    final public function disabled(bool $disabled = true): static
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
     final protected function generateInput(): string
     {
         $value = $this->getAttributeValue();

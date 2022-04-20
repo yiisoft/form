@@ -93,6 +93,16 @@ final class Password extends InputField
     }
 
     /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    public function disabled(bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
+    /**
      * The size of the control.
      *
      * @param int $value The number of characters that allow the user to see while editing the element's value.

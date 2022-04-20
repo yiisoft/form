@@ -102,7 +102,7 @@ final class RadioList extends PartsField
     }
 
     /**
-     * @param bool $disabled Whether checkboxes is disabled.
+     * @param bool $disabled Whether radio buttons is disabled.
      *
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
      */

@@ -60,7 +60,6 @@ final class SubmitButtonTest extends TestCase
     public function dataDisabled(): array
     {
         return [
-            ['<button type="submit"></button>', null],
             ['<button type="submit"></button>', false],
             ['<button type="submit" disabled></button>', true],
         ];

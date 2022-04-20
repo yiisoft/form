@@ -115,6 +115,16 @@ final class Email extends InputField
         return $new;
     }
 
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    public function disabled(bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
     protected function generateInput(): string
     {
         $value = $this->getAttributeValue();

@@ -74,6 +74,16 @@ final class Range extends InputField
         return $new;
     }
 
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    public function disabled(bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
     public function showOutput(bool $show = true): self
     {
         $new = clone $this;

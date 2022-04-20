@@ -61,6 +61,9 @@ final class ButtonGroup extends PartsField
         return $new;
     }
 
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;

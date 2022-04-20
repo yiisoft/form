@@ -37,7 +37,10 @@ abstract class ButtonField extends PartsField
         return $new;
     }
 
-    final public function disabled(?bool $disabled = true): static
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    final public function disabled(bool $disabled = true): static
     {
         $new = clone $this;
         $new->attributes['disabled'] = $disabled;

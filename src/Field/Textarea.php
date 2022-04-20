@@ -88,6 +88,16 @@ final class Textarea extends InputField
     }
 
     /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    public function disabled(bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
+    /**
      * The expected maximum number of characters per line of text to show.
      *
      * @link https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-cols

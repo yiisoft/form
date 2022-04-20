@@ -39,7 +39,6 @@ final class ImageTest extends TestCase
     public function dataDisabled(): array
     {
         return [
-            ['<input type="image">', null],
             ['<input type="image">', false],
             ['<input type="image" disabled>', true],
         ];
