@@ -51,6 +51,19 @@ final class Image extends PartsField
         return $new;
     }
 
+    /**
+     * Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus
+     * at the same time.
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus
+     */
+    public function autofocus(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['autofocus'] = $value;
+        return $new;
+    }
+
     public function disabled(?bool $disabled = true): self
     {
         $new = clone $this;
