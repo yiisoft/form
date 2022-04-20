@@ -75,6 +75,30 @@ final class Image extends PartsField
     }
 
     /**
+     * Identifies the element (or elements) that describes the object.
+     *
+     * @link https://w3c.github.io/aria/#aria-describedby
+     */
+    public function ariaDescribedBy(string $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['aria-describedby'] = $value;
+        return $new;
+    }
+
+    /**
+     * Defines a string value that labels the current element.
+     *
+     * @link https://w3c.github.io/aria/#aria-label
+     */
+    public function ariaLabel(string $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['aria-label'] = $value;
+        return $new;
+    }
+
+    /**
      * The `tabindex` attribute indicates that its element can be focused, and where it participates in sequential
      * keyboard navigation (usually with the Tab key, hence the name).
      *
