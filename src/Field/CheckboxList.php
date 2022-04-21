@@ -158,24 +158,24 @@ final class CheckboxList extends PartsField
             ->render();
     }
 
-    protected function generateLabel(): string
+    protected function renderLabel(Label $label): string
     {
-        return Label::widget($this->labelConfig)
+        return $label
             ->attribute($this->getFormModel(), $this->attribute)
             ->useInputIdAttribute(false)
             ->render();
     }
 
-    protected function generateHint(): string
+    protected function renderHint(Hint $hint): string
     {
-        return Hint::widget($this->hintConfig)
+        return $hint
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
     }
 
-    protected function generateError(): string
+    protected function renderError(Error $error): string
     {
-        return Error::widget($this->errorConfig)
+        return $error
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
     }

@@ -91,10 +91,9 @@ abstract class InputField extends PartsField
         }
     }
 
-    final protected function generateLabel(): string
+    final protected function renderLabel(Label $label): string
     {
-        $label = Label::widget($this->labelConfig)
-            ->attribute($this->getFormModel(), $this->attribute);
+        $label = $label->attribute($this->getFormModel(), $this->attribute);
 
         if ($this->setInputIdAttribute === false) {
             $label = $label->useInputIdAttribute(false);
@@ -109,16 +108,16 @@ abstract class InputField extends PartsField
         return $label->render();
     }
 
-    final protected function generateHint(): string
+    final protected function renderHint(Hint $hint): string
     {
-        return Hint::widget($this->hintConfig)
+        return $hint
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
     }
 
-    final protected function generateError(): string
+    final protected function renderError(Error $error): string
     {
-        return Error::widget($this->errorConfig)
+        return $error
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
     }

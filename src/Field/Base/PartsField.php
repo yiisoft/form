@@ -15,9 +15,9 @@ abstract class PartsField extends BaseField
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
     protected ?bool $hideLabel = null;
 
-    protected array $labelConfig = [];
-    protected array $hintConfig = [];
-    protected array $errorConfig = [];
+    private array $labelConfig = [];
+    private array $hintConfig = [];
+    private array $errorConfig = [];
 
     /**
      * Set layout template for render a field.
@@ -98,19 +98,19 @@ abstract class PartsField extends BaseField
         return '';
     }
 
-    protected function generateLabel(): string
+    protected function renderLabel(Label $label): string
     {
-        return Label::widget($this->labelConfig)->render();
+        return $label->render();
     }
 
-    protected function generateHint(): string
+    protected function renderHint(Hint $hint): string
     {
-        return Hint::widget($this->hintConfig)->render();
+        return $hint->render();
     }
 
-    protected function generateError(): string
+    protected function renderError(Error $error): string
     {
-        return Error::widget($this->errorConfig)->render();
+        return $error->render();
     }
 
     final protected function generateContent(): ?string
@@ -147,5 +147,26 @@ abstract class PartsField extends BaseField
         ];
 
         return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateEnd, $parts)));
+    }
+
+    private function generateLabel(): string
+    {
+        $label = Label::widget($this->labelConfig);
+
+        return $this->renderLabel($label);
+    }
+
+    private function generateHint(): string
+    {
+        $hint = Hint::widget($this->hintConfig);
+
+        return $this->renderHint($hint);
+    }
+
+    private function generateError(): string
+    {
+        $error = Error::widget($this->errorConfig);
+
+        return $this->renderError($error);
     }
 }
