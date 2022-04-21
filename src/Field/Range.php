@@ -7,7 +7,8 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\ValidationClassTrait;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
@@ -17,7 +18,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range)
  */
-final class Range extends InputField
+final class Range extends InputField implements ValidationClassInterface
 {
     use ValidationClassTrait;
 

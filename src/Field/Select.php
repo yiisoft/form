@@ -7,7 +7,8 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\ValidationClassTrait;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
@@ -17,7 +18,7 @@ use Yiisoft\Html\Tag\Select as SelectTag;
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
  */
-final class Select extends InputField
+final class Select extends InputField implements ValidationClassInterface
 {
     use ValidationClassTrait;
 

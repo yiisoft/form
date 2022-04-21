@@ -8,7 +8,8 @@ use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
-use Yiisoft\Form\Field\Base\ValidationClassTrait;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 /**
@@ -16,7 +17,7 @@ use Yiisoft\Html\Html;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#number-state-(type=number)
  */
-final class Number extends InputField implements PlaceholderInterface
+final class Number extends InputField implements PlaceholderInterface, ValidationClassInterface
 {
     use PlaceholderTrait;
     use ValidationClassTrait;

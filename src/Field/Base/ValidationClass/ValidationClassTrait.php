@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base;
+namespace Yiisoft\Form\Field\Base\ValidationClass;
 
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 
 /**
- * @psalm-require-extends BaseField
+ * @psalm-require-extends \Yiisoft\Form\Field\Base\BaseField
  */
 trait ValidationClassTrait
 {
@@ -18,7 +18,7 @@ trait ValidationClassTrait
     /**
      * Set invalid CSS class.
      */
-    public function invalidClass(string $class): static
+    public function invalidClass(string $class): self
     {
         $new = clone $this;
         $new->invalidClass = $class;
@@ -28,7 +28,7 @@ trait ValidationClassTrait
     /**
      * Set valid CSS class.
      */
-    public function validClass(string $class): static
+    public function validClass(string $class): self
     {
         $new = clone $this;
         $new->validClass = $class;

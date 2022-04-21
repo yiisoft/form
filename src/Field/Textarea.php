@@ -8,12 +8,13 @@ use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
-use Yiisoft\Form\Field\Base\ValidationClassTrait;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
 
-final class Textarea extends InputField implements PlaceholderInterface
+final class Textarea extends InputField implements PlaceholderInterface, ValidationClassInterface
 {
     use PlaceholderTrait;
     use ValidationClassTrait;

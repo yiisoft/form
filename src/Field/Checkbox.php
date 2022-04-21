@@ -7,7 +7,8 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\ValidationClassTrait;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_bool;
@@ -19,7 +20,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#checkbox-state-(type=checkbox)
  */
-final class Checkbox extends InputField
+final class Checkbox extends InputField implements ValidationClassInterface
 {
     use ValidationClassTrait;
 

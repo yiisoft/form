@@ -9,7 +9,8 @@ use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
-use Yiisoft\Form\Field\Base\ValidationClassTrait;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
@@ -20,7 +21,7 @@ use Yiisoft\Html\Widget\RadioList\RadioList as RadioListWidget;
 /**
  * @see RadioListWidget
  */
-final class RadioList extends PartsField
+final class RadioList extends PartsField implements ValidationClassInterface
 {
     use FormAttributeTrait;
     use ValidationClassTrait;

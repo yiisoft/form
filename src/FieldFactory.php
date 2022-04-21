@@ -7,6 +7,7 @@ namespace Yiisoft\Form;
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
@@ -53,6 +54,8 @@ final class FieldFactory
         private array $hintConfig = [],
         private array $errorConfig = [],
         private ?bool $usePlaceholder = null,
+        private ?string $validClass = null,
+        private ?string $invalidClass = null,
         private array $fieldConfigs = [],
     ) {
     }
@@ -253,6 +256,15 @@ final class FieldFactory
         if (is_a($class, PlaceholderInterface::class, true)) {
             if ($this->usePlaceholder !== null) {
                 $config['usePlaceholder()'] = [$this->usePlaceholder];
+            }
+        }
+
+        if (is_a($class, ValidationClassInterface::class, true)) {
+            if ($this->validClass !== null) {
+                $config['validClass()'] = [$this->validClass];
+            }
+            if ($this->invalidClass !== null) {
+                $config['invalidClass()'] = [$this->invalidClass];
             }
         }
 

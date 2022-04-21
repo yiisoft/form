@@ -154,6 +154,33 @@ final class FieldFactoryTest extends TestCase
                 ],
                 'job',
             ],
+            [
+                <<<'HTML'
+                <div class="wrapper valid">
+                <label for="textform-job">Job</label>
+                <input type="text" id="textform-job" name="TextForm[job]" value>
+                </div>
+                HTML,
+                [
+                    'validClass' => 'valid',
+                    'containerTagAttributes' => ['class' => 'wrapper'],
+                ],
+                'job',
+            ],
+            [
+                <<<'HTML'
+                <div class="wrapper invalid">
+                <label for="textform-company">Company</label>
+                <input type="text" id="textform-company" name="TextForm[company]" value>
+                <div>Value cannot be blank.</div>
+                </div>
+                HTML,
+                [
+                    'invalidClass' => 'invalid',
+                    'containerTagAttributes' => ['class' => 'wrapper'],
+                ],
+                'company',
+            ],
         ];
     }
 
@@ -166,7 +193,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->text(TextForm::validated(), $attribute)->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
     }
 
     public function dataLabel(): array

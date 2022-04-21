@@ -6,11 +6,13 @@ namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
 use ReflectionClass;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
 
-abstract class DateTimeInputField extends InputField
+abstract class DateTimeInputField extends InputField implements ValidationClassInterface
 {
     use ValidationClassTrait;
 
