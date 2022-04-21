@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\Tests\Support\AssertTrait;
+use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -54,7 +55,7 @@ final class FieldFactoryTest extends TestCase
                 ],
                 'job',
             ],
-            [
+            'common-template' => [
                 <<<'HTML'
                 <div>
                 <div class="wrap">
@@ -196,24 +197,68 @@ final class FieldFactoryTest extends TestCase
         $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function dataErrorSummary(): array
+    {
+        return [
+            'base' => [
+                <<<'HTML'
+                <div>
+                <p>Please fix the following errors:</p>
+                <ul>
+                <li>Value cannot be blank.</li>
+                </ul>
+                </div>
+                HTML,
+                [],
+            ],
+            'non-exists-common-methods' => [
+                <<<'HTML'
+                <div>
+                <p>Please fix the following errors:</p>
+                <ul>
+                <li>Value cannot be blank.</li>
+                </ul>
+                </div>
+                HTML,
+                [
+                    'template' => '{input}'
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataErrorSummary
+     */
+    public function testErrorSummary(string $expected, array $factoryParameters): void
+    {
+        $field = $this->createFieldFactory($factoryParameters);
+
+        $result = $field->errorSummary(ErrorSummaryForm::validated())->render();
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+    }
+
     public function dataLabel(): array
     {
         return [
-            [
+            'simple' => [
                 <<<'HTML'
                 <label for="textform-job">Job</label>
                 HTML,
                 [],
             ],
-            [
+            'set-input-id-attribute-false' => [
                 <<<'HTML'
                 <label>Job</label>
                 HTML,
                 [
-                    'setInputIdAttribute' => false,
+                    'labelConfig' => [
+                        'useInputIdAttribute()' => [false],
+                    ],
                 ],
             ],
-            [
+            'set-for-attribute-false' => [
                 <<<'HTML'
                 <label>Job</label>
                 HTML,
