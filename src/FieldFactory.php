@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use InvalidArgumentException;
-use RuntimeException;
-
-use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
@@ -38,12 +35,8 @@ use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Url;
 use Yiisoft\Widget\WidgetFactory;
 
-use function in_array;
-
 final class FieldFactory
 {
-    private const SUPPORT_PLACEHOLDER = 1;
-
     private ?array $baseFieldConfig = null;
 
     /**
@@ -239,42 +232,30 @@ final class FieldFactory
      */
     public function field(string $class, array $config = []): object
     {
-        $traits = class_uses($class);
-        if ($traits === false) {
-            throw new RuntimeException('Invalid field class.');
-        }
-
-        $supports = [];
-        if (in_array(PlaceholderTrait::class, $traits, true)) {
-            $supports[] = self::SUPPORT_PLACEHOLDER;
-        }
-
         $config = array_merge(
-            $this->makeFieldConfig($supports),
+            $this->makeFieldConfig($class),
             $this->fieldConfigs[$class] ?? [],
             $config,
             ['class' => $class],
         );
 
-        /** @psalm-var T&BaseField */
+        /** @psalm-var T */
         return WidgetFactory::createWidget($config);
     }
 
     /**
-     * @param int[] $supports
+     * @psalm-param class-string $class
      */
-    private function makeFieldConfig(array $supports): array
+    private function makeFieldConfig(string $class): array
     {
         $config = $this->makeBaseFieldConfig();
-        foreach ($supports as $support) {
-            switch ($support) {
-                case self::SUPPORT_PLACEHOLDER:
-                    if ($this->usePlaceholder !== null) {
-                        $config['usePlaceholder()'] = [$this->usePlaceholder];
-                    }
-                    break;
+
+        if (is_a($class, PlaceholderInterface::class, true)) {
+            if ($this->usePlaceholder !== null) {
+                $config['usePlaceholder()'] = [$this->usePlaceholder];
             }
         }
+
         return $config;
     }
 

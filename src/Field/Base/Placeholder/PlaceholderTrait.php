@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base;
+namespace Yiisoft\Form\Field\Base\Placeholder;
 
 /**
- * @psalm-require-extends InputField
+ * @psalm-require-extends \Yiisoft\Form\Field\Base\InputField
  */
 trait PlaceholderTrait
 {
     private ?string $placeholder = null;
     private bool $usePlaceholder = true;
 
-    public function placeholder(?string $placeholder): static
+    public function placeholder(?string $placeholder): self
     {
         $new = clone $this;
         $new->placeholder = $placeholder;
         return $new;
     }
 
-    public function usePlaceholder(bool $use): static
+    public function usePlaceholder(bool $use): self
     {
         $new = clone $this;
         $new->usePlaceholder = $use;

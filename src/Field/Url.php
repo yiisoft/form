@@ -6,7 +6,8 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
+use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
@@ -15,7 +16,7 @@ use function is_string;
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url)
  */
-final class Url extends InputField
+final class Url extends InputField implements PlaceholderInterface
 {
     use PlaceholderTrait;
     use ValidationClassTrait;

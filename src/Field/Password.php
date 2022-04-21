@@ -6,7 +6,8 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
+use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
@@ -17,7 +18,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#password-state-(type=password)
  */
-final class Password extends InputField
+final class Password extends InputField implements PlaceholderInterface
 {
     use PlaceholderTrait;
     use ValidationClassTrait;
