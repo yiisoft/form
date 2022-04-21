@@ -290,7 +290,7 @@ final class FieldFactory
                 $config['setInputIdAttribute()'] = [$this->setInputIdAttribute];
                 if ($this->setInputIdAttribute === false) {
                     $config['labelConfig()'] = [
-                        $this->labelConfig + ['useInputIdAttribute()' => [false]]
+                        $this->labelConfig + ['useInputIdAttribute()' => [false]],
                     ];
                 }
             }

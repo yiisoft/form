@@ -221,7 +221,7 @@ final class FieldFactoryTest extends TestCase
                 </div>
                 HTML,
                 [
-                    'template' => '{input}'
+                    'template' => '{input}',
                 ],
             ],
         ];
