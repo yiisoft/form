@@ -211,4 +211,9 @@ final class Email extends InputField
             );
         }
     }
+
+    protected function prepareInputTagAttributes(array &$attributes): void
+    {
+        $this->preparePlaceholderInInputTagAttributes($attributes);
+    }
 }

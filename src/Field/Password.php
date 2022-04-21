@@ -202,4 +202,9 @@ final class Password extends InputField
             );
         }
     }
+
+    protected function prepareInputTagAttributes(array &$attributes): void
+    {
+        $this->preparePlaceholderInInputTagAttributes($attributes);
+    }
 }

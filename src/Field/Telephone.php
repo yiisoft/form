@@ -200,4 +200,9 @@ final class Telephone extends InputField
             );
         }
     }
+
+    protected function prepareInputTagAttributes(array &$attributes): void
+    {
+        $this->preparePlaceholderInInputTagAttributes($attributes);
+    }
 }

@@ -9,8 +9,6 @@ use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Helper\HtmlForm;
 
-use function in_array;
-
 abstract class InputField extends PartsField
 {
     use FormAttributeTrait;
@@ -66,12 +64,13 @@ abstract class InputField extends PartsField
 
         $this->prepareIdInInputTagAttributes($attributes);
 
-        if ($this->isUsePlaceholder()) {
-            /** @psalm-suppress UndefinedMethod */
-            $this->preparePlaceholderInInputTagAttributes($attributes);
-        }
+        $this->prepareInputTagAttributes($attributes);
 
         return $attributes;
+    }
+
+    protected function prepareInputTagAttributes(array &$attributes): void
+    {
     }
 
     final protected function prepareIdInInputTagAttributes(array &$attributes): void
@@ -120,11 +119,5 @@ abstract class InputField extends PartsField
         return $error
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
-    }
-
-    private function isUsePlaceholder(): bool
-    {
-        $traits = class_uses($this);
-        return in_array(PlaceholderTrait::class, $traits, true);
     }
 }
