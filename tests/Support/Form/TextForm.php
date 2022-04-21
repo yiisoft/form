@@ -13,12 +13,14 @@ final class TextForm extends FormModel
 {
     public string $name = '';
     public string $job = '';
+    public string $company = '';
     public int $age = 42;
 
     public function getRules(): array
     {
         return [
             'name' => [new Required(), new HasLength(min: 4)],
+            'company' => [new Required()],
         ];
     }
 
@@ -27,6 +29,7 @@ final class TextForm extends FormModel
         return [
             'name' => 'Name',
             'job' => 'Job',
+            'company' => 'Company',
         ];
     }
 

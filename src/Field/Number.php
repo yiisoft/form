@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 /**
@@ -17,6 +18,7 @@ use Yiisoft\Html\Html;
 final class Number extends InputField
 {
     use PlaceholderTrait;
+    use ValidationClassTrait;
 
     /**
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-max
@@ -148,5 +150,16 @@ final class Number extends InputField
         $tagAttributes = $this->getInputTagAttributes();
 
         return Html::input('number', $this->getInputName(), $value, $tagAttributes)->render();
+    }
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
     }
 }

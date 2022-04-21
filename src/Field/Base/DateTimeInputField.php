@@ -12,6 +12,8 @@ use function is_string;
 
 abstract class DateTimeInputField extends InputField
 {
+    use ValidationClassTrait;
+
     /**
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-max
      */
@@ -148,4 +150,15 @@ abstract class DateTimeInputField extends InputField
     }
 
     abstract protected function getInputType(): string;
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
+    }
 }

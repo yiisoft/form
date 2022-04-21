@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PlaceholderTrait;
+use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
@@ -14,6 +15,7 @@ use function is_string;
 final class Email extends InputField
 {
     use PlaceholderTrait;
+    use ValidationClassTrait;
 
     /**
      * Maximum length of value.
@@ -197,5 +199,16 @@ final class Email extends InputField
         $tagAttributes = $this->getInputTagAttributes();
 
         return Html::input('email', $this->getInputName(), $value, $tagAttributes)->render();
+    }
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
     }
 }

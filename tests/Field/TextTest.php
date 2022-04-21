@@ -459,6 +459,61 @@ final class TextTest extends TestCase
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function testValidationClassForNonValidatedForm(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->invalidClass('invalid')
+            ->validClass('valid')
+            ->attribute(new TextForm(), 'job')
+            ->render();
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testInvalidClass(): void
+    {
+        $expected = <<<'HTML'
+        <div class="invalid">
+        <label for="textform-company">Company</label>
+        <input type="text" id="textform-company" name="TextForm[company]" value>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->invalidClass('invalid')
+            ->validClass('valid')
+            ->attribute(TextForm::validated(), 'company')
+            ->render();
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testValidClass(): void
+    {
+        $expected = <<<'HTML'
+        <div class="valid">
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" name="TextForm[job]" value>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->invalidClass('invalid')
+            ->validClass('valid')
+            ->attribute(TextForm::validated(), 'job')
+            ->render();
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = Text::widget();

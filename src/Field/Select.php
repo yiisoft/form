@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\InputField;
+use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
@@ -18,6 +19,8 @@ use Yiisoft\Html\Tag\Select as SelectTag;
  */
 final class Select extends InputField
 {
+    use ValidationClassTrait;
+
     private SelectTag $select;
 
     public function __construct()
@@ -264,5 +267,16 @@ final class Select extends InputField
             ->name($this->getInputName())
             ->values($value)
             ->render();
+    }
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\InputField;
+use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
@@ -18,6 +19,8 @@ use function is_string;
  */
 final class Range extends InputField
 {
+    use ValidationClassTrait;
+
     private bool $showOutput = false;
 
     /**
@@ -187,5 +190,16 @@ final class Range extends InputField
         }
 
         return $tag->render();
+    }
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
+use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
@@ -51,18 +52,7 @@ abstract class BaseField extends Widget
 
         $content = $this->generateBeginContent();
 
-        if (!$this->useContainer) {
-            return $content;
-        }
-
-        $containerTag = CustomTag::name($this->containerTag);
-        if ($this->containerTagAttributes !== []) {
-            $containerTag = $containerTag->attributes($this->containerTagAttributes);
-        }
-
-        return $containerTag->open()
-            . ($content === '' ? '' : (PHP_EOL . $content))
-            . PHP_EOL;
+        return $this->renderOpenContainerAndContent($content) . "\n";
     }
 
     final protected function run(): string
@@ -77,19 +67,13 @@ abstract class BaseField extends Widget
             return '';
         }
 
-        if (!$this->useContainer) {
-            return $content;
+        $result = $this->renderOpenContainerAndContent($content);
+
+        if ($this->useContainer) {
+            $result .= "\n" . Html::closeTag($this->containerTag);
         }
 
-        $containerTag = CustomTag::name($this->containerTag);
-        if ($this->containerTagAttributes !== []) {
-            $containerTag = $containerTag->attributes($this->containerTagAttributes);
-        }
-
-        return $containerTag->open()
-            . ($content === '' ? '' : (PHP_EOL . $content))
-            . PHP_EOL
-            . $containerTag->close();
+        return $result;
     }
 
     abstract protected function generateContent(): ?string;
@@ -104,6 +88,10 @@ abstract class BaseField extends Widget
         return '';
     }
 
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+    }
+
     private function renderEnd(): string
     {
         $content = $this->generateEndContent();
@@ -115,8 +103,26 @@ abstract class BaseField extends Widget
         $containerTag = CustomTag::name($this->containerTag);
 
         return
-            "\n" .
-            ($content !== '' ? $content . "\n" : '')
+            "\n"
+            . ($content !== '' ? $content . "\n" : '')
             . $containerTag->close();
+    }
+
+    private function renderOpenContainerAndContent(string $content): string
+    {
+        if (!$this->useContainer) {
+            return $content;
+        }
+
+        $containerTag = CustomTag::name($this->containerTag);
+
+        $attributes = $this->containerTagAttributes;
+        $this->prepareContainerTagAttributes($attributes);
+        if ($attributes !== []) {
+            $containerTag = $containerTag->attributes($attributes);
+        }
+
+        return $containerTag->open()
+            . ($content === '' ? '' : ("\n" . $content));
     }
 }

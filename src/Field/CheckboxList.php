@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
+use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
@@ -22,6 +23,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
 final class CheckboxList extends PartsField
 {
     use FormAttributeTrait;
+    use ValidationClassTrait;
 
     private CheckboxListWidget $widget;
 
@@ -178,6 +180,17 @@ final class CheckboxList extends PartsField
         return $error
             ->attribute($this->getFormModel(), $this->attribute)
             ->render();
+    }
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
     }
 
     private function getInputName(): string

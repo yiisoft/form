@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Field;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\InputField;
+use Yiisoft\Form\Field\Base\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_bool;
@@ -20,6 +21,8 @@ use function is_string;
  */
 final class Checkbox extends InputField
 {
+    use ValidationClassTrait;
+
     private ?string $uncheckValue = '0';
     private bool $enclosedByLabel = true;
     private ?string $inputLabel = null;
@@ -226,5 +229,16 @@ final class Checkbox extends InputField
         }
 
         return (string) $value;
+    }
+
+    protected function prepareContainerTagAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addValidationClassToTagAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getAttributeName(),
+            );
+        }
     }
 }
