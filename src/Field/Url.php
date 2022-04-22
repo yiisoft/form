@@ -5,20 +5,29 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Regex;
+use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\Url as UrlRule;
 
 use function is_string;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url)
  */
-final class Url extends InputField implements PlaceholderInterface, ValidationClassInterface
+final class Url
+    extends InputField
+    implements PlaceholderInterface, ValidationClassInterface, EnrichmentFromRulesInterface
 {
+    use EnrichmentFromRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -179,6 +188,52 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
         return $new;
     }
 
+    /**
+     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     */
+    protected function beforeRender(): void
+    {
+        parent::beforeRender();
+        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
+            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            foreach ($rules as $rule) {
+                if ($rule instanceof Required) {
+                    $this->inputTagAttributes['required'] = true;
+                }
+
+                if ($rule instanceof HasLength) {
+                    if (null !== $min = $rule->getOptions()['min']) {
+                        $this->inputTagAttributes['minlength'] = $min;
+                    }
+                    if (null !== $max = $rule->getOptions()['max']) {
+                        $this->inputTagAttributes['maxlength'] = $max;
+                    }
+                }
+
+                $pattern = null;
+                if ($rule instanceof UrlRule) {
+                    $pattern = $rule->getOptions()['pattern'];
+
+                    $schemePatterns = [];
+                    foreach ($rule->getOptions()['validSchemes'] as $scheme) {
+                        $schemePatterns[] = $this->generateSchemePattern($scheme);
+                    }
+
+                    if (str_contains($pattern, '{schemes}')) {
+                        $pattern = str_replace('{schemes}', '(' . implode('|', $schemePatterns) . ')', $pattern);
+                    }
+                } elseif ($rule instanceof Regex) {
+                    if (!($rule->getOptions()['not'])) {
+                        $pattern = $rule->getOptions()['pattern'];
+                    }
+                }
+                if ($pattern !== null) {
+                    $this->inputTagAttributes['pattern'] = Html::normalizeRegexpPattern($pattern);
+                }
+            }
+        }
+    }
+
     protected function generateInput(): string
     {
         $value = $this->getAttributeValue();
@@ -206,5 +261,16 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     protected function prepareInputTagAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputTagAttributes($attributes);
+    }
+
+    private function generateSchemePattern(string $scheme): string
+    {
+        $result = '';
+
+        for ($i = 0, $length = strlen($scheme); $i < $length; $i++) {
+            $result .= '[' . strtolower($scheme[$i]) . strtoupper($scheme[$i]) . ']';
+        }
+
+        return $result;
     }
 }
