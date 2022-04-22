@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
-use Yiisoft\Form\Widget\Validator\NumberInterface;
 use Yiisoft\Html\Tag\Input;
 
 use function array_key_exists;
@@ -19,7 +18,7 @@ use function is_numeric;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.number.html
  */
-final class Number extends InputAttributes implements NumberInterface, PlaceholderInterface
+final class Number extends InputAttributes implements PlaceholderInterface
 {
     public function max(int $value): self
     {

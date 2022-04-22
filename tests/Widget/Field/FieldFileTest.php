@@ -72,23 +72,6 @@ final class FieldFileTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-required">Required</label>
-        <input type="file" id="validatorform-required" name="ValidatorForm[required][]" required>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->file(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'

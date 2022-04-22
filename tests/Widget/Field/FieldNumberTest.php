@@ -56,37 +56,6 @@ final class FieldNumberTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeNumber(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label for="validatorform-number">Number</label>
-        <input type="number" id="validatorform-number" name="ValidatorForm[number]" value="0" max="5" min="3">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->number(new ValidatorForm(), 'number')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<'HTML'
-        <div>
-        <label for="validatorform-numberrequired">Number Required</label>
-        <input type="number" id="validatorform-numberrequired" name="ValidatorForm[numberRequired]" value="0" required>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->number(new ValidatorForm(), 'numberRequired')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $expected = <<<'HTML'

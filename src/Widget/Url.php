@@ -7,8 +7,6 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
-use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\RegexInterface;
 use Yiisoft\Html\Tag\Input;
 
 use function is_string;
@@ -19,7 +17,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.url.html
  */
-final class Url extends InputAttributes implements HasLengthInterface, RegexInterface, PlaceholderInterface
+final class Url extends InputAttributes implements PlaceholderInterface
 {
     public function maxlength(int $value): self
     {

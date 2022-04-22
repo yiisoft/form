@@ -83,62 +83,6 @@ final class FieldTextTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeMatchRegulRegex(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-regex">Regex</label>
-        <input type="text" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->text(new ValidatorForm(), 'regex')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMaxLength(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-maxlength">Maxlength</label>
-        <input type="text" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->text(new ValidatorForm(), 'maxlength')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMinLength(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-minlength">Minlength</label>
-        <input type="text" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->text(new ValidatorForm(), 'minlength')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-required">Required</label>
-        <input type="text" id="validatorform-required" name="ValidatorForm[required]" required>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->text(new ValidatorForm(), 'required')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $expected = <<<HTML

@@ -100,34 +100,6 @@ final class FieldTextAreaTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeMaxLength(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-maxlength">Maxlength</label>
-        <textarea id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50"></textarea>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->textArea(new ValidatorForm(), 'maxlength')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMinLength(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-minlength">Minlength</label>
-        <textarea id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15"></textarea>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->textArea(new ValidatorForm(), 'minlength')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $expected = <<<HTML

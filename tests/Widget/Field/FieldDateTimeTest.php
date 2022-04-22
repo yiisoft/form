@@ -56,23 +56,6 @@ final class FieldDateTimeTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-required">Required</label>
-        <input type="datetime" id="validatorform-required" name="ValidatorForm[required]" required>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->dateTime(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $expected = <<<HTML

@@ -78,20 +78,6 @@ final class CheckboxTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <input type="hidden" name="ValidatorForm[required]" value="0"><label><input type="checkbox" id="validatorform-required" name="ValidatorForm[required]" required> Required</label>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Checkbox::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $expected = <<<HTML

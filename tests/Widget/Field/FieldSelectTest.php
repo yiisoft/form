@@ -95,28 +95,6 @@ final class FieldSelectTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-required">Required</label>
-        <select id="validatorform-required" name="ValidatorForm[required]" required>
-        <option value="1">Moscu</option>
-        <option value="2">San Petersburgo</option>
-        <option value="3">Novosibirsk</option>
-        <option value="4">Ekaterinburgo</option>
-        </select>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->select(new ValidatorForm(), 'required', ['items()' => [$this->cities]])->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testGroups(): void
     {
         $expected = <<<HTML

@@ -44,17 +44,6 @@ final class DateTimeTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->assertSame(
-            '<input type="datetime" id="validatorform-required" name="ValidatorForm[required]" required>',
-            DateTime::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->assertSame(

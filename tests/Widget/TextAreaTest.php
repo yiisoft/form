@@ -76,39 +76,6 @@ final class TextAreaTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeMaxLength(): void
-    {
-        $this->assertSame(
-            '<textarea id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50"></textarea>',
-            TextArea::widget()->for(new ValidatorForm(), 'maxlength')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMinLength(): void
-    {
-        $this->assertSame(
-            '<textarea id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15"></textarea>',
-            TextArea::widget()->for(new ValidatorForm(), 'minlength')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->assertSame(
-            '<textarea id="validatorform-required" name="ValidatorForm[required]" required></textarea>',
-            TextArea::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testImmutability(): void
     {
         $textArea = TextArea::widget();

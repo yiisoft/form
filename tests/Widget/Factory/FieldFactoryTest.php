@@ -53,7 +53,7 @@ final class FieldFactoryTest extends TestCase
                         // Expected.
                         'expected' => <<<HTML
                         <div class="container-class-checkbox">
-                        <input type="hidden" name="AttributesValidatorForm[checkbox]" value="0"><label class="form-check-label"><input type="checkbox" id="attributesvalidatorform-checkbox" class="form-check-input is-invalid" name="AttributesValidatorForm[checkbox]" value="1" required> Checkbox</label>
+                        <input type="hidden" name="AttributesValidatorForm[checkbox]" value="0"><label class="form-check-label"><input type="checkbox" id="attributesvalidatorform-checkbox" class="form-check-input is-invalid" name="AttributesValidatorForm[checkbox]" value="1"> Checkbox</label>
                         <div class="form-text text-muted">Mark the checkbox.</div>
                         <div class="invalid-feedback">Value cannot be blank.</div>
                         </div>
@@ -65,7 +65,7 @@ final class FieldFactoryTest extends TestCase
                         // Expected.
                         'expected' => <<<HTML
                         <div class="container-class-checkbox">
-                        <input type="hidden" name="AttributesValidatorForm[checkbox]" value="0"><label class="form-check-label"><input type="checkbox" id="attributesvalidatorform-checkbox" class="form-check-input is-valid" name="AttributesValidatorForm[checkbox]" value="1" checked required> Checkbox</label>
+                        <input type="hidden" name="AttributesValidatorForm[checkbox]" value="0"><label class="form-check-label"><input type="checkbox" id="attributesvalidatorform-checkbox" class="form-check-input is-valid" name="AttributesValidatorForm[checkbox]" value="1" checked> Checkbox</label>
                         <div class="form-text text-muted">Mark the checkbox.</div>
                         </div>
                         HTML,

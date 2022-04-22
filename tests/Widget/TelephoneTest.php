@@ -44,50 +44,6 @@ final class TelephoneTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRegex(): void
-    {
-        $this->assertSame(
-            '<input type="tel" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
-            Telephone::widget()->for(new ValidatorForm(), 'regex')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMaxLength(): void
-    {
-        $this->assertSame(
-            '<input type="tel" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">',
-            Telephone::widget()->for(new ValidatorForm(), 'maxlength')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMinLength(): void
-    {
-        $this->assertSame(
-            '<input type="tel" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">',
-            Telephone::widget()->for(new ValidatorForm(), 'minlength')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->assertSame(
-            '<input type="tel" id="validatorform-required" name="ValidatorForm[required]" required>',
-            Telephone::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->assertSame(

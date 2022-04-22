@@ -7,8 +7,6 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
-use Yiisoft\Form\Widget\Validator\HasLengthInterface;
-use Yiisoft\Form\Widget\Validator\RegexInterface;
 use Yiisoft\Html\Tag\Input;
 
 use function is_string;
@@ -18,7 +16,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.text.html#input.text
  */
-final class Text extends InputAttributes implements HasLengthInterface, RegexInterface, PlaceholderInterface
+final class Text extends InputAttributes implements PlaceholderInterface
 {
     /**
      * Enables submission of a value for the directionality of the element, and gives the name of the field that

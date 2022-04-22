@@ -54,17 +54,6 @@ final class FileTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->assertSame(
-            '<input type="file" id="validatorform-required" name="ValidatorForm[required][]" required>',
-            File::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testHiddenAttributes(): void
     {
         $expected = <<<'HTML'

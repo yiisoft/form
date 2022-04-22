@@ -44,17 +44,6 @@ final class DateTimeLocalTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->assertSame(
-            '<input type="datetime-local" id="validatorform-required" name="ValidatorForm[required]" required>',
-            DateTimeLocal::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->assertSame(

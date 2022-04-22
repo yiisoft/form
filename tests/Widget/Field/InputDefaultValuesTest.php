@@ -26,7 +26,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" name="PersonalForm[name]">
         <div>Write your first name.</div>
         </div>
         HTML;
@@ -44,7 +44,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" minlength="4" aria-describedby="personalform-name-help" required>
+        <input type="text" id="personalform-name" name="PersonalForm[name]" aria-describedby="personalform-name-help">
         <div id="personalform-name-help">Write your first name.</div>
         </div>
         HTML;
@@ -191,7 +191,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" name="PersonalForm[name]">
         <div>Write your first name.</div>
         <span class="text-danger is-invalid">error-text</span>
         </div>
@@ -222,7 +222,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" name="PersonalForm[name]">
         <div>Write your first name.</div>
         <p class="text-warning invalid-feedback">error-text-widget</p>
         </div>
@@ -263,7 +263,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" name="PersonalForm[name]">
         <div>Write your first name.</div>
         <span class="text-danger is-invalid">This is custom error message.</span>
         </div>
@@ -294,7 +294,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" name="PersonalForm[name]">
         <div>Write your first name.</div>
         <p class="text-warning invalid-feedback">(&amp;#10006;) This is custom error message.</p>
         </div>
@@ -436,7 +436,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" class="is-invalid" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" class="is-invalid" name="PersonalForm[name]">
         <div>Write your first name.</div>
         <div>Value cannot be blank.</div>
         </div>
@@ -458,7 +458,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" class="invalid-tooltip" name="PersonalForm[name]" minlength="4" required>
+        <input type="text" id="personalform-name" class="invalid-tooltip" name="PersonalForm[name]">
         <div>Write your first name.</div>
         <div>Value cannot be blank.</div>
         </div>
@@ -618,7 +618,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" class="is-valid" name="PersonalForm[name]" value="samdark" minlength="4" required>
+        <input type="text" id="personalform-name" class="is-valid" name="PersonalForm[name]" value="samdark">
         <div>Write your first name.</div>
         </div>
         HTML;
@@ -639,7 +639,7 @@ final class InputDefaultValuesTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
-        <input type="text" id="personalform-name" class="valid-tooltip" name="PersonalForm[name]" value="samdark" minlength="4" required>
+        <input type="text" id="personalform-name" class="valid-tooltip" name="PersonalForm[name]" value="samdark">
         <div>Write your first name.</div>
         </div>
         HTML;

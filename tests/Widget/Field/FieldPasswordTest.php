@@ -53,53 +53,6 @@ final class FieldPasswordTest extends TestCase
         );
     }
 
-    public function testGetValidatorAttributeRegex(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-regex">Regex</label>
-        <input type="password" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->password(new ValidatorForm(), 'regex')->render(),
-        );
-    }
-
-    public function testGetValidatorAttributeMaxLength(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-maxlength">Maxlength</label>
-        <input type="password" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password(new ValidatorForm(), 'maxlength')->render());
-    }
-
-    public function testGetValidatorAttributeMinLength(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-minlength">Minlength</label>
-        <input type="password" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password(new ValidatorForm(), 'minlength')->render());
-    }
-
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-required">Required</label>
-        <input type="password" id="validatorform-required" name="ValidatorForm[required]" required>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password(new ValidatorForm(), 'required')->render());
-    }
-
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */

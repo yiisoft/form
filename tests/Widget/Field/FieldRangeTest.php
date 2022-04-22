@@ -63,43 +63,6 @@ final class FieldRangeTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeNumber(): void
-    {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-number">Number</label>
-        <input type="range" id="validatorform-number" name="ValidatorForm[number]" value="0" max="5" min="3" oninput="i1.value=this.value">
-        <output id="i1" name="i1" for="ValidatorForm[number]">0</output>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new ValidatorForm(), 'number')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
-
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-numberrequired">Number Required</label>
-        <input type="range" id="validatorform-numberrequired" name="ValidatorForm[numberRequired]" value="0" required oninput="i1.value=this.value">
-        <output id="i1" name="i1" for="ValidatorForm[numberRequired]">0</output>
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget()->range(new ValidatorForm(), 'numberRequired')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);

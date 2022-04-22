@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Widget;
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
 use Yiisoft\Form\Widget\Attribute\PlaceholderInterface;
-use Yiisoft\Form\Widget\Validator\HasLengthInterface;
 use Yiisoft\Html\Tag\Textarea as TextAreaTag;
 
 use function in_array;
@@ -18,7 +17,7 @@ use function is_string;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/textarea.html
  */
-final class TextArea extends InputAttributes implements HasLengthInterface, PlaceholderInterface
+final class TextArea extends InputAttributes implements PlaceholderInterface
 {
     /**
      * The expected maximum number of characters per line of text for the UA to show.

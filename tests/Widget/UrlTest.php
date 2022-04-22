@@ -44,61 +44,6 @@ final class UrlTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeRegex(): void
-    {
-        $this->assertSame(
-            '<input type="url" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
-            Url::widget()->for(new ValidatorForm(), 'regex')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMaxLength(): void
-    {
-        $this->assertSame(
-            '<input type="url" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">',
-            Url::widget()->for(new ValidatorForm(), 'maxlength')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeMinLength(): void
-    {
-        $this->assertSame(
-            '<input type="url" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">',
-            Url::widget()->for(new ValidatorForm(), 'minlength')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $this->assertSame(
-            '<input type="url" id="validatorform-required" name="ValidatorForm[required]" required>',
-            Url::widget()->for(new ValidatorForm(), 'required')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeUrlValidator(): void
-    {
-        $expected = <<<HTML
-        <input type="url" id="validatorform-url" name="ValidatorForm[url]" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
-        HTML;
-        $this->assertSame($expected, Url::widget()->for(new ValidatorForm(), 'url')->render());
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->assertSame(

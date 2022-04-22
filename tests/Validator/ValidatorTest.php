@@ -46,11 +46,11 @@ final class ValidatorTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="loginvalidatorform-login">Login</label>
-        <input type="text" id="loginvalidatorform-login" class="is-invalid" name="LoginValidatorForm[login]" value="joe" required>
+        <input type="text" id="loginvalidatorform-login" class="is-invalid" name="LoginValidatorForm[login]" value="joe">
         </div>
         <div>
         <label for="loginvalidatorform-password">Password</label>
-        <input type="text" id="loginvalidatorform-password" class="is-invalid" name="LoginValidatorForm[password]" value="123456" required>
+        <input type="text" id="loginvalidatorform-password" class="is-invalid" name="LoginValidatorForm[password]" value="123456">
         <div class="test-class hasError">invalid login password</div>
         </div>
         HTML;
@@ -76,11 +76,11 @@ final class ValidatorTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="loginvalidatorform-login">Login</label>
-        <input type="text" id="loginvalidatorform-login" class="is-valid" name="LoginValidatorForm[login]" value="admin" required>
+        <input type="text" id="loginvalidatorform-login" class="is-valid" name="LoginValidatorForm[login]" value="admin">
         </div>
         <div>
         <label for="loginvalidatorform-password">Password</label>
-        <input type="text" id="loginvalidatorform-password" class="is-valid" name="LoginValidatorForm[password]" value="admin" required>
+        <input type="text" id="loginvalidatorform-password" class="is-valid" name="LoginValidatorForm[password]" value="admin">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -105,11 +105,11 @@ final class ValidatorTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="loginvalidatorform-login">Login</label>
-        <input type="text" id="loginvalidatorform-login" class="is-invalid" name="LoginValidatorForm[login]" value="joe" required>
+        <input type="text" id="loginvalidatorform-login" class="is-invalid" name="LoginValidatorForm[login]" value="joe">
         </div>
         <div>
         <label for="loginvalidatorform-password">Password</label>
-        <input type="text" id="loginvalidatorform-password" class="is-invalid" name="LoginValidatorForm[password]" value="123456" required>
+        <input type="text" id="loginvalidatorform-password" class="is-invalid" name="LoginValidatorForm[password]" value="123456">
         </div>
         <div>
         <p>Please fix the following errors:</p>
@@ -147,11 +147,11 @@ final class ValidatorTest extends TestCase
         $expected = <<<HTML
         <div>
         <label for="loginvalidatorform-login">Login</label>
-        <input type="text" id="loginvalidatorform-login" class="is-valid" name="LoginValidatorForm[login]" value="admin" required>
+        <input type="text" id="loginvalidatorform-login" class="is-valid" name="LoginValidatorForm[login]" value="admin">
         </div>
         <div>
         <label for="loginvalidatorform-password">Password</label>
-        <input type="text" id="loginvalidatorform-password" class="is-valid" name="LoginValidatorForm[password]" value="admin" required>
+        <input type="text" id="loginvalidatorform-password" class="is-valid" name="LoginValidatorForm[password]" value="admin">
         </div>
         HTML;
         $this->assertEqualsWithoutLE(
@@ -159,26 +159,6 @@ final class ValidatorTest extends TestCase
             Field::widget($this->fieldConfig)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
             Field::widget($this->fieldConfig)->text($loginValidatorForm, 'password')->render() .
             ErrorSummary::widget()->model($loginValidatorForm)->render(),
-        );
-    }
-
-    public function testUrlValidatorPatternSchemeCaseInsensitive(): void
-    {
-        $validatorForm = new ValidatorForm();
-        $validator = $this->createValidatorMock();
-
-        $validatorForm->setAttribute('urlWithPattern', 'https://www.yiiframework.com/');
-        $validator->validate($validatorForm);
-
-        $expected = <<<HTML
-        <div>
-        <label for="validatorform-urlwithpattern">Url With Pattern</label>
-        <input type="url" id="validatorform-urlwithpattern" class="is-valid" name="ValidatorForm[urlWithPattern]" value="https://www.yiiframework.com/" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
-        </div>
-        HTML;
-        $this->assertEqualsWithoutLE(
-            $expected,
-            Field::widget($this->fieldConfig)->url($validatorForm, 'urlWithPattern')->render(),
         );
     }
 }

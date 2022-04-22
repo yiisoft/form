@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Widget;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
-use Yiisoft\Form\Widget\Validator\NumberInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Html\Tag\Input;
@@ -19,7 +18,7 @@ use function is_numeric;
  *
  * @link https://www.w3.org/TR/2012/WD-html-markup-20120329/input.range.html
  */
-final class Range extends InputAttributes implements NumberInterface
+final class Range extends InputAttributes
 {
     private array $outputAttributes = [];
     private string $outputTag = 'output';

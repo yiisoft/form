@@ -44,31 +44,6 @@ final class NumberTest extends TestCase
     /**
      * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
      */
-    public function testGetValidatorAttributeNumber(): void
-    {
-        $this->assertEqualsWithoutLE(
-            '<input type="number" id="validatorform-number" name="ValidatorForm[number]" value="0" max="5" min="3">',
-            Number::widget()->for(new ValidatorForm(), 'number')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
-    public function testGetValidatorAttributeRequired(): void
-    {
-        $expected = <<<HTML
-        <input type="number" id="validatorform-numberrequired" name="ValidatorForm[numberRequired]" value="0" required>
-        HTML;
-        $this->assertSame(
-            $expected,
-            Number::widget()->for(new ValidatorForm(), 'numberRequired')->render(),
-        );
-    }
-
-    /**
-     * @throws CircularReferenceException|InvalidConfigException|NotFoundException|NotInstantiableException
-     */
     public function testId(): void
     {
         $this->assertSame(
