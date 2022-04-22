@@ -5,17 +5,24 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Required;
 
 use function is_string;
 
-final class Textarea extends InputField implements PlaceholderInterface, ValidationClassInterface
+final class Textarea
+    extends InputField
+    implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
+    use EnrichmentFromRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -200,6 +207,31 @@ final class Textarea extends InputField implements PlaceholderInterface, Validat
         $new = clone $this;
         $new->inputTagAttributes['wrap'] = $value;
         return $new;
+    }
+
+    /**
+     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     */
+    protected function beforeRender(): void
+    {
+        parent::beforeRender();
+        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
+            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            foreach ($rules as $rule) {
+                if ($rule instanceof Required) {
+                    $this->inputTagAttributes['required'] = true;
+                }
+
+                if ($rule instanceof HasLength) {
+                    if (null !== $min = $rule->getOptions()['min']) {
+                        $this->inputTagAttributes['minlength'] = $min;
+                    }
+                    if (null !== $max = $rule->getOptions()['max']) {
+                        $this->inputTagAttributes['maxlength'] = $max;
+                    }
+                }
+            }
+        }
     }
 
     protected function generateInput(): string
