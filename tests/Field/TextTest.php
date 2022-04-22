@@ -519,19 +519,19 @@ final class TextTest extends TestCase
         return [
             'required' => [
                 '<input type="text" id="textform-company" name="TextForm[company]" value required>',
-                'company'
+                'company',
             ],
             'has-length' => [
                 '<input type="text" id="textform-shortdesc" name="TextForm[shortdesc]" value maxlength="199" minlength="10">',
-                'shortdesc'
+                'shortdesc',
             ],
             'regex' => [
                 '<input type="text" id="textform-code" name="TextForm[code]" value pattern="\w+">',
-                'code'
+                'code',
             ],
             'regex-not' => [
                 '<input type="text" id="textform-nocode" name="TextForm[nocode]" value>',
-                'nocode'
+                'nocode',
             ],
         ];
     }

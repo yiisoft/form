@@ -23,9 +23,7 @@ use function is_string;
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url)
  */
-final class Url
-    extends InputField
-    implements PlaceholderInterface, ValidationClassInterface, EnrichmentFromRulesInterface
+final class Url extends InputField implements PlaceholderInterface, ValidationClassInterface, EnrichmentFromRulesInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;

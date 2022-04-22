@@ -24,9 +24,7 @@ use function is_string;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#password-state-(type=password)
  */
-final class Password
-    extends InputField
-    implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Password extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;

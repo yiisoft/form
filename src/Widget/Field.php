@@ -12,7 +12,6 @@ use Yiisoft\Factory\NotFoundException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Attribute\FieldAttributes;
 use Yiisoft\Form\Widget\Attribute\InputAttributes;
-use Yiisoft\Form\Widget\Attribute\GlobalAttributes;
 use Yiisoft\Form\Widget\Attribute\WidgetAttributes;
 use Yiisoft\Form\Widget\FieldPart\Error;
 use Yiisoft\Form\Widget\FieldPart\Hint;

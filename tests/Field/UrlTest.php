@@ -26,31 +26,31 @@ final class UrlTest extends TestCase
         return [
             'required' => [
                 '<input type="url" id="urlform-company" name="UrlForm[company]" value required>',
-                'company'
+                'company',
             ],
             'has-length' => [
                 '<input type="url" id="urlform-home" name="UrlForm[home]" value maxlength="199" minlength="50">',
-                'home'
+                'home',
             ],
             'regex' => [
                 '<input type="url" id="urlform-code" name="UrlForm[code]" value pattern="\w+">',
-                'code'
+                'code',
             ],
             'regex-not' => [
                 '<input type="url" id="urlform-nocode" name="UrlForm[nocode]" value>',
-                'nocode'
+                'nocode',
             ],
             'url' => [
                 '<input type="url" id="urlform-shop" name="UrlForm[shop]" value pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
-                'shop'
+                'shop',
             ],
             'url-regex' => [
                 '<input type="url" id="urlform-beach" name="UrlForm[beach]" value pattern="\w+">',
-                'beach'
+                'beach',
             ],
             'regex-url' => [
                 '<input type="url" id="urlform-beach2" name="UrlForm[beach2]" value pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
-                'beach2'
+                'beach2',
             ],
         ];
     }
@@ -68,5 +68,4 @@ final class UrlTest extends TestCase
 
         $this->assertSame($expected, $field->render());
     }
-
 }

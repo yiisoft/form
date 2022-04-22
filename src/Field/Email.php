@@ -19,9 +19,7 @@ use Yiisoft\Validator\Rule\Required;
 
 use function is_string;
 
-final class Email
-    extends InputField
-    implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Email extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;

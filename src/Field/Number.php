@@ -21,9 +21,7 @@ use Yiisoft\Validator\Rule\Required;
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#number-state-(type=number)
  */
-final class Number
-    extends InputField
-    implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Number extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;

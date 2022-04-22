@@ -18,9 +18,7 @@ use Yiisoft\Validator\Rule\Required;
 
 use function is_string;
 
-final class Textarea
-    extends InputField
-    implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Textarea extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;

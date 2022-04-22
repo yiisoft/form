@@ -22,9 +22,7 @@ use function is_string;
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#telephone-state-(type=tel)
  */
-final class Telephone
-    extends InputField
-    implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Telephone extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;
