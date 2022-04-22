@@ -514,6 +514,42 @@ final class TextTest extends TestCase
         $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function dataEnrichmentFromRules(): array
+    {
+        return [
+            'required' => [
+                '<input type="text" id="textform-company" name="TextForm[company]" value required>',
+                'company'
+            ],
+            'has-length' => [
+                '<input type="text" id="textform-shortdesc" name="TextForm[shortdesc]" value maxlength="199" minlength="10">',
+                'shortdesc'
+            ],
+            'regex' => [
+                '<input type="text" id="textform-code" name="TextForm[code]" value pattern="\w+">',
+                'code'
+            ],
+            'regex-not' => [
+                '<input type="text" id="textform-nocode" name="TextForm[nocode]" value>',
+                'nocode'
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataEnrichmentFromRules
+     */
+    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    {
+        $field = Text::widget()
+            ->attribute(new TextForm(), $attribute)
+            ->hideLabel()
+            ->enrichmentFromRules(true)
+            ->useContainer(false);
+
+        $this->assertSame($expected, $field->render());
+    }
+
     public function testImmutability(): void
     {
         $field = Text::widget();

@@ -50,6 +50,8 @@ abstract class BaseField extends Widget
         parent::begin();
         $this->isStartedByBegin = true;
 
+        $this->beforeRender();
+
         $content = $this->generateBeginContent();
 
         return $this->renderOpenContainerAndContent($content) . "\n";
@@ -61,6 +63,8 @@ abstract class BaseField extends Widget
             $this->isStartedByBegin = false;
             return $this->renderEnd();
         }
+
+        $this->beforeRender();
 
         $content = $this->generateContent();
         if ($content === null) {
@@ -74,6 +78,10 @@ abstract class BaseField extends Widget
         }
 
         return $result;
+    }
+
+    protected function beforeRender(): void
+    {
     }
 
     abstract protected function generateContent(): ?string;

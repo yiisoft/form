@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
@@ -57,6 +58,7 @@ final class FieldFactory
         private ?bool $usePlaceholder = null,
         private ?string $validClass = null,
         private ?string $invalidClass = null,
+        private ?bool $enrichmentFromRules = null,
         private array $fieldConfigs = [],
     ) {
     }
@@ -302,6 +304,12 @@ final class FieldFactory
         if (is_a($class, PlaceholderInterface::class, true)) {
             if ($this->usePlaceholder !== null) {
                 $config['usePlaceholder()'] = [$this->usePlaceholder];
+            }
+        }
+
+        if (is_a($class, EnrichmentFromRulesInterface::class, true)) {
+            if ($this->enrichmentFromRules !== null) {
+                $config['enrichmentFromRules()'] = [$this->enrichmentFromRules];
             }
         }
 
