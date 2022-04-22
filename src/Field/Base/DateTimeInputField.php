@@ -6,14 +6,18 @@ namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
 use ReflectionClass;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\Rule\Required;
 
 use function is_string;
 
-abstract class DateTimeInputField extends InputField implements ValidationClassInterface
+abstract class DateTimeInputField extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {
+    use EnrichmentFromRulesTrait;
     use ValidationClassTrait;
 
     /**
@@ -133,6 +137,22 @@ abstract class DateTimeInputField extends InputField implements ValidationClassI
         $new = clone $this;
         $new->inputTagAttributes['disabled'] = $disabled;
         return $new;
+    }
+
+    /**
+     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     */
+    protected function beforeRender(): void
+    {
+        parent::beforeRender();
+        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
+            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            foreach ($rules as $rule) {
+                if ($rule instanceof Required) {
+                    $this->inputTagAttributes['required'] = true;
+                }
+            }
+        }
     }
 
     final protected function generateInput(): string
