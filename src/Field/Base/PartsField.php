@@ -4,12 +4,29 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 
+use function in_array;
+
 abstract class PartsField extends BaseField
 {
+    private const BUILTIN_TOKENS = [
+        '{input}',
+        '{label}',
+        '{hint}',
+        '{error}',
+    ];
+
+    /**
+     * @var string[]|Stringable[]
+     * @psalm-var array<non-empty-string,string|Stringable>
+     */
+    private array $extraTokens = [];
+
     protected string $templateBegin = "{label}\n{input}";
     protected string $templateEnd = "{input}\n{hint}\n{error}";
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
@@ -18,6 +35,46 @@ abstract class PartsField extends BaseField
     private array $labelConfig = [];
     private array $hintConfig = [];
     private array $errorConfig = [];
+
+    final public function tokens(array $tokens): static
+    {
+        $new = clone $this;
+
+        foreach ($tokens as $token => $value) {
+            if (!is_string($token)) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Token should be string. %s given.',
+                        $token,
+                    )
+                );
+            }
+
+            if (!is_string($value) && !$value instanceof Stringable) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Token value should be string or Stringable. %s given.',
+                        get_debug_type($value),
+                    )
+                );
+            }
+
+            $this->validateToken($token);
+
+            $new->extraTokens[$token] = $value;
+        }
+
+        return $new;
+    }
+
+    final public function token(string $token, string|Stringable $value): static
+    {
+        $this->validateToken($token);
+
+        $new = clone $this;
+        $new->extraTokens[$token] = $value;
+        return $new;
+    }
 
     /**
      * Set layout template for render a field.
@@ -122,7 +179,7 @@ abstract class PartsField extends BaseField
             '{error}' => $this->generateError(),
         ];
 
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->template, $parts)));
+        return $this->makeContent($this->template, $parts);
     }
 
     final protected function generateBeginContent(): string
@@ -134,7 +191,7 @@ abstract class PartsField extends BaseField
             '{error}' => $this->generateError(),
         ];
 
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateBegin, $parts)));
+        return $this->makeContent($this->templateBegin, $parts);
     }
 
     final protected function generateEndContent(): string
@@ -146,7 +203,16 @@ abstract class PartsField extends BaseField
             '{error}' => $this->generateError(),
         ];
 
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($this->templateEnd, $parts)));
+        return $this->makeContent($this->templateEnd, $parts);
+    }
+
+    private function makeContent(string $template, array $parts): string
+    {
+        if (!empty($this->extraTokens)) {
+            $parts += $this->extraTokens;
+        }
+
+        return preg_replace('/^\h*\v+/m', '', trim(strtr($template, $parts)));
     }
 
     private function generateLabel(): string
@@ -168,5 +234,24 @@ abstract class PartsField extends BaseField
         $error = Error::widget($this->errorConfig);
 
         return $this->renderError($error);
+    }
+
+    /**
+     * @psalm-assert non-empty-string $token
+     */
+    private function validateToken(string $token): void
+    {
+        if (in_array($token, self::BUILTIN_TOKENS, true)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Token name "%s" is built-in.',
+                    $token,
+                )
+            );
+        }
+
+        if ($token === '') {
+            throw new InvalidArgumentException('Token must be non-empty string.');
+        }
     }
 }
