@@ -6,20 +6,24 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
+use Yiisoft\Validator\Rule\Required;
 
 /**
  * A control for selecting amongst a set of options.
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
  */
-final class Select extends InputField implements ValidationClassInterface
+final class Select extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {
+    use EnrichmentFromRulesTrait;
     use ValidationClassTrait;
 
     private SelectTag $select;
@@ -233,6 +237,22 @@ final class Select extends InputField implements ValidationClassInterface
         $new = clone $this;
         $new->select = $this->select->unselectValue($value);
         return $new;
+    }
+
+    /**
+     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     */
+    protected function beforeRender(): void
+    {
+        parent::beforeRender();
+        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
+            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            foreach ($rules as $rule) {
+                if ($rule instanceof Required) {
+                    $this->inputTagAttributes['required'] = true;
+                }
+            }
+        }
     }
 
     protected function generateInput(): string
