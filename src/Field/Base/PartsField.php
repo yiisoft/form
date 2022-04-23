@@ -86,6 +86,20 @@ abstract class PartsField extends BaseField
         return $new;
     }
 
+    final public function templateBegin(string $template): static
+    {
+        $new = clone $this;
+        $new->templateBegin = $template;
+        return $new;
+    }
+
+    final public function templateEnd(string $template): static
+    {
+        $new = clone $this;
+        $new->templateEnd = $template;
+        return $new;
+    }
+
     final public function hideLabel(?bool $hide = true): static
     {
         $new = clone $this;

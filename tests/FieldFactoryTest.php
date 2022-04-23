@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\Tests\Support\AssertTrait;
@@ -31,6 +33,19 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [],
                 'name',
+            ],
+            [
+                <<<'HTML'
+                <div>
+                <label for="textform-company">Company</label>
+                <input type="text" id="textform-company" name="TextForm[company]" value required>
+                <div>Value cannot be blank.</div>
+                </div>
+                HTML,
+                [
+                    'enrichmentFromRules' => true,
+                ],
+                'company',
             ],
             [
                 <<<'HTML'
@@ -239,6 +254,57 @@ final class FieldFactoryTest extends TestCase
         $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function dataFieldSet(): array
+    {
+        return [
+            'empty' => [
+                <<<HTML
+                <div>
+                <fieldset>
+                </fieldset>
+                </div>
+                HTML,
+                [],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataFieldSet
+     */
+    public function testFieldSet(string $expected, array $factoryParameters): void
+    {
+        $field = $this->createFieldFactory($factoryParameters);
+
+        $result = $field->fieldset()->render();
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testFieldSetWithOverrideTemplateBeginAndTemplateEnd(): void
+    {
+        $field = $this->createFieldFactory([
+            'templateBegin' => "before\n{input}",
+            'templateEnd' => "{input}\nafter",
+        ]);
+
+        $field = $field->fieldset();
+
+        $result = $field->begin() . 'hello' . $field::end();
+
+        $expected = <<<HTML
+            <div>
+            before
+            <fieldset>
+            hello
+            </fieldset>
+            after
+            </div>
+            HTML;
+
+        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+    }
+
     public function dataLabel(): array
     {
         return [
@@ -349,6 +415,13 @@ final class FieldFactoryTest extends TestCase
         $result = $field->error(TextForm::validated(), 'name')->render();
 
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testNotInputFieldInInputMethod(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Input widget must be instance of "Yiisoft\Form\Field\Base\InputField".');
+        $this->createFieldFactory()->input(ErrorSummary::class, new ErrorSummaryForm(), 'name');
     }
 
     private function createFieldFactory(array $parameters = []): FieldFactory
