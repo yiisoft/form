@@ -36,6 +36,7 @@ final class FieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        Field::initialize();
     }
 
     public function testButton(): void
