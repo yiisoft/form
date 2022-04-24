@@ -8,7 +8,8 @@ use Yiisoft\Form\FormModel;
 
 final class CheckboxListForm extends FormModel
 {
-    public ?string $color = null;
+    public array $color = [];
+    public int $age = 42;
 
     public function getAttributeLabels(): array
     {
