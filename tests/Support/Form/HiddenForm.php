@@ -9,4 +9,5 @@ use Yiisoft\Form\FormModel;
 final class HiddenForm extends FormModel
 {
     private ?string $key = 'x100';
+    private bool $flag = false;
 }
