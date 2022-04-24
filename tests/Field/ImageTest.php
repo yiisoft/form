@@ -6,14 +6,11 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Image;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ImageTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -26,7 +23,7 @@ final class ImageTest extends TestCase
             ->src('btn.png')
             ->alt('Go')
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <input type="image" src="btn.png" alt="Go">

@@ -6,15 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Select;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class SelectTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,7 +27,7 @@ final class SelectTest extends TestCase
                 2 => 'Two',
             ])
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="selectform-number">Select number</label>
@@ -54,7 +51,7 @@ final class SelectTest extends TestCase
                 20 => 'Twenty',
             ])
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="selectform-count">Select count</label>
@@ -80,7 +77,7 @@ final class SelectTest extends TestCase
             ])
             ->multiple()
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="selectform-letters">Select letters</label>

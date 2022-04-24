@@ -9,7 +9,6 @@ use RuntimeException;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\Form\CheckboxListForm;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
@@ -33,8 +32,6 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class FieldTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -47,7 +44,7 @@ final class FieldTest extends TestCase
         $result = Field::button()
             ->content('Show info')
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="button">Show info</button>
@@ -66,7 +63,7 @@ final class FieldTest extends TestCase
             )
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="reset">Reset Data</button>
@@ -80,7 +77,7 @@ final class FieldTest extends TestCase
     public function testCheckbox(): void
     {
         $result = Field::checkbox(new CheckboxForm(), 'blue')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <input type="hidden" name="CheckboxForm[blue]" value="0"><label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>
@@ -110,13 +107,13 @@ final class FieldTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testDate(): void
     {
         $result = Field::date(new DateForm(), 'birthday')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="dateform-birthday">Your birthday</label>
@@ -131,7 +128,7 @@ final class FieldTest extends TestCase
     public function testDateTime(): void
     {
         $result = Field::dateTime(new DateTimeForm(), 'partyDate')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="datetimeform-partydate">Date of party</label>
@@ -146,7 +143,7 @@ final class FieldTest extends TestCase
     public function testDateTimeLocal(): void
     {
         $result = Field::dateTimeLocal(new DateTimeLocalForm(), 'partyDate')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="datetimelocalform-partydate">Date of party</label>
@@ -161,7 +158,7 @@ final class FieldTest extends TestCase
     public function testEmail(): void
     {
         $result = Field::email(new EmailForm(), 'main')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="emailform-main">Main email</label>
@@ -187,7 +184,7 @@ final class FieldTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testFieldset(): void
@@ -204,7 +201,7 @@ final class FieldTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testHidden(): void
@@ -222,7 +219,7 @@ final class FieldTest extends TestCase
             ->src('btn.png')
             ->alt('Go')
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <input type="image" src="btn.png" alt="Go">
@@ -235,7 +232,7 @@ final class FieldTest extends TestCase
     public function testNumber(): void
     {
         $result = Field::number(new NumberForm(), 'age')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="numberform-age">Your age</label>
@@ -250,7 +247,7 @@ final class FieldTest extends TestCase
     public function testPassword(): void
     {
         $result = Field::password(new PasswordForm(), 'old')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="passwordform-old">Old password</label>
@@ -282,7 +279,7 @@ final class FieldTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testRange(): void
@@ -291,7 +288,7 @@ final class FieldTest extends TestCase
             ->min(1)
             ->max(100)
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="rangeform-volume">Volume level</label>
@@ -307,7 +304,7 @@ final class FieldTest extends TestCase
         $result = Field::resetButton()
             ->content('Reset form')
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="reset">Reset form</button>
@@ -325,7 +322,7 @@ final class FieldTest extends TestCase
                 2 => 'Two',
             ])
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="selectform-number">Select number</label>
@@ -344,7 +341,7 @@ final class FieldTest extends TestCase
         $result = Field::submitButton()
             ->content('Go!')
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="submit">Go!</button>
@@ -357,7 +354,7 @@ final class FieldTest extends TestCase
     public function testTelephone(): void
     {
         $result = Field::telephone(new TelephoneForm(), 'number')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="telephoneform-number">Phone</label>
@@ -372,7 +369,7 @@ final class FieldTest extends TestCase
     public function testText(): void
     {
         $result = Field::text(new TextForm(), 'job')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="textform-job">Job</label>
@@ -386,7 +383,7 @@ final class FieldTest extends TestCase
     public function testTextarea(): void
     {
         $result = Field::textarea(new TextareaForm(), 'desc')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="textareaform-desc">Description</label>
@@ -400,7 +397,7 @@ final class FieldTest extends TestCase
     public function testUrl(): void
     {
         $result = Field::url(new UrlForm(), 'site')->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="urlform-site">Your site</label>
@@ -423,7 +420,7 @@ final class FieldTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testField(): void
@@ -437,7 +434,7 @@ final class FieldTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testGetFactoryWithNonExistConfiguration(): void

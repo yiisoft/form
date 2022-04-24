@@ -6,15 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Range;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class RangeTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,7 +27,7 @@ final class RangeTest extends TestCase
             ->showOutput()
             ->outputTagAttributes(['id' => 'UID'])
             ->render();
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label for="rangeform-volume">Volume level</label>

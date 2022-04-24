@@ -7,15 +7,12 @@ namespace Yiisoft\Form\Tests\Field;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class FieldsetTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,7 +29,7 @@ final class FieldsetTest extends TestCase
             . Field::text($form, 'lastName')->useContainer(false)
             . Fieldset::end();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <fieldset>
@@ -59,7 +56,7 @@ final class FieldsetTest extends TestCase
             )
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <fieldset>

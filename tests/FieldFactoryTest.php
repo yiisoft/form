@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\FieldFactory;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -17,8 +16,6 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class FieldFactoryTest extends TestCase
 {
-    use AssertTrait;
-
     public function dataText(): array
     {
         return [
@@ -209,7 +206,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->text(TextForm::validated(), $attribute)->render();
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataErrorSummary(): array
@@ -251,7 +248,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->errorSummary(ErrorSummaryForm::validated())->render();
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataFieldSet(): array
@@ -278,7 +275,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->fieldset()->render();
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testFieldSetWithOverrideTemplateBeginAndTemplateEnd(): void
@@ -302,7 +299,7 @@ final class FieldFactoryTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataLabel(): array
@@ -346,7 +343,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->label(new TextForm(), 'job')->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataHint(): array
@@ -380,7 +377,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->hint(new TextForm(), 'name')->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataError(): array
@@ -414,7 +411,7 @@ final class FieldFactoryTest extends TestCase
 
         $result = $field->error(TextForm::validated(), 'name')->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testNotInputFieldInInputMethod(): void

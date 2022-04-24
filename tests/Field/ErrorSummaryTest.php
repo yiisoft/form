@@ -6,15 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\ErrorSummary;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorSummaryTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,7 +33,7 @@ final class ErrorSummaryTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testNonValidateForm(): void

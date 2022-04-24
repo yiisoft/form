@@ -6,15 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\ButtonGroup;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ButtonGroupTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,7 +34,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testButtonsData(): void
@@ -56,7 +53,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testButtonAttributes(): void
@@ -76,7 +73,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testReplaceButtonAttributes(): void
@@ -97,7 +94,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testDisabled(): void
@@ -117,7 +114,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testForm(): void
@@ -137,7 +134,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testSeparator(): void
@@ -158,7 +155,7 @@ final class ButtonGroupTest extends TestCase
             </div>
             HTML;
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testImmutability(): void

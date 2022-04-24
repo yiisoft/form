@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Checkbox;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -15,8 +14,6 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class CheckboxTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,7 +33,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testFalseValue(): void
@@ -51,7 +48,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputValue(): void
@@ -68,7 +65,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCheckedInputValue(): void
@@ -84,7 +81,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataUncheckValue(): array
@@ -115,7 +112,7 @@ final class CheckboxTest extends TestCase
             '<label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>' . "\n" .
             '</div>';
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testNotEnclosedByLabel(): void
@@ -132,7 +129,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testBothLabels(): void
@@ -150,7 +147,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testBothLabelsWithNotEnclosedByLabel(): void
@@ -169,7 +166,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputLabelEncode(): void
@@ -185,7 +182,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputLabelNotEncode(): void
@@ -202,7 +199,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputLabelEncodeNotEnclosedByLabel(): void
@@ -220,7 +217,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputLabelNotEncodeNotEnclosedByLabel(): void
@@ -239,7 +236,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputLabelAttributes(): void
@@ -255,7 +252,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testDisabled(): void
@@ -272,7 +269,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testAriaDescibedBy(): void
@@ -289,7 +286,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testAriaLabel(): void
@@ -306,7 +303,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testAutofocus(): void
@@ -323,7 +320,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testTabIndex(): void
@@ -340,7 +337,7 @@ final class CheckboxTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInvalidValue(): void

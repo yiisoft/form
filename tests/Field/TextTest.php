@@ -7,15 +7,12 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class TextTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,7 +34,7 @@ final class TextTest extends TestCase
             ->attribute(TextForm::validated(), 'name')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInvalidValue(): void
@@ -62,7 +59,7 @@ final class TextTest extends TestCase
             ->useContainer(false)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomContainerTag(): void
@@ -79,7 +76,7 @@ final class TextTest extends TestCase
             ->containerTag('section')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testEmptyContainerTag(): void
@@ -105,7 +102,7 @@ final class TextTest extends TestCase
             ->containerTagAttributes(['class' => 'wrapper', 'id' => 'main'])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomTemplate(): void
@@ -126,7 +123,7 @@ final class TextTest extends TestCase
             ->template("<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>")
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomInputId(): void
@@ -143,7 +140,7 @@ final class TextTest extends TestCase
             ->inputId('CustomID')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testDoNotSetInputIdAttribute(): void
@@ -160,7 +157,7 @@ final class TextTest extends TestCase
             ->setInputIdAttribute(false)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomLabelConfig(): void
@@ -180,7 +177,7 @@ final class TextTest extends TestCase
             ])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomLabel(): void
@@ -197,7 +194,7 @@ final class TextTest extends TestCase
             ->label('Your job')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomHintConfig(): void
@@ -218,7 +215,7 @@ final class TextTest extends TestCase
             ])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomHint(): void
@@ -236,7 +233,7 @@ final class TextTest extends TestCase
             ->hint('Custom hint.')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomErrorConfig(): void
@@ -258,7 +255,7 @@ final class TextTest extends TestCase
             ])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testOverridePlaceholder(): void
@@ -277,7 +274,7 @@ final class TextTest extends TestCase
             ->placeholder('Input your pretty name')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testDoNotSetPlaceholder(): void
@@ -296,7 +293,7 @@ final class TextTest extends TestCase
             ->usePlaceholder(false)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputTagAttributes(): void
@@ -313,7 +310,7 @@ final class TextTest extends TestCase
             ->inputTagAttributes(['class' => 'red'])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputTagAttributesOverridePlaceholderFromForm(): void
@@ -332,7 +329,7 @@ final class TextTest extends TestCase
             ->inputTagAttributes(['placeholder' => 'Input your pretty name'])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputTagAttributesOverrideIdFromForm(): void
@@ -351,7 +348,7 @@ final class TextTest extends TestCase
             ->inputTagAttributes(['id' => 'MyID'])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInputIdOverrideIdFromTagAttributes(): void
@@ -371,7 +368,7 @@ final class TextTest extends TestCase
             ->inputTagAttributes(['id' => 'MyID'])
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testDirname(): void
@@ -388,7 +385,7 @@ final class TextTest extends TestCase
             ->dirname('test')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testMaxlength(): void
@@ -405,7 +402,7 @@ final class TextTest extends TestCase
             ->maxlength(5)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testMinlength(): void
@@ -422,7 +419,7 @@ final class TextTest extends TestCase
             ->minlength(5)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testPattern(): void
@@ -439,7 +436,7 @@ final class TextTest extends TestCase
             ->pattern('[0-9]{3}')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testSize(): void
@@ -456,7 +453,7 @@ final class TextTest extends TestCase
             ->size(12)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testValidationClassForNonValidatedForm(): void
@@ -474,7 +471,7 @@ final class TextTest extends TestCase
             ->attribute(new TextForm(), 'job')
             ->render();
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testInvalidClass(): void
@@ -493,7 +490,7 @@ final class TextTest extends TestCase
             ->attribute(TextForm::validated(), 'company')
             ->render();
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testValidClass(): void
@@ -511,7 +508,7 @@ final class TextTest extends TestCase
             ->attribute(TextForm::validated(), 'job')
             ->render();
 
-        $this->assertStringEqualsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function dataEnrichmentFromRules(): array

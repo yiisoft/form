@@ -6,15 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Date;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class DateTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -35,7 +32,7 @@ final class DateTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 
     public function testRange(): void
@@ -53,6 +50,6 @@ final class DateTest extends TestCase
         </div>
         HTML;
 
-        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+        $this->assertSame($expected, $result);
     }
 }

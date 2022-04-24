@@ -6,15 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\SubmitButton;
-use Yiisoft\Form\Tests\Support\AssertTrait;
 use Yiisoft\Html\Tag\Button;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
 final class SubmitButtonTest extends TestCase
 {
-    use AssertTrait;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,7 +24,7 @@ final class SubmitButtonTest extends TestCase
             ->content('Go!')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="submit">Go!</button>
@@ -47,7 +44,7 @@ final class SubmitButtonTest extends TestCase
             ->button($button)
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="submit" class="red">Go!</button>
@@ -85,7 +82,7 @@ final class SubmitButtonTest extends TestCase
             ->label('Click here!')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <label>Click here!</label>
@@ -103,7 +100,7 @@ final class SubmitButtonTest extends TestCase
             ->hint('Click here!')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="submit">Go!</button>
@@ -121,7 +118,7 @@ final class SubmitButtonTest extends TestCase
             ->error('error message')
             ->render();
 
-        $this->assertStringContainsStringIgnoringLineEndings(
+        $this->assertSame(
             <<<HTML
             <div>
             <button type="submit">Go!</button>
