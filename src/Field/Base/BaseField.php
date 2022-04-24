@@ -54,7 +54,12 @@ abstract class BaseField extends Widget
 
         $content = $this->generateBeginContent();
 
-        return $this->renderOpenContainerAndContent($content) . "\n";
+        $html = $this->renderOpenContainerAndContent($content);
+        if ($html === '') {
+            return '';
+        }
+
+        return $html . "\n";
     }
 
     final protected function run(): string
