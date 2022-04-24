@@ -61,7 +61,6 @@ final class ButtonGroupTest extends TestCase
 
     public function testButtonAttributes(): void
     {
-
         $result = ButtonGroup::widget()
             ->buttonsData([
                 ['Reset', 'type' => 'reset'],
