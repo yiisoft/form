@@ -134,7 +134,7 @@ final class ErrorSummaryTest extends TestCase
 
     public function testWithoutForm(): void
     {
-        $field =  ErrorSummary::widget();
+        $field = ErrorSummary::widget();
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Form model is not set.');

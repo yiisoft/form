@@ -105,7 +105,7 @@ final class CheckboxListTest extends TestCase
             ])
             ->attribute(new CheckboxListForm(), 'color')
             ->individualInputAttributes([
-                'red' => ['class' => 'control']
+                'red' => ['class' => 'control'],
             ])
             ->render();
 
@@ -132,10 +132,10 @@ final class CheckboxListTest extends TestCase
             ])
             ->attribute(new CheckboxListForm(), 'color')
             ->individualInputAttributes([
-                'red' => ['class' => 'control']
+                'red' => ['class' => 'control'],
             ])
             ->replaceIndividualInputAttributes([
-                'blue' => ['class' => 'control']
+                'blue' => ['class' => 'control'],
             ])
             ->render();
 
