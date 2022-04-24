@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
+use Yiisoft\Html\Tag\Legend;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -69,5 +70,98 @@ final class FieldsetTest extends TestCase
             HTML,
             $result
         );
+    }
+
+    public function testLegend(): void
+    {
+        $result = Fieldset::widget()
+            ->legend('test')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <fieldset>
+            <legend>test</legend>
+            </fieldset>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testLegendTag(): void
+    {
+        $result = Fieldset::widget()
+            ->legendTag(Legend::tag()->content('test'))
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <fieldset>
+            <legend>test</legend>
+            </fieldset>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testDisabled(): void
+    {
+        $result = Fieldset::widget()
+            ->disabled()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <fieldset disabled>
+            </fieldset>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testForm(): void
+    {
+        $result = Fieldset::widget()
+            ->form('CreatePost')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <fieldset form="CreatePost">
+            </fieldset>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testName(): void
+    {
+        $result = Fieldset::widget()
+            ->name('test')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <fieldset name="test">
+            </fieldset>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testImmutability(): void
+    {
+        $field = Fieldset::widget();
+
+        $this->assertNotSame($field, $field->legend(null));
+        $this->assertNotSame($field, $field->legendTag(null));
+        $this->assertNotSame($field, $field->disabled());
+        $this->assertNotSame($field, $field->form(null));
+        $this->assertNotSame($field, $field->name(null));
     }
 }
