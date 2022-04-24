@@ -115,7 +115,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    public function ariaDescribedBy(string $value): self
+    public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['aria-describedby'] = $value;
@@ -127,7 +127,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
      *
      * @link https://w3c.github.io/aria/#aria-label
      */
-    public function ariaLabel(string $value): self
+    public function ariaLabel(?string $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['aria-label'] = $value;

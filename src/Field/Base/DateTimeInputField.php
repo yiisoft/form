@@ -45,7 +45,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    final public function ariaDescribedBy(string $value): static
+    final public function ariaDescribedBy(?string $value): static
     {
         $new = clone $this;
         $new->inputTagAttributes['aria-describedby'] = $value;
@@ -57,7 +57,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
      *
      * @link https://w3c.github.io/aria/#aria-label
      */
-    final public function ariaLabel(string $value): static
+    final public function ariaLabel(?string $value): static
     {
         $new = clone $this;
         $new->inputTagAttributes['aria-label'] = $value;

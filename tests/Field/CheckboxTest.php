@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Tests\Support\AssertTrait;
@@ -257,6 +258,100 @@ final class CheckboxTest extends TestCase
         $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
     }
 
+    public function testDisabled(): void
+    {
+        $result = Checkbox::widget()
+            ->attribute(new CheckboxForm(), 'blue')
+            ->disabled()
+            ->uncheckValue(null)
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1" disabled> Blue color</label>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testAriaDescibedBy(): void
+    {
+        $result = Checkbox::widget()
+            ->attribute(new CheckboxForm(), 'blue')
+            ->ariaDescribedBy('hint')
+            ->uncheckValue(null)
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1" aria-describedby="hint"> Blue color</label>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testAriaLabel(): void
+    {
+        $result = Checkbox::widget()
+            ->attribute(new CheckboxForm(), 'blue')
+            ->ariaLabel('test')
+            ->uncheckValue(null)
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1" aria-label="test"> Blue color</label>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testAutofocus(): void
+    {
+        $result = Checkbox::widget()
+            ->attribute(new CheckboxForm(), 'blue')
+            ->autofocus()
+            ->uncheckValue(null)
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1" autofocus> Blue color</label>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testTabIndex(): void
+    {
+        $result = Checkbox::widget()
+            ->attribute(new CheckboxForm(), 'blue')
+            ->tabIndex(2)
+            ->uncheckValue(null)
+            ->render();
+
+        $expected = <<<'HTML'
+        <div>
+        <label><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1" tabindex="2"> Blue color</label>
+        </div>
+        HTML;
+
+        $this->assertStringContainsStringIgnoringLineEndings($expected, $result);
+    }
+
+    public function testInvalidValue(): void
+    {
+        $field = Checkbox::widget()->attribute(new CheckboxForm(), 'object');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage('Checkbox widget requires a string, numeric, bool, Stringable or null value.');
+        $field->render();
+    }
+
     public function testImmutability(): void
     {
         $widget = Checkbox::widget();
@@ -266,5 +361,10 @@ final class CheckboxTest extends TestCase
         $this->assertNotSame($widget, $widget->inputLabel(null));
         $this->assertNotSame($widget, $widget->inputLabelAttributes([]));
         $this->assertNotSame($widget, $widget->inputValue(null));
+        $this->assertNotSame($widget, $widget->disabled());
+        $this->assertNotSame($widget, $widget->ariaDescribedBy(null));
+        $this->assertNotSame($widget, $widget->ariaLabel(null));
+        $this->assertNotSame($widget, $widget->autofocus());
+        $this->assertNotSame($widget, $widget->tabIndex(null));
     }
 }
