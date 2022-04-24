@@ -5,10 +5,29 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Support\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Regex;
+use Yiisoft\Validator\Rule\Required;
 
 final class EmailForm extends FormModel
 {
     public string $main = '';
+    public ?string $second = null;
+    public int $age = 42;
+    public ?string $cto = null;
+    public ?string $teamlead = null;
+    public ?string $code = null;
+    public ?string $nocode = null;
+
+    public function getRules(): array
+    {
+        return [
+            'cto' => [new Required()],
+            'teamlead' => [new HasLength(min: 10, max: 199)],
+            'code' => [new Regex(pattern: '~\w+@\w+~')],
+            'nocode' => [new Regex(pattern: '~\w+@\w+~', not: true)],
+        ];
+    }
 
     public function getAttributeLabels(): array
     {
