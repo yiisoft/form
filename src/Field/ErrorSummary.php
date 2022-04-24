@@ -135,7 +135,7 @@ final class ErrorSummary extends BaseField
             $content[] = Html::p($this->header, $this->headerAttributes)->render();
         }
 
-        $content[] = Html::ul()->strings($messages)->render();
+        $content[] = Html::ul()->strings($messages, [], $this->encode)->render();
 
         if ($this->footer !== '') {
             $content[] = Html::p($this->footer, $this->footerAttributes)->render();
@@ -156,7 +156,6 @@ final class ErrorSummary extends BaseField
         }
 
         $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
-        $errorMessages = [];
 
         if ($this->showAllErrors) {
             $errors = HtmlFormErrors::getErrorSummary($this->formModel, $this->onlyAttributes);
@@ -167,18 +166,9 @@ final class ErrorSummary extends BaseField
         /**
          * If there are the same error messages for different attributes, array_unique will leave gaps between
          * sequential keys. Applying array_values to reorder array keys.
+         *
+         * @var string[]
          */
-        $lines = array_values(array_unique($errors));
-
-        if ($this->encode) {
-            /** @var string $line */
-            foreach ($lines as $line) {
-                if (!empty($line)) {
-                    $errorMessages[] = Html::encode($line);
-                }
-            }
-        }
-
-        return $errorMessages;
+        return array_values(array_unique($errors));
     }
 }

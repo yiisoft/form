@@ -244,6 +244,17 @@ final class FieldFactoryTest extends TestCase
      */
     public function testErrorSummary(string $expected, array $factoryParameters): void
     {
+        $factoryParameters = array_merge(
+            [
+                'fieldConfigs' => [
+                    ErrorSummary::class => [
+                        'onlyAttributes()' => ['name'],
+                    ],
+                ],
+            ],
+            $factoryParameters
+        );
+
         $field = $this->createFieldFactory($factoryParameters);
 
         $result = $field->errorSummary(ErrorSummaryForm::validated())->render();
