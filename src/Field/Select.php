@@ -221,11 +221,11 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     /**
      * The size of the control.
      *
-     * @param int $value The number of options to show to the user.
+     * @param int|null $value The number of options to show to the user.
      *
      * @link https://html.spec.whatwg.org/multipage/form-elements.html#attr-select-size
      */
-    public function size(int $value): self
+    public function size(?int $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['size'] = $value;

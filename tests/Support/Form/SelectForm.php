@@ -4,13 +4,31 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Support\Form;
 
+use stdClass;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\Rule\Required;
 
 final class SelectForm extends FormModel
 {
-    public ?int $number = null;
-    public int $count = 15;
-    public array $letters = ['A', 'C'];
+    private ?int $number = null;
+    private int $count = 15;
+    private array $letters = ['A', 'C'];
+    private ?string $item = null;
+    private stdClass $object;
+    private ?int $color = null;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->object = new stdClass();
+    }
+
+    public function getRules(): array
+    {
+        return [
+            'color' => [new Required()],
+        ];
+    }
 
     public function getAttributeLabels(): array
     {
