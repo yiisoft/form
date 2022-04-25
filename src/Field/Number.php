@@ -189,7 +189,7 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
         $value = $this->getAttributeValue();
 
         if (!is_numeric($value) && $value !== null) {
-            throw new InvalidArgumentException('Number widget must be a numeric or null value.');
+            throw new InvalidArgumentException('Number field requires a numeric or null value.');
         }
 
         $tagAttributes = $this->getInputTagAttributes();

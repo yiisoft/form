@@ -285,7 +285,7 @@ final class NumberTest extends TestCase
             ->attribute(new NumberForm(), 'name');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Number widget must be a numeric or null value.');
+        $this->expectExceptionMessage('Number field requires a numeric or null value.');
         $widget->render();
     }
 

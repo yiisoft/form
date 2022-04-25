@@ -32,12 +32,12 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     /**
      * Maximum length of value.
      *
-     * @param int $value A limit on the number of characters a user can input.
+     * @param int|null $value A limit on the number of characters a user can input.
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-maxlength
      */
-    public function maxlength(int $value): self
+    public function maxlength(?int $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['maxlength'] = $value;
@@ -47,12 +47,12 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     /**
      * Minimum length of value.
      *
-     * @param int $value A lower bound on the number of characters a user can input.
+     * @param int|null $value A lower bound on the number of characters a user can input.
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-minlength
      */
-    public function minlength(int $value): self
+    public function minlength(?int $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['minlength'] = $value;
@@ -62,11 +62,11 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     /**
      * Pattern to be matched by the form control's value.
      *
-     * @param string $value A regular expression against which the control's value.
+     * @param string|null $value A regular expression against which the control's value.
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
      */
-    public function pattern(string $value): self
+    public function pattern(?string $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['pattern'] = $value;
@@ -175,11 +175,11 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     /**
      * The size of the control.
      *
-     * @param int $value The number of characters that allow the user to see while editing the element's value.
+     * @param int|null $value The number of characters that allow the user to see while editing the element's value.
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-size
      */
-    public function size(int $value): self
+    public function size(?int $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['size'] = $value;
@@ -237,7 +237,7 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
         $value = $this->getAttributeValue();
 
         if (!is_string($value) && $value !== null) {
-            throw new InvalidArgumentException('URL widget must be a string or null value.');
+            throw new InvalidArgumentException('URL field requires a string or null value.');
         }
 
         $tagAttributes = $this->getInputTagAttributes();

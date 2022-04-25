@@ -20,6 +20,8 @@ final class UrlForm extends FormModel
     public string $shop = '';
     public string $beach = '';
     public string $beach2 = '';
+    public ?string $post = null;
+    public int $age = 42;
 
     public function getAttributeLabels(): array
     {
