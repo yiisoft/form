@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
 use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
@@ -30,7 +31,7 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
     /**
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-max
      */
-    public function max(?string $value): self
+    public function max(int|float|string|Stringable|null $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['max'] = $value;
@@ -40,10 +41,22 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
     /**
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-min
      */
-    public function min(?string $value): self
+    public function min(int|float|string|Stringable|null $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['min'] = $value;
+        return $new;
+    }
+
+    /**
+     * Granularity to be matched by the form control's value.
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-step
+     */
+    public function step(float|int|string|Stringable|null $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['step'] = $value;
         return $new;
     }
 
