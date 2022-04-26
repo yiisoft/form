@@ -303,9 +303,7 @@ final class FieldFactoryTest extends TestCase
         $expected = <<<HTML
             <div>
             before
-            <fieldset>
-            hello
-            </fieldset>
+            <fieldset>hello</fieldset>
             after
             </div>
             HTML;

@@ -25,9 +25,11 @@ final class FieldsetTest extends TestCase
         $form = new FieldsetForm();
 
         $result = Fieldset::widget()->begin()
+            . "\n"
             . Field::text($form, 'firstName')->useContainer(false)
             . "\n"
             . Field::text($form, 'lastName')->useContainer(false)
+            . "\n"
             . Fieldset::end();
 
         $this->assertSame(

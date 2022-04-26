@@ -59,7 +59,7 @@ abstract class BaseField extends Widget
             return '';
         }
 
-        return $html . "\n";
+        return $html;
     }
 
     final protected function run(): string
@@ -115,10 +115,7 @@ abstract class BaseField extends Widget
 
         $containerTag = CustomTag::name($this->containerTag);
 
-        return
-            "\n"
-            . ($content !== '' ? $content . "\n" : '')
-            . $containerTag->close();
+        return ($content !== '' ? $content . "\n" : '') . $containerTag->close();
     }
 
     private function renderOpenContainerAndContent(string $content): string
