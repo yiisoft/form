@@ -25,7 +25,7 @@ abstract class InputField extends PartsField
      *
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fae-form
      */
-    final public function form(string $value): static
+    final public function form(?string $value): static
     {
         $new = clone $this;
         $new->inputTagAttributes['form'] = $value;
