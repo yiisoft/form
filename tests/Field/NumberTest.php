@@ -20,7 +20,7 @@ final class NumberTest extends TestCase
         WidgetFactory::initialize(new SimpleContainer());
     }
 
-    public function testNumber(): void
+    public function testBase(): void
     {
         $result = Number::widget()
             ->attribute(new NumberForm(), 'age')

@@ -209,7 +209,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
         $value = $this->getAttributeValue();
 
         if (!is_string($value) && !is_numeric($value) && $value !== null) {
-            throw new InvalidArgumentException('Range widget requires a string, numeric or null value.');
+            throw new InvalidArgumentException('Range field requires a string, numeric or null value.');
         }
 
         $tag = Html::range($this->getInputName(), $value, $this->getInputTagAttributes());
