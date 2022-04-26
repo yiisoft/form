@@ -162,7 +162,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException(
                 (new ReflectionClass($this))->getShortName() .
-                ' widget must be a string or null value.'
+                ' field requires a string or null value.'
             );
         }
 
