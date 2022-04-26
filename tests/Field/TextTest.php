@@ -456,6 +456,111 @@ final class TextTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testReadonly(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->readonly()
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value readonly>',
+            $result
+        );
+    }
+
+    public function testRequired(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->required()
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value required>',
+            $result
+        );
+    }
+
+    public function testDisabled(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->disabled()
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value disabled>',
+            $result
+        );
+    }
+
+    public function testAriaDescribedBy(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->ariaDescribedBy('hint')
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value aria-describedby="hint">',
+            $result
+        );
+    }
+
+    public function testAriaLabel(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->ariaLabel('test')
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value aria-label="test">',
+            $result
+        );
+    }
+
+    public function testAutofocus(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->autofocus()
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value autofocus>',
+            $result
+        );
+    }
+
+    public function testTabIndex(): void
+    {
+        $result = Text::widget()
+            ->attribute(new TextForm(), 'job')
+            ->useContainer(false)
+            ->hideLabel()
+            ->tabIndex(5)
+            ->render();
+
+        $this->assertSame(
+            '<input type="text" id="textform-job" name="TextForm[job]" value tabindex="5">',
+            $result
+        );
+    }
+
     public function testValidationClassForNonValidatedForm(): void
     {
         $expected = <<<'HTML'
@@ -551,10 +656,17 @@ final class TextTest extends TestCase
     {
         $field = Text::widget();
 
-        $this->assertNotSame($field, $field->dirname('test'));
-        $this->assertNotSame($field, $field->maxlength(6));
-        $this->assertNotSame($field, $field->minlength(2));
-        $this->assertNotSame($field, $field->pattern('[a-z]'));
-        $this->assertNotSame($field, $field->size(5));
+        $this->assertNotSame($field, $field->maxlength(null));
+        $this->assertNotSame($field, $field->minlength(null));
+        $this->assertNotSame($field, $field->dirname(null));
+        $this->assertNotSame($field, $field->pattern(null));
+        $this->assertNotSame($field, $field->readonly());
+        $this->assertNotSame($field, $field->required());
+        $this->assertNotSame($field, $field->disabled());
+        $this->assertNotSame($field, $field->ariaDescribedBy(null));
+        $this->assertNotSame($field, $field->ariaLabel(null));
+        $this->assertNotSame($field, $field->autofocus());
+        $this->assertNotSame($field, $field->tabIndex(null));
+        $this->assertNotSame($field, $field->size(null));
     }
 }
