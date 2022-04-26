@@ -249,7 +249,7 @@ final class TelephoneTest extends TestCase
 
     public function testImmutability(): void
     {
-        $field  =Telephone::widget();
+        $field = Telephone::widget();
 
         $this->assertNotSame($field, $field->maxlength(null));
         $this->assertNotSame($field, $field->minlength(null));
