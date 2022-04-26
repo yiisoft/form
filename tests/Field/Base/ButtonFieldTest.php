@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Tests\Support\StubButtonField;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Test\Support\Container\SimpleContainer;
