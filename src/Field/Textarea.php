@@ -27,12 +27,12 @@ final class Textarea extends InputField implements EnrichmentFromRulesInterface,
     /**
      * Maximum length of value.
      *
-     * @param int $value A limit on the number of characters a user can input.
+     * @param int|null $value A limit on the number of characters a user can input.
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-maxlength
      */
-    public function maxlength(int $value): self
+    public function maxlength(?int $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['maxlength'] = $value;
@@ -42,12 +42,12 @@ final class Textarea extends InputField implements EnrichmentFromRulesInterface,
     /**
      * Minimum length of value.
      *
-     * @param int $value A lower bound on the number of characters a user can input.
+     * @param int|null $value A lower bound on the number of characters a user can input.
      *
      * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
      * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-minlength
      */
-    public function minlength(int $value): self
+    public function minlength(?int $value): self
     {
         $new = clone $this;
         $new->inputTagAttributes['minlength'] = $value;
@@ -237,7 +237,7 @@ final class Textarea extends InputField implements EnrichmentFromRulesInterface,
         $value = $this->getAttributeValue();
 
         if (!is_string($value) && $value !== null) {
-            throw new InvalidArgumentException('Textarea widget must be a string or null value.');
+            throw new InvalidArgumentException('Textarea field requires a string or null value.');
         }
 
         $tagAttributes = $this->getInputTagAttributes();
