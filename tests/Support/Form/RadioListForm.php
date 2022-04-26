@@ -8,7 +8,9 @@ use Yiisoft\Form\FormModel;
 
 final class RadioListForm extends FormModel
 {
-    public ?string $color = null;
+    private ?string $color = null;
+    private ?int $number = null;
+    private array $data = [];
 
     public function getAttributeLabels(): array
     {
