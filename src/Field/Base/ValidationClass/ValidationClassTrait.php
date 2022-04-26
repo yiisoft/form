@@ -18,7 +18,7 @@ trait ValidationClassTrait
     /**
      * Set invalid CSS class.
      */
-    public function invalidClass(string $class): self
+    public function invalidClass(?string $class): self
     {
         $new = clone $this;
         $new->invalidClass = $class;
@@ -28,7 +28,7 @@ trait ValidationClassTrait
     /**
      * Set valid CSS class.
      */
-    public function validClass(string $class): self
+    public function validClass(?string $class): self
     {
         $new = clone $this;
         $new->validClass = $class;
