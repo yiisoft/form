@@ -22,8 +22,8 @@ use Yiisoft\Validator\Rule\Required;
  */
 final class File extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {
-    use ValidationClassTrait;
     use EnrichmentFromRulesTrait;
+    use ValidationClassTrait;
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
 
