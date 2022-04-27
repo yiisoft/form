@@ -26,6 +26,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     use ValidationClassTrait;
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
+    private array $uncheckInputTagAttributes = [];
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -137,6 +138,13 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         return $new;
     }
 
+    public function uncheckInputTagAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->uncheckInputTagAttributes = $attributes;
+        return $new;
+    }
+
     /**
      * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
      */
@@ -171,6 +179,9 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         $tag = Html::file($this->getInputName(), $value, $tagAttributes);
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
+            if (!empty($this->uncheckInputTagAttributes)) {
+                $tag = $tag->uncheckInputTagAttributes($this->uncheckInputTagAttributes);
+            }
         }
 
         return $tag->render();

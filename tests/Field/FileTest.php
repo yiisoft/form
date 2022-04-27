@@ -193,6 +193,24 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testUncheckInputTagAttributes(): void
+    {
+        $result = File::widget()
+            ->attribute(new FileForm(), 'avatar')
+            ->hideLabel()
+            ->uncheckValue('0')
+            ->uncheckInputTagAttributes(['data-key' => '100'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="hidden" name="FileForm[avatar]" value="0" data-key="100"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testEnrichmentFromRules(): void
     {
         $result = File::widget()
