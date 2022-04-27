@@ -281,12 +281,12 @@ final class NumberTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $widget = Number::widget()
+        $field = Number::widget()
             ->attribute(new NumberForm(), 'name');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number field requires a numeric or null value.');
-        $widget->render();
+        $field->render();
     }
 
     public function dataEnrichmentFromRules(): array

@@ -20,6 +20,7 @@ use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Fieldset;
+use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Field\Image;
 use Yiisoft\Form\Field\Number;
@@ -115,6 +116,11 @@ final class FieldFactory
     public function fieldset(array $config = []): Fieldset
     {
         return $this->field(Fieldset::class, $config);
+    }
+
+    public function file(FormModelInterface $formModel, string $attribute, array $config = []): File
+    {
+        return $this->input(File::class, $formModel, $attribute, $config);
     }
 
     public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden

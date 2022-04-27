@@ -16,6 +16,7 @@ use Yiisoft\Form\Tests\Support\Form\DateTimeForm;
 use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
 use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
+use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
@@ -203,6 +204,20 @@ final class FieldTest extends TestCase
         HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testFile(): void
+    {
+        $result = Field::file(new FileForm(), 'avatar')->render();
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <label for="fileform-avatar">Avatar</label>
+            <input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            </div>
+            HTML,
+            $result
+        );
     }
 
     public function testHidden(): void
