@@ -38,4 +38,6 @@ trait PlaceholderTrait
             }
         }
     }
+
+    abstract protected function getAttributePlaceholder(): ?string;
 }
