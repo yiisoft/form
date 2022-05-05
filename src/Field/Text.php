@@ -23,6 +23,7 @@ use function is_string;
  * Generates a text input tag for the given form attribute.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search)
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/text
  */
 final class Text extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
@@ -31,32 +32,39 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     use ValidationClassTrait;
 
     /**
-     * Maximum length of value.
+     * Identifies the element (or elements) that describes the object.
      *
-     * @param int|null $value A limit on the number of characters a user can input.
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-maxlength
+     * @link https://w3c.github.io/aria/#aria-describedby
      */
-    public function maxlength(?int $value): self
+    public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['maxlength'] = $value;
+        $new->inputTagAttributes['aria-describedby'] = $value;
         return $new;
     }
 
     /**
-     * Minimum length of value.
+     * Defines a string value that labels the current element.
      *
-     * @param int|null $value A lower bound on the number of characters a user can input.
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-minlength
+     * @link https://w3c.github.io/aria/#aria-label
      */
-    public function minlength(?int $value): self
+    public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['minlength'] = $value;
+        $new->inputTagAttributes['aria-label'] = $value;
+        return $new;
+    }
+
+    /**
+     * Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus
+     * at the same time.
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus
+     */
+    public function autofocus(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -71,6 +79,46 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     {
         $new = clone $this;
         $new->inputTagAttributes['dirname'] = $value;
+        return $new;
+    }
+
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    public function disabled(bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
+        return $new;
+    }
+
+    /**
+     * Set value of `maxlength` HTML attribute, that define maximum length of value.
+     *
+     * @param int|null $value A limit on the number of characters a user can input.
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-maxlength
+     */
+    public function maxlength(?int $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['maxlength'] = $value;
+        return $new;
+    }
+
+    /**
+     * Set value of `minlength` HTML attribute, that define minimum length of value.
+     *
+     * @param int|null $value A lower bound on the number of characters a user can input.
+     *
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-minlength
+     */
+    public function minlength(?int $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['minlength'] = $value;
         return $new;
     }
 
@@ -117,49 +165,16 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     }
 
     /**
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
-     */
-    public function disabled(bool $disabled = true): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
-        return $new;
-    }
-
-    /**
-     * Identifies the element (or elements) that describes the object.
+     * The size of the control.
      *
-     * @link https://w3c.github.io/aria/#aria-describedby
-     */
-    public function ariaDescribedBy(?string $value): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
-        return $new;
-    }
-
-    /**
-     * Defines a string value that labels the current element.
+     * @param int|null $value The number of characters that allow the user to see while editing the element's value.
      *
-     * @link https://w3c.github.io/aria/#aria-label
+     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-size
      */
-    public function ariaLabel(?string $value): self
+    public function size(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
-        return $new;
-    }
-
-    /**
-     * Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus
-     * at the same time.
-     *
-     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus
-     */
-    public function autofocus(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputTagAttributes['size'] = $value;
         return $new;
     }
 
@@ -184,20 +199,6 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     {
         $new = clone $this;
         $new->inputTagAttributes['tabindex'] = $value;
-        return $new;
-    }
-
-    /**
-     * The size of the control.
-     *
-     * @param int|null $value The number of characters that allow the user to see while editing the element's value.
-     *
-     * @link https://html.spec.whatwg.org/multipage/input.html#attr-input-size
-     */
-    public function size(?int $value): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['size'] = $value;
         return $new;
     }
 
