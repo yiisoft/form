@@ -19,6 +19,7 @@ use function is_string;
  * The input element with a type attribute whose value is "checkbox" represents a state or option that can be toggled.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#checkbox-state-(type=checkbox)
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/checkbox
  */
 final class Checkbox extends InputField implements ValidationClassInterface
 {
@@ -32,12 +33,49 @@ final class Checkbox extends InputField implements ValidationClassInterface
     private ?string $inputValue = null;
 
     /**
-     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
+     * Identifies the element (or elements) that describes the object.
+     *
+     * @link https://w3c.github.io/aria/#aria-describedby
      */
-    public function uncheckValue(bool|float|int|string|Stringable|null $value): self
+    public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->uncheckValue = $this->prepareValue($value);
+        $new->inputTagAttributes['aria-describedby'] = $value;
+        return $new;
+    }
+
+    /**
+     * Defines a string value that labels the current element.
+     *
+     * @link https://w3c.github.io/aria/#aria-label
+     */
+    public function ariaLabel(?string $value): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['aria-label'] = $value;
+        return $new;
+    }
+
+    /**
+     * Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus
+     * at the same time.
+     *
+     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus
+     */
+    public function autofocus(bool $value = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['autofocus'] = $value;
+        return $new;
+    }
+
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
+     */
+    public function disabled(bool $disabled = true): self
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -98,53 +136,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
     }
 
     /**
-     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
-     */
-    public function disabled(bool $disabled = true): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
-        return $new;
-    }
-
-    /**
-     * Identifies the element (or elements) that describes the object.
-     *
-     * @link https://w3c.github.io/aria/#aria-describedby
-     */
-    public function ariaDescribedBy(?string $value): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
-        return $new;
-    }
-
-    /**
-     * Defines a string value that labels the current element.
-     *
-     * @link https://w3c.github.io/aria/#aria-label
-     */
-    public function ariaLabel(?string $value): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
-        return $new;
-    }
-
-    /**
-     * Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus
-     * at the same time.
-     *
-     * @link https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus
-     */
-    public function autofocus(bool $value = true): self
-    {
-        $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
-        return $new;
-    }
-
-    /**
      * The `tabindex` attribute indicates that its element can be focused, and where it participates in sequential
      * keyboard navigation (usually with the Tab key, hence the name).
      *
@@ -165,6 +156,16 @@ final class Checkbox extends InputField implements ValidationClassInterface
     {
         $new = clone $this;
         $new->inputTagAttributes['tabindex'] = $value;
+        return $new;
+    }
+
+    /**
+     * @param bool|float|int|string|Stringable|null $value Value that corresponds to "unchecked" state of the input.
+     */
+    public function uncheckValue(bool|float|int|string|Stringable|null $value): self
+    {
+        $new = clone $this;
+        $new->uncheckValue = $this->prepareValue($value);
         return $new;
     }
 

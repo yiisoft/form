@@ -10,7 +10,7 @@ Represents `<input>` element of type text that create basic single-line text fie
 Form model:
 
 ```php
-final class TextForm extends FormModel
+final class CreateForm extends FormModel
 {
     public ?string $name = null;
 

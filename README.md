@@ -37,7 +37,7 @@ composer require yiisoft/form --prefer-dist
 
 The following documentation describes how to use widgets with PHP:
 
-- [Checkbox](docs/checkbox.md)
+- [Checkbox](docs/fields/checkbox.md)
 - [CheckboxList](docs/checkboxlist.md)
 - [Date](docs/date.md)
 - [DateTime](docs/datetime.md)
