@@ -52,8 +52,7 @@ Result will be:
 <div>
     <input type="hidden" name="ProfileForm[subscribe]" value="0">
     <label>
-        <input type="checkbox" id="profileform-red" name="ProfileForm[subscribe]" value="1" checked> Subscribe to
-        mailing list
+        <input type="checkbox" id="profileform-red" name="ProfileForm[subscribe]" value="1" checked> Subscribe to mailing list
     </label>
     <div>We send emails once a month.</div>
 </div>
