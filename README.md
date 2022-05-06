@@ -31,11 +31,13 @@ composer require yiisoft/form --prefer-dist
 
 ## General usage
 
-[Creating Forms](docs/creating-forms.md)
+General topics:
 
-### Widgets usage
+- [Creating Forms](docs/creating-forms.md)
+- [Fields Configuration](docs/fields-configuration.md)
+- [Creating and Using Custom Fields](docs/creating-fields.md)
 
-The following documentation describes how to use widgets with PHP:
+Fields available out of the box:
 
 - [Checkbox](docs/fields/checkbox.md)
 - [CheckboxList](docs/checkboxlist.md)
@@ -43,11 +45,8 @@ The following documentation describes how to use widgets with PHP:
 - [DateTime](docs/datetime.md)
 - [DateTimeLocal](docs/datetimelocal.md)
 - [Email](docs/email.md)
-- [Error](docs/error.md)
 - [ErrorSummary](docs/error-summary.md)
 - [File](docs/file.md)
-- [Hint](docs/hint.md)
-- [Label](docs/label.md)
 - [Number](docs/number.md)
 - [Password](docs/password.md)
 - [Radio](docs/radio.md)
@@ -60,10 +59,11 @@ The following documentation describes how to use widgets with PHP:
 - [Text](docs/fields/text.md)  
 - [Url](docs/url.md)
 
-### Special Topics
+Field parts:
 
-- [Fields Configuration](docs/fields-configuration.md)
-- [Creating and Using Custom Fields](docs/creating-fields.md)
+- [Error](docs/field-parts/error.md)
+- [Hint](docs/field-parts/hint.md)
+- [Label](docs/field-parts/label.md)
 
 ## Testing
 
