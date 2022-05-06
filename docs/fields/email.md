@@ -1,6 +1,6 @@
 # Email Field
 
-Represents `<input>` element of type "email"  are used to let the user enter and edit an e-mail address, or, if the
+Represents `<input>` element of type "email" are used to let the user enter and edit an e-mail address, or, if the
 "multiple" attribute is specified, a list of e-mail addresses. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email))
@@ -27,7 +27,7 @@ final class ProfileForm extends FormModel
 Widget:
 
 ```php
-echo Text::widget()
+echo Email::widget()
     ->attribute($profileForm, 'email')
     ->required();
 ```
