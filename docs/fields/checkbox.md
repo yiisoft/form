@@ -6,12 +6,6 @@ activated. Documentation:
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#checkbox-state-(type=checkbox))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/checkbox)
 
-## Supported Values
-
-- `bool`
-- `null`
-- any stringable values
-
 ## Usage Example
 
 Form model:
@@ -57,3 +51,9 @@ Result will be:
     <div>We send emails once a month.</div>
 </div>
 ```
+
+## Supported Values
+
+- `bool`
+- `null`
+- any stringable values
