@@ -240,7 +240,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
         $value = $this->getAttributeValue();
 
         if (!is_string($value) && $value !== null) {
-            throw new InvalidArgumentException('Text widget must be a string or null value.');
+            throw new InvalidArgumentException('Text field requires a string or null value.');
         }
 
         $tagAttributes = $this->getInputTagAttributes();

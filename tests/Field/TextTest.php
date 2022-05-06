@@ -43,7 +43,7 @@ final class TextTest extends TestCase
             ->attribute(new TextForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Text widget must be a string or null value.');
+        $this->expectExceptionMessage('Text field requires a string or null value.');
         $widget->render();
     }
 
