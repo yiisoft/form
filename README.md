@@ -60,6 +60,11 @@ The following documentation describes how to use widgets with PHP:
 - [Text](docs/fields/text.md)  
 - [Url](docs/url.md)
 
+### Special Topics
+
+- [Fields Configuration](docs/fields-configuration.md)
+- [Creating and Using Custom Fields](docs/creating-fields.md)
+
 ## Testing
 
 ### Unit testing
