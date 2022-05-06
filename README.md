@@ -44,7 +44,7 @@ Fields available out of the box:
 - [Date](docs/date.md)
 - [DateTime](docs/datetime.md)
 - [DateTimeLocal](docs/datetimelocal.md)
-- [Email](docs/email.md)
+- [Email](docs/fields/email.md)
 - [ErrorSummary](docs/error-summary.md)
 - [File](docs/file.md)
 - [Number](docs/number.md)
@@ -56,7 +56,7 @@ Fields available out of the box:
 - [Select](docs/select.md)
 - [SubmitButton](docs/submitbutton.md)
 - [Telephone](docs/telephone.md)
-- [Text](docs/fields/text.md)  
+- [Text](docs/fields/text.md)
 - [Url](docs/url.md)
 
 Field parts:

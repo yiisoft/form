@@ -34,9 +34,7 @@ final class ProfileForm extends FormModel
 Widget:
 
 ```php
-echo Checkbox::widget()
-    ->attribute($profileForm, 'subscribe')
-    ->render();
+echo Checkbox::widget()->attribute($profileForm, 'subscribe');
 ```
 
 Result will be:

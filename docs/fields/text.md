@@ -1,6 +1,6 @@
 # Text Field
 
-Represents `<input>` element of type text that create basic single-line text fields. Documentation:
+Represents `<input>` element of type "text" that create basic single-line text fields. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search))
 - [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text)
@@ -35,8 +35,7 @@ Widget:
 ```php
 echo Text::widget()
     ->attribute($createForm, 'name')
-    ->required()
-    ->render();
+    ->required();
 ```
 
 Result will be:
@@ -44,7 +43,7 @@ Result will be:
 ```html
 <div>
     <label for="createform-name">Full Name</label>
-    <input type="text" id="createform-name" name="CreateForm[name]">
+    <input type="text" id="createform-name" name="CreateForm[name]" required>
     <div>Input your full name.</div>
 </div>
 ```
