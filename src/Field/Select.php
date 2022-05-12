@@ -17,9 +17,10 @@ use Yiisoft\Html\Tag\Select as SelectTag;
 use Yiisoft\Validator\Rule\Required;
 
 /**
- * A control for selecting amongst a set of options.
+ * Represents `<select>` element that provides a menu of options.
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
  */
 final class Select extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {
@@ -283,8 +284,10 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
         }
         /** @psalm-var iterable<int, Stringable|scalar> $value */
 
+        $tagAttributes = $this->getInputTagAttributes();
+
         return $this->select
-            ->attributes($this->inputTagAttributes)
+            ->attributes($tagAttributes)
             ->name($this->getInputName())
             ->values($value)
             ->render();

@@ -342,7 +342,7 @@ final class FieldTest extends TestCase
             <<<HTML
             <div>
             <label for="selectform-number">Select number</label>
-            <select name="SelectForm[number]">
+            <select id="selectform-number" name="SelectForm[number]">
             <option value="1">One</option>
             <option value="2">Two</option>
             </select>

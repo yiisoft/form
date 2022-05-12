@@ -34,7 +34,7 @@ final class SelectTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="selectform-number">Select number</label>
-            <select name="SelectForm[number]">
+            <select id="selectform-number" name="SelectForm[number]">
             <option value="1">One</option>
             <option value="2">Two</option>
             </select>
@@ -58,7 +58,7 @@ final class SelectTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="selectform-count">Select count</label>
-            <select name="SelectForm[count]">
+            <select id="selectform-count" name="SelectForm[count]">
             <option value="10">Ten</option>
             <option value="15" selected>Fifteen</option>
             <option value="20">Twenty</option>
@@ -85,7 +85,7 @@ final class SelectTest extends TestCase
             <div>
             <label for="selectform-letters">Select letters</label>
             <input type="hidden" name="SelectForm[letters]" value>
-            <select name="SelectForm[letters][]" multiple>
+            <select id="selectform-letters" name="SelectForm[letters][]" multiple>
             <option value="A" selected>Letter A</option>
             <option value="B">Letter B</option>
             <option value="C" selected>Letter C</option>
@@ -100,12 +100,12 @@ final class SelectTest extends TestCase
     {
         return [
             [
-                '<select name="SelectForm[item]"></select>',
+                '<select id="selectform-item" name="SelectForm[item]"></select>',
                 [],
             ],
             [
                 <<<HTML
-                <select name="SelectForm[item]">
+                <select id="selectform-item" name="SelectForm[item]">
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 </select>
@@ -117,7 +117,7 @@ final class SelectTest extends TestCase
             ],
             [
                 <<<HTML
-                <select name="SelectForm[item]">
+                <select id="selectform-item" name="SelectForm[item]">
                 <option value="1">One</option>
                 <optgroup>
                 <option value="1.1">One.One</option>
@@ -164,7 +164,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1">One</option>
             <option value="2">Two</option>
             </select>
@@ -183,7 +183,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1">One</option>
             <option value="2">Two</option>
             </select>
@@ -202,7 +202,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1">&lt;b&gt;One&lt;/b&gt;</option>
             </select>
             HTML;
@@ -220,7 +220,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1"><b>One</b></option>
             </select>
             HTML;
@@ -244,7 +244,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1">One</option>
             <optgroup label="Test Group">
             <option value="2">Two</option>
@@ -285,7 +285,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1" data-key="42">One</option>
             <optgroup label="Group A">
             <option value="2">Two</option>
@@ -312,7 +312,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" disabled>
+            <select id="selectform-item" name="SelectForm[item]" disabled>
             <option value="1">One</option>
             </select>
             HTML;
@@ -331,7 +331,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" aria-describedby="hint">
+            <select id="selectform-item" name="SelectForm[item]" aria-describedby="hint">
             <option value="1">One</option>
             </select>
             HTML;
@@ -350,7 +350,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" aria-label="test">
+            <select id="selectform-item" name="SelectForm[item]" aria-label="test">
             <option value="1">One</option>
             </select>
             HTML;
@@ -369,7 +369,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" autofocus>
+            <select id="selectform-item" name="SelectForm[item]" autofocus>
             <option value="1">One</option>
             </select>
             HTML;
@@ -388,7 +388,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" tabindex="5">
+            <select id="selectform-item" name="SelectForm[item]" tabindex="5">
             <option value="1">One</option>
             </select>
             HTML;
@@ -408,7 +408,7 @@ final class SelectTest extends TestCase
 
         $expected = <<<HTML
             <input type="hidden" name="SelectForm[item]" value>
-            <select name="SelectForm[item][]" multiple>
+            <select id="selectform-item" name="SelectForm[item][]" multiple>
             <option value="1">One</option>
             </select>
             HTML;
@@ -421,7 +421,7 @@ final class SelectTest extends TestCase
         return [
             [
                 <<<HTML
-                <select name="SelectForm[item]">
+                <select id="selectform-item" name="SelectForm[item]">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -429,7 +429,7 @@ final class SelectTest extends TestCase
             ],
             [
                 <<<HTML
-                <select name="SelectForm[item]">
+                <select id="selectform-item" name="SelectForm[item]">
                 <option value>Please select...</option>
                 <option value="1">One</option>
                 </select>
@@ -460,7 +460,7 @@ final class SelectTest extends TestCase
         return [
             [
                 <<<HTML
-                <select name="SelectForm[item]">
+                <select id="selectform-item" name="SelectForm[item]">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -468,7 +468,7 @@ final class SelectTest extends TestCase
             ],
             [
                 <<<HTML
-                <select name="SelectForm[item]">
+                <select id="selectform-item" name="SelectForm[item]">
                 <option>Please select...</option>
                 <option value="1">One</option>
                 </select>
@@ -505,7 +505,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" required>
+            <select id="selectform-item" name="SelectForm[item]" required>
             <option value="1">One</option>
             </select>
             HTML;
@@ -524,7 +524,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[item]" size="10">
+            <select id="selectform-item" name="SelectForm[item]" size="10">
             <option value="1">One</option>
             </select>
             HTML;
@@ -544,7 +544,7 @@ final class SelectTest extends TestCase
 
         $expected = <<<HTML
             <input type="hidden" name="SelectForm[item]" value="no">
-            <select name="SelectForm[item]">
+            <select id="selectform-item" name="SelectForm[item]">
             <option value="1">One</option>
             </select>
             HTML;
@@ -588,7 +588,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="SelectForm[color]" required>
+            <select id="selectform-color" name="SelectForm[color]" required>
             <option value="red">Red</option>
             </select>
             HTML;
