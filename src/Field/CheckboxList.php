@@ -19,6 +19,8 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
 
 /**
+ * Represents a list of checkboxes with multiple selection.
+ *
  * @see CheckboxListWidget
  */
 final class CheckboxList extends PartsField implements ValidationClassInterface

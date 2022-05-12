@@ -41,7 +41,7 @@ Fields available out of the box:
 
 - [Button](docs/fields/button.md)
 - [Checkbox](docs/fields/checkbox.md)
-- [CheckboxList](docs/checkboxlist.md)
+- [CheckboxList](docs/fields/checkbox-list.md)
 - [Date](docs/fields/date.md)
 - [DateTime](docs/fields/date-time.md)
 - [DateTimeLocal](docs/fields/date-time-local.md)
