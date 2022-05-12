@@ -36,10 +36,9 @@ Result will be:
 ```html
 <div>
     <label for="profileform-phone">Your phone number</label>
-    <input type="tel" id="profileform-phone" name="ProfileForm[phone]" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+    <input type="tel" id="profileform-phone" name="ProfileForm[phone]" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
 </div>
 ```
-
 
 ## Supported Values
 

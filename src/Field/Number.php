@@ -18,9 +18,10 @@ use Yiisoft\Validator\Rule\Number as NumberRule;
 use Yiisoft\Validator\Rule\Required;
 
 /**
- * A control for setting the element's value to a string representing a number.
+ * Represents `<input>` element of type "number" are used to let the user enter and edit a telephone number.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#number-state-(type=number)
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number
  */
 final class Number extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
