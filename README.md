@@ -39,6 +39,7 @@ General topics:
 
 Fields available out of the box:
 
+- [Button](docs/fields/button.md)
 - [Checkbox](docs/fields/checkbox.md)
 - [CheckboxList](docs/checkboxlist.md)
 - [Date](docs/fields/date.md)
