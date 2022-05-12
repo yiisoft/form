@@ -11,7 +11,10 @@ use Yiisoft\Html\Tag\Fieldset as FieldsetTag;
 use Yiisoft\Html\Tag\Legend;
 
 /**
+ * Represents `<fieldset>` element are use to group several controls.
+ *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/fieldset
  */
 final class Fieldset extends PartsField
 {

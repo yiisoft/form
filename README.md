@@ -48,6 +48,7 @@ Fields available out of the box:
 - [DateTimeLocal](docs/fields/date-time-local.md)
 - [Email](docs/fields/email.md)
 - [ErrorSummary](docs/fields/error-summary.md)
+- [Fieldset](docs/fields/fieldset.md)
 - [File](docs/fields/file.md)
 - [Hidden](docs/fields/hidden.md)
 - [Image](docs/fields/image.md)
