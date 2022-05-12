@@ -21,6 +21,7 @@ use function is_string;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#telephone-state-(type=tel)
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel
  */
 final class Telephone extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {

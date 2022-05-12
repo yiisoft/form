@@ -55,7 +55,7 @@ Fields available out of the box:
 - [ResetButton](docs/resetbutton.md)
 - [Select](docs/select.md)
 - [SubmitButton](docs/submitbutton.md)
-- [Telephone](docs/telephone.md)
+- [Telephone](docs/fields/telephone.md)
 - [Text](docs/fields/text.md)
 - [Url](docs/fields/url.md)
 
