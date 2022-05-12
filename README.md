@@ -46,7 +46,7 @@ Fields available out of the box:
 - [DateTimeLocal](docs/fields/date-time-local.md)
 - [Email](docs/fields/email.md)
 - [ErrorSummary](docs/error-summary.md)
-- [File](docs/file.md)
+- [File](docs/fields/file.md)
 - [Number](docs/fields/number.md)
 - [Password](docs/fields/password.md)
 - [Radio](docs/radio.md)

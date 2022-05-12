@@ -15,10 +15,10 @@ use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\Required;
 
 /**
- * The input element with a type attribute whose value is "file" represents a list of file items, each consisting of a
- * file name, a file type, and a file body (the contents of the file).
+ * Represents `<input>` element of type "file" are ley the user choose one or more files from their device storage.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file)
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
  */
 final class File extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {
