@@ -48,7 +48,7 @@ Fields available out of the box:
 - [ErrorSummary](docs/error-summary.md)
 - [File](docs/file.md)
 - [Number](docs/fields/number.md)
-- [Password](docs/password.md)
+- [Password](docs/fields/password.md)
 - [Radio](docs/radio.md)
 - [RadioList](docs/radiolist.md)
 - [Range](docs/fields/range.md)

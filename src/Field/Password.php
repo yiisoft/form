@@ -20,11 +20,15 @@ use Yiisoft\Validator\Rule\Required;
 use function is_string;
 
 /**
- * A one-line plain-text edit control for entering a password.
+ * Represents `<input>` element of type "password" are let the user securely enter a password.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#password-state-(type=password)
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
  */
-final class Password extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Password extends InputField implements
+    EnrichmentFromRulesInterface,
+    PlaceholderInterface,
+    ValidationClassInterface
 {
     use EnrichmentFromRulesTrait;
     use PlaceholderTrait;
