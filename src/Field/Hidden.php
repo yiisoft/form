@@ -11,10 +11,11 @@ use Yiisoft\Html\Html;
 use function is_string;
 
 /**
- * The input element with a type attribute whose value is "hidden" represents a value that is not intended to be
- * examined or manipulated by the user.
+ * Represents `<input>` element of type "hidden" are let web developers include data that cannot be seen or modified by
+ * users when a form is submitted
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#hidden-state-(type=hidden)
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/hidden
  */
 final class Hidden extends InputField
 {
