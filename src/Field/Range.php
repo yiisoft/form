@@ -18,9 +18,11 @@ use Yiisoft\Validator\Rule\Required;
 use function is_string;
 
 /**
- * An imprecise control for setting the element’s value to a string representing a number.
+ * Represents `<input>` element of type "range" are let the user specify a numeric value which must be no less than
+ * a given value, and no more than another given value.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range)
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
  */
 final class Range extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {
