@@ -9,6 +9,9 @@ use Yiisoft\Form\Field\Base\FormAttributeTrait;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
+/**
+ * Represents label for a form field.
+ */
 final class Label extends Widget
 {
     use FormAttributeTrait;

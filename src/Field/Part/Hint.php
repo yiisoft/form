@@ -10,6 +10,9 @@ use Yiisoft\Form\Field\Base\FormAttributeTrait;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
+/**
+ * Represents hint for a form field.
+ */
 final class Hint extends Widget
 {
     use FormAttributeTrait;
