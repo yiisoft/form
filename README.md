@@ -57,6 +57,7 @@ Fields available out of the box:
 - [SubmitButton](docs/fields/submit-button.md)
 - [Telephone](docs/fields/telephone.md)
 - [Text](docs/fields/text.md)
+- [Textarea](docs/fields/textarea.md)
 - [Url](docs/fields/url.md)
 
 Field parts:
