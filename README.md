@@ -50,7 +50,7 @@ Fields available out of the box:
 - [File](docs/fields/file.md)
 - [Number](docs/fields/number.md)
 - [Password](docs/fields/password.md)
-- [RadioList](docs/radiolist.md)
+- [RadioList](docs/fields/radio-list.md)
 - [Range](docs/fields/range.md)
 - [ResetButton](docs/fields/reset-button.md)
 - [Select](docs/fields/select.md)
