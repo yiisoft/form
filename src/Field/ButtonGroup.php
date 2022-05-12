@@ -9,7 +9,9 @@ use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
 
 /**
- * `ButtonGroup` renders a button group widget.
+ * Represents a button group widget.
+ *
+ * @see ButtonGroupWidget
  */
 final class ButtonGroup extends PartsField
 {
