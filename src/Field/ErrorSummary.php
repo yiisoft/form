@@ -10,6 +10,9 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
 
+/**
+ * Displays a summary of the form validation errors. If there is no validation error, field will be hidden.
+ */
 final class ErrorSummary extends BaseField
 {
     private ?FormModelInterface $formModel = null;
