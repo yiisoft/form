@@ -11,6 +11,10 @@ use Yiisoft\Widget\Widget;
 
 use function call_user_func;
 
+/**
+ * Represent a field validation error (if there are several errors, the first one is used). If field is no validation
+ * error, field part will be hidden.
+ */
 final class Error extends Widget
 {
     use FormAttributeTrait;
