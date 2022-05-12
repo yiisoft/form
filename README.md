@@ -42,7 +42,7 @@ Fields available out of the box:
 - [Checkbox](docs/fields/checkbox.md)
 - [CheckboxList](docs/checkboxlist.md)
 - [Date](docs/fields/date.md)
-- [DateTime](docs/datetime.md)
+- [DateTime](docs/fields/date-time.md)
 - [DateTimeLocal](docs/datetimelocal.md)
 - [Email](docs/fields/email.md)
 - [ErrorSummary](docs/error-summary.md)
