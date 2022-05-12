@@ -53,7 +53,7 @@ Fields available out of the box:
 - [RadioList](docs/radiolist.md)
 - [Range](docs/fields/range.md)
 - [ResetButton](docs/resetbutton.md)
-- [Select](docs/select.md)
+- [Select](docs/fields/select.md)
 - [SubmitButton](docs/submitbutton.md)
 - [Telephone](docs/fields/telephone.md)
 - [Text](docs/fields/text.md)
