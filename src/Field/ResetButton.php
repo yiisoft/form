@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Base\ButtonField;
  * values.
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type-reset-state
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/button
  */
 final class ResetButton extends ButtonField
 {

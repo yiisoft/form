@@ -3,7 +3,7 @@
 Represents `<select>` element that provides a menu of options. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element)
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/select)
 
 ## Usage Example
 

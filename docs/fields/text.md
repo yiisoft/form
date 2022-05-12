@@ -3,7 +3,7 @@
 Represents `<input>` element of type "text" that create basic single-line text fields. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/text)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/text)
 
 ## Usage Example
 

@@ -22,7 +22,7 @@ use function is_string;
  * a given value, and no more than another given value.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/range
  */
 final class Range extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {

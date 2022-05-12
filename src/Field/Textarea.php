@@ -22,7 +22,7 @@ use function is_string;
  * Represents `<textarea>` element that create a multi-line plain-text editing control.
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-textarea-element
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/textarea
  */
 final class Textarea extends InputField implements
     EnrichmentFromRulesInterface,

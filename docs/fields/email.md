@@ -4,7 +4,7 @@ Represents `<input>` element of type "email" are let the user enter and edit an 
 attribute is specified, a list of e-mail addresses. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/email)
 
 ## Usage Example
 

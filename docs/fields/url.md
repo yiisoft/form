@@ -3,7 +3,7 @@
 Represents `<input>` element of type "url" are let the user enter and edit a URL. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/url)
 
 ## Usage Example
 

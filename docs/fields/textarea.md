@@ -3,7 +3,7 @@
 Represents `<textarea>` element that create a multi-line plain-text editing control. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/form-elements.html#the-textarea-element)
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
 
 ## Usage Example
 

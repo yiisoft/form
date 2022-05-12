@@ -4,7 +4,7 @@ Represents `<input>` element of type "range" are let the user specify a numeric 
 value, and no more than another given value. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/range)
 
 ## Usage Example
 

@@ -18,7 +18,7 @@ use Yiisoft\Validator\Rule\Required;
  * Represents `<input>` element of type "file" are ley the user choose one or more files from their device storage.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/file
  */
 final class File extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {

@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Base\DateTimeInputField;
  * fraction of a second) as well as a timezone.
  *
  * @link https://www.w3.org/TR/2017/CR-html52-20170808/sec-forms.html#date-and-time-state-typedatetime
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/datetime
  */
 final class DateTime extends DateTimeInputField
 {

@@ -21,7 +21,7 @@ use function is_string;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/email
  */
 final class Email extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
 {

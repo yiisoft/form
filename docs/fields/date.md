@@ -4,7 +4,7 @@ Represents `<input>` element of type "date" are let the user enter a date, eithe
 the input or a special date picker interface. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/date)
 
 ## Usage Example
 

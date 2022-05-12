@@ -20,7 +20,7 @@ use Yiisoft\Validator\Rule\Required;
  * Represents `<select>` element that provides a menu of options.
  *
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/select
  */
 final class Select extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
 {

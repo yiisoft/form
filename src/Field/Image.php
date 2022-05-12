@@ -9,7 +9,10 @@ use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Html;
 
 /**
+ * Represents `<input>` element of type "image" are used to create graphical submit buttons.
+ *
  * @link https://html.spec.whatwg.org/multipage/input.html#image-button-state-(type=image)
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/image
  */
 final class Image extends PartsField
 {

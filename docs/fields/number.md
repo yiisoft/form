@@ -3,7 +3,7 @@
 Represents `<input>` element of type "number" are let the user enter a number. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#number-state-(type=number))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/number)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/number)
 
 ## Usage Example
 

@@ -4,7 +4,7 @@ Represents `<input>` element of type "file" are ley the user choose one or more 
 Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file))
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/file)
 
 ## Usage Example
 

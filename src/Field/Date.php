@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Base\DateTimeInputField;
  * the input or a special date picker interface.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/date
  */
 final class Date extends DateTimeInputField
 {

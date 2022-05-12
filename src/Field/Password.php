@@ -23,7 +23,7 @@ use function is_string;
  * Represents `<input>` element of type "password" are let the user securely enter a password.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#password-state-(type=password)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/password
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/password
  */
 final class Password extends InputField implements
     EnrichmentFromRulesInterface,

@@ -22,7 +22,7 @@ use function is_string;
 
 /**
  * @link https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/url
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/url
  */
 final class Url extends InputField implements PlaceholderInterface, ValidationClassInterface, EnrichmentFromRulesInterface
 {

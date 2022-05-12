@@ -4,7 +4,7 @@ Represents `<input>` element of type "datetime" are let the user enter a date an
 fraction of a second) as well as a timezone. Documentation:
 
 - [HTML 5.2 W3C Candidate Recommendation](https://www.w3.org/TR/2017/CR-html52-20170808/sec-forms.html#date-and-time-state-typedatetime)
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/date)
 
 ## Usage Example
 

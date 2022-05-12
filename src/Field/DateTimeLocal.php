@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Base\DateTimeInputField;
  * the year, month, and day as well as the time in hours and minutes.
  *
  * @link https://html.spec.whatwg.org/multipage/input.html#local-date-and-time-state-(type=datetime-local)
- * @link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime-local
+ * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/datetime-local
  */
 final class DateTimeLocal extends DateTimeInputField
 {

@@ -49,6 +49,7 @@ Fields available out of the box:
 - [Email](docs/fields/email.md)
 - [ErrorSummary](docs/fields/error-summary.md)
 - [File](docs/fields/file.md)
+- [Image](docs/fields/image.md)
 - [Number](docs/fields/number.md)
 - [Password](docs/fields/password.md)
 - [RadioList](docs/fields/radio-list.md)
