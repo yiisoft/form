@@ -16,6 +16,8 @@ final class Label extends Widget
 {
     use FormAttributeTrait;
 
+    private array $tagAttributes = [];
+
     private bool $setForAttribute = true;
 
     private ?string $forId = null;
@@ -24,6 +26,16 @@ final class Label extends Widget
     private string|Stringable|null $content = null;
 
     private bool $encode = true;
+
+    /**
+     * @return static
+     */
+    public function tagAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->tagAttributes = $attributes;
+        return $new;
+    }
 
     public function setForAttribute(bool $value): self
     {
@@ -86,17 +98,19 @@ final class Label extends Widget
             return '';
         }
 
-        $tag = Html::label($content);
+        $tagAttributes = $this->tagAttributes;
 
-        if ($this->setForAttribute) {
+        if ($this->setForAttribute && !isset($tagAttributes['for'])) {
             $id = $this->forId;
             if ($useModel && $id === null && $this->useInputIdAttribute) {
                 $id = $this->getInputId();
             }
             if ($id !== null) {
-                $tag = $tag->forId($id);
+                $tagAttributes['for'] = $id;
             }
         }
+
+        $tag = Html::label($content)->attributes($tagAttributes);
 
         if (!$this->encode) {
             $tag = $tag->encode(false);

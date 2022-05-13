@@ -38,8 +38,6 @@ final class Error extends Widget
      * Set the container tag name for the error.
      *
      * @param string $tag Container tag name.
-     *
-     * @return static
      */
     public function tag(string $tag): self
     {
@@ -63,8 +61,6 @@ final class Error extends Widget
      * Whether content should be HTML-encoded.
      *
      * @param bool $value
-     *
-     * @return static
      */
     public function encode(bool $value): self
     {
@@ -75,8 +71,6 @@ final class Error extends Widget
 
     /**
      * Error message to display.
-     *
-     * @return static
      */
     public function message(?string $value): self
     {
@@ -89,8 +83,6 @@ final class Error extends Widget
      * Callback that will be called to obtain an error message.
      *
      * @param callable|null $value
-     *
-     * @return static
      */
     public function messageCallback(?callable $value): self
     {

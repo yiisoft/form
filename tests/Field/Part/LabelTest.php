@@ -28,6 +28,16 @@ final class LabelTest extends TestCase
         $this->assertSame('<label for="labelform-name">Name</label>', $result);
     }
 
+    public function testTagAttributes(): void
+    {
+        $result = Label::widget()
+            ->attribute(new LabelForm(), 'name')
+            ->tagAttributes(['class' => 'red', 'id' => 'RedLabel'])
+            ->render();
+
+        $this->assertSame('<label id="RedLabel" class="red" for="labelform-name">Name</label>', $result);
+    }
+
     public function testDoNotSetForAttribute(): void
     {
         $result = Label::widget()
@@ -118,5 +128,17 @@ final class LabelTest extends TestCase
             ->render();
 
         $this->assertSame('<label for="labelform-name"><b>Name</b></label>', $result);
+    }
+
+    public function testImmutability(): void
+    {
+        $label = Label::widget();
+
+        $this->assertNotSame($label, $label->tagAttributes([]));
+        $this->assertNotSame($label, $label->setForAttribute(true));
+        $this->assertNotSame($label, $label->forId(null));
+        $this->assertNotSame($label, $label->useInputIdAttribute(true));
+        $this->assertNotSame($label, $label->content(null));
+        $this->assertNotSame($label, $label->encode(true));
     }
 }

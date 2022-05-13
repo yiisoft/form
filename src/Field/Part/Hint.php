@@ -31,8 +31,6 @@ final class Hint extends Widget
      * Set the container tag name for the hint.
      *
      * @param string $tag Container tag name.
-     *
-     * @return static
      */
     public function tag(string $tag): self
     {
@@ -45,9 +43,6 @@ final class Hint extends Widget
         return $new;
     }
 
-    /**
-     * @return static
-     */
     public function tagAttributes(array $attributes): self
     {
         $new = clone $this;
@@ -55,9 +50,6 @@ final class Hint extends Widget
         return $new;
     }
 
-    /**
-     * @return static
-     */
     public function content(string|Stringable|null $content): self
     {
         $new = clone $this;
@@ -69,8 +61,6 @@ final class Hint extends Widget
      * Whether content should be HTML-encoded.
      *
      * @param bool $value
-     *
-     * @return static
      */
     public function encode(bool $value): self
     {
