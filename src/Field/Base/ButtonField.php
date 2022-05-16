@@ -60,7 +60,7 @@ abstract class ButtonField extends PartsField
         $new = clone $this;
         Html::addCssClass(
             $new->buttonAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -73,7 +73,7 @@ abstract class ButtonField extends PartsField
     final public function replaceButtonClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->buttonAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->buttonAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 

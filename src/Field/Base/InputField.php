@@ -64,7 +64,7 @@ abstract class InputField extends PartsField
         $new = clone $this;
         Html::addCssClass(
             $new->inputTagAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -77,7 +77,7 @@ abstract class InputField extends PartsField
     final public function replaceInputClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->inputTagAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
