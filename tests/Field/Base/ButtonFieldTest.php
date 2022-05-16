@@ -50,14 +50,14 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testAttributes(): void
+    public function testButtonAttributes(): void
     {
         $result = StubButtonField::widget()
-            ->attributes([
+            ->buttonAttributes([
                 'data-key' => 'main',
                 'class' => 'primary',
             ])
-            ->attributes([
+            ->buttonAttributes([
                 'aria-label' => 'test',
             ])
             ->render();
@@ -71,14 +71,14 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceAttributes(): void
+    public function testReplaceButtonAttributes(): void
     {
         $result = StubButtonField::widget()
-            ->attributes([
+            ->buttonAttributes([
                 'data-key' => 'main',
                 'class' => 'primary',
             ])
-            ->replaceAttributes([
+            ->replaceButtonAttributes([
                 'class' => 'red',
             ])
             ->render();
@@ -187,8 +187,8 @@ final class ButtonFieldTest extends TestCase
         $field = StubButtonField::widget();
 
         $this->assertNotSame($field, $field->button(null));
-        $this->assertNotSame($field, $field->attributes([]));
-        $this->assertNotSame($field, $field->replaceAttributes([]));
+        $this->assertNotSame($field, $field->buttonAttributes([]));
+        $this->assertNotSame($field, $field->replaceButtonAttributes([]));
         $this->assertNotSame($field, $field->ariaDescribedBy(null));
         $this->assertNotSame($field, $field->ariaLabel(null));
         $this->assertNotSame($field, $field->autofocus());

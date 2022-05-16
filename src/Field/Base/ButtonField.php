@@ -14,7 +14,7 @@ abstract class ButtonField extends PartsField
     use FieldContentTrait;
 
     private ?Button $button = null;
-    private array $attributes = [];
+    private array $buttonAttributes = [];
 
     final public function button(?Button $button): static
     {
@@ -23,17 +23,17 @@ abstract class ButtonField extends PartsField
         return $new;
     }
 
-    final public function attributes(array $attributes): static
+    final public function buttonAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->attributes = array_merge($this->attributes, $attributes);
+        $new->buttonAttributes = array_merge($this->buttonAttributes, $attributes);
         return $new;
     }
 
-    final public function replaceAttributes(array $attributes): static
+    final public function replaceButtonAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->attributes = $attributes;
+        $new->buttonAttributes = $attributes;
         return $new;
     }
 
@@ -45,7 +45,7 @@ abstract class ButtonField extends PartsField
     final public function ariaDescribedBy(?string $value): static
     {
         $new = clone $this;
-        $new->attributes['aria-describedby'] = $value;
+        $new->buttonAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -57,7 +57,7 @@ abstract class ButtonField extends PartsField
     final public function ariaLabel(?string $value): static
     {
         $new = clone $this;
-        $new->attributes['aria-label'] = $value;
+        $new->buttonAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -70,7 +70,7 @@ abstract class ButtonField extends PartsField
     final public function autofocus(bool $value = true): static
     {
         $new = clone $this;
-        $new->attributes['autofocus'] = $value;
+        $new->buttonAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -94,7 +94,7 @@ abstract class ButtonField extends PartsField
     final public function tabIndex(?int $value): static
     {
         $new = clone $this;
-        $new->attributes['tabindex'] = $value;
+        $new->buttonAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -104,7 +104,7 @@ abstract class ButtonField extends PartsField
     final public function disabled(bool $disabled = true): static
     {
         $new = clone $this;
-        $new->attributes['disabled'] = $disabled;
+        $new->buttonAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -119,7 +119,7 @@ abstract class ButtonField extends PartsField
     final public function form(?string $id): static
     {
         $new = clone $this;
-        $new->attributes['form'] = $id;
+        $new->buttonAttributes['form'] = $id;
         return $new;
     }
 
@@ -128,8 +128,8 @@ abstract class ButtonField extends PartsField
         $button = ($this->button ?? Button::tag())
             ->type($this->getType());
 
-        if (!empty($this->attributes)) {
-            $button = $button->attributes($this->attributes);
+        if (!empty($this->buttonAttributes)) {
+            $button = $button->attributes($this->buttonAttributes);
         }
 
         $content = $this->renderContent();
