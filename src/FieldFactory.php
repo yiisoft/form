@@ -47,12 +47,14 @@ final class FieldFactory
     public function __construct(
         private ?string $containerTag = null,
         private array $containerTagAttributes = [],
+        private string|array|null $containerClass = null,
         private ?bool $useContainer = null,
         private ?string $template = null,
         private ?string $templateBegin = null,
         private ?string $templateEnd = null,
         private ?bool $setInputIdAttribute = null,
         private array $inputTagAttributes = [],
+        private string|array|null $inputClass = null,
         private array $labelConfig = [],
         private array $hintConfig = [],
         private array $errorConfig = [],
@@ -268,6 +270,11 @@ final class FieldFactory
         if ($this->containerTagAttributes !== []) {
             $config['containerTagAttributes()'] = [$this->containerTagAttributes];
         }
+        if ($this->containerClass !== null) {
+            $config['containerClass()'] = is_array($this->containerClass)
+                ? $this->containerClass
+                : [$this->containerClass];
+        }
         if ($this->useContainer !== null) {
             $config['useContainer()'] = [$this->useContainer];
         }
@@ -304,6 +311,11 @@ final class FieldFactory
             }
             if ($this->inputTagAttributes !== []) {
                 $config['inputTagAttributes()'] = [$this->inputTagAttributes];
+            }
+            if ($this->inputClass !== null) {
+                $config['inputClass()'] = is_array($this->inputClass)
+                    ? $this->inputClass
+                    : [$this->inputClass];
             }
         }
 
