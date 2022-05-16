@@ -155,7 +155,7 @@ final class FormTest extends TestCase
     public function testEnctype(): void
     {
         $this->assertSame(
-            '<form id="multipart/form-data" method="POST">',
+            '<form enctype="multipart/form-data" method="POST">',
             Form::widget()->enctype('multipart/form-data')->begin(),
         );
     }
