@@ -8,6 +8,7 @@ use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Html\Html;
 
 abstract class InputField extends PartsField
 {
@@ -50,6 +51,33 @@ abstract class InputField extends PartsField
     {
         $new = clone $this;
         $new->inputTagAttributes = $attributes;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the input tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function inputClass(?string ...$class): static
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->inputTagAttributes,
+            array_filter($class, static fn($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace input tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function replaceInputClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->inputTagAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
