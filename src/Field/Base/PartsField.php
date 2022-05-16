@@ -255,6 +255,10 @@ abstract class PartsField extends BaseField
      */
     private function validateToken(string $token): void
     {
+        if ($token === '') {
+            throw new InvalidArgumentException('Token must be non-empty string.');
+        }
+
         if (in_array($token, self::BUILTIN_TOKENS, true)) {
             throw new InvalidArgumentException(
                 sprintf(
@@ -262,10 +266,6 @@ abstract class PartsField extends BaseField
                     $token,
                 )
             );
-        }
-
-        if ($token === '') {
-            throw new InvalidArgumentException('Token must be non-empty string.');
         }
     }
 }
