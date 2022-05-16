@@ -38,6 +38,28 @@ abstract class ButtonField extends PartsField
     }
 
     /**
+     * Set button tag ID.
+     *
+     * @param string|null $id Button tag ID.
+     */
+    final public function buttonId(?string $id): static
+    {
+        $new = clone $this;
+        $new->buttonAttributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * @link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name
+     */
+    final public function name(?string $name): self
+    {
+        $new = clone $this;
+        $new->buttonAttributes['name'] = $name;
+        return $new;
+    }
+
+    /**
      * Identifies the element (or elements) that describes the object.
      *
      * @link https://w3c.github.io/aria/#aria-describedby

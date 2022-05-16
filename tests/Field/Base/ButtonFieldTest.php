@@ -92,6 +92,58 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function dataButtonId(): array
+    {
+        return [
+            ['', null],
+            [' id="main"', 'main'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataButtonId
+     */
+    public function testButtonId(string $expectedIdAttribute, ?string $id): void
+    {
+        $result = StubButtonField::widget()
+            ->buttonId($id)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button"$expectedIdAttribute></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataName(): array
+    {
+        return [
+            ['', null],
+            [' name="go-btn"', 'go-btn'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataName
+     */
+    public function testName(string $expectedNameAttribute, ?string $name): void
+    {
+        $result = StubButtonField::widget()
+            ->name($name)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button"$expectedNameAttribute></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAriaDescribedBy(): void
     {
         $result = StubButtonField::widget()
@@ -188,6 +240,8 @@ final class ButtonFieldTest extends TestCase
 
         $this->assertNotSame($field, $field->button(null));
         $this->assertNotSame($field, $field->buttonAttributes([]));
+        $this->assertNotSame($field, $field->buttonId(null));
+        $this->assertNotSame($field, $field->name(null));
         $this->assertNotSame($field, $field->replaceButtonAttributes([]));
         $this->assertNotSame($field, $field->ariaDescribedBy(null));
         $this->assertNotSame($field, $field->ariaLabel(null));
