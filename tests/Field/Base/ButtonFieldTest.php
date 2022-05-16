@@ -234,6 +234,98 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function dataButtonClass(): array
+    {
+        return [
+            [' class="main"', []],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['bold']],
+            [' class="main italic bold"', ['italic bold']],
+            [' class="main italic bold"', ['italic', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataButtonClass
+     *
+     * @param string[] $class
+     */
+    public function testButtonClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = StubButtonField::widget()
+            ->buttonClass('main')
+            ->buttonClass(...$class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button"$expectedClassAttribute></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataInputNewClass(): array
+    {
+        return [
+            ['', null],
+            [' class', ''],
+            [' class="red"', 'red'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataInputNewClass
+     */
+    public function testInputNewClass(string $expectedClassAttribute, ?string $class): void
+    {
+        $result = StubButtonField::widget()
+            ->buttonClass($class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button"$expectedClassAttribute></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataReplaceButtonClass(): array
+    {
+        return [
+            ['', []],
+            ['', [null]],
+            [' class', ['']],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['main bold']],
+            [' class="main bold"', ['main', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataReplaceButtonClass
+     *
+     * @param string[] $class
+     */
+    public function testReplaceButtonClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = StubButtonField::widget()
+            ->buttonClass('red')
+            ->replaceButtonClass(...$class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button"$expectedClassAttribute></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubButtonField::widget();
@@ -241,6 +333,8 @@ final class ButtonFieldTest extends TestCase
         $this->assertNotSame($field, $field->button(null));
         $this->assertNotSame($field, $field->buttonAttributes([]));
         $this->assertNotSame($field, $field->buttonId(null));
+        $this->assertNotSame($field, $field->buttonClass());
+        $this->assertNotSame($field, $field->replaceButtonClass());
         $this->assertNotSame($field, $field->name(null));
         $this->assertNotSame($field, $field->replaceButtonAttributes([]));
         $this->assertNotSame($field, $field->ariaDescribedBy(null));

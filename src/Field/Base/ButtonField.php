@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\Button;
 
 /**
@@ -46,6 +47,33 @@ abstract class ButtonField extends PartsField
     {
         $new = clone $this;
         $new->buttonAttributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the button tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function buttonClass(?string ...$class): static
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->buttonAttributes,
+            array_filter($class, static fn($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace button tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function replaceButtonClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->buttonAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
