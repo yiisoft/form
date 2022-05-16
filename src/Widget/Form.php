@@ -194,7 +194,7 @@ final class Form extends Widget
     public function enctype(string $value): self
     {
         $new = clone $this;
-        $new->attributes['id'] = $value;
+        $new->attributes['enctype'] = $value;
         return $new;
     }
 
