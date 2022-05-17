@@ -38,6 +38,46 @@ final class RangeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testOutputAttributes(): void
+    {
+        $result = Range::widget()
+            ->formAttribute(new RangeForm(), 'volume')
+            ->showOutput()
+            ->outputAttributes(['class' => 'red'])
+            ->outputAttributes(['id' => 'UID'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="rangeform-volume">Volume level</label>
+            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+            <span id="UID" class="red">23</span>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testReplaceOutputAttributes(): void
+    {
+        $result = Range::widget()
+            ->formAttribute(new RangeForm(), 'volume')
+            ->showOutput()
+            ->outputAttributes(['class' => 'red'])
+            ->replaceOutputAttributes(['id' => 'UID'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="rangeform-volume">Volume level</label>
+            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+            <span id="UID">23</span>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testWithOutput(): void
     {
         $result = Range::widget()

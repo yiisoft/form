@@ -141,6 +141,13 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function uncheckInputAttributes(array $attributes): self
     {
         $new = clone $this;
+        $new->uncheckInputAttributes = array_merge($new->uncheckInputAttributes, $attributes);
+        return $new;
+    }
+
+    public function replaceUncheckInputAttributes(array $attributes): self
+    {
+        $new = clone $this;
         $new->uncheckInputAttributes = $attributes;
         return $new;
     }

@@ -34,6 +34,13 @@ abstract class BaseField extends Widget
     final public function containerAttributes(array $attributes): static
     {
         $new = clone $this;
+        $new->containerAttributes = array_merge($new->containerAttributes, $attributes);
+        return $new;
+    }
+
+    final public function replaceContainerAttributes(array $attributes): static
+    {
+        $new = clone $this;
         $new->containerAttributes = $attributes;
         return $new;
     }

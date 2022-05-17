@@ -254,7 +254,24 @@ final class ImageTest extends TestCase
     public function testInputAttributes(): void
     {
         $result = Image::widget()
+            ->inputAttributes(['id' => 'TEST'])
             ->inputAttributes(['class' => 'primary'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="image" id="TEST" class="primary">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testReplaceInputAttributes(): void
+    {
+        $result = Image::widget()
+            ->inputAttributes(['id' => 'TEST'])
+            ->replaceInputAttributes(['class' => 'primary'])
             ->render();
 
         $expected = <<<HTML
@@ -280,5 +297,6 @@ final class ImageTest extends TestCase
         $this->assertNotSame($field, $field->ariaLabel(null));
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->inputAttributes([]));
+        $this->assertNotSame($field, $field->replaceInputAttributes([]));
     }
 }

@@ -200,11 +200,31 @@ final class FileTest extends TestCase
             ->hideLabel()
             ->uncheckValue('0')
             ->uncheckInputAttributes(['data-key' => '100'])
+            ->uncheckInputAttributes(['id' => 'TEST'])
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="FileForm[avatar]" value="0" data-key="100"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            <input type="hidden" id="TEST" name="FileForm[avatar]" value="0" data-key="100"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testReplaceUncheckInputAttributes(): void
+    {
+        $result = File::widget()
+            ->formAttribute(new FileForm(), 'avatar')
+            ->hideLabel()
+            ->uncheckValue('0')
+            ->uncheckInputAttributes(['data-key' => '100'])
+            ->replaceUncheckInputAttributes(['id' => 'TEST'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="hidden" id="TEST" name="FileForm[avatar]" value="0"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
             </div>
             HTML;
 
@@ -250,5 +270,7 @@ final class FileTest extends TestCase
         $this->assertNotSame($field, $field->ariaLabel(null));
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->uncheckValue(null));
+        $this->assertNotSame($field, $field->uncheckInputAttributes([]));
+        $this->assertNotSame($field, $field->replaceUncheckInputAttributes([]));
     }
 }

@@ -50,6 +50,13 @@ abstract class InputField extends PartsField
     final public function inputAttributes(array $attributes): static
     {
         $new = clone $this;
+        $new->inputAttributes = array_merge($new->inputAttributes, $attributes);
+        return $new;
+    }
+
+    final public function replaceInputAttributes(array $attributes): static
+    {
+        $new = clone $this;
         $new->inputAttributes = $attributes;
         return $new;
     }

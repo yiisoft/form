@@ -128,6 +128,13 @@ final class Image extends PartsField
     public function inputAttributes(array $attributes): self
     {
         $new = clone $this;
+        $new->inputAttributes = array_merge($new->inputAttributes, $attributes);
+        return $new;
+    }
+
+    public function replaceInputAttributes(array $attributes): self
+    {
+        $new = clone $this;
         $new->inputAttributes = $attributes;
         return $new;
     }
