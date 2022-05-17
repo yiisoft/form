@@ -59,11 +59,129 @@ final class HintTest extends TestCase
     public function testAttributes(): void
     {
         $result = Hint::widget()
-            ->formAttribute(new HintForm(), 'name')
-            ->attributes(['class' => 'red', 'data-number' => 18])
+             ->formAttribute(new HintForm(), 'name')
+            ->attributes(['class' => 'red'])
+            ->attributes(['data-number' => 18])
             ->render();
 
         $this->assertSame('<div class="red" data-number="18">Write your name.</div>', $result);
+    }
+
+    public function testReplaceAttributes(): void
+    {
+        $result = Hint::widget()
+             ->formAttribute(new HintForm(), 'name')
+            ->attributes(['class' => 'red'])
+            ->replaceAttributes(['data-number' => 18])
+            ->render();
+
+        $this->assertSame('<div data-number="18">Write your name.</div>', $result);
+    }
+
+    public function dataId(): array
+    {
+        return [
+            ['', null],
+            [' id="main"', 'main'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataId
+     */
+    public function testId(string $expectedId, ?string $id): void
+    {
+        $result = Hint::widget()
+             ->formAttribute(new HintForm(), 'name')
+            ->id($id)
+            ->render();
+
+        $expected = '<div' . $expectedId . '>Write your name.</div>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataClass(): array
+    {
+        return [
+            [' class="main"', []],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['bold']],
+            [' class="main italic bold"', ['italic bold']],
+            [' class="main italic bold"', ['italic', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataClass
+     *
+     * @param string[] $class
+     */
+    public function testClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Hint::widget()
+             ->formAttribute(new HintForm(), 'name')
+            ->class('main')
+            ->class(...$class)
+            ->render();
+
+        $expected = '<div' . $expectedClassAttribute . '>Write your name.</div>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataNewClass(): array
+    {
+        return [
+            ['', null],
+            [' class', ''],
+            [' class="red"', 'red'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataNewClass
+     */
+    public function testNewClass(string $expectedClassAttribute, ?string $class): void
+    {
+        $result = Hint::widget()
+             ->formAttribute(new HintForm(), 'name')
+            ->class($class)
+            ->render();
+
+        $expected = '<div' . $expectedClassAttribute . '>Write your name.</div>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataReplaceClass(): array
+    {
+        return [
+            ['', []],
+            ['', [null]],
+            [' class', ['']],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['main bold']],
+            [' class="main bold"', ['main', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataReplaceClass
+     *
+     * @param string[] $class
+     */
+    public function testReplaceClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Hint::widget()
+             ->formAttribute(new HintForm(), 'name')
+            ->class('red')
+            ->replaceClass(...$class)
+            ->render();
+
+        $expected = '<div' . $expectedClassAttribute . '>Write your name.</div>';
+
+        $this->assertSame($expected, $result);
     }
 
     public function testCustomContent(): void

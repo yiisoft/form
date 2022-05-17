@@ -27,13 +27,56 @@ final class Label extends Widget
 
     private bool $encode = true;
 
-    /**
-     * @return static
-     */
     public function attributes(array $attributes): self
     {
         $new = clone $this;
+        $new->attributes = array_merge($this->attributes, $attributes);
+        return $new;
+    }
+
+    public function replaceAttributes(array $attributes): self
+    {
+        $new = clone $this;
         $new->attributes = $attributes;
+        return $new;
+    }
+
+    /**
+     * Set tag ID.
+     *
+     * @param string|null $id Tag ID.
+     */
+    public function id(?string $id): self
+    {
+        $new = clone $this;
+        $new->attributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    public function class(?string ...$class): self
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->attributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    public function replaceClass(?string ...$class): self
+    {
+        $new = clone $this;
+        $new->attributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 

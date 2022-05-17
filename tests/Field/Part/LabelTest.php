@@ -32,10 +32,128 @@ final class LabelTest extends TestCase
     {
         $result = Label::widget()
             ->formAttribute(new LabelForm(), 'name')
-            ->attributes(['class' => 'red', 'id' => 'RedLabel'])
+            ->attributes(['class' => 'red'])
+            ->attributes(['data-number' => 18])
             ->render();
 
-        $this->assertSame('<label id="RedLabel" class="red" for="labelform-name">Name</label>', $result);
+        $this->assertSame('<label class="red" data-number="18" for="labelform-name">Name</label>', $result);
+    }
+
+    public function testReplaceAttributes(): void
+    {
+        $result = Label::widget()
+            ->formAttribute(new LabelForm(), 'name')
+            ->attributes(['class' => 'red'])
+            ->replaceAttributes(['data-number' => 18])
+            ->render();
+
+        $this->assertSame('<label data-number="18" for="labelform-name">Name</label>', $result);
+    }
+
+    public function dataId(): array
+    {
+        return [
+            ['', null],
+            [' id="main"', 'main'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataId
+     */
+    public function testId(string $expectedId, ?string $id): void
+    {
+        $result = Label::widget()
+            ->formAttribute(new LabelForm(), 'name')
+            ->id($id)
+            ->render();
+
+        $expected = '<label' . $expectedId . ' for="labelform-name">Name</label>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataClass(): array
+    {
+        return [
+            [' class="main"', []],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['bold']],
+            [' class="main italic bold"', ['italic bold']],
+            [' class="main italic bold"', ['italic', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataClass
+     *
+     * @param string[] $class
+     */
+    public function testClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Label::widget()
+            ->formAttribute(new LabelForm(), 'name')
+            ->class('main')
+            ->class(...$class)
+            ->render();
+
+        $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataNewClass(): array
+    {
+        return [
+            ['', null],
+            [' class', ''],
+            [' class="red"', 'red'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataNewClass
+     */
+    public function testNewClass(string $expectedClassAttribute, ?string $class): void
+    {
+        $result = Label::widget()
+            ->formAttribute(new LabelForm(), 'name')
+            ->class($class)
+            ->render();
+
+        $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataReplaceClass(): array
+    {
+        return [
+            ['', []],
+            ['', [null]],
+            [' class', ['']],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['main bold']],
+            [' class="main bold"', ['main', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataReplaceClass
+     *
+     * @param string[] $class
+     */
+    public function testReplaceClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Label::widget()
+            ->formAttribute(new LabelForm(), 'name')
+            ->class('red')
+            ->replaceClass(...$class)
+            ->render();
+
+        $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
+
+        $this->assertSame($expected, $result);
     }
 
     public function testDoNotSetFor(): void
