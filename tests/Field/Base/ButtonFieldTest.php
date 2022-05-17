@@ -266,7 +266,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputNewClass(): array
+    public function dataButtonNewClass(): array
     {
         return [
             ['', null],
@@ -276,9 +276,9 @@ final class ButtonFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputNewClass
+     * @dataProvider dataButtonNewClass
      */
-    public function testInputNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testButtonNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubButtonField::widget()
             ->buttonClass($class)

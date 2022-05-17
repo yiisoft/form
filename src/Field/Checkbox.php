@@ -128,6 +128,45 @@ final class Checkbox extends InputField implements ValidationClassInterface
         return $new;
     }
 
+    /**
+     * Set enclosed label tag ID.
+     *
+     * @param string|null $id Label tag ID.
+     */
+    public function inputLabelId(?string $id): self
+    {
+        $new = clone $this;
+        $new->inputLabelAttributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the enclosed label tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    public function inputLabelClass(?string ...$class): self
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->inputLabelAttributes,
+            array_filter($class, static fn($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace enclosed label tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    public function replaceInputLabelClass(?string ...$class): self
+    {
+        $new = clone $this;
+        $new->inputLabelAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        return $new;
+    }
+
     public function inputLabelEncode(bool $encode): self
     {
         $new = clone $this;

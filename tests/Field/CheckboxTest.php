@@ -273,6 +273,128 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function dataInputLabelId(): array
+    {
+        return [
+            ['', null],
+            [' id="main"', 'main'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataInputLabelId
+     */
+    public function testInputLabelId(string $expectedId, ?string $id): void
+    {
+        $result = Checkbox::widget()
+            ->formAttribute(new CheckboxForm(), 'blue')
+            ->inputLabelId($id)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="hidden" name="CheckboxForm[blue]" value="0"><label$expectedId><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataInputLabelClass(): array
+    {
+        return [
+            [' class="main"', []],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['bold']],
+            [' class="main italic bold"', ['italic bold']],
+            [' class="main italic bold"', ['italic', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataInputLabelClass
+     *
+     * @param string[] $class
+     */
+    public function testInputLabelClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Checkbox::widget()
+            ->formAttribute(new CheckboxForm(), 'blue')
+            ->inputLabelClass('main')
+            ->inputLabelClass(...$class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="hidden" name="CheckboxForm[blue]" value="0"><label$expectedClassAttribute><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataInputLabelNewClass(): array
+    {
+        return [
+            ['', null],
+            [' class', ''],
+            [' class="red"', 'red'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataInputLabelNewClass
+     */
+    public function testInputLabelNewClass(string $expectedClassAttribute, ?string $class): void
+    {
+        $result = Checkbox::widget()
+            ->formAttribute(new CheckboxForm(), 'blue')
+            ->inputLabelClass($class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="hidden" name="CheckboxForm[blue]" value="0"><label$expectedClassAttribute><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataReplaceInputLabelClass(): array
+    {
+        return [
+            ['', []],
+            ['', [null]],
+            [' class', ['']],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['main bold']],
+            [' class="main bold"', ['main', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataReplaceInputLabelClass
+     *
+     * @param string[] $class
+     */
+    public function testReplaceInputLabelClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Checkbox::widget()
+            ->formAttribute(new CheckboxForm(), 'blue')
+            ->inputLabelClass('red')
+            ->replaceInputLabelClass(...$class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="hidden" name="CheckboxForm[blue]" value="0"><label$expectedClassAttribute><input type="checkbox" id="checkboxform-blue" name="CheckboxForm[blue]" value="1"> Blue color</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testDisabled(): void
     {
         $result = Checkbox::widget()
@@ -376,6 +498,9 @@ final class CheckboxTest extends TestCase
         $this->assertNotSame($widget, $widget->inputLabel(null));
         $this->assertNotSame($widget, $widget->inputLabelAttributes([]));
         $this->assertNotSame($widget, $widget->replaceInputLabelAttributes([]));
+        $this->assertNotSame($widget, $widget->inputLabelId(null));
+        $this->assertNotSame($widget, $widget->inputLabelClass());
+        $this->assertNotSame($widget, $widget->replaceInputLabelClass());
         $this->assertNotSame($widget, $widget->inputValue(null));
         $this->assertNotSame($widget, $widget->disabled());
         $this->assertNotSame($widget, $widget->ariaDescribedBy(null));
