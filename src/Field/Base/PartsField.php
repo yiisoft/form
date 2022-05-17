@@ -176,7 +176,7 @@ abstract class PartsField extends BaseField
     final public function replaceLabelClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->labelAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->labelAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         $new->replaceLabelClass = true;
         return $new;
     }
@@ -245,7 +245,7 @@ abstract class PartsField extends BaseField
     final public function replaceHintClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->hintAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->hintAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         $new->replaceHintClass = true;
         return $new;
     }
@@ -314,7 +314,7 @@ abstract class PartsField extends BaseField
     final public function replaceErrorClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->errorAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->errorAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         $new->replaceErrorClass = true;
         return $new;
     }
