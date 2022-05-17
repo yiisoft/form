@@ -58,6 +58,46 @@ final class FieldFactoryTest extends TestCase
                 'job',
             ],
             [
+                <<<HTML
+                <div class="wrapper">
+                <label for="textform-job">Job</label>
+                <input type="text" id="textform-job" name="TextForm[job]" value>
+                </div>
+                HTML,
+                ['containerClass' => 'wrapper'],
+                'job',
+            ],
+            [
+                <<<HTML
+                <div class="wrapper red">
+                <label for="textform-job">Job</label>
+                <input type="text" id="textform-job" name="TextForm[job]" value>
+                </div>
+                HTML,
+                ['containerClass' => ['wrapper', 'red']],
+                'job',
+            ],
+            [
+                <<<HTML
+                <div>
+                <label for="textform-job">Job</label>
+                <input type="text" id="textform-job" class="red" name="TextForm[job]" value>
+                </div>
+                HTML,
+                ['inputClass' => 'red'],
+                'job',
+            ],
+            [
+                <<<HTML
+                <div>
+                <label for="textform-job">Job</label>
+                <input type="text" id="textform-job" class="red blue" name="TextForm[job]" value>
+                </div>
+                HTML,
+                ['inputClass' => ['red', 'blue']],
+                'job',
+            ],
+            [
                 <<<'HTML'
                 <label for="textform-job">Job</label>
                 <input type="text" id="textform-job" name="TextForm[job]" value>
@@ -340,6 +380,18 @@ final class FieldFactoryTest extends TestCase
                     ],
                 ],
             ],
+            'label-class-string' => [
+                '<label class="red" for="textform-job">Job</label>',
+                ['labelClass' => 'red'],
+            ],
+            'label-class-array' => [
+                '<label class="red blue" for="textform-job">Job</label>',
+                ['labelClass' => ['red', 'blue']],
+            ],
+            'label-class-null' => [
+                '<label for="textform-job">Job</label>',
+                ['labelClass' => null],
+            ],
         ];
     }
 
@@ -374,6 +426,18 @@ final class FieldFactoryTest extends TestCase
                     ],
                 ],
             ],
+            'hint-class-string' => [
+                '<div class="red">Input your full name.</div>',
+                ['hintClass' => 'red'],
+            ],
+            'hint-class-array' => [
+                '<div class="red blue">Input your full name.</div>',
+                ['hintClass' => ['red', 'blue']],
+            ],
+            'hint-class-null' => [
+                '<div>Input your full name.</div>',
+                ['hintClass' => null],
+            ],
         ];
     }
 
@@ -407,6 +471,18 @@ final class FieldFactoryTest extends TestCase
                         'tag()' => ['b'],
                     ],
                 ],
+            ],
+            'error-class-string' => [
+                '<div class="red">Value cannot be blank.</div>',
+                ['errorClass' => 'red'],
+            ],
+            'error-class-array' => [
+                '<div class="red blue">Value cannot be blank.</div>',
+                ['errorClass' => ['red', 'blue']],
+            ],
+            'error-class-null' => [
+                '<div>Value cannot be blank.</div>',
+                ['errorClass' => null],
             ],
         ];
     }

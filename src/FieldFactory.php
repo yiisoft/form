@@ -55,8 +55,11 @@ final class FieldFactory
         private ?bool $setInputId = null,
         private array $inputAttributes = [],
         private string|array|null $inputClass = null,
+        string|array|null $labelClass = null,
         private array $labelConfig = [],
+        string|array|null $hintClass = null,
         private array $hintConfig = [],
+        string|array|null $errorClass = null,
         private array $errorConfig = [],
         private ?bool $usePlaceholder = null,
         private ?string $validClass = null,
@@ -64,6 +67,15 @@ final class FieldFactory
         private ?bool $enrichmentFromRules = null,
         private array $fieldConfigs = [],
     ) {
+        if ($labelClass !== null) {
+            $this->labelConfig['class()'] = is_array($labelClass) ? $labelClass : [$labelClass];
+        }
+        if ($hintClass !== null) {
+            $this->hintConfig['class()'] = is_array($hintClass) ? $hintClass : [$hintClass];
+        }
+        if ($errorClass !== null) {
+            $this->errorConfig['class()'] = is_array($errorClass) ? $errorClass : [$errorClass];
+        }
     }
 
     public function button(array $config = []): Button
