@@ -20,7 +20,7 @@ final class ProfileForm extends FormModel
 Widget:
 
 ```php
-echo Hidden::widget()->attribute($profileForm, 'action');
+echo Hidden::widget()->formAttribute($profileForm, 'action');
 ```
 
 Result will be:

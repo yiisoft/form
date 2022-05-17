@@ -31,7 +31,7 @@ Widget:
 
 ```php
 echo RadioList::widget()
-    ->attribute($profileForm, 'color')
+    ->formAttribute($profileForm, 'color')
     ->items([
         'f00' => 'Red',
         '0f0' => 'Green',

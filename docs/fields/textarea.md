@@ -27,7 +27,7 @@ Widget:
 
 ```php
 echo Textarea::widget()
-    ->attribute($productForm, 'shortdesc')
+    ->formAttribute($productForm, 'shortdesc')
     ->rows(7);
 ```
 

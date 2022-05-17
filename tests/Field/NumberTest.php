@@ -23,7 +23,7 @@ final class NumberTest extends TestCase
     public function testBase(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'age')
+            ->formAttribute(new NumberForm(), 'age')
             ->render();
 
         $expected = <<<HTML
@@ -69,7 +69,7 @@ final class NumberTest extends TestCase
     public function testMax(string $expected, $value): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->max($value)
@@ -110,7 +110,7 @@ final class NumberTest extends TestCase
     public function testMin(string $expected, $value): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->min($value)
@@ -151,7 +151,7 @@ final class NumberTest extends TestCase
     public function testStep(string $expected, $value): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->step($value)
@@ -163,7 +163,7 @@ final class NumberTest extends TestCase
     public function testReadonly(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->readonly()
             ->render();
 
@@ -180,7 +180,7 @@ final class NumberTest extends TestCase
     public function testRequired(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->required()
             ->render();
 
@@ -197,7 +197,7 @@ final class NumberTest extends TestCase
     public function testDisabled(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->disabled()
             ->render();
 
@@ -214,7 +214,7 @@ final class NumberTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->ariaDescribedBy('hint')
             ->render();
 
@@ -231,7 +231,7 @@ final class NumberTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->ariaLabel('test')
             ->render();
 
@@ -248,7 +248,7 @@ final class NumberTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->autofocus()
             ->render();
 
@@ -265,7 +265,7 @@ final class NumberTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Number::widget()
-            ->attribute(new NumberForm(), 'count')
+            ->formAttribute(new NumberForm(), 'count')
             ->tabIndex(5)
             ->render();
 
@@ -282,7 +282,7 @@ final class NumberTest extends TestCase
     public function testInvalidValue(): void
     {
         $field = Number::widget()
-            ->attribute(new NumberForm(), 'name');
+            ->formAttribute(new NumberForm(), 'name');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number field requires a numeric or null value.');
@@ -309,7 +309,7 @@ final class NumberTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Number::widget()
-            ->attribute(new NumberForm(), $attribute)
+            ->formAttribute(new NumberForm(), $attribute)
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->useContainer(false);

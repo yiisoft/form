@@ -34,8 +34,8 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     /**
      * @psalm-var non-empty-string
      */
-    private string $outputTagName = 'span';
-    private array $outputTagAttributes = [];
+    private string $outputTag = 'span';
+    private array $outputAttributes = [];
 
     /**
      * Maximum value.
@@ -45,7 +45,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function max(float|int|string|Stringable|null $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['max'] = $value;
+        $new->inputAttributes['max'] = $value;
         return $new;
     }
 
@@ -57,7 +57,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function min(float|int|string|Stringable|null $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['min'] = $value;
+        $new->inputAttributes['min'] = $value;
         return $new;
     }
 
@@ -69,7 +69,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function step(float|int|string|Stringable|null $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['step'] = $value;
+        $new->inputAttributes['step'] = $value;
         return $new;
     }
 
@@ -81,7 +81,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function list(?string $id): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['list'] = $id;
+        $new->inputAttributes['list'] = $id;
         return $new;
     }
 
@@ -91,7 +91,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -103,7 +103,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -115,7 +115,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -128,7 +128,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -152,7 +152,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function tabIndex(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -163,21 +163,21 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
         return $new;
     }
 
-    public function outputTagName(string $tagName): self
+    public function outputTag(string $tagName): self
     {
         if ($tagName === '') {
             throw new InvalidArgumentException('The output tag name it cannot be empty value.');
         }
 
         $new = clone $this;
-        $new->outputTagName = $tagName;
+        $new->outputTag = $tagName;
         return $new;
     }
 
-    public function outputTagAttributes(array $attributes): self
+    public function outputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->outputTagAttributes = $attributes;
+        $new->outputAttributes = $attributes;
         return $new;
     }
 
@@ -188,18 +188,18 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Required) {
-                    $this->inputTagAttributes['required'] = true;
+                    $this->inputAttributes['required'] = true;
                 }
 
                 if ($rule instanceof NumberRule) {
                     if (null !== $min = $rule->getOptions()['min']) {
-                        $this->inputTagAttributes['min'] = $min;
+                        $this->inputAttributes['min'] = $min;
                     }
                     if (null !== $max = $rule->getOptions()['max']) {
-                        $this->inputTagAttributes['max'] = $max;
+                        $this->inputAttributes['max'] = $max;
                     }
                 }
             }
@@ -208,30 +208,30 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
 
     protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
+        $value = $this->getFormAttributeValue();
 
         if (!is_string($value) && !is_numeric($value) && $value !== null) {
             throw new InvalidArgumentException('Range field requires a string, numeric or null value.');
         }
 
-        $tag = Html::range($this->getInputName(), $value, $this->getInputTagAttributes());
+        $tag = Html::range($this->getInputName(), $value, $this->getInputAttributes());
         if ($this->showOutput) {
             $tag = $tag
                 ->showOutput()
-                ->outputTagName($this->outputTagName)
-                ->outputTagAttributes($this->outputTagAttributes);
+                ->outputTag($this->outputTag)
+                ->outputAttributes($this->outputAttributes);
         }
 
         return $tag->render();
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }

@@ -26,7 +26,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function max(?string $value): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['max'] = $value;
+        $new->inputAttributes['max'] = $value;
         return $new;
     }
 
@@ -36,7 +36,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function min(?string $value): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['min'] = $value;
+        $new->inputAttributes['min'] = $value;
         return $new;
     }
 
@@ -48,7 +48,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function ariaDescribedBy(?string $value): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -60,7 +60,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function ariaLabel(?string $value): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -73,7 +73,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function autofocus(bool $value = true): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -97,7 +97,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function tabIndex(?int $value): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -111,7 +111,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function readonly(bool $value = true): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['readonly'] = $value;
+        $new->inputAttributes['readonly'] = $value;
         return $new;
     }
 
@@ -125,7 +125,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function required(bool $value = true): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['required'] = $value;
+        $new->inputAttributes['required'] = $value;
         return $new;
     }
 
@@ -135,7 +135,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     final public function disabled(bool $disabled = true): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -146,10 +146,10 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Required) {
-                    $this->inputTagAttributes['required'] = true;
+                    $this->inputAttributes['required'] = true;
                 }
             }
         }
@@ -157,7 +157,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
 
     final protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
+        $value = $this->getFormAttributeValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException(
@@ -166,20 +166,20 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
             );
         }
 
-        $tagAttributes = $this->getInputTagAttributes();
+        $inputAttributes = $this->getInputAttributes();
 
-        return Html::input($this->getInputType(), $this->getInputName(), $value, $tagAttributes)->render();
+        return Html::input($this->getInputType(), $this->getInputName(), $value, $inputAttributes)->render();
     }
 
     abstract protected function getInputType(): string;
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }

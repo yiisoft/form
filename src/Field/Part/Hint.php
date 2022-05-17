@@ -21,7 +21,7 @@ final class Hint extends Widget
      * @psalm-var non-empty-string
      */
     private string $tag = 'div';
-    private array $tagAttributes = [];
+    private array $attributes = [];
 
     private string|Stringable|null $content = null;
 
@@ -43,10 +43,10 @@ final class Hint extends Widget
         return $new;
     }
 
-    public function tagAttributes(array $attributes): self
+    public function attributes(array $attributes): self
     {
         $new = clone $this;
-        $new->tagAttributes = $attributes;
+        $new->attributes = $attributes;
         return $new;
     }
 
@@ -72,12 +72,12 @@ final class Hint extends Widget
     protected function run(): string
     {
         $content = $this->hasFormModelAndAttribute()
-            ? $this->content ?? $this->getAttributeHint()
+            ? $this->content ?? $this->getFormAttributeHint()
             : (string) $this->content;
 
         return $content === ''
             ? ''
-            : Html::tag($this->tag, $content, $this->tagAttributes)
+            : Html::tag($this->tag, $content, $this->attributes)
                 ->encode($this->encode)
                 ->render();
     }

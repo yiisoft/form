@@ -22,7 +22,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testMax(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->max('2030-12-31')
             ->render();
@@ -39,7 +39,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testMin(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->min('1999-01-01')
             ->render();
@@ -56,7 +56,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->ariaDescribedBy('hint')
             ->render();
@@ -73,7 +73,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->ariaLabel('test')
             ->render();
@@ -90,7 +90,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testAutofocus(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->autofocus()
             ->render();
@@ -107,7 +107,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testTabIndex(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->tabIndex(5)
             ->render();
@@ -124,7 +124,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testReadonly(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->readonly()
             ->render();
@@ -141,7 +141,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testRequired(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->required()
             ->render();
@@ -158,7 +158,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testDisabled(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'endDate')
+            ->formAttribute(new DateForm(), 'endDate')
             ->hideLabel()
             ->disabled()
             ->render();
@@ -175,7 +175,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testEnrichmentFromRules(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'main')
+            ->formAttribute(new DateForm(), 'main')
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->render();
@@ -192,7 +192,7 @@ final class DateTimeInputFieldTest extends TestCase
     public function testInvalidValue(): void
     {
         $widget = StubDateTimeInputField::widget()
-            ->attribute(new DateForm(), 'age');
+            ->formAttribute(new DateForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('StubDateTimeInputField field requires a string or null value.');

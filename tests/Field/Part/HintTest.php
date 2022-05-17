@@ -22,7 +22,7 @@ final class HintTest extends TestCase
     public function testBase(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->render();
 
         $this->assertSame('<div>Write your name.</div>', $result);
@@ -31,7 +31,7 @@ final class HintTest extends TestCase
     public function testAttributeWithoutHint(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'age')
+            ->formAttribute(new HintForm(), 'age')
             ->render();
 
         $this->assertSame('', $result);
@@ -40,7 +40,7 @@ final class HintTest extends TestCase
     public function testCustomTag(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->tag('b')
             ->render();
 
@@ -52,15 +52,15 @@ final class HintTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
         Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->tag('');
     }
 
-    public function testTagAttributes(): void
+    public function testAttributes(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
-            ->tagAttributes(['class' => 'red', 'data-number' => 18])
+            ->formAttribute(new HintForm(), 'name')
+            ->attributes(['class' => 'red', 'data-number' => 18])
             ->render();
 
         $this->assertSame('<div class="red" data-number="18">Write your name.</div>', $result);
@@ -69,7 +69,7 @@ final class HintTest extends TestCase
     public function testCustomContent(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->content('Override hint.')
             ->render();
 
@@ -79,7 +79,7 @@ final class HintTest extends TestCase
     public function testEmptyContent(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->content('')
             ->render();
 
@@ -89,7 +89,7 @@ final class HintTest extends TestCase
     public function testEncode(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->content('your name >')
             ->render();
 
@@ -99,7 +99,7 @@ final class HintTest extends TestCase
     public function testWithoutEncode(): void
     {
         $result = Hint::widget()
-            ->attribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->content('<b>your name</b>')
             ->encode(false)
             ->render();
@@ -116,9 +116,9 @@ final class HintTest extends TestCase
     public function testImmutability(): void
     {
         $widget = Hint::widget();
-        $this->assertNotSame($widget, $widget->attribute(new HintForm(), 'name'));
+        $this->assertNotSame($widget, $widget->formAttribute(new HintForm(), 'name'));
         $this->assertNotSame($widget, $widget->tag('b'));
-        $this->assertNotSame($widget, $widget->tagAttributes([]));
+        $this->assertNotSame($widget, $widget->attributes([]));
         $this->assertNotSame($widget, $widget->content(''));
         $this->assertNotSame($widget, $widget->encode(false));
     }

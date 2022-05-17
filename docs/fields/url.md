@@ -26,7 +26,7 @@ final class ProfileForm extends FormModel
 Widget:
 
 ```php
-echo Url::widget()->attribute($profileForm, 'site');
+echo Url::widget()->formAttribute($profileForm, 'site');
 ```
 
 Result will be:

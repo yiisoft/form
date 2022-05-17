@@ -34,7 +34,7 @@ Widget:
 
 ```php
 echo Text::widget()
-    ->attribute($createForm, 'name')
+    ->formAttribute($createForm, 'name')
     ->required();
 ```
 

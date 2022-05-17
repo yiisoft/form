@@ -15,7 +15,7 @@ abstract class BaseField extends Widget
      * @psalm-var non-empty-string
      */
     protected string $containerTag = 'div';
-    protected array $containerTagAttributes = [];
+    protected array $containerAttributes = [];
     protected bool $useContainer = true;
 
     private bool $isStartedByBegin = false;
@@ -31,10 +31,10 @@ abstract class BaseField extends Widget
         return $new;
     }
 
-    final public function containerTagAttributes(array $attributes): static
+    final public function containerAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->containerTagAttributes = $attributes;
+        $new->containerAttributes = $attributes;
         return $new;
     }
 
@@ -46,7 +46,7 @@ abstract class BaseField extends Widget
     final public function containerId(?string $id): static
     {
         $new = clone $this;
-        $new->containerTagAttributes['id'] = $id;
+        $new->containerAttributes['id'] = $id;
         return $new;
     }
 
@@ -59,7 +59,7 @@ abstract class BaseField extends Widget
     {
         $new = clone $this;
         Html::addCssClass(
-            $new->containerTagAttributes,
+            $new->containerAttributes,
             array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
@@ -73,7 +73,7 @@ abstract class BaseField extends Widget
     final public function replaceContainerClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->containerTagAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->containerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
@@ -140,7 +140,7 @@ abstract class BaseField extends Widget
         return '';
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
     }
 
@@ -165,8 +165,8 @@ abstract class BaseField extends Widget
 
         $containerTag = CustomTag::name($this->containerTag);
 
-        $attributes = $this->containerTagAttributes;
-        $this->prepareContainerTagAttributes($attributes);
+        $attributes = $this->containerAttributes;
+        $this->prepareContainerAttributes($attributes);
         if ($attributes !== []) {
             $containerTag = $containerTag->attributes($attributes);
         }

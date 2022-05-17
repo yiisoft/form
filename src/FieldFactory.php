@@ -46,14 +46,14 @@ final class FieldFactory
      */
     public function __construct(
         private ?string $containerTag = null,
-        private array $containerTagAttributes = [],
+        private array $containerAttributes = [],
         private string|array|null $containerClass = null,
         private ?bool $useContainer = null,
         private ?string $template = null,
         private ?string $templateBegin = null,
         private ?string $templateEnd = null,
-        private ?bool $setInputIdAttribute = null,
-        private array $inputTagAttributes = [],
+        private ?bool $setInputId = null,
+        private array $inputAttributes = [],
         private string|array|null $inputClass = null,
         private array $labelConfig = [],
         private array $hintConfig = [],
@@ -85,7 +85,7 @@ final class FieldFactory
     {
         return $this
             ->field(CheckboxList::class, $config)
-            ->attribute($formModel, $attribute);
+            ->formAttribute($formModel, $attribute);
     }
 
     public function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
@@ -149,7 +149,7 @@ final class FieldFactory
     {
         return $this
             ->field(RadioList::class, $config)
-            ->attribute($formModel, $attribute);
+            ->formAttribute($formModel, $attribute);
     }
 
     public function range(FormModelInterface $formModel, string $attribute, array $config = []): Range
@@ -198,7 +198,7 @@ final class FieldFactory
             $this->labelConfig,
             $config,
         );
-        return Label::widget($widgetConfig)->attribute($formModel, $attribute);
+        return Label::widget($widgetConfig)->formAttribute($formModel, $attribute);
     }
 
     public function hint(FormModelInterface $formModel, string $attribute, array $config = []): Hint
@@ -207,7 +207,7 @@ final class FieldFactory
             $this->hintConfig,
             $config,
         );
-        return Hint::widget($widgetConfig)->attribute($formModel, $attribute);
+        return Hint::widget($widgetConfig)->formAttribute($formModel, $attribute);
     }
 
     public function error(FormModelInterface $formModel, string $attribute, array $config = []): Error
@@ -216,7 +216,7 @@ final class FieldFactory
             $this->errorConfig,
             $config,
         );
-        return Error::widget($widgetConfig)->attribute($formModel, $attribute);
+        return Error::widget($widgetConfig)->formAttribute($formModel, $attribute);
     }
 
     /**
@@ -236,7 +236,7 @@ final class FieldFactory
             );
         }
 
-        return $widget->attribute($formModel, $attribute);
+        return $widget->formAttribute($formModel, $attribute);
     }
 
     /**
@@ -267,8 +267,8 @@ final class FieldFactory
         if ($this->containerTag !== null) {
             $config['containerTag()'] = [$this->containerTag];
         }
-        if ($this->containerTagAttributes !== []) {
-            $config['containerTagAttributes()'] = [$this->containerTagAttributes];
+        if ($this->containerAttributes !== []) {
+            $config['containerAttributes()'] = [$this->containerAttributes];
         }
         if ($this->containerClass !== null) {
             $config['containerClass()'] = is_array($this->containerClass)
@@ -301,16 +301,16 @@ final class FieldFactory
         }
 
         if (is_a($class, InputField::class, true)) {
-            if ($this->setInputIdAttribute !== null) {
-                $config['setInputIdAttribute()'] = [$this->setInputIdAttribute];
-                if ($this->setInputIdAttribute === false) {
+            if ($this->setInputId !== null) {
+                $config['setInputId()'] = [$this->setInputId];
+                if ($this->setInputId === false) {
                     $config['labelConfig()'] = [
-                        $this->labelConfig + ['useInputIdAttribute()' => [false]],
+                        $this->labelConfig + ['useInputId()' => [false]],
                     ];
                 }
             }
-            if ($this->inputTagAttributes !== []) {
-                $config['inputTagAttributes()'] = [$this->inputTagAttributes];
+            if ($this->inputAttributes !== []) {
+                $config['inputAttributes()'] = [$this->inputAttributes];
             }
             if ($this->inputClass !== null) {
                 $config['inputClass()'] = is_array($this->inputClass)

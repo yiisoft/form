@@ -16,7 +16,7 @@ use Yiisoft\Html\Html;
  */
 final class Image extends PartsField
 {
-    private array $inputTagAttributes = [];
+    private array $inputAttributes = [];
 
     /**
      * Provides the textual label for the button for users and user agents who cannot use the image.
@@ -26,21 +26,21 @@ final class Image extends PartsField
     public function alt(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['alt'] = $value;
+        $new->inputAttributes['alt'] = $value;
         return $new;
     }
 
     public function width(int|string|Stringable|null $width): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['width'] = $width;
+        $new->inputAttributes['width'] = $width;
         return $new;
     }
 
     public function height(int|string|Stringable|null $height): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['height'] = $height;
+        $new->inputAttributes['height'] = $height;
         return $new;
     }
 
@@ -50,7 +50,7 @@ final class Image extends PartsField
     public function src(?string $url): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['src'] = $url;
+        $new->inputAttributes['src'] = $url;
         return $new;
     }
 
@@ -63,7 +63,7 @@ final class Image extends PartsField
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -73,7 +73,7 @@ final class Image extends PartsField
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -85,7 +85,7 @@ final class Image extends PartsField
     public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -97,7 +97,7 @@ final class Image extends PartsField
     public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -121,14 +121,14 @@ final class Image extends PartsField
     public function tabIndex(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
-    public function inputTagAttributes(array $attributes): self
+    public function inputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->inputTagAttributes = $attributes;
+        $new->inputAttributes = $attributes;
         return $new;
     }
 
@@ -136,7 +136,7 @@ final class Image extends PartsField
     {
         return Html::input(
             type: 'image',
-            attributes: $this->inputTagAttributes
+            attributes: $this->inputAttributes
         )->render();
     }
 }

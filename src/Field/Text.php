@@ -39,7 +39,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -51,7 +51,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -64,7 +64,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -78,7 +78,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function dirname(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['dirname'] = $value;
+        $new->inputAttributes['dirname'] = $value;
         return $new;
     }
 
@@ -88,7 +88,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -103,7 +103,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function maxlength(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['maxlength'] = $value;
+        $new->inputAttributes['maxlength'] = $value;
         return $new;
     }
 
@@ -118,7 +118,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function minlength(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['minlength'] = $value;
+        $new->inputAttributes['minlength'] = $value;
         return $new;
     }
 
@@ -132,7 +132,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function pattern(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['pattern'] = $value;
+        $new->inputAttributes['pattern'] = $value;
         return $new;
     }
 
@@ -146,7 +146,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function readonly(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['readonly'] = $value;
+        $new->inputAttributes['readonly'] = $value;
         return $new;
     }
 
@@ -160,7 +160,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['required'] = $value;
+        $new->inputAttributes['required'] = $value;
         return $new;
     }
 
@@ -174,7 +174,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function size(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['size'] = $value;
+        $new->inputAttributes['size'] = $value;
         return $new;
     }
 
@@ -198,7 +198,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     public function tabIndex(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -209,24 +209,24 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Required) {
-                    $this->inputTagAttributes['required'] = true;
+                    $this->inputAttributes['required'] = true;
                 }
 
                 if ($rule instanceof HasLength) {
                     if (null !== $min = $rule->getOptions()['min']) {
-                        $this->inputTagAttributes['minlength'] = $min;
+                        $this->inputAttributes['minlength'] = $min;
                     }
                     if (null !== $max = $rule->getOptions()['max']) {
-                        $this->inputTagAttributes['maxlength'] = $max;
+                        $this->inputAttributes['maxlength'] = $max;
                     }
                 }
 
                 if ($rule instanceof Regex) {
                     if (!($rule->getOptions()['not'])) {
-                        $this->inputTagAttributes['pattern'] = Html::normalizeRegexpPattern(
+                        $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
                             $rule->getOptions()['pattern']
                         );
                     }
@@ -237,30 +237,30 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
 
     protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
+        $value = $this->getFormAttributeValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Text field requires a string or null value.');
         }
 
-        $tagAttributes = $this->getInputTagAttributes();
+        $inputAttributes = $this->getInputAttributes();
 
-        return Html::textInput($this->getInputName(), $value, $tagAttributes)->render();
+        return Html::textInput($this->getInputName(), $value, $inputAttributes)->render();
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }
 
-    protected function prepareInputTagAttributes(array &$attributes): void
+    protected function prepareInputAttributes(array &$attributes): void
     {
-        $this->preparePlaceholderInInputTagAttributes($attributes);
+        $this->preparePlaceholderInInputAttributes($attributes);
     }
 }

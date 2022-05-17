@@ -35,7 +35,7 @@ Widget:
 
 ```php
 echo Date::widget()
-    ->attribute($createForm, 'publishDate')
+    ->formAttribute($createForm, 'publishDate')
     ->min('2022-01-01')
     ->max('2038-12-31');
 ```

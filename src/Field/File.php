@@ -26,7 +26,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     use ValidationClassTrait;
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
-    private array $uncheckInputTagAttributes = [];
+    private array $uncheckInputAttributes = [];
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -38,7 +38,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function accept(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['accept'] = $value;
+        $new->inputAttributes['accept'] = $value;
         return $new;
     }
 
@@ -50,7 +50,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function multiple(bool $multiple = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['multiple'] = $multiple;
+        $new->inputAttributes['multiple'] = $multiple;
         return $new;
     }
 
@@ -64,7 +64,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['required'] = $value;
+        $new->inputAttributes['required'] = $value;
         return $new;
     }
 
@@ -76,7 +76,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -88,7 +88,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -100,7 +100,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -124,7 +124,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     public function tabIndex(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -138,10 +138,10 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         return $new;
     }
 
-    public function uncheckInputTagAttributes(array $attributes): self
+    public function uncheckInputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->uncheckInputTagAttributes = $attributes;
+        $new->uncheckInputAttributes = $attributes;
         return $new;
     }
 
@@ -152,10 +152,10 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Required) {
-                    $this->inputTagAttributes['required'] = true;
+                    $this->inputAttributes['required'] = true;
                 }
             }
         }
@@ -163,7 +163,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
 
     protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
+        $value = $this->getFormAttributeValue();
 
         if (!is_string($value)
             && $value !== null
@@ -174,26 +174,26 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
             );
         }
 
-        $tagAttributes = $this->getInputTagAttributes();
+        $inputAttributes = $this->getInputAttributes();
 
-        $tag = Html::file($this->getInputName(), $value, $tagAttributes);
+        $tag = Html::file($this->getInputName(), $value, $inputAttributes);
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
-            if (!empty($this->uncheckInputTagAttributes)) {
-                $tag = $tag->uncheckInputTagAttributes($this->uncheckInputTagAttributes);
+            if (!empty($this->uncheckInputAttributes)) {
+                $tag = $tag->uncheckInputAttributes($this->uncheckInputAttributes);
             }
         }
 
         return $tag->render();
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }

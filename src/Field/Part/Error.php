@@ -23,7 +23,7 @@ final class Error extends Widget
      * @psalm-var non-empty-string
      */
     private string $tag = 'div';
-    private array $tagAttributes = [];
+    private array $attributes = [];
 
     private bool $encode = true;
 
@@ -50,10 +50,10 @@ final class Error extends Widget
         return $new;
     }
 
-    public function tagAttributes(array $attributes): self
+    public function attributes(array $attributes): self
     {
         $new = clone $this;
-        $new->tagAttributes = $attributes;
+        $new->attributes = $attributes;
         return $new;
     }
 
@@ -114,12 +114,12 @@ final class Error extends Widget
                 $this->messageCallback,
                 $message,
                 $useModel ? $this->getFormModel() : null,
-                $useModel ? $this->attribute : null
+                $useModel ? $this->formAttribute : null
             );
         }
 
         return CustomTag::name($this->tag)
-            ->attributes($this->tagAttributes)
+            ->attributes($this->attributes)
             ->content($message)
             ->encode($this->encode)
             ->render();

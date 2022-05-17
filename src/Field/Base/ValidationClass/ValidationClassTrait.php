@@ -35,8 +35,8 @@ trait ValidationClassTrait
         return $new;
     }
 
-    protected function addValidationClassToTagAttributes(
-        array &$tagAttributes,
+    protected function addValidationClassToAttributes(
+        array &$attributes,
         FormModelInterface $formModel,
         string $attributeName,
     ): void {
@@ -47,11 +47,11 @@ trait ValidationClassTrait
         $hasErrors = $formModel->getFormErrors()->hasErrors($attributeName);
 
         if ($hasErrors && $this->invalidClass !== null) {
-            Html::addCssClass($tagAttributes, $this->invalidClass);
+            Html::addCssClass($attributes, $this->invalidClass);
         }
 
         if (!$hasErrors && $this->validClass !== null) {
-            Html::addCssClass($tagAttributes, $this->validClass);
+            Html::addCssClass($attributes, $this->validClass);
         }
     }
 }

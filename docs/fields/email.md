@@ -28,7 +28,7 @@ Widget:
 
 ```php
 echo Email::widget()
-    ->attribute($profileForm, 'email')
+    ->formAttribute($profileForm, 'email')
     ->required();
 ```
 

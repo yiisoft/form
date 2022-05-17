@@ -23,7 +23,7 @@ final class CreateForm extends FormModel
 Widget:
 
 ```php
-echo Label::widget()->attribute($createForm, 'name');
+echo Label::widget()->formAttribute($createForm, 'name');
 ```
 
 Result will be:

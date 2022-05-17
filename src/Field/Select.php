@@ -107,7 +107,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -119,7 +119,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -131,7 +131,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -144,7 +144,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -168,7 +168,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function tabIndex(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -180,7 +180,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function multiple(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['multiple'] = $value;
+        $new->inputAttributes['multiple'] = $value;
         return $new;
     }
 
@@ -215,7 +215,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function required(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['required'] = $value;
+        $new->inputAttributes['required'] = $value;
         return $new;
     }
 
@@ -229,7 +229,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     public function size(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['size'] = $value;
+        $new->inputAttributes['size'] = $value;
         return $new;
     }
 
@@ -247,10 +247,10 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModel()->getRules()[$this->getAttributeName()] ?? [];
+            $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Required) {
-                    $this->inputTagAttributes['required'] = true;
+                    $this->inputAttributes['required'] = true;
                 }
             }
         }
@@ -258,8 +258,8 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
 
     protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
-        $multiple = (bool) ($this->inputTagAttributes['multiple'] ?? false);
+        $value = $this->getFormAttributeValue();
+        $multiple = (bool) ($this->inputAttributes['multiple'] ?? false);
 
         if ($multiple) {
             /** @var mixed $value */
@@ -284,22 +284,22 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
         }
         /** @psalm-var iterable<int, Stringable|scalar> $value */
 
-        $tagAttributes = $this->getInputTagAttributes();
+        $selectAttributes = $this->getInputAttributes();
 
         return $this->select
-            ->attributes($tagAttributes)
+            ->attributes($selectAttributes)
             ->name($this->getInputName())
             ->values($value)
             ->render();
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }

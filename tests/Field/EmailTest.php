@@ -22,7 +22,7 @@ final class EmailTest extends TestCase
     public function testBase(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'main')
+            ->formAttribute(new EmailForm(), 'main')
             ->render();
 
         $expected = <<<HTML
@@ -39,7 +39,7 @@ final class EmailTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->maxlength(99)
             ->render();
 
@@ -56,7 +56,7 @@ final class EmailTest extends TestCase
     public function testMinlength(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->minlength(5)
             ->render();
 
@@ -73,7 +73,7 @@ final class EmailTest extends TestCase
     public function testMultiple(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->multiple()
             ->render();
 
@@ -90,7 +90,7 @@ final class EmailTest extends TestCase
     public function testPattern(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->pattern('\w+@\w+')
             ->render();
 
@@ -107,7 +107,7 @@ final class EmailTest extends TestCase
     public function testReadonly(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->readonly()
             ->render();
 
@@ -124,7 +124,7 @@ final class EmailTest extends TestCase
     public function testRequired(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->required()
             ->render();
 
@@ -141,7 +141,7 @@ final class EmailTest extends TestCase
     public function testSize(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->size(99)
             ->render();
 
@@ -158,7 +158,7 @@ final class EmailTest extends TestCase
     public function testDisabled(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->disabled()
             ->render();
 
@@ -175,7 +175,7 @@ final class EmailTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->ariaDescribedBy('hint')
             ->render();
 
@@ -192,7 +192,7 @@ final class EmailTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->ariaLabel('test')
             ->render();
 
@@ -209,7 +209,7 @@ final class EmailTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->autofocus()
             ->render();
 
@@ -226,7 +226,7 @@ final class EmailTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Email::widget()
-            ->attribute(new EmailForm(), 'second')
+            ->formAttribute(new EmailForm(), 'second')
             ->tabIndex(2)
             ->render();
 
@@ -242,7 +242,7 @@ final class EmailTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = Email::widget()->attribute(new EmailForm(), 'age');
+        $field = Email::widget()->formAttribute(new EmailForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage('Email field requires a string or null value.');
@@ -277,7 +277,7 @@ final class EmailTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Email::widget()
-            ->attribute(new EmailForm(), $attribute)
+            ->formAttribute(new EmailForm(), $attribute)
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->useContainer(false);

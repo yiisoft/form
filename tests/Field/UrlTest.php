@@ -22,7 +22,7 @@ final class UrlTest extends TestCase
     public function tesBase(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'site')
+            ->formAttribute(new UrlForm(), 'site')
             ->render();
 
         $expected = <<<HTML
@@ -39,7 +39,7 @@ final class UrlTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->maxlength(95)
             ->hideLabel()
             ->render();
@@ -56,7 +56,7 @@ final class UrlTest extends TestCase
     public function testMinlength(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->minlength(3)
             ->hideLabel()
             ->render();
@@ -73,7 +73,7 @@ final class UrlTest extends TestCase
     public function testPattern(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->pattern('\w+')
             ->hideLabel()
             ->render();
@@ -90,7 +90,7 @@ final class UrlTest extends TestCase
     public function testReadonly(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->readonly()
             ->hideLabel()
             ->render();
@@ -107,7 +107,7 @@ final class UrlTest extends TestCase
     public function testRequired(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->required()
             ->hideLabel()
             ->render();
@@ -124,7 +124,7 @@ final class UrlTest extends TestCase
     public function testDisabled(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->disabled()
             ->hideLabel()
             ->render();
@@ -141,7 +141,7 @@ final class UrlTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->ariaDescribedBy('hint')
             ->hideLabel()
             ->render();
@@ -158,7 +158,7 @@ final class UrlTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->ariaLabel('test')
             ->hideLabel()
             ->render();
@@ -175,7 +175,7 @@ final class UrlTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->autofocus()
             ->hideLabel()
             ->render();
@@ -192,7 +192,7 @@ final class UrlTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->tabIndex(5)
             ->hideLabel()
             ->render();
@@ -209,7 +209,7 @@ final class UrlTest extends TestCase
     public function testSize(): void
     {
         $result = Url::widget()
-            ->attribute(new UrlForm(), 'post')
+            ->formAttribute(new UrlForm(), 'post')
             ->size(99)
             ->hideLabel()
             ->render();
@@ -263,7 +263,7 @@ final class UrlTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Url::widget()
-            ->attribute(new UrlForm(), $attribute)
+            ->formAttribute(new UrlForm(), $attribute)
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->useContainer(false);
@@ -274,7 +274,7 @@ final class UrlTest extends TestCase
     public function testInvalidValue(): void
     {
         $widget = Url::widget()
-            ->attribute(new UrlForm(), 'age');
+            ->formAttribute(new UrlForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('URL field requires a string or null value.');

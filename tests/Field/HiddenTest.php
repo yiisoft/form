@@ -21,7 +21,7 @@ final class HiddenTest extends TestCase
 
     public function testBase(): void
     {
-        $field = Hidden::widget()->attribute(new HiddenForm(), 'key');
+        $field = Hidden::widget()->formAttribute(new HiddenForm(), 'key');
 
         $this->assertSame(
             '<input type="hidden" id="hiddenform-key" name="HiddenForm[key]" value="x100">',
@@ -31,7 +31,7 @@ final class HiddenTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = Hidden::widget()->attribute(new HiddenForm(), 'flag');
+        $field = Hidden::widget()->formAttribute(new HiddenForm(), 'flag');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage('Hidden widget requires a string, numeric or null value.');

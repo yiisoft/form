@@ -21,7 +21,7 @@ final class DateTest extends TestCase
     public function testBase(): void
     {
         $result = Date::widget()
-            ->attribute(new DateForm(), 'birthday')
+            ->formAttribute(new DateForm(), 'birthday')
             ->render();
 
         $expected = <<<'HTML'
@@ -38,7 +38,7 @@ final class DateTest extends TestCase
     public function testRange(): void
     {
         $result = Date::widget()
-            ->attribute(new DateForm(), 'startDate')
+            ->formAttribute(new DateForm(), 'startDate')
             ->min('1990-01-01')
             ->max('2030-12-31')
             ->render();

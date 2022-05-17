@@ -16,12 +16,12 @@ final class Label extends Widget
 {
     use FormAttributeTrait;
 
-    private array $tagAttributes = [];
+    private array $attributes = [];
 
-    private bool $setForAttribute = true;
+    private bool $setFor = true;
 
     private ?string $forId = null;
-    private bool $useInputIdAttribute = true;
+    private bool $useInputId = true;
 
     private string|Stringable|null $content = null;
 
@@ -30,17 +30,17 @@ final class Label extends Widget
     /**
      * @return static
      */
-    public function tagAttributes(array $attributes): self
+    public function attributes(array $attributes): self
     {
         $new = clone $this;
-        $new->tagAttributes = $attributes;
+        $new->attributes = $attributes;
         return $new;
     }
 
-    public function setForAttribute(bool $value): self
+    public function setFor(bool $value): self
     {
         $new = clone $this;
-        $new->setForAttribute = $value;
+        $new->setFor = $value;
         return $new;
     }
 
@@ -57,10 +57,10 @@ final class Label extends Widget
     /**
      * @return static
      */
-    public function useInputIdAttribute(bool $value): self
+    public function useInputId(bool $value): self
     {
         $new = clone $this;
-        $new->useInputIdAttribute = $value;
+        $new->useInputId = $value;
         return $new;
     }
 
@@ -91,26 +91,26 @@ final class Label extends Widget
         $useModel = $this->hasFormModelAndAttribute();
 
         $content = $useModel
-            ? $this->content ?? $this->getAttributeLabel()
+            ? $this->content ?? $this->getFormAttributeLabel()
             : (string) $this->content;
 
         if ($content === '') {
             return '';
         }
 
-        $tagAttributes = $this->tagAttributes;
+        $labelAttributes = $this->attributes;
 
-        if ($this->setForAttribute && !isset($tagAttributes['for'])) {
+        if ($this->setFor && !isset($labelAttributes['for'])) {
             $id = $this->forId;
-            if ($useModel && $id === null && $this->useInputIdAttribute) {
+            if ($useModel && $id === null && $this->useInputId) {
                 $id = $this->getInputId();
             }
             if ($id !== null) {
-                $tagAttributes['for'] = $id;
+                $labelAttributes['for'] = $id;
             }
         }
 
-        $tag = Html::label($content)->attributes($tagAttributes);
+        $tag = Html::label($content)->attributes($labelAttributes);
 
         if (!$this->encode) {
             $tag = $tag->encode(false);

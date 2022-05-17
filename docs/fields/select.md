@@ -27,7 +27,7 @@ Widget:
 
 ```php
 echo Select::widget()
-    ->attribute($profileForm, 'color')
+    ->formAttribute($profileForm, 'color')
     ->optionsData([
         'f00' => 'Red',
         '0f0' => 'Green',

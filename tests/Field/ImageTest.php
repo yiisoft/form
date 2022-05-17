@@ -251,10 +251,10 @@ final class ImageTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testInputTagAttributes(): void
+    public function testInputAttributes(): void
     {
         $result = Image::widget()
-            ->inputTagAttributes(['class' => 'primary'])
+            ->inputAttributes(['class' => 'primary'])
             ->render();
 
         $expected = <<<HTML
@@ -279,6 +279,6 @@ final class ImageTest extends TestCase
         $this->assertNotSame($field, $field->ariaDescribedBy(null));
         $this->assertNotSame($field, $field->ariaLabel(null));
         $this->assertNotSame($field, $field->tabIndex(null));
-        $this->assertNotSame($field, $field->inputTagAttributes([]));
+        $this->assertNotSame($field, $field->inputAttributes([]));
     }
 }

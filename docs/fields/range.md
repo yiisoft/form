@@ -28,7 +28,7 @@ Widget:
 
 ```php
 echo Number::widget()
-    ->attribute($profileForm, 'age')
+    ->formAttribute($profileForm, 'age')
     ->min(21)
     ->max(150);
 ```

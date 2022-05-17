@@ -22,7 +22,7 @@ final class TelephoneTest extends TestCase
     public function testBase(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'number')
+            ->formAttribute(new TelephoneForm(), 'number')
             ->render();
 
         $expected = <<<HTML
@@ -39,7 +39,7 @@ final class TelephoneTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->maxlength(12)
@@ -54,7 +54,7 @@ final class TelephoneTest extends TestCase
     public function testMinlength(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->minlength(7)
@@ -69,7 +69,7 @@ final class TelephoneTest extends TestCase
     public function testPattern(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->pattern('\d+')
@@ -84,7 +84,7 @@ final class TelephoneTest extends TestCase
     public function testReadonly(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->readonly()
@@ -99,7 +99,7 @@ final class TelephoneTest extends TestCase
     public function testRequired(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->required()
@@ -114,7 +114,7 @@ final class TelephoneTest extends TestCase
     public function testDisabled(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->disabled()
@@ -129,7 +129,7 @@ final class TelephoneTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->ariaDescribedBy('hint')
@@ -144,7 +144,7 @@ final class TelephoneTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->ariaLabel('test')
@@ -159,7 +159,7 @@ final class TelephoneTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->autofocus()
@@ -174,7 +174,7 @@ final class TelephoneTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->tabIndex(5)
@@ -189,7 +189,7 @@ final class TelephoneTest extends TestCase
     public function testSize(): void
     {
         $result = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'main')
+            ->formAttribute(new TelephoneForm(), 'main')
             ->useContainer(false)
             ->hideLabel()
             ->size(9)
@@ -229,7 +229,7 @@ final class TelephoneTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Telephone::widget()
-            ->attribute(new TelephoneForm(), $attribute)
+            ->formAttribute(new TelephoneForm(), $attribute)
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->useContainer(false);
@@ -240,7 +240,7 @@ final class TelephoneTest extends TestCase
     public function testInvalidValue(): void
     {
         $widget = Telephone::widget()
-            ->attribute(new TelephoneForm(), 'age');
+            ->formAttribute(new TelephoneForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Telephone field requires a string or null value.');

@@ -13,8 +13,8 @@ final class StubInputField extends InputField
     {
         return Html::textInput(
             $this->getInputName(),
-            (string) $this->getAttributeValue(),
-            $this->getInputTagAttributes()
+            (string) $this->getFormAttributeValue(),
+            $this->getInputAttributes()
         )->render();
     }
 }

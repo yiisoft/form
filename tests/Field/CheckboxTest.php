@@ -23,7 +23,7 @@ final class CheckboxTest extends TestCase
     public function testBase(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'red')
+            ->formAttribute(new CheckboxForm(), 'red')
             ->render();
 
         $expected = <<<'HTML'
@@ -39,7 +39,7 @@ final class CheckboxTest extends TestCase
     public function testFalseValue(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->render();
 
         $expected = <<<'HTML'
@@ -54,7 +54,7 @@ final class CheckboxTest extends TestCase
     public function testInputValue(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'red')
+            ->formAttribute(new CheckboxForm(), 'red')
             ->inputValue('4')
             ->render();
 
@@ -71,7 +71,7 @@ final class CheckboxTest extends TestCase
     public function testCheckedInputValue(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'age')
+            ->formAttribute(new CheckboxForm(), 'age')
             ->inputValue('42')
             ->render();
 
@@ -103,7 +103,7 @@ final class CheckboxTest extends TestCase
     public function testUncheckValue(string $expectedInput, mixed $uncheckValue): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->uncheckValue($uncheckValue)
             ->render();
 
@@ -118,7 +118,7 @@ final class CheckboxTest extends TestCase
     public function testNotEnclosedByLabel(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->enclosedByLabel(false)
             ->render();
 
@@ -135,7 +135,7 @@ final class CheckboxTest extends TestCase
     public function testBothLabels(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabel('Yes')
             ->hideLabel(false)
             ->render();
@@ -153,7 +153,7 @@ final class CheckboxTest extends TestCase
     public function testBothLabelsWithNotEnclosedByLabel(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabel('Yes')
             ->enclosedByLabel(false)
             ->hideLabel(false)
@@ -172,7 +172,7 @@ final class CheckboxTest extends TestCase
     public function testInputLabelEncode(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabel('A > B')
             ->render();
 
@@ -188,7 +188,7 @@ final class CheckboxTest extends TestCase
     public function testInputLabelNotEncode(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabel('<b>Blue</b>')
             ->inputLabelEncode(false)
             ->render();
@@ -205,7 +205,7 @@ final class CheckboxTest extends TestCase
     public function testInputLabelEncodeNotEnclosedByLabel(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabel('A > B')
             ->enclosedByLabel(false)
             ->render();
@@ -223,7 +223,7 @@ final class CheckboxTest extends TestCase
     public function testInputLabelNotEncodeNotEnclosedByLabel(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabel('<b>Blue</b>')
             ->inputLabelEncode(false)
             ->enclosedByLabel(false)
@@ -242,7 +242,7 @@ final class CheckboxTest extends TestCase
     public function testInputLabelAttributes(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabelAttributes(['class' => 'red'])
             ->render();
 
@@ -258,7 +258,7 @@ final class CheckboxTest extends TestCase
     public function testDisabled(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->disabled()
             ->uncheckValue(null)
             ->render();
@@ -275,7 +275,7 @@ final class CheckboxTest extends TestCase
     public function testAriaDescibedBy(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->ariaDescribedBy('hint')
             ->uncheckValue(null)
             ->render();
@@ -292,7 +292,7 @@ final class CheckboxTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->ariaLabel('test')
             ->uncheckValue(null)
             ->render();
@@ -309,7 +309,7 @@ final class CheckboxTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->autofocus()
             ->uncheckValue(null)
             ->render();
@@ -326,7 +326,7 @@ final class CheckboxTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Checkbox::widget()
-            ->attribute(new CheckboxForm(), 'blue')
+            ->formAttribute(new CheckboxForm(), 'blue')
             ->tabIndex(2)
             ->uncheckValue(null)
             ->render();
@@ -342,7 +342,7 @@ final class CheckboxTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = Checkbox::widget()->attribute(new CheckboxForm(), 'object');
+        $field = Checkbox::widget()->formAttribute(new CheckboxForm(), 'object');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage('Checkbox widget requires a string, numeric, bool, Stringable or null value.');

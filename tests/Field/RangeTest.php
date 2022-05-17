@@ -23,7 +23,7 @@ final class RangeTest extends TestCase
     public function testBase(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'volume')
+            ->formAttribute(new RangeForm(), 'volume')
             ->min(1)
             ->max(100)
             ->render();
@@ -41,11 +41,11 @@ final class RangeTest extends TestCase
     public function testWithOutput(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'volume')
+            ->formAttribute(new RangeForm(), 'volume')
             ->min(1)
             ->max(100)
             ->showOutput()
-            ->outputTagAttributes(['id' => 'UID'])
+            ->outputAttributes(['id' => 'UID'])
             ->render();
 
         $expected = <<<HTML
@@ -59,13 +59,13 @@ final class RangeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testCustomOutputTagName(): void
+    public function testCustomOutputTag(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'volume')
+            ->formAttribute(new RangeForm(), 'volume')
             ->showOutput()
-            ->outputTagName('div')
-            ->outputTagAttributes(['id' => 'UID'])
+            ->outputTag('div')
+            ->outputAttributes(['id' => 'UID'])
             ->render();
 
         $expected = <<<HTML
@@ -79,13 +79,13 @@ final class RangeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEmptyOutputTagName(): void
+    public function testEmptyOutputTag(): void
     {
         $field = Range::widget();
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The output tag name it cannot be empty value.');
-        $field->outputTagName('');
+        $field->outputTag('');
     }
 
     public function dataMax(): array
@@ -120,7 +120,7 @@ final class RangeTest extends TestCase
     public function testMax(string $expected, $value): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->max($value)
@@ -161,7 +161,7 @@ final class RangeTest extends TestCase
     public function testMin(string $expected, $value): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->min($value)
@@ -202,7 +202,7 @@ final class RangeTest extends TestCase
     public function testStep(string $expected, $value): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->step($value)
@@ -214,7 +214,7 @@ final class RangeTest extends TestCase
     public function testList(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->list('TheList')
@@ -229,7 +229,7 @@ final class RangeTest extends TestCase
     public function testDisabled(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
@@ -244,7 +244,7 @@ final class RangeTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
@@ -259,7 +259,7 @@ final class RangeTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
@@ -274,7 +274,7 @@ final class RangeTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->autofocus()
@@ -289,7 +289,7 @@ final class RangeTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Range::widget()
-            ->attribute(new RangeForm(), 'count')
+            ->formAttribute(new RangeForm(), 'count')
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(5)
@@ -321,7 +321,7 @@ final class RangeTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Range::widget()
-            ->attribute(new RangeForm(), $attribute)
+            ->formAttribute(new RangeForm(), $attribute)
             ->hideLabel()
             ->useContainer(false)
             ->enrichmentFromRules(true);
@@ -332,7 +332,7 @@ final class RangeTest extends TestCase
     public function testInvalidValue(): void
     {
         $field = Range::widget()
-            ->attribute(new RangeForm(), 'flag');
+            ->formAttribute(new RangeForm(), 'flag');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range field requires a string, numeric or null value.');

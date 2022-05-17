@@ -103,7 +103,7 @@ final class ButtonFieldTest extends TestCase
     /**
      * @dataProvider dataButtonId
      */
-    public function testButtonId(string $expectedIdAttribute, ?string $id): void
+    public function testButtonId(string $expectedId, ?string $id): void
     {
         $result = StubButtonField::widget()
             ->buttonId($id)
@@ -111,7 +111,7 @@ final class ButtonFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <button type="button"$expectedIdAttribute></button>
+            <button type="button"$expectedId></button>
             </div>
             HTML;
 

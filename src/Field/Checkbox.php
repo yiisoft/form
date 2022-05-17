@@ -40,7 +40,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function ariaDescribedBy(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = $value;
         return $new;
     }
 
@@ -52,7 +52,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function ariaLabel(?string $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['aria-label'] = $value;
+        $new->inputAttributes['aria-label'] = $value;
         return $new;
     }
 
@@ -65,7 +65,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function autofocus(bool $value = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['autofocus'] = $value;
+        $new->inputAttributes['autofocus'] = $value;
         return $new;
     }
 
@@ -75,7 +75,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function disabled(bool $disabled = true): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['disabled'] = $disabled;
+        $new->inputAttributes['disabled'] = $disabled;
         return $new;
     }
 
@@ -155,7 +155,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function tabIndex(?int $value): self
     {
         $new = clone $this;
-        $new->inputTagAttributes['tabindex'] = $value;
+        $new->inputAttributes['tabindex'] = $value;
         return $new;
     }
 
@@ -171,7 +171,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
+        $value = $this->getFormAttributeValue();
 
         if (!is_bool($value)
             && !is_string($value)
@@ -186,16 +186,16 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
         $value = $this->prepareValue($value);
 
-        $tagAttributes = $this->getInputTagAttributes();
+        $inputAttributes = $this->getInputAttributes();
 
         $inputValue = $this->inputValue;
-        $inputValue = $inputValue ?? $this->prepareValue($tagAttributes['value'] ?? null);
-        unset($tagAttributes['value']);
+        $inputValue = $inputValue ?? $this->prepareValue($inputAttributes['value'] ?? null);
+        unset($inputAttributes['value']);
         $inputValue = $inputValue ?? '1';
 
-        $checkbox = Html::checkbox($this->getInputName(), $inputValue, $tagAttributes);
+        $checkbox = Html::checkbox($this->getInputName(), $inputValue, $inputAttributes);
 
-        $label = $this->inputLabel ?? $this->getAttributeLabel();
+        $label = $this->inputLabel ?? $this->getFormAttributeLabel();
 
         if ($this->enclosedByLabel) {
             $checkbox = $checkbox
@@ -233,13 +233,13 @@ final class Checkbox extends InputField implements ValidationClassInterface
         return (string) $value;
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }

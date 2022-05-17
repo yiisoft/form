@@ -35,7 +35,7 @@ Widget:
 
 ```php
 echo DateTimeLocal::widget()
-    ->attribute($createForm, 'publishDate')
+    ->formAttribute($createForm, 'publishDate')
     ->min('2022-01-01T00:00')
     ->max('2038-12-31T19:30');
 ```

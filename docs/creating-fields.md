@@ -66,8 +66,8 @@ Set base configuration of field in parameter "fieldConfigs" of field factory. Fo
 'fieldConfigs' => [
     MyCustomField::class => [
         'containerTag()' => ['div'],
-        'containerTagAttributes()' => [['class' => 'main-wrapper']],
-        'inputTagAttributes()' => [['data-type' => 'input-text']],
+        'containerAttributes()' => [['class' => 'main-wrapper']],
+        'inputAttributes()' => [['data-type' => 'input-text']],
         'customMethod()' => [true],
     ],
 ],
@@ -98,8 +98,8 @@ final class SuffixInput extends InputField
     {
         $input = Html::textInput(
             $this->getInputName(),
-            (string) $this->getAttributeValue(),
-            $this->getInputTagAttributes()
+            (string) $this->getFormAttributeValue(),
+            $this->getInputAttributes()
         )->render();
 
         if ($this->suffix === null) {

@@ -28,14 +28,14 @@ final class BaseFieldTest extends TestCase
     /**
      * @dataProvider dataContainerId
      */
-    public function testContainerId(string $expectedIdAttribute, ?string $id): void
+    public function testContainerId(string $expectedId, ?string $id): void
     {
         $result = StubBaseField::widget()
             ->containerId($id)
             ->render();
 
         $expected = <<<HTML
-            <div$expectedIdAttribute>
+            <div$expectedId>
             test
             </div>
             HTML;
@@ -158,7 +158,7 @@ final class BaseFieldTest extends TestCase
         $field = StubBaseField::widget();
 
         $this->assertNotSame($field, $field->containerTag('div'));
-        $this->assertNotSame($field, $field->containerTagAttributes([]));
+        $this->assertNotSame($field, $field->containerAttributes([]));
         $this->assertNotSame($field, $field->containerId(null));
         $this->assertNotSame($field, $field->containerClass());
         $this->assertNotSame($field, $field->replaceContainerClass());

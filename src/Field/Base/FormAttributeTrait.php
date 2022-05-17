@@ -11,13 +11,13 @@ use Yiisoft\Form\Helper\HtmlForm;
 trait FormAttributeTrait
 {
     private ?FormModelInterface $formModel = null;
-    private string $attribute = '';
+    private string $formAttribute = '';
 
-    final public function attribute(FormModelInterface $formModel, string $attribute): static
+    final public function formAttribute(FormModelInterface $model, string $attribute): static
     {
         $new = clone $this;
-        $new->formModel = $formModel;
-        $new->attribute = $attribute;
+        $new->formModel = $model;
+        $new->formAttribute = $attribute;
         return $new;
     }
 
@@ -32,42 +32,42 @@ trait FormAttributeTrait
 
     final protected function hasFormModelAndAttribute(): bool
     {
-        return $this->formModel !== null && $this->attribute !== '';
+        return $this->formModel !== null && $this->formAttribute !== '';
     }
 
-    final protected function getAttributeName(): string
+    final protected function getFormAttributeName(): string
     {
-        return HtmlForm::getAttributeName($this->getFormModel(), $this->attribute);
+        return HtmlForm::getAttributeName($this->getFormModel(), $this->formAttribute);
     }
 
-    final protected function getAttributeValue(): mixed
+    final protected function getFormAttributeValue(): mixed
     {
-        return HtmlForm::getAttributeValue($this->getFormModel(), $this->attribute);
+        return HtmlForm::getAttributeValue($this->getFormModel(), $this->formAttribute);
     }
 
-    final protected function getAttributeLabel(): string
+    final protected function getFormAttributeLabel(): string
     {
-        return HtmlForm::getAttributeLabel($this->getFormModel(), $this->attribute);
+        return HtmlForm::getAttributeLabel($this->getFormModel(), $this->formAttribute);
     }
 
-    final protected function getAttributeHint(): string
+    final protected function getFormAttributeHint(): string
     {
-        return HtmlForm::getAttributeHint($this->getFormModel(), $this->attribute);
+        return HtmlForm::getAttributeHint($this->getFormModel(), $this->formAttribute);
     }
 
-    final protected function getAttributePlaceholder(): ?string
+    final protected function getFormAttributePlaceholder(): ?string
     {
-        $placeholder = $this->getFormModel()->getAttributePlaceholder($this->getAttributeName());
+        $placeholder = $this->getFormModel()->getAttributePlaceholder($this->getFormAttributeName());
         return $placeholder === '' ? null : $placeholder;
     }
 
     final protected function getInputId(): string
     {
-        return HtmlForm::getInputId($this->getFormModel(), $this->attribute);
+        return HtmlForm::getInputId($this->getFormModel(), $this->formAttribute);
     }
 
     final protected function getFirstError(): ?string
     {
-        return $this->getFormModel()->getFormErrors()->getFirstError($this->getAttributeName());
+        return $this->getFormModel()->getFormErrors()->getFirstError($this->getFormAttributeName());
     }
 }

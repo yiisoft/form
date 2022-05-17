@@ -16,9 +16,9 @@ abstract class InputField extends PartsField
 
     protected ?string $inputId = null;
     protected ?string $inputIdFromTag = null;
-    protected bool $setInputIdAttribute = true;
+    protected bool $setInputId = true;
 
-    protected array $inputTagAttributes = [];
+    protected array $inputAttributes = [];
 
     /**
      * Specifies the form element the tag input element belongs to. The value of this attribute must be the ID
@@ -29,7 +29,7 @@ abstract class InputField extends PartsField
     final public function form(?string $value): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['form'] = $value;
+        $new->inputAttributes['form'] = $value;
         return $new;
     }
 
@@ -40,17 +40,17 @@ abstract class InputField extends PartsField
         return $new;
     }
 
-    final public function setInputIdAttribute(bool $value): static
+    final public function setInputId(bool $value): static
     {
         $new = clone $this;
-        $new->setInputIdAttribute = $value;
+        $new->setInputId = $value;
         return $new;
     }
 
-    final public function inputTagAttributes(array $attributes): static
+    final public function inputAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->inputTagAttributes = $attributes;
+        $new->inputAttributes = $attributes;
         return $new;
     }
 
@@ -63,7 +63,7 @@ abstract class InputField extends PartsField
     {
         $new = clone $this;
         Html::addCssClass(
-            $new->inputTagAttributes,
+            $new->inputAttributes,
             array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
@@ -77,31 +77,31 @@ abstract class InputField extends PartsField
     final public function replaceInputClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->inputTagAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->inputAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
     final protected function getInputName(): string
     {
-        return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
+        return HtmlForm::getInputName($this->getFormModel(), $this->formAttribute);
     }
 
-    final protected function getInputTagAttributes(): array
+    final protected function getInputAttributes(): array
     {
-        $attributes = $this->inputTagAttributes;
+        $attributes = $this->inputAttributes;
 
-        $this->prepareIdInInputTagAttributes($attributes);
+        $this->prepareIdInInputAttributes($attributes);
 
-        $this->prepareInputTagAttributes($attributes);
+        $this->prepareInputAttributes($attributes);
 
         return $attributes;
     }
 
-    protected function prepareInputTagAttributes(array &$attributes): void
+    protected function prepareInputAttributes(array &$attributes): void
     {
     }
 
-    final protected function prepareIdInInputTagAttributes(array &$attributes): void
+    final protected function prepareIdInInputAttributes(array &$attributes): void
     {
         /** @var mixed $idFromTag */
         $idFromTag = $attributes['id'] ?? null;
@@ -109,7 +109,7 @@ abstract class InputField extends PartsField
             $this->inputIdFromTag = (string) $idFromTag;
         }
 
-        if ($this->setInputIdAttribute) {
+        if ($this->setInputId) {
             if ($this->inputId !== null) {
                 $attributes['id'] = $this->inputId;
             } elseif ($idFromTag === null) {
@@ -120,10 +120,10 @@ abstract class InputField extends PartsField
 
     final protected function renderLabel(Label $label): string
     {
-        $label = $label->attribute($this->getFormModel(), $this->attribute);
+        $label = $label->formAttribute($this->getFormModel(), $this->formAttribute);
 
-        if ($this->setInputIdAttribute === false) {
-            $label = $label->useInputIdAttribute(false);
+        if ($this->setInputId === false) {
+            $label = $label->useInputId(false);
         }
 
         if ($this->inputId !== null) {
@@ -138,14 +138,14 @@ abstract class InputField extends PartsField
     final protected function renderHint(Hint $hint): string
     {
         return $hint
-            ->attribute($this->getFormModel(), $this->attribute)
+            ->formAttribute($this->getFormModel(), $this->formAttribute)
             ->render();
     }
 
     final protected function renderError(Error $error): string
     {
         return $error
-            ->attribute($this->getFormModel(), $this->attribute)
+            ->formAttribute($this->getFormModel(), $this->formAttribute)
             ->render();
     }
 }

@@ -23,7 +23,7 @@ final class ErrorTest extends TestCase
     public function testBase(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->render();
 
         $this->assertSame('<div>Value cannot be blank.</div>', $result);
@@ -32,7 +32,7 @@ final class ErrorTest extends TestCase
     public function testAttributeWithoutError(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'age')
+            ->formAttribute($this->createValidatedErrorForm(), 'age')
             ->render();
 
         $this->assertSame('', $result);
@@ -41,7 +41,7 @@ final class ErrorTest extends TestCase
     public function testCustomTag(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->tag('b')
             ->render();
 
@@ -53,15 +53,15 @@ final class ErrorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
         Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->tag('');
     }
 
-    public function testTagAttributes(): void
+    public function testAttributes(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
-            ->tagAttributes(['class' => 'red', 'data-number' => 18])
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->attributes(['class' => 'red', 'data-number' => 18])
             ->render();
 
         $this->assertSame('<div class="red" data-number="18">Value cannot be blank.</div>', $result);
@@ -70,7 +70,7 @@ final class ErrorTest extends TestCase
     public function testEncode(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->message('your name >')
             ->render();
 
@@ -80,7 +80,7 @@ final class ErrorTest extends TestCase
     public function testWithoutEncode(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->message('<b>your name</b>')
             ->encode(false)
             ->render();
@@ -91,7 +91,7 @@ final class ErrorTest extends TestCase
     public function testCustomMessage(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->message('Invalid name.')
             ->render();
 
@@ -101,7 +101,7 @@ final class ErrorTest extends TestCase
     public function testCustomMessageWithoutError(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'age')
+            ->formAttribute($this->createValidatedErrorForm(), 'age')
             ->message('Invalid name.')
             ->render();
 
@@ -111,7 +111,7 @@ final class ErrorTest extends TestCase
     public function testMessageCallback(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->messageCallback(
                 static function (string $message, ?ErrorForm $form, ?string $attribute): string {
                     return 'Attribute "' . $attribute . '" error: ' . $message;
@@ -125,7 +125,7 @@ final class ErrorTest extends TestCase
     public function testMessageCallbackWithCustomMessage(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'name')
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->message('Invalid value.')
             ->messageCallback(
                 static function (string $message, ?ErrorForm $form, ?string $attribute): string {
@@ -140,7 +140,7 @@ final class ErrorTest extends TestCase
     public function testMessageCallbackWithMessageAndWithoutError(): void
     {
         $result = Error::widget()
-            ->attribute($this->createValidatedErrorForm(), 'age')
+            ->formAttribute($this->createValidatedErrorForm(), 'age')
             ->message('Invalid value.')
             ->messageCallback(
                 static function (string $message, ?ErrorForm $form, ?string $attribute): string {

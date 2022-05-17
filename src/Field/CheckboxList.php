@@ -146,7 +146,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $value = $this->getAttributeValue();
+        $value = $this->getFormAttributeValue();
 
         /** @var mixed $value */
         $value ??= [];
@@ -166,38 +166,38 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     protected function renderLabel(Label $label): string
     {
         return $label
-            ->attribute($this->getFormModel(), $this->attribute)
-            ->useInputIdAttribute(false)
+            ->formAttribute($this->getFormModel(), $this->formAttribute)
+            ->useInputId(false)
             ->render();
     }
 
     protected function renderHint(Hint $hint): string
     {
         return $hint
-            ->attribute($this->getFormModel(), $this->attribute)
+            ->formAttribute($this->getFormModel(), $this->formAttribute)
             ->render();
     }
 
     protected function renderError(Error $error): string
     {
         return $error
-            ->attribute($this->getFormModel(), $this->attribute)
+            ->formAttribute($this->getFormModel(), $this->formAttribute)
             ->render();
     }
 
-    protected function prepareContainerTagAttributes(array &$attributes): void
+    protected function prepareContainerAttributes(array &$attributes): void
     {
         if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToTagAttributes(
+            $this->addValidationClassToAttributes(
                 $attributes,
                 $this->getFormModel(),
-                $this->getAttributeName(),
+                $this->getFormAttributeName(),
             );
         }
     }
 
     private function getInputName(): string
     {
-        return HtmlForm::getInputName($this->getFormModel(), $this->attribute);
+        return HtmlForm::getInputName($this->getFormModel(), $this->formAttribute);
     }
 }

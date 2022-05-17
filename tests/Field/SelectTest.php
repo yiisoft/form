@@ -24,7 +24,7 @@ final class SelectTest extends TestCase
     public function testBase(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'number')
+            ->formAttribute(new SelectForm(), 'number')
             ->optionsData([
                 1 => 'One',
                 2 => 'Two',
@@ -47,7 +47,7 @@ final class SelectTest extends TestCase
     public function testSelectedSingle(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'count')
+            ->formAttribute(new SelectForm(), 'count')
             ->optionsData([
                 10 => 'Ten',
                 15 => 'Fifteen',
@@ -72,7 +72,7 @@ final class SelectTest extends TestCase
     public function testSelectedMultiple(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'letters')
+            ->formAttribute(new SelectForm(), 'letters')
             ->optionsData([
                 'A' => 'Letter A',
                 'B' => 'Letter B',
@@ -142,7 +142,7 @@ final class SelectTest extends TestCase
     public function testItems(string $expected, array $items): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->items(...$items)
             ->hideLabel()
             ->useContainer(false)
@@ -154,7 +154,7 @@ final class SelectTest extends TestCase
     public function testOptions(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->options(
                 Option::tag()->value('1')->content('One'),
                 Option::tag()->value('2')->content('Two'),
@@ -176,7 +176,7 @@ final class SelectTest extends TestCase
     public function testOptionsData(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One', '2' => 'Two'])
             ->hideLabel()
             ->useContainer(false)
@@ -195,7 +195,7 @@ final class SelectTest extends TestCase
     public function testOptionsDataEncode(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => '<b>One</b>'])
             ->hideLabel()
             ->useContainer(false)
@@ -213,7 +213,7 @@ final class SelectTest extends TestCase
     public function testOptionsDataWithoutEncode(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => '<b>One</b>'], false)
             ->hideLabel()
             ->useContainer(false)
@@ -231,7 +231,7 @@ final class SelectTest extends TestCase
     public function testOptionsDataWithGroups(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData([
                 1 => 'One',
                 'Test Group' => [
@@ -259,7 +259,7 @@ final class SelectTest extends TestCase
     public function testOptionsAndGroupsAttributes(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(
                 data: [
                     1 => 'One',
@@ -304,7 +304,7 @@ final class SelectTest extends TestCase
     public function testDisabled(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->disabled()
             ->hideLabel()
@@ -323,7 +323,7 @@ final class SelectTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->ariaDescribedBy('hint')
             ->hideLabel()
@@ -342,7 +342,7 @@ final class SelectTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->ariaLabel('test')
             ->hideLabel()
@@ -361,7 +361,7 @@ final class SelectTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->autofocus()
             ->hideLabel()
@@ -380,7 +380,7 @@ final class SelectTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->tabIndex(5)
             ->hideLabel()
@@ -399,7 +399,7 @@ final class SelectTest extends TestCase
     public function testMultiple(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->multiple()
             ->hideLabel()
@@ -445,7 +445,7 @@ final class SelectTest extends TestCase
     public function testPrompt(string $expected, ?string $text): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->prompt($text)
             ->hideLabel()
@@ -484,7 +484,7 @@ final class SelectTest extends TestCase
     public function testPromptOption(string $expected, ?Option $option): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->promptOption($option)
             ->hideLabel()
@@ -497,7 +497,7 @@ final class SelectTest extends TestCase
     public function testRequired(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->required()
             ->hideLabel()
@@ -516,7 +516,7 @@ final class SelectTest extends TestCase
     public function testSize(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->size(10)
             ->hideLabel()
@@ -535,7 +535,7 @@ final class SelectTest extends TestCase
     public function testUnselectValue(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'item')
+            ->formAttribute(new SelectForm(), 'item')
             ->optionsData(['1' => 'One'])
             ->unselectValue('no')
             ->hideLabel()
@@ -555,7 +555,7 @@ final class SelectTest extends TestCase
     public function testSingleInvalidValue(): void
     {
         $widget = Select::widget()
-            ->attribute(new SelectForm(), 'object');
+            ->formAttribute(new SelectForm(), 'object');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -567,7 +567,7 @@ final class SelectTest extends TestCase
     public function testMultipleInvalidValue(): void
     {
         $widget = Select::widget()
-            ->attribute(new SelectForm(), 'count')
+            ->formAttribute(new SelectForm(), 'count')
             ->multiple();
 
         $this->expectException(InvalidArgumentException::class);
@@ -580,7 +580,7 @@ final class SelectTest extends TestCase
     public function testEnrichmentFromRules(): void
     {
         $result = Select::widget()
-            ->attribute(new SelectForm(), 'color')
+            ->formAttribute(new SelectForm(), 'color')
             ->optionsData(['red' => 'Red'])
             ->enrichmentFromRules(true)
             ->hideLabel()

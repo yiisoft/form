@@ -53,7 +53,7 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'containerTag' => 'section',
-                    'containerTagAttributes' => ['class' => 'wrapper'],
+                    'containerAttributes' => ['class' => 'wrapper'],
                 ],
                 'job',
             ],
@@ -91,8 +91,8 @@ final class FieldFactoryTest extends TestCase
                 </div>
                 HTML,
                 [
-                    'setInputIdAttribute' => false,
-                    'inputTagAttributes' => ['class' => 'form-control'],
+                    'setInputId' => false,
+                    'inputAttributes' => ['class' => 'form-control'],
                 ],
                 'job',
             ],
@@ -107,13 +107,13 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'labelConfig' => [
-                        'setForAttribute()' => [false],
+                        'setFor()' => [false],
                     ],
                     'hintConfig' => [
-                        'tagAttributes()' => [['class' => 'info']],
+                        'attributes()' => [['class' => 'info']],
                     ],
                     'errorConfig' => [
-                        'tagAttributes()' => [['class' => 'red']],
+                        'attributes()' => [['class' => 'red']],
                     ],
                 ],
                 'name',
@@ -155,13 +155,13 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'containerTag' => 'section',
-                    'containerTagAttributes' => ['class' => 'wrapper'],
-                    'inputTagAttributes' => ['data-type' => 'field'],
+                    'containerAttributes' => ['class' => 'wrapper'],
+                    'inputAttributes' => ['data-type' => 'field'],
                     'fieldConfigs' => [
                         Text::class => [
                             'containerTag()' => ['div'],
-                            'containerTagAttributes()' => [['class' => 'main-wrapper']],
-                            'inputTagAttributes()' => [['data-type' => 'input-text']],
+                            'containerAttributes()' => [['class' => 'main-wrapper']],
+                            'inputAttributes()' => [['data-type' => 'input-text']],
                         ],
                     ],
                 ],
@@ -176,7 +176,7 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'validClass' => 'valid',
-                    'containerTagAttributes' => ['class' => 'wrapper'],
+                    'containerAttributes' => ['class' => 'wrapper'],
                 ],
                 'job',
             ],
@@ -190,7 +190,7 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'invalidClass' => 'invalid',
-                    'containerTagAttributes' => ['class' => 'wrapper'],
+                    'containerAttributes' => ['class' => 'wrapper'],
                 ],
                 'company',
             ],
@@ -326,7 +326,7 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'labelConfig' => [
-                        'useInputIdAttribute()' => [false],
+                        'useInputId()' => [false],
                     ],
                 ],
             ],
@@ -336,7 +336,7 @@ final class FieldFactoryTest extends TestCase
                 HTML,
                 [
                     'labelConfig' => [
-                        'setForAttribute()' => [false],
+                        'setFor()' => [false],
                     ],
                 ],
             ],

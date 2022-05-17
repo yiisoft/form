@@ -32,7 +32,7 @@ $profileForm->age = 17;
 Widget:
 
 ```php
-echo Error::widget()->attribute($profileForm, 'age');
+echo Error::widget()->formAttribute($profileForm, 'age');
 ```
 
 Result will be:

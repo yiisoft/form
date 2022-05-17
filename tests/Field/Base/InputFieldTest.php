@@ -31,7 +31,7 @@ final class InputFieldTest extends TestCase
     public function testForm(): void
     {
         $result = StubInputField::widget()
-            ->attribute(new TextForm(), 'company')
+            ->formAttribute(new TextForm(), 'company')
             ->form('CreatePost')
             ->render();
 
@@ -64,7 +64,7 @@ final class InputFieldTest extends TestCase
     public function testInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
-            ->attribute(new TextForm(), 'company')
+            ->formAttribute(new TextForm(), 'company')
             ->inputClass('main')
             ->inputClass(...$class)
             ->render();
@@ -94,7 +94,7 @@ final class InputFieldTest extends TestCase
     public function testInputNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubInputField::widget()
-            ->attribute(new TextForm(), 'company')
+            ->formAttribute(new TextForm(), 'company')
             ->inputClass($class)
             ->render();
 
@@ -128,7 +128,7 @@ final class InputFieldTest extends TestCase
     public function testReplaceInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
-            ->attribute(new TextForm(), 'company')
+            ->formAttribute(new TextForm(), 'company')
             ->inputClass('red')
             ->replaceInputClass(...$class)
             ->render();
@@ -149,8 +149,8 @@ final class InputFieldTest extends TestCase
 
         $this->assertNotSame($field, $field->form(null));
         $this->assertNotSame($field, $field->inputId(null));
-        $this->assertNotSame($field, $field->setInputIdAttribute(true));
-        $this->assertNotSame($field, $field->inputTagAttributes([]));
+        $this->assertNotSame($field, $field->setInputId(true));
+        $this->assertNotSame($field, $field->inputAttributes([]));
         $this->assertNotSame($field, $field->inputClass());
         $this->assertNotSame($field, $field->replaceInputClass());
     }

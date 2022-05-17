@@ -28,7 +28,7 @@ Widget:
 
 ```php
 echo File::widget()
-    ->attribute($profileForm, 'avatar')
+    ->formAttribute($profileForm, 'avatar')
     ->accept('image/png, image/jpeg');
 ```
 

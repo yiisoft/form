@@ -22,27 +22,27 @@ final class LabelTest extends TestCase
     public function testBase(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->render();
 
         $this->assertSame('<label for="labelform-name">Name</label>', $result);
     }
 
-    public function testTagAttributes(): void
+    public function testAttributes(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
-            ->tagAttributes(['class' => 'red', 'id' => 'RedLabel'])
+            ->formAttribute(new LabelForm(), 'name')
+            ->attributes(['class' => 'red', 'id' => 'RedLabel'])
             ->render();
 
         $this->assertSame('<label id="RedLabel" class="red" for="labelform-name">Name</label>', $result);
     }
 
-    public function testDoNotSetForAttribute(): void
+    public function testDoNotSetFor(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
-            ->setForAttribute(false)
+            ->formAttribute(new LabelForm(), 'name')
+            ->setFor(false)
             ->render();
 
         $this->assertSame('<label>Name</label>', $result);
@@ -51,28 +51,28 @@ final class LabelTest extends TestCase
     public function customFor(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->forId('MyID')
             ->render();
 
         $this->assertSame('<label for="MyID">Name</label>', $result);
     }
 
-    public function testDoNotUseInputIdAttribute(): void
+    public function testDoNotUseInputId(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
-            ->useInputIdAttribute(false)
+            ->formAttribute(new LabelForm(), 'name')
+            ->useInputId(false)
             ->render();
 
         $this->assertSame('<label>Name</label>', $result);
     }
 
-    public function testCustomForWithDoNotUseInputIdAttribute(): void
+    public function testCustomForWithDoNotUseInputId(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
-            ->useInputIdAttribute(false)
+            ->formAttribute(new LabelForm(), 'name')
+            ->useInputId(false)
             ->forId('MyID')
             ->render();
 
@@ -82,7 +82,7 @@ final class LabelTest extends TestCase
     public function testCustomContent(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->content('Your name')
             ->render();
 
@@ -92,7 +92,7 @@ final class LabelTest extends TestCase
     public function testEmptyContent(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->content('')
             ->render();
 
@@ -102,7 +102,7 @@ final class LabelTest extends TestCase
     public function testContentAsStringableObject(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->content(new StringableObject('Your name'))
             ->render();
 
@@ -112,7 +112,7 @@ final class LabelTest extends TestCase
     public function testEncode(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->content('Your name >')
             ->render();
 
@@ -122,7 +122,7 @@ final class LabelTest extends TestCase
     public function testWithoutEncode(): void
     {
         $result = Label::widget()
-            ->attribute(new LabelForm(), 'name')
+            ->formAttribute(new LabelForm(), 'name')
             ->content('<b>Name</b>')
             ->encode(false)
             ->render();
@@ -134,10 +134,10 @@ final class LabelTest extends TestCase
     {
         $label = Label::widget();
 
-        $this->assertNotSame($label, $label->tagAttributes([]));
-        $this->assertNotSame($label, $label->setForAttribute(true));
+        $this->assertNotSame($label, $label->attributes([]));
+        $this->assertNotSame($label, $label->setFor(true));
         $this->assertNotSame($label, $label->forId(null));
-        $this->assertNotSame($label, $label->useInputIdAttribute(true));
+        $this->assertNotSame($label, $label->useInputId(true));
         $this->assertNotSame($label, $label->content(null));
         $this->assertNotSame($label, $label->encode(true));
     }

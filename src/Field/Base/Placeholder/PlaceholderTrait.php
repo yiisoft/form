@@ -26,18 +26,18 @@ trait PlaceholderTrait
         return $new;
     }
 
-    protected function preparePlaceholderInInputTagAttributes(array &$attributes): void
+    protected function preparePlaceholderInInputAttributes(array &$attributes): void
     {
         if (
             $this->usePlaceholder
             && !isset($attributes['placeholder'])
         ) {
-            $placeholder = $this->placeholder ?? $this->getAttributePlaceholder();
+            $placeholder = $this->placeholder ?? $this->getFormAttributePlaceholder();
             if ($placeholder !== null) {
                 $attributes['placeholder'] = $placeholder;
             }
         }
     }
 
-    abstract protected function getAttributePlaceholder(): ?string;
+    abstract protected function getFormAttributePlaceholder(): ?string;
 }

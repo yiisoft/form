@@ -34,7 +34,7 @@ final class CreateForm extends FormModel
 Widget:
 
 ```php
-echo DateTime::widget()->attribute($createForm, 'publishDate');
+echo DateTime::widget()->formAttribute($createForm, 'publishDate');
 ```
 
 Result will be:

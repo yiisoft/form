@@ -27,7 +27,7 @@ Widget:
 
 ```php
 echo Password::widget()
-    ->attribute($profileForm, 'password')
+    ->formAttribute($profileForm, 'password')
     ->minlength(8);
 ```
 

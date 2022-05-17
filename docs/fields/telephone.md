@@ -27,7 +27,7 @@ Widget:
 
 ```php
 echo Telephone::widget()
-    ->attribute($profileForm, 'phone')
+    ->formAttribute($profileForm, 'phone')
     ->pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}');
 ```
 
