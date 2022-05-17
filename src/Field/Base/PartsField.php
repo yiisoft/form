@@ -33,12 +33,18 @@ abstract class PartsField extends BaseField
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
     protected ?bool $hideLabel = null;
 
+    private bool $replaceLabelAttributes = false;
+    private bool $replaceLabelClass = false;
     private array $labelAttributes = [];
     private array $labelConfig = [];
 
+    private bool $replaceHintAttributes = false;
+    private bool $replaceHintClass = false;
     private array $hintAttributes = [];
     private array $hintConfig = [];
 
+    private bool $replaceErrorAttributes = false;
+    private bool $replaceErrorClass = false;
     private array $errorAttributes = [];
     private array $errorConfig = [];
 
@@ -131,6 +137,7 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->labelAttributes = $attributes;
+        $new->replaceLabelAttributes = true;
         return $new;
     }
 
@@ -170,6 +177,7 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->labelAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->replaceLabelClass = true;
         return $new;
     }
 
@@ -198,6 +206,7 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->hintAttributes = $attributes;
+        $new->replaceHintAttributes = true;
         return $new;
     }
 
@@ -237,6 +246,7 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->hintAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->replaceHintClass = true;
         return $new;
     }
 
@@ -265,6 +275,7 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->errorAttributes = $attributes;
+        $new->replaceErrorAttributes = true;
         return $new;
     }
 
@@ -304,6 +315,7 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->errorAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->replaceErrorClass = true;
         return $new;
     }
 
@@ -398,8 +410,23 @@ abstract class PartsField extends BaseField
     {
         $label = Label::widget($this->labelConfig);
 
-        if (!empty($this->labelAttributes)) {
-            $label = $label->attributes($this->labelAttributes);
+        $labelAttributes = $this->labelAttributes;
+        if (!empty($labelAttributes)) {
+            if ($this->replaceLabelAttributes) {
+                $label = $label->replaceAttributes($labelAttributes);
+            } else {
+                /** @var string|string[]|null $class */
+                $class = $this->labelAttributes['class'] ?? null;
+                unset($labelAttributes['class']);
+
+                $label = $label->attributes($labelAttributes);
+
+                if ($this->replaceLabelClass) {
+                    $label = is_array($class) ? $label->replaceClass(...$class) : $label->replaceClass($class);
+                } elseif ($class !== null) {
+                    $label = is_array($class) ? $label->class(...$class) : $label->class($class);
+                }
+            }
         }
 
         return $this->renderLabel($label);
@@ -409,8 +436,23 @@ abstract class PartsField extends BaseField
     {
         $hint = Hint::widget($this->hintConfig);
 
-        if (!empty($this->hintAttributes)) {
-            $hint = $hint->attributes($this->hintAttributes);
+        $hintAttributes = $this->hintAttributes;
+        if (!empty($hintAttributes)) {
+            if ($this->replaceHintAttributes) {
+                $hint = $hint->replaceAttributes($hintAttributes);
+            } else {
+                /** @var string|string[]|null $class */
+                $class = $this->hintAttributes['class'] ?? null;
+                unset($hintAttributes['class']);
+
+                $hint = $hint->attributes($hintAttributes);
+
+                if ($this->replaceHintClass) {
+                    $hint = is_array($class) ? $hint->replaceClass(...$class) : $hint->replaceClass($class);
+                } elseif ($class !== null) {
+                    $hint = is_array($class) ? $hint->class(...$class) : $hint->class($class);
+                }
+            }
         }
 
         return $this->renderHint($hint);
@@ -420,8 +462,23 @@ abstract class PartsField extends BaseField
     {
         $error = Error::widget($this->errorConfig);
 
-        if (!empty($this->errorAttributes)) {
-            $error = $error->attributes($this->errorAttributes);
+        $errorAttributes = $this->errorAttributes;
+        if (!empty($errorAttributes)) {
+            if ($this->replaceErrorAttributes) {
+                $error = $error->replaceAttributes($errorAttributes);
+            } else {
+                /** @var string|string[]|null $class */
+                $class = $this->errorAttributes['class'] ?? null;
+                unset($errorAttributes['class']);
+
+                $error = $error->attributes($errorAttributes);
+
+                if ($this->replaceErrorClass) {
+                    $error = is_array($class) ? $error->replaceClass(...$class) : $error->replaceClass($class);
+                } elseif ($class !== null) {
+                    $error = is_array($class) ? $error->class(...$class) : $error->class($class);
+                }
+            }
         }
 
         return $this->renderError($error);
