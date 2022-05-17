@@ -156,7 +156,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
         Html::addCssClass(
             $new->labelAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -169,7 +169,7 @@ abstract class PartsField extends BaseField
     final public function replaceLabelClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->labelAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->labelAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
@@ -223,7 +223,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
         Html::addCssClass(
             $new->hintAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -236,7 +236,7 @@ abstract class PartsField extends BaseField
     final public function replaceHintClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->hintAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->hintAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
@@ -290,7 +290,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
         Html::addCssClass(
             $new->errorAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -303,7 +303,7 @@ abstract class PartsField extends BaseField
     final public function replaceErrorClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->errorAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->errorAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
