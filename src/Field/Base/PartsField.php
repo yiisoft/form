@@ -9,6 +9,7 @@ use Stringable;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Html\Html;
 
 use function in_array;
 
@@ -32,8 +33,13 @@ abstract class PartsField extends BaseField
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
     protected ?bool $hideLabel = null;
 
+    private array $labelAttributes = [];
     private array $labelConfig = [];
+
+    private array $hintAttributes = [];
     private array $hintConfig = [];
+
+    private array $errorAttributes = [];
     private array $errorConfig = [];
 
     final public function tokens(array $tokens): static
@@ -114,6 +120,59 @@ abstract class PartsField extends BaseField
         return $new;
     }
 
+    final public function labelAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->labelAttributes = array_merge($new->labelAttributes, $attributes);
+        return $new;
+    }
+
+    final public function replaceLabelAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->labelAttributes = $attributes;
+        return $new;
+    }
+
+    /**
+     * Set label tag ID.
+     *
+     * @param string|null $id Label tag ID.
+     */
+    final public function labelId(?string $id): static
+    {
+        $new = clone $this;
+        $new->labelAttributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the label tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function labelClass(?string ...$class): static
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->labelAttributes,
+            array_filter($class, static fn($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace label tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function replaceLabelClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->labelAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        return $new;
+    }
+
     final public function label(?string $content): static
     {
         $new = clone $this;
@@ -128,6 +187,59 @@ abstract class PartsField extends BaseField
         return $new;
     }
 
+    final public function hintAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->hintAttributes = array_merge($new->hintAttributes, $attributes);
+        return $new;
+    }
+
+    final public function replaceHintAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->hintAttributes = $attributes;
+        return $new;
+    }
+
+    /**
+     * Set hint tag ID.
+     *
+     * @param string|null $id Hint tag ID.
+     */
+    final public function hintId(?string $id): static
+    {
+        $new = clone $this;
+        $new->hintAttributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the hint tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function hintClass(?string ...$class): static
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->hintAttributes,
+            array_filter($class, static fn($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace hint tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function replaceHintClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->hintAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        return $new;
+    }
+
     final public function hint(?string $content): static
     {
         $new = clone $this;
@@ -139,6 +251,59 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->errorConfig = $config;
+        return $new;
+    }
+
+    final public function errorAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->errorAttributes = array_merge($new->errorAttributes, $attributes);
+        return $new;
+    }
+
+    final public function replaceErrorAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->errorAttributes = $attributes;
+        return $new;
+    }
+
+    /**
+     * Set error tag ID.
+     *
+     * @param string|null $id Error tag ID.
+     */
+    final public function errorId(?string $id): static
+    {
+        $new = clone $this;
+        $new->errorAttributes['id'] = $id;
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the error tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function errorClass(?string ...$class): static
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->errorAttributes,
+            array_filter($class, static fn($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace error tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function replaceErrorClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->errorAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
@@ -233,6 +398,10 @@ abstract class PartsField extends BaseField
     {
         $label = Label::widget($this->labelConfig);
 
+        if (!empty($this->labelAttributes)) {
+            $label = $label->attributes($this->labelAttributes);
+        }
+
         return $this->renderLabel($label);
     }
 
@@ -240,12 +409,20 @@ abstract class PartsField extends BaseField
     {
         $hint = Hint::widget($this->hintConfig);
 
+        if (!empty($this->hintAttributes)) {
+            $hint = $hint->attributes($this->hintAttributes);
+        }
+
         return $this->renderHint($hint);
     }
 
     private function generateError(): string
     {
         $error = Error::widget($this->errorConfig);
+
+        if (!empty($this->errorAttributes)) {
+            $error = $error->attributes($this->errorAttributes);
+        }
 
         return $this->renderError($error);
     }
