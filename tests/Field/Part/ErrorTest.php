@@ -61,10 +61,128 @@ final class ErrorTest extends TestCase
     {
         $result = Error::widget()
             ->formAttribute($this->createValidatedErrorForm(), 'name')
-            ->attributes(['class' => 'red', 'data-number' => 18])
+            ->attributes(['class' => 'red'])
+            ->attributes(['data-number' => 18])
             ->render();
 
         $this->assertSame('<div class="red" data-number="18">Value cannot be blank.</div>', $result);
+    }
+
+    public function testReplaceAttributes(): void
+    {
+        $result = Error::widget()
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->attributes(['class' => 'red'])
+            ->replaceAttributes(['data-number' => 18])
+            ->render();
+
+        $this->assertSame('<div data-number="18">Value cannot be blank.</div>', $result);
+    }
+
+    public function dataId(): array
+    {
+        return [
+            ['', null],
+            [' id="main"', 'main'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataId
+     */
+    public function testId(string $expectedId, ?string $id): void
+    {
+        $result = Error::widget()
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->id($id)
+            ->render();
+
+        $expected = '<div' . $expectedId . '>Value cannot be blank.</div>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataClass(): array
+    {
+        return [
+            [' class="main"', []],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['bold']],
+            [' class="main italic bold"', ['italic bold']],
+            [' class="main italic bold"', ['italic', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataClass
+     *
+     * @param string[] $class
+     */
+    public function testClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Error::widget()
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->class('main')
+            ->class(...$class)
+            ->render();
+
+        $expected = '<div' . $expectedClassAttribute . '>Value cannot be blank.</div>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataNewClass(): array
+    {
+        return [
+            ['', null],
+            [' class', ''],
+            [' class="red"', 'red'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataNewClass
+     */
+    public function testNewClass(string $expectedClassAttribute, ?string $class): void
+    {
+        $result = Error::widget()
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->class($class)
+            ->render();
+
+        $expected = '<div' . $expectedClassAttribute . '>Value cannot be blank.</div>';
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataReplaceClass(): array
+    {
+        return [
+            ['', []],
+            ['', [null]],
+            [' class', ['']],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['main bold']],
+            [' class="main bold"', ['main', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataReplaceClass
+     *
+     * @param string[] $class
+     */
+    public function testReplaceClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = Error::widget()
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->class('red')
+            ->replaceClass(...$class)
+            ->render();
+
+        $expected = '<div' . $expectedClassAttribute . '>Value cannot be blank.</div>';
+
+        $this->assertSame($expected, $result);
     }
 
     public function testEncode(): void
