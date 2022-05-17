@@ -163,7 +163,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
         Html::addCssClass(
             $new->labelAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -232,7 +232,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
         Html::addCssClass(
             $new->hintAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
@@ -301,7 +301,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
         Html::addCssClass(
             $new->errorAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
