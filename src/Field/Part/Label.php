@@ -30,14 +30,14 @@ final class Label extends Widget
     public function attributes(array $attributes): self
     {
         $new = clone $this;
-        $new->attributes = array_merge($this->attributes, $attributes);
+        $new->attributes = $attributes;
         return $new;
     }
 
-    public function replaceAttributes(array $attributes): self
+    public function addAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->attributes = $attributes;
+        $new->attributes = array_merge($this->attributes, $attributes);
         return $new;
     }
 

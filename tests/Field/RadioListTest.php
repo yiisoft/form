@@ -65,15 +65,15 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testRadioAttributesMerge(): void
+    public function testAddRadioAttributes(): void
     {
         $result = RadioList::widget()
             ->formAttribute(new RadioListForm(), 'number')
             ->items([1 => 'One', 2 => 'Two'])
             ->useContainer(false)
             ->hideLabel()
-            ->radioAttributes(['readonly' => true])
-            ->radioAttributes(['class' => 'red'])
+            ->addRadioAttributes(['readonly' => true])
+            ->addRadioAttributes(['class' => 'red'])
             ->render();
 
         $expected = <<<HTML
@@ -86,7 +86,7 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceRadioAttributes(): void
+    public function testRadioAttributesReplace(): void
     {
         $result = RadioList::widget()
             ->formAttribute(new RadioListForm(), 'number')
@@ -94,7 +94,7 @@ final class RadioListTest extends TestCase
             ->useContainer(false)
             ->hideLabel()
             ->radioAttributes(['readonly' => true])
-            ->replaceRadioAttributes(['class' => 'red'])
+            ->radioAttributes(['class' => 'red'])
             ->render();
 
         $expected = <<<HTML
@@ -107,7 +107,7 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIndividualInputAttributes(): void
+    public function testAddIndividualInputAttributes(): void
     {
         $result = RadioList::widget()
             ->formAttribute(new RadioListForm(), 'number')
@@ -115,7 +115,7 @@ final class RadioListTest extends TestCase
             ->useContainer(false)
             ->hideLabel()
             ->radioAttributes(['class' => 'red'])
-            ->individualInputAttributes([
+            ->addIndividualInputAttributes([
                 2 => ['class' => 'blue'],
                 3 => ['class' => 'green'],
             ])
@@ -157,7 +157,7 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testIndividualInputAttributesMerge(): void
+    public function testAddIndividualInputAttributesMerge(): void
     {
         $result = RadioList::widget()
             ->formAttribute(new RadioListForm(), 'number')
@@ -165,11 +165,11 @@ final class RadioListTest extends TestCase
             ->useContainer(false)
             ->hideLabel()
             ->radioAttributes(['class' => 'red'])
-            ->individualInputAttributes([
+            ->addIndividualInputAttributes([
                 2 => ['class' => 'blue'],
                 3 => ['class' => 'green'],
             ])
-            ->individualInputAttributes([
+            ->addIndividualInputAttributes([
                 1 => ['class' => 'yellow'],
                 2 => ['class' => 'cyan'],
             ])
@@ -198,7 +198,7 @@ final class RadioListTest extends TestCase
                 2 => ['class' => 'blue'],
                 3 => ['class' => 'green'],
             ])
-            ->replaceIndividualInputAttributes([
+            ->individualInputAttributes([
                 1 => ['class' => 'yellow'],
             ])
             ->render();
@@ -532,9 +532,9 @@ final class RadioListTest extends TestCase
         $field = RadioList::widget();
 
         $this->assertNotSame($field, $field->radioAttributes([]));
-        $this->assertNotSame($field, $field->replaceRadioAttributes([]));
+        $this->assertNotSame($field, $field->addRadioAttributes([]));
         $this->assertNotSame($field, $field->individualInputAttributes([]));
-        $this->assertNotSame($field, $field->replaceIndividualInputAttributes([]));
+        $this->assertNotSame($field, $field->addIndividualInputAttributes([]));
         $this->assertNotSame($field, $field->items([]));
         $this->assertNotSame($field, $field->itemsFromValues([]));
         $this->assertNotSame($field, $field->form(null));

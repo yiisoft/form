@@ -56,6 +56,27 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testAddButtonAttributes(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Reset', 'type' => 'reset'],
+                ['Send', 'type' => 'submit'],
+            ])
+            ->addButtonAttributes(['class' => 'button'])
+            ->addButtonAttributes(['data-key' => 'x100'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset" class="button" data-key="x100">Reset</button>
+            <button type="submit" class="button" data-key="x100">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testButtonAttributes(): void
     {
         $result = ButtonGroup::widget()
@@ -63,28 +84,8 @@ final class ButtonGroupTest extends TestCase
                 ['Reset', 'type' => 'reset'],
                 ['Send', 'type' => 'submit'],
             ])
-            ->buttonAttributes(['class' => 'button'])
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <button type="reset" class="button">Reset</button>
-            <button type="submit" class="button">Send</button>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testReplaceButtonAttributes(): void
-    {
-        $result = ButtonGroup::widget()
-            ->buttonsData([
-                ['Reset', 'type' => 'reset'],
-                ['Send', 'type' => 'submit'],
-            ])
             ->buttonAttributes(['data-key' => 'x100'])
-            ->replaceButtonAttributes(['class' => 'button'])
+            ->buttonAttributes(['class' => 'button'])
             ->render();
 
         $expected = <<<HTML
@@ -165,7 +166,7 @@ final class ButtonGroupTest extends TestCase
         $this->assertNotSame($field, $field->buttons());
         $this->assertNotSame($field, $field->buttonsData([]));
         $this->assertNotSame($field, $field->buttonAttributes([]));
-        $this->assertNotSame($field, $field->replaceButtonAttributes([]));
+        $this->assertNotSame($field, $field->addButtonAttributes([]));
         $this->assertNotSame($field, $field->disabled());
         $this->assertNotSame($field, $field->form('test'));
         $this->assertNotSame($field, $field->separator(''));

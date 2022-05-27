@@ -38,13 +38,13 @@ final class RangeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testOutputAttributes(): void
+    public function testAddOutputAttributes(): void
     {
         $result = Range::widget()
             ->formAttribute(new RangeForm(), 'volume')
             ->showOutput()
-            ->outputAttributes(['class' => 'red'])
-            ->outputAttributes(['id' => 'UID'])
+            ->addOutputAttributes(['class' => 'red'])
+            ->addOutputAttributes(['id' => 'UID'])
             ->render();
 
         $expected = <<<HTML
@@ -58,13 +58,13 @@ final class RangeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceOutputAttributes(): void
+    public function testOutputAttributes(): void
     {
         $result = Range::widget()
             ->formAttribute(new RangeForm(), 'volume')
             ->showOutput()
             ->outputAttributes(['class' => 'red'])
-            ->replaceOutputAttributes(['id' => 'UID'])
+            ->outputAttributes(['id' => 'UID'])
             ->render();
 
         $expected = <<<HTML

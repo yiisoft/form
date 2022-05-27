@@ -296,7 +296,7 @@ final class TextTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testInputAttributes(): void
+    public function testAddInputAttributes(): void
     {
         $expected = <<<'HTML'
         <div>
@@ -307,7 +307,7 @@ final class TextTest extends TestCase
 
         $result = Text::widget()
             ->formAttribute(TextForm::validated(), 'job')
-            ->inputAttributes(['class' => 'red'])
+            ->addInputAttributes(['class' => 'red'])
             ->render();
 
         $this->assertSame($expected, $result);

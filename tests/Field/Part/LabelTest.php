@@ -28,23 +28,23 @@ final class LabelTest extends TestCase
         $this->assertSame('<label for="labelform-name">Name</label>', $result);
     }
 
+    public function testAddAttributes(): void
+    {
+        $result = Label::widget()
+            ->formAttribute(new LabelForm(), 'name')
+            ->addAttributes(['class' => 'red'])
+            ->addAttributes(['data-number' => 18])
+            ->render();
+
+        $this->assertSame('<label class="red" data-number="18" for="labelform-name">Name</label>', $result);
+    }
+
     public function testAttributes(): void
     {
         $result = Label::widget()
             ->formAttribute(new LabelForm(), 'name')
             ->attributes(['class' => 'red'])
             ->attributes(['data-number' => 18])
-            ->render();
-
-        $this->assertSame('<label class="red" data-number="18" for="labelform-name">Name</label>', $result);
-    }
-
-    public function testReplaceAttributes(): void
-    {
-        $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
-            ->attributes(['class' => 'red'])
-            ->replaceAttributes(['data-number' => 18])
             ->render();
 
         $this->assertSame('<label data-number="18" for="labelform-name">Name</label>', $result);
@@ -253,6 +253,7 @@ final class LabelTest extends TestCase
         $label = Label::widget();
 
         $this->assertNotSame($label, $label->attributes([]));
+        $this->assertNotSame($label, $label->addAttributes([]));
         $this->assertNotSame($label, $label->setFor(true));
         $this->assertNotSame($label, $label->forId(null));
         $this->assertNotSame($label, $label->useInputId(true));

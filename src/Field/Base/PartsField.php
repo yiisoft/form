@@ -129,15 +129,15 @@ abstract class PartsField extends BaseField
     final public function labelAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->labelAttributes = array_merge($new->labelAttributes, $attributes);
+        $new->labelAttributes = $attributes;
+        $new->replaceLabelAttributes = true;
         return $new;
     }
 
-    final public function replaceLabelAttributes(array $attributes): static
+    final public function addLabelAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->labelAttributes = $attributes;
-        $new->replaceLabelAttributes = true;
+        $new->labelAttributes = array_merge($new->labelAttributes, $attributes);
         return $new;
     }
 
@@ -198,15 +198,15 @@ abstract class PartsField extends BaseField
     final public function hintAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->hintAttributes = array_merge($new->hintAttributes, $attributes);
+        $new->hintAttributes = $attributes;
+        $new->replaceHintAttributes = true;
         return $new;
     }
 
-    final public function replaceHintAttributes(array $attributes): static
+    final public function addHintAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->hintAttributes = $attributes;
-        $new->replaceHintAttributes = true;
+        $new->hintAttributes = array_merge($new->hintAttributes, $attributes);
         return $new;
     }
 
@@ -267,15 +267,15 @@ abstract class PartsField extends BaseField
     final public function errorAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->errorAttributes = array_merge($new->errorAttributes, $attributes);
+        $new->errorAttributes = $attributes;
+        $new->replaceErrorAttributes = true;
         return $new;
     }
 
-    final public function replaceErrorAttributes(array $attributes): static
+    final public function addErrorAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->errorAttributes = $attributes;
-        $new->replaceErrorAttributes = true;
+        $new->errorAttributes = array_merge($new->errorAttributes, $attributes);
         return $new;
     }
 
@@ -413,13 +413,13 @@ abstract class PartsField extends BaseField
         $labelAttributes = $this->labelAttributes;
         if (!empty($labelAttributes)) {
             if ($this->replaceLabelAttributes) {
-                $label = $label->replaceAttributes($labelAttributes);
+                $label = $label->attributes($labelAttributes);
             } else {
                 /** @var string|string[]|null $class */
                 $class = $this->labelAttributes['class'] ?? null;
                 unset($labelAttributes['class']);
 
-                $label = $label->attributes($labelAttributes);
+                $label = $label->addAttributes($labelAttributes);
 
                 if ($this->replaceLabelClass) {
                     $label = is_array($class) ? $label->replaceClass(...$class) : $label->replaceClass($class);
@@ -439,13 +439,13 @@ abstract class PartsField extends BaseField
         $hintAttributes = $this->hintAttributes;
         if (!empty($hintAttributes)) {
             if ($this->replaceHintAttributes) {
-                $hint = $hint->replaceAttributes($hintAttributes);
+                $hint = $hint->attributes($hintAttributes);
             } else {
                 /** @var string|string[]|null $class */
                 $class = $this->hintAttributes['class'] ?? null;
                 unset($hintAttributes['class']);
 
-                $hint = $hint->attributes($hintAttributes);
+                $hint = $hint->addAttributes($hintAttributes);
 
                 if ($this->replaceHintClass) {
                     $hint = is_array($class) ? $hint->replaceClass(...$class) : $hint->replaceClass($class);
@@ -465,13 +465,13 @@ abstract class PartsField extends BaseField
         $errorAttributes = $this->errorAttributes;
         if (!empty($errorAttributes)) {
             if ($this->replaceErrorAttributes) {
-                $error = $error->replaceAttributes($errorAttributes);
+                $error = $error->attributes($errorAttributes);
             } else {
                 /** @var string|string[]|null $class */
                 $class = $this->errorAttributes['class'] ?? null;
                 unset($errorAttributes['class']);
 
-                $error = $error->attributes($errorAttributes);
+                $error = $error->addAttributes($errorAttributes);
 
                 if ($this->replaceErrorClass) {
                     $error = is_array($class) ? $error->replaceClass(...$class) : $error->replaceClass($class);

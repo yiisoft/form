@@ -101,12 +101,12 @@ final class PartsFieldTest extends TestCase
         $field->tokens(['{before}' => new stdClass()]);
     }
 
-    public function testLabelAttributes(): void
+    public function testAddLabelAttributes(): void
     {
         $result = StubPartsField::widget()
             ->label('test')
-            ->labelAttributes(['class' => 'red'])
-            ->labelAttributes(['id' => 'KEY'])
+            ->addLabelAttributes(['class' => 'red'])
+            ->addLabelAttributes(['id' => 'KEY'])
             ->render();
 
         $expected = <<<HTML
@@ -118,12 +118,12 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceLabelAttributes(): void
+    public function testLabelAttributes(): void
     {
         $result = StubPartsField::widget()
             ->label('test')
             ->labelAttributes(['class' => 'red'])
-            ->replaceLabelAttributes(['id' => 'KEY'])
+            ->labelAttributes(['id' => 'KEY'])
             ->render();
 
         $expected = <<<HTML
@@ -185,12 +185,12 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testHintAttributes(): void
+    public function testAddHintAttributes(): void
     {
         $result = StubPartsField::widget()
             ->hint('test')
-            ->hintAttributes(['class' => 'red'])
-            ->hintAttributes(['id' => 'KEY'])
+            ->addHintAttributes(['class' => 'red'])
+            ->addHintAttributes(['id' => 'KEY'])
             ->render();
 
         $expected = <<<HTML
@@ -202,12 +202,12 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceHintAttributes(): void
+    public function testHintAttributes(): void
     {
         $result = StubPartsField::widget()
             ->hint('test')
             ->hintAttributes(['class' => 'red'])
-            ->replaceHintAttributes(['id' => 'KEY'])
+            ->hintAttributes(['id' => 'KEY'])
             ->render();
 
         $expected = <<<HTML
@@ -269,12 +269,12 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testErrorAttributes(): void
+    public function testAddErrorAttributes(): void
     {
         $result = StubPartsField::widget()
             ->error('test')
-            ->errorAttributes(['class' => 'red'])
-            ->errorAttributes(['id' => 'KEY'])
+            ->addErrorAttributes(['class' => 'red'])
+            ->addErrorAttributes(['id' => 'KEY'])
             ->render();
 
         $expected = <<<HTML
@@ -286,12 +286,12 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceErrorAttributes(): void
+    public function testErrorAttributes(): void
     {
         $result = StubPartsField::widget()
             ->error('test')
             ->errorAttributes(['class' => 'red'])
-            ->replaceErrorAttributes(['id' => 'KEY'])
+            ->errorAttributes(['id' => 'KEY'])
             ->render();
 
         $expected = <<<HTML
@@ -363,21 +363,21 @@ final class PartsFieldTest extends TestCase
         $this->assertNotSame($field, $field->hideLabel());
         $this->assertNotSame($field, $field->labelConfig([]));
         $this->assertNotSame($field, $field->labelAttributes([]));
-        $this->assertNotSame($field, $field->replaceLabelAttributes([]));
+        $this->assertNotSame($field, $field->addLabelAttributes([]));
         $this->assertNotSame($field, $field->labelId(null));
         $this->assertNotSame($field, $field->labelClass());
         $this->assertNotSame($field, $field->replaceLabelClass());
         $this->assertNotSame($field, $field->label(null));
         $this->assertNotSame($field, $field->hintConfig([]));
         $this->assertNotSame($field, $field->hintAttributes([]));
-        $this->assertNotSame($field, $field->replaceHintAttributes([]));
+        $this->assertNotSame($field, $field->addHintAttributes([]));
         $this->assertNotSame($field, $field->hintId(null));
         $this->assertNotSame($field, $field->hintClass());
         $this->assertNotSame($field, $field->replaceHintClass());
         $this->assertNotSame($field, $field->hint(null));
         $this->assertNotSame($field, $field->errorConfig([]));
         $this->assertNotSame($field, $field->errorAttributes([]));
-        $this->assertNotSame($field, $field->replaceErrorAttributes([]));
+        $this->assertNotSame($field, $field->addErrorAttributes([]));
         $this->assertNotSame($field, $field->errorId(null));
         $this->assertNotSame($field, $field->errorClass());
         $this->assertNotSame($field, $field->replaceErrorClass());

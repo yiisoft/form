@@ -193,14 +193,14 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testUncheckInputAttributes(): void
+    public function testAddUncheckInputAttributes(): void
     {
         $result = File::widget()
             ->formAttribute(new FileForm(), 'avatar')
             ->hideLabel()
             ->uncheckValue('0')
-            ->uncheckInputAttributes(['data-key' => '100'])
-            ->uncheckInputAttributes(['id' => 'TEST'])
+            ->addUncheckInputAttributes(['data-key' => '100'])
+            ->addUncheckInputAttributes(['id' => 'TEST'])
             ->render();
 
         $expected = <<<HTML
@@ -212,14 +212,14 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceUncheckInputAttributes(): void
+    public function testUncheckInputAttributes(): void
     {
         $result = File::widget()
             ->formAttribute(new FileForm(), 'avatar')
             ->hideLabel()
             ->uncheckValue('0')
             ->uncheckInputAttributes(['data-key' => '100'])
-            ->replaceUncheckInputAttributes(['id' => 'TEST'])
+            ->uncheckInputAttributes(['id' => 'TEST'])
             ->render();
 
         $expected = <<<HTML
@@ -271,6 +271,6 @@ final class FileTest extends TestCase
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->uncheckInputAttributes([]));
-        $this->assertNotSame($field, $field->replaceUncheckInputAttributes([]));
+        $this->assertNotSame($field, $field->addUncheckInputAttributes([]));
     }
 }

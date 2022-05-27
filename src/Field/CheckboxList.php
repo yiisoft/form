@@ -38,14 +38,14 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     public function checkboxAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->checkboxAttributes($attributes);
+        $new->widget = $this->widget->replaceCheckboxAttributes($attributes);
         return $new;
     }
 
-    public function replaceCheckboxAttributes(array $attributes): self
+    public function addCheckboxAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->replaceCheckboxAttributes($attributes);
+        $new->widget = $this->widget->checkboxAttributes($attributes);
         return $new;
     }
 
@@ -55,17 +55,17 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     public function individualInputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->individualInputAttributes($attributes);
+        $new->widget = $this->widget->replaceIndividualInputAttributes($attributes);
         return $new;
     }
 
     /**
      * @param array[] $attributes
      */
-    public function replaceIndividualInputAttributes(array $attributes): self
+    public function addIndividualInputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->replaceIndividualInputAttributes($attributes);
+        $new->widget = $this->widget->individualInputAttributes($attributes);
         return $new;
     }
 

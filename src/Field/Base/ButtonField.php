@@ -27,14 +27,14 @@ abstract class ButtonField extends PartsField
     final public function buttonAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->buttonAttributes = array_merge($this->buttonAttributes, $attributes);
+        $new->buttonAttributes = $attributes;
         return $new;
     }
 
-    final public function replaceButtonAttributes(array $attributes): static
+    final public function addButtonAttributes(array $attributes): static
     {
         $new = clone $this;
-        $new->buttonAttributes = $attributes;
+        $new->buttonAttributes = array_merge($this->buttonAttributes, $attributes);
         return $new;
     }
 

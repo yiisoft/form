@@ -239,12 +239,12 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testInputLabelAttributes(): void
+    public function testAddInputLabelAttributes(): void
     {
         $result = Checkbox::widget()
             ->formAttribute(new CheckboxForm(), 'blue')
-            ->inputLabelAttributes(['class' => 'red'])
-            ->inputLabelAttributes(['data-key' => 'x7'])
+            ->addInputLabelAttributes(['class' => 'red'])
+            ->addInputLabelAttributes(['data-key' => 'x7'])
             ->render();
 
         $expected = <<<'HTML'
@@ -256,12 +256,12 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceInputLabelAttributes(): void
+    public function testInputLabelAttributes(): void
     {
         $result = Checkbox::widget()
             ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabelAttributes(['class' => 'red'])
-            ->replaceInputLabelAttributes(['data-key' => 'x7'])
+            ->inputLabelAttributes(['data-key' => 'x7'])
             ->render();
 
         $expected = <<<'HTML'
@@ -497,7 +497,7 @@ final class CheckboxTest extends TestCase
         $this->assertNotSame($widget, $widget->enclosedByLabel(true));
         $this->assertNotSame($widget, $widget->inputLabel(null));
         $this->assertNotSame($widget, $widget->inputLabelAttributes([]));
-        $this->assertNotSame($widget, $widget->replaceInputLabelAttributes([]));
+        $this->assertNotSame($widget, $widget->addInputLabelAttributes([]));
         $this->assertNotSame($widget, $widget->inputLabelId(null));
         $this->assertNotSame($widget, $widget->inputLabelClass());
         $this->assertNotSame($widget, $widget->replaceInputLabelClass());

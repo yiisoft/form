@@ -52,14 +52,14 @@ final class ButtonGroup extends PartsField
     public function buttonAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->buttonAttributes($attributes);
+        $new->widget = $this->widget->replaceButtonAttributes($attributes);
         return $new;
     }
 
-    public function replaceButtonAttributes(array $attributes): self
+    public function addButtonAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->replaceButtonAttributes($attributes);
+        $new->widget = $this->widget->buttonAttributes($attributes);
         return $new;
     }
 

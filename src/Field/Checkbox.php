@@ -117,14 +117,14 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function inputLabelAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->inputLabelAttributes = array_merge($new->inputLabelAttributes, $attributes);
+        $new->inputLabelAttributes = $attributes;
         return $new;
     }
 
-    public function replaceInputLabelAttributes(array $attributes): self
+    public function addInputLabelAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->inputLabelAttributes = $attributes;
+        $new->inputLabelAttributes = array_merge($new->inputLabelAttributes, $attributes);
         return $new;
     }
 

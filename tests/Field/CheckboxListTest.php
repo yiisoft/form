@@ -45,6 +45,32 @@ final class CheckboxListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testAddCheckboxAttributes(): void
+    {
+        $result = CheckboxList::widget()
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->formAttribute(new CheckboxListForm(), 'color')
+            ->addCheckboxAttributes(['class' => 'control'])
+            ->addCheckboxAttributes(['data-key' => 'x100'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label>Select one or more colors</label>
+            <div>
+            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red" data-key="x100"> Red</label>
+            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue" data-key="x100"> Blue</label>
+            </div>
+            <div>Color of box.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testCheckboxAttributes(): void
     {
         $result = CheckboxList::widget()
@@ -53,6 +79,7 @@ final class CheckboxListTest extends TestCase
                 'blue' => 'Blue',
             ])
             ->formAttribute(new CheckboxListForm(), 'color')
+            ->checkboxAttributes(['data-key' => 'x100'])
             ->checkboxAttributes(['class' => 'control'])
             ->render();
 
@@ -70,7 +97,7 @@ final class CheckboxListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testReplaceCheckboxAttributes(): void
+    public function testAddIndividualInputAttributes(): void
     {
         $result = CheckboxList::widget()
             ->items([
@@ -78,8 +105,12 @@ final class CheckboxListTest extends TestCase
                 'blue' => 'Blue',
             ])
             ->formAttribute(new CheckboxListForm(), 'color')
-            ->checkboxAttributes(['data-key' => 'x100'])
-            ->replaceCheckboxAttributes(['class' => 'control'])
+            ->addIndividualInputAttributes([
+                'red' => ['class' => 'control'],
+            ])
+            ->addIndividualInputAttributes([
+                'blue' => ['class' => 'control2'],
+            ])
             ->render();
 
         $expected = <<<HTML
@@ -87,7 +118,7 @@ final class CheckboxListTest extends TestCase
             <label>Select one or more colors</label>
             <div>
             <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+            <label><input type="checkbox" class="control2" name="CheckboxListForm[color][]" value="blue"> Blue</label>
             </div>
             <div>Color of box.</div>
             </div>
@@ -107,34 +138,7 @@ final class CheckboxListTest extends TestCase
             ->individualInputAttributes([
                 'red' => ['class' => 'control'],
             ])
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label>Select one or more colors</label>
-            <div>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
-            </div>
-            <div>Color of box.</div>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testReplaceIndividualInputAttributes(): void
-    {
-        $result = CheckboxList::widget()
-            ->items([
-                'red' => 'Red',
-                'blue' => 'Blue',
-            ])
-            ->formAttribute(new CheckboxListForm(), 'color')
             ->individualInputAttributes([
-                'red' => ['class' => 'control'],
-            ])
-            ->replaceIndividualInputAttributes([
                 'blue' => ['class' => 'control'],
             ])
             ->render();
@@ -350,9 +354,9 @@ final class CheckboxListTest extends TestCase
         $field = CheckboxList::widget();
 
         $this->assertNotSame($field, $field->checkboxAttributes([]));
-        $this->assertNotSame($field, $field->replaceCheckboxAttributes([]));
+        $this->assertNotSame($field, $field->addCheckboxAttributes([]));
         $this->assertNotSame($field, $field->individualInputAttributes([]));
-        $this->assertNotSame($field, $field->replaceIndividualInputAttributes([]));
+        $this->assertNotSame($field, $field->addIndividualInputAttributes([]));
         $this->assertNotSame($field, $field->items([]));
         $this->assertNotSame($field, $field->itemsFromValues([]));
         $this->assertNotSame($field, $field->form(null));

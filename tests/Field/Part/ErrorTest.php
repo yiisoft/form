@@ -57,23 +57,23 @@ final class ErrorTest extends TestCase
             ->tag('');
     }
 
+    public function testAddAttributes(): void
+    {
+        $result = Error::widget()
+            ->formAttribute($this->createValidatedErrorForm(), 'name')
+            ->addAttributes(['class' => 'red'])
+            ->addAttributes(['data-number' => 18])
+            ->render();
+
+        $this->assertSame('<div class="red" data-number="18">Value cannot be blank.</div>', $result);
+    }
+
     public function testAttributes(): void
     {
         $result = Error::widget()
             ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->attributes(['class' => 'red'])
             ->attributes(['data-number' => 18])
-            ->render();
-
-        $this->assertSame('<div class="red" data-number="18">Value cannot be blank.</div>', $result);
-    }
-
-    public function testReplaceAttributes(): void
-    {
-        $result = Error::widget()
-            ->formAttribute($this->createValidatedErrorForm(), 'name')
-            ->attributes(['class' => 'red'])
-            ->replaceAttributes(['data-number' => 18])
             ->render();
 
         $this->assertSame('<div data-number="18">Value cannot be blank.</div>', $result);

@@ -177,14 +177,14 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     public function outputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->outputAttributes = array_merge($new->outputAttributes, $attributes);
+        $new->outputAttributes = $attributes;
         return $new;
     }
 
-    public function replaceOutputAttributes(array $attributes): self
+    public function addOutputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->outputAttributes = $attributes;
+        $new->outputAttributes = array_merge($new->outputAttributes, $attributes);
         return $new;
     }
 

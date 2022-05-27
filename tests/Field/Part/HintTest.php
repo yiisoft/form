@@ -56,23 +56,23 @@ final class HintTest extends TestCase
             ->tag('');
     }
 
-    public function testAttributes(): void
+    public function testAddAttributes(): void
     {
         $result = Hint::widget()
-             ->formAttribute(new HintForm(), 'name')
-            ->attributes(['class' => 'red'])
-            ->attributes(['data-number' => 18])
+            ->formAttribute(new HintForm(), 'name')
+            ->addAttributes(['class' => 'red'])
+            ->addAttributes(['data-number' => 18])
             ->render();
 
         $this->assertSame('<div class="red" data-number="18">Write your name.</div>', $result);
     }
 
-    public function testReplaceAttributes(): void
+    public function testAttributes(): void
     {
         $result = Hint::widget()
-             ->formAttribute(new HintForm(), 'name')
+            ->formAttribute(new HintForm(), 'name')
             ->attributes(['class' => 'red'])
-            ->replaceAttributes(['data-number' => 18])
+            ->attributes(['data-number' => 18])
             ->render();
 
         $this->assertSame('<div data-number="18">Write your name.</div>', $result);
@@ -237,6 +237,7 @@ final class HintTest extends TestCase
         $this->assertNotSame($widget, $widget->formAttribute(new HintForm(), 'name'));
         $this->assertNotSame($widget, $widget->tag('b'));
         $this->assertNotSame($widget, $widget->attributes([]));
+        $this->assertNotSame($widget, $widget->addAttributes([]));
         $this->assertNotSame($widget, $widget->content(''));
         $this->assertNotSame($widget, $widget->encode(false));
     }

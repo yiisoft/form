@@ -159,7 +159,7 @@ final class BaseFieldTest extends TestCase
 
         $this->assertNotSame($field, $field->containerTag('div'));
         $this->assertNotSame($field, $field->containerAttributes([]));
-        $this->assertNotSame($field, $field->replaceContainerAttributes([]));
+        $this->assertNotSame($field, $field->addContainerAttributes([]));
         $this->assertNotSame($field, $field->containerId(null));
         $this->assertNotSame($field, $field->containerClass());
         $this->assertNotSame($field, $field->replaceContainerClass());
