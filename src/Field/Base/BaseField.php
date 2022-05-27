@@ -100,12 +100,7 @@ abstract class BaseField extends Widget
 
         $content = $this->generateBeginContent();
 
-        $html = $this->renderOpenContainerAndContent($content);
-        if ($html === '') {
-            return '';
-        }
-
-        return $html;
+        return $this->renderOpenContainerAndContent($content);
     }
 
     final protected function run(): string
