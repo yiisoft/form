@@ -87,9 +87,6 @@ final class Label extends Widget
         return $new;
     }
 
-    /**
-     * @return static
-     */
     public function forId(?string $id): self
     {
         $new = clone $this;
@@ -97,9 +94,6 @@ final class Label extends Widget
         return $new;
     }
 
-    /**
-     * @return static
-     */
     public function useInputId(bool $value): self
     {
         $new = clone $this;
@@ -107,9 +101,6 @@ final class Label extends Widget
         return $new;
     }
 
-    /**
-     * @return static
-     */
     public function content(string|Stringable|null $content): self
     {
         $new = clone $this;
@@ -119,8 +110,6 @@ final class Label extends Widget
 
     /**
      * Whether content should be HTML-encoded.
-     *
-     * @return static
      */
     public function encode(bool $value): self
     {

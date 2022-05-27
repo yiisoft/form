@@ -28,10 +28,8 @@ trait FieldContentTrait
      *  - `true`: any content is encoded;
      *  - `false`: nothing is encoded.
      * Defaults to `null`.
-     *
-     * @return static
      */
-    final public function encodeContent(?bool $encode): self
+    final public function encodeContent(?bool $encode): static
     {
         $new = clone $this;
         $new->encodeContent = $encode;
@@ -41,10 +39,8 @@ trait FieldContentTrait
     /**
      * @param bool $doubleEncode Whether already encoded HTML entities in field content should be encoded.
      * Defaults to `true`.
-     *
-     * @return static
      */
-    final public function doubleEncodeContent(bool $doubleEncode): self
+    final public function doubleEncodeContent(bool $doubleEncode): static
     {
         $new = clone $this;
         $new->doubleEncodeContent = $doubleEncode;
@@ -53,10 +49,8 @@ trait FieldContentTrait
 
     /**
      * @param string|Stringable ...$content Field content.
-     *
-     * @return static
      */
-    final public function content(string|Stringable ...$content): self
+    final public function content(string|Stringable ...$content): static
     {
         $new = clone $this;
         $new->content = array_values($content);
@@ -65,10 +59,8 @@ trait FieldContentTrait
 
     /**
      * @param string|Stringable ...$content Field content.
-     *
-     * @return static
      */
-    final public function addContent(string|Stringable ...$content): self
+    final public function addContent(string|Stringable ...$content): static
     {
         $new = clone $this;
         $new->content = array_merge($new->content, array_values($content));
