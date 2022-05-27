@@ -80,7 +80,6 @@ final class Field
      *     ],
      * ]
      * ```
-     *
      * @param string $defaultConfigName Configuration name that will be used for create fields by default. If value is
      * not "default", then `$configs` must contain configuration with this name.
      */
