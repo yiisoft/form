@@ -1,7 +1,7 @@
 # Date Field
 
-Represents `<input>` element of type "date" are let the user enter a date, either with a textbox that validates
-the input or a special date picker interface. Documentation:
+Represents `<input>` element of type "date" that lets the user enter a date, either with a textbox that validates
+the input or with a special date picker interface. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#date-state-(type=date))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/date)

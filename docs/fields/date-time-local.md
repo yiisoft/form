@@ -1,6 +1,6 @@
 # DateTimeLocal Field
 
-Represents `<input>` element of type "datetime-local" are let the user easily enter both a date and a time, including
+Represents `<input>` element of type "datetime-local" that lets the user to easily enter both a date and a time, including
 the year, month, and day as well as the time in hours and minutes. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#local-date-and-time-state-(type=datetime-local))

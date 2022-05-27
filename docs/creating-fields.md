@@ -1,17 +1,17 @@
 # Creating and Using Custom Fields
 
-Using the fields included in the package, you may also create your own fields.
+You may create your own fields based on the abstract fields included in the package.
 
 ## Creating Field Class
 
-Field class must extend `Yiisoft\Form\Field\Base\BaseField` or one of his heirs and implement necessary abstract 
+Field class must extend `Yiisoft\Form\Field\Base\BaseField` or one of his children and implement necessary abstract 
 methods. 
 
 ### Base Classes
 
-- `BaseField` — base class that contain common functionality of fields.
-- `PartsField` — class extends `BaseField`, add templating functionality and parts of field (label, hint, error).  
-- `InputField` — class extends `PartsField`, add form model support (in most cases, this class is used).
+- `BaseField` — base class that contains common functionality of fields.
+- `PartsField` — class extends `BaseField`. It adds templating functionality and parts of field (label, hint, error).
+- `InputField` — class extends `PartsField`. It adds form model support (in most cases, this class is used as a base).
 - `ButtonField` — specific class for button fields, extends `PartsField`.
 - `DateTimeInputField` — specific class for creating form controls with date and/or time input, extends `InputField`.
 
@@ -31,36 +31,36 @@ You can use feature traits for your field class.
 
 #### `FormAttributeTrait` 
 
-Add methods for using form model.
+Adds methods for using form model.
 
 #### `FieldContentTrait`
 
-Add methods for set and generate custom content of fields.
+Adds methods for setting and generating custom field content.
 
 #### `VaidationClassTrait` 
 
-Add methods for set valid and invalid CSS classes. 
+Adds methods for setting valid and invalid CSS classes.
 
-For applying common fields configuration when field creating through a field factory class must implement 
+To apply common field configuration when field is created through a field factory, class must implement 
 `ValidationClassInterface`.
 
 #### `PlaceholderTrait`
 
-Add methods for using placeholder. Available for heirs of `InputField` only. 
+Adds methods for using placeholder. Could be applied to children of `InputField` only. 
 
-For applying common fields configuration when field creating through a field factory class must implement
+To apply common field configuration when field is created through a field factory, class must implement
 `PlaceholderInterface`.
 
 #### `EnrichmentFromRulesTrait`
 
-Add method for set option of enrichment field from form model rules.
+Adds method to set option of enrichment field from form model rules.
 
-For applying common fields configuration when field creating through a field factory class must implement
+To apply common field configuration when field is created through a field factory class must implement
 `EnrichmentFromRulesInterface`.
 
 ## Field Configuration
 
-Set base configuration of field in parameter "fieldConfigs" of field factory. For example:
+Sets base configuration of field via parameter "fieldConfigs" of a field factory. For example:
 
 ```php
 'fieldConfigs' => [
@@ -116,7 +116,7 @@ final class SuffixInput extends InputField
 }
 ```
 
-Field using:
+Usage is the following:
 
 ```php
 echo \Yiisoft\Form\Field::input(SuffixInput::class, $procentForm, 'value')->suffix('%');

@@ -1,6 +1,6 @@
 # Reset Button Field
 
-Represents `<button>` element of type "reset" are rendered as button for resets all the controls to their initial
+Represents `<button>` element of type "reset" that is rendered as button resetting all the controls to their initial
 values. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type-reset-state)

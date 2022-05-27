@@ -1,6 +1,6 @@
 # Password Field
 
-Represents `<input>` element of type "password" are let the user securely enter a password. Documentation:
+Represents `<input>` element of type "password" that lets the user to securely enter a password. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#password-state-(type=password))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/password)

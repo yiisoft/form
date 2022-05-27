@@ -1,6 +1,6 @@
 # Url Field
 
-Represents `<input>` element of type "url" are let the user enter and edit a URL. Documentation:
+Represents `<input>` element of type "url" that lets the user enter and edit an URL. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/url)

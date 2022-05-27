@@ -1,7 +1,7 @@
 # Error Field Part
 
-Represent a field validation error (if there are several errors, the first one is used). If field is no validation
-error, field part will be hidden.
+Represent a field validation error (if there are several errors, the first one is used). If field has no validation
+error, this field part will be hidden.
 
 ## Usage Example
 

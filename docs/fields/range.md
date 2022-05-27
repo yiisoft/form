@@ -1,6 +1,6 @@
 # Range Field
 
-Represents `<input>` element of type "range" are let the user specify a numeric value which must be no less than a given
+Represents `<input>` element of type "range" lets the user to specify a numeric value which must be no less than a given
 value, and no more than another given value. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range))

@@ -1,6 +1,6 @@
 # Telephone Field
 
-Represents `<input>` element of type "tel" are let the user enter and edit a telephone number. Documentation:
+Represents `<input>` element of type "tel" that lets the user enter and edit a telephone number. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#telephone-state-(type=tel))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/tel)

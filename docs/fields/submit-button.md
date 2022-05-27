@@ -1,6 +1,6 @@
 # Submit Button Field
 
-Represents `<button>` element of type "submit" are rendered as button for submitting a form. Documentation:
+Represents `<button>` element of type "submit" that is rendered as button for submitting a form. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/form-elements.html#attr-button-type-submit-state)
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/button)

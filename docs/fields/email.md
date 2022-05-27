@@ -1,7 +1,7 @@
 # Email Field
 
-Represents `<input>` element of type "email" are let the user enter and edit an e-mail address, or, if the "multiple"
-attribute is specified, a list of e-mail addresses. Documentation:
+Represents `<input>` element of type "email" that lets the user to enter and edit an e-mail address, or, if the "multiple"
+attribute is specified, a list of e-mail addresses is accepted. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/email)

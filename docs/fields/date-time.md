@@ -1,6 +1,6 @@
 # DateTime Field
 
-Represents `<input>` element of type "datetime" are let the user enter a date and time (hour, minute, second, and
+Represents `<input>` element of type "datetime" that lets the user to enter a date and time (hour, minute, second, and
 fraction of a second) as well as a timezone. Documentation:
 
 - [HTML 5.2 W3C Candidate Recommendation](https://www.w3.org/TR/2017/CR-html52-20170808/sec-forms.html#date-and-time-state-typedatetime)

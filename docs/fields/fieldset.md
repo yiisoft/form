@@ -1,6 +1,6 @@
 # Fieldset Field
 
-Represents `<fieldset>` element are use to group several controls. Documentation:
+Represents `<fieldset>` element used to group several controls. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/form-elements.html#the-fieldset-element)
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/fieldset)
