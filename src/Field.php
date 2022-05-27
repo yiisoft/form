@@ -52,7 +52,8 @@ final class Field
     private static array $factories = [];
 
     /**
-     * @psalm-param array<string,array> $configs
+     * @param array<string,array> $configs
+     * @param string $defaultConfigName Configuration name that will be used for create fields by default.
      */
     public static function initialize(array $configs = [], string $defaultConfigName = 'default'): void
     {
