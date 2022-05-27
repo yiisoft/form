@@ -154,30 +154,30 @@ abstract class PartsField extends BaseField
     }
 
     /**
-     * Add one or more CSS classes to the label tag.
+     * Replace label tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
     final public function labelClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->labelAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        $new->labelAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->replaceLabelClass = true;
         return $new;
     }
 
     /**
-     * Replace label tag CSS classes with a new set of classes.
+     * Add one or more CSS classes to the label tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function replaceLabelClass(?string ...$class): static
+    final public function addLabelClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->labelAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
-        $new->replaceLabelClass = true;
+        Html::addCssClass(
+            $new->labelAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
         return $new;
     }
 
@@ -223,30 +223,30 @@ abstract class PartsField extends BaseField
     }
 
     /**
-     * Add one or more CSS classes to the hint tag.
+     * Replace hint tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
     final public function hintClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->hintAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        $new->hintAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->replaceHintClass = true;
         return $new;
     }
 
     /**
-     * Replace hint tag CSS classes with a new set of classes.
+     * Add one or more CSS classes to the hint tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function replaceHintClass(?string ...$class): static
+    final public function addHintClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->hintAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
-        $new->replaceHintClass = true;
+        Html::addCssClass(
+            $new->hintAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
         return $new;
     }
 
@@ -292,30 +292,30 @@ abstract class PartsField extends BaseField
     }
 
     /**
-     * Add one or more CSS classes to the error tag.
+     * Replace error tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
     final public function errorClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->errorAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        $new->errorAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->replaceErrorClass = true;
         return $new;
     }
 
     /**
-     * Replace error tag CSS classes with a new set of classes.
+     * Add one or more CSS classes to the error tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function replaceErrorClass(?string ...$class): static
+    final public function addErrorClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->errorAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
-        $new->replaceErrorClass = true;
+        Html::addCssClass(
+            $new->errorAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
         return $new;
     }
 
@@ -422,9 +422,9 @@ abstract class PartsField extends BaseField
                 $label = $label->addAttributes($labelAttributes);
 
                 if ($this->replaceLabelClass) {
-                    $label = is_array($class) ? $label->replaceClass(...$class) : $label->replaceClass($class);
-                } elseif ($class !== null) {
                     $label = is_array($class) ? $label->class(...$class) : $label->class($class);
+                } elseif ($class !== null) {
+                    $label = is_array($class) ? $label->addClass(...$class) : $label->addClass($class);
                 }
             }
         }
@@ -448,9 +448,9 @@ abstract class PartsField extends BaseField
                 $hint = $hint->addAttributes($hintAttributes);
 
                 if ($this->replaceHintClass) {
-                    $hint = is_array($class) ? $hint->replaceClass(...$class) : $hint->replaceClass($class);
-                } elseif ($class !== null) {
                     $hint = is_array($class) ? $hint->class(...$class) : $hint->class($class);
+                } elseif ($class !== null) {
+                    $hint = is_array($class) ? $hint->addClass(...$class) : $hint->addClass($class);
                 }
             }
         }
@@ -474,9 +474,9 @@ abstract class PartsField extends BaseField
                 $error = $error->addAttributes($errorAttributes);
 
                 if ($this->replaceErrorClass) {
-                    $error = is_array($class) ? $error->replaceClass(...$class) : $error->replaceClass($class);
-                } elseif ($class !== null) {
                     $error = is_array($class) ? $error->class(...$class) : $error->class($class);
+                } elseif ($class !== null) {
+                    $error = is_array($class) ? $error->addClass(...$class) : $error->addClass($class);
                 }
             }
         }

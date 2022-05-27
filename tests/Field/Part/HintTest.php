@@ -101,7 +101,7 @@ final class HintTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataClass(): array
+    public function dataAddClass(): array
     {
         return [
             [' class="main"', []],
@@ -113,16 +113,16 @@ final class HintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataClass
+     * @dataProvider dataAddClass
      *
      * @param string[] $class
      */
-    public function testClass(string $expectedClassAttribute, array $class): void
+    public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $result = Hint::widget()
              ->formAttribute(new HintForm(), 'name')
-            ->class('main')
-            ->class(...$class)
+            ->addClass('main')
+            ->addClass(...$class)
             ->render();
 
         $expected = '<div' . $expectedClassAttribute . '>Write your name.</div>';
@@ -130,7 +130,7 @@ final class HintTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataNewClass(): array
+    public function dataAddNewClass(): array
     {
         return [
             ['', null],
@@ -140,13 +140,13 @@ final class HintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataNewClass
+     * @dataProvider dataAddNewClass
      */
-    public function testNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Hint::widget()
              ->formAttribute(new HintForm(), 'name')
-            ->class($class)
+            ->addClass($class)
             ->render();
 
         $expected = '<div' . $expectedClassAttribute . '>Write your name.</div>';
@@ -154,7 +154,7 @@ final class HintTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataReplaceClass(): array
+    public function dataClass(): array
     {
         return [
             ['', []],
@@ -167,16 +167,16 @@ final class HintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataReplaceClass
+     * @dataProvider dataClass
      *
      * @param string[] $class
      */
-    public function testReplaceClass(string $expectedClassAttribute, array $class): void
+    public function testClass(string $expectedClassAttribute, array $class): void
     {
         $result = Hint::widget()
              ->formAttribute(new HintForm(), 'name')
             ->class('red')
-            ->replaceClass(...$class)
+            ->class(...$class)
             ->render();
 
         $expected = '<div' . $expectedClassAttribute . '>Write your name.</div>';

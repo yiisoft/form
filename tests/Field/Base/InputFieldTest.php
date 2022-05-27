@@ -45,7 +45,7 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputClass(): array
+    public function dataAddInputClass(): array
     {
         return [
             [' class="main"', []],
@@ -57,16 +57,16 @@ final class InputFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputClass
+     * @dataProvider dataAddInputClass
      *
      * @param string[] $class
      */
-    public function testInputClass(string $expectedClassAttribute, array $class): void
+    public function testAddInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
             ->formAttribute(new TextForm(), 'company')
-            ->inputClass('main')
-            ->inputClass(...$class)
+            ->addInputClass('main')
+            ->addInputClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -79,7 +79,7 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputNewClass(): array
+    public function dataAddInputNewClass(): array
     {
         return [
             ['', null],
@@ -89,13 +89,13 @@ final class InputFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputNewClass
+     * @dataProvider dataAddInputNewClass
      */
-    public function testInputNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testAddInputNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubInputField::widget()
             ->formAttribute(new TextForm(), 'company')
-            ->inputClass($class)
+            ->addInputClass($class)
             ->render();
 
         $expected = <<<HTML
@@ -108,7 +108,7 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataReplaceInputClass(): array
+    public function dataInputClass(): array
     {
         return [
             ['', []],
@@ -121,16 +121,16 @@ final class InputFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataReplaceInputClass
+     * @dataProvider dataInputClass
      *
      * @param string[] $class
      */
-    public function testReplaceInputClass(string $expectedClassAttribute, array $class): void
+    public function testInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
             ->formAttribute(new TextForm(), 'company')
             ->inputClass('red')
-            ->replaceInputClass(...$class)
+            ->inputClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -152,7 +152,7 @@ final class InputFieldTest extends TestCase
         $this->assertNotSame($field, $field->setInputId(true));
         $this->assertNotSame($field, $field->inputAttributes([]));
         $this->assertNotSame($field, $field->addInputAttributes([]));
+        $this->assertNotSame($field, $field->addInputClass());
         $this->assertNotSame($field, $field->inputClass());
-        $this->assertNotSame($field, $field->replaceInputClass());
     }
 }

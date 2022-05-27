@@ -73,7 +73,7 @@ final class LabelTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataClass(): array
+    public function dataAddClass(): array
     {
         return [
             [' class="main"', []],
@@ -85,16 +85,16 @@ final class LabelTest extends TestCase
     }
 
     /**
-     * @dataProvider dataClass
+     * @dataProvider dataAddClass
      *
      * @param string[] $class
      */
-    public function testClass(string $expectedClassAttribute, array $class): void
+    public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $result = Label::widget()
             ->formAttribute(new LabelForm(), 'name')
-            ->class('main')
-            ->class(...$class)
+            ->addClass('main')
+            ->addClass(...$class)
             ->render();
 
         $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
@@ -102,7 +102,7 @@ final class LabelTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataNewClass(): array
+    public function dataAddNewClass(): array
     {
         return [
             ['', null],
@@ -112,13 +112,13 @@ final class LabelTest extends TestCase
     }
 
     /**
-     * @dataProvider dataNewClass
+     * @dataProvider dataAddNewClass
      */
-    public function testNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Label::widget()
             ->formAttribute(new LabelForm(), 'name')
-            ->class($class)
+            ->addClass($class)
             ->render();
 
         $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
@@ -126,7 +126,7 @@ final class LabelTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataReplaceClass(): array
+    public function dataClass(): array
     {
         return [
             ['', []],
@@ -139,16 +139,16 @@ final class LabelTest extends TestCase
     }
 
     /**
-     * @dataProvider dataReplaceClass
+     * @dataProvider dataClass
      *
      * @param string[] $class
      */
-    public function testReplaceClass(string $expectedClassAttribute, array $class): void
+    public function testClass(string $expectedClassAttribute, array $class): void
     {
         $result = Label::widget()
             ->formAttribute(new LabelForm(), 'name')
             ->class('red')
-            ->replaceClass(...$class)
+            ->class(...$class)
             ->render();
 
         $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';

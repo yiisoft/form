@@ -234,7 +234,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataButtonClass(): array
+    public function dataAddButtonClass(): array
     {
         return [
             [' class="main"', []],
@@ -246,15 +246,15 @@ final class ButtonFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataButtonClass
+     * @dataProvider dataAddButtonClass
      *
      * @param string[] $class
      */
-    public function testButtonClass(string $expectedClassAttribute, array $class): void
+    public function testAddButtonClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubButtonField::widget()
-            ->buttonClass('main')
-            ->buttonClass(...$class)
+            ->addButtonClass('main')
+            ->addButtonClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -266,7 +266,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataButtonNewClass(): array
+    public function dataAddButtonNewClass(): array
     {
         return [
             ['', null],
@@ -276,12 +276,12 @@ final class ButtonFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataButtonNewClass
+     * @dataProvider dataAddButtonNewClass
      */
-    public function testButtonNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testAddButtonNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubButtonField::widget()
-            ->buttonClass($class)
+            ->addButtonClass($class)
             ->render();
 
         $expected = <<<HTML
@@ -293,7 +293,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataReplaceButtonClass(): array
+    public function dataButtonClass(): array
     {
         return [
             ['', []],
@@ -306,15 +306,15 @@ final class ButtonFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataReplaceButtonClass
+     * @dataProvider dataButtonClass
      *
      * @param string[] $class
      */
-    public function testReplaceButtonClass(string $expectedClassAttribute, array $class): void
+    public function testButtonClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubButtonField::widget()
             ->buttonClass('red')
-            ->replaceButtonClass(...$class)
+            ->buttonClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -334,8 +334,8 @@ final class ButtonFieldTest extends TestCase
         $this->assertNotSame($field, $field->buttonAttributes([]));
         $this->assertNotSame($field, $field->addButtonAttributes([]));
         $this->assertNotSame($field, $field->buttonId(null));
+        $this->assertNotSame($field, $field->addButtonClass());
         $this->assertNotSame($field, $field->buttonClass());
-        $this->assertNotSame($field, $field->replaceButtonClass());
         $this->assertNotSame($field, $field->name(null));
         $this->assertNotSame($field, $field->ariaDescribedBy(null));
         $this->assertNotSame($field, $field->ariaLabel(null));

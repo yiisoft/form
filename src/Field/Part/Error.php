@@ -82,7 +82,7 @@ final class Error extends Widget
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    public function class(?string ...$class): self
+    public function addClass(?string ...$class): self
     {
         $new = clone $this;
         Html::addCssClass(
@@ -97,7 +97,7 @@ final class Error extends Widget
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    public function replaceClass(?string ...$class): self
+    public function class(?string ...$class): self
     {
         $new = clone $this;
         $new->attributes['class'] = array_filter($class, static fn ($c) => $c !== null);

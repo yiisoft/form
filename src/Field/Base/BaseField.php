@@ -58,29 +58,29 @@ abstract class BaseField extends Widget
     }
 
     /**
-     * Add one or more CSS classes to the container tag.
+     * Replace container tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
     final public function containerClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->containerAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        $new->containerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
     /**
-     * Replace container tag CSS classes with a new set of classes.
+     * Add one or more CSS classes to the container tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function replaceContainerClass(?string ...$class): static
+    final public function addContainerClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->containerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        Html::addCssClass(
+            $new->containerAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
         return $new;
     }
 

@@ -43,7 +43,7 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataContainerClass(): array
+    public function dataAddContainerClass(): array
     {
         return [
             [' class="main"', []],
@@ -55,15 +55,15 @@ final class BaseFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataContainerClass
+     * @dataProvider dataAddContainerClass
      *
      * @param string[] $class
      */
-    public function testContainerClass(string $expectedClassAttribute, array $class): void
+    public function testAddContainerClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubBaseField::widget()
-            ->containerClass('main')
-            ->containerClass(...$class)
+            ->addContainerClass('main')
+            ->addContainerClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -75,7 +75,7 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataContainerNewClass(): array
+    public function dataAddContainerNewClass(): array
     {
         return [
             ['', null],
@@ -85,12 +85,12 @@ final class BaseFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataContainerNewClass
+     * @dataProvider dataAddContainerNewClass
      */
-    public function testContainerNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testAddContainerNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubBaseField::widget()
-            ->containerClass($class)
+            ->addContainerClass($class)
             ->render();
 
         $expected = <<<HTML
@@ -102,7 +102,7 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataReplaceContainerClass(): array
+    public function dataContainerClass(): array
     {
         return [
             ['', []],
@@ -115,15 +115,15 @@ final class BaseFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataReplaceContainerClass
+     * @dataProvider dataContainerClass
      *
      * @param string[] $class
      */
-    public function testReplaceContainerClass(string $expectedClassAttribute, array $class): void
+    public function testContainerClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubBaseField::widget()
             ->containerClass('red')
-            ->replaceContainerClass(...$class)
+            ->containerClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -161,8 +161,8 @@ final class BaseFieldTest extends TestCase
         $this->assertNotSame($field, $field->containerAttributes([]));
         $this->assertNotSame($field, $field->addContainerAttributes([]));
         $this->assertNotSame($field, $field->containerId(null));
+        $this->assertNotSame($field, $field->addContainerClass());
         $this->assertNotSame($field, $field->containerClass());
-        $this->assertNotSame($field, $field->replaceContainerClass());
         $this->assertNotSame($field, $field->useContainer(true));
     }
 }

@@ -300,7 +300,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputLabelClass(): array
+    public function dataAddInputLabelClass(): array
     {
         return [
             [' class="main"', []],
@@ -312,16 +312,16 @@ final class CheckboxTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputLabelClass
+     * @dataProvider dataAddInputLabelClass
      *
      * @param string[] $class
      */
-    public function testInputLabelClass(string $expectedClassAttribute, array $class): void
+    public function testAddInputLabelClass(string $expectedClassAttribute, array $class): void
     {
         $result = Checkbox::widget()
             ->formAttribute(new CheckboxForm(), 'blue')
-            ->inputLabelClass('main')
-            ->inputLabelClass(...$class)
+            ->addInputLabelClass('main')
+            ->addInputLabelClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -333,7 +333,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputLabelNewClass(): array
+    public function dataAddInputLabelNewClass(): array
     {
         return [
             ['', null],
@@ -343,13 +343,13 @@ final class CheckboxTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputLabelNewClass
+     * @dataProvider dataAddInputLabelNewClass
      */
-    public function testInputLabelNewClass(string $expectedClassAttribute, ?string $class): void
+    public function testAddInputLabelNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Checkbox::widget()
             ->formAttribute(new CheckboxForm(), 'blue')
-            ->inputLabelClass($class)
+            ->addInputLabelClass($class)
             ->render();
 
         $expected = <<<HTML
@@ -361,7 +361,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataReplaceInputLabelClass(): array
+    public function dataInputLabelClass(): array
     {
         return [
             ['', []],
@@ -374,16 +374,16 @@ final class CheckboxTest extends TestCase
     }
 
     /**
-     * @dataProvider dataReplaceInputLabelClass
+     * @dataProvider dataInputLabelClass
      *
      * @param string[] $class
      */
-    public function testReplaceInputLabelClass(string $expectedClassAttribute, array $class): void
+    public function testInputLabelClass(string $expectedClassAttribute, array $class): void
     {
         $result = Checkbox::widget()
             ->formAttribute(new CheckboxForm(), 'blue')
             ->inputLabelClass('red')
-            ->replaceInputLabelClass(...$class)
+            ->inputLabelClass(...$class)
             ->render();
 
         $expected = <<<HTML
@@ -499,8 +499,8 @@ final class CheckboxTest extends TestCase
         $this->assertNotSame($widget, $widget->inputLabelAttributes([]));
         $this->assertNotSame($widget, $widget->addInputLabelAttributes([]));
         $this->assertNotSame($widget, $widget->inputLabelId(null));
+        $this->assertNotSame($widget, $widget->addInputLabelClass());
         $this->assertNotSame($widget, $widget->inputLabelClass());
-        $this->assertNotSame($widget, $widget->replaceInputLabelClass());
         $this->assertNotSame($widget, $widget->inputValue(null));
         $this->assertNotSame($widget, $widget->disabled());
         $this->assertNotSame($widget, $widget->ariaDescribedBy(null));

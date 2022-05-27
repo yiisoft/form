@@ -54,29 +54,29 @@ final class Label extends Widget
     }
 
     /**
-     * Add one or more CSS classes to the tag.
+     * Replace tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
     public function class(?string ...$class): self
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->attributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        $new->attributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
     /**
-     * Replace tag CSS classes with a new set of classes.
+     * Add one or more CSS classes to the tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    public function replaceClass(?string ...$class): self
+    public function addClass(?string ...$class): self
     {
         $new = clone $this;
-        $new->attributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        Html::addCssClass(
+            $new->attributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
         return $new;
     }
 

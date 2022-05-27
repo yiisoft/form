@@ -62,29 +62,29 @@ abstract class InputField extends PartsField
     }
 
     /**
-     * Add one or more CSS classes to the input tag.
+     * Replace input tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
     final public function inputClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->inputAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        $new->inputAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
     /**
-     * Replace input tag CSS classes with a new set of classes.
+     * Add one or more CSS classes to the input tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function replaceInputClass(?string ...$class): static
+    final public function addInputClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->inputAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        Html::addCssClass(
+            $new->inputAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
         return $new;
     }
 
