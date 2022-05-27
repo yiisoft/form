@@ -52,8 +52,37 @@ final class Field
     private static array $factories = [];
 
     /**
-     * @param array<string,array> $configs
-     * @param string $defaultConfigName Configuration name that will be used for create fields by default.
+     * @param array<string,array> $configs Array of configurations with {@see FieldFactory::__construct()}
+     * arguments indexed by name. For example:
+     * ```php
+     * [
+     *     'default' => [
+     *         'containerClass' => 'formField',
+     *     ],
+     *     'bulma' => [
+     *         'containerClass' => 'field',
+     *         'inputClass' => 'input',
+     *         'invalidClass' => 'has-background-danger',
+     *         'validClass' => 'has-background-success',
+     *         'template' => "{label}<div class=\"control\">\n{input}</div>\n{hint}\n{error}",
+     *         'labelClass' => 'label',
+     *         'errorClass' => 'has-text-danger is-italic',
+     *         'hintClass' => 'help',
+     *     ],
+     *     'bootstrap5' => [
+     *         'containerClass' => 'mb-3',
+     *         'invalidClass' => 'is-invalid',
+     *         'errorClass' => 'text-danger fst-italic',
+     *         'hintClass' => 'form-text',
+     *         'inputClass' => 'form-control',
+     *         'labelClass' => 'form-label',
+     *         'validClass' => 'is-valid',
+     *     ],
+     * ]
+     * ```
+     *
+     * @param string $defaultConfigName Configuration name that will be used for create fields by default. If value is
+     * not "default", then `$configs` must contain configuration with this name.
      */
     public static function initialize(array $configs = [], string $defaultConfigName = 'default'): void
     {
