@@ -54,10 +54,10 @@ final class FormErrors implements FormErrorsInterface
         return $this->renderErrorSummary([$this->getFirstErrors()]);
     }
 
-    public function getFirstError(string $attribute): string
+    public function getFirstError(string $attribute): ?string
     {
         if (empty($this->attributesErrors[$attribute])) {
-            return '';
+            return null;
         }
 
         return reset($this->attributesErrors[$attribute]);
