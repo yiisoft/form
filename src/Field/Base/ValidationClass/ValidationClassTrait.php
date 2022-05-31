@@ -44,7 +44,9 @@ trait ValidationClassTrait
             return;
         }
 
-        $hasErrors = $formModel->getFormErrors()->hasErrors($attributeName);
+        $hasErrors = $formModel
+            ->getFormErrors()
+            ->hasErrors($attributeName);
 
         if ($hasErrors && $this->invalidClass !== null) {
             Html::addCssClass($attributes, $this->invalidClass);

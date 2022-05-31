@@ -20,7 +20,9 @@ final class HtmlFormErrors
      */
     public static function getAllErrors(FormModelInterface $formModel): array
     {
-        return $formModel->getFormErrors()->getAllErrors();
+        return $formModel
+            ->getFormErrors()
+            ->getAllErrors();
     }
 
     /**
@@ -31,7 +33,9 @@ final class HtmlFormErrors
      */
     public static function getErrors(FormModelInterface $formModel, string $attribute): array
     {
-        return $formModel->getFormErrors()->getErrors($attribute);
+        return $formModel
+            ->getFormErrors()
+            ->getErrors($attribute);
     }
 
     /**
@@ -43,7 +47,9 @@ final class HtmlFormErrors
      */
     public static function getErrorSummaryFirstErrors(FormModelInterface $formModel): array
     {
-        return $formModel->getFormErrors()->getErrorSummaryFirstErrors();
+        return $formModel
+            ->getFormErrors()
+            ->getErrorSummaryFirstErrors();
     }
 
     /**
@@ -56,7 +62,9 @@ final class HtmlFormErrors
      */
     public static function getErrorSummary(FormModelInterface $formModel, array $onlyAttributes = []): array
     {
-        return $formModel->getFormErrors()->getErrorSummary($onlyAttributes);
+        return $formModel
+            ->getFormErrors()
+            ->getErrorSummary($onlyAttributes);
     }
 
     /**
@@ -69,7 +77,9 @@ final class HtmlFormErrors
      */
     public static function getFirstError(FormModelInterface $formModel, string $attribute): ?string
     {
-        return $formModel->getFormErrors()->getFirstError(HtmlForm::getAttributeName($formModel, $attribute));
+        return $formModel
+            ->getFormErrors()
+            ->getFirstError(HtmlForm::getAttributeName($formModel, $attribute));
     }
 
     /**
@@ -82,7 +92,9 @@ final class HtmlFormErrors
      */
     public static function getFirstErrors(FormModelInterface $formModel): array
     {
-        return $formModel->getFormErrors()->getFirstErrors();
+        return $formModel
+            ->getFormErrors()
+            ->getFirstErrors();
     }
 
     /**
@@ -95,6 +107,8 @@ final class HtmlFormErrors
      */
     public static function hasErrors(FormModelInterface $formModel, ?string $attribute = null): bool
     {
-        return $formModel->getFormErrors()->hasErrors($attribute);
+        return $formModel
+            ->getFormErrors()
+            ->hasErrors($attribute);
     }
 }
