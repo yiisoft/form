@@ -37,7 +37,9 @@ final class ButtonFieldTest extends TestCase
     {
         $result = StubButtonField::widget()
             ->button(
-                ButtonTag::tag()->content('Start')->class('primary')
+                ButtonTag::tag()
+                    ->content('Start')
+                    ->class('primary')
             )
             ->render();
 

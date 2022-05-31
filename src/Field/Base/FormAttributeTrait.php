@@ -57,7 +57,9 @@ trait FormAttributeTrait
 
     final protected function getFormAttributePlaceholder(): ?string
     {
-        $placeholder = $this->getFormModel()->getAttributePlaceholder($this->getFormAttributeName());
+        $placeholder = $this
+            ->getFormModel()
+            ->getAttributePlaceholder($this->getFormAttributeName());
         return $placeholder === '' ? null : $placeholder;
     }
 
@@ -68,6 +70,9 @@ trait FormAttributeTrait
 
     final protected function getFirstError(): ?string
     {
-        return $this->getFormModel()->getFormErrors()->getFirstError($this->getFormAttributeName());
+        return $this
+            ->getFormModel()
+            ->getFormErrors()
+            ->getFirstError($this->getFormAttributeName());
     }
 }

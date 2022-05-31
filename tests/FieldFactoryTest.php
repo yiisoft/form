@@ -244,7 +244,9 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->text(TextForm::validated(), $attribute)->render();
+        $result = $field
+            ->text(TextForm::validated(), $attribute)
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -297,7 +299,9 @@ final class FieldFactoryTest extends TestCase
 
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->errorSummary(ErrorSummaryForm::validated())->render();
+        $result = $field
+            ->errorSummary(ErrorSummaryForm::validated())
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -324,7 +328,9 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->fieldset()->render();
+        $result = $field
+            ->fieldset()
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -402,7 +408,9 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->label(new TextForm(), 'job')->render();
+        $result = $field
+            ->label(new TextForm(), 'job')
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -448,7 +456,9 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->hint(new TextForm(), 'name')->render();
+        $result = $field
+            ->hint(new TextForm(), 'name')
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -494,7 +504,9 @@ final class FieldFactoryTest extends TestCase
     {
         $field = $this->createFieldFactory($factoryParameters);
 
-        $result = $field->error(TextForm::validated(), 'name')->render();
+        $result = $field
+            ->error(TextForm::validated(), 'name')
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -503,7 +515,9 @@ final class FieldFactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Input widget must be instance of "Yiisoft\Form\Field\Base\InputField".');
-        $this->createFieldFactory()->input(ErrorSummary::class, new ErrorSummaryForm(), 'name');
+        $this
+            ->createFieldFactory()
+            ->input(ErrorSummary::class, new ErrorSummaryForm(), 'name');
     }
 
     private function createFieldFactory(array $parameters = []): FieldFactory
