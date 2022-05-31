@@ -232,14 +232,22 @@ final class ErrorSummary extends Widget
             throw new InvalidArgumentException('Tag name cannot be empty.');
         }
 
-        $content .=  P::tag()->attributes($this->headerAttributes)->content($this->header)->render() . PHP_EOL;
+        $content .=  P::tag()
+                ->attributes($this->headerAttributes)
+                ->content($this->header)
+                ->render() . PHP_EOL;
 
         /** @var array<string, string> */
         $lines = $this->collectErrors();
-        $content .= Ul::tag()->strings($lines)->render();
+        $content .= Ul::tag()
+            ->strings($lines)
+            ->render();
 
         if ($this->footer !== '') {
-            $content .= PHP_EOL . P::tag()->attributes($this->footerAttributes)->content($this->footer)->render();
+            $content .= PHP_EOL . P::tag()
+                    ->attributes($this->footerAttributes)
+                    ->content($this->footer)
+                    ->render();
         }
 
         return $lines !== []

@@ -32,7 +32,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->date(new TypeForm(), 'toDate')->render(),
+            Field::widget()
+                ->autofocus()
+                ->date(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -49,7 +52,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->disabled()->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->disabled()
+                ->render(),
         );
     }
 
@@ -66,7 +72,9 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new ValidatorForm(), 'required')->render(),
+            Field::widget()
+                ->date(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -83,7 +91,9 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate', ['max()' => ['1996-12-19']])->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate', ['max()' => ['1996-12-19']])
+                ->render(),
         );
     }
 
@@ -100,7 +110,9 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate', ['min()' => ['1996-12-19']])->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate', ['min()' => ['1996-12-19']])
+                ->render(),
         );
     }
 
@@ -117,7 +129,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->name('name-test')->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -134,7 +149,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->readonly()->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -151,7 +169,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->required()->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->required()
+                ->render(),
         );
     }
 
@@ -168,7 +189,9 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -185,7 +208,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->tabindex(1)->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -203,7 +229,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->value('2021-09-18')->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->value('2021-09-18')
+                ->render(),
         );
 
         // Value `null`.
@@ -215,7 +244,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->value(null)->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -226,7 +258,9 @@ final class FieldDateTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Date widget requires a string or null value.');
-        Field::widget()->date(new TypeForm(), 'array')->render();
+        Field::widget()
+            ->date(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -246,7 +280,9 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date($formModel, 'toDate')->render(),
+            Field::widget()
+                ->date($formModel, 'toDate')
+                ->render(),
         );
 
         // Value `null`.
@@ -259,7 +295,9 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date($formModel, 'toDate')->render(),
+            Field::widget()
+                ->date($formModel, 'toDate')
+                ->render(),
         );
     }
 
@@ -276,7 +314,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->id(null)->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -293,7 +334,10 @@ final class FieldDateTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->date(new TypeForm(), 'toDate')->name(null)->render(),
+            Field::widget()
+                ->date(new TypeForm(), 'toDate')
+                ->name(null)
+                ->render(),
         );
     }
 }

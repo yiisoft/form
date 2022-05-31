@@ -29,7 +29,9 @@ use function is_array;
  * // button group with an item as a string
  * echo ButtonGroup::widget()
  *     ->buttons([
- *         SubmitButton::widget()->content('A')->render(),
+ *         SubmitButton::widget()
+ *             ->content('A')
+ *             ->render(),
  *         ['label' => 'B'],
  *     ]);
  * ```
@@ -170,7 +172,10 @@ final class ButtonGroup extends ButtonAttributes
         }
 
         return $this->container ?
-            $div->content(PHP_EOL . $this->renderButtons() . PHP_EOL)->encode(false)->render() : $this->renderButtons();
+            $div
+                ->content(PHP_EOL . $this->renderButtons() . PHP_EOL)
+                ->encode(false)
+                ->render() : $this->renderButtons();
     }
 
     /**
@@ -208,7 +213,11 @@ final class ButtonGroup extends ButtonAttributes
                     continue;
                 }
 
-                $htmlButtons[] = Input::tag()->attributes($attributes)->value($label)->type($type)->render();
+                $htmlButtons[] = Input::tag()
+                    ->attributes($attributes)
+                    ->value($label)
+                    ->type($type)
+                    ->render();
             } else {
                 $htmlButtons[] = $button;
             }

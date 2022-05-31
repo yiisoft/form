@@ -62,10 +62,20 @@ $citiesGroups = [
 ];
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Select::widget()->for($data, 'cityOfBirth')->groups($groups)->items($citiesGroups)->prompt($prompt) ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
+    <?= Select::widget()
+        ->for($data, 'cityOfBirth')
+        ->groups($groups)
+        ->items($citiesGroups)
+        ->prompt($prompt) ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 

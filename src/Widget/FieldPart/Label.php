@@ -121,7 +121,11 @@ final class Label extends Widget
         }
 
         return $label !== null ?
-            LabelTag::tag()->attributes($attributes)->content($label)->encode($this->encode)->render()
+            LabelTag::tag()
+                ->attributes($attributes)
+                ->content($label)
+                ->encode($this->encode)
+                ->render()
             : '';
     }
 

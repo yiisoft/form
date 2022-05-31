@@ -32,7 +32,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->autofocus()
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -49,7 +52,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->disabled()->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->disabled()
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -63,7 +69,9 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new ValidatorForm(), 'regex')->render(),
+            Field::widget()
+                ->password(new ValidatorForm(), 'regex')
+                ->render(),
         );
     }
 
@@ -75,7 +83,9 @@ final class FieldPasswordTest extends TestCase
         <input type="password" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password(new ValidatorForm(), 'maxlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->password(new ValidatorForm(), 'maxlength')
+            ->render());
     }
 
     public function testGetValidatorAttributeMinLength(): void
@@ -86,7 +96,9 @@ final class FieldPasswordTest extends TestCase
         <input type="password" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password(new ValidatorForm(), 'minlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->password(new ValidatorForm(), 'minlength')
+            ->render());
     }
 
     public function testGetValidatorAttributeRequired(): void
@@ -97,7 +109,9 @@ final class FieldPasswordTest extends TestCase
         <input type="password" id="validatorform-required" name="ValidatorForm[required]" required>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password(new ValidatorForm(), 'required')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->password(new ValidatorForm(), 'required')
+            ->render());
     }
 
     /**
@@ -113,7 +127,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id('id-test')->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->id('id-test')
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -130,7 +147,9 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string', ['maxlength()' => [16]])->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string', ['maxlength()' => [16]])
+                ->render(),
         );
     }
 
@@ -147,7 +166,9 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string', ['minlength()' => [8]])->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string', ['minlength()' => [8]])
+                ->render(),
         );
     }
 
@@ -164,7 +185,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name('name-test')->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->name('name-test')
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -203,7 +227,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string')->placeHolder('PlaceHolder Text')->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string')
+                ->placeHolder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -220,7 +247,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->readonly()->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->readonly()
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -237,7 +267,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string')->required()->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string')
+                ->required()
+                ->render(),
         );
     }
 
@@ -254,7 +287,9 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -271,7 +306,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string')->tabIndex(1)->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string')
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -289,7 +327,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string')->value('1234??')->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string')
+                ->value('1234??')
+                ->render(),
         );
 
         // Value `null`.
@@ -301,7 +342,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->password(new TypeForm(), 'string')->value(null)->render(),
+            Field::widget()
+                ->password(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -312,7 +356,9 @@ final class FieldPasswordTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Password widget must be a string or null value.');
-        Field::widget()->password(new TypeForm(), 'array')->render();
+        Field::widget()
+            ->password(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -330,7 +376,9 @@ final class FieldPasswordTest extends TestCase
         <input type="password" id="typeform-string" name="TypeForm[string]" value="1234??">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->password($formModel, 'string')
+            ->render());
 
         // Value `null`.
         $formModel->setAttribute('string', null);
@@ -340,7 +388,9 @@ final class FieldPasswordTest extends TestCase
         <input type="password" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->password($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->password($formModel, 'string')
+            ->render());
     }
 
     /**
@@ -356,7 +406,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id(null)->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->id(null)
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -373,7 +426,10 @@ final class FieldPasswordTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name(null)->password(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->name(null)
+                ->password(new TypeForm(), 'string')
+                ->render(),
         );
     }
 }

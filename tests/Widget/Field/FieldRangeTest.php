@@ -36,7 +36,10 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->range(new TypeForm(), 'int')->render(),
+            Field::widget()
+                ->autofocus()
+                ->range(new TypeForm(), 'int')
+                ->render(),
         );
     }
 
@@ -56,7 +59,10 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->disabled()->range(new TypeForm(), 'int')->render(),
+            Field::widget()
+                ->disabled()
+                ->range(new TypeForm(), 'int')
+                ->render(),
         );
     }
 
@@ -74,7 +80,9 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="ValidatorForm[number]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new ValidatorForm(), 'number')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new ValidatorForm(), 'number')
+            ->render());
     }
 
     /**
@@ -93,7 +101,9 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->range(new ValidatorForm(), 'numberRequired')->render(),
+            Field::widget()
+                ->range(new ValidatorForm(), 'numberRequired')
+                ->render(),
         );
     }
 
@@ -113,7 +123,10 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id('id-test')->range(new TypeForm(), 'int')->render(),
+            Field::widget()
+                ->id('id-test')
+                ->range(new TypeForm(), 'int')
+                ->render(),
         );
     }
 
@@ -133,7 +146,9 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->range(new TypeForm(), 'int', ['max()' => [8]])->render(),
+            Field::widget()
+                ->range(new TypeForm(), 'int', ['max()' => [8]])
+                ->render(),
         );
     }
 
@@ -153,7 +168,9 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->range(new TypeForm(), 'int', ['min()' => [4]])->render(),
+            Field::widget()
+                ->range(new TypeForm(), 'int', ['min()' => [4]])
+                ->render(),
         );
     }
 
@@ -173,7 +190,10 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name('name-test')->range(new TypeForm(), 'int')->render(),
+            Field::widget()
+                ->name('name-test')
+                ->range(new TypeForm(), 'int')
+                ->render(),
         );
     }
 
@@ -215,7 +235,9 @@ final class FieldRangeTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->range(new TypeForm(), 'int', ['outputTag()' => ['p']])->render(),
+            Field::widget()
+                ->range(new TypeForm(), 'int', ['outputTag()' => ['p']])
+                ->render(),
         );
     }
 
@@ -226,7 +248,9 @@ final class FieldRangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The output tag name it cannot be empty value.');
-        Field::widget()->range(new TypeForm(), 'int', ['outputTag()' => ['']])->render();
+        Field::widget()
+            ->range(new TypeForm(), 'int', ['outputTag()' => ['']])
+            ->render();
     }
 
     /**
@@ -243,7 +267,10 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new TypeForm(), 'int')->required()->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new TypeForm(), 'int')
+            ->required()
+            ->render());
     }
 
     /**
@@ -260,7 +287,9 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new TypeForm(), 'int')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new TypeForm(), 'int')
+            ->render());
     }
 
     /**
@@ -277,7 +306,10 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new TypeForm(), 'int')->tabindex(1)->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new TypeForm(), 'int')
+            ->tabindex(1)
+            ->render());
     }
 
     /**
@@ -295,7 +327,10 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">1</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new TypeForm(), 'int')->value(1)->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new TypeForm(), 'int')
+            ->value(1)
+            ->render());
 
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
 
@@ -307,7 +342,10 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[string]">1</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new TypeForm(), 'string')->value('1')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new TypeForm(), 'string')
+            ->value('1')
+            ->render());
 
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
 
@@ -319,7 +357,10 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range(new TypeForm(), 'int')->value(null)->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range(new TypeForm(), 'int')
+            ->value(null)
+            ->render());
     }
 
     /**
@@ -329,7 +370,9 @@ final class FieldRangeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range widget must be a numeric or null value.');
-        Field::widget()->range(new TypeForm(), 'array')->render();
+        Field::widget()
+            ->range(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -350,7 +393,9 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">1</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range($formModel, 'int')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range($formModel, 'int')
+            ->render());
 
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
 
@@ -363,7 +408,9 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[string]">1</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range($formModel, 'string')
+            ->render());
 
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
 
@@ -376,7 +423,9 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->range($formModel, 'int')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->range($formModel, 'int')
+            ->render());
     }
 
     /**
@@ -393,7 +442,10 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1" for="TypeForm[int]">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->id(null)->range(new TypeForm(), 'int')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->id(null)
+            ->range(new TypeForm(), 'int')
+            ->render());
     }
 
     /**
@@ -410,6 +462,9 @@ final class FieldRangeTest extends TestCase
         <output id="i1" name="i1">0</output>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->name(null)->range(new TypeForm(), 'int')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->name(null)
+            ->range(new TypeForm(), 'int')
+            ->render());
     }
 }

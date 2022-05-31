@@ -66,7 +66,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->autofocus()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -88,7 +91,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->disabled()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->disabled()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -110,7 +116,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new ValidatorForm(), 'required', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select(new ValidatorForm(), 'required', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -202,7 +210,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id('id-test')->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->id('id-test')
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -253,7 +264,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name('name-test')->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->name('name-test')
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -282,7 +296,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->encode(true)->select(new TypeForm(), 'int', ['optionsData()' => [$cities]])->render(),
+            Field::widget()
+                ->encode(true)
+                ->select(new TypeForm(), 'int', ['optionsData()' => [$cities]])
+                ->render(),
         );
     }
 
@@ -336,7 +353,9 @@ final class FieldSelectTest extends TestCase
                     'int',
                     [
                         'items()' => [$this->cities],
-                        'promptTag()' => [Option::tag()->content('Select City Birth')->value(0)],
+                        'promptTag()' => [Option::tag()
+                            ->content('Select City Birth')
+                            ->value(0)],
                     ],
                 )
                 ->render(),
@@ -361,7 +380,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->required()->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->required()
+                ->render(),
         );
     }
 
@@ -383,7 +405,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -430,7 +454,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->tabindex(1)->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -482,7 +509,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->value(1)->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->value(1)
+                ->render(),
         );
 
         // Value int `2`.
@@ -499,7 +529,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->value(2)->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->value(2)
+                ->render(),
         );
 
         // Value iterable `[2, 3]`.
@@ -516,7 +549,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'array', ['items()' => [$this->cities]])->value([2, 3])->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'array', ['items()' => [$this->cities]])
+                ->value([2, 3])
+                ->render(),
         );
 
         // Value string `1`.
@@ -533,7 +569,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'string', ['items()' => [$this->cities]])->value('1')->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'string', ['items()' => [$this->cities]])
+                ->value('1')
+                ->render(),
         );
 
         // Value string `2`.
@@ -550,7 +589,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'string', ['items()' => [$this->cities]])->value('2')->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'string', ['items()' => [$this->cities]])
+                ->value('2')
+                ->render(),
         );
 
         // Value `null`.
@@ -567,7 +609,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->value(null)->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -583,7 +628,9 @@ final class FieldSelectTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select widget value can not be an object.');
-        Field::widget()->select($formModel, 'object')->render();
+        Field::widget()
+            ->select($formModel, 'object')
+            ->render();
     }
 
     /**
@@ -608,7 +655,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select($formModel, 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select($formModel, 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
 
         // Value int `2`.
@@ -626,7 +675,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select($formModel, 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select($formModel, 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
 
         // Value iterable `[2, 3]`.
@@ -644,7 +695,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select($formModel, 'array', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select($formModel, 'array', ['items()' => [$this->cities]])
+                ->render(),
         );
 
         // Value string `1`.
@@ -662,7 +715,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select($formModel, 'string', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select($formModel, 'string', ['items()' => [$this->cities]])
+                ->render(),
         );
 
         // Value string '2'.
@@ -680,7 +735,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select($formModel, 'string', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select($formModel, 'string', ['items()' => [$this->cities]])
+                ->render(),
         );
 
         // Value `null`.
@@ -698,7 +755,9 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select($formModel, 'int', ['items()' => [$this->cities]])->render(),
+            Field::widget()
+                ->select($formModel, 'int', ['items()' => [$this->cities]])
+                ->render(),
         );
     }
 
@@ -720,7 +779,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->id(null)->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -742,7 +804,10 @@ final class FieldSelectTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->select(new TypeForm(), 'int', ['items()' => [$this->cities]])->name(null)->render(),
+            Field::widget()
+                ->select(new TypeForm(), 'int', ['items()' => [$this->cities]])
+                ->name(null)
+                ->render(),
         );
     }
 }

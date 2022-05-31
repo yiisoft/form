@@ -142,7 +142,9 @@ final class ButtonDefaultValueTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="submit" id="w1-submit" name="w1-submit">',
-            Field::widget(['container()' => [false]])->submitButton()->render(),
+            Field::widget(['container()' => [false]])
+                ->submitButton()
+                ->render(),
         );
     }
 

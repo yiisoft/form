@@ -25,7 +25,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" accept="image/*">',
-            File::widget()->for(new TypeForm(), 'array')->accept('image/*')->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->accept('image/*')
+                ->render(),
         );
     }
 
@@ -36,7 +39,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" autofocus>',
-            File::widget()->for(new TypeForm(), 'array')->autofocus()->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->autofocus()
+                ->render(),
         );
     }
 
@@ -47,7 +53,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" disabled>',
-            File::widget()->for(new TypeForm(), 'array')->disabled()->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->disabled()
+                ->render(),
         );
     }
 
@@ -58,7 +67,9 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="validatorform-required" name="ValidatorForm[required][]" required>',
-            File::widget()->for(new ValidatorForm(), 'required')->render(),
+            File::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -85,7 +96,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="id-test" name="TypeForm[array][]">',
-            File::widget()->for(new TypeForm(), 'array')->id('id-test')->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -108,7 +122,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" multiple>',
-            File::widget()->for(new TypeForm(), 'array')->multiple()->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->multiple()
+                ->render(),
         );
     }
 
@@ -119,7 +136,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="name-test[]">',
-            File::widget()->for(new TypeForm(), 'array')->name('name-test')->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -130,7 +150,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" required>',
-            File::widget()->for(new TypeForm(), 'array')->required()->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->required()
+                ->render(),
         );
     }
 
@@ -141,7 +164,9 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]">',
-            File::widget()->for(new TypeForm(), 'array')->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->render(),
         );
     }
 
@@ -152,7 +177,10 @@ final class FileTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="file" id="typeform-array" name="TypeForm[array][]" tabindex="1">',
-            File::widget()->for(new TypeForm(), 'array')->tabIndex(1)->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -164,13 +192,19 @@ final class FileTest extends TestCase
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[array]" value="0"><input type="file" id="typeform-array" name="TypeForm[array][]">
         HTML;
-        $html = File::widget()->for(new TypeForm(), 'array')->uncheckValue('0')->render();
+        $html = File::widget()
+            ->for(new TypeForm(), 'array')
+            ->uncheckValue('0')
+            ->render();
         $this->assertSame($expected, $html);
 
         $expected = <<<'HTML'
         <input type="hidden" name="TypeForm[array]" value="1"><input type="file" id="typeform-array" name="TypeForm[array][]">
         HTML;
-        $html = File::widget()->for(new TypeForm(), 'array')->uncheckValue(true)->render();
+        $html = File::widget()
+            ->for(new TypeForm(), 'array')
+            ->uncheckValue(true)
+            ->render();
         $this->assertSame($expected, $html);
     }
 
@@ -181,7 +215,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" name="TypeForm[array][]">',
-            File::widget()->for(new TypeForm(), 'array')->id(null)->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -192,7 +229,10 @@ final class FileTest extends TestCase
     {
         $this->assertSame(
             '<input type="file" id="typeform-array" name="TypeForm[array][]">',
-            File::widget()->for(new TypeForm(), 'array')->name(null)->render(),
+            File::widget()
+                ->for(new TypeForm(), 'array')
+                ->name(null)
+                ->render(),
         );
     }
 }

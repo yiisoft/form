@@ -108,6 +108,10 @@ final class Email extends InputAttributes implements HasLengthInterface, RegexIn
             throw new InvalidArgumentException('Email widget must be a string or null value.');
         }
 
-        return Input::tag()->type('email')->attributes($attributes)->value($value === '' ? null : $value)->render();
+        return Input::tag()
+            ->type('email')
+            ->attributes($attributes)
+            ->value($value === '' ? null : $value)
+            ->render();
     }
 }

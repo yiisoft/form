@@ -287,7 +287,11 @@ final class ButtonGroupTest extends TestCase
         $this->assertEqualsWithoutLE(
             $expected,
             ButtonGroup::widget()
-                ->buttons([Button::tag()->type('submit')->content('Send'), Button::tag()->type('reset')->content('Reset')])
+                ->buttons([Button::tag()
+                    ->type('submit')
+                    ->content('Send'), Button::tag()
+                    ->type('reset')
+                    ->content('Reset')])
                 ->render(),
         );
     }

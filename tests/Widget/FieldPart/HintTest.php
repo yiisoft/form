@@ -42,7 +42,9 @@ final class HintTest extends TestCase
     {
         $this->expectException(AttributeNotSetException::class);
         $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
-        Hint::widget()->for(new TypeWithHintForm(), '')->render();
+        Hint::widget()
+            ->for(new TypeWithHintForm(), '')
+            ->render();
     }
 
     /**
@@ -62,7 +64,10 @@ final class HintTest extends TestCase
     {
         $this->assertSame(
             '<div>Write your text.</div>',
-            Hint::widget()->for(new TypeWithHintForm(), 'login')->hint('Write your text.')->render(),
+            Hint::widget()
+                ->for(new TypeWithHintForm(), 'login')
+                ->hint('Write your text.')
+                ->render(),
         );
     }
 
@@ -102,7 +107,9 @@ final class HintTest extends TestCase
     {
         $this->assertSame(
             '<div>Please enter your login.</div>',
-            Hint::widget()->for(new TypeWithHintForm(), 'login')->render(),
+            Hint::widget()
+                ->for(new TypeWithHintForm(), 'login')
+                ->render(),
         );
     }
 
@@ -113,7 +120,10 @@ final class HintTest extends TestCase
     {
         $this->assertSame(
             '<span>Please enter your login.</span>',
-            Hint::widget()->for(new TypeWithHintForm(), 'login')->tag('span')->render(),
+            Hint::widget()
+                ->for(new TypeWithHintForm(), 'login')
+                ->tag('span')
+                ->render(),
         );
     }
 
@@ -124,6 +134,9 @@ final class HintTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
-        Hint::widget()->for(new TypeWithHintForm(), 'login')->tag('')->render();
+        Hint::widget()
+            ->for(new TypeWithHintForm(), 'login')
+            ->tag('')
+            ->render();
     }
 }

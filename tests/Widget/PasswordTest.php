@@ -26,7 +26,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" autofocus>',
-            Password::widget()->autofocus()->for(new TypeForm(), 'string')->render(),
+            Password::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="password" id="typeform-string" name="TypeForm[string]" disabled>',
-            Password::widget()->disabled()->for(new TypeForm(), 'string')->render(),
+            Password::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -48,7 +54,9 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
-            Password::widget()->for(new ValidatorForm(), 'regex')->render(),
+            Password::widget()
+                ->for(new ValidatorForm(), 'regex')
+                ->render(),
         );
     }
 
@@ -59,7 +67,9 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">',
-            Password::widget()->for(new ValidatorForm(), 'maxlength')->render(),
+            Password::widget()
+                ->for(new ValidatorForm(), 'maxlength')
+                ->render(),
         );
     }
 
@@ -70,7 +80,9 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">',
-            Password::widget()->for(new ValidatorForm(), 'minlength')->render(),
+            Password::widget()
+                ->for(new ValidatorForm(), 'minlength')
+                ->render(),
         );
     }
 
@@ -81,7 +93,9 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="validatorform-required" name="ValidatorForm[required]" required>',
-            Password::widget()->for(new ValidatorForm(), 'required')->render(),
+            Password::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -92,7 +106,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="id-test" name="TypeForm[string]">',
-            Password::widget()->for(new TypeForm(), 'string')->id('id-test')->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -117,7 +134,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" maxlength="16">',
-            Password::widget()->for(new TypeForm(), 'string')->maxlength(16)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->maxlength(16)
+                ->render(),
         );
     }
 
@@ -128,7 +148,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" minlength="8">',
-            Password::widget()->for(new TypeForm(), 'string')->minlength(8)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->minlength(8)
+                ->render(),
         );
     }
 
@@ -139,7 +162,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="name-test">',
-            Password::widget()->for(new TypeForm(), 'string')->name('name-test')->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -167,7 +193,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
-            Password::widget()->for(new TypeForm(), 'string')->placeholder('PlaceHolder Text')->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->placeholder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -178,7 +207,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" readonly>',
-            Password::widget()->for(new TypeForm(), 'string')->readonly()->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -189,7 +221,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" required>',
-            Password::widget()->for(new TypeForm(), 'string')->required()->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->required()
+                ->render(),
         );
     }
 
@@ -200,7 +235,9 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]">',
-            Password::widget()->for(new TypeForm(), 'string')->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -211,7 +248,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" size="3">',
-            Password::widget()->for(new TypeForm(), 'string')->size(3)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->size(3)
+                ->render(),
         );
     }
 
@@ -222,7 +262,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="password" id="typeform-string" name="TypeForm[string]" tabindex="1">',
-            Password::widget()->for(new TypeForm(), 'string')->tabIndex(1)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -234,13 +277,19 @@ final class PasswordTest extends TestCase
         // Value string `1234??`.
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" value="1234??">',
-            Password::widget()->for(new TypeForm(), 'string')->value('1234??')->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->value('1234??')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]">',
-            Password::widget()->for(new TypeForm(), 'string')->value(null)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -251,7 +300,9 @@ final class PasswordTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Password widget must be a string or null value.');
-        Password::widget()->for(new TypeForm(), 'array')->render();
+        Password::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -265,14 +316,18 @@ final class PasswordTest extends TestCase
         $formModel->setAttribute('string', '1234??');
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]" value="1234??">',
-            Password::widget()->for($formModel, 'string')->render(),
+            Password::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('string', null);
         $this->assertSame(
             '<input type="password" id="typeform-string" name="TypeForm[string]">',
-            Password::widget()->for($formModel, 'string')->render(),
+            Password::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
     }
 
@@ -283,7 +338,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" name="TypeForm[string]">',
-            Password::widget()->for(new TypeForm(), 'string')->id(null)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -294,7 +352,10 @@ final class PasswordTest extends TestCase
     {
         $this->assertSame(
             '<input type="password" id="typeform-string">',
-            Password::widget()->for(new TypeForm(), 'string')->name(null)->render(),
+            Password::widget()
+                ->for(new TypeForm(), 'string')
+                ->name(null)
+                ->render(),
         );
     }
 }

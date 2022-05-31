@@ -90,7 +90,10 @@ final class Image extends GlobalAttributes
     protected function run(): string
     {
         $attributes = $this->build($this->attributes);
-        return Input::tag()->type('image')->attributes($attributes)->render();
+        return Input::tag()
+            ->type('image')
+            ->attributes($attributes)
+            ->render();
     }
 
     /**

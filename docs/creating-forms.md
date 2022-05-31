@@ -131,8 +131,13 @@ $this->setTitle($title);
             ->id('form-auth-login')
             ->begin() ?>
 
-            <?= Field::widget()->autofocus()->text($formModel, 'login')->tabindex(1) ?>
-            <?= Field::widget()->password($formModel, 'password')->tabindex(2) ?>
+            <?= Field::widget()
+                ->autofocus()
+                ->text($formModel, 'login')
+                ->tabindex(1) ?>
+            <?= Field::widget()
+                ->password($formModel, 'password')
+                ->tabindex(2) ?>
             <?= Field::widget()
                 ->class('btn btn-primary btn-lg mt-3')
                 ->containerClass('d-grid gap-2 form-floating')

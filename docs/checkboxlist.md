@@ -40,10 +40,18 @@ use Yiisoft\Form\Widget\Label;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= CheckboxList::widget()->for($data, 'fruits')->items(['0' => 'Apple', '1' => 'Banana']) ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
+    <?= CheckboxList::widget()
+        ->for($data, 'fruits')
+        ->items(['0' => 'Apple', '1' => 'Banana']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -95,10 +103,18 @@ use Yiisoft\Form\Widget\Form;
 use Yiisoft\Form\Widget\Label;
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= CheckboxList::widget()->for($data, 'fruits')->itemsFromValues(['0' => 'Apple', '1' => 'Banana']) ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
+    <?= CheckboxList::widget()
+        ->for($data, 'fruits')
+        ->itemsFromValues(['0' => 'Apple', '1' => 'Banana']) ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 

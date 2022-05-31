@@ -113,6 +113,8 @@ abstract class WidgetAttributes extends GlobalAttributes
      */
     protected function isValidated(): bool
     {
-        return $this->getFormModel()->isValidated();
+        return $this
+            ->getFormModel()
+            ->isValidated();
     }
 }

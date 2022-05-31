@@ -26,7 +26,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" autofocus></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->autofocus()->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->autofocus()
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" cols="50"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->cols(50)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->cols(50)
+                ->render(),
         );
     }
 
@@ -48,7 +54,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" dirname="test.dir"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->dirname('test.dir')->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->dirname('test.dir')
+                ->render(),
         );
     }
 
@@ -59,7 +68,10 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
-        TextArea::widget()->for(new TypeForm(), 'string')->dirname('')->render();
+        TextArea::widget()
+            ->for(new TypeForm(), 'string')
+            ->dirname('')
+            ->render();
     }
 
     /**
@@ -69,7 +81,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" disabled></textarea>',
-            TextArea::widget()->disabled()->for(new TypeForm(), 'string')->render(),
+            TextArea::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -80,7 +95,9 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50"></textarea>',
-            TextArea::widget()->for(new ValidatorForm(), 'maxlength')->render(),
+            TextArea::widget()
+                ->for(new ValidatorForm(), 'maxlength')
+                ->render(),
         );
     }
 
@@ -91,7 +108,9 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15"></textarea>',
-            TextArea::widget()->for(new ValidatorForm(), 'minlength')->render(),
+            TextArea::widget()
+                ->for(new ValidatorForm(), 'minlength')
+                ->render(),
         );
     }
 
@@ -102,7 +121,9 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="validatorform-required" name="ValidatorForm[required]" required></textarea>',
-            TextArea::widget()->for(new ValidatorForm(), 'required')->render(),
+            TextArea::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -129,7 +150,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" maxlength="100"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->maxLength(100)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->maxLength(100)
+                ->render(),
         );
     }
 
@@ -140,7 +164,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" minlength="20"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->minLength(20)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->minLength(20)
+                ->render(),
         );
     }
 
@@ -151,7 +178,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="name-test"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->name('name-test')->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -162,7 +192,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->placeholder('PlaceHolder Text')->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->placeholder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -173,7 +206,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" readonly></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->readOnly()->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->readOnly()
+                ->render(),
         );
     }
 
@@ -184,7 +220,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" required></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->required()->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->required()
+                ->render(),
         );
     }
 
@@ -195,7 +234,9 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -206,7 +247,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" rows="4"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->rows(4)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->rows(4)
+                ->render(),
         );
     }
 
@@ -218,13 +262,19 @@ final class TextAreaTest extends TestCase
         // Value string `hello`.
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]">hello</textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->value('hello')->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->value('hello')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->value(null)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -235,7 +285,9 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('TextArea widget must be a string or null value.');
-        TextArea::widget()->for(new TypeForm(), 'array')->render();
+        TextArea::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -249,14 +301,18 @@ final class TextAreaTest extends TestCase
         $formModel->setAttribute('string', 'hello');
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]">hello</textarea>',
-            TextArea::widget()->for($formModel, 'string')->render(),
+            TextArea::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('string', null);
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]"></textarea>',
-            TextArea::widget()->for($formModel, 'string')->render(),
+            TextArea::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
     }
 
@@ -268,13 +324,19 @@ final class TextAreaTest extends TestCase
         /** hard value */
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" wrap="hard"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->wrap()->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->wrap()
+                ->render(),
         );
 
         /** soft value */
         $this->assertSame(
             '<textarea id="typeform-string" name="TypeForm[string]" wrap="soft"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->wrap('soft')->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->wrap('soft')
+                ->render(),
         );
     }
 
@@ -285,7 +347,9 @@ final class TextAreaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid wrap value. Valid values are: hard, soft.');
-        TextArea::widget()->for(new TypeForm(), 'string')->wrap('exception');
+        TextArea::widget()
+            ->for(new TypeForm(), 'string')
+            ->wrap('exception');
     }
 
     /**
@@ -295,7 +359,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea name="TypeForm[string]"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->id(null)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -306,7 +373,10 @@ final class TextAreaTest extends TestCase
     {
         $this->assertSame(
             '<textarea id="typeform-string"></textarea>',
-            TextArea::widget()->for(new TypeForm(), 'string')->name(null)->render(),
+            TextArea::widget()
+                ->for(new TypeForm(), 'string')
+                ->name(null)
+                ->render(),
         );
     }
 }

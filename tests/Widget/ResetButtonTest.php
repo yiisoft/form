@@ -25,7 +25,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset" name="w1-reset" autofocus>',
-            ResetButton::widget()->autofocus()->render(),
+            ResetButton::widget()
+                ->autofocus()
+                ->render(),
         );
     }
 
@@ -37,7 +39,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset" name="w1-reset" disabled>',
-            ResetButton::widget()->disabled()->render(),
+            ResetButton::widget()
+                ->disabled()
+                ->render(),
         );
     }
 
@@ -49,7 +53,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset" name="w1-reset" form="form-register">',
-            ResetButton::widget()->form('form-register')->render(),
+            ResetButton::widget()
+                ->form('form-register')
+                ->render(),
         );
     }
 
@@ -61,7 +67,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="test-id" name="w1-reset">',
-            ResetButton::widget()->id('test-id')->render(),
+            ResetButton::widget()
+                ->id('test-id')
+                ->render(),
         );
     }
 
@@ -73,7 +81,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset" name="test-name">',
-            ResetButton::widget()->name('test-name')->render(),
+            ResetButton::widget()
+                ->name('test-name')
+                ->render(),
         );
     }
 
@@ -94,7 +104,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset" name="w1-reset" tabindex="1">',
-            ResetButton::widget()->tabindex(1)->render(),
+            ResetButton::widget()
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -106,7 +118,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset" name="w1-reset" value="Save">',
-            ResetButton::widget()->value('Save')->render(),
+            ResetButton::widget()
+                ->value('Save')
+                ->render(),
         );
     }
 
@@ -118,7 +132,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" name="w1-reset">',
-            ResetButton::widget()->id(null)->render(),
+            ResetButton::widget()
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -130,7 +146,9 @@ final class ResetButtonTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="reset" id="w1-reset">',
-            ResetButton::widget()->name(null)->render(),
+            ResetButton::widget()
+                ->name(null)
+                ->render(),
         );
     }
 }

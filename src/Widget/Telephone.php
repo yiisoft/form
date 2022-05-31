@@ -90,6 +90,10 @@ final class Telephone extends InputAttributes implements HasLengthInterface, Reg
             throw new InvalidArgumentException('Telephone widget must be a string, numeric or null.');
         }
 
-        return Input::tag()->type('tel')->attributes($attributes)->value($value === '' ? null : $value)->render();
+        return Input::tag()
+            ->type('tel')
+            ->attributes($attributes)
+            ->value($value === '' ? null : $value)
+            ->render();
     }
 }

@@ -45,11 +45,17 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
     <?= Label::widget()->for($formModel, 'name') ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -88,11 +94,19 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Label::widget()->for($formModel, 'name')->label('Name:') ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
+    <?= Label::widget()
+        ->for($formModel, 'name')
+        ->label('Name:') ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 

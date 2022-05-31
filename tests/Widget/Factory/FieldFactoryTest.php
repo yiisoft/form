@@ -109,11 +109,16 @@ final class FieldFactoryTest extends TestCase
             // Set field attribute value.
             $formModel->setAttribute($type, $expected['value']);
             // Validate form.
-            $this->createValidatorMock()->validate($formModel);
+            $this
+                ->createValidatorMock()
+                ->validate($formModel);
             // Check test.
             $this->assertEqualsWithoutLE(
                 $expected['expected'],
-                Field::widget($definitions)->attributes($attributes)->$type($formModel, $type)->render(),
+                Field::widget($definitions)
+                    ->attributes($attributes)
+                    ->$type($formModel, $type)
+                    ->render(),
             );
         }
     }

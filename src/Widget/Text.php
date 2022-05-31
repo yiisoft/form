@@ -109,6 +109,10 @@ final class Text extends InputAttributes implements HasLengthInterface, RegexInt
             throw new InvalidArgumentException('Text widget must be a string or null value.');
         }
 
-        return Input::tag()->type('text')->attributes($attributes)->value($value === '' ? null : $value)->render();
+        return Input::tag()
+            ->type('text')
+            ->attributes($attributes)
+            ->value($value === '' ? null : $value)
+            ->render();
     }
 }

@@ -25,7 +25,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" alt="Submit">',
-            Image::widget()->alt('Submit')->render(),
+            Image::widget()
+                ->alt('Submit')
+                ->render(),
         );
     }
 
@@ -37,7 +39,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" autofocus>',
-            Image::widget()->autofocus()->render(),
+            Image::widget()
+                ->autofocus()
+                ->render(),
         );
     }
 
@@ -49,7 +53,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" disabled>',
-            Image::widget()->disabled()->render(),
+            Image::widget()
+                ->disabled()
+                ->render(),
         );
     }
 
@@ -61,7 +67,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="id-test" name="w1-image">',
-            Image::widget()->id('id-test')->render(),
+            Image::widget()
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -85,7 +93,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" height="20">',
-            Image::widget()->height('20')->render(),
+            Image::widget()
+                ->height('20')
+                ->render(),
         );
     }
 
@@ -97,7 +107,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="name-test">',
-            Image::widget()->name('name-test')->render(),
+            Image::widget()
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -118,7 +130,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" src="img_submit.gif">',
-            Image::widget()->src('img_submit.gif')->render(),
+            Image::widget()
+                ->src('img_submit.gif')
+                ->render(),
         );
     }
 
@@ -130,7 +144,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertEqualsWithoutLE(
             '<input type="image" id="w1-image" name="w1-image" tabindex="1">',
-            Image::widget()->tabIndex(1)->render(),
+            Image::widget()
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -142,7 +158,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image" name="w1-image" width="20%">',
-            Image::widget()->width('20%')->render(),
+            Image::widget()
+                ->width('20%')
+                ->render(),
         );
     }
 
@@ -154,7 +172,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" name="w1-image">',
-            Image::widget()->id(null)->render(),
+            Image::widget()
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -166,7 +186,9 @@ final class ImageTest extends TestCase
         $this->setInaccessibleProperty(new Html(), 'generateIdCounter', []);
         $this->assertSame(
             '<input type="image" id="w1-image">',
-            Image::widget()->name(null)->render(),
+            Image::widget()
+                ->name(null)
+                ->render(),
         );
     }
 }

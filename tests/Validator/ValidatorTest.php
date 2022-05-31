@@ -56,8 +56,12 @@ final class ValidatorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($config)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
-            Field::widget($config)->text($loginValidatorForm, 'password')->render()
+            Field::widget($config)
+                ->text($loginValidatorForm, 'login')
+                ->render() . PHP_EOL .
+            Field::widget($config)
+                ->text($loginValidatorForm, 'password')
+                ->render()
         );
     }
 
@@ -85,8 +89,12 @@ final class ValidatorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
-            Field::widget($this->fieldConfig)->text($loginValidatorForm, 'password')->render()
+            Field::widget($this->fieldConfig)
+                ->text($loginValidatorForm, 'login')
+                ->render() . PHP_EOL .
+            Field::widget($this->fieldConfig)
+                ->text($loginValidatorForm, 'password')
+                ->render()
         );
     }
 
@@ -128,7 +136,9 @@ final class ValidatorTest extends TestCase
                 ->error(null)
                 ->text($loginValidatorForm, 'password')
                 ->render() . PHP_EOL .
-            ErrorSummary::widget()->model($loginValidatorForm)->render(),
+            ErrorSummary::widget()
+                ->model($loginValidatorForm)
+                ->render(),
         );
     }
 
@@ -156,9 +166,15 @@ final class ValidatorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->text($loginValidatorForm, 'login')->render() . PHP_EOL .
-            Field::widget($this->fieldConfig)->text($loginValidatorForm, 'password')->render() .
-            ErrorSummary::widget()->model($loginValidatorForm)->render(),
+            Field::widget($this->fieldConfig)
+                ->text($loginValidatorForm, 'login')
+                ->render() . PHP_EOL .
+            Field::widget($this->fieldConfig)
+                ->text($loginValidatorForm, 'password')
+                ->render() .
+            ErrorSummary::widget()
+                ->model($loginValidatorForm)
+                ->render(),
         );
     }
 
@@ -178,7 +194,9 @@ final class ValidatorTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget($this->fieldConfig)->url($validatorForm, 'urlWithPattern')->render(),
+            Field::widget($this->fieldConfig)
+                ->url($validatorForm, 'urlWithPattern')
+                ->render(),
         );
     }
 }

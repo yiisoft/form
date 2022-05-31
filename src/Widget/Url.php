@@ -80,6 +80,10 @@ final class Url extends InputAttributes implements HasLengthInterface, RegexInte
             throw new InvalidArgumentException('Url widget must be a string or null value.');
         }
 
-        return Input::tag()->type('url')->attributes($attributes)->value($value === '' ? null : $value)->render();
+        return Input::tag()
+            ->type('url')
+            ->attributes($attributes)
+            ->value($value === '' ? null : $value)
+            ->render();
     }
 }

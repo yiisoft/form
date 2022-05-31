@@ -27,7 +27,9 @@ final class FieldsetTest extends TestCase
      */
     public function testAutofocus(): void
     {
-        $this->assertSame('<fieldset autofocus>', Fieldset::widget()->autofocus()->begin());
+        $this->assertSame('<fieldset autofocus>', Fieldset::widget()
+            ->autofocus()
+            ->begin());
     }
 
     /**
@@ -37,7 +39,9 @@ final class FieldsetTest extends TestCase
     {
         $this->assertSame(
             '<fieldset class="test-class">',
-            Fieldset::widget()->attributes(['class' => 'test-class'])->begin(),
+            Fieldset::widget()
+                ->attributes(['class' => 'test-class'])
+                ->begin(),
         );
     }
 
@@ -46,7 +50,9 @@ final class FieldsetTest extends TestCase
      */
     public function testClass(): void
     {
-        $this->assertSame('<fieldset class="test-class">', Fieldset::widget()->class('test-class')->begin());
+        $this->assertSame('<fieldset class="test-class">', Fieldset::widget()
+            ->class('test-class')
+            ->begin());
     }
 
     /**
@@ -54,7 +60,9 @@ final class FieldsetTest extends TestCase
      */
     public function testDisabled(): void
     {
-        $this->assertSame('<fieldset disabled>', Fieldset::widget()->disabled()->begin());
+        $this->assertSame('<fieldset disabled>', Fieldset::widget()
+            ->disabled()
+            ->begin());
     }
 
     /**
@@ -62,7 +70,9 @@ final class FieldsetTest extends TestCase
      */
     public function testId(): void
     {
-        $this->assertSame('<fieldset id="id-test">', Fieldset::widget()->id('id-test')->begin());
+        $this->assertSame('<fieldset id="id-test">', Fieldset::widget()
+            ->id('id-test')
+            ->begin());
     }
 
     /**
@@ -87,7 +97,9 @@ final class FieldsetTest extends TestCase
      */
     public function testName(): void
     {
-        $this->assertSame('<fieldset name="name-test">', Fieldset::widget()->name('name-test')->begin());
+        $this->assertSame('<fieldset name="name-test">', Fieldset::widget()
+            ->name('name-test')
+            ->begin());
     }
 
     /**
@@ -143,60 +155,76 @@ final class FieldsetTest extends TestCase
             '<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">' . PHP_EOL .
             '<div class="pure-g" style="position: absolute;top: 50%;left: 50%;transform:translate(-50%,-50%);">' . PHP_EOL .
             '<div class="pure-u-5-5">' . PHP_EOL .
-            Form::widget()->action('#')->class('pure-form')->method('get')->begin() . PHP_EOL .
-                Fieldset::widget()->legend('Create A Project')->name('field-set-main')->begin() . PHP_EOL .
-                    Field::widget()
-                        ->container(false)
-                        ->label(null)
-                        ->placeholder('name')
-                        ->text(new ExampleForm(), 'name')
-                        ->render() . PHP_EOL .
-                    '<div>' . PHP_EOL .
-                    Field::widget()
-                        ->container(false)
-                        ->dateTimeLocal(new ExampleForm(), 'start')
-                        ->label(null)
-                        ->render() . PHP_EOL .
-                    Field::widget()
-                        ->container(false)
-                        ->dateTimeLocal(new ExampleForm(), 'end')
-                        ->label(null)
-                        ->render() . PHP_EOL .
-                    '</div>' . PHP_EOL .
-                Fieldset::end() .
-                Fieldset::widget()->legend('State')->name('field-set-state')->begin() . PHP_EOL .
-                    Field::widget()
-                        ->label(null)
-                        ->radioList(new ExampleForm(), 'state', ['itemsFromValues()' => [$this->state]])
-                        ->render() . PHP_EOL .
-                Fieldset::end() .
-                Fieldset::widget()->legend('Description')->name('field-set-description')->begin() . PHP_EOL .
-                    Field::widget()
-                        ->attributes(['cols' => 50, 'rows' => 5, 'style' => 'width: 100%'])
-                        ->container(false)
-                        ->label(null)
-                        ->placeholder('Write Description here..')
-                        ->textArea(new ExampleForm(), 'description')
-                        ->render() . PHP_EOL .
-                Fieldset::end() .
-                Fieldset::widget()->legend('Action')->name('field-set-control')->begin() . PHP_EOL .
-                    Field::widget()
-                        ->container(false)
-                        ->buttonGroup(
+            Form::widget()
+                ->action('#')
+                ->class('pure-form')
+                ->method('get')
+                ->begin() . PHP_EOL .
+            Fieldset::widget()
+                ->legend('Create A Project')
+                ->name('field-set-main')
+                ->begin() . PHP_EOL .
+            Field::widget()
+                ->container(false)
+                ->label(null)
+                ->placeholder('name')
+                ->text(new ExampleForm(), 'name')
+                ->render() . PHP_EOL .
+            '<div>' . PHP_EOL .
+            Field::widget()
+                ->container(false)
+                ->dateTimeLocal(new ExampleForm(), 'start')
+                ->label(null)
+                ->render() . PHP_EOL .
+            Field::widget()
+                ->container(false)
+                ->dateTimeLocal(new ExampleForm(), 'end')
+                ->label(null)
+                ->render() . PHP_EOL .
+            '</div>' . PHP_EOL .
+            Fieldset::end() .
+            Fieldset::widget()
+                ->legend('State')
+                ->name('field-set-state')
+                ->begin() . PHP_EOL .
+            Field::widget()
+                ->label(null)
+                ->radioList(new ExampleForm(), 'state', ['itemsFromValues()' => [$this->state]])
+                ->render() . PHP_EOL .
+            Fieldset::end() .
+            Fieldset::widget()
+                ->legend('Description')
+                ->name('field-set-description')
+                ->begin() . PHP_EOL .
+            Field::widget()
+                ->attributes(['cols' => 50, 'rows' => 5, 'style' => 'width: 100%'])
+                ->container(false)
+                ->label(null)
+                ->placeholder('Write Description here..')
+                ->textArea(new ExampleForm(), 'description')
+                ->render() . PHP_EOL .
+            Fieldset::end() .
+            Fieldset::widget()
+                ->legend('Action')
+                ->name('field-set-control')
+                ->begin() . PHP_EOL .
+            Field::widget()
+                ->container(false)
+                ->buttonGroup(
+                    [
+                        ['label' => 'Submit', 'type' => 'submit'],
+                        ['label' => 'Cancel', 'type' => 'submit'],
+                    ],
+                    [
+                        'individualButtonAttributes()' => [
                             [
-                                ['label' => 'Submit', 'type' => 'submit'],
-                                ['label' => 'Cancel', 'type' => 'submit'],
+                                0 => ['class' => 'pure-button pure-button-primary'],
+                                1 => ['class' => 'pure-button pure-button-danger'],
                             ],
-                            [
-                                'individualButtonAttributes()' => [
-                                    [
-                                        0 => ['class' => 'pure-button pure-button-primary'],
-                                        1 => ['class' => 'pure-button pure-button-danger'],
-                                    ],
-                                ],
-                            ],
-                        ) . PHP_EOL .
-                Fieldset::end() .
+                        ],
+                    ],
+                ) . PHP_EOL .
+            Fieldset::end() .
             Form::end() . PHP_EOL .
             '</div>' . PHP_EOL .
             '</div>',
@@ -208,6 +236,8 @@ final class FieldsetTest extends TestCase
      */
     public function testTitle(): void
     {
-        $this->assertSame('<fieldset title="your title">', Fieldset::widget()->title('your title')->begin());
+        $this->assertSame('<fieldset title="your title">', Fieldset::widget()
+            ->title('your title')
+            ->begin());
     }
 }

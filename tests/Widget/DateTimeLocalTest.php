@@ -26,7 +26,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" autofocus>',
-            DateTimeLocal::widget()->autofocus()->for(new TypeForm(), 'toDate')->render(),
+            DateTimeLocal::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" disabled>',
-            DateTimeLocal::widget()->disabled()->for(new TypeForm(), 'toDate')->render(),
+            DateTimeLocal::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -48,7 +54,9 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="validatorform-required" name="ValidatorForm[required]" required>',
-            DateTimeLocal::widget()->for(new ValidatorForm(), 'required')->render(),
+            DateTimeLocal::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -59,7 +67,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="id-test" name="TypeForm[toDate]">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->id('id-test')->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -81,7 +92,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" max="1985-04-12T23:20:50.52">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->max('1985-04-12T23:20:50.52')->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->max('1985-04-12T23:20:50.52')
+                ->render(),
         );
     }
 
@@ -92,7 +106,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" min="1985-04-12T23:20:50.52">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->min('1985-04-12T23:20:50.52')->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->min('1985-04-12T23:20:50.52')
+                ->render(),
         );
     }
 
@@ -103,7 +120,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="name-test">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->name('name-test')->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -114,7 +134,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" readonly>',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->readonly()->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -125,7 +148,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" required>',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->required()->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->required()
+                ->render(),
         );
     }
 
@@ -136,7 +162,9 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -147,7 +175,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" tabindex="1">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->tabindex(1)->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -159,13 +190,19 @@ final class DateTimeLocalTest extends TestCase
         // Value string `2021-09-18`.
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18T23:59:00">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->value('2021-09-18T23:59:00')->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->value('2021-09-18T23:59:00')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->value(null)->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -176,7 +213,9 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('DateTimeLocal widget requires a string or null value.');
-        DateTimeLocal::widget()->for(new TypeForm(), 'array')->render();
+        DateTimeLocal::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -190,14 +229,18 @@ final class DateTimeLocalTest extends TestCase
         $formModel->setAttribute('toDate', '2021-09-18T23:59:00');
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18T23:59:00">',
-            DateTimeLocal::widget()->for($formModel, 'toDate')->render(),
+            DateTimeLocal::widget()
+                ->for($formModel, 'toDate')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('toDate', null);
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate" name="TypeForm[toDate]">',
-            DateTimeLocal::widget()->for($formModel, 'toDate')->render(),
+            DateTimeLocal::widget()
+                ->for($formModel, 'toDate')
+                ->render(),
         );
     }
 
@@ -208,7 +251,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" name="TypeForm[toDate]">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->id(null)->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -219,7 +265,10 @@ final class DateTimeLocalTest extends TestCase
     {
         $this->assertSame(
             '<input type="datetime-local" id="typeform-todate">',
-            DateTimeLocal::widget()->for(new TypeForm(), 'toDate')->name(null)->render(),
+            DateTimeLocal::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->name(null)
+                ->render(),
         );
     }
 }

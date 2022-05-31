@@ -25,7 +25,9 @@ final class HiddenTest extends TestCase
     {
         $this->assertSame(
             '<input type="hidden" name="TypeForm[string]">',
-            Hidden::widget()->for(new TypeForm(), 'string')->render(),
+            Hidden::widget()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -37,19 +39,28 @@ final class HiddenTest extends TestCase
         // Value string `1`.
         $this->assertSame(
             '<input type="hidden" name="TypeForm[string]" value="1">',
-            Hidden::widget()->for(new TypeForm(), 'string')->value('1')->render(),
+            Hidden::widget()
+                ->for(new TypeForm(), 'string')
+                ->value('1')
+                ->render(),
         );
 
         // Value integer 1.
         $this->assertSame(
             '<input type="hidden" name="TypeForm[int]" value="1">',
-            Hidden::widget()->for(new TypeForm(), 'int')->value(1)->render(),
+            Hidden::widget()
+                ->for(new TypeForm(), 'int')
+                ->value(1)
+                ->render(),
         );
 
         // Value null.
         $this->assertSame(
             '<input type="hidden" name="TypeForm[string]">',
-            Hidden::widget()->for(new TypeForm(), 'string')->value(null)->render(),
+            Hidden::widget()
+                ->for(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -60,7 +71,9 @@ final class HiddenTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hidden widget requires a string, numeric or null value.');
-        Hidden::widget()->for(new TypeForm(), 'array')->render();
+        Hidden::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -74,21 +87,27 @@ final class HiddenTest extends TestCase
         $formModel->setAttribute('string', '1');
         $this->assertSame(
             '<input type="hidden" name="TypeForm[string]" value="1">',
-            Hidden::widget()->for($formModel, 'string')->render(),
+            Hidden::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
 
         // Value integer 1.
         $formModel->setAttribute('int', 1);
         $this->assertSame(
             '<input type="hidden" name="TypeForm[int]" value="1">',
-            Hidden::widget()->for($formModel, 'int')->render(),
+            Hidden::widget()
+                ->for($formModel, 'int')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('string', null);
         $this->assertSame(
             '<input type="hidden" name="TypeForm[string]">',
-            Hidden::widget()->for($formModel, 'string')->render(),
+            Hidden::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
     }
 }

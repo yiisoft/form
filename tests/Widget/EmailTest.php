@@ -26,7 +26,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" autofocus>',
-            Email::widget()->autofocus()->for(new TypeForm(), 'string')->render(),
+            Email::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" disabled>',
-            Email::widget()->disabled()->for(new TypeForm(), 'string')->render(),
+            Email::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -48,7 +54,9 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
-            Email::widget()->for(new ValidatorForm(), 'regex')->render(),
+            Email::widget()
+                ->for(new ValidatorForm(), 'regex')
+                ->render(),
         );
     }
 
@@ -59,7 +67,9 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">',
-            Email::widget()->for(new ValidatorForm(), 'maxlength')->render(),
+            Email::widget()
+                ->for(new ValidatorForm(), 'maxlength')
+                ->render(),
         );
     }
 
@@ -70,7 +80,9 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">',
-            Email::widget()->for(new ValidatorForm(), 'minlength')->render(),
+            Email::widget()
+                ->for(new ValidatorForm(), 'minlength')
+                ->render(),
         );
     }
 
@@ -81,7 +93,9 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="validatorform-required" name="ValidatorForm[required]" required>',
-            Email::widget()->for(new ValidatorForm(), 'required')->render(),
+            Email::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -92,7 +106,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="id-test" name="TypeForm[string]">',
-            Email::widget()->for(new TypeForm(), 'string')->id('id-test')->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -117,7 +134,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" maxlength="10">',
-            Email::widget()->for(new TypeForm(), 'string')->maxlength(10)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->maxlength(10)
+                ->render(),
         );
     }
 
@@ -128,7 +148,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" minlength="4">',
-            Email::widget()->for(new TypeForm(), 'string')->minlength(4)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->minlength(4)
+                ->render(),
         );
     }
 
@@ -163,7 +186,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="name-test">',
-            Email::widget()->for(new TypeForm(), 'string')->name('name-test')->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -189,7 +215,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
-            Email::widget()->for(new TypeForm(), 'string')->placeholder('PlaceHolder Text')->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->placeholder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -200,7 +229,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" readonly>',
-            Email::widget()->for(new TypeForm(), 'string')->readonly()->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -211,7 +243,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" required>',
-            Email::widget()->for(new TypeForm(), 'string')->required()->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->required()
+                ->render(),
         );
     }
 
@@ -222,7 +257,9 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]">',
-            Email::widget()->for(new TypeForm(), 'string')->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -233,7 +270,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" size="20">',
-            Email::widget()->for(new TypeForm(), 'string')->size(20)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->size(20)
+                ->render(),
         );
     }
 
@@ -244,7 +284,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" tabindex="1">',
-            Email::widget()->for(new TypeForm(), 'string')->tabindex(1)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -256,13 +299,19 @@ final class EmailTest extends TestCase
         // Value string `email1@example.com;`.
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;">',
-            Email::widget()->for(new TypeForm(), 'string')->value('email1@example.com;')->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->value('email1@example.com;')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]">',
-            Email::widget()->for(new TypeForm(), 'string')->value(null)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -273,7 +322,9 @@ final class EmailTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Email widget must be a string or null value.');
-        Email::widget()->for(new TypeForm(), 'int')->render();
+        Email::widget()
+            ->for(new TypeForm(), 'int')
+            ->render();
     }
 
     /**
@@ -287,14 +338,18 @@ final class EmailTest extends TestCase
         $formModel->setAttribute('string', 'email1@example.com;');
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;">',
-            Email::widget()->for($formModel, 'string')->render(),
+            Email::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('string', null);
         $this->assertSame(
             '<input type="email" id="typeform-string" name="TypeForm[string]">',
-            Email::widget()->for($formModel, 'string')->render(),
+            Email::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
     }
 
@@ -305,7 +360,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" name="TypeForm[string]">',
-            Email::widget()->for(new TypeForm(), 'string')->id(null)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -316,7 +374,10 @@ final class EmailTest extends TestCase
     {
         $this->assertSame(
             '<input type="email" id="typeform-string">',
-            Email::widget()->for(new TypeForm(), 'string')->name(null)->render(),
+            Email::widget()
+                ->for(new TypeForm(), 'string')
+                ->name(null)
+                ->render(),
         );
     }
 }

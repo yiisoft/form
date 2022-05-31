@@ -21,6 +21,9 @@ final class ResetButton extends ButtonAttributes
     {
         $attributes = $this->build($this->attributes, '-reset');
 
-        return Input::tag()->type('reset')->attributes($attributes)->render();
+        return Input::tag()
+            ->type('reset')
+            ->attributes($attributes)
+            ->render();
     }
 }

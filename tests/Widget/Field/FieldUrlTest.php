@@ -32,7 +32,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->autofocus()
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -49,7 +52,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->disabled()->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->disabled()
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -66,7 +72,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id('id-test')->url(new TypeForm(), 'string')->render()
+            Field::widget()
+                ->id('id-test')
+                ->url(new TypeForm(), 'string')
+                ->render()
         );
     }
 
@@ -81,7 +90,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new ValidatorForm(), 'regex')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new ValidatorForm(), 'regex')
+            ->render());
     }
 
     /**
@@ -95,7 +106,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new ValidatorForm(), 'maxlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new ValidatorForm(), 'maxlength')
+            ->render());
     }
 
     /**
@@ -109,7 +122,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new ValidatorForm(), 'minlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new ValidatorForm(), 'minlength')
+            ->render());
     }
 
     /**
@@ -123,7 +138,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="validatorform-required" name="ValidatorForm[required]" required>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new ValidatorForm(), 'required')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new ValidatorForm(), 'required')
+            ->render());
     }
 
     /**
@@ -137,7 +154,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="validatorform-url" name="ValidatorForm[url]" pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new ValidatorForm(), 'url')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new ValidatorForm(), 'url')
+            ->render());
     }
 
     /**
@@ -153,7 +172,9 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->url(new TypeForm(), 'string', ['maxlength()' => [10]])->render(),
+            Field::widget()
+                ->url(new TypeForm(), 'string', ['maxlength()' => [10]])
+                ->render(),
         );
     }
 
@@ -170,7 +191,9 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->url(new TypeForm(), 'string', ['minlength()' => [4]])->render(),
+            Field::widget()
+                ->url(new TypeForm(), 'string', ['minlength()' => [4]])
+                ->render(),
         );
     }
 
@@ -187,7 +210,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name('name-test')->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->name('name-test')
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -221,7 +247,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->placeholder('PlaceHolder Text')->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->placeholder('PlaceHolder Text')
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -238,7 +267,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->readonly()->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->readonly()
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -255,7 +287,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->required()->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->required()
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -270,7 +305,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new TypeForm(), 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new TypeForm(), 'string')
+            ->render());
     }
 
     /**
@@ -286,7 +323,9 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->url(new TypeForm(), 'string', ['size()' => [20]])->render(),
+            Field::widget()
+                ->url(new TypeForm(), 'string', ['size()' => [20]])
+                ->render(),
         );
     }
 
@@ -301,7 +340,10 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="typeform-string" name="TypeForm[string]" tabindex="1">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url(new TypeForm(), 'string')->tabIndex(1)->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url(new TypeForm(), 'string')
+            ->tabIndex(1)
+            ->render());
     }
 
     /**
@@ -318,7 +360,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->url(new TypeForm(), 'string')->value('https://yiiframework.com')->render(),
+            Field::widget()
+                ->url(new TypeForm(), 'string')
+                ->value('https://yiiframework.com')
+                ->render(),
         );
 
         // Value `null`.
@@ -330,7 +375,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->url(new TypeForm(), 'string')->value(null)->render(),
+            Field::widget()
+                ->url(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -341,7 +389,9 @@ final class FieldUrlTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Url widget must be a string or null value.');
-        Field::widget()->url(new TypeForm(), 'int')->render();
+        Field::widget()
+            ->url(new TypeForm(), 'int')
+            ->render();
     }
 
     /**
@@ -359,7 +409,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="typeform-string" name="TypeForm[string]" value="https://yiiframework.com">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url($formModel, 'string')
+            ->render());
 
         // Value `null`.
         $formModel->setAttribute('string', null);
@@ -369,7 +421,9 @@ final class FieldUrlTest extends TestCase
         <input type="url" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->url($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->url($formModel, 'string')
+            ->render());
     }
 
     /**
@@ -385,7 +439,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id(null)->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->id(null)
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -402,7 +459,10 @@ final class FieldUrlTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name(null)->url(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->name(null)
+                ->url(new TypeForm(), 'string')
+                ->render(),
         );
     }
 }

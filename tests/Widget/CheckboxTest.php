@@ -29,7 +29,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->autofocus()->for(new TypeForm(), 'bool')->value(true)->render(),
+            Checkbox::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'bool')
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -43,7 +47,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->checked()->for(new TypeForm(), 'bool')->value(true)->render(),
+            Checkbox::widget()
+                ->checked()
+                ->for(new TypeForm(), 'bool')
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -57,7 +65,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->disabled()->for(new TypeForm(), 'bool')->value(true)->render(),
+            Checkbox::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'bool')
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -71,7 +83,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->enclosedByLabel(false)->value(true)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->enclosedByLabel(false)
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -85,7 +101,9 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Checkbox::widget()->for(new ValidatorForm(), 'required')->render(),
+            Checkbox::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -99,7 +117,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->id('id-test')->value(true)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->id('id-test')
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -145,7 +167,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->name('name-test')->value(true)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->name('name-test')
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -159,7 +185,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->required()->value(true)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->required()
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -171,7 +201,10 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1"> Bool</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for(new TypeForm(), 'bool')->value(true)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for(new TypeForm(), 'bool')
+            ->value(true)
+            ->render());
     }
 
     /**
@@ -184,7 +217,11 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->tabindex(1)->value(true)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->tabindex(1)
+                ->value(true)
+                ->render(),
         );
     }
 
@@ -198,7 +235,10 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue('1')->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->uncheckValue('1')
+                ->render(),
         );
 
         $expected = <<<HTML
@@ -206,7 +246,10 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue(0)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->uncheckValue(0)
+                ->render(),
         );
 
         $expected = <<<HTML
@@ -214,7 +257,10 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->for(new TypeForm(), 'bool')->uncheckValue(false)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->uncheckValue(false)
+                ->render(),
         );
     }
 
@@ -227,31 +273,48 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for(new TypeForm(), 'bool')->value(false)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for(new TypeForm(), 'bool')
+            ->value(false)
+            ->render());
 
         // Value bool `true`.
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->checked()->for(new TypeForm(), 'bool')->value(true)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->checked()
+            ->for(new TypeForm(), 'bool')
+            ->value(true)
+            ->render());
 
         // Value int `0`.
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for(new TypeForm(), 'int')->value(0)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for(new TypeForm(), 'int')
+            ->value(0)
+            ->render());
 
         // Value int `1`.
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->checked()->for(new TypeForm(), 'int')->value(1)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->checked()
+            ->for(new TypeForm(), 'int')
+            ->value(1)
+            ->render());
 
         // Value string '0'.
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for(new TypeForm(), 'string')->value('0')->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for(new TypeForm(), 'string')
+            ->value('0')
+            ->render());
 
         // Value string '1'.
         $expected = <<<HTML
@@ -259,14 +322,21 @@ final class CheckboxTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Checkbox::widget()->checked()->for(new TypeForm(), 'string')->value('1')->render(),
+            Checkbox::widget()
+                ->checked()
+                ->for(new TypeForm(), 'string')
+                ->value('1')
+                ->render(),
         );
 
         // Value `null`.
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]"> Int</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for(new TypeForm(), 'int')->value(null)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for(new TypeForm(), 'int')
+            ->value(null)
+            ->render());
     }
 
     /**
@@ -276,7 +346,9 @@ final class CheckboxTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Checkbox widget value can not be an iterable or an object.');
-        Checkbox::widget()->for(new TypeForm(), 'array')->render();
+        Checkbox::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -292,11 +364,17 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="0"> Bool</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'bool')->value(false)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'bool')
+            ->value(false)
+            ->render());
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" id="typeform-bool" name="TypeForm[bool]" value="1" checked> Bool</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'bool')->value(true)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'bool')
+            ->value(true)
+            ->render());
 
         // Value int `1`.
         $formModel->setAttribute('int', 1);
@@ -304,11 +382,17 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="0"> Int</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'int')->value(0)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'int')
+            ->value(0)
+            ->render());
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1" checked> Int</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'int')->value(1)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'int')
+            ->value(1)
+            ->render());
 
         // Value string '1'.
         $formModel->setAttribute('string', '1');
@@ -316,11 +400,17 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="0"> String</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'string')->value('0')->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'string')
+            ->value('0')
+            ->render());
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[string]" value="0"><label><input type="checkbox" id="typeform-string" name="TypeForm[string]" value="1" checked> String</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'string')->value('1')->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'string')
+            ->value('1')
+            ->render());
 
         // Value `null`.
         $formModel->setAttribute('int', null);
@@ -328,7 +418,10 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[int]" value="0"><label><input type="checkbox" id="typeform-int" name="TypeForm[int]" value="1"> Int</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for($formModel, 'int')->value('1')->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for($formModel, 'int')
+            ->value('1')
+            ->render());
     }
 
     /**
@@ -339,7 +432,11 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
         <input type="hidden" name="TypeForm[bool]" value="0"><label><input type="checkbox" name="TypeForm[bool]" value="1"> Bool</label>
         HTML;
-        $this->assertSame($expected, Checkbox::widget()->for(new TypeForm(), 'bool')->id(null)->value(true)->render());
+        $this->assertSame($expected, Checkbox::widget()
+            ->for(new TypeForm(), 'bool')
+            ->id(null)
+            ->value(true)
+            ->render());
     }
 
     /**
@@ -349,7 +446,11 @@ final class CheckboxTest extends TestCase
     {
         $this->assertSame(
             '<label><input type="checkbox" id="typeform-bool" value="1"> Bool</label>',
-            Checkbox::widget()->for(new TypeForm(), 'bool')->name(null)->value(true)->render(),
+            Checkbox::widget()
+                ->for(new TypeForm(), 'bool')
+                ->name(null)
+                ->value(true)
+                ->render(),
         );
     }
 }

@@ -26,7 +26,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" autofocus>',
-            Text::widget()->autofocus()->for(new TypeForm(), 'string')->render(),
+            Text::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" dirname="test.dir">',
-            Text::widget()->for(new TypeForm(), 'string')->dirname('test.dir')->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->dirname('test.dir')
+                ->render(),
         );
     }
 
@@ -48,7 +54,10 @@ final class TextTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value cannot be empty.');
-        Text::widget()->for(new TypeForm(), 'login')->dirname('')->render();
+        Text::widget()
+            ->for(new TypeForm(), 'login')
+            ->dirname('')
+            ->render();
     }
 
     /**
@@ -58,7 +67,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" disabled>',
-            Text::widget()->disabled()->for(new TypeForm(), 'string')->render(),
+            Text::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -69,7 +81,9 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">',
-            Text::widget()->for(new ValidatorForm(), 'regex')->render(),
+            Text::widget()
+                ->for(new ValidatorForm(), 'regex')
+                ->render(),
         );
     }
 
@@ -80,7 +94,9 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">',
-            Text::widget()->for(new ValidatorForm(), 'maxlength')->render(),
+            Text::widget()
+                ->for(new ValidatorForm(), 'maxlength')
+                ->render(),
         );
     }
 
@@ -91,7 +107,9 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">',
-            Text::widget()->for(new ValidatorForm(), 'minlength')->render(),
+            Text::widget()
+                ->for(new ValidatorForm(), 'minlength')
+                ->render(),
         );
     }
 
@@ -102,7 +120,9 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="validatorform-required" name="ValidatorForm[required]" required>',
-            Text::widget()->for(new ValidatorForm(), 'required')->render(),
+            Text::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -113,7 +133,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="id-test" name="TypeForm[string]">',
-            Text::widget()->for(new TypeForm(), 'string')->id('id-test')->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -139,7 +162,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" maxlength="10">',
-            Text::widget()->for(new TypeForm(), 'string')->maxlength(10)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->maxlength(10)
+                ->render(),
         );
     }
 
@@ -150,7 +176,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" minlength="4">',
-            Text::widget()->for(new TypeForm(), 'string')->minlength(4)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->minlength(4)
+                ->render(),
         );
     }
 
@@ -161,7 +190,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="name-test">',
-            Text::widget()->for(new TypeForm(), 'string')->name('name-test')->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -188,7 +220,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" placeholder="PlaceHolder Text">',
-            Text::widget()->for(new TypeForm(), 'string')->placeholder('PlaceHolder Text')->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->placeholder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -199,7 +234,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" readonly>',
-            Text::widget()->for(new TypeForm(), 'string')->readOnly()->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->readOnly()
+                ->render(),
         );
     }
 
@@ -210,7 +248,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" required>',
-            Text::widget()->for(new TypeForm(), 'string')->required()->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->required()
+                ->render(),
         );
     }
 
@@ -221,7 +262,9 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]">',
-            Text::widget()->for(new TypeForm(), 'string')->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -232,7 +275,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" size="10">',
-            Text::widget()->for(new TypeForm(), 'string')->size(10)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->size(10)
+                ->render(),
         );
     }
 
@@ -243,7 +289,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" tabindex="1">',
-            Text::widget()->for(new TypeForm(), 'string')->tabIndex(1)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -255,13 +304,19 @@ final class TextTest extends TestCase
         // Value string `hello`.
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" value="hello">',
-            Text::widget()->for(new TypeForm(), 'string')->value('hello')->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->value('hello')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]">',
-            Text::widget()->for(new TypeForm(), 'string')->value(null)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -272,7 +327,9 @@ final class TextTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text widget must be a string or null value.');
-        Text::widget()->for(new TypeForm(), 'array')->render();
+        Text::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -286,14 +343,18 @@ final class TextTest extends TestCase
         $formModel->setAttribute('string', 'hello');
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]" value="hello">',
-            Text::widget()->for($formModel, 'string')->render(),
+            Text::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('string', null);
         $this->assertSame(
             '<input type="text" id="typeform-string" name="TypeForm[string]">',
-            Text::widget()->for($formModel, 'string')->render(),
+            Text::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
     }
 
@@ -304,7 +365,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" name="TypeForm[string]">',
-            Text::widget()->for(new TypeForm(), 'string')->id(null)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -315,7 +379,10 @@ final class TextTest extends TestCase
     {
         $this->assertSame(
             '<input type="text" id="typeform-string">',
-            Text::widget()->for(new TypeForm(), 'string')->name(null)->render(),
+            Text::widget()
+                ->for(new TypeForm(), 'string')
+                ->name(null)
+                ->render(),
         );
     }
 }

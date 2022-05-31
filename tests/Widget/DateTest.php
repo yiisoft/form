@@ -26,7 +26,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" autofocus>',
-            Date::widget()->autofocus()->for(new TypeForm(), 'toDate')->render(),
+            Date::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" disabled>',
-            Date::widget()->disabled()->for(new TypeForm(), 'toDate')->render(),
+            Date::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -48,7 +54,9 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="validatorform-required" name="ValidatorForm[required]" required>',
-            Date::widget()->for(new ValidatorForm(), 'required')->render(),
+            Date::widget()
+                ->for(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -59,7 +67,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="id-test" name="TypeForm[toDate]">',
-            Date::widget()->for(new TypeForm(), 'toDate')->id('id-test')->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -81,7 +92,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" max="1996-12-19">',
-            Date::widget()->for(new TypeForm(), 'toDate')->max('1996-12-19')->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->max('1996-12-19')
+                ->render(),
         );
     }
 
@@ -92,7 +106,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" min="1996-12-19">',
-            Date::widget()->for(new TypeForm(), 'toDate')->min('1996-12-19')->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->min('1996-12-19')
+                ->render(),
         );
     }
 
@@ -103,7 +120,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="name-test">',
-            Date::widget()->for(new TypeForm(), 'toDate')->name('name-test')->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -114,7 +134,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" readonly>',
-            Date::widget()->for(new TypeForm(), 'toDate')->readonly()->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -125,7 +148,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" required>',
-            Date::widget()->for(new TypeForm(), 'toDate')->required()->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->required()
+                ->render(),
         );
     }
 
@@ -136,7 +162,9 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]">',
-            Date::widget()->for(new TypeForm(), 'toDate')->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->render(),
         );
     }
 
@@ -147,7 +175,10 @@ final class DateTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" tabindex="1">',
-            Date::widget()->for(new TypeForm(), 'toDate')->tabIndex(1)->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -159,13 +190,19 @@ final class DateTest extends TestCase
         // Value string `2021-09-18`.
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18">',
-            Date::widget()->for(new TypeForm(), 'toDate')->value('2021-09-18')->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->value('2021-09-18')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]">',
-            Date::widget()->for(new TypeForm(), 'toDate')->value(null)->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -176,7 +213,9 @@ final class DateTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Date widget requires a string or null value.');
-        Date::widget()->for(new TypeForm(), 'array')->render();
+        Date::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -190,14 +229,18 @@ final class DateTest extends TestCase
         $formModel->setAttribute('toDate', '2021-09-18');
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]" value="2021-09-18">',
-            Date::widget()->for($formModel, 'toDate')->render(),
+            Date::widget()
+                ->for($formModel, 'toDate')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('toDate', null);
         $this->assertSame(
             '<input type="date" id="typeform-todate" name="TypeForm[toDate]">',
-            Date::widget()->for($formModel, 'toDate')->render(),
+            Date::widget()
+                ->for($formModel, 'toDate')
+                ->render(),
         );
     }
 
@@ -208,7 +251,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" name="TypeForm[toDate]">',
-            Date::widget()->for(new TypeForm(), 'toDate')->id(null)->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -219,7 +265,10 @@ final class DateTest extends TestCase
     {
         $this->assertSame(
             '<input type="date" id="typeform-todate">',
-            Date::widget()->for(new TypeForm(), 'toDate')->name(null)->render(),
+            Date::widget()
+                ->for(new TypeForm(), 'toDate')
+                ->name(null)
+                ->render(),
         );
     }
 }

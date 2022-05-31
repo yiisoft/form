@@ -31,7 +31,9 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array', ['accept()' => ['image/*']])->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array', ['accept()' => ['image/*']])
+                ->render(),
         );
     }
 
@@ -48,7 +50,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->file(new TypeForm(), 'array')->render(),
+            Field::widget()
+                ->autofocus()
+                ->file(new TypeForm(), 'array')
+                ->render(),
         );
     }
 
@@ -65,7 +70,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->disabled()->file(new TypeForm(), 'array')->render(),
+            Field::widget()
+                ->disabled()
+                ->file(new TypeForm(), 'array')
+                ->render(),
         );
     }
 
@@ -82,7 +90,9 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new ValidatorForm(), 'required')->render(),
+            Field::widget()
+                ->file(new ValidatorForm(), 'required')
+                ->render(),
         );
     }
 
@@ -122,7 +132,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->id('id-test')->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -139,7 +152,9 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array', ['multiple()' => [true]])->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array', ['multiple()' => [true]])
+                ->render(),
         );
     }
 
@@ -156,7 +171,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->name('name-test')->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -173,7 +191,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->required()->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->required()
+                ->render(),
         );
     }
 
@@ -190,7 +211,9 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->render(),
         );
     }
 
@@ -207,7 +230,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->tabindex(1)->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -224,7 +250,9 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array', ['uncheckValue()' => ['0']])->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array', ['uncheckValue()' => ['0']])
+                ->render(),
         );
     }
 
@@ -241,7 +269,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->id(null)->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -258,7 +289,10 @@ final class FieldFileTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->file(new TypeForm(), 'array')->name(null)->render(),
+            Field::widget()
+                ->file(new TypeForm(), 'array')
+                ->name(null)
+                ->render(),
         );
     }
 }

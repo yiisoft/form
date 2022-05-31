@@ -42,10 +42,16 @@ use Yiisoft\Form\Widget\Label;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
     <?= Checkbox::widget()->for($data, 'active') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -101,10 +107,18 @@ use Yiisoft\Form\Widget\Label;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Checkbox::widget()->for($data, 'active')->uncheckValue(null) ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
+    <?= Checkbox::widget()
+        ->for($data, 'active')
+        ->uncheckValue(null) ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -159,10 +173,19 @@ use Yiisoft\Form\Widget\Label;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
-    <?= Checkbox::widget()->for($data, 'active')->uncheckValue('inactive')->value('active') ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
+    <?= Checkbox::widget()
+        ->for($data, 'active')
+        ->uncheckValue('inactive')
+        ->value('active') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 

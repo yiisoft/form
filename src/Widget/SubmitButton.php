@@ -21,6 +21,9 @@ final class SubmitButton extends ButtonAttributes
     {
         $attributes = $this->build($this->attributes, '-submit');
 
-        return Input::tag()->type('submit')->attributes($attributes)->render();
+        return Input::tag()
+            ->type('submit')
+            ->attributes($attributes)
+            ->render();
     }
 }

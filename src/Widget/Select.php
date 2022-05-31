@@ -230,14 +230,22 @@ final class Select extends ChoiceAttributes
                 foreach ($content as $v => $c) {
                     /** @var array */
                     $itemsAttributes[$v] ??= [];
-                    $options[] = Option::tag()->attributes($itemsAttributes[$v])->content($c)->value($v);
+                    $options[] = Option::tag()
+                        ->attributes($itemsAttributes[$v])
+                        ->content($c)
+                        ->value($v);
                 }
 
-                $items[] = Optgroup::tag()->attributes($groupAttrs)->options(...$options);
+                $items[] = Optgroup::tag()
+                    ->attributes($groupAttrs)
+                    ->options(...$options);
             } else {
                 /** @var array */
                 $itemsAttributes[$value] ??= [];
-                $items[] = Option::tag()->attributes($itemsAttributes[$value])->content($content)->value($value);
+                $items[] = Option::tag()
+                    ->attributes($itemsAttributes[$value])
+                    ->content($content)
+                    ->value($value);
             }
         }
 
@@ -289,6 +297,9 @@ final class Select extends ChoiceAttributes
             $select = $select->value($value);
         }
 
-        return $select->attributes($attributes)->unselectValue($this->unselectValue)->render();
+        return $select
+            ->attributes($attributes)
+            ->unselectValue($this->unselectValue)
+            ->render();
     }
 }

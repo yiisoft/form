@@ -100,7 +100,8 @@ final class Range extends InputAttributes implements NumberInterface
             Input::tag()
                 ->type('range')
                 ->attributes($attributes)
-                ->value($value > 0 ? $value : 0)->render() . PHP_EOL .
+                ->value($value > 0 ? $value : 0)
+                ->render() . PHP_EOL .
             CustomTag::name($this->outputTag)
                 ->attributes($outputAttributes)
                 ->content($value > 0 ? (string)$value : '0')

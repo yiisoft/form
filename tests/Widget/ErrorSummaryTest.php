@@ -206,6 +206,8 @@ final class ErrorSummaryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
-        ErrorSummary::widget()->tag('')->render();
+        ErrorSummary::widget()
+            ->tag('')
+            ->render();
     }
 }

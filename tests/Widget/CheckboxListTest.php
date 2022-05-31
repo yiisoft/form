@@ -35,7 +35,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->autofocus()->for(new TypeForm(), 'array')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -52,7 +56,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->disabled()->for(new TypeForm(), 'array')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -130,7 +138,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->id('id-test')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->id('id-test')
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -271,7 +283,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->name('name-test')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->name('name-test')
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -288,7 +304,10 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -305,7 +324,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->items($this->sex)->separator(PHP_EOL)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->separator(PHP_EOL)
+                ->render(),
         );
     }
 
@@ -322,7 +345,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->items($this->sex)->tabindex(1)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -340,7 +367,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->items($this->sex)->value([2])->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->value([2])
+                ->render(),
         );
 
         // Value `null`.
@@ -352,7 +383,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->items($this->sex)->value(null)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -368,7 +403,9 @@ final class CheckboxListTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('CheckboxList widget must be a array or null value.');
-        CheckboxList::widget()->for($formModel, 'int')->render();
+        CheckboxList::widget()
+            ->for($formModel, 'int')
+            ->render();
     }
 
     /**
@@ -388,7 +425,10 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for($formModel, 'array')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->for($formModel, 'array')
+                ->items($this->sex)
+                ->render(),
         );
 
         // Value `null`.
@@ -401,7 +441,10 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for($formModel, 'array')->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->for($formModel, 'array')
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -418,7 +461,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->id(null)->items($this->sex)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->id(null)
+                ->items($this->sex)
+                ->render(),
         );
     }
 
@@ -435,7 +482,11 @@ final class CheckboxListTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            CheckboxList::widget()->for(new TypeForm(), 'array')->items($this->sex)->name(null)->render(),
+            CheckboxList::widget()
+                ->for(new TypeForm(), 'array')
+                ->items($this->sex)
+                ->name(null)
+                ->render(),
         );
     }
 }

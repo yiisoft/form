@@ -32,7 +32,9 @@ final class InputDefaultValuesTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['ariaDescribedBy()' => [false]])->text(new PersonalForm(), 'name')->render(),
+            Field::widget(['ariaDescribedBy()' => [false]])
+                ->text(new PersonalForm(), 'name')
+                ->render(),
         );
     }
 
@@ -187,7 +189,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -218,7 +222,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -259,7 +265,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -290,7 +298,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -401,7 +411,9 @@ final class InputDefaultValuesTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['inputClass()' => ['form-control']])->text(new TypeForm(), 'string')->render(),
+            Field::widget(['inputClass()' => ['form-control']])
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -432,7 +444,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -443,7 +457,9 @@ final class InputDefaultValuesTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['invalidClass()' => ['is-invalid']])->text($formModel, 'name')->render(),
+            Field::widget(['invalidClass()' => ['is-invalid']])
+                ->text($formModel, 'name')
+                ->render(),
         );
     }
 
@@ -454,7 +470,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -544,7 +562,9 @@ final class InputDefaultValuesTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['placeholder()' => ['placeholder-text']])->text(new TypeForm(), 'string')->render(),
+            Field::widget(['placeholder()' => ['placeholder-text']])
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -614,7 +634,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => 'samdark']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -624,7 +646,9 @@ final class InputDefaultValuesTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['validClass()' => ['is-valid']])->text($formModel, 'name')->render(),
+            Field::widget(['validClass()' => ['is-valid']])
+                ->text($formModel, 'name')
+                ->render(),
         );
     }
 
@@ -635,7 +659,9 @@ final class InputDefaultValuesTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => 'samdark']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         $expected = <<<HTML
         <div>
         <label for="personalform-name">Name</label>
@@ -663,7 +689,9 @@ final class InputDefaultValuesTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget(['container()' => [false]])->text(new TypeForm(), 'string')->render(),
+            Field::widget(['container()' => [false]])
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 

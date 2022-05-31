@@ -37,10 +37,16 @@ use Yiisoft\Form\Widget\Url;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
     <?= Url::widget()->for($data, 'url') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 

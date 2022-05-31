@@ -39,7 +39,9 @@ public function widget(
     $body = $serverRequest->getParsedBody();
     $method = $serverRequest->getMethod();
 
-    if ($method === 'POST' && $testForm->load($body) && $validator->validate($testForm)->isValid()) {
+    if ($method === 'POST' && $testForm->load($body) && $validator
+        ->validate($testForm)
+        ->isValid()) {
     }
 
     return $this->viewRenderer->render('widget', ['formModel' => $testForm]);
@@ -65,11 +67,17 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <?= Error::widget()->for($formModel, 'name') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 
@@ -120,12 +128,20 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin() ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin() ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     // custom error message
-    <?= Error::widget()->for($formModel, 'name')->message('The name must have more than 3 letters.') ?>
+    <?= Error::widget()
+        ->for($formModel, 'name')
+        ->message('The name must have more than 3 letters.') ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end() ?>
 ```
 

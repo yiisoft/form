@@ -41,7 +41,9 @@ public function widget(
     $body = $serverRequest->getParsedBody();
     $method = $serverRequest->getMethod();
 
-    if ($method === 'POST' && $testForm->load($body) && $validator->validate($testForm)->isValid()) {
+    if ($method === 'POST' && $testForm->load($body) && $validator
+        ->validate($testForm)
+        ->isValid()) {
     }
 
     return $this->viewRenderer->render('widget', ['formModel' => $testForm]);
@@ -67,12 +69,17 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin(); ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <?= Text::widget()->for($formModel, 'email') ?>
     <?= ErrorSummary::widget()->model($formModel) ?>
     <hr class="mt-3">
-    <?= SubmitButton::widget()->class('button is-block is-info is-fullwidth')->value('Save') ?>
+    <?= SubmitButton::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->value('Save') ?>
 <?= Form::end(); ?>
 ```
 
@@ -127,7 +134,10 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin(); ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <?= Text::widget()->for($formModel, 'email') ?>
     <?= ErrorSummary::widget()
@@ -137,7 +147,9 @@ use Yiisoft\Form\Widget\Text;
         ->model($formModel)
     ?>
     <hr class="mt-3">
-    <?= SubmitButton::widget()->class('button is-block is-info is-fullwidth')->value('Save') ?>
+    <?= SubmitButton::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->value('Save') ?>
 <?= Form::end(); ?>
 ```
 
@@ -180,12 +192,21 @@ use Yiisoft\Form\Widget\Text;
  */
 ?>
 
-<?= Form::widget()->action('widgets')->csrf($csrf)->begin(); ?>
+<?= Form::widget()
+    ->action('widgets')
+    ->csrf($csrf)
+    ->begin(); ?>
     <?= Text::widget()->for($formModel, 'name') ?>
     <?= Text::widget()->for($formModel, 'email') ?>
-    <?= ErrorSummary::widget()->attributes(['class' => 'has-text-danger'])->onlyAttributes('email')->model($formModel) ?>
+    <?= ErrorSummary::widget()
+        ->attributes(['class' => 'has-text-danger'])
+        ->onlyAttributes('email')
+        ->model($formModel) ?>
     <hr class="mt-3">
-    <?= Field::widget()->class('button is-block is-info is-fullwidth')->submitButton()->value('Save') ?>
+    <?= Field::widget()
+        ->class('button is-block is-info is-fullwidth')
+        ->submitButton()
+        ->value('Save') ?>
 <?= Form::end(); ?>
 ```
 

@@ -61,7 +61,9 @@ final class Field extends FieldAttributes
         $new = clone $this;
         $new = $new->type('buttonGroup');
         $config = array_merge($new->getDefinitions(), $config);
-        $new->button = ButtonGroup::widget($config)->attributes($attributes)->buttons($buttons);
+        $new->button = ButtonGroup::widget($config)
+            ->attributes($attributes)
+            ->buttons($buttons);
         return $new;
     }
 
@@ -576,11 +578,15 @@ final class Field extends FieldAttributes
         }
 
         if (!empty($this->widget)) {
-            $content .= $this->widget->attributes($this->getAttributes())->render();
+            $content .= $this->widget
+                ->attributes($this->getAttributes())
+                ->render();
         }
 
         if (!empty($this->button)) {
-            $content .= $this->button->attributes($this->getAttributes())->render();
+            $content .= $this->button
+                ->attributes($this->getAttributes())
+                ->render();
         }
 
         if ($this->getContainerClass() !== '') {
@@ -591,7 +597,10 @@ final class Field extends FieldAttributes
             $div = $div->attributes($this->getContainerAttributes());
         }
 
-        return $this->getContainer() ? $div->content(PHP_EOL . $content . PHP_EOL)->encode(false)->render() : $content;
+        return $this->getContainer() ? $div
+            ->content(PHP_EOL . $content . PHP_EOL)
+            ->encode(false)
+            ->render() : $content;
     }
 
     private function buildField(): self

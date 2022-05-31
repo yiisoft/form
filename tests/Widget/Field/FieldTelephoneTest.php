@@ -32,7 +32,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->autofocus()->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->autofocus()
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -49,7 +52,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->disabled()->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->disabled()
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -66,7 +72,9 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new ValidatorForm(), 'regex')->render(),
+            Field::widget()
+                ->telephone(new ValidatorForm(), 'regex')
+                ->render(),
         );
     }
 
@@ -81,7 +89,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone(new ValidatorForm(), 'maxlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone(new ValidatorForm(), 'maxlength')
+            ->render());
     }
 
     /**
@@ -95,7 +105,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone(new ValidatorForm(), 'minlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone(new ValidatorForm(), 'minlength')
+            ->render());
     }
 
     /**
@@ -109,7 +121,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="validatorform-required" name="ValidatorForm[required]" required>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone(new ValidatorForm(), 'required')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone(new ValidatorForm(), 'required')
+            ->render());
     }
 
     /**
@@ -125,7 +139,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id('id-test')->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->id('id-test')
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -142,7 +159,9 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string', ['maxlength()' => [10]])->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string', ['maxlength()' => [10]])
+                ->render(),
         );
     }
 
@@ -159,7 +178,9 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string', ['minlength()' => [4]])->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string', ['minlength()' => [4]])
+                ->render(),
         );
     }
 
@@ -176,7 +197,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name('name-test')->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->name('name-test')
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -193,7 +217,9 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string', ['pattern()' => ['[789][0-9]{9}']])->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string', ['pattern()' => ['[789][0-9]{9}']])
+                ->render(),
         );
     }
 
@@ -210,7 +236,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->placeholder('PlaceHolder Text')->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->placeholder('PlaceHolder Text')
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -227,7 +256,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string')->readonly()->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -244,7 +276,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->required()->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->required()
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -259,7 +294,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone(new TypeForm(), 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone(new TypeForm(), 'string')
+            ->render());
     }
 
     /**
@@ -275,7 +312,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->tabIndex(1)->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->tabIndex(1)
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -293,7 +333,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string')->value('+71234567890')->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string')
+                ->value('+71234567890')
+                ->render(),
         );
 
         // Value numeric string `71234567890`.
@@ -305,7 +348,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string')->value('71234567890')->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string')
+                ->value('71234567890')
+                ->render(),
         );
 
         // Value integer `71234567890`.
@@ -317,7 +363,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'int')->value(71234567890)->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'int')
+                ->value(71234567890)
+                ->render(),
         );
 
         // Value `null`.
@@ -329,7 +378,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->telephone(new TypeForm(), 'string')->value(null)->render(),
+            Field::widget()
+                ->telephone(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -340,7 +392,9 @@ final class FieldTelephoneTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Telephone widget must be a string, numeric or null.');
-        Field::widget()->telephone(new TypeForm(), 'array')->render();
+        Field::widget()
+            ->telephone(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -358,7 +412,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="typeform-string" name="TypeForm[string]" value="+71234567890">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone($formModel, 'string')
+            ->render());
 
         // Value numeric string `71234567890`.
         $formModel->setAttribute('string', '71234567890');
@@ -368,7 +424,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="typeform-string" name="TypeForm[string]" value="71234567890">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone($formModel, 'string')
+            ->render());
 
         // Value integer `71234567890`.
         $formModel->setAttribute('int', 71234567890);
@@ -378,7 +436,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="typeform-int" name="TypeForm[int]" value="71234567890">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone($formModel, 'int')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone($formModel, 'int')
+            ->render());
 
         // Value `null`.
         $formModel->setAttribute('string', null);
@@ -388,7 +448,9 @@ final class FieldTelephoneTest extends TestCase
         <input type="tel" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->telephone($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->telephone($formModel, 'string')
+            ->render());
     }
 
     /**
@@ -404,7 +466,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->id(null)->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->id(null)
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -421,7 +486,10 @@ final class FieldTelephoneTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->name(null)->telephone(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->name(null)
+                ->telephone(new TypeForm(), 'string')
+                ->render(),
         );
     }
 }

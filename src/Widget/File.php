@@ -105,11 +105,17 @@ final class File extends InputAttributes
          * Note: For file-field-only form with `disabled` option set to `true` input submitting detection won't work.
          */
         if ($this->uncheckValue !== null) {
-            $hiddenInput = Input::hidden($name, $this->uncheckValue)->attributes($this->hiddenAttributes)->render();
+            $hiddenInput = Input::hidden($name, $this->uncheckValue)
+                ->attributes($this->hiddenAttributes)
+                ->render();
         }
 
         return
             $hiddenInput .
-            Input::file($name)->attributes($attributes)->name(Html::getArrayableName($name))->value(null)->render();
+            Input::file($name)
+                ->attributes($attributes)
+                ->name(Html::getArrayableName($name))
+                ->value(null)
+                ->render();
     }
 }

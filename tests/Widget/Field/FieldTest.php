@@ -53,7 +53,10 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->containerId('id-test')->text(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->containerId('id-test')
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -70,7 +73,10 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->containerName('name-test')->text(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->containerName('name-test')
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -96,8 +102,12 @@ final class FieldTest extends TestCase
                 ->containerClass('input-group mb-3')
                 ->defaultTokens(
                     [
-                        '{after}' => Span::tag()->class('input-group-text')->content('$'),
-                        '{before}' => Span::tag()->class('input-group-text')->content('.00'),
+                        '{after}' => Span::tag()
+                            ->class('input-group-text')
+                            ->content('$'),
+                        '{before}' => Span::tag()
+                            ->class('input-group-text')
+                            ->content('.00'),
                     ]
                 )
                 ->inputClass('form-control')
@@ -123,7 +133,10 @@ final class FieldTest extends TestCase
             Field::widget()
                 ->defaultTokens(
                     [
-                        '{input}' => Input::tag()->id('typeform-string')->name('TypeForm[string]')->type('color'),
+                        '{input}' => Input::tag()
+                            ->id('typeform-string')
+                            ->name('TypeForm[string]')
+                            ->type('color'),
                     ]
                 )
                 ->template("{label}\n{input}\n{hint}\n{error}")
@@ -144,14 +157,20 @@ final class FieldTest extends TestCase
                 [
                     'text' => [
                         'defaultTokens' => [
-                            '{after}' => Span::tag()->class('input-group-text')->content('$'),
-                            '{before}' => Span::tag()->class('input-group-text')->content('.00'),
+                            '{after}' => Span::tag()
+                                ->class('input-group-text')
+                                ->content('$'),
+                            '{before}' => Span::tag()
+                                ->class('input-group-text')
+                                ->content('.00'),
                         ],
                         'template' => "{before}\n{input}\n{after}\n{error}",
                     ],
                     'textArea' => [
                         'defaultTokens' => [
-                            '{before}' => Span::tag()->class('input-group-text')->content('With textarea'),
+                            '{before}' => Span::tag()
+                                ->class('input-group-text')
+                                ->content('With textarea'),
                         ],
                         'template' => "{before}\n{input}\n{error}",
                     ],
@@ -201,7 +220,10 @@ final class FieldTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->labelFor('id-test')->text(new TypeForm(), 'string')->render(),
+            Field::widget()
+                ->labelFor('id-test')
+                ->text(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -213,8 +235,12 @@ final class FieldTest extends TestCase
         $factoryConfig = [
             'defaultTokens()' => [
                 [
-                    '{after}' => Span::tag()->class('input-group-text')->content('$'),
-                    '{before}' => Span::tag()->class('input-group-text')->content('.00'),
+                    '{after}' => Span::tag()
+                        ->class('input-group-text')
+                        ->content('$'),
+                    '{before}' => Span::tag()
+                        ->class('input-group-text')
+                        ->content('.00'),
                 ],
             ],
         ];

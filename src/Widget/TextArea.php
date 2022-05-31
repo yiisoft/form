@@ -158,6 +158,9 @@ final class TextArea extends InputAttributes implements HasLengthInterface, Plac
             throw new InvalidArgumentException('TextArea widget must be a string or null value.');
         }
 
-        return TextAreaTag::tag()->attributes($attributes)->content((string)$value)->render();
+        return TextAreaTag::tag()
+            ->attributes($attributes)
+            ->content((string)$value)
+            ->render();
     }
 }

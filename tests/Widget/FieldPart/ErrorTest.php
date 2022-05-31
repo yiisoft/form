@@ -26,7 +26,9 @@ final class ErrorTest extends TestCase
     {
         $this->expectException(AttributeNotSetException::class);
         $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
-        Error::widget()->for($this->validation(), '')->render();
+        Error::widget()
+            ->for($this->validation(), '')
+            ->render();
     }
 
     /**
@@ -60,7 +62,10 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             '<div>This is custom error message.</div>',
-            Error::widget()->for($this->validation(), 'name')->message('This is custom error message.')->render(),
+            Error::widget()
+                ->for($this->validation(), 'name')
+                ->message('This is custom error message.')
+                ->render(),
         );
     }
 
@@ -100,7 +105,9 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             '<div>Value cannot be blank.</div>',
-            Error::widget()->for($this->validation(), 'name')->render(),
+            Error::widget()
+                ->for($this->validation(), 'name')
+                ->render(),
         );
     }
 
@@ -111,11 +118,17 @@ final class ErrorTest extends TestCase
     {
         $this->assertSame(
             'Value cannot be blank.',
-            Error::widget()->for($this->validation(), 'name')->tag('')->render(),
+            Error::widget()
+                ->for($this->validation(), 'name')
+                ->tag('')
+                ->render(),
         );
         $this->assertSame(
             '<span>Value cannot be blank.</span>',
-            Error::widget()->for($this->validation(), 'name')->tag('span')->render(),
+            Error::widget()
+                ->for($this->validation(), 'name')
+                ->tag('span')
+                ->render(),
         );
     }
 
@@ -123,7 +136,9 @@ final class ErrorTest extends TestCase
     {
         $formModel = new PersonalForm();
         $formModel->load(['PersonalForm' => ['name' => '']]);
-        $this->createValidatorMock()->validate($formModel);
+        $this
+            ->createValidatorMock()
+            ->validate($formModel);
         return $formModel;
     }
 }

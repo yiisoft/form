@@ -31,9 +31,13 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
-        $this->assertEmpty($formModel->getFormErrors()->clear());
+        $this->assertEmpty($formModel
+            ->getFormErrors()
+            ->clear());
     }
 
     public function testClearForAttribute(): void
@@ -41,9 +45,13 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
-        $this->assertEmpty($formModel->getFormErrors()->clear('login'));
+        $this->assertEmpty($formModel
+            ->getFormErrors()
+            ->clear('login'));
         $this->assertSame(['password' => ['Is too short.']], HtmlFormErrors::getAllErrors($formModel));
     }
 
@@ -52,7 +60,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
     }
 
@@ -61,7 +71,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame(['This value is not a valid email address.'], HtmlFormErrors::getErrors($formModel, 'login'));
     }
 
@@ -70,7 +82,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame(
             ['This value is not a valid email address.', 'Is too short.'],
             HtmlFormErrors::getErrorSummary($formModel),
@@ -82,7 +96,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame(
             ['login' => 'This value is not a valid email address.', 'password' => 'Is too short.'],
             HtmlFormErrors::getErrorSummaryFirstErrors($formModel),
@@ -94,7 +110,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame(
             'This value is not a valid email address.',
             HtmlFormErrors::getFirstError($formModel, 'login'),
@@ -116,7 +134,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertTrue(HtmlFormErrors::hasErrors($formModel));
     }
 
@@ -125,7 +145,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new LoginForm();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame(
             ['This value is not a valid email address.'],
             HtmlFormErrors::getErrorSummary($formModel, ['login']),
@@ -141,7 +163,9 @@ final class HtmlFormErrorsTest extends TestCase
         $formModel = new FormWithNestedAttribute();
         $validator = $this->createValidatorMock();
         $this->assertTrue($formModel->load(['FormWithNestedAttribute' => ['user.login' => 'ad']]));
-        $this->assertFalse($validator->validate($formModel)->isValid());
+        $this->assertFalse($validator
+            ->validate($formModel)
+            ->isValid());
         $this->assertSame(
             ['id' => 'Value cannot be blank.', 'user.login' => 'Is too short.'],
             HtmlFormErrors::getFirstErrors($formModel),

@@ -57,6 +57,10 @@ final class Number extends InputAttributes implements NumberInterface, Placehold
             throw new InvalidArgumentException('Number widget must be a numeric or null value.');
         }
 
-        return Input::tag()->type('number')->attributes($attributes)->value($value)->render();
+        return Input::tag()
+            ->type('number')
+            ->attributes($attributes)
+            ->value($value)
+            ->render();
     }
 }

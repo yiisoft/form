@@ -30,7 +30,10 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]" autofocus>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->autofocus()->email(new TypeForm(), 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->autofocus()
+            ->email(new TypeForm(), 'string')
+            ->render());
     }
 
     /**
@@ -44,7 +47,10 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]" disabled>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->disabled()->email(new TypeForm(), 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->disabled()
+            ->email(new TypeForm(), 'string')
+            ->render());
     }
 
     /**
@@ -58,7 +64,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="validatorform-regex" name="ValidatorForm[regex]" pattern="\w+">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new ValidatorForm(), 'regex')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new ValidatorForm(), 'regex')
+            ->render());
     }
 
     /**
@@ -72,7 +80,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="validatorform-maxlength" name="ValidatorForm[maxlength]" maxlength="50">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new ValidatorForm(), 'maxlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new ValidatorForm(), 'maxlength')
+            ->render());
     }
 
     /**
@@ -86,7 +96,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="validatorform-minlength" name="ValidatorForm[minlength]" minlength="15">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new ValidatorForm(), 'minlength')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new ValidatorForm(), 'minlength')
+            ->render());
     }
 
     /**
@@ -100,7 +112,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="validatorform-required" name="ValidatorForm[required]" required>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new ValidatorForm(), 'required')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new ValidatorForm(), 'required')
+            ->render());
     }
 
     /**
@@ -116,7 +130,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string')->id('id-test')->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -133,7 +150,9 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string', ['maxlength()' => [10]])->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string', ['maxlength()' => [10]])
+                ->render(),
         );
     }
 
@@ -150,7 +169,9 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string', ['minlength()' => [4]])->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string', ['minlength()' => [4]])
+                ->render(),
         );
     }
 
@@ -187,7 +208,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string')->name('name-test')->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -223,7 +247,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string')->placeholder('PlaceHolder Text')->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string')
+                ->placeholder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -238,7 +265,10 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]" readonly>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new TypeForm(), 'string')->readonly()->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new TypeForm(), 'string')
+            ->readonly()
+            ->render());
     }
 
     /**
@@ -252,7 +282,10 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]" required>
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new TypeForm(), 'string')->required()->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new TypeForm(), 'string')
+            ->required()
+            ->render());
     }
 
     /**
@@ -266,7 +299,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new TypeForm(), 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new TypeForm(), 'string')
+            ->render());
     }
 
     /**
@@ -282,7 +317,9 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string', ['size()' => [20]])->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string', ['size()' => [20]])
+                ->render(),
         );
     }
 
@@ -299,7 +336,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string')->tabindex(1)->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string')
+                ->tabindex(1)
+                ->render(),
         );
     }
 
@@ -317,7 +357,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string')->value('email1@example.com;')->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string')
+                ->value('email1@example.com;')
+                ->render(),
         );
 
         // Value `null`.
@@ -329,7 +372,10 @@ final class FieldEmailTest extends TestCase
         HTML;
         $this->assertEqualsWithoutLE(
             $expected,
-            Field::widget()->email(new TypeForm(), 'string')->value(null)->render(),
+            Field::widget()
+                ->email(new TypeForm(), 'string')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -340,7 +386,9 @@ final class FieldEmailTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Email widget must be a string or null value.');
-        Field::widget()->email(new TypeForm(), 'int')->render();
+        Field::widget()
+            ->email(new TypeForm(), 'int')
+            ->render();
     }
 
     /**
@@ -358,7 +406,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]" value="email1@example.com;">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email($formModel, 'string')
+            ->render());
 
         // Value `null`.
         $formModel->setAttribute('string', null);
@@ -368,7 +418,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email($formModel, 'string')->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email($formModel, 'string')
+            ->render());
     }
 
     /**
@@ -382,7 +434,10 @@ final class FieldEmailTest extends TestCase
         <input type="email" name="TypeForm[string]">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new TypeForm(), 'string')->id(null)->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new TypeForm(), 'string')
+            ->id(null)
+            ->render());
     }
 
     /**
@@ -396,6 +451,9 @@ final class FieldEmailTest extends TestCase
         <input type="email" id="typeform-string">
         </div>
         HTML;
-        $this->assertEqualsWithoutLE($expected, Field::widget()->email(new TypeForm(), 'string')->name(null)->render());
+        $this->assertEqualsWithoutLE($expected, Field::widget()
+            ->email(new TypeForm(), 'string')
+            ->name(null)
+            ->render());
     }
 }

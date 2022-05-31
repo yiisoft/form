@@ -41,7 +41,9 @@ final class LabelTest extends TestCase
     {
         $this->expectException(AttributeNotSetException::class);
         $this->expectExceptionMessage('Failed to create widget because "attribute" is not set.');
-        Label::widget()->for(new TypeForm(), '')->render();
+        Label::widget()
+            ->for(new TypeForm(), '')
+            ->render();
     }
 
     /**
@@ -74,7 +76,10 @@ final class LabelTest extends TestCase
     {
         $this->assertSame(
             '<label for="typeform-string">Label:</label>',
-            Label::widget()->for(new TypeForm(), 'string')->label('Label:')->render(),
+            Label::widget()
+                ->for(new TypeForm(), 'string')
+                ->label('Label:')
+                ->render(),
         );
     }
 
@@ -85,7 +90,9 @@ final class LabelTest extends TestCase
     {
         $this->assertSame(
             '<label for="typeform-string">String</label>',
-            Label::widget()->for(new TypeForm(), 'string')->render(),
+            Label::widget()
+                ->for(new TypeForm(), 'string')
+                ->render(),
         );
     }
 
@@ -98,7 +105,11 @@ final class LabelTest extends TestCase
     {
         $this->assertSame(
             '<label for="typeform-string">My&nbsp;Field</label>',
-            Label::widget()->for(new TypeForm(), 'string')->encode(false)->label('My&nbsp;Field')->render(),
+            Label::widget()
+                ->for(new TypeForm(), 'string')
+                ->encode(false)
+                ->label('My&nbsp;Field')
+                ->render(),
         );
     }
 }

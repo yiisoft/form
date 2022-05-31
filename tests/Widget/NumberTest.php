@@ -26,7 +26,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]" autofocus>',
-            Number::widget()->autofocus()->for(new TypeForm(), 'number')->render(),
+            Number::widget()
+                ->autofocus()
+                ->for(new TypeForm(), 'number')
+                ->render(),
         );
     }
 
@@ -37,7 +40,10 @@ final class NumberTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="number" id="typeform-number" name="TypeForm[number]" disabled>',
-            Number::widget()->disabled()->for(new TypeForm(), 'number')->render(),
+            Number::widget()
+                ->disabled()
+                ->for(new TypeForm(), 'number')
+                ->render(),
         );
     }
 
@@ -48,7 +54,9 @@ final class NumberTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="number" id="validatorform-number" name="ValidatorForm[number]" value="0" max="5" min="3">',
-            Number::widget()->for(new ValidatorForm(), 'number')->render(),
+            Number::widget()
+                ->for(new ValidatorForm(), 'number')
+                ->render(),
         );
     }
 
@@ -62,7 +70,9 @@ final class NumberTest extends TestCase
         HTML;
         $this->assertSame(
             $expected,
-            Number::widget()->for(new ValidatorForm(), 'numberRequired')->render(),
+            Number::widget()
+                ->for(new ValidatorForm(), 'numberRequired')
+                ->render(),
         );
     }
 
@@ -73,7 +83,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="id-test" name="TypeForm[number]">',
-            Number::widget()->for(new TypeForm(), 'number')->id('id-test')->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->id('id-test')
+                ->render(),
         );
     }
 
@@ -96,7 +109,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]" max="8">',
-            Number::widget()->for(new TypeForm(), 'number')->max(8)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->max(8)
+                ->render(),
         );
     }
 
@@ -107,7 +123,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]" min="4">',
-            Number::widget()->for(new TypeForm(), 'number')->min(4)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->min(4)
+                ->render(),
         );
     }
 
@@ -118,7 +137,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="name-test">',
-            Number::widget()->for(new TypeForm(), 'number')->name('name-test')->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->name('name-test')
+                ->render(),
         );
     }
 
@@ -129,7 +151,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]" placeholder="PlaceHolder Text">',
-            Number::widget()->for(new TypeForm(), 'number')->placeholder('PlaceHolder Text')->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->placeholder('PlaceHolder Text')
+                ->render(),
         );
     }
 
@@ -140,7 +165,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]" readonly>',
-            Number::widget()->for(new TypeForm(), 'number')->readonly()->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->readonly()
+                ->render(),
         );
     }
 
@@ -151,7 +179,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]" required>',
-            Number::widget()->for(new TypeForm(), 'number')->required()->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->required()
+                ->render(),
         );
     }
 
@@ -162,7 +193,9 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number" name="TypeForm[number]">',
-            Number::widget()->for(new TypeForm(), 'number')->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->render(),
         );
     }
 
@@ -173,7 +206,10 @@ final class NumberTest extends TestCase
     {
         $this->assertEqualsWithoutLE(
             '<input type="number" id="typeform-number" name="TypeForm[number]" tabindex="1">',
-            Number::widget()->for(new TypeForm(), 'number')->tabIndex(1)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->tabIndex(1)
+                ->render(),
         );
     }
 
@@ -185,19 +221,28 @@ final class NumberTest extends TestCase
         // value int `1`.
         $this->assertSame(
             '<input type="number" id="typeform-int" name="TypeForm[int]" value="1">',
-            Number::widget()->for(new TypeForm(), 'int')->value(1)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'int')
+                ->value(1)
+                ->render(),
         );
 
         // Value string numeric `1`.
         $this->assertSame(
             '<input type="number" id="typeform-string" name="TypeForm[string]" value="1">',
-            Number::widget()->for(new TypeForm(), 'string')->value('1')->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'string')
+                ->value('1')
+                ->render(),
         );
 
         // Value `null`.
         $this->assertSame(
             '<input type="number" id="typeform-int" name="TypeForm[int]">',
-            Number::widget()->for(new TypeForm(), 'int')->value(null)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'int')
+                ->value(null)
+                ->render(),
         );
     }
 
@@ -208,7 +253,9 @@ final class NumberTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number widget must be a numeric or null value.');
-        Number::widget()->for(new TypeForm(), 'array')->render();
+        Number::widget()
+            ->for(new TypeForm(), 'array')
+            ->render();
     }
 
     /**
@@ -222,21 +269,27 @@ final class NumberTest extends TestCase
         $formModel->setAttribute('int', 1);
         $this->assertSame(
             '<input type="number" id="typeform-int" name="TypeForm[int]" value="1">',
-            Number::widget()->for($formModel, 'int')->render(),
+            Number::widget()
+                ->for($formModel, 'int')
+                ->render(),
         );
 
         // Value string numeric `1`.
         $formModel->setAttribute('string', '1');
         $this->assertSame(
             '<input type="number" id="typeform-string" name="TypeForm[string]" value="1">',
-            Number::widget()->for($formModel, 'string')->render(),
+            Number::widget()
+                ->for($formModel, 'string')
+                ->render(),
         );
 
         // Value `null`.
         $formModel->setAttribute('int', null);
         $this->assertSame(
             '<input type="number" id="typeform-int" name="TypeForm[int]" value="0">',
-            Number::widget()->for($formModel, 'int')->render(),
+            Number::widget()
+                ->for($formModel, 'int')
+                ->render(),
         );
     }
 
@@ -247,7 +300,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" name="TypeForm[number]">',
-            Number::widget()->for(new TypeForm(), 'number')->id(null)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->id(null)
+                ->render(),
         );
     }
 
@@ -258,7 +314,10 @@ final class NumberTest extends TestCase
     {
         $this->assertSame(
             '<input type="number" id="typeform-number">',
-            Number::widget()->for(new TypeForm(), 'number')->name(null)->render(),
+            Number::widget()
+                ->for(new TypeForm(), 'number')
+                ->name(null)
+                ->render(),
         );
     }
 }
