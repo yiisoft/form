@@ -111,8 +111,12 @@ final class SelectTest extends TestCase
                 </select>
                 HTML,
                 [
-                    Option::tag()->value('1')->content('One'),
-                    Option::tag()->value('2')->content('Two'),
+                    Option::tag()
+                        ->value('1')
+                        ->content('One'),
+                    Option::tag()
+                        ->value('2')
+                        ->content('Two'),
                 ],
             ],
             [
@@ -126,10 +130,16 @@ final class SelectTest extends TestCase
                 </select>
                 HTML,
                 [
-                    Option::tag()->value('1')->content('One'),
+                    Option::tag()
+                        ->value('1')
+                        ->content('One'),
                     Optgroup::tag()->options(
-                        Option::tag()->value('1.1')->content('One.One'),
-                        Option::tag()->value('1.2')->content('One.Two'),
+                        Option::tag()
+                            ->value('1.1')
+                            ->content('One.One'),
+                        Option::tag()
+                            ->value('1.2')
+                            ->content('One.Two'),
                     ),
                 ],
             ],
@@ -156,8 +166,12 @@ final class SelectTest extends TestCase
         $result = Select::widget()
             ->formAttribute(new SelectForm(), 'item')
             ->options(
-                Option::tag()->value('1')->content('One'),
-                Option::tag()->value('2')->content('Two'),
+                Option::tag()
+                    ->value('1')
+                    ->content('One'),
+                Option::tag()
+                    ->value('2')
+                    ->content('Two'),
             )
             ->hideLabel()
             ->useContainer(false)

@@ -198,7 +198,9 @@ final class Password extends InputField implements
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
+            $rules = $this
+                    ->getFormModel()
+                    ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Required) {
                     $this->inputAttributes['required'] = true;
