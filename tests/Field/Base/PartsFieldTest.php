@@ -353,6 +353,51 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testEmptyInputContainerTag(): void
+    {
+        $field = StubPartsField::widget();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        $field->inputContainerTag('');
+    }
+
+    public function testAddInputContainerAttributes(): void
+    {
+        $result = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('p')
+            ->addInputContainerAttributes(['class' => 'red'])
+            ->addInputContainerAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p id="KEY" class="red"><input></p>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testInputContainerAttributes(): void
+    {
+        $result = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('p')
+            ->inputContainerAttributes(['class' => 'red'])
+            ->inputContainerAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p id="KEY"><input></p>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubPartsField::widget();
@@ -361,6 +406,9 @@ final class PartsFieldTest extends TestCase
         $this->assertNotSame($field, $field->token('{before}', ''));
         $this->assertNotSame($field, $field->template(''));
         $this->assertNotSame($field, $field->hideLabel());
+        $this->assertNotSame($field, $field->inputContainerTag(null));
+        $this->assertNotSame($field, $field->inputContainerAttributes([]));
+        $this->assertNotSame($field, $field->addInputContainerAttributes([]));
         $this->assertNotSame($field, $field->labelConfig([]));
         $this->assertNotSame($field, $field->labelAttributes([]));
         $this->assertNotSame($field, $field->addLabelAttributes([]));

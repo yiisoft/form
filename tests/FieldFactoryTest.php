@@ -234,6 +234,19 @@ final class FieldFactoryTest extends TestCase
                 ],
                 'company',
             ],
+            [
+                <<<'HTML'
+                <div>
+                <label for="textform-job">Job</label>
+                <div class="control"><input type="text" id="textform-job" name="TextForm[job]" value></div>
+                </div>
+                HTML,
+                [
+                    'inputContainerTag' => 'div',
+                    'inputContainerAttributes' => ['class' => 'control'],
+                ],
+                'job',
+            ],
         ];
     }
 
