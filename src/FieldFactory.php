@@ -66,6 +66,8 @@ final class FieldFactory
         private ?bool $usePlaceholder = null,
         private ?string $validClass = null,
         private ?string $invalidClass = null,
+        private ?string $inputValidClass = null,
+        private ?string $inputInvalidClass = null,
         private ?bool $enrichmentFromRules = null,
         private array $fieldConfigs = [],
     ) {
@@ -357,6 +359,12 @@ final class FieldFactory
             }
             if ($this->invalidClass !== null) {
                 $config['invalidClass()'] = [$this->invalidClass];
+            }
+            if ($this->inputValidClass !== null) {
+                $config['inputValidClass()'] = [$this->inputValidClass];
+            }
+            if ($this->inputInvalidClass !== null) {
+                $config['inputInvalidClass()'] = [$this->inputInvalidClass];
             }
         }
 
