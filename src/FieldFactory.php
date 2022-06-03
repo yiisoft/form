@@ -55,6 +55,8 @@ final class FieldFactory
         private ?bool $setInputId = null,
         private array $inputAttributes = [],
         private string|array|null $inputClass = null,
+        private ?string $inputContainerTag = null,
+        private array $inputContainerAttributes = [],
         string|array|null $labelClass = null,
         private array $labelConfig = [],
         string|array|null $hintClass = null,
@@ -300,6 +302,12 @@ final class FieldFactory
             }
             if ($this->templateEnd !== null) {
                 $config['templateEnd()'] = [$this->templateEnd];
+            }
+            if ($this->inputContainerTag !== null) {
+                $config['inputContainerTag()'] = [$this->inputContainerTag];
+            }
+            if ($this->inputContainerAttributes !== []) {
+                $config['inputContainerAttributes()'] = [$this->inputContainerAttributes];
             }
             if ($this->labelConfig !== []) {
                 $config['labelConfig()'] = [$this->labelConfig];
