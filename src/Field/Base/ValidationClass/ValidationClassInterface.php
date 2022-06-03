@@ -6,7 +6,11 @@ namespace Yiisoft\Form\Field\Base\ValidationClass;
 
 interface ValidationClassInterface
 {
-    public function invalidClass(string $class): self;
+    public function invalidClass(?string $class): self;
 
-    public function validClass(string $class): self;
+    public function validClass(?string $class): self;
+
+    public function inputInvalidClass(?string $class): self;
+
+    public function inputValidClass(?string $class): self;
 }

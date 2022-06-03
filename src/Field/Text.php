@@ -262,5 +262,12 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addInputValidationClassToAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getFormAttributeName(),
+            );
+        }
     }
 }

@@ -8,7 +8,7 @@ use Yiisoft\Form\Field\Base\PartsField;
 
 final class StubPartsField extends PartsField
 {
-    private string $inputHtml = '';
+    private ?string $inputHtml = null;
 
     public function setInputHtml(string $html): self
     {
@@ -18,6 +18,6 @@ final class StubPartsField extends PartsField
 
     protected function generateInput(): string
     {
-        return $this->inputHtml;
+        return $this->inputHtml ?? parent::generateInput();
     }
 }

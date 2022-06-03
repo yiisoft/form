@@ -260,6 +260,13 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addInputValidationClassToAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getFormAttributeName(),
+            );
+        }
     }
 
     private function generateSchemePattern(string $scheme): string

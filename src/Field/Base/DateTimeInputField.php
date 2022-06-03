@@ -183,4 +183,15 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
             );
         }
     }
+
+    protected function prepareInputAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addInputValidationClassToAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getFormAttributeName(),
+            );
+        }
+    }
 }
