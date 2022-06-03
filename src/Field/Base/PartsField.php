@@ -439,7 +439,7 @@ abstract class PartsField extends BaseField
 
     private function generateInputContainerEnd(): string
     {
-        return $this->inputContainerTag === null ? '' : '</' . $this->inputContainerTag . '>';
+        return $this->inputContainerTag === null ? '' : ('</' . $this->inputContainerTag . '>');
     }
 
     private function makeContent(string $template, array $parts): string
