@@ -81,7 +81,7 @@ In the controller, we will pass an instance of that `formModel` to the `view`:
 declare(strict_types=1);
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\Widget\Field;
+use Yiisoft\Form\Field;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\Translator;
