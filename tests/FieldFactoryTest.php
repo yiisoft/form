@@ -236,6 +236,33 @@ final class FieldFactoryTest extends TestCase
             ],
             [
                 <<<'HTML'
+                <div class="wrapper">
+                <label for="textform-job">Job</label>
+                <input type="text" id="textform-job" class="valid" name="TextForm[job]" value>
+                </div>
+                HTML,
+                [
+                    'inputValidClass' => 'valid',
+                    'containerAttributes' => ['class' => 'wrapper'],
+                ],
+                'job',
+            ],
+            [
+                <<<'HTML'
+                <div class="wrapper">
+                <label for="textform-company">Company</label>
+                <input type="text" id="textform-company" class="invalid" name="TextForm[company]" value>
+                <div>Value cannot be blank.</div>
+                </div>
+                HTML,
+                [
+                    'inputInvalidClass' => 'invalid',
+                    'containerAttributes' => ['class' => 'wrapper'],
+                ],
+                'company',
+            ],
+            [
+                <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
                 <div class="control"><input type="text" id="textform-job" name="TextForm[job]" value></div>
