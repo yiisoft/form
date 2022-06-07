@@ -31,7 +31,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $attributes;
     private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
-    /** @psalm-var array<string, string|array> */
     private array $rawData = [];
     private bool $validated = false;
 
@@ -147,28 +146,29 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $nested !== null || array_key_exists($attribute, $this->attributes);
     }
 
-    /**
-     * @param array $data
-     * @param string|null $formName
-     *
-     * @return bool
-     *
-     * @psalm-param array<string, string|array> $data
-     */
-    public function load(array $data, ?string $formName = null): bool
+    public function load(array|object|null $data, ?string $formName = null): bool
     {
+        if (!is_array($data)) {
+            return false;
+        }
+
         $this->rawData = [];
         $scope = $formName ?? $this->getFormName();
 
         if ($scope === '' && !empty($data)) {
             $this->rawData = $data;
         } elseif (isset($data[$scope])) {
-            /** @var array<string, string> */
+            if (!is_array($data[$scope])) {
+                return false;
+            }
             $this->rawData = $data[$scope];
         }
 
+        /**
+         * @var mixed $value
+         */
         foreach ($this->rawData as $name => $value) {
-            $this->setAttribute($name, $value);
+            $this->setAttribute((string) $name, $value);
         }
 
         return $this->rawData !== [];
