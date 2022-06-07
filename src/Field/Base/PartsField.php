@@ -33,6 +33,12 @@ abstract class PartsField extends BaseField
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
     protected ?bool $hideLabel = null;
 
+    /**
+     * @psalm-var non-empty-string|null
+     */
+    protected ?string $inputContainerTag = null;
+    protected array $inputContainerAttributes = [];
+
     private bool $replaceLabelAttributes = false;
     private bool $replaceLabelClass = false;
     private array $labelAttributes = [];
@@ -116,6 +122,31 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         $new->hideLabel = $hide;
+        return $new;
+    }
+
+    final public function inputContainerTag(?string $tag): static
+    {
+        if ($tag === '') {
+            throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
+        $new = clone $this;
+        $new->inputContainerTag = $tag;
+        return $new;
+    }
+
+    final public function inputContainerAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->inputContainerAttributes = $attributes;
+        return $new;
+    }
+
+    final public function addInputContainerAttributes(array $attributes): static
+    {
+        $new = clone $this;
+        $new->inputContainerAttributes = array_merge($new->inputContainerAttributes, $attributes);
         return $new;
     }
 
@@ -364,7 +395,9 @@ abstract class PartsField extends BaseField
     final protected function generateContent(): ?string
     {
         $parts = [
-            '{input}' => $this->generateInput(),
+            '{input}' => $this->generateInputContainerBegin()
+                . $this->generateInput()
+                . $this->generateInputContainerEnd(),
             '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
             '{hint}' => $this->generateHint(),
             '{error}' => $this->generateError(),
@@ -395,6 +428,18 @@ abstract class PartsField extends BaseField
         ];
 
         return $this->makeContent($this->templateEnd, $parts);
+    }
+
+    private function generateInputContainerBegin(): string
+    {
+        return $this->inputContainerTag === null
+            ? ''
+            : Html::tag($this->inputContainerTag, '', $this->inputContainerAttributes)->open();
+    }
+
+    private function generateInputContainerEnd(): string
+    {
+        return $this->inputContainerTag === null ? '' : ('</' . $this->inputContainerTag . '>');
     }
 
     private function makeContent(string $template, array $parts): string

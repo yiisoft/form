@@ -214,5 +214,12 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addInputValidationClassToAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getFormAttributeName(),
+            );
+        }
     }
 }

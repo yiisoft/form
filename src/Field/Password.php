@@ -253,5 +253,12 @@ final class Password extends InputField implements
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addInputValidationClassToAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getFormAttributeName(),
+            );
+        }
     }
 }

@@ -206,4 +206,15 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
             );
         }
     }
+
+    protected function prepareInputAttributes(array &$attributes): void
+    {
+        if ($this->hasFormModelAndAttribute()) {
+            $this->addInputValidationClassToAttributes(
+                $attributes,
+                $this->getFormModel(),
+                $this->getFormAttributeName(),
+            );
+        }
+    }
 }

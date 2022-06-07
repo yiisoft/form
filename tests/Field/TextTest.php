@@ -616,6 +616,43 @@ final class TextTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testInputInvalidClass(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-company">Company</label>
+        <input type="text" id="textform-company" class="invalid" name="TextForm[company]" value>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->formAttribute(TextForm::validated(), 'company')
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testInputValidClass(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="textform-job">Job</label>
+        <input type="text" id="textform-job" class="valid" name="TextForm[job]" value>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->formAttribute(TextForm::validated(), 'job')
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
     public function dataEnrichmentFromRules(): array
     {
         return [
