@@ -1,6 +1,6 @@
 # Creating Forms
 
-A form, that is displayed on the client-side, will in most cases have a corresponding form model which is used to
+A form displayed on the client-side usually has a corresponding form model which is used to
 [validate input](https://github.com/yiisoft/validator).
 
 In the following example, we show how a generic form model can be used for a login form:
