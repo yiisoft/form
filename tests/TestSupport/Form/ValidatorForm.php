@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\HasLength\HasLength;
-use Yiisoft\Validator\Rule\Number\Number;
-use Yiisoft\Validator\Rule\Regex\Regex;
-use Yiisoft\Validator\Rule\Required\Required;
-use Yiisoft\Validator\Rule\Url\Url;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Number;
+use Yiisoft\Validator\Rule\Regex;
+use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\Url;
 
 final class ValidatorForm extends FormModel
 {

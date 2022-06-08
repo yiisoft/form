@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Result;
-use Yiisoft\Validator\Rule\Required\Required;
+use Yiisoft\Validator\Rule\Required;
 
 final class LoginValidatorForm extends FormModel
 {

@@ -8,11 +8,11 @@ use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Widget\Attribute\WidgetAttributes;
 use Yiisoft\Form\Widget\Url;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\HasLength\HasLength;
-use Yiisoft\Validator\Rule\Number\Number;
-use Yiisoft\Validator\Rule\Regex\Regex;
-use Yiisoft\Validator\Rule\Required\Required;
-use Yiisoft\Validator\Rule\Url\Url as UrlRule;
+use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Number;
+use Yiisoft\Validator\Rule\Regex;
+use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\Url as UrlRule;
 use Yiisoft\Validator\RuleInterface;
 
 /**
@@ -43,9 +43,9 @@ final class FieldValidator
 
             if ($rule instanceof HasLength && $widget instanceof HasLengthInterface) {
                 /** @var int|null */
-                $attributes['maxlength'] = $rule->getOptions()['max'] !== null ? $rule->getOptions()['max'] : null;
+                $attributes['maxlength'] = $rule->getOptions()['max'];
                 /** @var int|null */
-                $attributes['minlength'] = $rule->getOptions()['min'] !== null ? $rule->getOptions()['min'] : null;
+                $attributes['minlength'] = $rule->getOptions()['min'];
             }
 
             if ($rule instanceof Regex && $widget instanceof RegexInterface) {
@@ -56,9 +56,9 @@ final class FieldValidator
 
             if ($rule instanceof Number && $widget instanceof NumberInterface) {
                 /** @var int|null */
-                $attributes['max'] = $rule->getOptions()['max'] !== null ? $rule->getOptions()['max'] : null;
+                $attributes['max'] = $rule->getOptions()['max'];
                 /** @var int|null */
-                $attributes['min'] = $rule->getOptions()['min'] !== null ? $rule->getOptions()['min'] : null;
+                $attributes['min'] = $rule->getOptions()['min'];
             }
 
             if ($rule instanceof UrlRule && $widget instanceof Url) {
