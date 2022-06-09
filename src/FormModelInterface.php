@@ -120,14 +120,12 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
      * `$data` instead of `$data['FormName']`.
      *
-     * @param array $data the data array to load, typically server request attributes.
+     * @param array|object|null $data The data to load, typically server request attributes.
      * @param string|null $formName scope from which to get data
      *
      * @return bool whether `load()` found the expected form in `$data`.
-     *
-     * @psalm-param array<string, string> $data
      */
-    public function load(array $data, ?string $formName = null): bool;
+    public function load(array|object|null $data, ?string $formName = null): bool;
 
     /**
      * Set specified attribute

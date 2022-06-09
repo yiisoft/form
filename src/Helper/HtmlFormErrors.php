@@ -65,9 +65,9 @@ final class HtmlFormErrors
      * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
-     * @return string the error message. Empty string returned if there is no error.
+     * @return string the error message. `null` returned if there is no error.
      */
-    public static function getFirstError(FormModelInterface $formModel, string $attribute): string
+    public static function getFirstError(FormModelInterface $formModel, string $attribute): ?string
     {
         return $formModel->getFormErrors()->getFirstError(HtmlForm::getAttributeName($formModel, $attribute));
     }
