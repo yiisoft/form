@@ -212,15 +212,6 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
                 $pattern = null;
                 if ($rule instanceof UrlRule) {
                     $pattern = $rule->getOptions()['pattern'];
-
-                    $schemePatterns = [];
-                    foreach ($rule->getOptions()['validSchemes'] as $scheme) {
-                        $schemePatterns[] = $this->generateSchemePattern($scheme);
-                    }
-
-                    if (str_contains($pattern, '{schemes}')) {
-                        $pattern = str_replace('{schemes}', '(' . implode('|', $schemePatterns) . ')', $pattern);
-                    }
                 } elseif ($rule instanceof Regex) {
                     if (!($rule->getOptions()['not'])) {
                         $pattern = $rule->getOptions()['pattern'];

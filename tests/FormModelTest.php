@@ -375,4 +375,17 @@ final class FormModelTest extends TestCase
 
         $this->assertSame([], $form->getRules());
     }
+
+    public function testGetData(): void
+    {
+        $data = [
+            'login' => 'admin',
+            'password' => '123456',
+            'rememberMe' => true,
+        ];
+        $form = new LoginForm();
+        $form->load($data, '');
+
+        $this->assertSame($data, $form->getData());
+    }
 }

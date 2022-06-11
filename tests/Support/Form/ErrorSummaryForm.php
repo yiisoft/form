@@ -8,6 +8,7 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Callback;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\Validator;
 
 final class ErrorSummaryForm extends FormModel
@@ -46,7 +47,7 @@ final class ErrorSummaryForm extends FormModel
     public static function validated(): self
     {
         $form = new self();
-        (new Validator())->validate($form);
+        (new Validator(new SimpleRuleHandlerContainer()))->validate($form);
         return $form;
     }
 }
