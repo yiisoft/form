@@ -672,6 +672,10 @@ final class TextTest extends TestCase
                 '<input type="text" id="textform-nocode" name="TextForm[nocode]" value>',
                 'nocode',
             ],
+            'required-with-when' => [
+                '<input type="text" id="textform-requiredwhen" name="TextForm[requiredWhen]">',
+                'requiredWhen',
+            ],
         ];
     }
 

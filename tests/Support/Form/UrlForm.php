@@ -22,6 +22,7 @@ final class UrlForm extends FormModel
     public string $beach2 = '';
     public ?string $post = null;
     public int $age = 42;
+    public ?int $requiredWhen = null;
 
     public function getAttributeLabels(): array
     {
@@ -40,6 +41,7 @@ final class UrlForm extends FormModel
             'shop' => [new Url()],
             'beach' => [new Url(), new Regex(pattern: '~\w+~')],
             'beach2' => [new Regex(pattern: '~\w+~'), new Url()],
+            'requiredWhen' => [new Required(when: static fn() => false)],
         ];
     }
 

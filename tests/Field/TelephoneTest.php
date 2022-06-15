@@ -220,6 +220,10 @@ final class TelephoneTest extends TestCase
                 '<input type="tel" id="telephoneform-nocode" name="TelephoneForm[nocode]">',
                 'nocode',
             ],
+            'required-with-when' => [
+                '<input type="tel" id="telephoneform-requiredwhen" name="TelephoneForm[requiredWhen]">',
+                'requiredWhen',
+            ],
         ];
     }
 

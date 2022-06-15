@@ -11,12 +11,14 @@ final class FileForm extends FormModel
 {
     private ?string $avatar = null;
     private ?string $image = null;
+    private ?string $photo = null;
     private ?int $age = 42;
 
     public function getRules(): array
     {
         return [
             'image' => [new Required()],
+            'photo' => [new Required(when: static fn() => false)],
         ];
     }
 

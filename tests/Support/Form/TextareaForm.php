@@ -14,12 +14,14 @@ final class TextareaForm extends FormModel
     private string $bio = '';
     private string $shortdesc = '';
     private int $age = 42;
+    public ?int $requiredWhen = null;
 
     public function getRules(): array
     {
         return [
             'bio' => [new Required()],
             'shortdesc' => [new HasLength(min: 10, max: 199)],
+            'requiredWhen' => [new Required(when: static fn() => false)],
         ];
     }
 
