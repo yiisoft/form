@@ -20,7 +20,7 @@ final class DateForm extends FormModel
     {
         return [
             'main' => [new Required()],
-            'second' => [new Required(when: static fn() => false)],
+            'second' => [new Required(when: static fn () => false)],
         ];
     }
 

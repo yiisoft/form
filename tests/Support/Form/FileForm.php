@@ -18,7 +18,7 @@ final class FileForm extends FormModel
     {
         return [
             'image' => [new Required()],
-            'photo' => [new Required(when: static fn() => false)],
+            'photo' => [new Required(when: static fn () => false)],
         ];
     }
 

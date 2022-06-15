@@ -27,7 +27,7 @@ final class EmailForm extends FormModel
             'teamlead' => [new HasLength(min: 10, max: 199)],
             'code' => [new Regex(pattern: '~\w+@\w+~')],
             'nocode' => [new Regex(pattern: '~\w+@\w+~', not: true)],
-            'requiredWhen' => [new Required(when: static fn() => false)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

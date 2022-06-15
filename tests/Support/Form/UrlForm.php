@@ -41,7 +41,7 @@ final class UrlForm extends FormModel
             'shop' => [new Url()],
             'beach' => [new Url(), new Regex(pattern: '~\w+~')],
             'beach2' => [new Regex(pattern: '~\w+~'), new Url()],
-            'requiredWhen' => [new Required(when: static fn() => false)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

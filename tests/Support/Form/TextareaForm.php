@@ -21,7 +21,7 @@ final class TextareaForm extends FormModel
         return [
             'bio' => [new Required()],
             'shortdesc' => [new HasLength(min: 10, max: 199)],
-            'requiredWhen' => [new Required(when: static fn() => false)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

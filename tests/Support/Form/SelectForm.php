@@ -28,7 +28,7 @@ final class SelectForm extends FormModel
     {
         return [
             'color' => [new Required()],
-            'requiredWhen' => [new Required(when: static fn() => false)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

@@ -20,7 +20,7 @@ final class RangeForm extends FormModel
         return [
             'volume' => [new Required()],
             'count' => [new Number(min: 1, max: 9)],
-            'requiredWhen' => [new Required(when: static fn() => false)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

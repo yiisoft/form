@@ -27,7 +27,7 @@ final class TelephoneForm extends FormModel
             'office2' => [new HasLength(min: 10, max: 199)],
             'code' => [new Regex(pattern: '~\w+~')],
             'nocode' => [new Regex(pattern: '~\w+~', not: true)],
-            'requiredWhen' => [new Required(when: static fn() => false)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 
