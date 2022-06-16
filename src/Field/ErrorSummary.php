@@ -138,7 +138,9 @@ final class ErrorSummary extends BaseField
             $content[] = Html::p($this->header, $this->headerAttributes)->render();
         }
 
-        $content[] = Html::ul()->strings($messages, [], $this->encode)->render();
+        $content[] = Html::ul()
+            ->strings($messages, [], $this->encode)
+            ->render();
 
         if ($this->footer !== '') {
             $content[] = Html::p($this->footer, $this->footerAttributes)->render();

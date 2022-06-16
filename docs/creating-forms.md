@@ -111,8 +111,11 @@ $this->setTitle($title);
             ->csrf($csrf)
             ->id('form-auth-login')
             ->open() ?>
-            <?= Field::text($formModel, 'login')->autofocus()->tabindex(1) ?>
-            <?= Field::password($formModel, 'password')->tabindex(2) ?>
+            <?= Field::text($formModel, 'login')
+                ->autofocus()
+                ->tabindex(1) ?>
+            <?= Field::password($formModel, 'password')
+                    ->tabindex(2) ?>
             <?= Field::submitButton()
                 ->containerClass('d-grid gap-2 form-floating')
                 ->buttonClass('btn btn-primary btn-lg mt-3')

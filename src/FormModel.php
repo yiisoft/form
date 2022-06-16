@@ -246,7 +246,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this->getFormErrors()->addError($attribute, $error);
+                $this
+                    ->getFormErrors()
+                    ->addError($attribute, $error);
             }
         }
     }
@@ -274,7 +276,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private function generateAttributeLabel(string $name): string
     {
         return StringHelper::uppercaseFirstCharacterInEachWord(
-            $this->getInflector()->toWords($name)
+            $this
+                ->getInflector()
+                ->toWords($name)
         );
     }
 
