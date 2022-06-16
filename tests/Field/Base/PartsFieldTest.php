@@ -398,6 +398,104 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function dataAddContainerClass(): array
+    {
+        return [
+            [' class="main"', []],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['bold']],
+            [' class="main italic bold"', ['italic bold']],
+            [' class="main italic bold"', ['italic', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataAddContainerClass
+     *
+     * @param string[] $class
+     */
+    public function testAddContainerClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('p')
+            ->addInputContainerClass('main')
+            ->addInputContainerClass(...$class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p$expectedClassAttribute><input></p>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataAddContainerNewClass(): array
+    {
+        return [
+            ['', null],
+            [' class', ''],
+            [' class="red"', 'red'],
+        ];
+    }
+
+    /**
+     * @dataProvider dataAddContainerNewClass
+     */
+    public function testAddContainerNewClass(string $expectedClassAttribute, ?string $class): void
+    {
+        $result = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('p')
+            ->addInputContainerClass($class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p$expectedClassAttribute><input></p>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function dataContainerClass(): array
+    {
+        return [
+            ['', []],
+            ['', [null]],
+            [' class', ['']],
+            [' class="main"', ['main']],
+            [' class="main bold"', ['main bold']],
+            [' class="main bold"', ['main', 'bold']],
+        ];
+    }
+
+    /**
+     * @dataProvider dataContainerClass
+     *
+     * @param string[] $class
+     */
+    public function testContainerClass(string $expectedClassAttribute, array $class): void
+    {
+        $result = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('p')
+            ->inputContainerClass('red')
+            ->inputContainerClass(...$class)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p$expectedClassAttribute><input></p>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubPartsField::widget();
@@ -409,6 +507,8 @@ final class PartsFieldTest extends TestCase
         $this->assertNotSame($field, $field->inputContainerTag(null));
         $this->assertNotSame($field, $field->inputContainerAttributes([]));
         $this->assertNotSame($field, $field->addInputContainerAttributes([]));
+        $this->assertNotSame($field, $field->inputContainerClass());
+        $this->assertNotSame($field, $field->addInputContainerClass());
         $this->assertNotSame($field, $field->labelConfig([]));
         $this->assertNotSame($field, $field->labelAttributes([]));
         $this->assertNotSame($field, $field->addLabelAttributes([]));

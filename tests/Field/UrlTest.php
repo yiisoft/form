@@ -243,7 +243,7 @@ final class UrlTest extends TestCase
                 'nocode',
             ],
             'url' => [
-                '<input type="url" id="urlform-shop" name="UrlForm[shop]" value pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
+                '<input type="url" id="urlform-shop" name="UrlForm[shop]" value pattern="^((?i)http|https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
                 'shop',
             ],
             'url-regex' => [
@@ -251,8 +251,12 @@ final class UrlTest extends TestCase
                 'beach',
             ],
             'regex-url' => [
-                '<input type="url" id="urlform-beach2" name="UrlForm[beach2]" value pattern="^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
+                '<input type="url" id="urlform-beach2" name="UrlForm[beach2]" value pattern="^((?i)http|https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
                 'beach2',
+            ],
+            'required-with-when' => [
+                '<input type="url" id="urlform-requiredwhen" name="UrlForm[requiredWhen]">',
+                'requiredWhen',
             ],
         ];
     }

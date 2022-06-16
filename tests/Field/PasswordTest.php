@@ -230,6 +230,10 @@ final class PasswordTest extends TestCase
                 '<input type="password" id="passwordform-nocode" name="PasswordForm[nocode]">',
                 'nocode',
             ],
+            'required-with-when' => [
+                '<input type="password" id="passwordform-requiredwhen" name="PasswordForm[requiredWhen]">',
+                'requiredWhen',
+            ],
         ];
     }
 

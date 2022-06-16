@@ -300,6 +300,10 @@ final class NumberTest extends TestCase
                 '<input type="number" id="numberform-step" name="NumberForm[step]" min="5" max="95">',
                 'step',
             ],
+            'required-with-when' => [
+                '<input type="number" id="numberform-requiredwhen" name="NumberForm[requiredWhen]">',
+                'requiredWhen',
+            ],
         ];
     }
 

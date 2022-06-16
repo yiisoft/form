@@ -150,6 +150,33 @@ abstract class PartsField extends BaseField
         return $new;
     }
 
+    /**
+     * Replace input container tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function inputContainerClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->inputContainerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        return $new;
+    }
+
+    /**
+     * Add one or more CSS classes to the input container tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function addInputContainerClass(?string ...$class): static
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->inputContainerAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
+        return $new;
+    }
+
     final public function labelConfig(array $config): static
     {
         $new = clone $this;

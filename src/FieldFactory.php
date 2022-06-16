@@ -57,6 +57,7 @@ final class FieldFactory
         private string|array|null $inputClass = null,
         private ?string $inputContainerTag = null,
         private array $inputContainerAttributes = [],
+        private string|array|null $inputContainerClass = null,
         string|array|null $labelClass = null,
         private array $labelConfig = [],
         string|array|null $hintClass = null,
@@ -310,6 +311,11 @@ final class FieldFactory
             }
             if ($this->inputContainerAttributes !== []) {
                 $config['inputContainerAttributes()'] = [$this->inputContainerAttributes];
+            }
+            if ($this->inputContainerClass !== null) {
+                $config['inputContainerClass()'] = is_array($this->inputContainerClass)
+                    ? $this->inputContainerClass
+                    : [$this->inputContainerClass];
             }
             if ($this->labelConfig !== []) {
                 $config['labelConfig()'] = [$this->labelConfig];

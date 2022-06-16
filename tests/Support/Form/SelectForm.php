@@ -16,6 +16,7 @@ final class SelectForm extends FormModel
     private ?string $item = null;
     private stdClass $object;
     private ?int $color = null;
+    public ?int $requiredWhen = null;
 
     public function __construct()
     {
@@ -27,6 +28,7 @@ final class SelectForm extends FormModel
     {
         return [
             'color' => [new Required()],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

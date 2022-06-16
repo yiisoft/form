@@ -13,6 +13,7 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
@@ -198,6 +199,10 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
+                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                    continue;
+                }
+
                 if ($rule instanceof Required) {
                     $this->inputAttributes['required'] = true;
                 }
@@ -214,15 +219,6 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
                 $pattern = null;
                 if ($rule instanceof UrlRule) {
                     $pattern = $rule->getOptions()['pattern'];
-
-                    $schemePatterns = [];
-                    foreach ($rule->getOptions()['validSchemes'] as $scheme) {
-                        $schemePatterns[] = $this->generateSchemePattern($scheme);
-                    }
-
-                    if (str_contains($pattern, '{schemes}')) {
-                        $pattern = str_replace('{schemes}', '(' . implode('|', $schemePatterns) . ')', $pattern);
-                    }
                 } elseif ($rule instanceof Regex) {
                     if (!($rule->getOptions()['not'])) {
                         $pattern = $rule->getOptions()['pattern'];

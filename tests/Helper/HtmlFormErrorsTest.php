@@ -35,9 +35,8 @@ final class HtmlFormErrorsTest extends TestCase
             ->validate($formModel)
             ->isValid());
         $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
-        $this->assertEmpty($formModel
-            ->getFormErrors()
-            ->clear());
+        $formModel->getFormErrors()->clear();
+        $this->assertEmpty($formModel->getFormErrors()->getAllErrors());
     }
 
     public function testClearForAttribute(): void

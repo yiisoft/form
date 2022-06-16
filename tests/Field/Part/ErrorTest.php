@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Tests\Support\Form\ErrorForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -273,7 +274,7 @@ final class ErrorTest extends TestCase
     private function createValidatedErrorForm(): ErrorForm
     {
         $form = new ErrorForm();
-        (new Validator())->validate($form);
+        (new Validator(new SimpleRuleHandlerContainer()))->validate($form);
         return $form;
     }
 }

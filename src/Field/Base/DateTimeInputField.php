@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\Required;
 
 use function is_string;
@@ -150,6 +151,10 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
+                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                    continue;
+                }
+
                 if ($rule instanceof Required) {
                     $this->inputAttributes['required'] = true;
                 }
