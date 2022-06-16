@@ -248,6 +248,23 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testEnrichmentFromRulesWithWhen(): void
+    {
+        $result = File::widget()
+            ->formAttribute(new FileForm(), 'photo')
+            ->hideLabel()
+            ->enrichmentFromRules(true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="file" id="fileform-photo" name="FileForm[photo]">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testInvalidValue(): void
     {
         $field = File::widget()

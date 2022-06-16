@@ -13,6 +13,7 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
@@ -195,6 +196,10 @@ final class Telephone extends InputField implements EnrichmentFromRulesInterface
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
             $rules = $this->getFormModel()->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
+                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                    continue;
+                }
+
                 if ($rule instanceof Required) {
                     $this->inputAttributes['required'] = true;
                 }

@@ -268,6 +268,10 @@ final class EmailTest extends TestCase
                 '<input type="email" id="emailform-nocode" name="EmailForm[nocode]">',
                 'nocode',
             ],
+            'required-with-when' => [
+                '<input type="email" id="emailform-requiredwhen" name="EmailForm[requiredWhen]">',
+                'requiredWhen',
+            ],
         ];
     }
 

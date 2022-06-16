@@ -251,6 +251,10 @@ final class TextareaTest extends TestCase
                 '<textarea id="textareaform-shortdesc" name="TextareaForm[shortdesc]" maxlength="199" minlength="10"></textarea>',
                 'shortdesc',
             ],
+            'required-with-when' => [
+                '<textarea id="textareaform-requiredwhen" name="TextareaForm[requiredWhen]"></textarea>',
+                'requiredWhen',
+            ],
         ];
     }
 

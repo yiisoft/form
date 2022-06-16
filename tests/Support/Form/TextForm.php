@@ -20,6 +20,7 @@ final class TextForm extends FormModel
     public string $code = '';
     public string $nocode = '';
     public int $age = 42;
+    public ?int $requiredWhen = null;
 
     public function getRules(): array
     {
@@ -29,6 +30,7 @@ final class TextForm extends FormModel
             'shortdesc' => [new HasLength(min: 10, max: 199)],
             'code' => [new Regex(pattern: '~\w+~')],
             'nocode' => [new Regex(pattern: '~\w+~', not: true)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

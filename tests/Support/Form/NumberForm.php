@@ -15,12 +15,14 @@ final class NumberForm extends FormModel
     public string $name = 'Mike';
     public ?int $weight = null;
     public ?int $step = null;
+    public ?int $requiredWhen = null;
 
     public function getRules(): array
     {
         return [
             'weight' => [new Required()],
             'step' => [new Number(min: 5, max: 95)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

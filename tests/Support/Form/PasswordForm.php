@@ -18,6 +18,7 @@ final class PasswordForm extends FormModel
     private ?string $entry2 = null;
     private ?string $code = null;
     private ?string $nocode = null;
+    public ?int $requiredWhen = null;
 
     public function getRules(): array
     {
@@ -26,6 +27,7 @@ final class PasswordForm extends FormModel
             'entry2' => [new HasLength(min: 10, max: 199)],
             'code' => [new Regex(pattern: '~\w+~')],
             'nocode' => [new Regex(pattern: '~\w+~', not: true)],
+            'requiredWhen' => [new Required(when: static fn () => false)],
         ];
     }
 

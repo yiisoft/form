@@ -596,6 +596,25 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testEnrichmentFromRulesWithWhen(): void
+    {
+        $result = Select::widget()
+            ->formAttribute(new SelectForm(), 'requiredWhen')
+            ->optionsData(['red' => 'Red'])
+            ->enrichmentFromRules(true)
+            ->hideLabel()
+            ->useContainer(false)
+            ->render();
+
+        $expected = <<<HTML
+            <select id="selectform-requiredwhen" name="SelectForm[requiredWhen]">
+            <option value="red">Red</option>
+            </select>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = Select::widget();

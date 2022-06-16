@@ -13,12 +13,14 @@ final class DateForm extends FormModel
     private ?string $startDate = null;
     private ?string $endDate = null;
     private ?string $main = null;
+    private ?string $second = null;
     private int $age = 42;
 
     public function getRules(): array
     {
         return [
             'main' => [new Required()],
+            'second' => [new Required(when: static fn () => false)],
         ];
     }
 

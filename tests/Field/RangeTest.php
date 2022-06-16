@@ -352,6 +352,10 @@ final class RangeTest extends TestCase
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" min="1" max="9">',
                 'count',
             ],
+            'required-with-when' => [
+                '<input type="range" id="rangeform-requiredwhen" name="RangeForm[requiredWhen]">',
+                'requiredWhen',
+            ],
         ];
     }
 
