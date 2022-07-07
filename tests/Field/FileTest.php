@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Tests\Support\Form\FileForm;
@@ -265,14 +264,21 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testInvalidValue(): void
+    public function testValue(): void
     {
-        $field = File::widget()
-            ->formAttribute(new FileForm(), 'age');
+        $result = File::widget()
+            ->hideLabel()
+            ->formAttribute(new FileForm(), 'photo')
+            ->value('test')
+            ->render();
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('File field requires a string, Stringable or null value.');
-        $field->render();
+        $expected = <<<HTML
+            <div>
+            <input type="file" id="fileform-photo" name="FileForm[photo]" value="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
     }
 
     public function testImmutability(): void
@@ -289,5 +295,6 @@ final class FileTest extends TestCase
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->uncheckInputAttributes([]));
         $this->assertNotSame($field, $field->addUncheckInputAttributes([]));
+        $this->assertNotSame($field, $field->value(null));
     }
 }

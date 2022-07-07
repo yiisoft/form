@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
-use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
 use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
@@ -28,6 +27,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
     private array $uncheckInputAttributes = [];
+    private string|Stringable|null $value = null;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -153,6 +153,13 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         return $new;
     }
 
+    public function value(string|Stringable|null $value): self
+    {
+        $new = clone $this;
+        $new->value = $value;
+        return $new;
+    }
+
     /**
      * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
      */
@@ -177,20 +184,9 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
 
     protected function generateInput(): string
     {
-        $value = $this->getFormAttributeValue();
-
-        if (!is_string($value)
-            && $value !== null
-            && (!$value instanceof Stringable)
-        ) {
-            throw new InvalidArgumentException(
-                'File field requires a string, Stringable or null value.'
-            );
-        }
-
         $inputAttributes = $this->getInputAttributes();
 
-        $tag = Html::file($this->getInputName(), $value, $inputAttributes);
+        $tag = Html::file($this->getInputName(), $this->value, $inputAttributes);
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
             if (!empty($this->uncheckInputAttributes)) {

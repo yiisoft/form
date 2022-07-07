@@ -12,7 +12,6 @@ final class FileForm extends FormModel
     private ?string $avatar = null;
     private ?string $image = null;
     private ?string $photo = null;
-    private ?int $age = 42;
 
     public function getRules(): array
     {
