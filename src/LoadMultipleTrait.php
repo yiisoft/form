@@ -6,9 +6,6 @@ namespace Yiisoft\Form;
 
 trait LoadMultipleTrait
 {
-    /**
-     * @param FormModelInterface[] Loaded models
-     */
     private array $models = [];
 
     public function loadMultiple(array $data, ?string $formName = null): bool
@@ -18,6 +15,7 @@ trait LoadMultipleTrait
             $formName = $this->getFormName();
         }
 
+        $success = true;
         foreach (array_keys($data) as $i) {
             /* @var \Yiisoft\Form\FormModelInterface $model */
             $model = clone $this;
@@ -32,11 +30,11 @@ trait LoadMultipleTrait
             if ($result === true) {
                 $this->models[] = $model;
             } else {
-                break;
+                $this->models[] = $success = false;
             }
         }
 
-        return count($this->models) === count($data);
+        return $success;
     }
 
     public function getModels(): array
