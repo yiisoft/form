@@ -15,19 +15,17 @@ trait LoadMultipleTrait
             $formName = $this->getFormName();
         }
 
+        if ($formName !== '') {
+            $data = $data[$formName];
+        }
+
         $success = true;
+
         foreach (array_keys($data) as $i) {
             /* @var \Yiisoft\Form\FormModelInterface $model */
             $model = clone $this;
 
-            $result = false;
-            if ($formName === '' && !empty($data[$i])) {
-                $result = $model->load($data[$i], '');
-            } elseif (!empty($data[$formName][$i])) {
-                $result = $model->load($data[$formName][$i], '');
-            }
-
-            if ($result === true) {
+            if ($model->load($data[$i], '') === true) {
                 $this->models[] = $model;
             } else {
                 $this->models[] = $success = false;
