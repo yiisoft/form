@@ -176,19 +176,21 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function setAttribute(string $name, mixed $value): void
     {
-        if ($value !== null) {
-            [$realName] = $this->getNestedAttribute($name);
+        if ($this->hasAttribute($name) === false) {
+            return;
+        }
 
-            if (isset($this->attributes[$realName])) {
-                /** @var mixed */
-                $value = match ($this->attributes[$realName]) {
-                    'bool' => (bool) $value,
-                    'float' => (float) $value,
-                    'int' => (int) $value,
-                    'string' => (string) $value,
-                    default => $value,
-                };
-            }
+        [$realName] = $this->getNestedAttribute($name);
+
+        if ($value !== null) {
+            /** @var mixed */
+            $value = match ($this->attributes[$realName]) {
+                'bool' => (bool) $value,
+                'float' => (float) $value,
+                'int' => (int) $value,
+                'string' => (string) $value,
+                default => $value,
+            };
         }
 
         $this->writeProperty($name, $value);
