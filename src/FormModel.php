@@ -176,9 +176,13 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function setAttribute(string $name, mixed $value): void
     {
+        if ($this->hasAttribute($name) === false) {
+            return;
+        }
+
         [$realName] = $this->getNestedAttribute($name);
 
-        if (isset($this->attributes[$realName])) {
+        if ($value !== null) {
             /** @var mixed */
             $value = match ($this->attributes[$realName]) {
                 'bool' => (bool) $value,
@@ -187,9 +191,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 'string' => (string) $value,
                 default => $value,
             };
-
-            $this->writeProperty($name, $value);
         }
+
+        $this->writeProperty($name, $value);
     }
 
     public function processValidationResult(Result $result): void
