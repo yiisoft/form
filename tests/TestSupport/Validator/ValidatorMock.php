@@ -20,6 +20,10 @@ final class ValidatorMock implements ValidatorInterface
 
     public function validate($data, ?iterable $rules = []): Result
     {
+        if ($rules === []) {
+            $rules = $data->getRules();
+        }
+
         return $this->validator->validate($data, $rules);
     }
 }
