@@ -18,12 +18,8 @@ final class ValidatorMock implements ValidatorInterface
         $this->validator = new Validator(new SimpleRuleHandlerContainer());
     }
 
-    public function validate($data, ?iterable $rules = []): Result
+    public function validate($data, ?iterable $rules = null): Result
     {
-        if ($rules === []) {
-            $rules = $data->getRules();
-        }
-
         return $this->validator->validate($data, $rules);
     }
 }
