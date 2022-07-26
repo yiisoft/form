@@ -6,6 +6,8 @@ namespace Yiisoft\Form\Tests;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+use TypeError;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
@@ -261,6 +263,33 @@ final class FormModelTest extends TestCase
         $this->assertSame('admin', $form->getUserLogin());
     }
 
+    public function testLoadObjectData(): void
+    {
+        $form = new LoginForm();
+
+        $result = $form->load(new stdClass());
+
+        $this->assertFalse($result);
+    }
+
+    public function testLoadNullData(): void
+    {
+        $form = new LoginForm();
+
+        $result = $form->load(null);
+
+        $this->assertFalse($result);
+    }
+
+    public function testLoadNonArrayScopedData(): void
+    {
+        $form = new LoginForm();
+
+        $result = $form->load(['LoginForm' => null]);
+
+        $this->assertFalse($result);
+    }
+
     public function testNonNamespacedFormName(): void
     {
         $form = new \NonNamespacedForm();
@@ -339,5 +368,48 @@ final class FormModelTest extends TestCase
 
         $form->setAttribute('property', []);
         $this->assertSame([], $form->getAttributeValue('property'));
+    }
+
+    public function testDefaultGetRules(): void
+    {
+        $form = new TypeForm();
+
+        $this->assertSame([], $form->getRules());
+    }
+
+    public function testGetData(): void
+    {
+        $data = [
+            'login' => 'admin',
+            'password' => '123456',
+            'rememberMe' => true,
+        ];
+        $form = new LoginForm();
+        $form->load($data, '');
+
+        $this->assertSame($data, $form->getData());
+    }
+
+    public function testSetAttributesWithNull(): void
+    {
+        $form = new class () extends FormModel {
+            private ?int $nullableProperty = 0;
+        };
+
+        $form->setAttribute('nullableProperty', null);
+        $this->assertSame(null, $form->getAttributeValue('nullableProperty'));
+    }
+
+    public function testSetAttributesTypeErrorException(): void
+    {
+        $form = new class () extends FormModel {
+            private int $int = 0;
+        };
+
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            'Cannot assign null to property Yiisoft\Form\FormModel@anonymous::$int of type int'
+        );
+        $form->setAttribute('int', null);
     }
 }

@@ -1,8 +1,7 @@
 # Creating Forms
 
-The primary way of using forms in `Yii` is through `Yiisoft\Form\Widget\Form` this approach should be preferred when the form is based upon a form model. Additionally, there are some useful "widgets" that are typically used for adding custom inputs and help text to a form.
-
-A form, that is displayed on the client-side, will in most cases have a corresponding form model which is used to [validate input](https://github.com/yiisoft/validator). 
+A form displayed on the client-side usually has a corresponding form model which is used to
+[validate input](https://github.com/yiisoft/validator).
 
 In the following example, we show how a generic form model can be used for a login form:
 
@@ -41,17 +40,6 @@ final class LoginForm extends FormModel
         return $this->password;
     }
 
-    // Setters properties
-    public function login(string $value): void
-    {
-        $this->login = $value;
-    }
-
-    public function password(string $value): void
-    {
-        $this->password = $value;
-    }
-
     public function getAttributeHints(): array
     {
         return [
@@ -60,7 +48,7 @@ final class LoginForm extends FormModel
         ];
     }
 
-    public function attributeLabels(): array
+    public function getAttributeLabels(): array
     {
         return [
             'login' => $this->translator->translate('Username'),
@@ -68,18 +56,12 @@ final class LoginForm extends FormModel
         ];
     }
 
-    public function getAttributePlaceholders(): array;
+    public function getAttributePlaceholders(): array
     {
         return [
             'login' => $this->translator->translate('Enter your username'),
             'password' => $this->translator->translate('Enter your password'),
         ];
-    }
-
-    // Define form name
-    public function formName(): string
-    {
-        return 'LoginForm';
     }
 
     public function rules(): array
@@ -91,7 +73,7 @@ final class LoginForm extends FormModel
 }
 ```
 
-In the controller, we will pass an instance of that `formModel` to the `view`, wherein the `Form` widget is used to display the form:
+In the controller, we will pass an instance of that `formModel` to the `view`:
 
 ```php
 <?php
@@ -99,16 +81,16 @@ In the controller, we will pass an instance of that `formModel` to the `view`, w
 declare(strict_types=1);
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\Widget\Field;
-use Yiisoft\Form\Widget\Form;
+use Yiisoft\Form\Field;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\Translator;
 use Yiisoft\View\WebView;
+use Yiisoft\Yii\View\Csrf;
 
 /**
  * @var FormModel $formModel
- * @var object $csrf
+ * @var Csrf $csrf
  * @var Translator $translator
  * @var UrlGeneratorInterface $urlGenerator
  * @var WebView $this
@@ -116,7 +98,6 @@ use Yiisoft\View\WebView;
 
 $title = $translator->translate('Log in');
 
-/** @psalm-suppress InvalidScope */
 $this->setTitle($title);
 ?>
 
@@ -125,27 +106,23 @@ $this->setTitle($title);
         <?= Html::encode($title) ?>
     </h1>
     <div class="card-body mt-2">
-        <?= Form::widget()
-            ->action($urlGenerator->generate('login'))
+        <?= Html::form()
+            ->post($urlGenerator->generate('login'))
             ->csrf($csrf)
             ->id('form-auth-login')
-            ->begin() ?>
-
-            <?= Field::widget()->autofocus()->text($formModel, 'login')->tabindex(1) ?>
-            <?= Field::widget()->password($formModel, 'password')->tabindex(2) ?>
-            <?= Field::widget()
-                ->class('btn btn-primary btn-lg mt-3')
+            ->open() ?>
+            <?= Field::text($formModel, 'login')
+                ->autofocus()
+                ->tabindex(1) ?>
+            <?= Field::password($formModel, 'password')
+                    ->tabindex(2) ?>
+            <?= Field::submitButton()
                 ->containerClass('d-grid gap-2 form-floating')
-                ->id('login-button')
-                ->submitButton()
+                ->buttonClass('btn btn-primary btn-lg mt-3')
+                ->buttonId('login-button')
                 ->tabindex(3)
-                ->value($translator->translate('Log in'))
-            ?>
-        <?= Form::end() ?>
+                ->content($translator->translate('Log in')) ?>
+        <?= '</form>' ?>
     </div>
 </div>
 ```
-
-### Wrapping with and `begin()` `end()`
-
-In the above code, `Form::begin()` not only creates a form instance, but also marks the beginning of the `form`. All of the content placed between `Form::begin()` and `Form::end()` will be wrapped within the `HTML` tag, `<form>content<form>`.

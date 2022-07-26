@@ -139,4 +139,14 @@ final class HtmlFormTest extends TestCase
             $this->assertSame($field['value'], $form->getAttributeValue($field['name']));
         }
     }
+
+    public function testGetAttributePlaceholder(): void
+    {
+        $form = new LoginForm();
+
+        $this->assertSame(
+            'Type Password.',
+            HtmlForm::getAttributePlaceHolder($form, 'password')
+        );
+    }
 }

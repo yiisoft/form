@@ -31,7 +31,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private array $attributes;
     private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
-    /** @psalm-var array<string, string|array> */
     private array $rawData = [];
     private bool $validated = false;
 
@@ -147,28 +146,29 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $nested !== null || array_key_exists($attribute, $this->attributes);
     }
 
-    /**
-     * @param array $data
-     * @param string|null $formName
-     *
-     * @return bool
-     *
-     * @psalm-param array<string, string|array> $data
-     */
-    public function load(array $data, ?string $formName = null): bool
+    public function load(array|object|null $data, ?string $formName = null): bool
     {
+        if (!is_array($data)) {
+            return false;
+        }
+
         $this->rawData = [];
         $scope = $formName ?? $this->getFormName();
 
         if ($scope === '' && !empty($data)) {
             $this->rawData = $data;
         } elseif (isset($data[$scope])) {
-            /** @var array<string, string> */
+            if (!is_array($data[$scope])) {
+                return false;
+            }
             $this->rawData = $data[$scope];
         }
 
+        /**
+         * @var mixed $value
+         */
         foreach ($this->rawData as $name => $value) {
-            $this->setAttribute($name, $value);
+            $this->setAttribute((string) $name, $value);
         }
 
         return $this->rawData !== [];
@@ -176,9 +176,13 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function setAttribute(string $name, mixed $value): void
     {
+        if ($this->hasAttribute($name) === false) {
+            return;
+        }
+
         [$realName] = $this->getNestedAttribute($name);
 
-        if (isset($this->attributes[$realName])) {
+        if ($value !== null) {
             /** @var mixed */
             $value = match ($this->attributes[$realName]) {
                 'bool' => (bool) $value,
@@ -187,9 +191,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
                 'string' => (string) $value,
                 default => $value,
             };
-
-            $this->writeProperty($name, $value);
         }
+
+        $this->writeProperty($name, $value);
     }
 
     public function processValidationResult(Result $result): void
@@ -246,7 +250,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this->getFormErrors()->addError($attribute, $error);
+                $this
+                    ->getFormErrors()
+                    ->addError($attribute, $error);
             }
         }
     }
@@ -274,7 +280,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private function generateAttributeLabel(string $name): string
     {
         return StringHelper::uppercaseFirstCharacterInEachWord(
-            $this->getInflector()->toWords($name)
+            $this
+                ->getInflector()
+                ->toWords($name)
         );
     }
 
@@ -366,5 +374,10 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     public function isValidated(): bool
     {
         return $this->validated;
+    }
+
+    public function getData(): mixed
+    {
+        return $this->rawData;
     }
 }
