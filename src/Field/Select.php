@@ -294,7 +294,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
         $selectAttributes = $this->getInputAttributes();
 
         return $this->select
-            ->attributes($selectAttributes)
+            ->addAttributes($selectAttributes)
             ->name($this->getInputName())
             ->values($value)
             ->render();

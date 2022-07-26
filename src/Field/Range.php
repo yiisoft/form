@@ -233,7 +233,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
             $tag = $tag
                 ->showOutput()
                 ->outputTag($this->outputTag)
-                ->outputAttributes($this->outputAttributes);
+                ->addOutputAttributes($this->outputAttributes);
         }
 
         return $tag->render();

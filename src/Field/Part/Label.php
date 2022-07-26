@@ -142,7 +142,7 @@ final class Label extends Widget
             }
         }
 
-        $tag = Html::label($content)->attributes($labelAttributes);
+        $tag = Html::label($content)->addAttributes($labelAttributes);
 
         if (!$this->encode) {
             $tag = $tag->encode(false);
