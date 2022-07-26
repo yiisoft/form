@@ -37,7 +37,7 @@ final class PersonalForm extends FormModel
     {
         return [
             'email' => [new Email()],
-            'name' => [new Required(), new HasLength(min: 4, tooShortMessage: 'Is too short.')],
+            'name' => [new Required(), new HasLength(min: 4, lessThanMinMessage: 'Is too short.')],
             'password' => [
                 new Required(),
                 new Regex(

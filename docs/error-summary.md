@@ -24,7 +24,7 @@ final class TestForm extends FormModel
     {
         return [
             'email' => [new Email()],
-            'name' => [new HasLength(min: 4, tooShortMessage: 'Is too short.'),
+            'name' => [new HasLength(min: 4, lessThanMinMessage: 'Is too short.'),
         ];
     } 
 }

@@ -33,7 +33,12 @@ final class AttributesValidatorForm extends FormModel
             ],
             'email' => [
                 new Required(),
-                new HasLength(min: 8, max: 20, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new HasLength(
+                    min: 8,
+                    max: 20,
+                    lessThanMinMessage: 'Is too short.',
+                    greaterThanMaxMessage: 'Is too long.'
+                ),
                 new Regex(
                     '/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/',
                     message: 'Is not a valid email address.'
@@ -49,7 +54,12 @@ final class AttributesValidatorForm extends FormModel
             ],
             'password' => [
                 new Required(),
-                new HasLength(min: 4, max: 8, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new HasLength(
+                    min: 4,
+                    max: 8,
+                    lessThanMinMessage: 'Is too short.',
+                    greaterThanMaxMessage: 'Is too long.'
+                ),
                 new Regex(
                     '/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{4,8}$/',
                     message: 'Is not a valid password.'
@@ -57,22 +67,42 @@ final class AttributesValidatorForm extends FormModel
             ],
             'telephone' => [
                 new Required(),
-                new HasLength(min: 8, max: 16, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new HasLength(
+                    min: 8,
+                    max: 16,
+                    lessThanMinMessage: 'Is too short.',
+                    greaterThanMaxMessage: 'Is too long.'
+                ),
                 new Regex('/[^0-9+\(\)-]/', message: 'Is not a valid telephone number.'),
             ],
             'text' => [
                 new Required(),
-                new HasLength(min: 3, max: 6, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new HasLength(
+                    min: 3,
+                    max: 6,
+                    lessThanMinMessage: 'Is too short.',
+                    greaterThanMaxMessage: 'Is too long.'
+                ),
                 new Regex('/^[a-zA-Z0-9_.-]+$/', message: 'Is not a valid text.'),
             ],
             'textArea' => [
                 new Required(),
-                new HasLength(min: 10, max: 100, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new HasLength(
+                    min: 10,
+                    max: 100,
+                    lessThanMinMessage: 'Is too short.',
+                    greaterThanMaxMessage: 'Is too long.'
+                ),
                 new Regex('/^[a-zA-Z ]*$/', message: 'Is not a valid text.'),
             ],
             'url' => [
                 new Required(),
-                new HasLength(min: 15, max: 20, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+                new HasLength(
+                    min: 15,
+                    max: 20,
+                    lessThanMinMessage: 'Is too short.',
+                    greaterThanMaxMessage: 'Is too long.'
+                ),
                 new Regex(
                     '/^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/',
                     message: 'Is not a valid URL.',
