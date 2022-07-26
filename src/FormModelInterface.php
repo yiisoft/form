@@ -81,11 +81,12 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * {
      *   return [
      *       new \Yiisoft\Validator\Rule\Required(),
-     *       (new \Yiisoft\Validator\Rule\HasLength())
-     *       ->min(4)
-     *       ->max(40)
-     *       ->tooShortMessage('Is too short.')
-     *       ->tooLongMessage('Is too long.'),
+     *       new \Yiisoft\Validator\Rule\HasLength(
+     *           min: 4,
+     *           max: 40,
+     *           lessThanMinMessage: 'Is too short.',
+     *           greaterThanMaxMessage: 'Is too long.',
+     *       ),
      *       new \Yiisoft\Validator\Rule\Email()
      *   ];
      * }
