@@ -83,7 +83,7 @@ class LoginForm extends FormModel
     {
         return [
             new Required(),
-            new HasLength(min: 4, max: 40, tooShortMessage: 'Is too short.', tooLongMessage: 'Is too long.'),
+            new HasLength(min: 4, max: 40, lessThanMinMessage: 'Is too short.', greaterThanMaxMessage: 'Is too long.'),
             new Email(),
         ];
     }
@@ -92,7 +92,7 @@ class LoginForm extends FormModel
     {
         return [
             new Required(),
-            new HasLength(min: 8, tooShortMessage: 'Is too short.'),
+            new HasLength(min: 8, lessThanMinMessage: 'Is too short.'),
         ];
     }
 }

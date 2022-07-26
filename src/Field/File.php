@@ -190,7 +190,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
             if (!empty($this->uncheckInputAttributes)) {
-                $tag = $tag->uncheckInputAttributes($this->uncheckInputAttributes);
+                $tag = $tag->addUncheckInputAttributes($this->uncheckInputAttributes);
             }
         }
 

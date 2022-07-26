@@ -179,7 +179,7 @@ abstract class ButtonField extends PartsField
             ->type($this->getType());
 
         if (!empty($this->buttonAttributes)) {
-            $button = $button->attributes($this->buttonAttributes);
+            $button = $button->addAttributes($this->buttonAttributes);
         }
 
         $content = $this->renderContent();

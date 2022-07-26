@@ -46,7 +46,7 @@ final class FormWithNestedAttribute extends FormModel
             'id' => [new Required()],
             'user.login' => [
                 new Required(),
-                new HasLength(min: 3, tooShortMessage: 'Is too short.'),
+                new HasLength(min: 3, lessThanMinMessage: 'Is too short.'),
             ],
         ];
     }
