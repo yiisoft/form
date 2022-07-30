@@ -89,9 +89,9 @@ final class Field
         self::$defaultConfigName = $defaultConfigName;
     }
 
-    public static function button(array $config = []): Button
+    public static function button(?string $content = null, array $config = []): Button
     {
-        return self::getFactory()->button($config);
+        return self::getFactory()->button($content, $config);
     }
 
     public static function buttonGroup(array $config = []): ButtonGroup
@@ -180,9 +180,9 @@ final class Field
         return self::getFactory()->range($formModel, $attribute, $config);
     }
 
-    public static function resetButton(array $config = []): ResetButton
+    public static function resetButton(?string $content = null, array $config = []): ResetButton
     {
-        return self::getFactory()->resetButton($config);
+        return self::getFactory()->resetButton($content, $config);
     }
 
     public static function select(FormModelInterface $formModel, string $attribute, array $config = []): Select
@@ -190,9 +190,9 @@ final class Field
         return self::getFactory()->select($formModel, $attribute, $config);
     }
 
-    public static function submitButton(array $config = []): SubmitButton
+    public static function submitButton(?string $content = null, array $config = []): SubmitButton
     {
-        return self::getFactory()->submitButton($config);
+        return self::getFactory()->submitButton($content, $config);
     }
 
     public static function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone
