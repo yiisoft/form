@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use HttpSoft\Message\ServerRequest;
+use HttpSoft\Message\Stream;
+use HttpSoft\Message\UploadedFileFactory;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 use TypeError;
+use Yiisoft\Form\Files;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
@@ -196,6 +201,107 @@ final class FormModelTest extends TestCase
         $this->assertSame('admin', $form->getLogin());
         $this->assertSame('123456', $form->getPassword());
         $this->assertSame(true, $form->getRememberMe());
+    }
+
+    public function testLoadFile(): void
+    {
+        $form = new class() extends FormModel {
+            private Files $files;
+
+            public function __construct()
+            {
+                $this->files = new Files([]);
+                parent::__construct();
+            }
+
+            public function files(): Files
+            {
+                return $this->files;
+            }
+        };
+
+        $request = (new ServerRequest())
+            ->withUploadedFiles(['files' => (new UploadedFileFactory())->createUploadedFile(new Stream()),]);
+
+        $this->assertTrue($form->load($request->getUploadedFiles(), ''));
+        $this->assertCount(1, $form->files());
+        $this->assertInstanceOf(UploadedFileInterface::class, $form->files()->offsetGet(0));
+
+        // multiple
+        $request = (new ServerRequest())
+            ->withUploadedFiles([
+                'files' => [
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                ],
+            ]);
+
+
+        $this->assertTrue($form->load($request->getUploadedFiles(), ''));
+        $this->assertCount(2, $form->files());
+        $this->assertInstanceOf(UploadedFileInterface::class, $form->files()->offsetGet(0));
+        $this->assertInstanceOf(UploadedFileInterface::class, $form->files()->offsetGet(1));
+    }
+
+    public function testLoadWrongFile(): void
+    {
+        $form = new class() extends FormModel {
+            private Files $files;
+
+            public function __construct()
+            {
+                $this->files = new Files([]);
+                parent::__construct();
+            }
+
+            public function files(): Files
+            {
+                return $this->files;
+            }
+        };
+
+        $data = ['files' => '',];
+        $this->assertTrue($form->load($data, ''));
+        $this->assertCount(0, $form->files());
+    }
+
+    public function testHandleRequest(): void
+    {
+        $form = new class() extends FormModel {
+            private string $name = '';
+            private Files $files;
+
+            public function __construct()
+            {
+                $this->files = new Files([]);
+                parent::__construct();
+            }
+
+            public function files(): Files
+            {
+                return $this->files;
+            }
+        };
+
+        $request = (new ServerRequest())
+            ->withParsedBody(['name' => 'Admin1', 'files' => 'wrong-value']);
+
+        $this->assertTrue($form->handleRequest($request));
+        $this->assertCount(0, $form->files());
+        $this->assertEquals('Admin1', $form->getAttributeCastValue('name'));
+
+        $request = (new ServerRequest())
+            ->withParsedBody(['name' => 'Admin2'])
+            ->withUploadedFiles([
+                'files' => [
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                ],
+            ]);
+
+        $this->assertTrue($form->handleRequest($request));
+        $this->assertCount(2, $form->files());
+        $this->assertEquals('Admin2', $form->getAttributeCastValue('name'));
     }
 
     public function testLoadFailedForm(): void

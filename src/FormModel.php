@@ -6,8 +6,10 @@ namespace Yiisoft\Form;
 
 use Closure;
 use InvalidArgumentException;
+use Psr\Http\Message\ServerRequestInterface;
 use ReflectionClass;
 use ReflectionNamedType;
+use Yiisoft\Arrays\ArrayHelper;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
@@ -146,6 +148,21 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $nested !== null || array_key_exists($attribute, $this->attributes);
     }
 
+    public function handleRequest(ServerRequestInterface $request, ?string $formName = null): bool
+    {
+        $parsedBody = $request->getParsedBody();
+        if (is_array($parsedBody)) {
+            $data = ArrayHelper::merge(
+                $parsedBody,
+                $request->getUploadedFiles()
+            );
+        } else {
+            $data = $request->getUploadedFiles();
+        }
+
+        return $this->load($data, $formName);
+    }
+
     public function load(array|object|null $data, ?string $formName = null): bool
     {
         if (!is_array($data)) {
@@ -168,7 +185,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
          * @var mixed $value
          */
         foreach ($this->rawData as $name => $value) {
-            $this->setAttribute((string) $name, $value);
+            $this->setAttribute((string)$name, $value);
         }
 
         return $this->rawData !== [];
@@ -183,14 +200,23 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$realName] = $this->getNestedAttribute($name);
 
         if ($value !== null) {
-            /** @var mixed */
-            $value = match ($this->attributes[$realName]) {
-                'bool' => (bool) $value,
-                'float' => (float) $value,
-                'int' => (int) $value,
-                'string' => (string) $value,
-                default => $value,
-            };
+            /** @var string $expectedType */
+            $expectedType = $this->attributes[$realName];
+            if ($expectedType === 'Yiisoft\Form\Files') {
+                try {
+                    $value = new Files($value);
+                } catch (InvalidArgumentException) {
+                    return;
+                }
+            } else {
+                $value = match ($expectedType) {
+                    'bool' => (bool)$value,
+                    'float' => (float)$value,
+                    'int' => (int)$value,
+                    'string' => (string)$value,
+                    default => $value,
+                };
+            }
         }
 
         $this->writeProperty($name, $value);
