@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class TypeForm extends FormModel
+final class TypeForm extends FormModel implements RulesProviderInterface
 {
     private ?array $array = [];
     private bool $bool = false;
@@ -18,4 +19,9 @@ final class TypeForm extends FormModel
     private string $toCamelCase = '';
     private ?string $toDate = '';
     private ?string $toNull = null;
+
+    public function getRules(): iterable
+    {
+        return [];
+    }
 }
