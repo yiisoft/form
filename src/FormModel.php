@@ -26,7 +26,7 @@ use function substr;
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
-abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
+abstract class FormModel implements FormModelInterface, PostValidationHookInterface
 {
     private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
@@ -205,11 +205,6 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         $this->validated = true;
-    }
-
-    public function getRules(): array
-    {
-        return [];
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void
