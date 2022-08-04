@@ -30,7 +30,7 @@ use function substr;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
-    private array $attributes;
+    private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
     private array $rawData = [];
@@ -38,12 +38,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function __construct()
     {
-        $this->attributes = $this->collectAttributes();
+        $this->attributeTypes = $this->collectAttributes();
     }
 
     public function attributes(): array
     {
-        return array_keys($this->attributes);
+        return array_keys($this->attributeTypes);
     }
 
     public function getAttributeHint(string $attribute): string
@@ -145,7 +145,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return $nested !== null || array_key_exists($attribute, $this->attributes);
+        return $nested !== null || array_key_exists($attribute, $this->attributeTypes);
     }
 
     public function handleRequest(ServerRequestInterface $request, ?string $formName = null): bool
@@ -201,7 +201,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         if ($value !== null) {
             /** @var string $expectedType */
-            $expectedType = $this->attributes[$realName];
+            $expectedType = $this->attributeTypes[$realName];
             if ($expectedType === 'Yiisoft\Form\Files') {
                 try {
                     $value = new Files($value);
@@ -368,7 +368,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$attribute, $nested] = explode('.', $attribute, 2);
 
         /** @var string */
-        $attributeNested = $this->attributes[$attribute] ?? '';
+        $attributeNested = $this->attributeTypes[$attribute] ?? '';
 
         if (!is_subclass_of($attributeNested, self::class)) {
             throw new InvalidArgumentException("Attribute \"$attribute\" is not a nested attribute.");
