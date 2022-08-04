@@ -208,9 +208,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->validated = true;
     }
 
-    public function getRules(): iterable
+    public function getRules(): array
     {
-        return (new AttributeDataSet($this))->getRules();
+        $rules = (new AttributeDataSet($this))->getRules();
+
+        return ($rules instanceof \Traversable) ? iterator_to_array($rules) : $rules;
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void

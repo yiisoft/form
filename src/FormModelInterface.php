@@ -70,7 +70,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * Each rule is an array with the following structure:
      *
      * ```php
-     * public function getRules(): iterable
+     * public function getRules(): array
      * {
      *     return [
      *         'login' => $this->loginRules()
@@ -92,9 +92,9 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * }
      * ```
      *
-     * @return iterable Validation rules.
+     * @return array Validation rules.
      */
-    public function getRules(): iterable;
+    public function getRules(): array;
 
     /**
      * This method allows knowing if the validation was executed or not in the model.
