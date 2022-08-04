@@ -8,8 +8,9 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-class LoginForm extends FormModel
+class LoginForm extends FormModel implements RulesProviderInterface
 {
     private static ?string $extraField = null;
     private ?string $login = null;

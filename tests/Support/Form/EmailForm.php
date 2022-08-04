@@ -8,8 +8,9 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class EmailForm extends FormModel
+final class EmailForm extends FormModel implements RulesProviderInterface
 {
     public string $main = '';
     public ?string $second = null;

@@ -7,8 +7,9 @@ namespace Yiisoft\Form\Tests\Support\Form;
 use stdClass;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class SelectForm extends FormModel
+final class SelectForm extends FormModel implements RulesProviderInterface
 {
     private ?int $number = null;
     private int $count = 15;

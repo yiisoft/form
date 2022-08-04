@@ -7,8 +7,9 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class FormWithNestedAttribute extends FormModel
+final class FormWithNestedAttribute extends FormModel implements RulesProviderInterface
 {
     private ?int $id = null;
     private LoginForm $user;

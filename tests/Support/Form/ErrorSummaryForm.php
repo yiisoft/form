@@ -8,10 +8,11 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\Rule\Callback;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 use Yiisoft\Validator\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\Validator;
 
-final class ErrorSummaryForm extends FormModel
+final class ErrorSummaryForm extends FormModel implements RulesProviderInterface
 {
     public string $name = '';
     public int $age = 42;

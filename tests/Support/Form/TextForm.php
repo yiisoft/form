@@ -8,10 +8,11 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 use Yiisoft\Validator\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\Validator;
 
-final class TextForm extends FormModel
+final class TextForm extends FormModel implements RulesProviderInterface
 {
     public string $name = '';
     public string $job = '';

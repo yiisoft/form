@@ -8,8 +8,9 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class ErrorForm extends FormModel
+final class ErrorForm extends FormModel implements RulesProviderInterface
 {
     private string $name = '';
     private int $age = 42;

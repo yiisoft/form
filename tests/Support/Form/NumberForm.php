@@ -7,8 +7,9 @@ namespace Yiisoft\Form\Tests\Support\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class NumberForm extends FormModel
+final class NumberForm extends FormModel implements RulesProviderInterface
 {
     public ?int $age = 42;
     public ?int $count = null;
