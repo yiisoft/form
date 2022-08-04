@@ -10,6 +10,7 @@ use ReflectionClass;
 use ReflectionNamedType;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
+use Yiisoft\Validator\DataSet\AttributeDataSet;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RulesProviderInterface;
@@ -207,9 +208,9 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         $this->validated = true;
     }
 
-    public function getRules(): array
+    public function getRules(): iterable
     {
-        return [];
+        return (new AttributeDataSet($this))->getRules();
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void
