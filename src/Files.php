@@ -11,6 +11,9 @@ use IteratorAggregate;
 use Psr\Http\Message\UploadedFileInterface;
 use Yiisoft\Arrays\ArrayAccessTrait;
 
+/**
+ * The collection of upload files
+ */
 final class Files implements Countable, IteratorAggregate, ArrayAccess
 {
     use ArrayAccessTrait;
@@ -32,6 +35,7 @@ final class Files implements Countable, IteratorAggregate, ArrayAccess
                     throw new InvalidArgumentException('Data should contain UploadedFileInterface objects only');
                 }
             }
+            /** @var UploadedFileInterface[] $data */
             $this->data = $data;
         }
     }

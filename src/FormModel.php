@@ -180,10 +180,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             }
             $this->rawData = $data[$scope];
         }
-
-        /**
-         * @var mixed $value
-         */
+        /** @var mixed $value */
         foreach ($this->rawData as $name => $value) {
             $this->setAttribute((string)$name, $value);
         }
@@ -202,13 +199,14 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         if ($value !== null) {
             /** @var string $expectedType */
             $expectedType = $this->attributeTypes[$realName];
-            if ($expectedType === 'Yiisoft\Form\Files') {
+            if ($expectedType === Files::class) {
                 try {
                     $value = new Files($value);
                 } catch (InvalidArgumentException) {
                     return;
                 }
             } else {
+                /** @var mixed $value */
                 $value = match ($expectedType) {
                     'bool' => (bool)$value,
                     'float' => (float)$value,
@@ -367,7 +365,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
         [$attribute, $nested] = explode('.', $attribute, 2);
 
-        /** @var string */
+        /** @var string $attributeNested */
         $attributeNested = $this->attributeTypes[$attribute] ?? '';
 
         if (!is_subclass_of($attributeNested, self::class)) {
@@ -390,7 +388,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         if ($nested !== null) {
             /** @var FormModelInterface $attributeNestedValue */
             $attributeNestedValue = $this->getAttributeCastValue($attribute);
-            /** @var string */
+            /** @var string $result */
             $result = $attributeNestedValue->$method($nested);
         }
 
@@ -402,7 +400,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->validated;
     }
 
-    public function getData(): mixed
+    public function getData(): array
     {
         return $this->rawData;
     }
