@@ -181,10 +181,10 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
                 }
 
                 if ($rule instanceof NumberRule) {
-                    if (null !== $min = $rule->getOptions()['min']) {
+                    if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['min'] = $min;
                     }
-                    if (null !== $max = $rule->getOptions()['max']) {
+                    if (null !== $max = $rule->getMax()) {
                         $this->inputAttributes['max'] = $max;
                     }
                 }
