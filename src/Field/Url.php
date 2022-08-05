@@ -218,10 +218,10 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
 
                 $pattern = null;
                 if ($rule instanceof UrlRule) {
-                    $pattern = $rule->getOptions()['pattern'];
+                    $pattern = $rule->getPattern();
                 } elseif ($rule instanceof Regex) {
-                    if (!($rule->getOptions()['not'])) {
-                        $pattern = $rule->getOptions()['pattern'];
+                    if (!($rule->isNot())) {
+                        $pattern = $rule->getPattern();
                     }
                 }
                 if ($pattern !== null) {

@@ -221,9 +221,9 @@ final class Password extends InputField implements
                 }
 
                 if ($rule instanceof Regex) {
-                    if (!($rule->getOptions()['not'])) {
+                    if (!($rule->isNot())) {
                         $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
-                            $rule->getOptions()['pattern']
+                            $rule->getPattern()
                         );
                     }
                 }
