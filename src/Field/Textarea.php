@@ -217,9 +217,6 @@ final class Textarea extends InputField implements
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
