@@ -193,7 +193,7 @@ final class Password extends InputField implements
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {

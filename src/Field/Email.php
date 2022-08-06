@@ -202,7 +202,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
