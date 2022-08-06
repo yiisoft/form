@@ -201,6 +201,9 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
         return $new;
     }
 
+    /**
+     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     */
     protected function beforeRender(): void
     {
         parent::beforeRender();

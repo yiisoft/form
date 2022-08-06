@@ -160,6 +160,9 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         return $new;
     }
 
+    /**
+     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
