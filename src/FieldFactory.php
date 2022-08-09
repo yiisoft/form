@@ -87,7 +87,7 @@ final class FieldFactory
     {
         $field = $this->field(Button::class, $config);
 
-        if($content !== null) {
+        if ($content !== null) {
             $field = $field->content($content);
         }
 
