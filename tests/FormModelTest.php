@@ -14,6 +14,7 @@ use stdClass;
 use TypeError;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\FileForm;
+use Yiisoft\Form\Tests\Support\Form\FileFormRequest;
 use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
@@ -266,6 +267,44 @@ final class FormModelTest extends TestCase
         $this->assertCount(0, $form->getImages());
         $this->assertCount(2, $form->getPhotos());
         $this->assertEquals('Admin2', $form->getAttributeCastValue('name'));
+    }
+
+    public function testFormRequest(): void
+    {
+        $serverRequest = (new ServerRequest())
+            ->withParsedBody(['name' => 'Admin2'])
+            ->withUploadedFiles([
+                'photo' => [
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                ],
+            ]);
+
+        $request = (new FileFormRequest($serverRequest))->withFormName('');
+
+        $this->assertTrue($request->isValid());
+        $form = $request->formModel();
+        $this->assertEquals('Admin2', $form->getAttributeCastValue('name'));
+        $this->assertCount(0, $form->getAvatars());
+        $this->assertCount(0, $form->getImages());
+        $this->assertCount(2, $form->getPhotos());
+
+        $serverRequest = (new ServerRequest())
+            ->withUploadedFiles([
+                'photo' => [
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                    (new UploadedFileFactory())->createUploadedFile(new Stream()),
+                ],
+            ]);
+
+        $request = (new FileFormRequest($serverRequest))->withFormName('');
+
+        $this->assertFalse($request->isValid());
+        $form = $request->formModel();
+        $this->assertEquals('', $form->getAttributeCastValue('name'));
+        $this->assertCount(0, $form->getAvatars());
+        $this->assertCount(0, $form->getImages());
+        $this->assertCount(2, $form->getPhotos());
     }
 
     public function testLoadFailedForm(): void
