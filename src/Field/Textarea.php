@@ -218,7 +218,7 @@ final class Textarea extends InputField implements
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
@@ -237,10 +237,10 @@ final class Textarea extends InputField implements
                 }
 
                 if ($rule instanceof HasLength) {
-                    if (null !== $min = $rule->getOptions()['min']) {
+                    if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['minlength'] = $min;
                     }
-                    if (null !== $max = $rule->getOptions()['max']) {
+                    if (null !== $max = $rule->getMax()) {
                         $this->inputAttributes['maxlength'] = $max;
                     }
                 }

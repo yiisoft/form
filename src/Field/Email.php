@@ -202,7 +202,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
@@ -221,18 +221,18 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
                 }
 
                 if ($rule instanceof HasLength) {
-                    if (null !== $min = $rule->getOptions()['min']) {
+                    if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['minlength'] = $min;
                     }
-                    if (null !== $max = $rule->getOptions()['max']) {
+                    if (null !== $max = $rule->getMax()) {
                         $this->inputAttributes['maxlength'] = $max;
                     }
                 }
 
                 if ($rule instanceof Regex) {
-                    if (!($rule->getOptions()['not'])) {
+                    if (!($rule->isNot())) {
                         $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
-                            $rule->getOptions()['pattern']
+                            $rule->getPattern()
                         );
                     }
                 }

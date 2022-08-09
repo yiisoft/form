@@ -189,7 +189,7 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
@@ -208,20 +208,20 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
                 }
 
                 if ($rule instanceof HasLength) {
-                    if (null !== $min = $rule->getOptions()['min']) {
+                    if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['minlength'] = $min;
                     }
-                    if (null !== $max = $rule->getOptions()['max']) {
+                    if (null !== $max = $rule->getMax()) {
                         $this->inputAttributes['maxlength'] = $max;
                     }
                 }
 
                 $pattern = null;
                 if ($rule instanceof UrlRule) {
-                    $pattern = $rule->getOptions()['pattern'];
+                    $pattern = $rule->getPattern();
                 } elseif ($rule instanceof Regex) {
-                    if (!($rule->getOptions()['not'])) {
-                        $pattern = $rule->getOptions()['pattern'];
+                    if (!($rule->isNot())) {
+                        $pattern = $rule->getPattern();
                     }
                 }
                 if ($pattern !== null) {
