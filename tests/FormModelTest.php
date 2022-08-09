@@ -12,8 +12,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 use TypeError;
-use Yiisoft\Form\Files;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
@@ -205,32 +205,19 @@ final class FormModelTest extends TestCase
 
     public function testLoadFile(): void
     {
-        $form = new class() extends FormModel {
-            private Files $files;
-
-            public function __construct()
-            {
-                $this->files = new Files([]);
-                parent::__construct();
-            }
-
-            public function files(): Files
-            {
-                return $this->files;
-            }
-        };
+        $form = new FileForm();
 
         $request = (new ServerRequest())
-            ->withUploadedFiles(['files' => (new UploadedFileFactory())->createUploadedFile(new Stream()),]);
+            ->withUploadedFiles(['avatar' => (new UploadedFileFactory())->createUploadedFile(new Stream()),]);
 
         $this->assertTrue($form->load($request->getUploadedFiles(), ''));
-        $this->assertCount(1, $form->files());
-        $this->assertInstanceOf(UploadedFileInterface::class, $form->files()->offsetGet(0));
+        $this->assertCount(1, $form->getAvatars());
+        $this->assertInstanceOf(UploadedFileInterface::class, $form->getAvatars()->offsetGet(0));
 
         // multiple
         $request = (new ServerRequest())
             ->withUploadedFiles([
-                'files' => [
+                'avatar' => [
                     (new UploadedFileFactory())->createUploadedFile(new Stream()),
                     (new UploadedFileFactory())->createUploadedFile(new Stream()),
                 ],
@@ -238,69 +225,46 @@ final class FormModelTest extends TestCase
 
 
         $this->assertTrue($form->load($request->getUploadedFiles(), ''));
-        $this->assertCount(2, $form->files());
-        $this->assertInstanceOf(UploadedFileInterface::class, $form->files()->offsetGet(0));
-        $this->assertInstanceOf(UploadedFileInterface::class, $form->files()->offsetGet(1));
+        $this->assertCount(2, $form->getAvatars());
+        $this->assertInstanceOf(UploadedFileInterface::class, $form->getAvatars()->offsetGet(0));
+        $this->assertInstanceOf(UploadedFileInterface::class, $form->getAvatars()->offsetGet(1));
     }
 
     public function testLoadWrongFile(): void
     {
-        $form = new class() extends FormModel {
-            private Files $files;
+        $form = new FileForm();
 
-            public function __construct()
-            {
-                $this->files = new Files([]);
-                parent::__construct();
-            }
-
-            public function files(): Files
-            {
-                return $this->files;
-            }
-        };
-
-        $data = ['files' => '',];
+        $data = ['avatar' => '',];
         $this->assertTrue($form->load($data, ''));
-        $this->assertCount(0, $form->files());
+        $this->assertCount(0, $form->getAvatars());
     }
 
     public function testHandleRequest(): void
     {
-        $form = new class() extends FormModel {
-            private string $name = '';
-            private Files $files;
-
-            public function __construct()
-            {
-                $this->files = new Files([]);
-                parent::__construct();
-            }
-
-            public function files(): Files
-            {
-                return $this->files;
-            }
-        };
+        $form = new FileForm();
 
         $request = (new ServerRequest())
             ->withParsedBody(['name' => 'Admin1', 'files' => 'wrong-value']);
 
-        $this->assertTrue($form->handleRequest($request));
-        $this->assertCount(0, $form->files());
+        $this->assertTrue($form->handleRequest($request, ''));
+        $this->assertCount(0, $form->getAvatars());
+        $this->assertCount(0, $form->getImages());
+        $this->assertCount(0, $form->getPhotos());
         $this->assertEquals('Admin1', $form->getAttributeCastValue('name'));
 
         $request = (new ServerRequest())
             ->withParsedBody(['name' => 'Admin2'])
             ->withUploadedFiles([
-                'files' => [
+                'photo' => [
                     (new UploadedFileFactory())->createUploadedFile(new Stream()),
                     (new UploadedFileFactory())->createUploadedFile(new Stream()),
                 ],
             ]);
 
-        $this->assertTrue($form->handleRequest($request));
-        $this->assertCount(2, $form->files());
+        $this->assertTrue($form->handleRequest($request, ''));
+        $this->assertCount(0, $form->getAvatars());
+        $this->assertCount(0, $form->getImages());
+        $this->assertCount(2, $form->getPhotos());
         $this->assertEquals('Admin2', $form->getAttributeCastValue('name'));
     }
 
