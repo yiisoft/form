@@ -70,7 +70,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * Each rule is an array with the following structure:
      *
      * ```php
-     * public function rules(): array
+     * public function getRules(): array
      * {
      *     return [
      *         'login' => $this->loginRules()

@@ -64,7 +64,7 @@ final class LoginForm extends FormModel
         ];
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             // Define validation rules here
@@ -126,3 +126,10 @@ $this->setTitle($title);
     </div>
 </div>
 ```
+
+### Using validation attributes
+
+There is a way to declare validation rules using attributes.
+For detailed information of using attributes see [Yiisoft Validator](https://github.com/yiisoft/validator).
+
+> If you are using attributes then there is no need to declare the `getRules` method.
