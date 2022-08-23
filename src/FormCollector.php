@@ -18,7 +18,7 @@ final class FormCollector
 
     public function __construct(private FormModelInterface $formModel)
     {
-        [$this->attributes, $this->rules] = $this->collectAttributes();
+        [$this->attributes, $this->rules] = $this->collectorAttributes();
     }
 
     public function attributes(): array
@@ -68,15 +68,11 @@ final class FormCollector
     }
 
     /**
-     * Returns the list of attribute types indexed by attribute names.
+     * Returns the list of attribute types and rules indexed by attribute names.
      *
-     * By default, this method returns all non-static properties of the class.
-     *
-     * @return array list of attribute types indexed by attribute names.
-     *
-     * @psalm-suppress UndefinedClass
+     * @return array List of attribute types and rules indexed by attribute names.
      */
-    private function collectAttributes(): array
+    private function collectorAttributes(): array
     {
         $reflection = new ReflectionObject($this->formModel);
         $attributes = [];
