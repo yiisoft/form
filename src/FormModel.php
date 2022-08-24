@@ -6,13 +6,15 @@ namespace Yiisoft\Form;
 
 use Closure;
 use InvalidArgumentException;
+use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionNamedType;
+use ReflectionObject;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
-use Yiisoft\Validator\DataSet\AttributeDataSet;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
+use Yiisoft\Validator\RuleInterface;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
@@ -210,9 +212,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function getRules(): array
     {
-        $rules = (new AttributeDataSet($this))->getRules();
-
-        return ($rules instanceof \Traversable) ? iterator_to_array($rules) : $rules;
+        $rules = [];
+        $reflection = new ReflectionObject($this);
+        foreach ($reflection->getProperties() as $property) {
+            $attributes = $property->getAttributes(RuleInterface::class, ReflectionAttribute::IS_INSTANCEOF);
+            foreach ($attributes as $attribute) {
+                $rules[$property->getName()][] = $attribute->newInstance();
+            }
+        }
+        return $rules;
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void
