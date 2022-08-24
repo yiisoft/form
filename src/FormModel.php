@@ -10,6 +10,7 @@ use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
+use Yiisoft\Validator\RuleInterface;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
