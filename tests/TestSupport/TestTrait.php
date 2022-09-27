@@ -35,6 +35,7 @@ trait TestTrait
      * Invokes an inaccessible method.
      *
      * @param bool $revoke whether to make method inaccessible after execution.
+     *
      * @throws ReflectionException
      *
      * @return mixed

@@ -308,7 +308,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         /** @psalm-suppress MixedMethodCall */
-        $getter = static fn(FormModelInterface $class, string $attribute, ?string $nested): mixed => match ($nested) {
+        $getter = static fn (FormModelInterface $class, string $attribute, ?string $nested): mixed => match ($nested) {
             null => $class->$attribute,
             default => $class->$attribute->getAttributeCastValue($nested),
         };

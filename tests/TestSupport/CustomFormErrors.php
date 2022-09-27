@@ -11,8 +11,7 @@ final class CustomFormErrors implements FormErrorsInterface
     public function __construct(
         /** @psalm-var array<string, array<array-key, string>> */
         private array $attributesErrors = []
-    )
-    {
+    ) {
     }
 
     public function addError(string $attribute, string $error): void

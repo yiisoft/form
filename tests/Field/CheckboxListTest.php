@@ -321,7 +321,7 @@ final class CheckboxListTest extends TestCase
                 'blue' => 'Blue',
             ])
             ->formAttribute(new CheckboxListForm(), 'color')
-            ->itemFormatter(static fn(CheckboxItem $item) => Html::checkbox($item->name, $item->value) . ' — ' . $item->label)
+            ->itemFormatter(static fn (CheckboxItem $item) => Html::checkbox($item->name, $item->value) . ' — ' . $item->label)
             ->render();
 
         $expected = <<<HTML

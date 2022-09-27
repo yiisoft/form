@@ -98,7 +98,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
      *
      * @param string|null $value
      *
-     *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
     public function inputLabel(?string $value): self
