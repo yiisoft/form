@@ -252,7 +252,7 @@ final class Field
 
     public static function getFactory(?string $name = null): FieldFactory
     {
-        $name = $name ?? self::$defaultConfigName;
+        $name ??= self::$defaultConfigName;
 
         if (!array_key_exists($name, self::$factories)) {
             if (!array_key_exists($name, self::$configs)) {

@@ -455,15 +455,13 @@ final class RadioListTest extends TestCase
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
             ->itemFormatter(
-                static function (RadioItem $item): string {
-                    return '<div>' .
-                        $item->index . ') ' .
-                        Html::radio($item->radioAttributes['name'], $item->radioAttributes['value'])
-                            ->attributes($item->radioAttributes)
-                            ->checked($item->checked)
-                            ->label($item->label) .
-                        '</div>';
-                }
+                static fn(RadioItem $item): string => '<div>' .
+                    $item->index . ') ' .
+                    Html::radio($item->radioAttributes['name'], $item->radioAttributes['value'])
+                        ->attributes($item->radioAttributes)
+                        ->checked($item->checked)
+                        ->label($item->label) .
+                    '</div>'
             )
             ->render();
 

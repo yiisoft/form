@@ -47,13 +47,13 @@ final class RangeTest extends TestCase
             ->addOutputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <span id="UID" class="red">23</span>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span id="UID" class="red">23</span>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -67,13 +67,13 @@ final class RangeTest extends TestCase
             ->outputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <span id="UID">23</span>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span id="UID">23</span>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -88,13 +88,13 @@ final class RangeTest extends TestCase
             ->outputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <span id="UID">23</span>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span id="UID">23</span>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -108,13 +108,13 @@ final class RangeTest extends TestCase
             ->outputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <div id="UID">23</div>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<div id="UID">23</div>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -143,7 +143,7 @@ final class RangeTest extends TestCase
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" max="5.9">',
                 '5.9',
             ],
-            'Stringable' => [
+            \Stringable::class => [
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" max="7">',
                 new StringableObject('7'),
             ],
@@ -184,7 +184,7 @@ final class RangeTest extends TestCase
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" min="5.9">',
                 '5.9',
             ],
-            'Stringable' => [
+            \Stringable::class => [
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" min="7">',
                 new StringableObject('7'),
             ],
@@ -225,7 +225,7 @@ final class RangeTest extends TestCase
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" step="5.9">',
                 '5.9',
             ],
-            'Stringable' => [
+            \Stringable::class => [
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" step="7">',
                 new StringableObject('7'),
             ],
