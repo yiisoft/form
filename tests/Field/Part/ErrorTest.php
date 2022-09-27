@@ -232,9 +232,7 @@ final class ErrorTest extends TestCase
         $result = Error::widget()
             ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->messageCallback(
-                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
-                    return 'Attribute "' . $attribute . '" error: ' . $message;
-                }
+                static fn (string $message, ?ErrorForm $form, ?string $attribute): string => 'Attribute "' . $attribute . '" error: ' . $message
             )
             ->render();
 
@@ -247,9 +245,7 @@ final class ErrorTest extends TestCase
             ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->message('Invalid value.')
             ->messageCallback(
-                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
-                    return 'Attribute "' . $attribute . '" error: ' . $message;
-                }
+                static fn (string $message, ?ErrorForm $form, ?string $attribute): string => 'Attribute "' . $attribute . '" error: ' . $message
             )
             ->render();
 
@@ -262,9 +258,7 @@ final class ErrorTest extends TestCase
             ->formAttribute($this->createValidatedErrorForm(), 'age')
             ->message('Invalid value.')
             ->messageCallback(
-                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
-                    return 'Attribute "' . $attribute . '" error: ' . $message;
-                }
+                static fn (string $message, ?ErrorForm $form, ?string $attribute): string => 'Attribute "' . $attribute . '" error: ' . $message
             )
             ->render();
 

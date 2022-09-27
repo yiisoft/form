@@ -84,10 +84,6 @@ final class HtmlFormTest extends TestCase
 
     /**
      * @dataProvider dataGetInputName
-     *
-     * @param FormModelInterface $form
-     * @param string $attribute
-     * @param string $expected
      */
     public function testGetInputName(FormModelInterface $form, string $attribute, string $expected): void
     {

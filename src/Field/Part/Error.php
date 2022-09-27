@@ -106,8 +106,6 @@ final class Error extends Widget
 
     /**
      * Whether content should be HTML-encoded.
-     *
-     * @param bool $value
      */
     public function encode(bool $value): self
     {
@@ -128,8 +126,6 @@ final class Error extends Widget
 
     /**
      * Callback that will be called to obtain an error message.
-     *
-     * @param callable|null $value
      */
     public function messageCallback(?callable $value): self
     {

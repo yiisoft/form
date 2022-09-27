@@ -8,13 +8,10 @@ use Yiisoft\Form\FormErrorsInterface;
 
 final class CustomFormErrors implements FormErrorsInterface
 {
-    /** @psalm-var array<string, array<array-key, string>> */
-    private array $attributesErrors;
-
-    public function __construct(array $attributesErrors = [])
-    {
+    public function __construct(
         /** @psalm-var array<string, array<array-key, string>> */
-        $this->attributesErrors = $attributesErrors;
+        private array $attributesErrors = []
+    ) {
     }
 
     public function addError(string $attribute, string $error): void

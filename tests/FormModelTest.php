@@ -293,7 +293,7 @@ final class FormModelTest extends TestCase
     public function testNonNamespacedFormName(): void
     {
         $form = new \NonNamespacedForm();
-        $this->assertSame('NonNamespacedForm', $form->getFormName());
+        $this->assertSame(\NonNamespacedForm::class, $form->getFormName());
     }
 
     public function testPublicAttributes(): void
