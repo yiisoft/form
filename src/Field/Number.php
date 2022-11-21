@@ -14,9 +14,9 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\Number as NumberRule;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\WhenInterface;
 
 /**
  * Represents `<input>` element of type "number" are used to let the user enter and edit a telephone number.
@@ -172,7 +172,7 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 

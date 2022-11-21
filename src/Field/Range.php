@@ -12,9 +12,10 @@ use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\Number as NumberRule;
 use Yiisoft\Validator\Rule\Required;
+
+use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -200,7 +201,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 

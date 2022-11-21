@@ -14,8 +14,8 @@ use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\WhenInterface;
 
 /**
  * Represents `<select>` element that provides a menu of options.
@@ -252,7 +252,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 
