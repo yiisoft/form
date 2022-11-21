@@ -17,7 +17,6 @@ use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\Url as UrlRule;
-
 use Yiisoft\Validator\WhenInterface;
 
 use function is_string;

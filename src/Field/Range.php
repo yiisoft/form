@@ -14,7 +14,6 @@ use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\Number as NumberRule;
 use Yiisoft\Validator\Rule\Required;
-
 use Yiisoft\Validator\WhenInterface;
 
 use function is_string;

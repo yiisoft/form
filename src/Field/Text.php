@@ -16,7 +16,6 @@ use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
-
 use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
