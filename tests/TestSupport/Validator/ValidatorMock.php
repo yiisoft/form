@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\TestSupport\Validator;
 
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\SimpleRuleHandlerContainer;
+use Yiisoft\Validator\ValidationContext;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Validator\ValidatorInterface;
 
@@ -18,8 +19,11 @@ final class ValidatorMock implements ValidatorInterface
         $this->validator = new Validator(new SimpleRuleHandlerContainer());
     }
 
-    public function validate($data, ?iterable $rules = null): Result
-    {
-        return $this->validator->validate($data, $rules);
+    public function validate(
+        mixed $data,
+        iterable|object|string|null $rules = null,
+        ?ValidationContext $context = null
+    ): Result {
+        return $this->validator->validate($data, $rules, $context);
     }
 }
