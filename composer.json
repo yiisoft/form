@@ -21,7 +21,7 @@
     "require": {
         "php": "^8.0",
         "yiisoft/friendly-exception": "^1.0",
-        "yiisoft/html": "^2.4",
+        "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
         "yiisoft/strings": "^2.0",
         "yiisoft/validator": "dev-master",
