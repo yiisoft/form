@@ -36,6 +36,7 @@ use Yiisoft\Form\Field\SubmitButton;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Textarea;
+use Yiisoft\Form\Field\Time;
 use Yiisoft\Form\Field\Url;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -220,6 +221,11 @@ final class FieldFactory
     public function textarea(FormModelInterface $formModel, string $attribute, array $config = []): Textarea
     {
         return $this->input(Textarea::class, $formModel, $attribute, $config);
+    }
+
+    public function time(FormModelInterface $formModel, string $attribute, array $config = []): Time
+    {
+        return $this->input(Time::class, $formModel, $attribute, $config);
     }
 
     public function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
