@@ -9,11 +9,13 @@ use Yiisoft\Form\FormModel;
 final class TimeForm extends FormModel
 {
     private string $checkinTime = '15:00';
+    private string $startTime = '16:00';
 
     public function getAttributeLabels(): array
     {
         return [
             'checkinTime' => 'Check-in Time',
+            'startTime' => 'StartTime',
         ];
     }
 
