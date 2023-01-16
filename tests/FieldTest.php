@@ -26,6 +26,7 @@ use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
+use Yiisoft\Form\Tests\Support\Form\TimeForm;
 use Yiisoft\Form\Tests\Support\Form\UrlForm;
 use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -406,6 +407,22 @@ final class FieldTest extends TestCase
             $result
         );
     }
+
+    public function testTime(): void
+    {
+        $result = Field::time(new TimeForm(), 'checkinTime')->render();
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <label for="timeform-checkintime">Check-in Time</label>
+            <input type="time" id="timeform-checkintime" name="TimeForm[checkinTime]" value="15:00">
+            <div>Check-in Time.</div>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
 
     public function testUrl(): void
     {
