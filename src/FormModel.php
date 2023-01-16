@@ -6,12 +6,15 @@ namespace Yiisoft\Form;
 
 use Closure;
 use InvalidArgumentException;
+use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionNamedType;
+use ReflectionObject;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
+use Yiisoft\Validator\RuleInterface;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
@@ -28,7 +31,7 @@ use function substr;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
-    private array $attributes;
+    private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
     private array $rawData = [];
@@ -36,12 +39,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function __construct()
     {
-        $this->attributes = $this->collectAttributes();
+        $this->attributeTypes = $this->collectAttributes();
     }
 
     public function attributes(): array
     {
-        return array_keys($this->attributes);
+        return array_keys($this->attributeTypes);
     }
 
     public function getAttributeHint(string $attribute): string
@@ -143,7 +146,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return $nested !== null || array_key_exists($attribute, $this->attributes);
+        return $nested !== null || array_key_exists($attribute, $this->attributeTypes);
     }
 
     public function load(array|object|null $data, ?string $formName = null): bool
@@ -176,20 +179,24 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function setAttribute(string $name, mixed $value): void
     {
+        if ($this->hasAttribute($name) === false) {
+            return;
+        }
+
         [$realName] = $this->getNestedAttribute($name);
 
-        if (isset($this->attributes[$realName])) {
+        if ($value !== null) {
             /** @var mixed */
-            $value = match ($this->attributes[$realName]) {
+            $value = match ($this->attributeTypes[$realName]) {
                 'bool' => (bool) $value,
                 'float' => (float) $value,
                 'int' => (int) $value,
                 'string' => (string) $value,
                 default => $value,
             };
-
-            $this->writeProperty($name, $value);
         }
+
+        $this->writeProperty($name, $value);
     }
 
     public function processValidationResult(Result $result): void
@@ -205,7 +212,15 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function getRules(): array
     {
-        return [];
+        $rules = [];
+        $reflection = new ReflectionObject($this);
+        foreach ($reflection->getProperties() as $property) {
+            $attributes = $property->getAttributes(RuleInterface::class, ReflectionAttribute::IS_INSTANCEOF);
+            foreach ($attributes as $attribute) {
+                $rules[$property->getName()][] = $attribute->newInstance();
+            }
+        }
+        return $rules;
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void
@@ -338,7 +353,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         [$attribute, $nested] = explode('.', $attribute, 2);
 
         /** @var string */
-        $attributeNested = $this->attributes[$attribute] ?? '';
+        $attributeNested = $this->attributeTypes[$attribute] ?? '';
 
         if (!is_subclass_of($attributeNested, self::class)) {
             throw new InvalidArgumentException("Attribute \"$attribute\" is not a nested attribute.");
@@ -372,7 +387,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->validated;
     }
 
-    public function getData(): mixed
+    public function getData(): array
     {
         return $this->rawData;
     }

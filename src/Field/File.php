@@ -11,8 +11,8 @@ use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\WhenInterface;
 
 /**
  * Represents `<input>` element of type "file" are ley the user choose one or more files from their device storage.
@@ -161,7 +161,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
@@ -171,7 +171,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 
@@ -190,7 +190,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
             if (!empty($this->uncheckInputAttributes)) {
-                $tag = $tag->uncheckInputAttributes($this->uncheckInputAttributes);
+                $tag = $tag->addUncheckInputAttributes($this->uncheckInputAttributes);
             }
         }
 

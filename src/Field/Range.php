@@ -12,9 +12,9 @@ use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\Number as NumberRule;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -190,7 +190,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
@@ -200,7 +200,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 
@@ -209,10 +209,10 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
                 }
 
                 if ($rule instanceof NumberRule) {
-                    if (null !== $min = $rule->getOptions()['min']) {
+                    if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['min'] = $min;
                     }
-                    if (null !== $max = $rule->getOptions()['max']) {
+                    if (null !== $max = $rule->getMax()) {
                         $this->inputAttributes['max'] = $max;
                     }
                 }
@@ -233,7 +233,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
             $tag = $tag
                 ->showOutput()
                 ->outputTag($this->outputTag)
-                ->outputAttributes($this->outputAttributes);
+                ->addOutputAttributes($this->outputAttributes);
         }
 
         return $tag->render();

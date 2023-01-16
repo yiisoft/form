@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypeError;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
@@ -387,5 +388,28 @@ final class FormModelTest extends TestCase
         $form->load($data, '');
 
         $this->assertSame($data, $form->getData());
+    }
+
+    public function testSetAttributesWithNull(): void
+    {
+        $form = new class () extends FormModel {
+            private ?int $nullableProperty = 0;
+        };
+
+        $form->setAttribute('nullableProperty', null);
+        $this->assertSame(null, $form->getAttributeValue('nullableProperty'));
+    }
+
+    public function testSetAttributesTypeErrorException(): void
+    {
+        $form = new class () extends FormModel {
+            private int $int = 0;
+        };
+
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage(
+            'Cannot assign null to property Yiisoft\Form\FormModel@anonymous::$int of type int'
+        );
+        $form->setAttribute('int', null);
     }
 }

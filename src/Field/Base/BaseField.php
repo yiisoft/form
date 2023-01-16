@@ -170,7 +170,7 @@ abstract class BaseField extends Widget
         $attributes = $this->containerAttributes;
         $this->prepareContainerAttributes($attributes);
         if ($attributes !== []) {
-            $containerTag = $containerTag->attributes($attributes);
+            $containerTag = $containerTag->addAttributes($attributes);
         }
 
         return $containerTag->open()

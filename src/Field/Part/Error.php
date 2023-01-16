@@ -166,7 +166,7 @@ final class Error extends Widget
         }
 
         return CustomTag::name($this->tag)
-            ->attributes($this->attributes)
+            ->addAttributes($this->attributes)
             ->content($message)
             ->encode($this->encode)
             ->render();

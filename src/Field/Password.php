@@ -13,10 +13,10 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -193,7 +193,7 @@ final class Password extends InputField implements
     }
 
     /**
-     * @psalm-suppress MixedAssignment,MixedArgument Remove after fix https://github.com/yiisoft/validator/issues/225
+     * @psalm-suppress MixedAssignment,MixedArgument
      */
     protected function beforeRender(): void
     {
@@ -203,7 +203,7 @@ final class Password extends InputField implements
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 
@@ -212,18 +212,18 @@ final class Password extends InputField implements
                 }
 
                 if ($rule instanceof HasLength) {
-                    if (null !== $min = $rule->getOptions()['min']) {
+                    if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['minlength'] = $min;
                     }
-                    if (null !== $max = $rule->getOptions()['max']) {
+                    if (null !== $max = $rule->getMax()) {
                         $this->inputAttributes['maxlength'] = $max;
                     }
                 }
 
                 if ($rule instanceof Regex) {
-                    if (!($rule->getOptions()['not'])) {
+                    if (!($rule->isNot())) {
                         $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
-                            $rule->getOptions()['pattern']
+                            $rule->getPattern()
                         );
                     }
                 }

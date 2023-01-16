@@ -42,8 +42,7 @@ final class FieldTest extends TestCase
 
     public function testButton(): void
     {
-        $result = Field::button()
-            ->content('Show info')
+        $result = Field::button('Show info')
             ->render();
         $this->assertSame(
             <<<HTML
@@ -317,8 +316,7 @@ final class FieldTest extends TestCase
 
     public function testResetButton(): void
     {
-        $result = Field::resetButton()
-            ->content('Reset form')
+        $result = Field::resetButton('Reset form')
             ->render();
         $this->assertSame(
             <<<HTML
@@ -354,8 +352,7 @@ final class FieldTest extends TestCase
 
     public function testSubmitButton(): void
     {
-        $result = Field::submitButton()
-            ->content('Go!')
+        $result = Field::submitButton('Go!')
             ->render();
         $this->assertSame(
             <<<HTML

@@ -83,9 +83,15 @@ final class FieldFactory
         }
     }
 
-    public function button(array $config = []): Button
+    public function button(?string $content = null, array $config = []): Button
     {
-        return $this->field(Button::class, $config);
+        $field = $this->field(Button::class, $config);
+
+        if ($content !== null) {
+            $field = $field->content($content);
+        }
+
+        return $field;
     }
 
     public function buttonGroup(array $config = []): ButtonGroup
@@ -174,9 +180,15 @@ final class FieldFactory
         return $this->input(Range::class, $formModel, $attribute, $config);
     }
 
-    public function resetButton(array $config = []): ResetButton
+    public function resetButton(?string $content = null, array $config = []): ResetButton
     {
-        return $this->field(ResetButton::class, $config);
+        $field = $this->field(ResetButton::class, $config);
+
+        if ($content !== null) {
+            $field = $field->content($content);
+        }
+
+        return $field;
     }
 
     public function select(FormModelInterface $formModel, string $attribute, array $config = []): Select
@@ -184,9 +196,15 @@ final class FieldFactory
         return $this->input(Select::class, $formModel, $attribute, $config);
     }
 
-    public function submitButton(array $config = []): SubmitButton
+    public function submitButton(?string $content = null, array $config = []): SubmitButton
     {
-        return $this->field(SubmitButton::class, $config);
+        $field = $this->field(SubmitButton::class, $config);
+
+        if ($content !== null) {
+            $field = $field->content($content);
+        }
+
+        return $field;
     }
 
     public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone

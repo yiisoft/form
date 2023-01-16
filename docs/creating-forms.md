@@ -56,7 +56,7 @@ final class LoginForm extends FormModel
         ];
     }
 
-    public function getAttributePlaceholders(): array;
+    public function getAttributePlaceholders(): array
     {
         return [
             'login' => $this->translator->translate('Enter your username'),
@@ -64,7 +64,7 @@ final class LoginForm extends FormModel
         ];
     }
 
-    public function rules(): array
+    public function getRules(): array
     {
         return [
             // Define validation rules here
@@ -121,8 +121,15 @@ $this->setTitle($title);
                 ->buttonClass('btn btn-primary btn-lg mt-3')
                 ->buttonId('login-button')
                 ->tabindex(3)
-                ->content($translator->translate('Log in') ?>
+                ->content($translator->translate('Log in')) ?>
         <?= '</form>' ?>
     </div>
 </div>
 ```
+
+### Using validation attributes
+
+There is a way to declare validation rules using attributes.
+For detailed information of using attributes see [Yiisoft Validator](https://github.com/yiisoft/validator).
+
+> If you are using attributes then there is no need to declare the `getRules` method.
