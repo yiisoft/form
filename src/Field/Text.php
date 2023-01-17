@@ -13,10 +13,10 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\BeforeValidationInterface;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -214,7 +214,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
                     ->getFormModel()
                     ->getRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
-                if ($rule instanceof BeforeValidationInterface && $rule->getWhen() !== null) {
+                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
 
