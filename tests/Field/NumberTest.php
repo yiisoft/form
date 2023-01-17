@@ -52,7 +52,7 @@ final class NumberTest extends TestCase
                 '<input type="number" id="numberform-count" name="NumberForm[count]" max="5.9">',
                 '5.9',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 '<input type="number" id="numberform-count" name="NumberForm[count]" max="7">',
                 new StringableObject('7'),
             ],
@@ -93,7 +93,7 @@ final class NumberTest extends TestCase
                 '<input type="number" id="numberform-count" name="NumberForm[count]" min="5.9">',
                 '5.9',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 '<input type="number" id="numberform-count" name="NumberForm[count]" min="7">',
                 new StringableObject('7'),
             ],
@@ -134,7 +134,7 @@ final class NumberTest extends TestCase
                 '<input type="number" id="numberform-count" name="NumberForm[count]" step="5.9">',
                 '5.9',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 '<input type="number" id="numberform-count" name="NumberForm[count]" step="7">',
                 new StringableObject('7'),
             ],

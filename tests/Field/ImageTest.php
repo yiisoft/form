@@ -68,7 +68,7 @@ final class ImageTest extends TestCase
                 HTML,
                 '53',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 <<<HTML
                 <div>
                 <input type="image" width="7">
@@ -118,7 +118,7 @@ final class ImageTest extends TestCase
                 HTML,
                 '53',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 <<<HTML
                 <div>
                 <input type="image" height="7">

@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Support;
 
-final class StringableObject implements \Stringable
+use Stringable;
+
+final class StringableObject implements Stringable
 {
-    public function __construct(private string $string)
-    {
+    public function __construct(
+        private string $string
+    ) {
     }
 
     public function __toString(): string

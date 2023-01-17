@@ -14,9 +14,11 @@ use function reset;
  */
 final class FormErrors implements FormErrorsInterface
 {
+    /**
+     * @psalm-param array<string, array<array-key, string>> $attributesErrors
+     */
     public function __construct(
-        /** @psalm-var array<string, array<array-key, string>> */
-        private array $attributesErrors = []
+        private array $attributesErrors = [],
     ) {
     }
 

@@ -143,7 +143,7 @@ HTML_WRAP;
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" max="5.9">',
                 '5.9',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" max="7">',
                 new StringableObject('7'),
             ],
@@ -184,7 +184,7 @@ HTML_WRAP;
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" min="5.9">',
                 '5.9',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" min="7">',
                 new StringableObject('7'),
             ],
@@ -225,7 +225,7 @@ HTML_WRAP;
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" step="5.9">',
                 '5.9',
             ],
-            \Stringable::class => [
+            'Stringable' => [
                 '<input type="range" id="rangeform-count" name="RangeForm[count]" step="7">',
                 new StringableObject('7'),
             ],
