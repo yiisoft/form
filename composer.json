@@ -20,6 +20,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0",
+        "ext-mbstring": "*",
         "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
