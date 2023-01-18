@@ -20,6 +20,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0",
+        "ext-mbstring": "*",
         "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
@@ -28,6 +29,7 @@
         "yiisoft/widget": "^1.0"
     },
     "require-dev": {
+        "maglnet/composer-require-checker": "^4.2",
         "phpunit/phpunit": "^9.5",
         "rector/rector": "^0.15.7",
         "roave/infection-static-analysis-plugin": "^1.18",
