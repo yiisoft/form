@@ -17,10 +17,6 @@ trait TestTrait
 {
     /**
      * Asserting two strings equality ignoring line endings.
-     *
-     * @param string $expected
-     * @param string $actual
-     * @param string $message
      */
     protected function assertEqualsWithoutLE(string $expected, string $actual, string $message = ''): void
     {
@@ -38,9 +34,6 @@ trait TestTrait
     /**
      * Invokes an inaccessible method.
      *
-     * @param object $object
-     * @param string $method
-     * @param array $args
      * @param bool $revoke whether to make method inaccessible after execution.
      *
      * @throws ReflectionException
@@ -64,12 +57,9 @@ trait TestTrait
     /**
      * Sets an inaccessible object property to a designated value.
      *
-     * @param object $object
-     * @param string $propertyName
-     * @param mixed $value
      * @param bool $revoke whether to make property inaccessible after setting
      */
-    protected function setInaccessibleProperty(object $object, string $propertyName, $value, bool $revoke = true): void
+    protected function setInaccessibleProperty(object $object, string $propertyName, mixed $value, bool $revoke = true): void
     {
         $class = new ReflectionClass($object);
 

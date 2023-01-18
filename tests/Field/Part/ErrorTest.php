@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Tests\Support\Form\ErrorForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -232,9 +231,7 @@ final class ErrorTest extends TestCase
         $result = Error::widget()
             ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->messageCallback(
-                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
-                    return 'Attribute "' . $attribute . '" error: ' . $message;
-                }
+                static fn (string $message, ?ErrorForm $form, ?string $attribute): string => 'Attribute "' . $attribute . '" error: ' . $message
             )
             ->render();
 
@@ -247,9 +244,7 @@ final class ErrorTest extends TestCase
             ->formAttribute($this->createValidatedErrorForm(), 'name')
             ->message('Invalid value.')
             ->messageCallback(
-                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
-                    return 'Attribute "' . $attribute . '" error: ' . $message;
-                }
+                static fn (string $message, ?ErrorForm $form, ?string $attribute): string => 'Attribute "' . $attribute . '" error: ' . $message
             )
             ->render();
 
@@ -262,9 +257,7 @@ final class ErrorTest extends TestCase
             ->formAttribute($this->createValidatedErrorForm(), 'age')
             ->message('Invalid value.')
             ->messageCallback(
-                static function (string $message, ?ErrorForm $form, ?string $attribute): string {
-                    return 'Attribute "' . $attribute . '" error: ' . $message;
-                }
+                static fn (string $message, ?ErrorForm $form, ?string $attribute): string => 'Attribute "' . $attribute . '" error: ' . $message
             )
             ->render();
 
@@ -274,7 +267,7 @@ final class ErrorTest extends TestCase
     private function createValidatedErrorForm(): ErrorForm
     {
         $form = new ErrorForm();
-        (new Validator(new SimpleRuleHandlerContainer()))->validate($form);
+        (new Validator())->validate($form);
         return $form;
     }
 }

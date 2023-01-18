@@ -18,8 +18,6 @@ final class HtmlForm
      *
      * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
-     *
-     * @return string
      */
     public static function getAttributeHint(FormModelInterface $formModel, string $attribute): string
     {
@@ -33,8 +31,6 @@ final class HtmlForm
      * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
-     * @return string
      */
     public static function getAttributeLabel(FormModelInterface $formModel, string $attribute): string
     {
@@ -72,8 +68,6 @@ final class HtmlForm
      * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
-     * @return string
      */
     public static function getAttributePlaceHolder(FormModelInterface $formModel, string $attribute): string
     {

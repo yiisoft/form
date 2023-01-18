@@ -387,7 +387,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->validated;
     }
 
-    public function getData(): mixed
+    public function getData(): array
     {
         return $this->rawData;
     }

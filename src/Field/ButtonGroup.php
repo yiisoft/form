@@ -31,7 +31,7 @@ final class ButtonGroup extends PartsField
 
     /**
      * @param array $data Array of buttons. Each button is an array with label as first element and additional
-     * name-value pairs as attrbiutes of button.
+     * name-value pairs as attributes of button.
      *
      * Example:
      * ```php
@@ -52,7 +52,7 @@ final class ButtonGroup extends PartsField
     public function buttonAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->replaceButtonAttributes($attributes);
+        $new->widget = $this->widget->buttonAttributes($attributes);
         return $new;
     }
 

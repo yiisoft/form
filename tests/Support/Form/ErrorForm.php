@@ -26,7 +26,7 @@ final class ErrorForm extends FormModel
     {
         return [
             'name' => [new Required(), new HasLength(min: 4)],
-            'age' => [new Number(asInteger: true, min: 18)],
+            'age' => [new Number(integerOnly: true, min: 18)],
         ];
     }
 }

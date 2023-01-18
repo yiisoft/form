@@ -36,7 +36,7 @@ final class RadioList extends PartsField implements ValidationClassInterface
     public function radioAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->replaceRadioAttributes($attributes);
+        $new->widget = $this->widget->radioAttributes($attributes);
         return $new;
     }
 
@@ -53,7 +53,7 @@ final class RadioList extends PartsField implements ValidationClassInterface
     public function individualInputAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->replaceIndividualInputAttributes($attributes);
+        $new->widget = $this->widget->individualInputAttributes($attributes);
         return $new;
     }
 
@@ -131,8 +131,6 @@ final class RadioList extends PartsField implements ValidationClassInterface
     }
 
     /**
-     * @param Closure|null $formatter
-     *
      * @psalm-param Closure(RadioItem):string|null $formatter
      */
     public function itemFormatter(?Closure $formatter): self

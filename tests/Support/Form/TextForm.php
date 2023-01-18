@@ -8,7 +8,6 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\HasLength;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\SimpleRuleHandlerContainer;
 use Yiisoft\Validator\Validator;
 
 final class TextForm extends FormModel
@@ -60,7 +59,7 @@ final class TextForm extends FormModel
     public static function validated(): self
     {
         $form = new self();
-        (new Validator(new SimpleRuleHandlerContainer()))->validate($form);
+        (new Validator())->validate($form);
         return $form;
     }
 }

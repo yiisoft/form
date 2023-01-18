@@ -47,13 +47,13 @@ final class RangeTest extends TestCase
             ->addOutputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <span id="UID" class="red">23</span>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span id="UID" class="red">23</span>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -67,13 +67,13 @@ final class RangeTest extends TestCase
             ->outputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <span id="UID">23</span>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span id="UID">23</span>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -88,13 +88,13 @@ final class RangeTest extends TestCase
             ->outputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <span id="UID">23</span>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span id="UID">23</span>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
@@ -108,13 +108,13 @@ final class RangeTest extends TestCase
             ->outputAttributes(['id' => 'UID'])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-            <div id="UID">23</div>
-            </div>
-            HTML;
+        $expected = <<<HTML_WRAP
+<div>
+<label for="rangeform-volume">Volume level</label>
+<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<div id="UID">23</div>
+</div>
+HTML_WRAP;
 
         $this->assertSame($expected, $result);
     }
