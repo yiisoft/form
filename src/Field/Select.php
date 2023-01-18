@@ -86,8 +86,6 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
      * @param array[] $groupsAttributes Array of group attribute sets indexed by group labels from {@see $data}.
      *
      * @psalm-param array<array-key, string|array<array-key,string>> $data
-     *
-     * @return self
      */
     public function optionsData(
         array $data,

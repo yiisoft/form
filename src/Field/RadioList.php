@@ -131,8 +131,6 @@ final class RadioList extends PartsField implements ValidationClassInterface
     }
 
     /**
-     * @param Closure|null $formatter
-     *
      * @psalm-param Closure(RadioItem):string|null $formatter
      */
     public function itemFormatter(?Closure $formatter): self

@@ -67,10 +67,6 @@ final class ErrorSummary extends BaseField
 
     /**
      * Set the footer text for the error summary
-     *
-     * @param string $value
-     *
-     * @return self
      */
     public function footer(string $value): self
     {
@@ -84,8 +80,6 @@ final class ErrorSummary extends BaseField
      *
      * @param array $values Attribute values indexed by attribute names.
      *
-     * @return self
-     *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function footerAttributes(array $values): self
@@ -97,10 +91,6 @@ final class ErrorSummary extends BaseField
 
     /**
      * Set the header text for the error summary
-     *
-     * @param string $value
-     *
-     * @return self
      */
     public function header(string $value): self
     {
@@ -113,8 +103,6 @@ final class ErrorSummary extends BaseField
      * Set header attributes for the error summary.
      *
      * @param array $values Attribute values indexed by attribute names.
-     *
-     * @return self
      *
      * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
      */

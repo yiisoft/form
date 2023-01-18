@@ -98,8 +98,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
      *
      * @param string|null $value
      *
-     * @return self
-     *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
     public function inputLabel(?string $value): self
@@ -235,9 +233,9 @@ final class Checkbox extends InputField implements ValidationClassInterface
         $inputAttributes = $this->getInputAttributes();
 
         $inputValue = $this->inputValue;
-        $inputValue = $inputValue ?? $this->prepareValue($inputAttributes['value'] ?? null);
+        $inputValue ??= $this->prepareValue($inputAttributes['value'] ?? null);
         unset($inputAttributes['value']);
-        $inputValue = $inputValue ?? '1';
+        $inputValue ??= '1';
 
         $checkbox = Html::checkbox($this->getInputName(), $inputValue, $inputAttributes);
 

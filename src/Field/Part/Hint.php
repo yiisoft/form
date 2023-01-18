@@ -105,8 +105,6 @@ final class Hint extends Widget
 
     /**
      * Whether content should be HTML-encoded.
-     *
-     * @param bool $value
      */
     public function encode(bool $value): self
     {

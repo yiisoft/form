@@ -133,8 +133,6 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     }
 
     /**
-     * @param Closure|null $formatter
-     *
      * @psalm-param Closure(CheckboxItem):string|null $formatter
      */
     public function itemFormatter(?Closure $formatter): self
