@@ -6,15 +6,10 @@ namespace Yiisoft\Form;
 
 use Closure;
 use InvalidArgumentException;
-use ReflectionAttribute;
-use ReflectionClass;
-use ReflectionNamedType;
-use ReflectionObject;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
-use Yiisoft\Validator\RuleInterface;
 use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
@@ -31,7 +26,7 @@ use function substr;
  */
 abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
 {
-    private array $attributeTypes;
+    private FormCollector $formCollector;
     private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
     private array $rawData = [];
@@ -39,12 +34,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function __construct()
     {
-        $this->attributeTypes = $this->collectAttributes();
+        $this->formCollector = new FormCollector($this);
     }
 
     public function attributes(): array
     {
-        return array_keys($this->attributeTypes);
+        return array_keys($this->formCollector->attributes());
     }
 
     public function getAttributeHint(string $attribute): string
@@ -113,6 +108,11 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         return $this->rawData[$attribute] ?? $this->getAttributeCastValue($attribute);
     }
 
+    public function getFormCollector(): FormCollector
+    {
+        return $this->formCollector;
+    }
+
     /**
      * @return FormErrorsInterface Get FormErrors object.
      */
@@ -146,7 +146,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         [$attribute, $nested] = $this->getNestedAttribute($attribute);
 
-        return $nested !== null || array_key_exists($attribute, $this->attributeTypes);
+        return $nested !== null || array_key_exists($attribute, $this->formCollector->attributes());
     }
 
     public function load(array|object|null $data, ?string $formName = null): bool
@@ -179,24 +179,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function setAttribute(string $name, mixed $value): void
     {
-        if ($this->hasAttribute($name) === false) {
-            return;
-        }
-
         [$realName] = $this->getNestedAttribute($name);
 
-        if ($value !== null) {
-            /** @var mixed */
-            $value = match ($this->attributeTypes[$realName]) {
-                'bool' => (bool) $value,
-                'float' => (float) $value,
-                'int' => (int) $value,
-                'string' => (string) $value,
-                default => $value,
-            };
-        }
+        /** @var mixed */
+        $valueTypeCast = $this->formCollector->phpTypeCast($realName, $value);
 
-        $this->writeProperty($name, $value);
+        $this->writeProperty($name, $valueTypeCast);
     }
 
     public function processValidationResult(Result $result): void
@@ -212,46 +200,12 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
 
     public function getRules(): array
     {
-        $rules = [];
-        $reflection = new ReflectionObject($this);
-        foreach ($reflection->getProperties() as $property) {
-            $attributes = $property->getAttributes(RuleInterface::class, ReflectionAttribute::IS_INSTANCEOF);
-            foreach ($attributes as $attribute) {
-                $rules[$property->getName()][] = $attribute->newInstance();
-            }
-        }
-        return $rules;
+        return $this->formCollector->getRules();
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void
     {
         $this->formErrors = $formErrors;
-    }
-
-    /**
-     * Returns the list of attribute types indexed by attribute names.
-     *
-     * By default, this method returns all non-static properties of the class.
-     *
-     * @return array list of attribute types indexed by attribute names.
-     */
-    protected function collectAttributes(): array
-    {
-        $class = new ReflectionClass($this);
-        $attributes = [];
-
-        foreach ($class->getProperties() as $property) {
-            if ($property->isStatic()) {
-                continue;
-            }
-
-            /** @var ReflectionNamedType|null $type */
-            $type = $property->getType();
-
-            $attributes[$property->getName()] = $type !== null ? $type->getName() : '';
-        }
-
-        return $attributes;
     }
 
     /**
@@ -261,9 +215,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     {
         foreach ($items as $attribute => $errors) {
             foreach ($errors as $error) {
-                $this
-                    ->getFormErrors()
-                    ->addError($attribute, $error);
+                $this->getFormErrors()->addError($attribute, $error);
             }
         }
     }
@@ -291,9 +243,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
     private function generateAttributeLabel(string $name): string
     {
         return StringHelper::uppercaseFirstCharacterInEachWord(
-            $this
-                ->getInflector()
-                ->toWords($name)
+            $this->getInflector()->toWords($name)
         );
     }
 
@@ -351,9 +301,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
         }
 
         [$attribute, $nested] = explode('.', $attribute, 2);
-
-        /** @var string */
-        $attributeNested = $this->attributeTypes[$attribute] ?? '';
+        $attributeNested = $this->formCollector->getType($attribute);
 
         if (!is_subclass_of($attributeNested, self::class)) {
             throw new InvalidArgumentException("Attribute \"$attribute\" is not a nested attribute.");
