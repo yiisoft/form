@@ -480,7 +480,7 @@ abstract class PartsField extends BaseField
 
     private function generateLabel(): string
     {
-        $label = Label::widget($this->labelConfig);
+        $label = Label::widget([], $this->labelConfig);
 
         $labelAttributes = $this->labelAttributes;
         if (!empty($labelAttributes)) {
@@ -506,7 +506,7 @@ abstract class PartsField extends BaseField
 
     private function generateHint(): string
     {
-        $hint = Hint::widget($this->hintConfig);
+        $hint = Hint::widget([], $this->hintConfig);
 
         $hintAttributes = $this->hintAttributes;
         if (!empty($hintAttributes)) {
@@ -532,7 +532,7 @@ abstract class PartsField extends BaseField
 
     private function generateError(): string
     {
-        $error = Error::widget($this->errorConfig);
+        $error = Error::widget([], $this->errorConfig);
 
         $errorAttributes = $this->errorAttributes;
         if (!empty($errorAttributes)) {

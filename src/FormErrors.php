@@ -99,9 +99,9 @@ final class FormErrors implements FormErrorsInterface
 
         /** @var string[] errors */
         foreach ($errors as $error) {
-            $lines = array_merge($lines, $error);
+            $lines[] = $error;
         }
 
-        return $lines;
+        return array_merge(...$lines);
     }
 }

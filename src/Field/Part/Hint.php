@@ -113,7 +113,7 @@ final class Hint extends Widget
         return $new;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         $content = $this->hasFormModelAndAttribute()
             ? $this->content ?? $this->getFormAttributeHint()

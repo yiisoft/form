@@ -139,7 +139,7 @@ final class Error extends Widget
      *
      * @return string The generated error tag.
      */
-    protected function run(): string
+    public function render(): string
     {
         $useModel = $this->hasFormModelAndAttribute();
 

@@ -233,7 +233,7 @@ final class FieldFactory
             $this->labelConfig,
             $config,
         );
-        return Label::widget($widgetConfig)->formAttribute($formModel, $attribute);
+        return Label::widget([], $widgetConfig)->formAttribute($formModel, $attribute);
     }
 
     public function hint(FormModelInterface $formModel, string $attribute, array $config = []): Hint
@@ -242,7 +242,7 @@ final class FieldFactory
             $this->hintConfig,
             $config,
         );
-        return Hint::widget($widgetConfig)->formAttribute($formModel, $attribute);
+        return Hint::widget([], $widgetConfig)->formAttribute($formModel, $attribute);
     }
 
     public function error(FormModelInterface $formModel, string $attribute, array $config = []): Error
@@ -251,7 +251,7 @@ final class FieldFactory
             $this->errorConfig,
             $config,
         );
-        return Error::widget($widgetConfig)->formAttribute($formModel, $attribute);
+        return Error::widget([], $widgetConfig)->formAttribute($formModel, $attribute);
     }
 
     /**
