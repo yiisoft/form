@@ -103,7 +103,7 @@ abstract class BaseField extends Widget
         return $this->renderOpenContainerAndContent($content);
     }
 
-    final protected function run(): string
+    final public function render(): string
     {
         if ($this->isStartedByBegin) {
             $this->isStartedByBegin = false;
