@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Support\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 
@@ -24,7 +24,7 @@ final class TelephoneForm extends FormModel
     {
         return [
             'office1' => [new Required()],
-            'office2' => [new HasLength(min: 10, max: 199)],
+            'office2' => [new Length(min: 10, max: 199)],
             'code' => [new Regex(pattern: '~\w+~')],
             'nocode' => [new Regex(pattern: '~\w+~', not: true)],
             'requiredWhen' => [new Required(when: static fn () => false)],

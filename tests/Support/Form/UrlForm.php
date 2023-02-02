@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Support\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\Url;
@@ -35,7 +35,7 @@ final class UrlForm extends FormModel
     {
         return [
             'company' => [new Required()],
-            'home' => [new HasLength(min: 50, max: 199)],
+            'home' => [new Length(min: 50, max: 199)],
             'code' => [new Regex(pattern: '~\w+~')],
             'nocode' => [new Regex(pattern: '~\w+~', not: true)],
             'shop' => [new Url()],
