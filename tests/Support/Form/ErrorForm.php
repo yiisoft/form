@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Support\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Validator\Rule\Integer;
 use Yiisoft\Validator\Rule\Length;
-use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
 
 final class ErrorForm extends FormModel
@@ -26,7 +26,7 @@ final class ErrorForm extends FormModel
     {
         return [
             'name' => [new Required(), new Length(min: 4)],
-            'age' => [new Number(integerOnly: true, min: 18)],
+            'age' => [new Integer(min: 18)],
         ];
     }
 }

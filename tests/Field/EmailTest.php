@@ -245,7 +245,7 @@ final class EmailTest extends TestCase
         $field = Email::widget()->formAttribute(new EmailForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Email field requires a string or null value.');
+        $this->expectExceptionMessage('Email field requires a string or null value.');
         $field->render();
     }
 

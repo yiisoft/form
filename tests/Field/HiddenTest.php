@@ -34,7 +34,7 @@ final class HiddenTest extends TestCase
         $field = Hidden::widget()->formAttribute(new HiddenForm(), 'flag');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('Hidden widget requires a string, numeric or null value.');
+        $this->expectExceptionMessage('Hidden widget requires a string, numeric or null value.');
         $field->render();
     }
 }

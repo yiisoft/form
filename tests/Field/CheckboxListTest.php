@@ -343,7 +343,7 @@ final class CheckboxListTest extends TestCase
         $field = CheckboxList::widget()->formAttribute(new CheckboxListForm(), 'age');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage('"CheckboxList" field requires iterable or null value.');
+        $this->expectExceptionMessage('"CheckboxList" field requires iterable or null value.');
         $field->render();
     }
 

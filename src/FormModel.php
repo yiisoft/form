@@ -350,6 +350,7 @@ abstract class FormModel implements FormModelInterface, PostValidationHookInterf
             return [$attribute, null];
         }
 
+        /** @psalm-suppress PossiblyUndefinedArrayOffset Condition above guarantee that attribute contains dot */
         [$attribute, $nested] = explode('.', $attribute, 2);
 
         /** @var string */
