@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Email;
-use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Required;
 
 class LoginForm extends FormModel
@@ -83,7 +83,7 @@ class LoginForm extends FormModel
     {
         return [
             new Required(),
-            new HasLength(min: 4, max: 40, lessThanMinMessage: 'Is too short.', greaterThanMaxMessage: 'Is too long.'),
+            new Length(min: 4, max: 40, lessThanMinMessage: 'Is too short.', greaterThanMaxMessage: 'Is too long.'),
             new Email(),
         ];
     }
@@ -92,7 +92,7 @@ class LoginForm extends FormModel
     {
         return [
             new Required(),
-            new HasLength(min: 8, lessThanMinMessage: 'Is too short.'),
+            new Length(min: 8, lessThanMinMessage: 'Is too short.'),
         ];
     }
 }

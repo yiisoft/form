@@ -13,7 +13,7 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\WhenInterface;
@@ -206,7 +206,7 @@ final class Telephone extends InputField implements EnrichmentFromRulesInterface
                     $this->inputAttributes['required'] = true;
                 }
 
-                if ($rule instanceof HasLength) {
+                if ($rule instanceof Length) {
                     if (null !== $min = $rule->getMin()) {
                         $this->inputAttributes['minlength'] = $min;
                     }

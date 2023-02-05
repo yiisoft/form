@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\HasLength;
+use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Required;
 
 final class FormWithNestedAttribute extends FormModel
@@ -46,7 +46,7 @@ final class FormWithNestedAttribute extends FormModel
             'id' => [new Required()],
             'user.login' => [
                 new Required(),
-                new HasLength(min: 3, lessThanMinMessage: 'Is too short.'),
+                new Length(min: 3, lessThanMinMessage: 'Is too short.'),
             ],
         ];
     }

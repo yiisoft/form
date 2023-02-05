@@ -118,7 +118,7 @@ final class Label extends Widget
         return $new;
     }
 
-    protected function run(): string
+    public function render(): string
     {
         $useModel = $this->hasFormModelAndAttribute();
 
