@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
+use Yiisoft\Form\ThemeDispatcher;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
@@ -144,6 +145,11 @@ abstract class BaseField extends Widget
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
+    }
+
+    final protected static function getDefaultConfig(): array
+    {
+        return ThemeDispatcher::getTheme()->getFieldConfig(static::class);
     }
 
     private function renderEnd(): string

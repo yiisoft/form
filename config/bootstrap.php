@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Yiisoft\Form\Field;
+use Yiisoft\Form\ThemeDispatcher;
 
 /**
  * @var array $params
@@ -11,9 +11,9 @@ use Yiisoft\Form\Field;
 
 return [
     static function (ContainerInterface $container) use ($params) {
-        Field::initialize(
-            $params['yiisoft/form']['configs'],
-            $params['yiisoft/form']['defaultConfig'],
+        ThemeDispatcher::initialize(
+            $params['yiisoft/form']['themeConfigs'],
+            $params['yiisoft/form']['defaultThemeName'],
         );
     },
 ];

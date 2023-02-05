@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Fieldset;
+use Yiisoft\Form\Field\Part\Error;
+use Yiisoft\Form\Field\Part\Hint;
+use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Form\ThemeDispatcher;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Form\FieldFactory;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
-final class FieldFactoryTest extends TestCase
+final class ThemeTest extends TestCase
 {
     public function dataText(): array
     {
@@ -287,7 +290,7 @@ final class FieldFactoryTest extends TestCase
                 ],
                 'job',
             ],
-            [
+            'text1' => [
                 <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
@@ -308,10 +311,10 @@ final class FieldFactoryTest extends TestCase
      */
     public function testText(string $expected, array $factoryParameters, string $attribute): void
     {
-        $field = $this->createFieldFactory($factoryParameters);
+        $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = $field
-            ->text(TextForm::validated(), $attribute)
+        $result = Text::widget()
+            ->formAttribute(TextForm::validated(), $attribute)
             ->render();
 
         $this->assertSame($expected, $result);
@@ -363,10 +366,10 @@ final class FieldFactoryTest extends TestCase
             $factoryParameters
         );
 
-        $field = $this->createFieldFactory($factoryParameters);
+        $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = $field
-            ->errorSummary(ErrorSummaryForm::validated())
+        $result = ErrorSummary::widget()
+            ->formModel(ErrorSummaryForm::validated())
             ->render();
 
         $this->assertSame($expected, $result);
@@ -392,23 +395,21 @@ final class FieldFactoryTest extends TestCase
      */
     public function testFieldSet(string $expected, array $factoryParameters): void
     {
-        $field = $this->createFieldFactory($factoryParameters);
+        $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = $field
-            ->fieldset()
-            ->render();
+        $result = Fieldset::widget()->render();
 
         $this->assertSame($expected, $result);
     }
 
     public function testFieldSetWithOverrideTemplateBeginAndTemplateEnd(): void
     {
-        $field = $this->createFieldFactory([
+        $this->initializeThemeDispatcher([
             'templateBegin' => "before\n{input}",
             'templateEnd' => "{input}\nafter",
         ]);
 
-        $field = $field->fieldset();
+        $field = Fieldset::widget();
 
         $result = $field->begin() . 'hello' . $field::end();
 
@@ -472,10 +473,10 @@ final class FieldFactoryTest extends TestCase
      */
     public function testLabel(string $expected, array $factoryParameters): void
     {
-        $field = $this->createFieldFactory($factoryParameters);
+        $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = $field
-            ->label(new TextForm(), 'job')
+        $result = Label::widget()
+            ->formAttribute(new TextForm(), 'job')
             ->render();
 
         $this->assertSame($expected, $result);
@@ -520,10 +521,10 @@ final class FieldFactoryTest extends TestCase
      */
     public function testHint(string $expected, array $factoryParameters): void
     {
-        $field = $this->createFieldFactory($factoryParameters);
+        $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = $field
-            ->hint(new TextForm(), 'name')
+        $result = Hint::widget()
+            ->formAttribute(new TextForm(), 'name')
             ->render();
 
         $this->assertSame($expected, $result);
@@ -568,30 +569,18 @@ final class FieldFactoryTest extends TestCase
      */
     public function testError(string $expected, array $factoryParameters): void
     {
-        $field = $this->createFieldFactory($factoryParameters);
+        $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = $field
-            ->error(TextForm::validated(), 'name')
+        $result = Error::widget()
+            ->formAttribute(TextForm::validated(), 'name')
             ->render();
 
         $this->assertSame($expected, $result);
     }
 
-    public function testNotInputFieldInInputMethod(): void
+    private function initializeThemeDispatcher(array $parameters): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Input widget must be instance of "Yiisoft\Form\Field\Base\InputField".');
-        $this
-            ->createFieldFactory()
-            ->input(ErrorSummary::class, new ErrorSummaryForm(), 'name');
-    }
-
-    private function createFieldFactory(array $parameters = []): FieldFactory
-    {
-        $container = new SimpleContainer();
-
-        WidgetFactory::initialize($container);
-
-        return new FieldFactory(...$parameters);
+        WidgetFactory::initialize(new SimpleContainer());
+        ThemeDispatcher::initialize(['default' => $parameters]);
     }
 }

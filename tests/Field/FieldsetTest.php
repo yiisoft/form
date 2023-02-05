@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field;
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\ThemeDispatcher;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
 use Yiisoft\Html\Tag\Legend;
@@ -18,6 +19,7 @@ final class FieldsetTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeDispatcher::initialize();
     }
 
     public function testBase(): void
@@ -26,9 +28,9 @@ final class FieldsetTest extends TestCase
 
         $result = Fieldset::widget()->begin()
             . "\n"
-            . Field::text($form, 'firstName')->useContainer(false)
+            . Text::widget()->formAttribute($form, 'firstName')->useContainer(false)
             . "\n"
-            . Field::text($form, 'lastName')->useContainer(false)
+            . Text::widget()->formAttribute($form, 'lastName')->useContainer(false)
             . "\n"
             . Fieldset::end();
 
@@ -53,9 +55,9 @@ final class FieldsetTest extends TestCase
 
         $result = Fieldset::widget()
             ->content(
-                Field::text($form, 'firstName')->useContainer(false),
+                Text::widget()->formAttribute($form, 'firstName')->useContainer(false),
                 "\n",
-                Field::text($form, 'lastName')->useContainer(false),
+                Text::widget()->formAttribute($form, 'lastName')->useContainer(false),
             )
             ->render();
 

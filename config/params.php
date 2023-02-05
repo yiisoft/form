@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 return [
     'yiisoft/form' => [
-        'configs' => [
+        'themeConfigs' => [
             'default' => [],
         ],
-        'defaultConfig' => 'default',
+        'defaultThemeName' => 'default',
     ],
 ];
