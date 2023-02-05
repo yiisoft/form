@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Yiisoft\Form\ThemeDispatcher;
-use Yiisoft\Form\Tests\Support\Form\TextForm;
 
 final class ThemeDispatcherTest extends TestCase
 {
