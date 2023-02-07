@@ -7,8 +7,6 @@ namespace Yiisoft\Form\Tests;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
-use Yiisoft\Form\Field\Part\Error;
-use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\ThemeDispatcher;
 use Yiisoft\Form\Field\ErrorSummary;
