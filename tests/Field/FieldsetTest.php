@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\Field;
 use Yiisoft\Form\ThemeDispatcher;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
@@ -28,9 +28,9 @@ final class FieldsetTest extends TestCase
 
         $result = Fieldset::widget()->begin()
             . "\n"
-            . Text::widget()->formAttribute($form, 'firstName')->useContainer(false)
+            . Field::text($form, 'firstName')->useContainer(false)
             . "\n"
-            . Text::widget()->formAttribute($form, 'lastName')->useContainer(false)
+            . Field::text($form, 'lastName')->useContainer(false)
             . "\n"
             . Fieldset::end();
 
@@ -55,9 +55,9 @@ final class FieldsetTest extends TestCase
 
         $result = Fieldset::widget()
             ->content(
-                Text::widget()->formAttribute($form, 'firstName')->useContainer(false),
+                Field::text($form, 'firstName')->useContainer(false),
                 "\n",
-                Text::widget()->formAttribute($form, 'lastName')->useContainer(false),
+                Field::text($form, 'lastName')->useContainer(false),
             )
             ->render();
 

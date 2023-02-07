@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field;
 use Yiisoft\Form\ThemeDispatcher;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
@@ -36,7 +37,7 @@ final class ConfigTest extends TestCase
     public function testCustomParams(): void
     {
         $params = $this->getParams();
-        $params['yiisoft/form']['themeConfigs'] = [
+        $params['yiisoft/form']['configs'] = [
             'simple' => [
                 'fieldConfigs' => [
                     Hidden::class => [
@@ -45,13 +46,13 @@ final class ConfigTest extends TestCase
                 ],
             ],
         ];
-        $params['yiisoft/form']['defaultThemeName'] = 'simple';
+        $params['yiisoft/form']['defaultConfig'] = 'simple';
 
         $bootstrapList = $this->getBootstrapList($params);
         $bootstrap = array_shift($bootstrapList);
         $bootstrap(new SimpleContainer());
 
-        $input = Hidden::widget()->formAttribute(new HiddenForm(), 'key');
+        $input = Field::hidden(new HiddenForm(), 'key');
 
         $this->assertSame(
             '<input type="hidden" id="TestId" name="HiddenForm[key]" value="x100">',

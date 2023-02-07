@@ -81,7 +81,7 @@ In the controller, we will pass an instance of that `formModel` to the `view`:
 declare(strict_types=1);
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\Field;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\Translator;
@@ -111,12 +111,12 @@ $this->setTitle($title);
             ->csrf($csrf)
             ->id('form-auth-login')
             ->open() ?>
-            <?= ThemeDispatcher::text($formModel, 'login')
+            <?= Field::text($formModel, 'login')
                 ->autofocus()
                 ->tabindex(1) ?>
-            <?= ThemeDispatcher::password($formModel, 'password')
+            <?= Field::password($formModel, 'password')
                     ->tabindex(2) ?>
-            <?= ThemeDispatcher::submitButton()
+            <?= Field::submitButton()
                 ->containerClass('d-grid gap-2 form-floating')
                 ->buttonClass('btn btn-primary btn-lg mt-3')
                 ->buttonId('login-button')

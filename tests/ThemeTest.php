@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -368,9 +369,7 @@ final class ThemeTest extends TestCase
 
         $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
-            ->render();
+        $result = Field::errorSummary(ErrorSummaryForm::validated())->render();
 
         $this->assertSame($expected, $result);
     }
@@ -397,7 +396,7 @@ final class ThemeTest extends TestCase
     {
         $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = Fieldset::widget()->render();
+        $result = Field::fieldset()->render();
 
         $this->assertSame($expected, $result);
     }
@@ -523,9 +522,7 @@ final class ThemeTest extends TestCase
     {
         $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = Hint::widget()
-            ->formAttribute(new TextForm(), 'name')
-            ->render();
+        $result = Field::hint(new TextForm(), 'name')->render();
 
         $this->assertSame($expected, $result);
     }
@@ -571,9 +568,7 @@ final class ThemeTest extends TestCase
     {
         $this->initializeThemeDispatcher($factoryParameters);
 
-        $result = Error::widget()
-            ->formAttribute(TextForm::validated(), 'name')
-            ->render();
+        $result = Field::error(TextForm::validated(), 'name')->render();
 
         $this->assertSame($expected, $result);
     }

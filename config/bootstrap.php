@@ -12,8 +12,8 @@ use Yiisoft\Form\ThemeDispatcher;
 return [
     static function (ContainerInterface $container) use ($params) {
         ThemeDispatcher::initialize(
-            $params['yiisoft/form']['themeConfigs'],
-            $params['yiisoft/form']['defaultThemeName'],
+            $params['yiisoft/form']['configs'],
+            $params['yiisoft/form']['defaultConfig'],
         );
     },
 ];
