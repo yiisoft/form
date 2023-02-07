@@ -13,11 +13,11 @@ final class ThemeDispatcher
     /**
      * @psalm-var array<string,array>
      */
-    private static array $themeConfigs = [
+    private static array $configs = [
         'default' => [],
     ];
 
-    private static string $defaultThemeName = 'default';
+    private static string $defaultConfig = 'default';
 
     /**
      * @psalm-var array<string,Theme>
@@ -25,7 +25,7 @@ final class ThemeDispatcher
     private static array $themes = [];
 
     /**
-     * @param array<string,array> $themeConfigs Array of configurations with {@see Theme::__construct()}
+     * @param array<string,array> $configs Array of configurations with {@see Theme::__construct()}
      * arguments indexed by name. For example:
      * ```php
      * [
@@ -53,29 +53,29 @@ final class ThemeDispatcher
      *     ],
      * ]
      * ```
-     * @param string $defaultThemeName Configuration name that will be used for create fields by default. If value is
+     * @param string $defaultConfig Configuration name that will be used for create fields by default. If value is
      * not "default", then `$configs` must contain configuration with this name.
      */
-    public static function initialize(array $themeConfigs = [], string $defaultThemeName = 'default'): void
+    public static function initialize(array $configs = [], string $defaultConfig = 'default'): void
     {
-        self::$themeConfigs = array_merge(self::$themeConfigs, $themeConfigs);
-        self::$defaultThemeName = $defaultThemeName;
+        self::$configs = array_merge(self::$configs, $configs);
+        self::$defaultConfig = $defaultConfig;
         self::$themes = [];
     }
 
     public static function getTheme(?string $name = null): Theme
     {
-        $name ??= self::$defaultThemeName;
+        $name ??= self::$defaultConfig;
 
         if (!array_key_exists($name, self::$themes)) {
-            if (!array_key_exists($name, self::$themeConfigs)) {
+            if (!array_key_exists($name, self::$configs)) {
                 throw new RuntimeException(
                     sprintf('Theme with name "%s" not found.', $name)
                 );
             }
 
             /** @psalm-suppress MixedArgument */
-            self::$themes[$name] = new Theme(...self::$themeConfigs[$name]);
+            self::$themes[$name] = new Theme(...self::$configs[$name]);
         }
 
         return self::$themes[$name];
