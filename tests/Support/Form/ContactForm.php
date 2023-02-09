@@ -9,6 +9,7 @@ use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\Rule\StopOnError;
 
 final class ContactForm extends FormModel
 {
