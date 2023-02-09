@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use Yiisoft\Definitions\Exception\InvalidConfigException;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Tests\Support\Form\ContactFormOne;
 use Yiisoft\Form\Tests\Support\Form\ContactFormTwo;
@@ -12,8 +14,14 @@ use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 final class ValidatorTest extends TestCase
 {
+    /**
+     * @throws InvalidConfigException
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,6 +30,9 @@ final class ValidatorTest extends TestCase
         Field::initialize();
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function testValidatorFailsOne(): void
     {
         $formModel = new ContactFormOne();
@@ -48,6 +59,9 @@ final class ValidatorTest extends TestCase
         }
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function testValidatorTwoChangeOrderRules(): void
     {
         $formModel = new ContactFormTwo();

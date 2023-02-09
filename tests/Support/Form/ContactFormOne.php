@@ -15,7 +15,7 @@ final class ContactFormOne extends FormModel
 {
     #[StopOnError([new Required(), new Email(), new Length(min:5, max:20)])]
     private string $email = '';
-    #[Required(), Length(min:5, max:20), Regex(pattern: '/^[a-zA-Z0-9\s]+$/')]
+    #[Required, Length(min:5, max:20), Regex(pattern: '/^[a-zA-Z0-9\s]+$/')]
     private string $name = '';
     #[StopOnError([new Required(), new Length(min:5), new Regex(pattern: '/^[a-zA-Z0-9\s]+$/')])]
     private string $subject = '';

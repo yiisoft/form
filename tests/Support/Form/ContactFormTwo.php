@@ -15,8 +15,8 @@ final class ContactFormTwo extends FormModel
 {
     #[StopOnError([new Required(), new Email(), new Length(min:5, max:20)])]
     private string $email = '';
-    #[Required(), Length(min:5, max:20), Regex(pattern: '/^[a-zA-Z0-9\s]+$/')]
+    #[Required, Length(min:5, max:20), Regex(pattern: '/^[a-zA-Z0-9\s]+$/')]
     private string $name = '';
-    #[Required(), Length(min:5), Regex(pattern: '/^[a-zA-Z0-9\s]+$/')]
+    #[Required, Length(min:5), Regex(pattern: '/^[a-zA-Z0-9\s]+$/')]
     private string $subject = '';
 }
