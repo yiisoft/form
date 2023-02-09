@@ -6,7 +6,8 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
-use Yiisoft\Form\Tests\Support\Form\ContactForm;
+use Yiisoft\Form\Tests\Support\Form\ContactFormOne;
+use Yiisoft\Form\Tests\Support\Form\ContactFormTwo;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
@@ -23,7 +24,7 @@ final class ValidatorTest extends TestCase
 
     public function testValidatorFailsOne(): void
     {
-        $formModel = new ContactForm();
+        $formModel = new ContactFormOne();
         $validator = new Validator();
         $result = $validator->validate($formModel);
 
@@ -40,6 +41,34 @@ final class ValidatorTest extends TestCase
                     ],
                     'subject' => [
                         'Value cannot be blank.',
+                    ],
+                ],
+                $result->getErrorMessagesIndexedByAttribute(),
+            );
+        }
+    }
+
+    public function testValidatorTwoChangeOrderRules(): void
+    {
+        $formModel = new ContactFormTwo();
+        $validator = new Validator();
+        $result = $validator->validate($formModel);
+
+        if ($result->isValid() === false) {
+            $this->assertSame(
+                [
+                    'email' => [
+                        'Value cannot be blank.',
+                    ],
+                    'name' => [
+                        'Value cannot be blank.',
+                        'This value must contain at least 5 characters.',
+                        'Value is invalid.',
+                    ],
+                    'subject' => [
+                        'Value cannot be blank.',
+                        'This value must contain at least 5 characters.',
+                        'Value is invalid.',
                     ],
                 ],
                 $result->getErrorMessagesIndexedByAttribute(),

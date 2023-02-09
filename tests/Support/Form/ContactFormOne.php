@@ -11,7 +11,7 @@ use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\StopOnError;
 
-final class ContactForm extends FormModel
+final class ContactFormOne extends FormModel
 {
     #[StopOnError([new Required(), new Email(), new Length(min:5, max:20)])]
     private string $email = '';
