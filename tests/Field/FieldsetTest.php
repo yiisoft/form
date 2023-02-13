@@ -6,9 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
-use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Legend;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;

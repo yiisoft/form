@@ -310,7 +310,7 @@ final class ThemeTest extends TestCase
      */
     public function testText(string $expected, array $factoryParameters, string $attribute): void
     {
-        $this->initializeThemeDispatcher($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Text::widget()
             ->formAttribute(TextForm::validated(), $attribute)
@@ -365,7 +365,7 @@ final class ThemeTest extends TestCase
             $factoryParameters
         );
 
-        $this->initializeThemeDispatcher($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Field::errorSummary(ErrorSummaryForm::validated())->render();
 
@@ -392,7 +392,7 @@ final class ThemeTest extends TestCase
      */
     public function testFieldSet(string $expected, array $factoryParameters): void
     {
-        $this->initializeThemeDispatcher($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Field::fieldset()->render();
 
@@ -401,7 +401,7 @@ final class ThemeTest extends TestCase
 
     public function testFieldSetWithOverrideTemplateBeginAndTemplateEnd(): void
     {
-        $this->initializeThemeDispatcher([
+        $this->initializeThemeContainer([
             'templateBegin' => "before\n{input}",
             'templateEnd' => "{input}\nafter",
         ]);
@@ -470,7 +470,7 @@ final class ThemeTest extends TestCase
      */
     public function testLabel(string $expected, array $factoryParameters): void
     {
-        $this->initializeThemeDispatcher($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Label::widget()
             ->formAttribute(new TextForm(), 'job')
@@ -518,7 +518,7 @@ final class ThemeTest extends TestCase
      */
     public function testHint(string $expected, array $factoryParameters): void
     {
-        $this->initializeThemeDispatcher($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Field::hint(new TextForm(), 'name')->render();
 
@@ -564,14 +564,14 @@ final class ThemeTest extends TestCase
      */
     public function testError(string $expected, array $factoryParameters): void
     {
-        $this->initializeThemeDispatcher($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Field::error(TextForm::validated(), 'name')->render();
 
         $this->assertSame($expected, $result);
     }
 
-    private function initializeThemeDispatcher(array $parameters): void
+    private function initializeThemeContainer(array $parameters): void
     {
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(['default' => $parameters]);

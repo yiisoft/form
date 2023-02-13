@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Tests\Support\Form\ErrorForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
@@ -18,6 +19,7 @@ final class ErrorTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

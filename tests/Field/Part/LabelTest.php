@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Tests\Support\Form\LabelForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -17,6 +18,7 @@ final class LabelTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

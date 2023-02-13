@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Field;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -16,6 +17,7 @@ final class DateTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -18,6 +19,7 @@ final class NumberTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

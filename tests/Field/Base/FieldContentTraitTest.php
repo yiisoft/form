@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubFieldContentTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\P;
 use Yiisoft\Html\Tag\Span;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -18,6 +19,7 @@ final class FieldContentTraitTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

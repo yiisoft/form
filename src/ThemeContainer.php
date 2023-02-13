@@ -10,14 +10,15 @@ use function array_key_exists;
 
 final class ThemeContainer
 {
+    private const INITIAL_CONFIGS = ['default' => []];
+    private const INITIAL_DEFAULT_CONFIG = 'default';
+
     /**
      * @psalm-var array<string,array>
      */
-    private static array $configs = [
-        'default' => [],
-    ];
+    private static array $configs = self::INITIAL_CONFIGS;
 
-    private static string $defaultConfig = 'default';
+    private static string $defaultConfig = self::INITIAL_DEFAULT_CONFIG;
 
     /**
      * @psalm-var array<string,Theme>
@@ -56,9 +57,9 @@ final class ThemeContainer
      * @param string $defaultConfig Configuration name that will be used for create fields by default. If value is
      * not "default", then `$configs` must contain configuration with this name.
      */
-    public static function initialize(array $configs = [], string $defaultConfig = 'default'): void
+    public static function initialize(array $configs = [], string $defaultConfig = self::INITIAL_DEFAULT_CONFIG): void
     {
-        self::$configs = array_merge(self::$configs, $configs);
+        self::$configs = array_merge(self::INITIAL_CONFIGS, $configs);
         self::$defaultConfig = $defaultConfig;
         self::$themes = [];
     }

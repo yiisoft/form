@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Tests\Support\Form\CheckboxListForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -19,6 +20,7 @@ final class CheckboxListTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

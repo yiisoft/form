@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubBaseField;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -15,6 +16,7 @@ final class BaseFieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function dataContainerId(): array

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\SubmitButton;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -16,6 +17,7 @@ final class SubmitButtonTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
