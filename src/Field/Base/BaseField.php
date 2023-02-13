@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
@@ -149,7 +149,7 @@ abstract class BaseField extends Widget
 
     final protected static function getDefaultConfig(): array
     {
-        return ThemeDispatcher::getTheme()->getFieldConfig(static::class);
+        return ThemeContainer::getTheme()->getFieldConfig(static::class);
     }
 
     private function renderEnd(): string

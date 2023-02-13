@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field\Part;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
@@ -171,6 +171,6 @@ final class Error extends Widget
 
     protected static function getDefaultConfig(): array
     {
-        return ThemeDispatcher::getTheme()->getErrorConfig();
+        return ThemeContainer::getTheme()->getErrorConfig();
     }
 }

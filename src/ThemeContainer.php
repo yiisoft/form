@@ -8,7 +8,7 @@ use RuntimeException;
 
 use function array_key_exists;
 
-final class ThemeDispatcher
+final class ThemeContainer
 {
     /**
      * @psalm-var array<string,array>

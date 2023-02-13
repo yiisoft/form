@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Field\Part;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -129,6 +129,6 @@ final class Hint extends Widget
 
     protected static function getDefaultConfig(): array
     {
-        return ThemeDispatcher::getTheme()->getHintConfig();
+        return ThemeContainer::getTheme()->getHintConfig();
     }
 }

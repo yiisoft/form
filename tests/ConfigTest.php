@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -18,7 +18,7 @@ final class ConfigTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeDispatcher::initialize();
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

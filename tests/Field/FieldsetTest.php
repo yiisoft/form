@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
 use Yiisoft\Html\Tag\Legend;
@@ -19,7 +19,7 @@ final class FieldsetTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeDispatcher::initialize();
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

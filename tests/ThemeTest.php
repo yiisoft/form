@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
@@ -574,6 +574,6 @@ final class ThemeTest extends TestCase
     private function initializeThemeDispatcher(array $parameters): void
     {
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeDispatcher::initialize(['default' => $parameters]);
+        ThemeContainer::initialize(['default' => $parameters]);
     }
 }

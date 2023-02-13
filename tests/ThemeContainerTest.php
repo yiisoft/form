@@ -6,14 +6,14 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 
-final class ThemeDispatcherTest extends TestCase
+final class ThemeContainerTest extends TestCase
 {
     public function testGetThemeWithNonExistConfiguration(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Theme with name "non-exist" not found.');
-        ThemeDispatcher::getTheme('non-exist');
+        ThemeContainer::getTheme('non-exist');
     }
 }

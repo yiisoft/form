@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Yiisoft\Form\ThemeDispatcher;
+use Yiisoft\Form\ThemeContainer;
 
 /**
  * @var array $params
@@ -11,7 +11,7 @@ use Yiisoft\Form\ThemeDispatcher;
 
 return [
     static function (ContainerInterface $container) use ($params) {
-        ThemeDispatcher::initialize(
+        ThemeContainer::initialize(
             $params['yiisoft/form']['configs'],
             $params['yiisoft/form']['defaultConfig'],
         );
