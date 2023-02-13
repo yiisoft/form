@@ -12,6 +12,7 @@ use ReflectionNamedType;
 use ReflectionObject;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
+use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RuleInterface;
@@ -29,7 +30,11 @@ use function substr;
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
-abstract class FormModel implements FormModelInterface, PostValidationHookInterface, RulesProviderInterface
+abstract class FormModel implements
+    DataSetInterface,
+    FormModelInterface,
+    PostValidationHookInterface,
+    RulesProviderInterface
 {
     private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
