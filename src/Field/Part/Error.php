@@ -169,8 +169,8 @@ final class Error extends Widget
             ->render();
     }
 
-    protected static function getDefaultConfig(): array
+    protected static function getDefaultConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme()->getErrorConfig();
+        return ThemeContainer::getTheme($theme)->getErrorConfig();
     }
 }

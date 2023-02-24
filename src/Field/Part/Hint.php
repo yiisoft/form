@@ -127,8 +127,8 @@ final class Hint extends Widget
                 ->render();
     }
 
-    protected static function getDefaultConfig(): array
+    protected static function getDefaultConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme()->getHintConfig();
+        return ThemeContainer::getTheme($theme)->getHintConfig();
     }
 }

@@ -289,7 +289,7 @@ final class ThemeTest extends TestCase
                 ],
                 'job',
             ],
-            'text1' => [
+            [
                 <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
@@ -317,6 +317,31 @@ final class ThemeTest extends TestCase
             ->render();
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testTextWithCustomTheme(): void
+    {
+        WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize([
+            'custom-theme' => [
+                'inputContainerTag' => 'div',
+                'inputContainerClass' => ['control', 'red'],
+            ],
+        ]);
+
+        $result = Text::widget(theme: 'custom-theme')
+            ->formAttribute(TextForm::validated(), 'job')
+            ->render();
+
+        $this->assertSame(
+            <<<'HTML'
+                <div>
+                <label for="textform-job">Job</label>
+                <div class="control red"><input type="text" id="textform-job" name="TextForm[job]" value></div>
+                </div>
+                HTML,
+            $result
+        );
     }
 
     public function dataErrorSummary(): array

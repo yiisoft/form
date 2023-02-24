@@ -152,8 +152,8 @@ final class Label extends Widget
         return $tag->render();
     }
 
-    protected static function getDefaultConfig(): array
+    protected static function getDefaultConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme()->getLabelConfig();
+        return ThemeContainer::getTheme($theme)->getLabelConfig();
     }
 }

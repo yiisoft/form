@@ -147,9 +147,9 @@ abstract class BaseField extends Widget
     {
     }
 
-    final protected static function getDefaultConfig(): array
+    final protected static function getDefaultConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme()->getFieldConfig(static::class);
+        return ThemeContainer::getTheme($theme)->getFieldConfig(static::class);
     }
 
     private function renderEnd(): string
