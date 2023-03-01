@@ -370,13 +370,6 @@ final class FormModelTest extends TestCase
         $this->assertSame([], $form->getAttributeValue('property'));
     }
 
-    public function testDefaultGetRules(): void
-    {
-        $form = new TypeForm();
-
-        $this->assertSame([], $form->getRules());
-    }
-
     public function testGetData(): void
     {
         $data = [

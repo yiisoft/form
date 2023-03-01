@@ -7,11 +7,17 @@ namespace Yiisoft\Form\Field\Base;
 use InvalidArgumentException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Validator\Helper\ObjectParser;
+use Yiisoft\Validator\Helper\RulesNormalizer;
 
+/**
+ * @psalm-import-type NormalizedRulesMap from RulesNormalizer
+ */
 trait FormAttributeTrait
 {
     private ?FormModelInterface $formModel = null;
     private string $formAttribute = '';
+    private ?ObjectParser $formModelParser = null;
 
     final public function formAttribute(FormModelInterface $model, string $attribute): static
     {
@@ -28,6 +34,14 @@ trait FormAttributeTrait
         }
 
         return $this->formModel;
+    }
+
+    /**
+     * @psalm-return NormalizedRulesMap
+     */
+    final protected function getFormModelRules(): array
+    {
+        return RulesNormalizer::normalize(null, $this->getFormModel());
     }
 
     final protected function hasFormModelAndAttribute(): bool

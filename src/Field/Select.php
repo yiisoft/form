@@ -246,9 +246,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this
-                    ->getFormModel()
-                    ->getRules()[$this->getFormAttributeName()] ?? [];
+            $rules = $this->getFormModelRules()[$this->getFormAttributeName()] ?? [];
             foreach ($rules as $rule) {
                 if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
