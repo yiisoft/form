@@ -196,8 +196,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this->getFormModelRules()[$this->getFormAttributeName()] ?? [];
-            foreach ($rules as $rule) {
+            foreach ($this->getFormAttributeValidationRules() as $rule) {
                 if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
