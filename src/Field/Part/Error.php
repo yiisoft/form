@@ -169,7 +169,7 @@ final class Error extends Widget
             ->render();
     }
 
-    protected static function getDefaultConfig(?string $theme): array
+    protected static function getThemeConfig(?string $theme): array
     {
         return ThemeContainer::getTheme($theme)->getErrorConfig();
     }
