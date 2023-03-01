@@ -11,6 +11,7 @@ use Yiisoft\Validator\Helper\RulesNormalizer;
 
 /**
  * @psalm-import-type NormalizedRulesMap from RulesNormalizer
+ * @psalm-import-type NormalizedRulesList from RulesNormalizer
  */
 trait FormAttributeTrait
 {
@@ -41,7 +42,7 @@ trait FormAttributeTrait
     }
 
     /**
-     * @psalm-return NormalizedRulesMap
+     * @psalm-return NormalizedRulesList
      */
     final protected function getFormAttributeValidationRules(): iterable
     {
