@@ -3,6 +3,6 @@
 Configuration levels:
 
 - widget factory configuration;
-- common configuration in field factory;
-- individual configuration in field factory;
+- common configuration from theme (optional);
+- individual configuration from theme (optional);
 - configuration at the place of use.
