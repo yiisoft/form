@@ -6,17 +6,13 @@ namespace Yiisoft\Form;
 
 use Closure;
 use InvalidArgumentException;
-use ReflectionAttribute;
 use ReflectionClass;
 use ReflectionNamedType;
-use ReflectionObject;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
-use Yiisoft\Validator\RuleInterface;
-use Yiisoft\Validator\RulesProviderInterface;
 
 use function array_key_exists;
 use function array_keys;
@@ -33,8 +29,7 @@ use function substr;
 abstract class FormModel implements
     DataSetInterface,
     FormModelInterface,
-    PostValidationHookInterface,
-    RulesProviderInterface
+    PostValidationHookInterface
 {
     private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
@@ -213,19 +208,6 @@ abstract class FormModel implements
         }
 
         $this->validated = true;
-    }
-
-    public function getRules(): array
-    {
-        $rules = [];
-        $reflection = new ReflectionObject($this);
-        foreach ($reflection->getProperties() as $property) {
-            $attributes = $property->getAttributes(RuleInterface::class, ReflectionAttribute::IS_INSTANCEOF);
-            foreach ($attributes as $attribute) {
-                $rules[$property->getName()][] = $attribute->newInstance();
-            }
-        }
-        return $rules;
     }
 
     public function setFormErrors(FormErrorsInterface $formErrors): void

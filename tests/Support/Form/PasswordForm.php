@@ -8,8 +8,9 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class PasswordForm extends FormModel
+final class PasswordForm extends FormModel implements RulesProviderInterface
 {
     private string $old = '';
     private ?string $post = null;

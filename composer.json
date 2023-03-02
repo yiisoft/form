@@ -25,7 +25,7 @@
         "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
         "yiisoft/strings": "^2.0",
-        "yiisoft/validator": "dev-master",
+        "yiisoft/validator": "^1.0",
         "yiisoft/widget": "^2.0"
     },
     "require-dev": {

@@ -9,8 +9,9 @@ use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\Rule\Url;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class UrlForm extends FormModel
+final class UrlForm extends FormModel implements RulesProviderInterface
 {
     public string $site = '';
     public string $company = '';
