@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use RuntimeException;
-
 use function array_key_exists;
 
 final class ThemeContainer

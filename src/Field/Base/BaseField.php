@@ -66,7 +66,7 @@ abstract class BaseField extends Widget
     final public function containerClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->containerAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->containerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
         return $new;
     }
 
@@ -80,7 +80,7 @@ abstract class BaseField extends Widget
         $new = clone $this;
         Html::addCssClass(
             $new->containerAttributes,
-            array_filter($class, static fn($c) => $c !== null),
+            array_filter($class, static fn ($c) => $c !== null),
         );
         return $new;
     }
