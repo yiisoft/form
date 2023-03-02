@@ -7,8 +7,9 @@ namespace Yiisoft\Form\Tests\Support\Form;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Number;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class RangeForm extends FormModel
+final class RangeForm extends FormModel implements RulesProviderInterface
 {
     private int $volume = 23;
     private ?int $count = null;

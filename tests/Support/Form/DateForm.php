@@ -6,8 +6,9 @@ namespace Yiisoft\Form\Tests\Support\Form;
 
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class DateForm extends FormModel
+final class DateForm extends FormModel implements RulesProviderInterface
 {
     private string $birthday = '1996-12-19';
     private ?string $startDate = null;

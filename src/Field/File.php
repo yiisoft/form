@@ -167,10 +167,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            $rules = $this
-                    ->getFormModel()
-                    ->getRules()[$this->getFormAttributeName()] ?? [];
-            foreach ($rules as $rule) {
+            foreach ($this->getFormAttributeValidationRules() as $rule) {
                 if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }

@@ -8,8 +8,9 @@ use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
+use Yiisoft\Validator\RulesProviderInterface;
 
-final class TelephoneForm extends FormModel
+final class TelephoneForm extends FormModel implements RulesProviderInterface
 {
     private string $number = '';
     private ?string $main = null;
