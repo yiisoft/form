@@ -155,6 +155,33 @@ final class BaseFieldTest extends TestCase
         $this->assertSame('content', $result);
     }
 
+    public function testCustomTheme(): void
+    {
+        WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize(
+            configs: [
+                'default' => [
+                    'useContainer' => false,
+                ],
+                'custom-theme' => [
+                    'containerClass' => 'main',
+                ],
+            ],
+            defaultConfig: 'default',
+        );
+
+        $result = StubBaseField::widget(theme: 'custom-theme')->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div class="main">
+            test
+            </div>
+            HTML,
+            $result
+        );
+    }
+
     public function testImmutability(): void
     {
         $field = StubBaseField::widget();
