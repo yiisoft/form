@@ -171,6 +171,6 @@ final class Error extends Widget
 
     protected static function getThemeConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme($theme)->getErrorConfig();
+        return ThemeContainer::getTheme($theme)?->getErrorConfig() ?? [];
     }
 }

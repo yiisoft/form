@@ -599,6 +599,6 @@ final class ThemeTest extends TestCase
     private function initializeThemeContainer(array $parameters): void
     {
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(['default' => $parameters]);
+        ThemeContainer::initialize(['default' => $parameters], defaultConfig: 'default');
     }
 }

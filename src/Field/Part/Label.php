@@ -154,6 +154,6 @@ final class Label extends Widget
 
     protected static function getThemeConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme($theme)->getLabelConfig();
+        return ThemeContainer::getTheme($theme)?->getLabelConfig() ?? [];
     }
 }

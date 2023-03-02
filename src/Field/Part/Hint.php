@@ -129,6 +129,6 @@ final class Hint extends Widget
 
     protected static function getThemeConfig(?string $theme): array
     {
-        return ThemeContainer::getTheme($theme)->getHintConfig();
+        return ThemeContainer::getTheme($theme)?->getHintConfig() ?? [];
     }
 }
