@@ -229,7 +229,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
                 }
 
                 if ($rule instanceof Regex) {
-                    if (!($rule->isNot())) {
+                    if (!$rule->isNot()) {
                         $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
                             $rule->getPattern()
                         );
