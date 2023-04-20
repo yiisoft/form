@@ -20,15 +20,6 @@ interface FormModelInterface extends DataSetInterface
     public function attributes(): array;
 
     /**
-     * Returns the value for the specified attribute.
-     *
-     * @param string $attribute
-     *
-     * @return mixed
-     */
-    public function getAttributeValue(string $attribute): mixed;
-
-    /**
      * If there is such attribute in the set.
      *
      * @param string $attribute
