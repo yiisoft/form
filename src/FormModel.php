@@ -32,10 +32,9 @@ abstract class FormModel implements
     PostValidationHookInterface
 {
     private array $attributeTypes;
-    private ?FormErrorsInterface $formErrors = null;
     private ?Inflector $inflector = null;
     private array $rawData = [];
-    private bool $validated = false;
+    private ?Result $validationResult = null;
 
     public function __construct()
     {
@@ -113,16 +112,9 @@ abstract class FormModel implements
         return $this->rawData[$attribute] ?? $this->getAttributeCastValue($attribute);
     }
 
-    /**
-     * @return FormErrorsInterface Get FormErrors object.
-     */
-    public function getFormErrors(): FormErrorsInterface
+    public function getValidationResult(): Result
     {
-        if ($this->formErrors === null) {
-            $this->formErrors = new FormErrors();
-        }
-
-        return $this->formErrors;
+        return $this->validationResult ?? new Result();
     }
 
     /**
@@ -201,18 +193,7 @@ abstract class FormModel implements
 
     public function processValidationResult(Result $result): void
     {
-        foreach ($result->getErrorMessagesIndexedByAttribute() as $attribute => $errors) {
-            if ($this->hasAttribute($attribute)) {
-                $this->addErrors([$attribute => $errors]);
-            }
-        }
-
-        $this->validated = true;
-    }
-
-    public function setFormErrors(FormErrorsInterface $formErrors): void
-    {
-        $this->formErrors = $formErrors;
+        $this->validationResult = $result;
     }
 
     /**
@@ -239,20 +220,6 @@ abstract class FormModel implements
         }
 
         return $attributes;
-    }
-
-    /**
-     * @psalm-param  non-empty-array<string, non-empty-list<string>> $items
-     */
-    private function addErrors(array $items): void
-    {
-        foreach ($items as $attribute => $errors) {
-            foreach ($errors as $error) {
-                $this
-                    ->getFormErrors()
-                    ->addError($attribute, $error);
-            }
-        }
     }
 
     private function getInflector(): Inflector
@@ -372,7 +339,7 @@ abstract class FormModel implements
 
     public function isValidated(): bool
     {
-        return $this->validated;
+        return $this->validationResult !== null;
     }
 
     public function getData(): array

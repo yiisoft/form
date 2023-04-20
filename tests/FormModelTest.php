@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypeError;
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
@@ -337,15 +336,6 @@ final class FormModelTest extends TestCase
             }
         };
         $this->assertSame(['int' => 'int', 'null' => 'null'], $form->collectAttributes());
-    }
-
-    public function testSetFormErrors(): void
-    {
-        $formErrors = new CustomFormErrors();
-        $formModel = new LoginForm();
-
-        $formModel->setFormErrors($formErrors);
-        $this->assertSame($formErrors, $formModel->getFormErrors());
     }
 
     public function testSetAttribute(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form;
 
 use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Validator\Result;
 
 /**
  * FormModelInterface model represents an HTML form: its data, validation and presentation.
@@ -36,10 +37,7 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      */
     public function hasAttribute(string $attribute): bool;
 
-    /**
-     * @return FormErrorsInterface Validation errors.
-     */
-    public function getFormErrors(): FormErrorsInterface;
+    public function getValidationResult(): Result;
 
     /**
      * Returns the form name that this model class should use.
@@ -100,9 +98,4 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * @param mixed $value
      */
     public function setAttribute(string $name, mixed $value): void;
-
-    /**
-     * Set custom form errors instance.
-     */
-    public function setFormErrors(FormErrorsInterface $formErrors): void;
 }

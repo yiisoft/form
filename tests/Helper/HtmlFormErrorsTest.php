@@ -26,34 +26,6 @@ final class HtmlFormErrorsTest extends TestCase
     ];
     private LoginForm $model;
 
-    public function testClearAllErrors(): void
-    {
-        $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
-        $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator
-            ->validate($formModel)
-            ->isValid());
-        $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
-        $formModel->getFormErrors()->clear();
-        $this->assertEmpty($formModel->getFormErrors()->getAllErrors());
-    }
-
-    public function testClearForAttribute(): void
-    {
-        $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
-        $this->assertTrue($formModel->load($this->data));
-        $this->assertFalse($validator
-            ->validate($formModel)
-            ->isValid());
-        $this->assertSame($this->expected, HtmlFormErrors::getAllErrors($formModel));
-        $this->assertEmpty($formModel
-            ->getFormErrors()
-            ->clear('login'));
-        $this->assertSame(['password' => ['Is too short.']], HtmlFormErrors::getAllErrors($formModel));
-    }
-
     public function testGetAllErrors(): void
     {
         $formModel = new LoginForm();

@@ -6,6 +6,8 @@ namespace Yiisoft\Form\Helper;
 
 use Yiisoft\Form\FormModelInterface;
 
+use function in_array;
+
 /**
  * HtmlFormErrors renders a list of errors for the specified model attribute.
  */
@@ -21,8 +23,8 @@ final class HtmlFormErrors
     public static function getAllErrors(FormModelInterface $formModel): array
     {
         return $formModel
-            ->getFormErrors()
-            ->getAllErrors();
+            ->getValidationResult()
+            ->getErrorMessagesIndexedByAttribute();
     }
 
     /**
@@ -34,8 +36,8 @@ final class HtmlFormErrors
     public static function getErrors(FormModelInterface $formModel, string $attribute): array
     {
         return $formModel
-            ->getFormErrors()
-            ->getErrors($attribute);
+            ->getValidationResult()
+            ->getAttributeErrorMessages($attribute);
     }
 
     /**
@@ -47,9 +49,13 @@ final class HtmlFormErrors
      */
     public static function getErrorSummaryFirstErrors(FormModelInterface $formModel): array
     {
-        return $formModel
-            ->getFormErrors()
-            ->getErrorSummaryFirstErrors();
+        $result = [];
+        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByAttribute() as $attribute => $messages) {
+            if (isset($messages[0])) {
+                $result[$attribute] = $messages[0];
+            }
+        }
+        return $result;
     }
 
     /**
@@ -62,9 +68,18 @@ final class HtmlFormErrors
      */
     public static function getErrorSummary(FormModelInterface $formModel, array $onlyAttributes = []): array
     {
-        return $formModel
-            ->getFormErrors()
-            ->getErrorSummary($onlyAttributes);
+        if ($onlyAttributes === []) {
+            return $formModel->getValidationResult()->getErrorMessages();
+        }
+
+        $result = [];
+        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByAttribute() as $attribute => $messages) {
+            if (in_array($attribute, $onlyAttributes, true)) {
+                $result[] = $messages;
+            }
+        }
+
+        return array_merge(...$result);
     }
 
     /**
@@ -78,8 +93,8 @@ final class HtmlFormErrors
     public static function getFirstError(FormModelInterface $formModel, string $attribute): ?string
     {
         return $formModel
-            ->getFormErrors()
-            ->getFirstError(HtmlForm::getAttributeName($formModel, $attribute));
+            ->getValidationResult()
+            ->getAttributeErrorMessages(HtmlForm::getAttributeName($formModel, $attribute))[0] ?? null;
     }
 
     /**
@@ -92,9 +107,13 @@ final class HtmlFormErrors
      */
     public static function getFirstErrors(FormModelInterface $formModel): array
     {
-        return $formModel
-            ->getFormErrors()
-            ->getFirstErrors();
+        $result = [];
+        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByAttribute() as $attribute => $messages) {
+            if (isset($messages[0])) {
+                $result[$attribute] = $messages[0];
+            }
+        }
+        return $result;
     }
 
     /**
@@ -107,8 +126,8 @@ final class HtmlFormErrors
      */
     public static function hasErrors(FormModelInterface $formModel, ?string $attribute = null): bool
     {
-        return $formModel
-            ->getFormErrors()
-            ->hasErrors($attribute);
+        return $attribute === null
+            ? !$formModel->getValidationResult()->isValid()
+            : !$formModel->getValidationResult()->isAttributeValid($attribute);
     }
 }
