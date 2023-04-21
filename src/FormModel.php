@@ -423,7 +423,7 @@ abstract class FormModel implements
     }
 
     /**
-     * @psalm-param list<array{0:int|string, 1:mixed}> $keys
+     * @psalm-param array<array-key, array{0:int|string, 1:mixed}> $keys
      */
     private function createNotFoundException(array $keys): InvalidArgumentException
     {
@@ -431,7 +431,7 @@ abstract class FormModel implements
     }
 
     /**
-     * @psalm-param list<array{0:int|string, 1:mixed}> $keys
+     * @psalm-param array<array-key, array{0:int|string, 1:mixed}> $keys
      */
     private function makePathString(array $keys): string
     {
