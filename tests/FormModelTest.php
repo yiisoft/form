@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypeError;
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Tests\Support\Form\NestedForm;
+use Yiisoft\Form\Tests\Support\StubInputField;
+use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
@@ -39,6 +42,47 @@ final class FormModelTest extends TestCase
     {
         $form = new DefaultFormNameForm();
         $this->assertSame('DefaultFormNameForm', $form->getFormName());
+    }
+
+    public function testArrayValue(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="nestedform-letters-0">Letters</label>
+        <input type="text" id="nestedform-letters-0" name="NestedForm[letters][0]" value="A">
+        </div>
+        HTML;
+
+        $result = StubInputField::widget()
+            ->formAttribute(new NestedForm(), 'letters[0]')
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testNonExistArrayValue(): void
+    {
+        $widget = StubInputField::widget()->formAttribute(new NestedForm(), 'letters[1]');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Undefined property: "' . NestedForm::class . '::letters[1]"');
+        $widget->render();
+    }
+
+    public function testArrayValueIntoObject(): void
+    {
+        $expected = <<<'HTML'
+        <div>
+        <label for="nestedform-object-numbers-1">Object</label>
+        <input type="text" id="nestedform-object-numbers-1" name="NestedForm[object][numbers][1]" value="42">
+        </div>
+        HTML;
+
+        $result = StubInputField::widget()
+            ->formAttribute(new NestedForm(), 'object[numbers][1]')
+            ->render();
+
+        $this->assertSame($expected, $result);
     }
 
     public function testGetAttributeHint(): void
@@ -76,8 +120,10 @@ final class FormModelTest extends TestCase
         $form = new FormWithNestedAttribute();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Attribute "profile" is not a nested attribute.');
-        $form->getAttributeValue('profile.user');
+        $this->expectExceptionMessage(
+            'Attribute "' . FormWithNestedAttribute::class . '::id" is not a nested attribute.'
+        );
+        $form->getAttributeValue('id.profile');
     }
 
     public function testGetNestedAttributeHint(): void
@@ -168,9 +214,7 @@ final class FormModelTest extends TestCase
     {
         $form = new FormWithNestedAttribute();
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noexist".');
-        $form->hasAttribute('user.noexist');
+        $this->assertFalse($form->hasAttribute('user.noexist'));
     }
 
     public function testLoad(): void
