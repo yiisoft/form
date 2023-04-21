@@ -328,6 +328,9 @@ abstract class FormModel implements
                 if ($property->isStatic()) {
                     throw $this->createNotFoundException($keys);
                 }
+                if (PHP_VERSION_ID < 80100) {
+                    $property->setAccessible(true);
+                }
                 /** @var mixed $value */
                 $value = $property->getValue($value);
                 continue;
@@ -372,6 +375,9 @@ abstract class FormModel implements
                 return null;
             }
 
+            if (PHP_VERSION_ID < 80100) {
+                $property->setAccessible(true);
+            }
             /** @var mixed $value */
             $value = $property->getValue($value);
             if (!is_object($value)) {
