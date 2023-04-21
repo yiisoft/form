@@ -13,7 +13,7 @@ final class NestedForm extends FormModel
 
     public function __construct()
     {
-        $this->object = new class() {
+        $this->object = new class () {
             public string $name = 'Bo';
             public array $numbers = [7, 42];
         };
