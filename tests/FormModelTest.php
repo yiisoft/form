@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use TypeError;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\NestedForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
@@ -16,7 +15,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\Form\TypeForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';

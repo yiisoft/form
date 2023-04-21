@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
-use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Nested;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;

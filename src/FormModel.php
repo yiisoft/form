@@ -235,7 +235,7 @@ abstract class FormModel implements ValidatedModelInterface, PostValidationHookI
         $value = $this;
         $n = 0;
         foreach ($path as $key) {
-            if ($value instanceof FormModel) {
+            if ($value instanceof self) {
                 $nestedAttribute = implode('.', array_slice($path, $n));
                 $data = match ($metaKey) {
                     self::META_LABEL => $value->getAttributeLabels(),
