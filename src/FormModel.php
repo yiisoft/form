@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
+use Yiisoft\Form\Helper\FormHelper;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\DataSetInterface;
@@ -105,7 +106,7 @@ abstract class FormModel implements
 
     public function getAttributeCastValue(string $attribute): mixed
     {
-        return $this->readProperty($attribute);
+        return FormHelper::getValue($this, $attribute);
     }
 
     public function getAttributeValue(string $attribute): mixed
@@ -282,30 +283,6 @@ abstract class FormModel implements
                 ->getInflector()
                 ->toWords($name)
         );
-    }
-
-    private function readProperty(string $attribute): mixed
-    {
-        $class = static::class;
-
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
-
-        if (!property_exists($class, $attribute)) {
-            throw new InvalidArgumentException("Undefined property: \"$class::$attribute\".");
-        }
-
-        /** @psalm-suppress MixedMethodCall */
-        $getter = static function (FormModelInterface $class, string $attribute, ?string $nested): mixed {
-            return match ($nested) {
-                null => $class->$attribute,
-                default => $class->$attribute->getAttributeCastValue($nested),
-            };
-        };
-
-        $getter = Closure::bind($getter, null, $this);
-
-        /** @var Closure $getter */
-        return $getter($this, $attribute, $nested);
     }
 
     private function writeProperty(string $attribute, mixed $value): void
