@@ -60,6 +60,8 @@ interface FormMetadataInterface
      * child hints using functions such as `array_merge()`.
      *
      * @return array attribute hints (name => hint)
+     *
+     * @psalm-return array<string,string>
      */
     public function getAttributeHints(): array;
 
@@ -76,6 +78,8 @@ interface FormMetadataInterface
      * Returns the attribute placeholders.
      *
      * @return array attribute placeholder (name => placeholder)
+     *
+     * @psalm-return array<string,string>
      */
     public function getAttributePlaceholders(): array;
 }

@@ -7,14 +7,20 @@ namespace Yiisoft\Form;
 use Closure;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionNamedType;
-use Yiisoft\Form\Helper\FormHelper;
+use Yiisoft\Strings\Inflector;
+use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
 
+use function array_key_exists;
 use function array_keys;
+use function array_slice;
 use function explode;
+use function is_array;
+use function is_object;
 use function is_subclass_of;
 use function property_exists;
 use function str_contains;
@@ -29,6 +35,12 @@ abstract class FormModel implements
     FormModelInterface,
     PostValidationHookInterface
 {
+    private const META_LABEL = 1;
+    private const META_HINT = 2;
+    private const META_PLACEHOLDER = 3;
+
+    private static ?Inflector $inflector = null;
+
     private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
     private array $rawData = [];
@@ -46,12 +58,9 @@ abstract class FormModel implements
 
     public function getAttributeHint(string $attribute): string
     {
-        return FormHelper::getAttributeHint($this, $attribute);
+        return $this->readAttributeMetaValue(self::META_HINT, $attribute) ?? '';
     }
 
-    /**
-     * @return string[]
-     */
     public function getAttributeHints(): array
     {
         return [];
@@ -59,7 +68,7 @@ abstract class FormModel implements
 
     public function getAttributeLabel(string $attribute): string
     {
-        return FormHelper::getAttributeLabel($this, $attribute);
+        return $this->readAttributeMetaValue(self::META_LABEL, $attribute) ?? $this->generateAttributeLabel($attribute);
     }
 
     public function getAttributeLabels(): array
@@ -69,12 +78,9 @@ abstract class FormModel implements
 
     public function getAttributePlaceholder(string $attribute): string
     {
-        return FormHelper::getAttributePlaceholder($this, $attribute);
+        return $this->readAttributeMetaValue(self::META_PLACEHOLDER, $attribute) ?? '';
     }
 
-    /**
-     * @return string[]
-     */
     public function getAttributePlaceholders(): array
     {
         return [];
@@ -82,7 +88,7 @@ abstract class FormModel implements
 
     public function getAttributeCastValue(string $attribute): mixed
     {
-        return FormHelper::getValue($this, $attribute);
+        return $this->readAttributeValue($attribute);
     }
 
     public function getAttributeValue(string $attribute): mixed
@@ -121,7 +127,12 @@ abstract class FormModel implements
 
     public function hasAttribute(string $attribute): bool
     {
-        return FormHelper::hasAttribute($this, $attribute);
+        try {
+            $this->readAttributeValue($attribute);
+        } catch (InvalidAttributeException) {
+            return false;
+        }
+        return true;
     }
 
     public function load(array|object|null $data, ?string $formName = null): bool
@@ -284,5 +295,152 @@ abstract class FormModel implements
     public function getData(): array
     {
         return $this->rawData;
+    }
+
+    /**
+     * @throws InvalidAttributeException
+     */
+    private function readAttributeValue(string $attribute): mixed
+    {
+        $path = $this->normalizePath($attribute);
+
+        $value = $this;
+        $keys = [[$this::class, $this]];
+        foreach ($path as $key) {
+            $keys[] = [$key, $value];
+
+            if (is_array($value)) {
+                if (array_key_exists($key, $value)) {
+                    /** @var mixed $value */
+                    $value = $value[$key];
+                    continue;
+                }
+                throw $this->createNotFoundException($keys);
+            }
+
+            if (is_object($value)) {
+                $class = new ReflectionClass($value);
+                try {
+                    $property = $class->getProperty($key);
+                } catch (ReflectionException) {
+                    throw $this->createNotFoundException($keys);
+                }
+                if ($property->isStatic()) {
+                    throw $this->createNotFoundException($keys);
+                }
+                /** @var mixed $value */
+                $value = $property->getValue($value);
+                continue;
+            }
+
+            array_pop($keys);
+            throw new InvalidAttributeException(
+                sprintf('Attribute "%s" is not a nested attribute.', $this->makePathString($keys))
+            );
+        }
+
+        return $value;
+    }
+
+    private function readAttributeMetaValue(int $metaKey, string $attribute): ?string
+    {
+        $path = $this->normalizePath($attribute);
+
+        $value = $this;
+        $n = 0;
+        foreach ($path as $key) {
+            if ($value instanceof FormModelInterface) {
+                $nestedAttribute = implode('.', array_slice($path, $n));
+                $data = match ($metaKey) {
+                    self::META_LABEL => $value->getAttributeLabels(),
+                    self::META_HINT => $value->getAttributeHints(),
+                    self::META_PLACEHOLDER => $value->getAttributePlaceholders(),
+                    default => throw new InvalidArgumentException('Invalid meta key.'),
+                };
+                if (array_key_exists($nestedAttribute, $data)) {
+                    return $data[$nestedAttribute];
+                }
+            }
+
+            $class = new ReflectionClass($value);
+            try {
+                $property = $class->getProperty($key);
+            } catch (ReflectionException) {
+                return null;
+            }
+            if ($property->isStatic()) {
+                return null;
+            }
+
+            /** @var mixed $value */
+            $value = $property->getValue($value);
+            if (!is_object($value)) {
+                return null;
+            }
+
+            $n++;
+        }
+
+        return null;
+    }
+
+    /**
+     * Generates a user-friendly attribute label based on the give attribute name.
+     *
+     * This is done by replacing underscores, dashes and dots with blanks and changing the first letter of each word to
+     * upper case.
+     *
+     * For example, 'department_name' or 'DepartmentName' will generate 'Department Name'.
+     *
+     * @param string $attribute The attribute name.
+     *
+     * @return string The attribute label.
+     */
+    private function generateAttributeLabel(string $attribute): string
+    {
+        if (self::$inflector === null) {
+            self::$inflector = new Inflector();
+        }
+
+        return StringHelper::uppercaseFirstCharacterInEachWord(
+            self::$inflector->toWords($attribute)
+        );
+    }
+
+    /**
+     * @return string[]
+     */
+    private function normalizePath(string $attribute): array
+    {
+        $attribute = str_replace(['][', '['], '.', rtrim($attribute, ']'));
+        return StringHelper::parsePath($attribute);
+    }
+
+    /**
+     * @psalm-param list<array{0:int|string, 1:mixed}> $keys
+     */
+    private function createNotFoundException(array $keys): InvalidArgumentException
+    {
+        return new InvalidAttributeException('Undefined property: "' . $this->makePathString($keys) . '".');
+    }
+
+    /**
+     * @psalm-param list<array{0:int|string, 1:mixed}> $keys
+     */
+    private function makePathString(array $keys): string
+    {
+        $path = '';
+        foreach ($keys as $key) {
+            if ($path !== '') {
+                if (is_object($key[1])) {
+                    $path .= '::' . $key[0];
+                } elseif (is_array($key[1])) {
+                    $path .= '[' . $key[0] . ']';
+                }
+            } else {
+                $path = (string) $key[0];
+            }
+        }
+        return $path;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Helper;
+namespace Yiisoft\Form;
 
 use InvalidArgumentException;
 
