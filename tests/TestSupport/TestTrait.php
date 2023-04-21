@@ -8,9 +8,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionObject;
 use Yiisoft\Definitions\Exception\InvalidConfigException;
-use Yiisoft\Form\Tests\TestSupport\Validator\ValidatorMock;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\ValidatorInterface;
 use Yiisoft\Widget\WidgetFactory;
 
 trait TestTrait
@@ -24,11 +22,6 @@ trait TestTrait
         $actual = str_replace("\r\n", "\n", $actual);
 
         $this->assertEquals($expected, $actual, $message);
-    }
-
-    private function createValidatorMock(): ValidatorInterface
-    {
-        return new ValidatorMock();
     }
 
     /**

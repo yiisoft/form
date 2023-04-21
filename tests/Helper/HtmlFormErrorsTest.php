@@ -10,6 +10,7 @@ use Yiisoft\Form\Tests\Support\TestHelper;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
+use Yiisoft\Validator\Validator;
 
 final class HtmlFormErrorsTest extends TestCase
 {
@@ -30,7 +31,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetAllErrors(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -41,7 +42,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetErrors(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -52,7 +53,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetErrorSummary(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -66,7 +67,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetErrorSummaryFirstErrors(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -80,7 +81,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetFirstError(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -104,7 +105,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testHasError(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -115,7 +116,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetErrorSummaryOnlyAttributes(): void
     {
         $formModel = new LoginForm();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $this->assertTrue(TestHelper::createFormHydrator()->populate($formModel, $this->data));
         $this->assertFalse($validator
             ->validate($formModel)
@@ -133,7 +134,7 @@ final class HtmlFormErrorsTest extends TestCase
     public function testGetErrorNestedAttribute(): void
     {
         $formModel = new FormWithNestedAttribute();
-        $validator = $this->createValidatorMock();
+        $validator = new Validator();
         $populateResult = TestHelper::createFormHydrator()->populate(
             $formModel,
             ['FormWithNestedAttribute' => ['user.login' => 'ad']]
