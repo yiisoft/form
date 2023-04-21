@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Yiisoft\Validator\DataSetInterface;
+use Vjik\InputValidation\ValidatedModelInterface;
+use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
 
 /**
  * FormModelInterface model represents an HTML form: its data, validation and presentation.
  */
-interface FormModelInterface extends DataSetInterface
+interface FormModelInterface extends ValidatedModelInterface, PostValidationHookInterface
 {
-    /**
-     * Return array with names of all attributes
-     *
-     * @return array
-     */
-    public function attributes(): array;
-
     /**
      * If there is such attribute in the set.
      *
@@ -57,38 +51,7 @@ interface FormModelInterface extends DataSetInterface
      */
     public function isValidated(): bool;
 
-    /**
-     * Populates the model with input data.
-     *
-     * which, with `load()` can be written as:
-     *
-     * ```php
-     * $body = $request->getParsedBody();
-     * $method = $request->getMethod();
-     *
-     * if ($method === Method::POST && $loginForm->load($body)) {
-     *     // handle success
-     * }
-     * ```
-     *
-     * `load()` gets the `'FormName'` from the {@see getFormName()} method (which you may override), unless the
-     * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
-     * `$data` instead of `$data['FormName']`.
-     *
-     * @param array|object|null $data The data to load, typically server request attributes.
-     * @param string|null $formName scope from which to get data
-     *
-     * @return bool whether `load()` found the expected form in `$data`.
-     */
-    public function load(array|object|null $data, ?string $formName = null): bool;
-
-    /**
-     * Set specified attribute
-     *
-     * @param string $name of the attribute to set
-     * @param mixed $value
-     */
-    public function setAttribute(string $name, mixed $value): void;
+    public function getAttributeValue(string $attribute): mixed;
 
     /**
      * Returns the text label for the specified attribute.
@@ -114,6 +77,8 @@ interface FormModelInterface extends DataSetInterface
      * @return array attribute labels (name => label)
      *
      * {@see \Yiisoft\Form\FormModel::getAttributeLabel()}
+     *
+     * @psalm-return array<string,string>
      */
     public function getAttributeLabels(): array;
 
@@ -139,6 +104,8 @@ interface FormModelInterface extends DataSetInterface
      * child hints using functions such as `array_merge()`.
      *
      * @return array attribute hints (name => hint)
+     *
+     * @psalm-return array<string,string>
      */
     public function getAttributeHints(): array;
 
@@ -155,6 +122,8 @@ interface FormModelInterface extends DataSetInterface
      * Returns the attribute placeholders.
      *
      * @return array attribute placeholder (name => placeholder)
+     *
+     * @psalm-return array<string,string>
      */
     public function getAttributePlaceholders(): array;
 }

@@ -11,6 +11,7 @@ use TypeError;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\NestedForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
+use Yiisoft\Form\Tests\Support\TestHelper;
 use Yiisoft\Form\Tests\TestSupport\CustomFormErrors;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
@@ -144,14 +145,14 @@ final class FormModelTest extends TestCase
     {
         $form = new FormWithNestedAttribute();
 
-        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('user.login'));
+        $this->assertSame('Type Username or Email.', $form->getAttributePlaceHolder('user.login'));
     }
 
     public function testGetAttributePlaceHolder(): void
     {
         $form = new LoginForm();
 
-        $this->assertSame('Type Usernamer or Email.', $form->getAttributePlaceHolder('login'));
+        $this->assertSame('Type Username or Email.', $form->getAttributePlaceHolder('login'));
         $this->assertSame('Type Password.', $form->getAttributePlaceHolder('password'));
         $this->assertEmpty($form->getAttributePlaceHolder('noExist'));
     }
@@ -234,7 +235,7 @@ final class FormModelTest extends TestCase
             ],
         ];
 
-        $this->assertTrue($form->load($data));
+        $this->assertTrue(TestHelper::createFormHydrator()->populate($form, $data));
 
         $this->assertSame('admin', $form->getLogin());
         $this->assertSame('123456', $form->getPassword());
@@ -257,11 +258,13 @@ final class FormModelTest extends TestCase
         ];
         $data2 = [];
 
-        $this->assertFalse($form1->load($data1));
-        $this->assertFalse($form1->load($data2));
+        $hydrator = TestHelper::createFormHydrator();
 
-        $this->assertTrue($form2->load($data1));
-        $this->assertFalse($form2->load($data2));
+        $this->assertFalse($hydrator->populate($form1, $data1));
+        $this->assertFalse($hydrator->populate($form1, $data2));
+
+        $this->assertTrue($hydrator->populate($form2, $data1));
+        $this->assertTrue($hydrator->populate($form2, $data2));
     }
 
     public function testLoadWithEmptyScope(): void
@@ -272,24 +275,21 @@ final class FormModelTest extends TestCase
             private float $float = 3.14;
             private bool $bool = true;
         };
-        $form->load([
-            'int' => '2',
-            'float' => '3.15',
-            'bool' => 'false',
-            'string' => 555,
-        ], '');
+        TestHelper::createFormHydrator()->populate(
+            $form,
+            [
+                'int' => '2',
+                'float' => '3.15',
+                'bool' => '0',
+                'string' => 555,
+            ],
+            scope: '',
+        );
 
-        // check row data value.
-        $this->assertIsString($form->getAttributeValue('int'));
-        $this->assertIsString($form->getAttributeValue('float'));
-        $this->assertIsString($form->getAttributeValue('bool'));
-        $this->assertIsInt($form->getAttributeValue('string'));
-
-        // chech cast data value.
-        $this->assertIsInt($form->getAttributeCastValue('int'));
-        $this->assertIsFloat($form->getAttributeCastValue('float'));
-        $this->assertIsBool($form->getAttributeCastValue('bool'));
-        $this->assertIsString($form->getAttributeCastValue('string'));
+        $this->assertSame(2, $form->getAttributeValue('int'));
+        $this->assertSame(3.15, $form->getAttributeValue('float'));
+        $this->assertSame(false, $form->getAttributeValue('bool'));
+        $this->assertSame('555', $form->getAttributeValue('string'));
     }
 
     public function testLoadWithNestedAttribute(): void
@@ -302,7 +302,7 @@ final class FormModelTest extends TestCase
             ],
         ];
 
-        $this->assertTrue($form->load($data));
+        $this->assertTrue(TestHelper::createFormHydrator()->populate($form, $data));
         $this->assertSame('admin', $form->getUserLogin());
     }
 
@@ -310,7 +310,7 @@ final class FormModelTest extends TestCase
     {
         $form = new LoginForm();
 
-        $result = $form->load(new stdClass());
+        $result = TestHelper::createFormHydrator()->populate($form, new stdClass());
 
         $this->assertFalse($result);
     }
@@ -319,7 +319,7 @@ final class FormModelTest extends TestCase
     {
         $form = new LoginForm();
 
-        $result = $form->load(null);
+        $result = TestHelper::createFormHydrator()->populate($form, null);
 
         $this->assertFalse($result);
     }
@@ -328,7 +328,7 @@ final class FormModelTest extends TestCase
     {
         $form = new LoginForm();
 
-        $result = $form->load(['LoginForm' => null]);
+        $result = TestHelper::createFormHydrator()->populate($form, ['LoginForm' => null]);
 
         $this->assertFalse($result);
     }
@@ -346,97 +346,7 @@ final class FormModelTest extends TestCase
         };
 
         // check row data value.
-        $form->load(['int' => '2']);
-        $this->assertSame('2', $form->getAttributeValue('int'));
-
-        // chech cast data value.
-        $form->setAttribute('int', 1);
-        $this->assertSame(1, $form->getAttributeCastValue('int'));
-    }
-
-    public function testAttributeNames(): void
-    {
-        $form = new LoginForm();
-        $this->assertSame(['login', 'password', 'rememberMe'], $form->attributes());
-
-        $nestedForm = new FormWithNestedAttribute();
-        $this->assertSame(['id', 'user'], $nestedForm->attributes());
-
-        $typeForm = new TypeForm();
-        $this->assertSame(
-            ['array', 'bool', 'float', 'int', 'number', 'object', 'string', 'toCamelCase', 'toDate', 'toNull'],
-            $typeForm->attributes(),
-        );
-    }
-
-    public function testProtectedCollectAttributes(): void
-    {
-        $form = new class () extends FormModel {
-            protected int $int = 1;
-
-            public function collectAttributes(): array
-            {
-                return array_merge(parent::collectAttributes(), ['null' => 'null']);
-            }
-        };
-        $this->assertSame(['int' => 'int', 'null' => 'null'], $form->collectAttributes());
-    }
-
-    public function testSetAttribute(): void
-    {
-        $form = new class () extends FormModel {
-            private $property;
-        };
-
-        $form->setAttribute('property', true);
-        $this->assertSame(true, $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', 'string');
-        $this->assertSame('string', $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', 0);
-        $this->assertSame(0, $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', 1.2563);
-        $this->assertSame(1.2563, $form->getAttributeValue('property'));
-
-        $form->setAttribute('property', []);
-        $this->assertSame([], $form->getAttributeValue('property'));
-    }
-
-    public function testGetData(): void
-    {
-        $data = [
-            'login' => 'admin',
-            'password' => '123456',
-            'rememberMe' => true,
-        ];
-        $form = new LoginForm();
-        $form->load($data, '');
-
-        $this->assertSame($data, $form->getData());
-    }
-
-    public function testSetAttributesWithNull(): void
-    {
-        $form = new class () extends FormModel {
-            private ?int $nullableProperty = 0;
-        };
-
-        $form->setAttribute('nullableProperty', null);
-        $this->assertSame(null, $form->getAttributeValue('nullableProperty'));
-    }
-
-    public function testSetAttributesTypeErrorException(): void
-    {
-        $form = new class () extends FormModel {
-            private int $int = 0;
-        };
-
-        $this->expectException(TypeError::class);
-        $this->expectExceptionMessage(
-            'Cannot assign null to property Yiisoft\Form\FormModel@anonymous::$int of type int'
-        );
-        $form->setAttribute('int', null);
+        TestHelper::createFormHydrator()->populate($form, ['int' => '2']);
+        $this->assertSame(2, $form->getAttributeValue('int'));
     }
 }

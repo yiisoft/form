@@ -37,7 +37,7 @@ final class HtmlFormErrors
     {
         return $formModel
             ->getValidationResult()
-            ->getAttributeErrorMessages($attribute);
+            ->getErrorMessagesIndexedByPath()[$attribute] ?? [];
     }
 
     /**
@@ -50,7 +50,7 @@ final class HtmlFormErrors
     public static function getErrorSummaryFirstErrors(FormModelInterface $formModel): array
     {
         $result = [];
-        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByAttribute() as $attribute => $messages) {
+        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByPath() as $attribute => $messages) {
             if (isset($messages[0])) {
                 $result[$attribute] = $messages[0];
             }
@@ -73,7 +73,7 @@ final class HtmlFormErrors
         }
 
         $result = [];
-        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByAttribute() as $attribute => $messages) {
+        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByPath() as $attribute => $messages) {
             if (in_array($attribute, $onlyAttributes, true)) {
                 $result[] = $messages;
             }
@@ -94,7 +94,7 @@ final class HtmlFormErrors
     {
         return $formModel
             ->getValidationResult()
-            ->getAttributeErrorMessages(HtmlForm::getAttributeName($formModel, $attribute))[0] ?? null;
+            ->getErrorMessagesIndexedByPath()[HtmlForm::getAttributeName($formModel, $attribute)][0] ?? null;
     }
 
     /**
@@ -108,7 +108,7 @@ final class HtmlFormErrors
     public static function getFirstErrors(FormModelInterface $formModel): array
     {
         $result = [];
-        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByAttribute() as $attribute => $messages) {
+        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByPath() as $attribute => $messages) {
             if (isset($messages[0])) {
                 $result[$attribute] = $messages[0];
             }

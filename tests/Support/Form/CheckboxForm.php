@@ -16,7 +16,6 @@ final class CheckboxForm extends FormModel
 
     public function __construct()
     {
-        parent::__construct();
         $this->object = new stdClass();
     }
 

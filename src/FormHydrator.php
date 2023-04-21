@@ -4,31 +4,41 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Vjik\InputHydrator\Hydrator;
+use Vjik\InputValidation\ValidatingHydrator;
 
 use function is_array;
 
 final class FormHydrator
 {
     public function __construct(
-        private Hydrator $hydrator,
+        private ValidatingHydrator $hydrator,
     ) {
     }
 
-    public function populate(FormModelInterface $model, mixed $data, array $map = [], bool $strict = false): bool
-    {
+    public function populate(
+        FormModelInterface $model,
+        mixed $data,
+        array $map = [],
+        bool $strict = false,
+        ?string $scope = null
+    ): bool {
         if (!is_array($data)) {
             return false;
         }
 
-        $scope = $model->getFormName();
+        $scope = $scope ?? $model->getFormName();
         if ($scope === '') {
             $hydrateData = $data;
         } else {
-            if (!isset($data[$scope]) || !is_array($data[$scope])) {
+            if (!isset($data[$scope])) {
                 return false;
             }
+            /** @var mixed $hydrateData */
             $hydrateData = $data[$scope];
+        }
+
+        if (!is_array($hydrateData)) {
+            return false;
         }
 
         $this->hydrator->populate($model, $hydrateData, $map, $strict);

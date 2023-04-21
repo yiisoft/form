@@ -21,6 +21,8 @@
     "require": {
         "php": "^8.0",
         "ext-mbstring": "*",
+        "vjik/input-hydrator": "dev-master",
+        "vjik/input-validation": "dev-master",
         "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
@@ -35,7 +37,6 @@
         "roave/infection-static-analysis-plugin": "^1.18",
         "spatie/phpunit-watcher": "^1.23",
         "vimeo/psalm": "^4.30|^5.6",
-        "vjik/input-hydrator": "dev-master",
         "yiisoft/test-support": " ^3.0"
     },
     "autoload": {

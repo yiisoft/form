@@ -130,9 +130,6 @@ final class HtmlFormTest extends TestCase
             $this->assertSame($field['expected'], $inputName);
             $this->assertTrue($form->hasAttribute($field['name']));
             $this->assertNull($form->getAttributeValue($field['name']));
-
-            $form->setAttribute($field['name'], $field['value']);
-            $this->assertSame($field['value'], $form->getAttributeValue($field['name']));
         }
     }
 

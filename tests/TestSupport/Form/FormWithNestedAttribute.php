@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
 use Yiisoft\Validator\Rule\Length;
+use Yiisoft\Validator\Rule\Nested;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
 
@@ -17,7 +18,6 @@ final class FormWithNestedAttribute extends FormModel implements RulesProviderIn
     public function __construct()
     {
         $this->user = new LoginForm();
-        parent::__construct();
     }
 
     public function getAttributeLabels(): array
@@ -45,10 +45,7 @@ final class FormWithNestedAttribute extends FormModel implements RulesProviderIn
     {
         return [
             'id' => [new Required()],
-            'user.login' => [
-                new Required(),
-                new Length(min: 3, lessThanMinMessage: 'Is too short.'),
-            ],
+            'user' => new Nested(),
         ];
     }
 
