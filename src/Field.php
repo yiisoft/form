@@ -99,43 +99,43 @@ final class Field
         return self::getFactory()->buttonGroup($config);
     }
 
-    public static function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
+    public static function checkbox(FormModel $formModel, string $attribute, array $config = []): Checkbox
     {
         return self::getFactory()->checkbox($formModel, $attribute, $config);
     }
 
     public static function checkboxList(
-        FormModelInterface $formModel,
+        FormModel $formModel,
         string $attribute,
         array $config = []
     ): CheckboxList {
         return self::getFactory()->checkboxList($formModel, $attribute, $config);
     }
 
-    public static function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
+    public static function date(FormModel $formModel, string $attribute, array $config = []): Date
     {
         return self::getFactory()->date($formModel, $attribute, $config);
     }
 
-    public static function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): DateTime
+    public static function dateTime(FormModel $formModel, string $attribute, array $config = []): DateTime
     {
         return self::getFactory()->dateTime($formModel, $attribute, $config);
     }
 
     public static function dateTimeLocal(
-        FormModelInterface $formModel,
+        FormModel $formModel,
         string $attribute,
         array $config = []
     ): DateTimeLocal {
         return self::getFactory()->dateTimeLocal($formModel, $attribute, $config);
     }
 
-    public static function email(FormModelInterface $formModel, string $attribute, array $config = []): Email
+    public static function email(FormModel $formModel, string $attribute, array $config = []): Email
     {
         return self::getFactory()->email($formModel, $attribute, $config);
     }
 
-    public static function errorSummary(FormModelInterface $formModel, array $config = []): ErrorSummary
+    public static function errorSummary(FormModel $formModel, array $config = []): ErrorSummary
     {
         return self::getFactory()->errorSummary($formModel, $config);
     }
@@ -145,12 +145,12 @@ final class Field
         return self::getFactory()->fieldset($config);
     }
 
-    public static function file(FormModelInterface $formModel, string $attribute, array $config = []): File
+    public static function file(FormModel $formModel, string $attribute, array $config = []): File
     {
         return self::getFactory()->file($formModel, $attribute, $config);
     }
 
-    public static function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
+    public static function hidden(FormModel $formModel, string $attribute, array $config = []): Hidden
     {
         return self::getFactory()->hidden($formModel, $attribute, $config);
     }
@@ -160,22 +160,22 @@ final class Field
         return self::getFactory()->image($config);
     }
 
-    public static function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
+    public static function number(FormModel $formModel, string $attribute, array $config = []): Number
     {
         return self::getFactory()->number($formModel, $attribute, $config);
     }
 
-    public static function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
+    public static function password(FormModel $formModel, string $attribute, array $config = []): Password
     {
         return self::getFactory()->password($formModel, $attribute, $config);
     }
 
-    public static function radioList(FormModelInterface $formModel, string $attribute, array $config = []): RadioList
+    public static function radioList(FormModel $formModel, string $attribute, array $config = []): RadioList
     {
         return self::getFactory()->radioList($formModel, $attribute, $config);
     }
 
-    public static function range(FormModelInterface $formModel, string $attribute, array $config = []): Range
+    public static function range(FormModel $formModel, string $attribute, array $config = []): Range
     {
         return self::getFactory()->range($formModel, $attribute, $config);
     }
@@ -185,7 +185,7 @@ final class Field
         return self::getFactory()->resetButton($content, $config);
     }
 
-    public static function select(FormModelInterface $formModel, string $attribute, array $config = []): Select
+    public static function select(FormModel $formModel, string $attribute, array $config = []): Select
     {
         return self::getFactory()->select($formModel, $attribute, $config);
     }
@@ -195,37 +195,37 @@ final class Field
         return self::getFactory()->submitButton($content, $config);
     }
 
-    public static function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone
+    public static function telephone(FormModel $formModel, string $attribute, array $config = []): Telephone
     {
         return self::getFactory()->telephone($formModel, $attribute, $config);
     }
 
-    public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
+    public static function text(FormModel $formModel, string $attribute, array $config = []): Text
     {
         return self::getFactory()->text($formModel, $attribute, $config);
     }
 
-    public static function textarea(FormModelInterface $formModel, string $attribute, array $config = []): Textarea
+    public static function textarea(FormModel $formModel, string $attribute, array $config = []): Textarea
     {
         return self::getFactory()->textarea($formModel, $attribute, $config);
     }
 
-    public static function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
+    public static function url(FormModel $formModel, string $attribute, array $config = []): Url
     {
         return self::getFactory()->url($formModel, $attribute, $config);
     }
 
-    public static function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
+    public static function label(FormModel $formModel, string $attribute, array $config = []): Label
     {
         return self::getFactory()->label($formModel, $attribute, $config);
     }
 
-    public static function hint(FormModelInterface $formModel, string $attribute, array $config = []): Hint
+    public static function hint(FormModel $formModel, string $attribute, array $config = []): Hint
     {
         return self::getFactory()->hint($formModel, $attribute, $config);
     }
 
-    public static function error(FormModelInterface $formModel, string $attribute, array $config = []): Error
+    public static function error(FormModel $formModel, string $attribute, array $config = []): Error
     {
         return self::getFactory()->error($formModel, $attribute, $config);
     }
@@ -235,7 +235,7 @@ final class Field
      * @psalm-param class-string<T> $class
      * @psalm-return T
      */
-    public static function input(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
+    public static function input(string $class, FormModel $formModel, string $attribute, array $config = []): object
     {
         return self::getFactory()->input($class, $formModel, $attribute, $config);
     }

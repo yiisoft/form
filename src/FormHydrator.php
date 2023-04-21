@@ -16,7 +16,7 @@ final class FormHydrator
     }
 
     public function populate(
-        FormModelInterface $model,
+        FormModel $model,
         mixed $data,
         array $map = [],
         bool $strict = false,

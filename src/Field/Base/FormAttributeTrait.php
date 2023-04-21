@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
-use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Validator\Helper\RulesNormalizer;
 
@@ -15,7 +15,7 @@ use Yiisoft\Validator\Helper\RulesNormalizer;
  */
 trait FormAttributeTrait
 {
-    private ?FormModelInterface $formModel = null;
+    private ?FormModel $formModel = null;
     private string $formAttribute = '';
 
     /**
@@ -23,7 +23,7 @@ trait FormAttributeTrait
      */
     private ?array $formModelValidationRules = null;
 
-    final public function formAttribute(FormModelInterface $model, string $attribute): static
+    final public function formAttribute(FormModel $model, string $attribute): static
     {
         $new = clone $this;
         $new->formModel = $model;
@@ -32,7 +32,7 @@ trait FormAttributeTrait
         return $new;
     }
 
-    final protected function getFormModel(): FormModelInterface
+    final protected function getFormModel(): FormModel
     {
         if ($this->formModel === null) {
             throw new InvalidArgumentException('Form model is not set.');
