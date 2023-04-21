@@ -145,9 +145,7 @@ abstract class FormModel implements
 
     public function hasAttribute(string $attribute): bool
     {
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
-
-        return $nested !== null || array_key_exists($attribute, $this->attributeTypes);
+        return FormHelper::hasAttribute($this, $attribute);
     }
 
     public function load(array|object|null $data, ?string $formName = null): bool

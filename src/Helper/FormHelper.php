@@ -20,7 +20,7 @@ use function is_object;
 final class FormHelper
 {
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidAttributeException
      */
     public static function getValue(FormModelInterface $form, string $attribute): mixed
     {
@@ -56,12 +56,22 @@ final class FormHelper
             }
 
             array_pop($keys);
-            throw new InvalidArgumentException(
+            throw new InvalidAttributeException(
                 sprintf('Attribute "%s" is not a nested attribute.', self::makePathString($keys))
             );
         }
 
         return $value;
+    }
+
+    public static function hasAttribute(FormModelInterface $form, string $attribute): bool
+    {
+        try {
+            self::getValue($form, $attribute);
+        } catch (InvalidAttributeException) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -78,7 +88,7 @@ final class FormHelper
      */
     private static function createNotFoundException(array $keys): InvalidArgumentException
     {
-        return new InvalidArgumentException('Undefined property: "' . self::makePathString($keys) . '".');
+        return new InvalidAttributeException('Undefined property: "' . self::makePathString($keys) . '".');
     }
 
     /**

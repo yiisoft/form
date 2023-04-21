@@ -214,9 +214,7 @@ final class FormModelTest extends TestCase
     {
         $form = new FormWithNestedAttribute();
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noexist".');
-        $form->hasAttribute('user.noexist');
+        $this->assertFalse($form->hasAttribute('user.noexist'));
     }
 
     public function testLoad(): void
