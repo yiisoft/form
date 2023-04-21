@@ -46,11 +46,7 @@ abstract class FormModel implements
 
     public function getAttributeHint(string $attribute): string
     {
-        $attributeHints = $this->getAttributeHints();
-        $hint = $attributeHints[$attribute] ?? '';
-        $nestedAttributeHint = $this->getNestedAttributeValue('getAttributeHint', $attribute);
-
-        return $nestedAttributeHint !== '' ? $nestedAttributeHint : $hint;
+        return FormHelper::getAttributeHint($this, $attribute);
     }
 
     /**
@@ -73,11 +69,7 @@ abstract class FormModel implements
 
     public function getAttributePlaceholder(string $attribute): string
     {
-        $attributePlaceHolders = $this->getAttributePlaceholders();
-        $placeholder = $attributePlaceHolders[$attribute] ?? '';
-        $nestedAttributePlaceholder = $this->getNestedAttributeValue('getAttributePlaceholder', $attribute);
-
-        return $nestedAttributePlaceholder !== '' ? $nestedAttributePlaceholder : $placeholder;
+        return FormHelper::getAttributePlaceholder($this, $attribute);
     }
 
     /**
@@ -282,22 +274,6 @@ abstract class FormModel implements
         }
 
         return [$attribute, $nested];
-    }
-
-    private function getNestedAttributeValue(string $method, string $attribute): string
-    {
-        $result = '';
-
-        [$attribute, $nested] = $this->getNestedAttribute($attribute);
-
-        if ($nested !== null) {
-            /** @var FormModelInterface $attributeNestedValue */
-            $attributeNestedValue = $this->getAttributeCastValue($attribute);
-            /** @var string */
-            $result = $attributeNestedValue->$method($nested);
-        }
-
-        return $result;
     }
 
     public function isValidated(): bool

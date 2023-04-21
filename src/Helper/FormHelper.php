@@ -21,6 +21,10 @@ use function is_object;
  */
 final class FormHelper
 {
+    private const META_LABEL = 1;
+    private const META_HINT = 2;
+    private const META_PLACEHOLDER = 3;
+
     private static ?Inflector $inflector = null;
 
     /**
@@ -80,7 +84,18 @@ final class FormHelper
 
     public static function getAttributeLabel(FormModelInterface $form, string $attribute): string
     {
-        return self::tryGetAttributeLabel($form, $attribute) ?? self::generateAttributeLabel($attribute);
+        return self::getAttributeMetaValue(self::META_LABEL, $form, $attribute)
+            ?? self::generateAttributeLabel($attribute);
+    }
+
+    public static function getAttributeHint(FormModelInterface $form, string $attribute): string
+    {
+        return self::getAttributeMetaValue(self::META_HINT, $form, $attribute) ?? '';
+    }
+
+    public static function getAttributePlaceholder(FormModelInterface $form, string $attribute): string
+    {
+        return self::getAttributeMetaValue(self::META_PLACEHOLDER, $form, $attribute) ?? '';
     }
 
     /**
@@ -106,7 +121,7 @@ final class FormHelper
         );
     }
 
-    private static function tryGetAttributeLabel(FormModelInterface $form, string $attribute): ?string
+    private static function getAttributeMetaValue(int $metaKey, FormModelInterface $form, string $attribute): ?string
     {
         $path = self::normalizePath($attribute);
 
@@ -115,9 +130,14 @@ final class FormHelper
         foreach ($path as $key) {
             if ($value instanceof FormModelInterface) {
                 $nestedAttribute = implode('.', array_slice($path, $n));
-                $labels = $value->getAttributeLabels();
-                if (array_key_exists($nestedAttribute, $labels)) {
-                    return $labels[$nestedAttribute];
+                $data = match ($metaKey) {
+                    self::META_LABEL => $value->getAttributeLabels(),
+                    self::META_HINT => $value->getAttributeHints(),
+                    self::META_PLACEHOLDER => $value->getAttributePlaceholders(),
+                    default => throw new InvalidArgumentException('Invalid meta key.'),
+                };
+                if (array_key_exists($nestedAttribute, $data)) {
+                    return $data[$nestedAttribute];
                 }
             }
 
