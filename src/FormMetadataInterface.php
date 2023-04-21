@@ -32,6 +32,8 @@ interface FormMetadataInterface
      *
      * @return array attribute labels (name => label)
      *
+     * @psalm-return array<string,string>
+     *
      * {@see \Yiisoft\Form\FormModel::getAttributeLabel()}
      */
     public function getAttributeLabels(): array;

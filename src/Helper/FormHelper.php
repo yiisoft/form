@@ -8,9 +8,11 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 
 use function array_key_exists;
+use function array_slice;
 use function is_array;
 use function is_object;
 
@@ -19,6 +21,8 @@ use function is_object;
  */
 final class FormHelper
 {
+    private static ?Inflector $inflector = null;
+
     /**
      * @throws InvalidAttributeException
      */
@@ -72,6 +76,71 @@ final class FormHelper
             return false;
         }
         return true;
+    }
+
+    public static function getAttributeLabel(FormModelInterface $form, string $attribute): string
+    {
+        return self::tryGetAttributeLabel($form, $attribute) ?? self::generateAttributeLabel($attribute);
+    }
+
+    /**
+     * Generates a user-friendly attribute label based on the give attribute name.
+     *
+     * This is done by replacing underscores, dashes and dots with blanks and changing the first letter of each word to
+     * upper case.
+     *
+     * For example, 'department_name' or 'DepartmentName' will generate 'Department Name'.
+     *
+     * @param string $attribute The attribute name.
+     *
+     * @return string The attribute label.
+     */
+    private static function generateAttributeLabel(string $attribute): string
+    {
+        if (self::$inflector === null) {
+            self::$inflector = new Inflector();
+        }
+
+        return StringHelper::uppercaseFirstCharacterInEachWord(
+            self::$inflector->toWords($attribute)
+        );
+    }
+
+    private static function tryGetAttributeLabel(FormModelInterface $form, string $attribute): ?string
+    {
+        $path = self::normalizePath($attribute);
+
+        $value = $form;
+        $n = 0;
+        foreach ($path as $key) {
+            if ($value instanceof FormModelInterface) {
+                $nestedAttribute = implode('.', array_slice($path, $n));
+                $labels = $value->getAttributeLabels();
+                if (array_key_exists($nestedAttribute, $labels)) {
+                    return $labels[$nestedAttribute];
+                }
+            }
+
+            $class = new ReflectionClass($value);
+            try {
+                $property = $class->getProperty($key);
+            } catch (ReflectionException) {
+                return null;
+            }
+            if ($property->isStatic()) {
+                return null;
+            }
+
+            /** @var mixed $value */
+            $value = $property->getValue($value);
+            if (!is_object($value)) {
+                return null;
+            }
+
+            $n++;
+        }
+
+        return null;
     }
 
     /**

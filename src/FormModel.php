@@ -9,13 +9,10 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionNamedType;
 use Yiisoft\Form\Helper\FormHelper;
-use Yiisoft\Strings\Inflector;
-use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\DataSetInterface;
 use Yiisoft\Validator\PostValidationHookInterface;
 use Yiisoft\Validator\Result;
 
-use function array_key_exists;
 use function array_keys;
 use function explode;
 use function is_subclass_of;
@@ -34,7 +31,6 @@ abstract class FormModel implements
 {
     private array $attributeTypes;
     private ?FormErrorsInterface $formErrors = null;
-    private ?Inflector $inflector = null;
     private array $rawData = [];
     private bool $validated = false;
 
@@ -67,21 +63,9 @@ abstract class FormModel implements
 
     public function getAttributeLabel(string $attribute): string
     {
-        $label = $this->generateAttributeLabel($attribute);
-        $labels = $this->getAttributeLabels();
-
-        if (array_key_exists($attribute, $labels)) {
-            $label = $labels[$attribute];
-        }
-
-        $nestedAttributeLabel = $this->getNestedAttributeValue('getAttributeLabel', $attribute);
-
-        return $nestedAttributeLabel !== '' ? $nestedAttributeLabel : $label;
+        return FormHelper::getAttributeLabel($this, $attribute);
     }
 
-    /**
-     * @return string[]
-     */
     public function getAttributeLabels(): array
     {
         return [];
@@ -252,35 +236,6 @@ abstract class FormModel implements
                     ->addError($attribute, $error);
             }
         }
-    }
-
-    private function getInflector(): Inflector
-    {
-        if ($this->inflector === null) {
-            $this->inflector = new Inflector();
-        }
-        return $this->inflector;
-    }
-
-    /**
-     * Generates a user-friendly attribute label based on the give attribute name.
-     *
-     * This is done by replacing underscores, dashes and dots with blanks and changing the first letter of each word to
-     * upper case.
-     *
-     * For example, 'department_name' or 'DepartmentName' will generate 'Department Name'.
-     *
-     * @param string $name the column name.
-     *
-     * @return string the attribute label.
-     */
-    private function generateAttributeLabel(string $name): string
-    {
-        return StringHelper::uppercaseFirstCharacterInEachWord(
-            $this
-                ->getInflector()
-                ->toWords($name)
-        );
     }
 
     private function writeProperty(string $attribute, mixed $value): void
