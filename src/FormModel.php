@@ -305,7 +305,7 @@ abstract class FormModel implements
         $path = $this->normalizePath($attribute);
 
         $value = $this;
-        $keys = [[$this::class, $this]];
+        $keys = [[static::class, $this]];
         foreach ($path as $key) {
             $keys[] = [$key, $value];
 
