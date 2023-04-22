@@ -11,8 +11,6 @@ use Vjik\InputValidation\ValidatedModelInterface;
 use Vjik\InputValidation\ValidatedModelTrait;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
-use Yiisoft\Validator\PostValidationHookInterface;
-use Yiisoft\Validator\Result;
 
 use function array_key_exists;
 use function array_slice;
@@ -25,7 +23,7 @@ use function substr;
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
-abstract class FormModel implements ValidatedModelInterface, PostValidationHookInterface
+abstract class FormModel implements ValidatedModelInterface
 {
     use ValidatedModelTrait;
 
@@ -173,11 +171,6 @@ abstract class FormModel implements ValidatedModelInterface, PostValidationHookI
             return false;
         }
         return true;
-    }
-
-    public function processValidationResult(Result $result): void
-    {
-        $this->validationResult = $result;
     }
 
     /**
