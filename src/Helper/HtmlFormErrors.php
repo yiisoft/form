@@ -24,7 +24,7 @@ final class HtmlFormErrors
     {
         return $formModel
             ->getValidationResult()
-            ->getErrorMessagesIndexedByAttribute();
+            ?->getErrorMessagesIndexedByAttribute() ?? [];
     }
 
     /**
@@ -37,7 +37,7 @@ final class HtmlFormErrors
     {
         return $formModel
             ->getValidationResult()
-            ->getErrorMessagesIndexedByPath()[$attribute] ?? [];
+            ?->getErrorMessagesIndexedByPath()[$attribute] ?? [];
     }
 
     /**
@@ -50,7 +50,7 @@ final class HtmlFormErrors
     public static function getErrorSummaryFirstErrors(FormModel $formModel): array
     {
         $result = [];
-        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByPath() as $attribute => $messages) {
+        foreach ($formModel->getValidationResult()?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
             if (isset($messages[0])) {
                 $result[$attribute] = $messages[0];
             }
@@ -69,11 +69,11 @@ final class HtmlFormErrors
     public static function getErrorSummary(FormModel $formModel, array $onlyAttributes = []): array
     {
         if ($onlyAttributes === []) {
-            return $formModel->getValidationResult()->getErrorMessages();
+            return $formModel->getValidationResult()?->getErrorMessages() ?? [];
         }
 
         $result = [];
-        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByPath() as $attribute => $messages) {
+        foreach ($formModel->getValidationResult()?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
             if (in_array($attribute, $onlyAttributes, true)) {
                 $result[] = $messages;
             }
@@ -94,7 +94,7 @@ final class HtmlFormErrors
     {
         return $formModel
             ->getValidationResult()
-            ->getErrorMessagesIndexedByPath()[HtmlForm::getAttributeName($formModel, $attribute)][0] ?? null;
+            ?->getErrorMessagesIndexedByPath()[HtmlForm::getAttributeName($formModel, $attribute)][0] ?? null;
     }
 
     /**
@@ -108,7 +108,7 @@ final class HtmlFormErrors
     public static function getFirstErrors(FormModel $formModel): array
     {
         $result = [];
-        foreach ($formModel->getValidationResult()->getErrorMessagesIndexedByPath() as $attribute => $messages) {
+        foreach ($formModel->getValidationResult()?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
             if (isset($messages[0])) {
                 $result[$attribute] = $messages[0];
             }
@@ -127,7 +127,7 @@ final class HtmlFormErrors
     public static function hasErrors(FormModel $formModel, ?string $attribute = null): bool
     {
         return $attribute === null
-            ? !$formModel->getValidationResult()->isValid()
-            : !$formModel->getValidationResult()->isAttributeValid($attribute);
+            ? !$formModel->getValidationResult()?->isValid()
+            : !$formModel->getValidationResult()?->isAttributeValid($attribute);
     }
 }
