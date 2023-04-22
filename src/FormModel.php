@@ -173,6 +173,11 @@ abstract class FormModel implements ValidatedModelInterface
         return true;
     }
 
+    public function isValid(): bool
+    {
+        return (bool) $this->getValidationResult()?->isValid();
+    }
+
     /**
      * @throws InvalidAttributeException
      */
