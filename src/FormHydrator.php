@@ -26,7 +26,7 @@ final class FormHydrator
             return false;
         }
 
-        $scope = $scope ?? $model->getFormName();
+        $scope ??= $model->getFormName();
         if ($scope === '') {
             $hydrateData = $data;
         } else {
