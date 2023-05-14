@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Support;
 
-use Vjik\InputHydrator\Hydrator;
-use Vjik\InputValidation\Attribute\PreValidateResolver;
-use Vjik\InputValidation\ValidatingHydrator;
 use Yiisoft\Form\FormHydrator;
+use Yiisoft\Hydrator\Hydrator;
+use Yiisoft\Hydrator\Validator\Attribute\ValidateResolver;
+use Yiisoft\Hydrator\Validator\ValidatingHydrator;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 
@@ -24,7 +24,7 @@ final class TestHelper
         return new ValidatingHydrator(
             self::createHydrator(),
             $validator,
-            new PreValidateResolver($validator),
+            new ValidateResolver($validator),
         );
     }
 

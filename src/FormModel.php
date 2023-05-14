@@ -7,8 +7,8 @@ namespace Yiisoft\Form;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
-use Vjik\InputValidation\ValidatedModelInterface;
-use Vjik\InputValidation\ValidatedModelTrait;
+use Yiisoft\Hydrator\Validator\ValidatedInputInterface;
+use Yiisoft\Hydrator\Validator\ValidatedInputTrait;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 
@@ -23,9 +23,9 @@ use function substr;
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
-abstract class FormModel implements ValidatedModelInterface
+abstract class FormModel implements ValidatedInputInterface
 {
-    use ValidatedModelTrait;
+    use ValidatedInputTrait;
 
     private const META_LABEL = 1;
     private const META_HINT = 2;

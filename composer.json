@@ -21,11 +21,11 @@
     "require": {
         "php": "^8.0",
         "ext-mbstring": "*",
-        "vjik/input-hydrator": "dev-master",
-        "vjik/input-validation": "dev-master",
         "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
+        "yiisoft/hydrator": "dev-master",
+        "yiisoft/hydrator-validator": "dev-master",
         "yiisoft/strings": "^2.0",
         "yiisoft/validator": "^1.0",
         "yiisoft/widget": "^2.0"

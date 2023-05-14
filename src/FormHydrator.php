@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Vjik\InputValidation\ValidatingHydrator;
+use Yiisoft\Hydrator\HydratorInterface;
 
 use function is_array;
 
+/**
+ * @psalm-import-type MapType from HydratorInterface
+ */
 final class FormHydrator
 {
     public function __construct(
-        private ValidatingHydrator $hydrator,
+        private HydratorInterface $hydrator,
     ) {
     }
 
+    /**
+     * @psalm-param MapType $map
+     */
     public function populate(
         FormModel $model,
         mixed $data,
@@ -33,7 +39,6 @@ final class FormHydrator
             if (!isset($data[$scope])) {
                 return false;
             }
-            /** @var mixed $hydrateData */
             $hydrateData = $data[$scope];
         }
 
@@ -41,7 +46,7 @@ final class FormHydrator
             return false;
         }
 
-        $this->hydrator->populate($model, $hydrateData, $map, $strict);
+        $this->hydrator->hydrate($model, $hydrateData, $map, $strict);
 
         return true;
     }
