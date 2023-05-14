@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\ValidationClass;
 
-use Yiisoft\Form\FormModel;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 
 /**
@@ -59,7 +59,7 @@ trait ValidationClassTrait
 
     protected function addValidationClassToAttributes(
         array &$attributes,
-        FormModel $formModel,
+        FormModelInterface $formModel,
         string $attributeName,
     ): void {
         $this->addClassesToAttributes(
@@ -73,7 +73,7 @@ trait ValidationClassTrait
 
     protected function addInputValidationClassToAttributes(
         array &$attributes,
-        FormModel $formModel,
+        FormModelInterface $formModel,
         string $attributeName,
     ): void {
         $this->addClassesToAttributes(
@@ -87,7 +87,7 @@ trait ValidationClassTrait
 
     private function addClassesToAttributes(
         array &$attributes,
-        FormModel $formModel,
+        FormModelInterface $formModel,
         string $attributeName,
         ?string $invalidClass,
         ?string $validClass,

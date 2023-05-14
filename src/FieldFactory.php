@@ -99,39 +99,39 @@ final class FieldFactory
         return $this->field(ButtonGroup::class, $config);
     }
 
-    public function checkbox(FormModel $formModel, string $attribute, array $config = []): Checkbox
+    public function checkbox(FormModelInterface $formModel, string $attribute, array $config = []): Checkbox
     {
         return $this->input(Checkbox::class, $formModel, $attribute, $config);
     }
 
-    public function checkboxList(FormModel $formModel, string $attribute, array $config = []): CheckboxList
+    public function checkboxList(FormModelInterface $formModel, string $attribute, array $config = []): CheckboxList
     {
         return $this
             ->field(CheckboxList::class, $config)
             ->formAttribute($formModel, $attribute);
     }
 
-    public function date(FormModel $formModel, string $attribute, array $config = []): Date
+    public function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
     {
         return $this->input(Date::class, $formModel, $attribute, $config);
     }
 
-    public function dateTime(FormModel $formModel, string $attribute, array $config = []): DateTime
+    public function dateTime(FormModelInterface $formModel, string $attribute, array $config = []): DateTime
     {
         return $this->input(DateTime::class, $formModel, $attribute, $config);
     }
 
-    public function dateTimeLocal(FormModel $formModel, string $attribute, array $config = []): DateTimeLocal
+    public function dateTimeLocal(FormModelInterface $formModel, string $attribute, array $config = []): DateTimeLocal
     {
         return $this->input(DateTimeLocal::class, $formModel, $attribute, $config);
     }
 
-    public function email(FormModel $formModel, string $attribute, array $config = []): Email
+    public function email(FormModelInterface $formModel, string $attribute, array $config = []): Email
     {
         return $this->input(Email::class, $formModel, $attribute, $config);
     }
 
-    public function errorSummary(FormModel $formModel, array $config = []): ErrorSummary
+    public function errorSummary(FormModelInterface $formModel, array $config = []): ErrorSummary
     {
         return $this
             ->field(ErrorSummary::class, $config)
@@ -143,12 +143,12 @@ final class FieldFactory
         return $this->field(Fieldset::class, $config);
     }
 
-    public function file(FormModel $formModel, string $attribute, array $config = []): File
+    public function file(FormModelInterface $formModel, string $attribute, array $config = []): File
     {
         return $this->input(File::class, $formModel, $attribute, $config);
     }
 
-    public function hidden(FormModel $formModel, string $attribute, array $config = []): Hidden
+    public function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
     {
         return $this->input(Hidden::class, $formModel, $attribute, $config);
     }
@@ -158,24 +158,24 @@ final class FieldFactory
         return $this->field(Image::class, $config);
     }
 
-    public function number(FormModel $formModel, string $attribute, array $config = []): Number
+    public function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
     {
         return $this->input(Number::class, $formModel, $attribute, $config);
     }
 
-    public function password(FormModel $formModel, string $attribute, array $config = []): Password
+    public function password(FormModelInterface $formModel, string $attribute, array $config = []): Password
     {
         return $this->input(Password::class, $formModel, $attribute, $config);
     }
 
-    public function radioList(FormModel $formModel, string $attribute, array $config = []): RadioList
+    public function radioList(FormModelInterface $formModel, string $attribute, array $config = []): RadioList
     {
         return $this
             ->field(RadioList::class, $config)
             ->formAttribute($formModel, $attribute);
     }
 
-    public function range(FormModel $formModel, string $attribute, array $config = []): Range
+    public function range(FormModelInterface $formModel, string $attribute, array $config = []): Range
     {
         return $this->input(Range::class, $formModel, $attribute, $config);
     }
@@ -191,7 +191,7 @@ final class FieldFactory
         return $field;
     }
 
-    public function select(FormModel $formModel, string $attribute, array $config = []): Select
+    public function select(FormModelInterface $formModel, string $attribute, array $config = []): Select
     {
         return $this->input(Select::class, $formModel, $attribute, $config);
     }
@@ -207,27 +207,27 @@ final class FieldFactory
         return $field;
     }
 
-    public function telephone(FormModel $formModel, string $attribute, array $config = []): Telephone
+    public function telephone(FormModelInterface $formModel, string $attribute, array $config = []): Telephone
     {
         return $this->input(Telephone::class, $formModel, $attribute, $config);
     }
 
-    public function text(FormModel $formModel, string $attribute, array $config = []): Text
+    public function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
         return $this->input(Text::class, $formModel, $attribute, $config);
     }
 
-    public function textarea(FormModel $formModel, string $attribute, array $config = []): Textarea
+    public function textarea(FormModelInterface $formModel, string $attribute, array $config = []): Textarea
     {
         return $this->input(Textarea::class, $formModel, $attribute, $config);
     }
 
-    public function url(FormModel $formModel, string $attribute, array $config = []): Url
+    public function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
     {
         return $this->input(Url::class, $formModel, $attribute, $config);
     }
 
-    public function label(FormModel $formModel, string $attribute, array $config = []): Label
+    public function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
     {
         $widgetConfig = array_merge(
             $this->labelConfig,
@@ -236,7 +236,7 @@ final class FieldFactory
         return Label::widget([], $widgetConfig)->formAttribute($formModel, $attribute);
     }
 
-    public function hint(FormModel $formModel, string $attribute, array $config = []): Hint
+    public function hint(FormModelInterface $formModel, string $attribute, array $config = []): Hint
     {
         $widgetConfig = array_merge(
             $this->hintConfig,
@@ -245,7 +245,7 @@ final class FieldFactory
         return Hint::widget([], $widgetConfig)->formAttribute($formModel, $attribute);
     }
 
-    public function error(FormModel $formModel, string $attribute, array $config = []): Error
+    public function error(FormModelInterface $formModel, string $attribute, array $config = []): Error
     {
         $widgetConfig = array_merge(
             $this->errorConfig,
@@ -259,7 +259,7 @@ final class FieldFactory
      * @psalm-param class-string<T> $class
      * @psalm-return T
      */
-    public function input(string $class, FormModel $formModel, string $attribute, array $config = []): object
+    public function input(string $class, FormModelInterface $formModel, string $attribute, array $config = []): object
     {
         $widget = $this->field($class, $config);
         if (!$widget instanceof InputField) {

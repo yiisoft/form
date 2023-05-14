@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\BaseField;
-use Yiisoft\Form\FormModel;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
 
@@ -15,7 +15,7 @@ use Yiisoft\Html\Html;
  */
 final class ErrorSummary extends BaseField
 {
-    private ?FormModel $formModel = null;
+    private ?FormModelInterface $formModel = null;
     private bool $encode = true;
 
     private bool $showAllErrors = false;
@@ -26,7 +26,7 @@ final class ErrorSummary extends BaseField
     private string $header = 'Please fix the following errors:';
     private array $headerAttributes = [];
 
-    public function formModel(FormModel $formModel): self
+    public function formModel(FormModelInterface $formModel): self
     {
         $new = clone $this;
         $new->formModel = $formModel;

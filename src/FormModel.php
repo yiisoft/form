@@ -7,7 +7,6 @@ namespace Yiisoft\Form;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
-use Yiisoft\Hydrator\Validator\ValidatedInputInterface;
 use Yiisoft\Hydrator\Validator\ValidatedInputTrait;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
@@ -23,7 +22,7 @@ use function substr;
 /**
  * Form model represents an HTML form: its data, validation and presentation.
  */
-abstract class FormModel implements ValidatedInputInterface
+abstract class FormModel implements FormModelInterface
 {
     use ValidatedInputTrait;
 
