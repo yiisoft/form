@@ -8,7 +8,7 @@ use Yiisoft\Form\FormHydrator;
 return [
     FormHydrator::class => [
         '__construct()' => [
-            'hydrator' => ValidatingHydrator::class
+            'hydrator' => ValidatingHydrator::class,
         ],
     ],
 ];
