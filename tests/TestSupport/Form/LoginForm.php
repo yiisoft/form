@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Attribute\SkipCollection;
 use Yiisoft\Validator\Rule\Email;
 use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Required;
@@ -13,6 +14,8 @@ use Yiisoft\Validator\RulesProviderInterface;
 class LoginForm extends FormModel implements RulesProviderInterface
 {
     private static ?string $extraField = null;
+    #[SkipCollection]
+    private ?string $skipField = null;
     private ?string $login = null;
     private ?string $password = null;
     private bool $rememberMe = false;

@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
+use Yiisoft\Form\Attribute\SkipCollection;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
 use Yiisoft\Validator\DataSetInterface;
@@ -218,6 +219,10 @@ abstract class FormModel implements
                 continue;
             }
 
+            if (!empty($property->getAttributes(SkipCollection::class))) {
+                continue;
+            }
+
             /** @var ReflectionNamedType|null $type */
             $type = $property->getType();
 
@@ -326,6 +331,9 @@ abstract class FormModel implements
                     throw $this->createNotFoundException($keys);
                 }
                 if ($property->isStatic()) {
+                    throw $this->createNotFoundException($keys);
+                }
+                if (!empty($property->getAttributes(SkipCollection::class))) {
                     throw $this->createNotFoundException($keys);
                 }
                 if (PHP_VERSION_ID < 80100) {

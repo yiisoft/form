@@ -92,6 +92,7 @@ final class FormModelTest extends TestCase
         $this->assertSame('Write your id or email.', $form->getAttributeHint('login'));
         $this->assertSame('Write your password.', $form->getAttributeHint('password'));
         $this->assertEmpty($form->getAttributeHint('noExist'));
+        $this->assertEmpty($form->getAttributeHint('skipField'));
     }
 
     public function testGetAttributeLabel(): void
@@ -198,6 +199,7 @@ final class FormModelTest extends TestCase
         $this->assertTrue($form->hasAttribute('rememberMe'));
         $this->assertFalse($form->hasAttribute('noExist'));
         $this->assertFalse($form->hasAttribute('extraField'));
+        $this->assertFalse($form->hasAttribute('skipField'));
     }
 
     public function testHasNestedAttribute(): void
@@ -207,7 +209,8 @@ final class FormModelTest extends TestCase
         $this->assertTrue($form->hasAttribute('user.login'));
         $this->assertTrue($form->hasAttribute('user.password'));
         $this->assertTrue($form->hasAttribute('user.rememberMe'));
-        $this->assertFalse($form->hasAttribute('noexist'));
+        $this->assertFalse($form->hasAttribute('noxist'));
+        $this->assertFalse($form->hasAttribute('skipField'));
     }
 
     public function testHasNestedAttributeException(): void
@@ -215,6 +218,7 @@ final class FormModelTest extends TestCase
         $form = new FormWithNestedAttribute();
 
         $this->assertFalse($form->hasAttribute('user.noexist'));
+        $this->assertFalse($form->hasAttribute('user.skipField'));
     }
 
     public function testLoad(): void
@@ -231,6 +235,7 @@ final class FormModelTest extends TestCase
                 'password' => '123456',
                 'rememberMe' => true,
                 'noExist' => 'noExist',
+                'skipField' => 'skipField',
             ],
         ];
 
@@ -253,6 +258,7 @@ final class FormModelTest extends TestCase
                 'password' => '123456',
                 'rememberMe' => true,
                 'noExist' => 'noExist',
+                'skipField' => 'skipField',
             ],
         ];
         $data2 = [];
