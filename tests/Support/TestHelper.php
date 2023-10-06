@@ -8,7 +8,6 @@ use Yiisoft\Form\FormHydrator;
 use Yiisoft\Hydrator\Hydrator;
 use Yiisoft\Hydrator\Validator\Attribute\ValidateResolver;
 use Yiisoft\Hydrator\Validator\ValidatingHydrator;
-use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Validator\Validator;
 
 final class TestHelper
@@ -22,14 +21,9 @@ final class TestHelper
     {
         $validator = new Validator();
         return new ValidatingHydrator(
-            self::createHydrator(),
+            new Hydrator(),
             $validator,
             new ValidateResolver($validator),
         );
-    }
-
-    public static function createHydrator(): Hydrator
-    {
-        return new Hydrator(new SimpleContainer());
     }
 }

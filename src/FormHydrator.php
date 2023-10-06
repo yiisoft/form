@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Yiisoft\Hydrator\ArrayData;
 use Yiisoft\Hydrator\HydratorInterface;
 
 use function is_array;
 
 /**
- * @psalm-import-type MapType from HydratorInterface
+ * @psalm-import-type MapType from ArrayData
  */
 final class FormHydrator
 {
@@ -36,17 +37,13 @@ final class FormHydrator
         if ($scope === '') {
             $hydrateData = $data;
         } else {
-            if (!isset($data[$scope])) {
+            if (!isset($data[$scope]) || !is_array($data[$scope])) {
                 return false;
             }
             $hydrateData = $data[$scope];
         }
 
-        if (!is_array($hydrateData)) {
-            return false;
-        }
-
-        $this->hydrator->hydrate($model, $hydrateData, $map, $strict);
+        $this->hydrator->hydrate($model, new ArrayData($hydrateData, $map, $strict));
 
         return true;
     }
