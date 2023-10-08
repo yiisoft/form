@@ -67,7 +67,7 @@ class LoginForm extends FormModel implements RulesProviderInterface
     public function getAttributePlaceholders(): array
     {
         return [
-            'login' => 'Type Usernamer or Email.',
+            'login' => 'Type Username or Email.',
             'password' => 'Type Password.',
         ];
     }

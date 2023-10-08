@@ -92,13 +92,12 @@ trait ValidationClassTrait
         ?string $invalidClass,
         ?string $validClass,
     ): void {
-        if (!$formModel->isValidated()) {
+        $validationResult = $formModel->getValidationResult();
+        if ($validationResult === null) {
             return;
         }
 
-        $hasErrors = $formModel
-            ->getFormErrors()
-            ->hasErrors($attributeName);
+        $hasErrors = !$validationResult->isAttributeValid($attributeName);
 
         if ($hasErrors && $invalidClass !== null) {
             Html::addCssClass($attributes, $invalidClass);

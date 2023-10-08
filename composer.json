@@ -24,6 +24,8 @@
         "yiisoft/friendly-exception": "^1.0",
         "yiisoft/html": "^3.0",
         "yiisoft/http": "^1.2",
+        "yiisoft/hydrator": "dev-master",
+        "yiisoft/hydrator-validator": "dev-master",
         "yiisoft/strings": "^2.0",
         "yiisoft/validator": "^1.0",
         "yiisoft/widget": "^2.0"
@@ -56,7 +58,8 @@
         },
         "config-plugin": {
             "params": "params.php",
-            "bootstrap": "bootstrap.php"
+            "bootstrap": "bootstrap.php",
+            "di": "di.php"
         }
     },
     "config": {

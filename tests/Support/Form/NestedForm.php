@@ -17,7 +17,5 @@ final class NestedForm extends FormModel
             public string $name = 'Bo';
             public array $numbers = [7, 42];
         };
-
-        parent::__construct();
     }
 }
