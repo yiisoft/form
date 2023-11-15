@@ -66,6 +66,16 @@ final class ErrorSummary extends BaseField
     }
 
     /**
+     * Use only common errors when rendering the error summary.
+     */
+    public function onlyCommonErrors(): self
+    {
+        $new = clone $this;
+        $new->onlyAttributes = [''];
+        return $new;
+    }
+
+    /**
      * Set the footer text for the error summary
      */
     public function footer(string $value): self
