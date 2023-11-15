@@ -158,6 +158,26 @@ final class ErrorSummaryTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testListAttributes(): void
+    {
+        $result = ErrorSummary::widget()
+            ->formModel(ErrorSummaryForm::validated())
+            ->onlyAttributes('year')
+            ->listAttributes(['class' => 'errorsList'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p>Please fix the following errors:</p>
+            <ul class="errorsList">
+            <li>Bad year.</li>
+            </ul>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testWithoutForm(): void
     {
         $field = ErrorSummary::widget();
@@ -178,6 +198,7 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($field, $field->onlyCommonErrors());
         $this->assertNotSame($field, $field->header(''));
         $this->assertNotSame($field, $field->headerAttributes([]));
+        $this->assertNotSame($field, $field->listAttributes([]));
         $this->assertNotSame($field, $field->footer(''));
         $this->assertNotSame($field, $field->footerAttributes([]));
     }
