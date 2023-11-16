@@ -21,7 +21,6 @@ final class SelectForm extends FormModel implements RulesProviderInterface
 
     public function __construct()
     {
-        parent::__construct();
         $this->object = new stdClass();
     }
 

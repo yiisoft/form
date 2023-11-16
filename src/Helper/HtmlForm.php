@@ -92,7 +92,8 @@ final class HtmlForm
      */
     public static function getAttributeValue(FormModelInterface $formModel, string $attribute): mixed
     {
-        return $formModel->getAttributeValue(self::getAttributeName($formModel, $attribute));
+        $parsedName = self::parseAttribute($attribute);
+        return $formModel->getAttributeValue($parsedName['name'] . $parsedName['suffix']);
     }
 
     /**

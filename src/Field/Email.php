@@ -227,7 +227,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
                 }
 
                 if ($rule instanceof Regex) {
-                    if (!($rule->isNot())) {
+                    if (!$rule->isNot()) {
                         $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
                             $rule->getPattern()
                         );

@@ -6,7 +6,6 @@ namespace Yiisoft\Form\Tests\Helper;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
-use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DynamicAttributesForm;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
@@ -85,7 +84,7 @@ final class HtmlFormTest extends TestCase
     /**
      * @dataProvider dataGetInputName
      */
-    public function testGetInputName(FormModelInterface $form, string $attribute, string $expected): void
+    public function testGetInputName(FormModel $form, string $attribute, string $expected): void
     {
         $this->assertSame($expected, HtmlForm::getInputName($form, $attribute));
     }
@@ -130,9 +129,6 @@ final class HtmlFormTest extends TestCase
             $this->assertSame($field['expected'], $inputName);
             $this->assertTrue($form->hasAttribute($field['name']));
             $this->assertNull($form->getAttributeValue($field['name']));
-
-            $form->setAttribute($field['name'], $field['value']);
-            $this->assertSame($field['value'], $form->getAttributeValue($field['name']));
         }
     }
 

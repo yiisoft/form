@@ -4,42 +4,78 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Yiisoft\Validator\DataSetInterface;
+use Yiisoft\Hydrator\Validator\ValidatedInputInterface;
 
-/**
- * FormModelInterface model represents an HTML form: its data, validation and presentation.
- */
-interface FormModelInterface extends DataSetInterface, FormMetadataInterface
+interface FormModelInterface extends ValidatedInputInterface
 {
-    /**
-     * Return array with names of all attributes
-     *
-     * @return array
-     */
-    public function attributes(): array;
+    public function getAttributeHint(string $attribute): string;
 
     /**
-     * Returns the value for the specified attribute.
+     * Returns the attribute hints.
      *
-     * @param string $attribute
+     * Attribute hints are mainly used for display purpose. For example, given an attribute `isPublic`, we can declare
+     * a hint `Whether the post should be visible for not logged-in users`, which provides user-friendly description of
+     * the attribute meaning and can be displayed to end users.
      *
-     * @return mixed
+     * Unlike label hint will not be generated, if its explicit declaration is omitted.
+     *
+     * Note, in order to inherit hints defined in the parent class, a child class needs to merge the parent hints with
+     * child hints using functions such as `array_merge()`.
+     *
+     * @return array attribute hints (name => hint)
+     *
+     * @psalm-return array<string,string>
      */
+    public function getAttributeHints(): array;
+
+    /**
+     * Returns the text label for the specified attribute.
+     *
+     * @param string $attribute The attribute name.
+     *
+     * @return string The attribute label.
+     */
+    public function getAttributeLabel(string $attribute): string;
+
+    /**
+     * Returns the attribute labels.
+     *
+     * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
+     * declare a label `First Name` which is more user-friendly and can be displayed to end users.
+     *
+     * By default, an attribute label is generated automatically. This method allows you to
+     * explicitly specify attribute labels.
+     *
+     * Note, in order to inherit labels defined in the parent class, a child class needs to merge the parent labels
+     * with child labels using functions such as `array_merge()`.
+     *
+     * @return array attribute labels (name => label)
+     *
+     * {@see getAttributeLabel()}
+     *
+     * @psalm-return array<string,string>
+     */
+    public function getAttributeLabels(): array;
+
+    /**
+     * Returns the text placeholder for the specified attribute.
+     *
+     * @param string $attribute the attribute name.
+     *
+     * @return string the attribute placeholder.
+     */
+    public function getAttributePlaceholder(string $attribute): string;
+
     public function getAttributeValue(string $attribute): mixed;
 
     /**
-     * If there is such attribute in the set.
+     * Returns the attribute placeholders.
      *
-     * @param string $attribute
+     * @return array attribute placeholder (name => placeholder)
      *
-     * @return bool
+     * @psalm-return array<string,string>
      */
-    public function hasAttribute(string $attribute): bool;
-
-    /**
-     * @return FormErrorsInterface Validation errors.
-     */
-    public function getFormErrors(): FormErrorsInterface;
+    public function getAttributePlaceholders(): array;
 
     /**
      * Returns the form name that this model class should use.
@@ -55,54 +91,14 @@ interface FormModelInterface extends DataSetInterface, FormMetadataInterface
      * By default, this method returns the model class name (without the namespace part) as the form name. You may
      * override it when the model is used in different forms.
      *
-     * @return string the form name of this model class.
-     *
-     * {@see load()}
+     * @return string The form name of this model class.
      */
     public function getFormName(): string;
 
     /**
-     * This method allows knowing if the validation was executed or not in the model.
-     *
-     * @return bool If the model was validated.
+     * If there is such attribute in the set.
      */
-    public function isValidated(): bool;
+    public function hasAttribute(string $attribute): bool;
 
-    /**
-     * Populates the model with input data.
-     *
-     * which, with `load()` can be written as:
-     *
-     * ```php
-     * $body = $request->getParsedBody();
-     * $method = $request->getMethod();
-     *
-     * if ($method === Method::POST && $loginForm->load($body)) {
-     *     // handle success
-     * }
-     * ```
-     *
-     * `load()` gets the `'FormName'` from the {@see getFormName()} method (which you may override), unless the
-     * `$formName` parameter is given. If the form name is empty string, `load()` populates the model with the whole of
-     * `$data` instead of `$data['FormName']`.
-     *
-     * @param array|object|null $data The data to load, typically server request attributes.
-     * @param string|null $formName scope from which to get data
-     *
-     * @return bool whether `load()` found the expected form in `$data`.
-     */
-    public function load(array|object|null $data, ?string $formName = null): bool;
-
-    /**
-     * Set specified attribute
-     *
-     * @param string $name of the attribute to set
-     * @param mixed $value
-     */
-    public function setAttribute(string $name, mixed $value): void;
-
-    /**
-     * Set custom form errors instance.
-     */
-    public function setFormErrors(FormErrorsInterface $formErrors): void;
+    public function isValid(): bool;
 }

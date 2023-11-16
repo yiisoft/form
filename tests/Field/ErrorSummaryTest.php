@@ -91,6 +91,32 @@ final class ErrorSummaryTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testOnlyCommonErrors(): void
+    {
+        $form = ErrorSummaryForm::validated();
+        $form->getValidationResult()
+            ->addError('Common error 1')
+            ->addError('Common error 2');
+
+        $result = ErrorSummary::widget()
+            ->formModel($form)
+            ->onlyCommonErrors()
+            ->showAllErrors()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p>Please fix the following errors:</p>
+            <ul>
+            <li>Common error 1</li>
+            <li>Common error 2</li>
+            </ul>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testFooter(): void
     {
         $result = ErrorSummary::widget()
@@ -134,6 +160,26 @@ final class ErrorSummaryTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testListAttributes(): void
+    {
+        $result = ErrorSummary::widget()
+            ->formModel(ErrorSummaryForm::validated())
+            ->onlyAttributes('year')
+            ->listAttributes(['class' => 'errorsList'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p>Please fix the following errors:</p>
+            <ul class="errorsList">
+            <li>Bad year.</li>
+            </ul>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testWithoutForm(): void
     {
         $field = ErrorSummary::widget();
@@ -151,8 +197,10 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($field, $field->encode(false));
         $this->assertNotSame($field, $field->showAllErrors());
         $this->assertNotSame($field, $field->onlyAttributes());
+        $this->assertNotSame($field, $field->onlyCommonErrors());
         $this->assertNotSame($field, $field->header(''));
         $this->assertNotSame($field, $field->headerAttributes([]));
+        $this->assertNotSame($field, $field->listAttributes([]));
         $this->assertNotSame($field, $field->footer(''));
         $this->assertNotSame($field, $field->footerAttributes([]));
     }

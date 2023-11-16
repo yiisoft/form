@@ -25,6 +25,7 @@ final class ErrorSummary extends BaseField
     private array $footerAttributes = [];
     private string $header = 'Please fix the following errors:';
     private array $headerAttributes = [];
+    private array $listAttributes = [];
 
     public function formModel(FormModelInterface $formModel): self
     {
@@ -66,6 +67,16 @@ final class ErrorSummary extends BaseField
     }
 
     /**
+     * Use only common errors when rendering the error summary.
+     */
+    public function onlyCommonErrors(): self
+    {
+        $new = clone $this;
+        $new->onlyAttributes = [''];
+        return $new;
+    }
+
+    /**
      * Set the footer text for the error summary
      */
     public function footer(string $value): self
@@ -80,7 +91,7 @@ final class ErrorSummary extends BaseField
      *
      * @param array $values Attribute values indexed by attribute names.
      *
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * See {@see Html::renderTagAttributes} for details on how attributes are being rendered.
      */
     public function footerAttributes(array $values): self
     {
@@ -104,12 +115,26 @@ final class ErrorSummary extends BaseField
      *
      * @param array $values Attribute values indexed by attribute names.
      *
-     * See {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * See {@see Html::renderTagAttributes} for details on how attributes are being rendered.
      */
     public function headerAttributes(array $values): self
     {
         $new = clone $this;
         $new->headerAttributes = $values;
+        return $new;
+    }
+
+    /**
+     * Set errors list container attributes.
+     *
+     * @param array $attributes Attribute values indexed by attribute names.
+     *
+     * See {@see Html::renderTagAttributes} for details on how attributes are being rendered.
+     */
+    public function listAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->listAttributes = $attributes;
         return $new;
     }
 
@@ -127,6 +152,7 @@ final class ErrorSummary extends BaseField
         }
 
         $content[] = Html::ul()
+            ->attributes($this->listAttributes)
             ->strings($messages, [], $this->encode)
             ->render();
 

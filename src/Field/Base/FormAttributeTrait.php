@@ -92,7 +92,7 @@ trait FormAttributeTrait
     {
         return $this
             ->getFormModel()
-            ->getFormErrors()
-            ->getFirstError($this->getFormAttributeName());
+            ->getValidationResult()
+            ?->getAttributeErrorMessages($this->getFormAttributeName())[0] ?? null;
     }
 }
