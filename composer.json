@@ -28,7 +28,7 @@
         "yiisoft/hydrator-validator": "dev-master",
         "yiisoft/strings": "^2.0",
         "yiisoft/validator": "^1.0",
-        "yiisoft/widget": "^2.0"
+        "yiisoft/widget": "^2.1"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^4.2",
