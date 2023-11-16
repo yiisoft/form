@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\Tests\Support\Form\RadioListForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -19,6 +20,7 @@ final class RadioListTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

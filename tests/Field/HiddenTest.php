@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -17,6 +18,7 @@ final class HiddenTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubBaseField;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -15,6 +16,7 @@ final class BaseFieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize();
     }
 
     public function dataContainerId(): array
@@ -151,6 +153,33 @@ final class BaseFieldTest extends TestCase
         $result = $field->begin() . 'content' . StubBaseField::end();
 
         $this->assertSame('content', $result);
+    }
+
+    public function testCustomTheme(): void
+    {
+        WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize(
+            configs: [
+                'default' => [
+                    'useContainer' => false,
+                ],
+                'custom-theme' => [
+                    'containerClass' => 'main',
+                ],
+            ],
+            defaultConfig: 'default',
+        );
+
+        $result = StubBaseField::widget(theme: 'custom-theme')->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div class="main">
+            test
+            </div>
+            HTML,
+            $result
+        );
     }
 
     public function testImmutability(): void

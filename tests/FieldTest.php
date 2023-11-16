@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use Yiisoft\Form\Field;
-use Yiisoft\Form\Field\Fieldset;
-use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\Form\CheckboxListForm;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
@@ -27,6 +24,7 @@ use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\Form\UrlForm;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -37,13 +35,12 @@ final class FieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        Field::initialize();
+        ThemeContainer::initialize();
     }
 
     public function testButton(): void
     {
-        $result = Field::button('Show info')
-            ->render();
+        $result = Field::button('Show info')->render();
         $this->assertSame(
             <<<HTML
             <div>
@@ -420,41 +417,6 @@ final class FieldTest extends TestCase
             HTML,
             $result
         );
-    }
-
-    public function testInput(): void
-    {
-        $result = Field::input(Text::class, new TextForm(), 'job')->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="textform-job">Job</label>
-            <input type="text" id="textform-job" name="TextForm[job]" value>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testField(): void
-    {
-        $result = Field::field(Fieldset::class)->render();
-
-        $expected = <<<HTML
-            <div>
-            <fieldset>
-            </fieldset>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testGetFactoryWithNonExistConfiguration(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Configuration with name "non-exist" not found.');
-        Field::getFactory('non-exist');
     }
 
     public function testLabel(): void

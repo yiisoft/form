@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Field\Part;
 
 use Stringable;
 use Yiisoft\Form\Field\Base\FormAttributeTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 
@@ -149,5 +150,10 @@ final class Label extends Widget
         }
 
         return $tag->render();
+    }
+
+    protected static function getThemeConfig(?string $theme): array
+    {
+        return ThemeContainer::getTheme($theme)?->getLabelConfig() ?? [];
     }
 }

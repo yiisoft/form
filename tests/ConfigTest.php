@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field;
-use Yiisoft\Form\Field\Fieldset;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -18,7 +18,7 @@ final class ConfigTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        Field::initialize();
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
@@ -32,8 +32,6 @@ final class ConfigTest extends TestCase
         $this->assertIsCallable($bootstrap);
 
         $bootstrap(new SimpleContainer());
-
-        $this->assertInstanceOf(Fieldset::class, Field::fieldset());
     }
 
     public function testCustomParams(): void

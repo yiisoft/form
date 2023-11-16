@@ -263,15 +263,4 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
             );
         }
     }
-
-    private function generateSchemePattern(string $scheme): string
-    {
-        $result = '';
-
-        for ($i = 0, $length = strlen($scheme); $i < $length; $i++) {
-            $result .= '[' . strtolower($scheme[$i]) . strtoupper($scheme[$i]) . ']';
-        }
-
-        return $result;
-    }
 }
