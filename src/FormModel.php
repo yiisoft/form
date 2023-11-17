@@ -166,7 +166,7 @@ abstract class FormModel implements FormModelInterface
     {
         try {
             $this->readAttributeValue($attribute);
-        } catch (InvalidAttributeException) {
+        } catch (UndefinedPropertyException) {
             return false;
         }
         return true;
@@ -178,7 +178,7 @@ abstract class FormModel implements FormModelInterface
     }
 
     /**
-     * @throws InvalidAttributeException
+     * @throws UndefinedPropertyException If the property is not in the set.
      */
     private function readAttributeValue(string $attribute): mixed
     {
@@ -191,11 +191,10 @@ abstract class FormModel implements FormModelInterface
 
             if (is_array($value)) {
                 if (array_key_exists($key, $value)) {
-                    /** @var mixed $value */
                     $value = $value[$key];
                     continue;
                 }
-                throw $this->createNotFoundException($keys);
+                throw UndefinedPropertyException::forUndefinedProperty($this->makePropertyPathString($keys));
             }
 
             if (is_object($value)) {
@@ -203,23 +202,20 @@ abstract class FormModel implements FormModelInterface
                 try {
                     $property = $class->getProperty($key);
                 } catch (ReflectionException) {
-                    throw $this->createNotFoundException($keys);
+                    throw UndefinedPropertyException::forUndefinedProperty($this->makePropertyPathString($keys));
                 }
                 if ($property->isStatic()) {
-                    throw $this->createNotFoundException($keys);
+                    throw UndefinedPropertyException::forUndefinedProperty($this->makePropertyPathString($keys));
                 }
                 if (PHP_VERSION_ID < 80100) {
                     $property->setAccessible(true);
                 }
-                /** @var mixed $value */
                 $value = $property->getValue($value);
                 continue;
             }
 
             array_pop($keys);
-            throw new InvalidAttributeException(
-                sprintf('Attribute "%s" is not a nested attribute.', $this->makePathString($keys))
-            );
+            throw UndefinedPropertyException::forNotNestedProperty($this->makePropertyPathString($keys));
         }
 
         return $value;
@@ -305,15 +301,7 @@ abstract class FormModel implements FormModelInterface
     /**
      * @psalm-param array<array-key, array{0:int|string, 1:mixed}> $keys
      */
-    private function createNotFoundException(array $keys): InvalidArgumentException
-    {
-        return new InvalidAttributeException('Undefined property: "' . $this->makePathString($keys) . '".');
-    }
-
-    /**
-     * @psalm-param array<array-key, array{0:int|string, 1:mixed}> $keys
-     */
-    private function makePathString(array $keys): string
+    private function makePropertyPathString(array $keys): string
     {
         $path = '';
         foreach ($keys as $key) {
