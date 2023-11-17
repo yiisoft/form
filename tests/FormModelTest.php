@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\NestedForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
@@ -128,7 +129,7 @@ final class FormModelTest extends TestCase
     {
         $form = new FormWithNestedProperty();
 
-        $this->expectException(ValueNotFoundException::class);
+        $this->expectException(PropertyNotSupportNestedValuesException::class);
         $this->expectExceptionMessage(
             'Property "' . FormWithNestedProperty::class . '::id" is not a nested attribute.'
         );
