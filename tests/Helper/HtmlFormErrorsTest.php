@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Form\Tests\Support\TestHelper;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedAttribute;
+use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedProperty;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
 use Yiisoft\Validator\Validator;
 
@@ -131,13 +131,13 @@ final class HtmlFormErrorsTest extends TestCase
         );
     }
 
-    public function testGetErrorNestedAttribute(): void
+    public function testGetErrorNestedProperty(): void
     {
-        $formModel = new FormWithNestedAttribute();
+        $formModel = new FormWithNestedProperty();
         $validator = new Validator();
         $populateResult = TestHelper::createFormHydrator()->populate(
             $formModel,
-            ['FormWithNestedAttribute' => ['user.login' => 'ad']]
+            ['FormWithNestedProperty' => ['user.login' => 'ad']]
         );
 
         $this->assertTrue($populateResult);

@@ -9,7 +9,7 @@ use Yiisoft\Validator\Rule\Nested;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
 
-final class FormWithNestedAttribute extends FormModel implements RulesProviderInterface
+final class FormWithNestedProperty extends FormModel implements RulesProviderInterface
 {
     private ?int $id = null;
     private LoginForm $user;
