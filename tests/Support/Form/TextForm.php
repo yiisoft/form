@@ -21,6 +21,7 @@ final class TextForm extends FormModel implements RulesProviderInterface
     public string $nocode = '';
     public int $age = 42;
     public ?int $requiredWhen = null;
+    public array $array = [];
 
     public function getRules(): array
     {
@@ -40,6 +41,7 @@ final class TextForm extends FormModel implements RulesProviderInterface
             'name' => 'Name',
             'job' => 'Job',
             'company' => 'Company',
+            'array' => 'Array',
         ];
     }
 

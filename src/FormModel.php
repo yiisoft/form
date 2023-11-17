@@ -7,6 +7,11 @@ namespace Yiisoft\Form;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
+use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\Exception\StaticObjectPropertyException;
+use Yiisoft\Form\Exception\UndefinedArrayElementException;
+use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
+use Yiisoft\Form\Exception\ValueNotFoundException;
 use Yiisoft\Hydrator\Validator\ValidatedInputTrait;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
@@ -166,7 +171,7 @@ abstract class FormModel implements FormModelInterface
     {
         try {
             $this->readAttributeValue($attribute);
-        } catch (UndefinedPropertyException) {
+        } catch (ValueNotFoundException) {
             return false;
         }
         return true;
@@ -178,7 +183,11 @@ abstract class FormModel implements FormModelInterface
     }
 
     /**
-     * @throws UndefinedPropertyException If the property is not in the set.
+     * @throws UndefinedArrayElementException
+     * @throws UndefinedObjectPropertyException
+     * @throws StaticObjectPropertyException
+     * @throws PropertyNotSupportNestedValuesException
+     * @throws ValueNotFoundException
      */
     private function readAttributeValue(string $attribute): mixed
     {
@@ -194,7 +203,7 @@ abstract class FormModel implements FormModelInterface
                     $value = $value[$key];
                     continue;
                 }
-                throw UndefinedPropertyException::forUndefinedProperty($this->makePropertyPathString($keys));
+                throw new UndefinedArrayElementException($this->makePropertyPathString($keys));
             }
 
             if (is_object($value)) {
@@ -202,10 +211,10 @@ abstract class FormModel implements FormModelInterface
                 try {
                     $property = $class->getProperty($key);
                 } catch (ReflectionException) {
-                    throw UndefinedPropertyException::forUndefinedProperty($this->makePropertyPathString($keys));
+                    throw new UndefinedObjectPropertyException($this->makePropertyPathString($keys));
                 }
                 if ($property->isStatic()) {
-                    throw UndefinedPropertyException::forUndefinedProperty($this->makePropertyPathString($keys));
+                    throw new StaticObjectPropertyException($this->makePropertyPathString($keys));
                 }
                 if (PHP_VERSION_ID < 80100) {
                     $property->setAccessible(true);
@@ -215,7 +224,7 @@ abstract class FormModel implements FormModelInterface
             }
 
             array_pop($keys);
-            throw UndefinedPropertyException::forNotNestedProperty($this->makePropertyPathString($keys));
+            throw new PropertyNotSupportNestedValuesException($this->makePropertyPathString($keys), $value);
         }
 
         return $value;

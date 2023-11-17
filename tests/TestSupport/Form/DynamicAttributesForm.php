@@ -18,7 +18,7 @@ final class DynamicAttributesForm extends FormModel
         return ArrayHelper::keyExists($this->attributes, $attribute);
     }
 
-    public function getAttributeValue(string $attribute): iterable|int|float|string|bool|object|null
+    public function getAttributeValue(string $attribute): mixed
     {
         if ($this->hasAttribute($attribute)) {
             return $this->attributes[$attribute];
