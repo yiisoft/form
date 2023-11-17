@@ -91,14 +91,13 @@ final class HtmlForm
      * @param FormModelInterface $formModel the form object.
      * @param string $attribute the attribute name or expression.
      *
-     * @return mixed the corresponding attribute value.
-     *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
      * @throws UndefinedArrayElementException
      * @throws UndefinedObjectPropertyException
      * @throws StaticObjectPropertyException
      * @throws PropertyNotSupportNestedValuesException
      * @throws ValueNotFoundException
+     * @return mixed the corresponding attribute value.
      */
     public static function getAttributeValue(FormModelInterface $formModel, string $attribute): mixed
     {

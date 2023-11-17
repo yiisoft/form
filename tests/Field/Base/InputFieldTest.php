@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
-use Yiisoft\Form\Tests\TestSupport\Dto\Coordinates;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedStructures;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
