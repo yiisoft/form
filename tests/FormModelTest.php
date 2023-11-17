@@ -19,7 +19,6 @@ use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedProperty;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedStructures;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\Exception\ValueNotFoundException;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
