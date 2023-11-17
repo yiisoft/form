@@ -256,9 +256,13 @@ final class UrlTest extends TestCase
                 '<input type="url" id="urlform-beach2" name="UrlForm[beach2]" value pattern="^((?i)http|https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
                 'beach2',
             ],
-            'required-with-when' => [
-                '<input type="url" id="urlform-requiredwhen" name="UrlForm[requiredWhen]">',
-                'requiredWhen',
+            'url-with-idn' => [
+                '<input type="url" id="urlform-urlwithidn" name="UrlForm[urlWithIdn]" value>',
+                'urlWithIdn',
+            ],
+            'regex-and-url-with-idn' => [
+                '<input type="url" id="urlform-regexandurlwithidn" name="UrlForm[regexAndUrlWithIdn]" value pattern="\w+">',
+                'regexAndUrlWithIdn',
             ],
         ];
     }

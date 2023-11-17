@@ -21,6 +21,8 @@ final class UrlForm extends FormModel implements RulesProviderInterface
     public string $shop = '';
     public string $beach = '';
     public string $beach2 = '';
+    public string $urlWithIdn = '';
+    public string $regexAndUrlWithIdn = '';
     public ?string $post = null;
     public int $age = 42;
     public ?int $requiredWhen = null;
@@ -43,6 +45,8 @@ final class UrlForm extends FormModel implements RulesProviderInterface
             'beach' => [new Url(), new Regex(pattern: '~\w+~')],
             'beach2' => [new Regex(pattern: '~\w+~'), new Url()],
             'requiredWhen' => [new Required(when: static fn () => false)],
+            'urlWithIdn' => [new Url(enableIdn: true)],
+            'regexAndUrlWithIdn' => [new Url(enableIdn: true), new Regex(pattern: '~\w+~')],
         ];
     }
 

@@ -215,8 +215,9 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
 
                 $pattern = null;
                 if ($rule instanceof UrlRule) {
-                    $pattern = $rule->getPattern();
-                } elseif ($rule instanceof Regex) {
+                    $pattern = $rule->isIdnEnabled() ? null : $rule->getPattern();
+                }
+                if ($pattern === null && $rule instanceof Regex) {
                     if (!$rule->isNot()) {
                         $pattern = $rule->getPattern();
                     }
