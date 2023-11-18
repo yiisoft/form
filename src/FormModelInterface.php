@@ -6,7 +6,6 @@ namespace Yiisoft\Form;
 
 use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
 use Yiisoft\Form\Exception\StaticObjectPropertyException;
-use Yiisoft\Form\Exception\UndefinedArrayElementException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\Exception\ValueNotFoundException;
 use Yiisoft\Hydrator\Validator\ValidatedInputInterface;
@@ -72,7 +71,6 @@ interface FormModelInterface extends ValidatedInputInterface
     public function getAttributePlaceholder(string $attribute): string;
 
     /**
-     * @throws UndefinedArrayElementException
      * @throws UndefinedObjectPropertyException
      * @throws StaticObjectPropertyException
      * @throws PropertyNotSupportNestedValuesException
