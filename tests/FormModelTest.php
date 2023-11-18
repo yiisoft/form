@@ -124,15 +124,33 @@ final class FormModelTest extends TestCase
         $this->assertSame($expected, $form->getAttributeLabels());
     }
 
-    public function testGetNestedPropertyException(): void
+    public function testNestedPropertyOnNull(): void
     {
         $form = new FormWithNestedProperty();
 
+        $this->assertFalse($form->hasAttribute('id.profile'));
+        $this->assertNull($form->getAttributeValue('id.profile'));
+    }
+
+    public function testNestedPropertyOnArray(): void
+    {
+        $form = new FormWithNestedProperty();
+
+        $this->assertFalse($form->hasAttribute('meta.profile'));
+        $this->assertNull($form->getAttributeValue('meta.profile'));
+    }
+
+    public function testNestedPropertyOnString(): void
+    {
+        $form = new FormWithNestedProperty();
+
+        $this->assertFalse($form->hasAttribute('key.profile'));
+
         $this->expectException(PropertyNotSupportNestedValuesException::class);
         $this->expectExceptionMessage(
-            'Property "' . FormWithNestedProperty::class . '::id" is not a nested attribute.'
+            'Property "' . FormWithNestedProperty::class . '::key" is not a nested attribute.'
         );
-        $form->getAttributeValue('id.profile');
+        $form->getAttributeValue('key.profile');
     }
 
     public function testGetNestedAttributeHint(): void

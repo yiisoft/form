@@ -12,6 +12,8 @@ use Yiisoft\Validator\RulesProviderInterface;
 final class FormWithNestedProperty extends FormModel implements RulesProviderInterface
 {
     private ?int $id = null;
+    private string $key = '';
+    private array $meta = [];
     private LoginForm $user;
 
     public function __construct()
