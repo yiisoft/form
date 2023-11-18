@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\NestedForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
@@ -151,6 +152,19 @@ final class FormModelTest extends TestCase
             'Property "' . FormWithNestedProperty::class . '::key" is not a nested attribute.'
         );
         $form->getAttributeValue('key.profile');
+    }
+
+    public function testNestedPropertyOnObject(): void
+    {
+        $form = new FormWithNestedProperty();
+
+        $this->assertFalse($form->hasAttribute('coordinates.profile'));
+
+        $this->expectException(UndefinedObjectPropertyException::class);
+        $this->expectExceptionMessage(
+            'Undefined object property: "' . FormWithNestedProperty::class . '::coordinates::profile".'
+        );
+        $form->getAttributeValue('coordinates.profile');
     }
 
     public function testGetNestedAttributeHint(): void

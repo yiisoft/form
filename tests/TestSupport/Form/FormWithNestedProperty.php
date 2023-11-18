@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Form\FormModel;
+use Yiisoft\Form\Tests\TestSupport\Dto\Coordinates;
 use Yiisoft\Validator\Rule\Nested;
 use Yiisoft\Validator\Rule\Required;
 use Yiisoft\Validator\RulesProviderInterface;
@@ -14,11 +15,13 @@ final class FormWithNestedProperty extends FormModel implements RulesProviderInt
     private ?int $id = null;
     private string $key = '';
     private array $meta = [];
+    private Coordinates $coordinates;
     private LoginForm $user;
 
     public function __construct()
     {
         $this->user = new LoginForm();
+        $this->coordinates = new Coordinates();
     }
 
     public function getAttributeLabels(): array
