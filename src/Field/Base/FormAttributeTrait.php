@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Field\Base;
 use InvalidArgumentException;
 use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
 use Yiisoft\Form\Exception\StaticObjectPropertyException;
-use Yiisoft\Form\Exception\UndefinedArrayElementException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
