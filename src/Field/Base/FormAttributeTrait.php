@@ -73,15 +73,7 @@ trait FormAttributeTrait
      */
     final protected function getFormAttributeValue(): mixed
     {
-        try {
-            return HtmlForm::getAttributeValue($this->getFormModel(), $this->formAttribute);
-        } catch (PropertyNotSupportNestedValuesException $exception) {
-            return $exception->getValue() === null
-                ? null
-                : throw $exception;
-        } catch (UndefinedArrayElementException) {
-            return null;
-        }
+        return HtmlForm::getAttributeValue($this->getFormModel(), $this->formAttribute);
     }
 
     final protected function getFormAttributeLabel(): string

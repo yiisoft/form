@@ -119,7 +119,15 @@ abstract class FormModel implements FormModelInterface
 
     public function getAttributeValue(string $attribute): mixed
     {
-        return $this->readAttributeValue($attribute);
+        try {
+            return $this->readAttributeValue($attribute);
+        } catch (PropertyNotSupportNestedValuesException $exception) {
+            return $exception->getValue() === null
+                ? null
+                : throw $exception;
+        } catch (UndefinedArrayElementException) {
+            return null;
+        }
     }
 
     /**
