@@ -143,7 +143,7 @@ final class ErrorSummary extends BaseField
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function addListClass(?string ...$class): self
+    public function addListClass(?string ...$class): self
     {
         $new = clone $this;
         Html::addCssClass($new->listAttributes, $class);
@@ -155,7 +155,7 @@ final class ErrorSummary extends BaseField
      *
      * @param string|null ...$class One or many CSS classes.
      */
-    final public function listClass(?string ...$class): static
+    public function listClass(?string ...$class): static
     {
         $new = clone $this;
         $new->listAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
