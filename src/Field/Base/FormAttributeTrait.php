@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\Exception\StaticObjectPropertyException;
+use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Helper\HtmlForm;
+use Yiisoft\Form\Exception\ValueNotFoundException;
 use Yiisoft\Validator\Helper\RulesNormalizer;
 
 /**
@@ -60,6 +64,12 @@ trait FormAttributeTrait
         return HtmlForm::getAttributeName($this->getFormModel(), $this->formAttribute);
     }
 
+    /**
+     * @throws UndefinedObjectPropertyException
+     * @throws StaticObjectPropertyException
+     * @throws PropertyNotSupportNestedValuesException
+     * @throws ValueNotFoundException
+     */
     final protected function getFormAttributeValue(): mixed
     {
         return HtmlForm::getAttributeValue($this->getFormModel(), $this->formAttribute);

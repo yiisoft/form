@@ -6,7 +6,12 @@ namespace Yiisoft\Form\Helper;
 
 use InvalidArgumentException;
 use UnexpectedValueException;
+use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\Exception\StaticObjectPropertyException;
+use Yiisoft\Form\Exception\UndefinedArrayElementException;
+use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Exception\ValueNotFoundException;
 
 /**
  * Form-related HTML tag generation
@@ -87,7 +92,11 @@ final class HtmlForm
      * @param string $attribute the attribute name or expression.
      *
      * @throws InvalidArgumentException if the attribute name contains non-word characters.
-     *
+     * @throws UndefinedArrayElementException
+     * @throws UndefinedObjectPropertyException
+     * @throws StaticObjectPropertyException
+     * @throws PropertyNotSupportNestedValuesException
+     * @throws ValueNotFoundException
      * @return mixed the corresponding attribute value.
      */
     public static function getAttributeValue(FormModelInterface $formModel, string $attribute): mixed

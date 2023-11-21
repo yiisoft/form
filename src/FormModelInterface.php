@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\Exception\StaticObjectPropertyException;
+use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
+use Yiisoft\Form\Exception\ValueNotFoundException;
 use Yiisoft\Hydrator\Validator\ValidatedInputInterface;
 
 interface FormModelInterface extends ValidatedInputInterface
@@ -66,6 +70,12 @@ interface FormModelInterface extends ValidatedInputInterface
      */
     public function getAttributePlaceholder(string $attribute): string;
 
+    /**
+     * @throws UndefinedObjectPropertyException
+     * @throws StaticObjectPropertyException
+     * @throws PropertyNotSupportNestedValuesException
+     * @throws ValueNotFoundException
+     */
     public function getAttributeValue(string $attribute): mixed;
 
     /**

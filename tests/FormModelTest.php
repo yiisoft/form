@@ -7,16 +7,19 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\FormModel;
 use Yiisoft\Form\Tests\Support\Form\NestedForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\Tests\Support\TestHelper;
+use Yiisoft\Form\Tests\TestSupport\Dto\Coordinates;
 use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedProperty;
+use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedStructures;
 use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
 use Yiisoft\Form\Tests\TestSupport\TestTrait;
-use Yiisoft\Form\UndefinedPropertyException;
 
 require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
 
@@ -63,9 +66,17 @@ final class FormModelTest extends TestCase
     {
         $widget = StubInputField::widget()->formAttribute(new NestedForm(), 'letters[1]');
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Undefined property: "' . NestedForm::class . '::letters[1]"');
-        $widget->render();
+        $result = $widget->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <label for="nestedform-letters-1">Letters</label>
+            <input type="text" id="nestedform-letters-1" name="NestedForm[letters][1]" value>
+            </div>
+            HTML,
+            $result
+        );
     }
 
     public function testArrayValueIntoObject(): void
@@ -114,15 +125,46 @@ final class FormModelTest extends TestCase
         $this->assertSame($expected, $form->getAttributeLabels());
     }
 
-    public function testGetNestedPropertyException(): void
+    public function testNestedPropertyOnNull(): void
     {
         $form = new FormWithNestedProperty();
 
-        $this->expectException(UndefinedPropertyException::class);
+        $this->assertFalse($form->hasAttribute('id.profile'));
+        $this->assertNull($form->getAttributeValue('id.profile'));
+    }
+
+    public function testNestedPropertyOnArray(): void
+    {
+        $form = new FormWithNestedProperty();
+
+        $this->assertFalse($form->hasAttribute('meta.profile'));
+        $this->assertNull($form->getAttributeValue('meta.profile'));
+    }
+
+    public function testNestedPropertyOnString(): void
+    {
+        $form = new FormWithNestedProperty();
+
+        $this->assertFalse($form->hasAttribute('key.profile'));
+
+        $this->expectException(PropertyNotSupportNestedValuesException::class);
         $this->expectExceptionMessage(
-            'Property "' . FormWithNestedProperty::class . '::id" is not a nested attribute.'
+            'Property "' . FormWithNestedProperty::class . '::key" is not a nested attribute.'
         );
-        $form->getAttributeValue('id.profile');
+        $form->getAttributeValue('key.profile');
+    }
+
+    public function testNestedPropertyOnObject(): void
+    {
+        $form = new FormWithNestedProperty();
+
+        $this->assertFalse($form->hasAttribute('coordinates.profile'));
+
+        $this->expectException(UndefinedObjectPropertyException::class);
+        $this->expectExceptionMessage(
+            'Undefined object property: "' . FormWithNestedProperty::class . '::coordinates::profile".'
+        );
+        $form->getAttributeValue('coordinates.profile');
     }
 
     public function testGetNestedAttributeHint(): void
@@ -175,7 +217,7 @@ final class FormModelTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Undefined property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".'
+            'Undefined object property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".'
         );
         $form->getAttributeValue('noExist');
     }
@@ -346,5 +388,24 @@ final class FormModelTest extends TestCase
         // check row data value.
         TestHelper::createFormHydrator()->populate($form, ['int' => '2']);
         $this->assertSame(2, $form->getAttributeValue('int'));
+    }
+
+    public function testFormWithNestedStructures(): void
+    {
+        $form = new FormWithNestedStructures();
+
+        TestHelper::createFormHydrator()->populate($form, [
+            'FormWithNestedStructures' => [
+                'array' => ['a' => 'b', 'nested' => ['c' => 'd']],
+                'coordinates' => ['latitude' => '12.24', 'longitude' => '56.78'],
+            ],
+        ]);
+
+        $this->assertSame(['a' => 'b', 'nested' => ['c' => 'd']], $form->getAttributeValue('array'));
+
+        $coordinates = $form->getAttributeValue('coordinates');
+        $this->assertInstanceOf(Coordinates::class, $coordinates);
+        $this->assertSame('12.24', $coordinates->getLatitude());
+        $this->assertSame('56.78', $coordinates->getLongitude());
     }
 }
