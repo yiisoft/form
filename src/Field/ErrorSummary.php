@@ -138,6 +138,33 @@ final class ErrorSummary extends BaseField
         return $new;
     }
 
+    /**
+     * Add one or more CSS classes to the list container tag.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function addListClass(?string ...$class): self
+    {
+        $new = clone $this;
+        Html::addCssClass(
+            $new->listAttributes,
+            array_filter($class, static fn ($c) => $c !== null),
+        );
+        return $new;
+    }
+
+    /**
+     * Replace current list container tag CSS classes with a new set of classes.
+     *
+     * @param string|null ...$class One or many CSS classes.
+     */
+    final public function listClass(?string ...$class): static
+    {
+        $new = clone $this;
+        $new->listAttributes['class'] = $class;
+        return $new;
+    }
+
     protected function generateContent(): ?string
     {
         $messages = $this->collectErrors();

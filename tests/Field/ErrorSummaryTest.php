@@ -180,6 +180,48 @@ final class ErrorSummaryTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testListClass(): void
+    {
+        $result = ErrorSummary::widget()
+            ->formModel(ErrorSummaryForm::validated())
+            ->onlyAttributes('year')
+            ->listAttributes(['class' => 'list'])
+            ->listClass('errorsList')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p>Please fix the following errors:</p>
+            <ul class="errorsList">
+            <li>Bad year.</li>
+            </ul>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testAddListClass(): void
+    {
+        $result = ErrorSummary::widget()
+            ->formModel(ErrorSummaryForm::validated())
+            ->onlyAttributes('year')
+            ->listClass('errorsList')
+            ->addListClass('errorsList-tiny')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <p>Please fix the following errors:</p>
+            <ul class="errorsList errorsList-tiny">
+            <li>Bad year.</li>
+            </ul>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testWithoutForm(): void
     {
         $field = ErrorSummary::widget();
@@ -201,6 +243,8 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($field, $field->header(''));
         $this->assertNotSame($field, $field->headerAttributes([]));
         $this->assertNotSame($field, $field->listAttributes([]));
+        $this->assertNotSame($field, $field->listClass());
+        $this->assertNotSame($field, $field->addListClass());
         $this->assertNotSame($field, $field->footer(''));
         $this->assertNotSame($field, $field->footerAttributes([]));
     }
