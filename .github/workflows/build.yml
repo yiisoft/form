@@ -25,7 +25,8 @@ jobs:
   phpunit:
     uses: yiisoft/actions/.github/workflows/phpunit.yml@master
     with:
+      extensions: intl
       os: >-
         ['ubuntu-latest', 'windows-latest']
       php: >-
-        ['8.0', '8.1']
+        ['8.0', '8.1', '8.2']
