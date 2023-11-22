@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\Placeholder;
 
-use Yiisoft\Form\Field\Base\InputDataInterface;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 
 /**
  * @psalm-require-extends \Yiisoft\Form\Field\Base\InputField

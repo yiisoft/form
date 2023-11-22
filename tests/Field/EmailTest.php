@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\InputData\FormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\ThemeContainer;

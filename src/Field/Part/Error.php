@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Part;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\InputDataTrait;
+use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;

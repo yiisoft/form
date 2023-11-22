@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base;
+namespace Yiisoft\Form\Field\Base\InputData;
 
-use Yiisoft\Form\InputData\Pure\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 
 trait InputDataTrait
 {

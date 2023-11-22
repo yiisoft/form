@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base;
+namespace Yiisoft\Form\Field\Base\InputData;
 
 use Yiisoft\Validator\Helper\RulesNormalizer;
-use Yiisoft\Validator\Result;
 
 /**
  * @psalm-import-type NormalizedRulesList from RulesNormalizer

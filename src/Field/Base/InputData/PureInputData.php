@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\InputData\Pure;
+namespace Yiisoft\Form\Field\Base\InputData;
 
-use Yiisoft\Form\Field\Base\InputDataInterface;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 
 final class PureInputData implements InputDataInterface
 {

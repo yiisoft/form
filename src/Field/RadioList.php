@@ -8,7 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use LogicException;
 use Stringable;
-use Yiisoft\Form\Field\Base\InputDataTrait;
+use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;

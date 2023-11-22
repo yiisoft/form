@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\ValidationClass;
 
-use Yiisoft\Form\Field\Base\InputDataInterface;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Html\Html;
 
 /**

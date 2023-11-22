@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\InputData\FormModel\FormModelInputData;
-use Yiisoft\Form\InputData\FormModel\Field;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\ThemeContainer;

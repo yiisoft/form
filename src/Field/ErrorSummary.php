@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\BaseField;
-use Yiisoft\Form\Field\Base\InputDataTrait;
+use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Validator\Result;

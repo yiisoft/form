@@ -6,9 +6,9 @@ namespace Yiisoft\Form\Tests\Field\Part;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\InputData\FormModel\FormModelInputData;
-use Yiisoft\Form\InputData\Pure\PureInputData;
-use Yiisoft\Form\Field\Base\InputDataInterface;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Tests\Support\Form\ErrorForm;
 use Yiisoft\Form\ThemeContainer;
