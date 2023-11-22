@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\InputData;
 
-use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
-
 final class PureInputData implements InputDataInterface
 {
     public function __construct(

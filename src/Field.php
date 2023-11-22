@@ -32,7 +32,6 @@ use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Url;
-use Yiisoft\Form\FormModelInterface;
 
 class Field
 {

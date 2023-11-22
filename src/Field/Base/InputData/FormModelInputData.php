@@ -9,7 +9,6 @@ use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
 use Yiisoft\Form\Exception\StaticObjectPropertyException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\Exception\ValueNotFoundException;
-use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Validator\Helper\RulesNormalizer;
 
