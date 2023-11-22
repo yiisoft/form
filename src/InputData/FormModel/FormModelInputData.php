@@ -47,10 +47,9 @@ final class FormModelInputData implements InputDataInterface
      *
      * See {@see getPropertyName()} for explanation of attribute expression.
      *
-     * @return string The generated input name.
      * @throws InvalidArgumentException If the attribute name contains non-word characters or empty form name for
      * tabular inputs.
-     *
+     * @return string The generated input name.
      */
     public function getName(): string
     {
@@ -103,9 +102,8 @@ final class FormModelInputData implements InputDataInterface
      *
      * For example, if {@see getInputName()} returns `Post[content]`, this method will return `post-content`.
      *
-     * @return string The generated input ID.
      * @throws InvalidArgumentException If the attribute name contains non-word characters.
-     *
+     * @return string The generated input ID.
      */
     public function getId(): string
     {
@@ -154,9 +152,8 @@ final class FormModelInputData implements InputDataInterface
      *
      * @param string $property The property name or expression
      *
-     * @return string[] The property name, prefix and suffix.
-     *
      * @throws InvalidArgumentException If the property name contains non-word characters.
+     * @return string[] The property name, prefix and suffix.
      */
     private function parseProperty(string $property): array
     {

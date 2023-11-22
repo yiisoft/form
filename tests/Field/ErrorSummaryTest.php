@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
