@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\ValidationClass;
 
-use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Field\Base\InputDataInterface;
 use Yiisoft\Html\Html;
 
 /**
@@ -57,29 +57,21 @@ trait ValidationClassTrait
         return $new;
     }
 
-    protected function addValidationClassToAttributes(
-        array &$attributes,
-        FormModelInterface $formModel,
-        string $attributeName,
-    ): void {
+    protected function addValidationClassToAttributes(array &$attributes, InputDataInterface $inputData): void
+    {
         $this->addClassesToAttributes(
             $attributes,
-            $formModel,
-            $attributeName,
+            $inputData,
             $this->invalidClass,
             $this->validClass,
         );
     }
 
-    protected function addInputValidationClassToAttributes(
-        array &$attributes,
-        FormModelInterface $formModel,
-        string $attributeName,
-    ): void {
+    protected function addInputValidationClassToAttributes(array &$attributes, InputDataInterface $inputData): void
+    {
         $this->addClassesToAttributes(
             $attributes,
-            $formModel,
-            $attributeName,
+            $inputData,
             $this->inputInvalidClass,
             $this->inputValidClass,
         );
@@ -87,17 +79,15 @@ trait ValidationClassTrait
 
     private function addClassesToAttributes(
         array &$attributes,
-        FormModelInterface $formModel,
-        string $attributeName,
+        InputDataInterface $inputData,
         ?string $invalidClass,
         ?string $validClass,
     ): void {
-        $validationResult = $formModel->getValidationResult();
-        if ($validationResult === null) {
+        if (!$inputData->isValidated()) {
             return;
         }
 
-        $hasErrors = !$validationResult->isAttributeValid($attributeName);
+        $hasErrors = !empty($inputData->getValidationErrors());
 
         if ($hasErrors && $invalidClass !== null) {
             Html::addCssClass($attributes, $invalidClass);

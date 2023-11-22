@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\InputData\FormModel\FormModelInputData;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Tests\Support\Form\CheckboxListForm;
 use Yiisoft\Form\ThemeContainer;
@@ -30,7 +31,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->render();
 
         $expected = <<<HTML
@@ -54,7 +55,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->addCheckboxAttributes(['class' => 'control'])
             ->addCheckboxAttributes(['data-key' => 'x100'])
             ->render();
@@ -80,7 +81,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->checkboxAttributes(['data-key' => 'x100'])
             ->checkboxAttributes(['class' => 'control'])
             ->render();
@@ -106,7 +107,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->addIndividualInputAttributes([
                 'red' => ['class' => 'control'],
             ])
@@ -136,7 +137,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->individualInputAttributes([
                 'red' => ['class' => 'control'],
             ])
@@ -169,7 +170,7 @@ final class CheckboxListTest extends TestCase
                 ],
                 false
             )
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->render();
 
         $expected = <<<HTML
@@ -196,7 +197,7 @@ final class CheckboxListTest extends TestCase
                 ],
                 false
             )
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->render();
 
         $expected = <<<HTML
@@ -220,7 +221,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->form('CreatePost')
             ->render();
 
@@ -245,7 +246,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->disabled()
             ->render();
 
@@ -270,7 +271,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->uncheckValue(0)
             ->render();
 
@@ -296,7 +297,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->separator("\n<br>\n")
             ->render();
 
@@ -322,7 +323,7 @@ final class CheckboxListTest extends TestCase
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->formAttribute(new CheckboxListForm(), 'color')
+            ->inputData(new FormModelInputData(new CheckboxListForm(), 'color'))
             ->itemFormatter(static fn (CheckboxItem $item) => Html::checkbox($item->name, $item->value) . ' — ' . $item->label)
             ->render();
 
@@ -342,7 +343,7 @@ final class CheckboxListTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = CheckboxList::widget()->formAttribute(new CheckboxListForm(), 'age');
+        $field = CheckboxList::widget()->inputData(new FormModelInputData(new CheckboxListForm(), 'age'));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"CheckboxList" field requires iterable or null value.');

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\InputData\FormModel\FormModelInputData;
 use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
@@ -25,7 +26,7 @@ final class RangeTest extends TestCase
     public function testBase(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'volume')
+            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
             ->min(1)
             ->max(100)
             ->render();
@@ -43,7 +44,7 @@ final class RangeTest extends TestCase
     public function testAddOutputAttributes(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'volume')
+            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
             ->showOutput()
             ->addOutputAttributes(['class' => 'red'])
             ->addOutputAttributes(['id' => 'UID'])
@@ -63,7 +64,7 @@ HTML_WRAP;
     public function testOutputAttributes(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'volume')
+            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
             ->showOutput()
             ->outputAttributes(['class' => 'red'])
             ->outputAttributes(['id' => 'UID'])
@@ -83,7 +84,7 @@ HTML_WRAP;
     public function testWithOutput(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'volume')
+            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
             ->min(1)
             ->max(100)
             ->showOutput()
@@ -104,7 +105,7 @@ HTML_WRAP;
     public function testCustomOutputTag(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'volume')
+            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
             ->showOutput()
             ->outputTag('div')
             ->outputAttributes(['id' => 'UID'])
@@ -162,7 +163,7 @@ HTML_WRAP;
     public function testMax(string $expected, $value): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->max($value)
@@ -203,7 +204,7 @@ HTML_WRAP;
     public function testMin(string $expected, $value): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->min($value)
@@ -244,7 +245,7 @@ HTML_WRAP;
     public function testStep(string $expected, $value): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->step($value)
@@ -256,7 +257,7 @@ HTML_WRAP;
     public function testList(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->list('TheList')
@@ -271,7 +272,7 @@ HTML_WRAP;
     public function testDisabled(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
@@ -286,7 +287,7 @@ HTML_WRAP;
     public function testAriaDescribedBy(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
@@ -301,7 +302,7 @@ HTML_WRAP;
     public function testAriaLabel(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
@@ -316,7 +317,7 @@ HTML_WRAP;
     public function testAutofocus(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->autofocus()
@@ -331,7 +332,7 @@ HTML_WRAP;
     public function testTabIndex(): void
     {
         $result = Range::widget()
-            ->formAttribute(new RangeForm(), 'count')
+            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(5)
@@ -367,7 +368,7 @@ HTML_WRAP;
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Range::widget()
-            ->formAttribute(new RangeForm(), $attribute)
+            ->inputData(new FormModelInputData(new RangeForm(), $attribute))
             ->hideLabel()
             ->useContainer(false)
             ->enrichmentFromRules(true);
@@ -378,7 +379,7 @@ HTML_WRAP;
     public function testInvalidValue(): void
     {
         $field = Range::widget()
-            ->formAttribute(new RangeForm(), 'flag');
+            ->inputData(new FormModelInputData(new RangeForm(), 'flag'));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range field requires a string, numeric or null value.');

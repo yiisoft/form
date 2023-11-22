@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field\Part;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\FormAttributeTrait;
+use Yiisoft\Form\Field\Base\InputDataTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
@@ -16,7 +16,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Hint extends Widget
 {
-    use FormAttributeTrait;
+    use InputDataTrait;
 
     /**
      * @psalm-var non-empty-string
@@ -116,11 +116,9 @@ final class Hint extends Widget
 
     public function render(): string
     {
-        $content = $this->hasFormModelAndAttribute()
-            ? $this->content ?? $this->getFormAttributeHint()
-            : (string) $this->content;
+        $content = $this->content ?? $this->getInputData()->getHint();
 
-        return $content === ''
+        return empty($content)
             ? ''
             : Html::tag($this->tag, $content, $this->attributes)
                 ->encode($this->encode)

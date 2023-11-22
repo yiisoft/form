@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Part;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\FormAttributeTrait;
+use Yiisoft\Form\Field\Base\InputDataTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
@@ -19,7 +19,7 @@ use function call_user_func;
  */
 final class Error extends Widget
 {
-    use FormAttributeTrait;
+    use InputDataTrait;
 
     /**
      * @psalm-var non-empty-string
@@ -142,11 +142,7 @@ final class Error extends Widget
      */
     public function render(): string
     {
-        $useModel = $this->hasFormModelAndAttribute();
-
-        $message = $useModel
-            ? $this->message ?? $this->getFirstError()
-            : $this->message;
+        $message = $this->message ?? $this->getInputData()->getValidationErrors()[0] ?? null;
 
         if ($message === null) {
             return '';
@@ -157,8 +153,7 @@ final class Error extends Widget
             $message = call_user_func(
                 $this->messageCallback,
                 $message,
-                $useModel ? $this->getFormModel() : null,
-                $useModel ? $this->formAttribute : null
+                $this->getInputData(),
             );
         }
 

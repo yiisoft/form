@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Yiisoft\Form\InputData\FormModel\FormModelInputData;
 use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\FormModel;
@@ -56,7 +57,7 @@ final class FormModelTest extends TestCase
         HTML;
 
         $result = StubInputField::widget()
-            ->formAttribute(new NestedForm(), 'letters[0]')
+            ->inputData(new FormModelInputData(new NestedForm(), 'letters[0]'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -64,7 +65,7 @@ final class FormModelTest extends TestCase
 
     public function testNonExistArrayValue(): void
     {
-        $widget = StubInputField::widget()->formAttribute(new NestedForm(), 'letters[1]');
+        $widget = StubInputField::widget()->inputData(new FormModelInputData(new NestedForm(), 'letters[1]'));
 
         $result = $widget->render();
 
@@ -89,7 +90,7 @@ final class FormModelTest extends TestCase
         HTML;
 
         $result = StubInputField::widget()
-            ->formAttribute(new NestedForm(), 'object[numbers][1]')
+            ->inputData(new FormModelInputData(new NestedForm(), 'object[numbers][1]'))
             ->render();
 
         $this->assertSame($expected, $result);

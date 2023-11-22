@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\Placeholder;
 
+use Yiisoft\Form\Field\Base\InputDataInterface;
+
 /**
  * @psalm-require-extends \Yiisoft\Form\Field\Base\InputField
  */
@@ -32,12 +34,12 @@ trait PlaceholderTrait
             $this->usePlaceholder
             && !isset($attributes['placeholder'])
         ) {
-            $placeholder = $this->placeholder ?? $this->getFormAttributePlaceholder();
+            $placeholder = $this->placeholder ?? $this->getInputData()->getPlaceholder();
             if ($placeholder !== null) {
                 $attributes['placeholder'] = $placeholder;
             }
         }
     }
 
-    abstract protected function getFormAttributePlaceholder(): ?string;
+    abstract protected function getInputData(): InputDataInterface;
 }

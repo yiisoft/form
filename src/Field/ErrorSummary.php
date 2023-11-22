@@ -6,18 +6,18 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\BaseField;
+use Yiisoft\Form\Field\Base\InputDataTrait;
 use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\Helper\HtmlFormErrors;
 use Yiisoft\Html\Html;
+use Yiisoft\Validator\Result;
 
 /**
  * Displays a summary of the form validation errors. If there is no validation error, field will be hidden.
  */
 final class ErrorSummary extends BaseField
 {
-    private ?FormModelInterface $formModel = null;
+    private ?Result $validationResult = null;
     private bool $encode = true;
-
     private bool $showAllErrors = false;
     private array $onlyAttributes = [];
 
@@ -27,10 +27,10 @@ final class ErrorSummary extends BaseField
     private array $headerAttributes = [];
     private array $listAttributes = [];
 
-    public function formModel(FormModelInterface $formModel): self
+    public function validationResult(?Result $result): self
     {
         $new = clone $this;
-        $new->formModel = $formModel;
+        $new->validationResult = $result;
         return $new;
     }
 
@@ -194,16 +194,16 @@ final class ErrorSummary extends BaseField
      */
     private function collectErrors(): array
     {
-        if ($this->formModel === null) {
-            throw new InvalidArgumentException('Form model is not set.');
+        if ($this->validationResult === null) {
+            return [];
         }
 
-        $errors = HtmlFormErrors::getErrorSummaryFirstErrors($this->formModel);
-
         if ($this->showAllErrors) {
-            $errors = HtmlFormErrors::getErrorSummary($this->formModel, $this->onlyAttributes);
+            $errors = $this->getAllErrors();
         } elseif ($this->onlyAttributes !== []) {
-            $errors = array_intersect_key($errors, array_flip($this->onlyAttributes));
+            $errors = array_intersect_key($this->getFirstErrors(), array_flip($this->onlyAttributes));
+        } else {
+            $errors = $this->getFirstErrors();
         }
 
         /**
@@ -213,5 +213,32 @@ final class ErrorSummary extends BaseField
          * @var string[]
          */
         return array_values(array_unique($errors));
+    }
+
+    private function getAllErrors(): array
+    {
+        if ($this->onlyAttributes === []) {
+            return $this->validationResult?->getErrorMessages() ?? [];
+        }
+
+        $result = [];
+        foreach ($this->validationResult?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
+            if (in_array($attribute, $this->onlyAttributes, true)) {
+                $result[] = $messages;
+            }
+        }
+
+        return array_merge(...$result);
+    }
+
+    private function getFirstErrors(): array
+    {
+        $result = [];
+        foreach ($this->validationResult?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
+            if (isset($messages[0])) {
+                $result[$attribute] = $messages[0];
+            }
+        }
+        return $result;
     }
 }

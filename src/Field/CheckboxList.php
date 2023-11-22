@@ -6,15 +6,15 @@ namespace Yiisoft\Form\Field;
 
 use Closure;
 use InvalidArgumentException;
+use LogicException;
 use Stringable;
+use Yiisoft\Form\Field\Base\InputDataTrait;
 use Yiisoft\Form\Field\Base\PartsField;
-use Yiisoft\Form\Field\Base\FormAttributeTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
 
@@ -25,7 +25,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
  */
 final class CheckboxList extends PartsField implements ValidationClassInterface
 {
-    use FormAttributeTrait;
+    use InputDataTrait;
     use ValidationClassTrait;
 
     private CheckboxListWidget $widget;
@@ -144,9 +144,13 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $value = $this->getFormAttributeValue();
+        $name = $this->getInputData()->getName();
+        if (empty($name)) {
+            throw new LogicException('"CheckboxList" field requires non-empty name.');
+        }
 
-        /** @var mixed $value */
+        $value = $this->getInputData()->getValue();
+
         $value ??= [];
         if (!is_iterable($value)) {
             throw new InvalidArgumentException(
@@ -156,7 +160,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
         /** @psalm-var iterable<int, Stringable|scalar> $value */
 
         return $this->widget
-            ->name($this->getInputName())
+            ->name($name)
             ->values($value)
             ->render();
     }
@@ -164,7 +168,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     protected function renderLabel(Label $label): string
     {
         return $label
-            ->formAttribute($this->getFormModel(), $this->formAttribute)
+            ->inputData($this->getInputData())
             ->useInputId(false)
             ->render();
     }
@@ -172,30 +176,19 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     protected function renderHint(Hint $hint): string
     {
         return $hint
-            ->formAttribute($this->getFormModel(), $this->formAttribute)
+            ->inputData($this->getInputData())
             ->render();
     }
 
     protected function renderError(Error $error): string
     {
         return $error
-            ->formAttribute($this->getFormModel(), $this->formAttribute)
+            ->inputData($this->getInputData())
             ->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
-    }
-
-    private function getInputName(): string
-    {
-        return HtmlForm::getInputName($this->getFormModel(), $this->formAttribute);
+        $this->addValidationClassToAttributes($attributes, $this->getInputData());
     }
 }

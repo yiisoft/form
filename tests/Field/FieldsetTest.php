@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field;
+use Yiisoft\Form\InputData\FormModel\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
 use Yiisoft\Form\ThemeContainer;

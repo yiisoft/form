@@ -145,7 +145,7 @@ abstract class FormModel implements FormModelInterface
     /**
      * Returns the form name that this model class should use.
      *
-     * The form name is mainly used by {@see \Yiisoft\Form\Helper\HtmlForm} to determine how to name the input
+     * The form name is mainly used by {@see \Yiisoft\Form\InputData\HtmlForm} to determine how to name the input
      * fields for the attributes in a model.
      * If the form name is "A" and an attribute name is "b", then the corresponding input name would be "A[b]".
      * If the form name is an empty string, then the input name would be "b".

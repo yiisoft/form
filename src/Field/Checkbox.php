@@ -215,7 +215,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $value = $this->getFormAttributeValue();
+        $value = $this->getInputData()->getValue();
 
         if (!is_bool($value)
             && !is_string($value)
@@ -237,9 +237,9 @@ final class Checkbox extends InputField implements ValidationClassInterface
         unset($inputAttributes['value']);
         $inputValue ??= '1';
 
-        $checkbox = Html::checkbox($this->getInputName(), $inputValue, $inputAttributes);
+        $checkbox = Html::checkbox($this->getInputData()->getName(), $inputValue, $inputAttributes);
 
-        $label = $this->inputLabel ?? $this->getFormAttributeLabel();
+        $label = $this->inputLabel ?? $this->getInputData()->getLabel();
 
         if ($this->enclosedByLabel) {
             $checkbox = $checkbox
@@ -279,23 +279,11 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addValidationClassToAttributes($attributes, $this->getInputData());
     }
 
     protected function prepareInputAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addInputValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addInputValidationClassToAttributes($attributes, $this->getInputData());
     }
 }

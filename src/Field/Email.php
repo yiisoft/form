@@ -207,8 +207,8 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            foreach ($this->getFormAttributeValidationRules() as $rule) {
+        if ($this->enrichmentFromRules) {
+            foreach ($this->getInputData()->getValidationRules() as $rule) {
                 if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
@@ -239,7 +239,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
 
     protected function generateInput(): string
     {
-        $value = $this->getFormAttributeValue();
+        $value = $this->getInputData()->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Email field requires a string or null value.');
@@ -247,29 +247,17 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
 
         $attributes = $this->getInputAttributes();
 
-        return Html::input('email', $this->getInputName(), $value, $attributes)->render();
+        return Html::input('email', $this->getInputData()->getName(), $value, $attributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addValidationClassToAttributes($attributes, $this->getInputData());
     }
 
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addInputValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addInputValidationClassToAttributes($attributes, $this->getInputData());
     }
 }

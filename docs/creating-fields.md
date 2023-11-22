@@ -119,7 +119,7 @@ final class SuffixInput extends InputField
 Usage is the following:
 
 ```php
-echo \Yiisoft\Form\Field::input(SuffixInput::class, $procentForm, 'value')->suffix('%');
+echo \Yiisoft\Form\InputData\FormModel\Field::input(SuffixInput::class, $procentForm, 'value')->suffix('%');
 ```
 
 Result will be:
