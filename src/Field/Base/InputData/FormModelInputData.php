@@ -41,7 +41,7 @@ final class FormModelInputData implements InputDataInterface
      * Generates an appropriate input name.
      *
      * This method generates a name that can be used as the input name to collect user input. The name is generated
-     * according to the of the form and the property name. For example, if the form name of the `Post` form is `Post`,
+     * according to the form and the property names. For example, if the form name is `Post`
      * then the input name generated for the `content` property would be `Post[content]`.
      *
      * See {@see getPropertyName()} for explanation of attribute expression.
