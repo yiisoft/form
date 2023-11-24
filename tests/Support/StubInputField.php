@@ -12,8 +12,8 @@ final class StubInputField extends InputField
     protected function generateInput(): string
     {
         return Html::textInput(
-            $this->getInputName(),
-            (string) $this->getFormAttributeValue(),
+            $this->getInputData()->getName(),
+            (string) $this->getInputData()->getValue(),
             $this->getInputAttributes()
         )->render();
     }

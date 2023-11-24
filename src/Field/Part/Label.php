@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Part;
 
 use Stringable;
-use Yiisoft\Form\Field\Base\FormAttributeTrait;
+use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
@@ -15,7 +15,7 @@ use Yiisoft\Widget\Widget;
  */
 final class Label extends Widget
 {
-    use FormAttributeTrait;
+    use InputDataTrait;
 
     private array $attributes = [];
 
@@ -121,13 +121,9 @@ final class Label extends Widget
 
     public function render(): string
     {
-        $useModel = $this->hasFormModelAndAttribute();
+        $content = $this->content ?? $this->getInputData()->getLabel();
 
-        $content = $useModel
-            ? $this->content ?? $this->getFormAttributeLabel()
-            : (string) $this->content;
-
-        if ($content === '') {
+        if (empty($content)) {
             return '';
         }
 
@@ -135,8 +131,8 @@ final class Label extends Widget
 
         if ($this->setFor && !isset($labelAttributes['for'])) {
             $id = $this->forId;
-            if ($useModel && $id === null && $this->useInputId) {
-                $id = $this->getInputId();
+            if ($id === null && $this->useInputId) {
+                $id = $this->getInputData()->getId();
             }
             if ($id !== null) {
                 $labelAttributes['for'] = $id;

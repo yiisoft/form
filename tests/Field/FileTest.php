@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\ThemeContainer;
@@ -23,7 +24,7 @@ final class FileTest extends TestCase
     public function testBase(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->render();
 
         $expected = <<<HTML
@@ -39,7 +40,7 @@ final class FileTest extends TestCase
     public function testAccept(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->accept('.png,.jpg')
@@ -54,7 +55,7 @@ final class FileTest extends TestCase
     public function testMultiple(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->multiple()
@@ -69,7 +70,7 @@ final class FileTest extends TestCase
     public function testRequired(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->required()
@@ -84,7 +85,7 @@ final class FileTest extends TestCase
     public function testDisabled(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
@@ -99,7 +100,7 @@ final class FileTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
@@ -114,7 +115,7 @@ final class FileTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
@@ -129,7 +130,7 @@ final class FileTest extends TestCase
     public function testTabIndex(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(3)
@@ -144,7 +145,7 @@ final class FileTest extends TestCase
     public function testUncheckValue(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->uncheckValue('0')
             ->render();
@@ -161,7 +162,7 @@ final class FileTest extends TestCase
     public function testUncheckValueDisabled(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->uncheckValue('0')
             ->disabled()
@@ -179,7 +180,7 @@ final class FileTest extends TestCase
     public function testUncheckValueForm(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->uncheckValue('0')
             ->form('CreatePost')
@@ -197,7 +198,7 @@ final class FileTest extends TestCase
     public function testAddUncheckInputAttributes(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->uncheckValue('0')
             ->addUncheckInputAttributes(['data-key' => '100'])
@@ -216,7 +217,7 @@ final class FileTest extends TestCase
     public function testUncheckInputAttributes(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'avatar')
+            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
             ->hideLabel()
             ->uncheckValue('0')
             ->uncheckInputAttributes(['data-key' => '100'])
@@ -235,7 +236,7 @@ final class FileTest extends TestCase
     public function testEnrichmentFromRules(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'image')
+            ->inputData(new FormModelInputData(new FileForm(), 'image'))
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->render();
@@ -252,7 +253,7 @@ final class FileTest extends TestCase
     public function testEnrichmentFromRulesWithWhen(): void
     {
         $result = File::widget()
-            ->formAttribute(new FileForm(), 'photo')
+            ->inputData(new FormModelInputData(new FileForm(), 'photo'))
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->render();
@@ -270,7 +271,7 @@ final class FileTest extends TestCase
     {
         $result = File::widget()
             ->hideLabel()
-            ->formAttribute(new FileForm(), 'photo')
+            ->inputData(new FormModelInputData(new FileForm(), 'photo'))
             ->value('test')
             ->render();
 

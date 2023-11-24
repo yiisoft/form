@@ -6,6 +6,8 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\ThemeContainer;
@@ -33,8 +35,21 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testWithoutForm(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <input type="text">
+        </div>
+        HTML;
+
+        $result = Text::widget()->render();
 
         $this->assertSame($expected, $result);
     }
@@ -42,7 +57,7 @@ final class TextTest extends TestCase
     public function testInvalidValue(): void
     {
         $widget = Text::widget()
-            ->formAttribute(new TextForm(), 'age');
+            ->inputData(new FormModelInputData(new TextForm(), 'age'));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text field requires a string or null value.');
@@ -57,7 +72,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->useContainer(false)
             ->render();
 
@@ -74,7 +89,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->containerTag('section')
             ->render();
 
@@ -86,7 +101,7 @@ final class TextTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
         Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new PureInputData())
             ->containerTag('');
     }
 
@@ -100,7 +115,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->containerAttributes(['class' => 'wrapper', 'id' => 'main'])
             ->render();
 
@@ -121,7 +136,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->template("<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>")
             ->render();
 
@@ -138,7 +153,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->inputId('CustomID')
             ->render();
 
@@ -155,7 +170,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->setInputId(false)
             ->render();
 
@@ -172,7 +187,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->labelConfig([
                 'setFor()' => [false],
                 'content()' => ['Your job'],
@@ -192,7 +207,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->label('Your job')
             ->render();
 
@@ -210,7 +225,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'name')
+            ->inputData(new FormModelInputData(new TextForm(), 'name'))
             ->hintConfig([
                 'tag()' => ['b'],
                 'attributes()' => [['class' => 'red']],
@@ -231,7 +246,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'name')
+            ->inputData(new FormModelInputData(new TextForm(), 'name'))
             ->hint('Custom hint.')
             ->render();
 
@@ -250,7 +265,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->errorConfig([
                 'tag()' => ['b'],
                 'attributes()' => [['class' => 'red']],
@@ -272,7 +287,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->placeholder('Input your pretty name')
             ->render();
 
@@ -291,7 +306,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->usePlaceholder(false)
             ->render();
 
@@ -308,7 +323,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->addInputAttributes(['class' => 'red'])
             ->render();
 
@@ -327,7 +342,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->inputAttributes(['placeholder' => 'Input your pretty name'])
             ->render();
 
@@ -346,7 +361,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->inputAttributes(['id' => 'MyID'])
             ->render();
 
@@ -365,7 +380,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), 'name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
             ->inputId('CustomID')
             ->inputAttributes(['id' => 'MyID'])
             ->render();
@@ -383,7 +398,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->dirname('test')
             ->render();
 
@@ -400,7 +415,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->maxlength(5)
             ->render();
 
@@ -417,7 +432,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->minlength(5)
             ->render();
 
@@ -434,7 +449,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->pattern('[0-9]{3}')
             ->render();
 
@@ -451,7 +466,7 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->size(12)
             ->render();
 
@@ -461,7 +476,7 @@ final class TextTest extends TestCase
     public function testReadonly(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->readonly()
@@ -476,7 +491,7 @@ final class TextTest extends TestCase
     public function testRequired(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->required()
@@ -491,7 +506,7 @@ final class TextTest extends TestCase
     public function testDisabled(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->disabled()
@@ -506,7 +521,7 @@ final class TextTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->ariaDescribedBy('hint')
@@ -521,7 +536,7 @@ final class TextTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->ariaLabel('test')
@@ -536,7 +551,7 @@ final class TextTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->autofocus()
@@ -551,7 +566,7 @@ final class TextTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Text::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->useContainer(false)
             ->hideLabel()
             ->tabIndex(5)
@@ -575,7 +590,7 @@ final class TextTest extends TestCase
         $result = Text::widget()
             ->invalidClass('invalid')
             ->validClass('valid')
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -594,7 +609,7 @@ final class TextTest extends TestCase
         $result = Text::widget()
             ->invalidClass('invalid')
             ->validClass('valid')
-            ->formAttribute(TextForm::validated(), 'company')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'company'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -612,7 +627,7 @@ final class TextTest extends TestCase
         $result = Text::widget()
             ->invalidClass('invalid')
             ->validClass('valid')
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -631,7 +646,7 @@ final class TextTest extends TestCase
         $result = Text::widget()
             ->inputInvalidClass('invalid')
             ->inputValidClass('valid')
-            ->formAttribute(TextForm::validated(), 'company')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'company'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -649,7 +664,7 @@ final class TextTest extends TestCase
         $result = Text::widget()
             ->inputInvalidClass('invalid')
             ->inputValidClass('valid')
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -687,7 +702,7 @@ final class TextTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Text::widget()
-            ->formAttribute(new TextForm(), $attribute)
+            ->inputData(new FormModelInputData(new TextForm(), $attribute))
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->useContainer(false);

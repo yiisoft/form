@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Tests\Support\Form\DateTimeForm;
 use Yiisoft\Form\ThemeContainer;
@@ -23,7 +24,7 @@ final class DateTimeTest extends TestCase
     public function testBase(): void
     {
         $result = DateTime::widget()
-            ->formAttribute(new DateTimeForm(), 'partyDate')
+            ->inputData(new FormModelInputData(new DateTimeForm(), 'partyDate'))
             ->render();
 
         $expected = <<<'HTML'

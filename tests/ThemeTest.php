@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
@@ -313,7 +314,7 @@ final class ThemeTest extends TestCase
         $this->initializeThemeContainer($factoryParameters);
 
         $result = Text::widget()
-            ->formAttribute(TextForm::validated(), $attribute)
+            ->inputData(new FormModelInputData(TextForm::validated(), $attribute))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -330,7 +331,7 @@ final class ThemeTest extends TestCase
         ]);
 
         $result = Text::widget(theme: 'custom-theme')
-            ->formAttribute(TextForm::validated(), 'job')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
             ->render();
 
         $this->assertSame(
@@ -498,7 +499,7 @@ final class ThemeTest extends TestCase
         $this->initializeThemeContainer($factoryParameters);
 
         $result = Label::widget()
-            ->formAttribute(new TextForm(), 'job')
+            ->inputData(new FormModelInputData(new TextForm(), 'job'))
             ->render();
 
         $this->assertSame($expected, $result);

@@ -166,8 +166,8 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            foreach ($this->getFormAttributeValidationRules() as $rule) {
+        if ($this->enrichmentFromRules) {
+            foreach ($this->getInputData()->getValidationRules() as $rule) {
                 if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
@@ -183,7 +183,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     {
         $inputAttributes = $this->getInputAttributes();
 
-        $tag = Html::file($this->getInputName(), $this->value, $inputAttributes);
+        $tag = Html::file($this->getInputData()->getName(), $this->value, $inputAttributes);
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
             if (!empty($this->uncheckInputAttributes)) {
@@ -196,23 +196,11 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addValidationClassToAttributes($attributes, $this->getInputData());
     }
 
     protected function prepareInputAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addInputValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addInputValidationClassToAttributes($attributes, $this->getInputData());
     }
 }

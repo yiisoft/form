@@ -24,7 +24,7 @@ final class Hidden extends InputField
 
     protected function generateInput(): string
     {
-        $value = $this->getFormAttributeValue();
+        $value = $this->getInputData()->getValue();
 
         if (!is_string($value) && !is_numeric($value) && $value !== null) {
             throw new InvalidArgumentException('Hidden widget requires a string, numeric or null value.');
@@ -32,6 +32,6 @@ final class Hidden extends InputField
 
         $inputAttributes = $this->getInputAttributes();
 
-        return Html::hiddenInput($this->getInputName(), $value, $inputAttributes)->render();
+        return Html::hiddenInput($this->getInputData()->getName(), $value, $inputAttributes)->render();
     }
 }

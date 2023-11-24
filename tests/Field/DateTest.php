@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\ThemeContainer;
@@ -23,7 +24,7 @@ final class DateTest extends TestCase
     public function testBase(): void
     {
         $result = Date::widget()
-            ->formAttribute(new DateForm(), 'birthday')
+            ->inputData(new FormModelInputData(new DateForm(), 'birthday'))
             ->render();
 
         $expected = <<<'HTML'
@@ -40,7 +41,7 @@ final class DateTest extends TestCase
     public function testRange(): void
     {
         $result = Date::widget()
-            ->formAttribute(new DateForm(), 'startDate')
+            ->inputData(new FormModelInputData(new DateForm(), 'startDate'))
             ->min('1990-01-01')
             ->max('2030-12-31')
             ->render();

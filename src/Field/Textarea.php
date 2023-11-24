@@ -223,8 +223,8 @@ final class Textarea extends InputField implements
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules && $this->hasFormModelAndAttribute()) {
-            foreach ($this->getFormAttributeValidationRules() as $rule) {
+        if ($this->enrichmentFromRules) {
+            foreach ($this->getInputData()->getValidationRules() as $rule) {
                 if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
                     continue;
                 }
@@ -247,7 +247,7 @@ final class Textarea extends InputField implements
 
     protected function generateInput(): string
     {
-        $value = $this->getFormAttributeValue();
+        $value = $this->getInputData()->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Textarea field requires a string or null value.');
@@ -255,29 +255,17 @@ final class Textarea extends InputField implements
 
         $textareaAttributes = $this->getInputAttributes();
 
-        return Html::textarea($this->getInputName(), $value, $textareaAttributes)->render();
+        return Html::textarea($this->getInputData()->getName(), $value, $textareaAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addValidationClassToAttributes($attributes, $this->getInputData());
     }
 
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
-        if ($this->hasFormModelAndAttribute()) {
-            $this->addInputValidationClassToAttributes(
-                $attributes,
-                $this->getFormModel(),
-                $this->getFormAttributeName(),
-            );
-        }
+        $this->addInputValidationClassToAttributes($attributes, $this->getInputData());
     }
 }

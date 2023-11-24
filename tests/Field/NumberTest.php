@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
@@ -25,7 +26,7 @@ final class NumberTest extends TestCase
     public function testBase(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'age')
+            ->inputData(new FormModelInputData(new NumberForm(), 'age'))
             ->render();
 
         $expected = <<<HTML
@@ -71,7 +72,7 @@ final class NumberTest extends TestCase
     public function testMax(string $expected, $value): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->max($value)
@@ -112,7 +113,7 @@ final class NumberTest extends TestCase
     public function testMin(string $expected, $value): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->min($value)
@@ -153,7 +154,7 @@ final class NumberTest extends TestCase
     public function testStep(string $expected, $value): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->hideLabel()
             ->useContainer(false)
             ->step($value)
@@ -165,7 +166,7 @@ final class NumberTest extends TestCase
     public function testReadonly(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->readonly()
             ->render();
 
@@ -182,7 +183,7 @@ final class NumberTest extends TestCase
     public function testRequired(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->required()
             ->render();
 
@@ -199,7 +200,7 @@ final class NumberTest extends TestCase
     public function testDisabled(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->disabled()
             ->render();
 
@@ -216,7 +217,7 @@ final class NumberTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->ariaDescribedBy('hint')
             ->render();
 
@@ -233,7 +234,7 @@ final class NumberTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->ariaLabel('test')
             ->render();
 
@@ -250,7 +251,7 @@ final class NumberTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->autofocus()
             ->render();
 
@@ -267,7 +268,7 @@ final class NumberTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Number::widget()
-            ->formAttribute(new NumberForm(), 'count')
+            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
             ->tabIndex(5)
             ->render();
 
@@ -284,7 +285,7 @@ final class NumberTest extends TestCase
     public function testInvalidValue(): void
     {
         $field = Number::widget()
-            ->formAttribute(new NumberForm(), 'name');
+            ->inputData(new FormModelInputData(new NumberForm(), 'name'));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number field requires a numeric or null value.');
@@ -315,7 +316,7 @@ final class NumberTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Number::widget()
-            ->formAttribute(new NumberForm(), $attribute)
+            ->inputData(new FormModelInputData(new NumberForm(), $attribute))
             ->hideLabel()
             ->enrichmentFromRules(true)
             ->useContainer(false);

@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\ThemeContainer;
@@ -24,7 +25,7 @@ final class TextareaTest extends TestCase
     public function testTextarea(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->render();
 
         $expected = <<<HTML
@@ -40,7 +41,7 @@ final class TextareaTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->maxlength(100)
@@ -55,7 +56,7 @@ final class TextareaTest extends TestCase
     public function testMinlength(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->minlength(7)
@@ -70,7 +71,7 @@ final class TextareaTest extends TestCase
     public function testDirname(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->dirname('test')
@@ -85,7 +86,7 @@ final class TextareaTest extends TestCase
     public function testReadonly(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->readonly()
@@ -100,7 +101,7 @@ final class TextareaTest extends TestCase
     public function testRequired(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->required()
@@ -115,7 +116,7 @@ final class TextareaTest extends TestCase
     public function testDisabled(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
@@ -130,7 +131,7 @@ final class TextareaTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
@@ -145,7 +146,7 @@ final class TextareaTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
@@ -160,7 +161,7 @@ final class TextareaTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->autofocus()
@@ -175,7 +176,7 @@ final class TextareaTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(5)
@@ -190,7 +191,7 @@ final class TextareaTest extends TestCase
     public function testCols(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->cols(12)
@@ -205,7 +206,7 @@ final class TextareaTest extends TestCase
     public function testRows(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->rows(7)
@@ -220,7 +221,7 @@ final class TextareaTest extends TestCase
     public function testWrap(): void
     {
         $result = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'desc')
+            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
             ->hideLabel()
             ->useContainer(false)
             ->wrap('hard')
@@ -235,7 +236,7 @@ final class TextareaTest extends TestCase
     public function testInvalidValue(): void
     {
         $widget = Textarea::widget()
-            ->formAttribute(new TextareaForm(), 'age');
+            ->inputData(new FormModelInputData(new TextareaForm(), 'age'));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Textarea field requires a string or null value.');
@@ -266,7 +267,7 @@ final class TextareaTest extends TestCase
     public function testEnrichmentFromRules(string $expected, string $attribute): void
     {
         $field = Textarea::widget()
-            ->formAttribute(new TextareaForm(), $attribute)
+            ->inputData(new FormModelInputData(new TextareaForm(), $attribute))
             ->hideLabel()
             ->useContainer(false)
             ->enrichmentFromRules(true);

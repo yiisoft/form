@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
@@ -55,7 +56,7 @@ class Field
         string $attribute,
         array $config = []
     ): Checkbox {
-        return Checkbox::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Checkbox::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function checkboxList(
@@ -63,12 +64,12 @@ class Field
         string $attribute,
         array $config = []
     ): CheckboxList {
-        return CheckboxList::widget(config: $config)->formAttribute($formModel, $attribute);
+        return CheckboxList::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function date(FormModelInterface $formModel, string $attribute, array $config = []): Date
     {
-        return Date::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Date::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function dateTime(
@@ -76,7 +77,7 @@ class Field
         string $attribute,
         array $config = []
     ): DateTime {
-        return DateTime::widget(config: $config)->formAttribute($formModel, $attribute);
+        return DateTime::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function dateTimeLocal(
@@ -84,17 +85,17 @@ class Field
         string $attribute,
         array $config = []
     ): DateTimeLocal {
-        return DateTimeLocal::widget(config: $config)->formAttribute($formModel, $attribute);
+        return DateTimeLocal::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function email(FormModelInterface $formModel, string $attribute, array $config = []): Email
     {
-        return Email::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Email::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function errorSummary(FormModelInterface $formModel, array $config = []): ErrorSummary
     {
-        return ErrorSummary::widget(config: $config)->formModel($formModel);
+        return ErrorSummary::widget(config: $config)->validationResult($formModel->getValidationResult());
     }
 
     final public static function fieldset(array $config = []): Fieldset
@@ -104,12 +105,12 @@ class Field
 
     final public static function file(FormModelInterface $formModel, string $attribute, array $config = []): File
     {
-        return File::widget(config: $config)->formAttribute($formModel, $attribute);
+        return File::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function hidden(FormModelInterface $formModel, string $attribute, array $config = []): Hidden
     {
-        return Hidden::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Hidden::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function image(array $config = []): Image
@@ -119,7 +120,7 @@ class Field
 
     final public static function number(FormModelInterface $formModel, string $attribute, array $config = []): Number
     {
-        return Number::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Number::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function password(
@@ -127,7 +128,7 @@ class Field
         string $attribute,
         array $config = []
     ): Password {
-        return Password::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Password::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function radioList(
@@ -135,12 +136,12 @@ class Field
         string $attribute,
         array $config = []
     ): RadioList {
-        return RadioList::widget(config: $config)->formAttribute($formModel, $attribute);
+        return RadioList::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function range(FormModelInterface $formModel, string $attribute, array $config = []): Range
     {
-        return Range::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Range::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function resetButton(?string $content = null, array $config = []): ResetButton
@@ -156,7 +157,7 @@ class Field
 
     final public static function select(FormModelInterface $formModel, string $attribute, array $config = []): Select
     {
-        return Select::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Select::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function submitButton(?string $content = null, array $config = []): SubmitButton
@@ -175,12 +176,12 @@ class Field
         string $attribute,
         array $config = []
     ): Telephone {
-        return Telephone::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Telephone::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function text(FormModelInterface $formModel, string $attribute, array $config = []): Text
     {
-        return Text::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Text::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function textarea(
@@ -188,26 +189,26 @@ class Field
         string $attribute,
         array $config = []
     ): Textarea {
-        return Textarea::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Textarea::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function url(FormModelInterface $formModel, string $attribute, array $config = []): Url
     {
-        return Url::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Url::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function label(FormModelInterface $formModel, string $attribute, array $config = []): Label
     {
-        return Label::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Label::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function hint(FormModelInterface $formModel, string $attribute, array $config = []): Hint
     {
-        return Hint::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Hint::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 
     final public static function error(FormModelInterface $formModel, string $attribute, array $config = []): Error
     {
-        return Error::widget(config: $config)->formAttribute($formModel, $attribute);
+        return Error::widget(config: $config)->inputData(new FormModelInputData($formModel, $attribute));
     }
 }

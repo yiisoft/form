@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
-use Yiisoft\Form\Helper\HtmlForm;
 use Yiisoft\Html\Html;
 
 abstract class InputField extends PartsField
 {
-    use FormAttributeTrait;
+    use InputDataTrait;
 
     protected ?string $inputId = null;
     protected ?string $inputIdFromTag = null;
@@ -88,11 +88,6 @@ abstract class InputField extends PartsField
         return $new;
     }
 
-    final protected function getInputName(): string
-    {
-        return HtmlForm::getInputName($this->getFormModel(), $this->formAttribute);
-    }
-
     final protected function getInputAttributes(): array
     {
         $attributes = $this->inputAttributes;
@@ -120,14 +115,14 @@ abstract class InputField extends PartsField
             if ($this->inputId !== null) {
                 $attributes['id'] = $this->inputId;
             } elseif ($idFromTag === null) {
-                $attributes['id'] = $this->getInputId();
+                $attributes['id'] = $this->getInputData()->getId();
             }
         }
     }
 
     final protected function renderLabel(Label $label): string
     {
-        $label = $label->formAttribute($this->getFormModel(), $this->formAttribute);
+        $label = $label->inputData($this->getInputData());
 
         if ($this->setInputId === false) {
             $label = $label->useInputId(false);
@@ -145,14 +140,14 @@ abstract class InputField extends PartsField
     final protected function renderHint(Hint $hint): string
     {
         return $hint
-            ->formAttribute($this->getFormModel(), $this->formAttribute)
+            ->inputData($this->getInputData())
             ->render();
     }
 
     final protected function renderError(Error $error): string
     {
         return $error
-            ->formAttribute($this->getFormModel(), $this->formAttribute)
+            ->inputData($this->getInputData())
             ->render();
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Part;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Tests\Support\Form\LabelForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
@@ -24,7 +25,7 @@ final class LabelTest extends TestCase
     public function testBase(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->render();
 
         $this->assertSame('<label for="labelform-name">Name</label>', $result);
@@ -33,7 +34,7 @@ final class LabelTest extends TestCase
     public function testAddAttributes(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->addAttributes(['class' => 'red'])
             ->addAttributes(['data-number' => 18])
             ->render();
@@ -44,7 +45,7 @@ final class LabelTest extends TestCase
     public function testAttributes(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->attributes(['class' => 'red'])
             ->attributes(['data-number' => 18])
             ->render();
@@ -66,7 +67,7 @@ final class LabelTest extends TestCase
     public function testId(string $expectedId, ?string $id): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->id($id)
             ->render();
 
@@ -94,7 +95,7 @@ final class LabelTest extends TestCase
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->addClass('main')
             ->addClass(...$class)
             ->render();
@@ -119,7 +120,7 @@ final class LabelTest extends TestCase
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->addClass($class)
             ->render();
 
@@ -148,7 +149,7 @@ final class LabelTest extends TestCase
     public function testClass(string $expectedClassAttribute, array $class): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->class('red')
             ->class(...$class)
             ->render();
@@ -161,7 +162,7 @@ final class LabelTest extends TestCase
     public function testDoNotSetFor(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->setFor(false)
             ->render();
 
@@ -171,7 +172,7 @@ final class LabelTest extends TestCase
     public function customFor(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->forId('MyID')
             ->render();
 
@@ -181,7 +182,7 @@ final class LabelTest extends TestCase
     public function testDoNotUseInputId(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->useInputId(false)
             ->render();
 
@@ -191,7 +192,7 @@ final class LabelTest extends TestCase
     public function testCustomForWithDoNotUseInputId(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->useInputId(false)
             ->forId('MyID')
             ->render();
@@ -202,7 +203,7 @@ final class LabelTest extends TestCase
     public function testCustomContent(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->content('Your name')
             ->render();
 
@@ -212,7 +213,7 @@ final class LabelTest extends TestCase
     public function testEmptyContent(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->content('')
             ->render();
 
@@ -222,7 +223,7 @@ final class LabelTest extends TestCase
     public function testContentAsStringableObject(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->content(new StringableObject('Your name'))
             ->render();
 
@@ -232,7 +233,7 @@ final class LabelTest extends TestCase
     public function testEncode(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->content('Your name >')
             ->render();
 
@@ -242,7 +243,7 @@ final class LabelTest extends TestCase
     public function testWithoutEncode(): void
     {
         $result = Label::widget()
-            ->formAttribute(new LabelForm(), 'name')
+            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
             ->content('<b>Name</b>')
             ->encode(false)
             ->render();

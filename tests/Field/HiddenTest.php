@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\ThemeContainer;
@@ -23,7 +24,7 @@ final class HiddenTest extends TestCase
 
     public function testBase(): void
     {
-        $field = Hidden::widget()->formAttribute(new HiddenForm(), 'key');
+        $field = Hidden::widget()->inputData(new FormModelInputData(new HiddenForm(), 'key'));
 
         $this->assertSame(
             '<input type="hidden" id="hiddenform-key" name="HiddenForm[key]" value="x100">',
@@ -33,7 +34,7 @@ final class HiddenTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = Hidden::widget()->formAttribute(new HiddenForm(), 'flag');
+        $field = Hidden::widget()->inputData(new FormModelInputData(new HiddenForm(), 'flag'));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hidden widget requires a string, numeric or null value.');

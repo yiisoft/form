@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
+use Yiisoft\Validator\Result;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorSummaryTest extends TestCase
@@ -24,7 +24,7 @@ final class ErrorSummaryTest extends TestCase
     public function testBase(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->render();
 
         $expected = <<<HTML
@@ -44,7 +44,7 @@ final class ErrorSummaryTest extends TestCase
     public function testNonValidateForm(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(new ErrorSummaryForm())
+            ->validationResult((new ErrorSummaryForm())->getValidationResult())
             ->render();
 
         $this->assertSame('', $result);
@@ -53,7 +53,7 @@ final class ErrorSummaryTest extends TestCase
     public function testNoEncode(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('age')
             ->encode(false)
             ->render();
@@ -73,7 +73,7 @@ final class ErrorSummaryTest extends TestCase
     public function testShowAllErrors(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('year')
             ->showAllErrors()
             ->render();
@@ -99,7 +99,7 @@ final class ErrorSummaryTest extends TestCase
             ->addError('Common error 2');
 
         $result = ErrorSummary::widget()
-            ->formModel($form)
+            ->validationResult($form->getValidationResult())
             ->onlyCommonErrors()
             ->showAllErrors()
             ->render();
@@ -120,7 +120,7 @@ final class ErrorSummaryTest extends TestCase
     public function testFooter(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('year')
             ->footer('Footer text.')
             ->footerAttributes(['class' => 'footer'])
@@ -142,7 +142,7 @@ final class ErrorSummaryTest extends TestCase
     public function testHeader(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('year')
             ->header('Header text.')
             ->headerAttributes(['class' => 'header'])
@@ -163,7 +163,7 @@ final class ErrorSummaryTest extends TestCase
     public function testListAttributes(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('year')
             ->listAttributes(['class' => 'errorsList'])
             ->render();
@@ -183,7 +183,7 @@ final class ErrorSummaryTest extends TestCase
     public function testListClass(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('year')
             ->listAttributes(['class' => 'list'])
             ->listClass('errorsList')
@@ -204,7 +204,7 @@ final class ErrorSummaryTest extends TestCase
     public function testAddListClass(): void
     {
         $result = ErrorSummary::widget()
-            ->formModel(ErrorSummaryForm::validated())
+            ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
             ->onlyAttributes('year')
             ->listClass('errorsList')
             ->addListClass('errorsList-tiny')
@@ -222,20 +222,17 @@ final class ErrorSummaryTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testWithoutForm(): void
+    public function testWithoutData(): void
     {
-        $field = ErrorSummary::widget();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Form model is not set.');
-        $field->render();
+        $result = ErrorSummary::widget()->render();
+        $this->assertSame('', $result);
     }
 
     public function testImmutability(): void
     {
         $field = ErrorSummary::widget();
 
-        $this->assertNotSame($field, $field->formModel(new ErrorSummaryForm()));
+        $this->assertNotSame($field, $field->validationResult(new Result()));
         $this->assertNotSame($field, $field->encode(false));
         $this->assertNotSame($field, $field->showAllErrors());
         $this->assertNotSame($field, $field->onlyAttributes());
