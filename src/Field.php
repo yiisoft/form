@@ -38,7 +38,7 @@ class Field
     /**
      * @var string|null
      */
-    const DEFAULT_THEME = null;
+    public const DEFAULT_THEME = null;
 
     final public static function button(?string $content = null, array $config = [], ?string $theme = null): Button
     {
@@ -81,8 +81,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Date
-    {
+    ): Date {
         return Date::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -112,8 +111,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Email
-    {
+    ): Email {
         return Email::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -122,8 +120,7 @@ class Field
         FormModelInterface $formModel,
         array $config = [],
         ?string $theme = null,
-    ): ErrorSummary
-    {
+    ): ErrorSummary {
         return ErrorSummary::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->validationResult($formModel->getValidationResult());
     }
@@ -138,8 +135,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): File
-    {
+    ): File {
         return File::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -149,8 +145,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Hidden
-    {
+    ): Hidden {
         return Hidden::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -165,8 +160,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Number
-    {
+    ): Number {
         return Number::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -196,8 +190,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Range
-    {
+    ): Range {
         return Range::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -206,8 +199,7 @@ class Field
         ?string $content = null,
         array $config = [],
         ?string $theme = null,
-    ): ResetButton
-    {
+    ): ResetButton {
         $field = ResetButton::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
 
         if ($content !== null) {
@@ -222,8 +214,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Select
-    {
+    ): Select {
         return Select::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -232,8 +223,7 @@ class Field
         ?string $content = null,
         array $config = [],
         ?string $theme = null,
-    ): SubmitButton
-    {
+    ): SubmitButton {
         $field = SubmitButton::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
 
         if ($content !== null) {
@@ -258,8 +248,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Text
-    {
+    ): Text {
         return Text::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -279,8 +268,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Url
-    {
+    ): Url {
         return Url::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -290,8 +278,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Label
-    {
+    ): Label {
         return Label::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -301,8 +288,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Hint
-    {
+    ): Hint {
         return Hint::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
@@ -312,8 +298,7 @@ class Field
         string $attribute,
         array $config = [],
         ?string $theme = null,
-    ): Error
-    {
+    ): Error {
         return Error::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $attribute));
     }
