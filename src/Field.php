@@ -38,7 +38,7 @@ class Field
     /**
      * @var string|null
      */
-    public const DEFAULT_THEME = null;
+    protected const DEFAULT_THEME = null;
 
     final public static function button(?string $content = null, array $config = [], ?string $theme = null): Button
     {
