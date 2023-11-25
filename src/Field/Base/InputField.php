@@ -13,8 +13,8 @@ use Yiisoft\Html\Html;
 
 abstract class InputField extends PartsField
 {
-    use InputDataTrait;
     use CustomNameAndValueForInputDataTrait;
+    use InputDataTrait;
 
     protected ?string $inputId = null;
     protected ?string $inputIdFromTag = null;

@@ -24,8 +24,8 @@ use Yiisoft\Html\Widget\RadioList\RadioList as RadioListWidget;
  */
 final class RadioList extends PartsField implements ValidationClassInterface
 {
-    use InputDataTrait;
     use CustomNameAndValueForInputDataTrait;
+    use InputDataTrait;
     use ValidationClassTrait;
 
     private RadioListWidget $widget;

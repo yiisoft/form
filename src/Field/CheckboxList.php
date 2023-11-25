@@ -26,8 +26,8 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
  */
 final class CheckboxList extends PartsField implements ValidationClassInterface
 {
-    use InputDataTrait;
     use CustomNameAndValueForInputDataTrait;
+    use InputDataTrait;
     use ValidationClassTrait;
 
     private CheckboxListWidget $widget;
