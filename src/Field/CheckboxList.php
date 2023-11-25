@@ -8,6 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use LogicException;
 use Stringable;
+use Yiisoft\Form\Field\Base\InputData\CustomNameAndValueForInputDataTrait;
 use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
@@ -26,6 +27,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
 final class CheckboxList extends PartsField implements ValidationClassInterface
 {
     use InputDataTrait;
+    use CustomNameAndValueForInputDataTrait;
     use ValidationClassTrait;
 
     private CheckboxListWidget $widget;

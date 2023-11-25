@@ -35,4 +35,14 @@ interface InputDataInterface
      * @psalm-return list<string>
      */
     public function getValidationErrors(): array;
+
+    /**
+     * @psalm-immutable
+     */
+    public function withName(?string $name): static;
+
+    /**
+     * @psalm-immutable
+     */
+    public function withValue(mixed $value): static;
 }

@@ -267,23 +267,6 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testValue(): void
-    {
-        $result = File::widget()
-            ->hideLabel()
-            ->inputData(new FormModelInputData(new FileForm(), 'photo'))
-            ->value('test')
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="file" id="fileform-photo" name="FileForm[photo]" value="test">
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
     public function testImmutability(): void
     {
         $field = File::widget();
@@ -298,6 +281,5 @@ final class FileTest extends TestCase
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->uncheckInputAttributes([]));
         $this->assertNotSame($field, $field->addUncheckInputAttributes([]));
-        $this->assertNotSame($field, $field->value(null));
     }
 }

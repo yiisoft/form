@@ -27,7 +27,6 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
     private array $uncheckInputAttributes = [];
-    private string|Stringable|null $value = null;
 
     /**
      * The accept attribute value is a string that defines the file types the file input should accept. This string is
@@ -153,13 +152,6 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         return $new;
     }
 
-    public function value(string|Stringable|null $value): self
-    {
-        $new = clone $this;
-        $new->value = $value;
-        return $new;
-    }
-
     /**
      * @psalm-suppress MixedAssignment,MixedArgument
      */
@@ -183,7 +175,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     {
         $inputAttributes = $this->getInputAttributes();
 
-        $tag = Html::file($this->getInputData()->getName(), $this->value, $inputAttributes);
+        $tag = Html::file($this->getInputData()->getName(), attributes: $inputAttributes);
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
             if (!empty($this->uncheckInputAttributes)) {
