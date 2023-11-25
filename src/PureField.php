@@ -35,9 +35,14 @@ use Yiisoft\Form\Field\Url;
 
 class PureField
 {
-    final public static function button(?string $content = null, array $config = []): Button
+    /**
+     * @var string|null
+     */
+    protected const DEFAULT_THEME = null;
+
+    final public static function button(?string $content = null, array $config = [], ?string $theme = null): Button
     {
-        $field = Button::widget($config);
+        $field = Button::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
 
         if ($content !== null) {
             $field = $field->content($content);
@@ -46,101 +51,154 @@ class PureField
         return $field;
     }
 
-    final public static function buttonGroup(array $config = []): ButtonGroup
+    final public static function buttonGroup(array $config = [], ?string $theme = null): ButtonGroup
     {
-        return ButtonGroup::widget(config: $config);
+        return ButtonGroup::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
     }
 
-    final public static function checkbox(?string $name = null, mixed $value = null, array $config = []): Checkbox
-    {
-        return Checkbox::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function checkbox(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Checkbox {
+        return Checkbox::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
     final public static function checkboxList(
         ?string $name = null,
         mixed $value = null,
-        array $config = []
+        array $config = [],
+        ?string $theme = null,
     ): CheckboxList {
-        return CheckboxList::widget(config: $config)->inputData(new PureInputData($name, $value));
+        return CheckboxList::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function date(?string $name = null, mixed $value = null, array $config = []): Date
-    {
-        return Date::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function date(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Date {
+        return Date::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function dateTime(?string $name = null, mixed $value = null, array $config = []): DateTime
-    {
-        return DateTime::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function dateTime(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): DateTime {
+        return DateTime::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
     final public static function dateTimeLocal(
         ?string $name = null,
         mixed $value = null,
-        array $config = []
+        array $config = [],
+        ?string $theme = null,
     ): DateTimeLocal {
-        return DateTimeLocal::widget(config: $config)->inputData(new PureInputData($name, $value));
+        return DateTimeLocal::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function email(?string $name = null, mixed $value = null, array $config = []): Email
-    {
-        return Email::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function email(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Email {
+        return Email::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function errorSummary(array $config = []): ErrorSummary
-    {
-        return ErrorSummary::widget(config: $config);
+    final public static function errorSummary(
+        array $config = [],
+        ?string $theme = null,
+    ): ErrorSummary {
+        return ErrorSummary::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
     }
 
-    final public static function fieldset(array $config = []): Fieldset
+    final public static function fieldset(array $config = [], ?string $theme = null): Fieldset
     {
-        return Fieldset::widget(config: $config);
+        return Fieldset::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
     }
 
-    final public static function file(?string $name = null, mixed $value = null, array $config = []): File
-    {
-        return File::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function file(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): File {
+        return File::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function hidden(?string $name = null, mixed $value = null, array $config = []): Hidden
-    {
-        return Hidden::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function hidden(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Hidden {
+        return Hidden::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function image(array $config = []): Image
+    final public static function image(array $config = [], ?string $theme = null): Image
     {
-        return Image::widget(config: $config);
+        return Image::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
     }
 
-    final public static function number(?string $name = null, mixed $value = null, array $config = []): Number
-    {
-        return Number::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function number(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Number {
+        return Number::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
     final public static function password(
         ?string $name = null,
         mixed $value = null,
-        array $config = []
+        array $config = [],
+        ?string $theme = null,
     ): Password {
-        return Password::widget(config: $config)->inputData(new PureInputData($name, $value));
+        return Password::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
     final public static function radioList(
         ?string $name = null,
         mixed $value = null,
-        array $config = []
+        array $config = [],
+        ?string $theme = null,
     ): RadioList {
-        return RadioList::widget(config: $config)->inputData(new PureInputData($name, $value));
+        return RadioList::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function range(?string $name = null, mixed $value = null, array $config = []): Range
-    {
-        return Range::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function range(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Range {
+        return Range::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function resetButton(?string $content = null, array $config = []): ResetButton
-    {
-        $field = ResetButton::widget(config: $config);
+    final public static function resetButton(
+        ?string $content = null,
+        array $config = [],
+        ?string $theme = null,
+    ): ResetButton {
+        $field = ResetButton::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
 
         if ($content !== null) {
             $field = $field->content($content);
@@ -149,14 +207,22 @@ class PureField
         return $field;
     }
 
-    final public static function select(?string $name = null, mixed $value = null, array $config = []): Select
-    {
-        return Select::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function select(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Select {
+        return Select::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function submitButton(?string $content = null, array $config = []): SubmitButton
-    {
-        $field = SubmitButton::widget(config: $config);
+    final public static function submitButton(
+        ?string $content = null,
+        array $config = [],
+        ?string $theme = null,
+    ): SubmitButton {
+        $field = SubmitButton::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
 
         if ($content !== null) {
             $field = $field->content($content);
@@ -168,38 +234,70 @@ class PureField
     final public static function telephone(
         ?string $name = null,
         mixed $value = null,
-        array $config = []
+        array $config = [],
+        ?string $theme = null,
     ): Telephone {
-        return Telephone::widget(config: $config)->inputData(new PureInputData($name, $value));
+        return Telephone::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function text(?string $name = null, mixed $value = null, array $config = []): Text
-    {
-        return Text::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function text(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Text {
+        return Text::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function textarea(?string $name = null, mixed $value = null, array $config = []): Textarea
-    {
-        return Textarea::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function textarea(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Textarea {
+        return Textarea::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function url(?string $name = null, mixed $value = null, array $config = []): Url
-    {
-        return Url::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function url(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Url {
+        return Url::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function label(?string $name = null, mixed $value = null, array $config = []): Label
-    {
-        return Label::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function label(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Label {
+        return Label::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function hint(?string $name = null, mixed $value = null, array $config = []): Hint
-    {
-        return Hint::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function hint(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Hint {
+        return Hint::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function error(?string $name = null, mixed $value = null, array $config = []): Error
-    {
-        return Error::widget(config: $config)->inputData(new PureInputData($name, $value));
+    final public static function error(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Error {
+        return Error::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
     }
 }
