@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Base;
 
 use Yiisoft\Form\Field\Base\InputData\InputDataWithCustomNameAndValueTrait;
-use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
