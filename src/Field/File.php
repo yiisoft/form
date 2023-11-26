@@ -175,7 +175,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     {
         $inputAttributes = $this->getInputAttributes();
 
-        $tag = Html::file($this->getInputData()->getName(), attributes: $inputAttributes);
+        $tag = Html::file($this->getName(), attributes: $inputAttributes);
         if ($this->uncheckValue !== null) {
             $tag = $tag->uncheckValue($this->uncheckValue);
             if (!empty($this->uncheckInputAttributes)) {

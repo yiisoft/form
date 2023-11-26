@@ -8,7 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use LogicException;
 use Stringable;
-use Yiisoft\Form\Field\Base\InputData\CustomNameAndValueForInputDataTrait;
+use Yiisoft\Form\Field\Base\InputData\InputDataWithCustomNameAndValueTrait;
 use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
@@ -26,8 +26,7 @@ use Yiisoft\Html\Widget\CheckboxList\CheckboxList as CheckboxListWidget;
  */
 final class CheckboxList extends PartsField implements ValidationClassInterface
 {
-    use CustomNameAndValueForInputDataTrait;
-    use InputDataTrait;
+    use InputDataWithCustomNameAndValueTrait;
     use ValidationClassTrait;
 
     private CheckboxListWidget $widget;
@@ -146,12 +145,12 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $name = $this->getInputData()->getName();
+        $name = $this->getName();
         if (empty($name)) {
             throw new LogicException('"CheckboxList" field requires non-empty name.');
         }
 
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         $value ??= [];
         if (!is_iterable($value)) {

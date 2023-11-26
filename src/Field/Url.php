@@ -231,7 +231,7 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('URL field requires a string or null value.');
@@ -239,7 +239,7 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
 
         $inputAttributes = $this->getInputAttributes();
 
-        return Html::input('url', $this->getInputData()->getName(), $value, $inputAttributes)->render();
+        return Html::input('url', $this->getName(), $value, $inputAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

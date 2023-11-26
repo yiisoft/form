@@ -247,7 +247,7 @@ final class Textarea extends InputField implements
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Textarea field requires a string or null value.');
@@ -255,7 +255,7 @@ final class Textarea extends InputField implements
 
         $textareaAttributes = $this->getInputAttributes();
 
-        return Html::textarea($this->getInputData()->getName(), $value, $textareaAttributes)->render();
+        return Html::textarea($this->getName(), $value, $textareaAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

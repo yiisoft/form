@@ -22,11 +22,6 @@ final class FormModelInputData implements InputDataInterface
      */
     private ?iterable $validationRules = null;
 
-    private bool $useCustomName = false;
-    private ?string $customName = null;
-    private bool $useCustomValue = false;
-    private mixed $customValue = null;
-
     public function __construct(
         private FormModelInterface $model,
         private string $property,
@@ -57,10 +52,6 @@ final class FormModelInputData implements InputDataInterface
      */
     public function getName(): ?string
     {
-        if ($this->useCustomName) {
-            return $this->customName;
-        }
-
         $data = $this->parseProperty($this->property);
         $formName = $this->model->getFormName();
 
@@ -83,10 +74,6 @@ final class FormModelInputData implements InputDataInterface
      */
     public function getValue(): mixed
     {
-        if ($this->useCustomValue) {
-            return $this->customValue;
-        }
-
         $parsedName = $this->parseProperty($this->property);
         return $this->model->getAttributeValue($parsedName['name'] . $parsedName['suffix']);
     }
@@ -182,21 +169,5 @@ final class FormModelInputData implements InputDataInterface
             'prefix' => $matches[1],
             'suffix' => $matches[3],
         ];
-    }
-
-    public function withName(?string $name): static
-    {
-        $new = clone $this;
-        $new->customName = $name;
-        $new->useCustomName = true;
-        return $new;
-    }
-
-    public function withValue(mixed $value): static
-    {
-        $new = clone $this;
-        $new->customValue = $value;
-        $new->useCustomValue = true;
-        return $new;
     }
 }

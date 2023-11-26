@@ -56,18 +56,4 @@ final class PureInputData implements InputDataInterface
     {
         return [];
     }
-
-    public function withName(?string $name): static
-    {
-        $new = clone $this;
-        $new->name = $name;
-        return $new;
-    }
-
-    public function withValue(mixed $value): static
-    {
-        $new = clone $this;
-        $new->value = $value;
-        return $new;
-    }
 }

@@ -219,13 +219,13 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && !is_numeric($value) && $value !== null) {
             throw new InvalidArgumentException('Range field requires a string, numeric or null value.');
         }
 
-        $tag = Html::range($this->getInputData()->getName(), $value, $this->getInputAttributes());
+        $tag = Html::range($this->getName(), $value, $this->getInputAttributes());
         if ($this->showOutput) {
             $tag = $tag
                 ->showOutput()

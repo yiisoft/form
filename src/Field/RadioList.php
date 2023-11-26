@@ -8,7 +8,7 @@ use Closure;
 use InvalidArgumentException;
 use LogicException;
 use Stringable;
-use Yiisoft\Form\Field\Base\InputData\CustomNameAndValueForInputDataTrait;
+use Yiisoft\Form\Field\Base\InputData\InputDataWithCustomNameAndValueTrait;
 use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
@@ -24,8 +24,7 @@ use Yiisoft\Html\Widget\RadioList\RadioList as RadioListWidget;
  */
 final class RadioList extends PartsField implements ValidationClassInterface
 {
-    use CustomNameAndValueForInputDataTrait;
-    use InputDataTrait;
+    use InputDataWithCustomNameAndValueTrait;
     use ValidationClassTrait;
 
     private RadioListWidget $widget;
@@ -144,12 +143,12 @@ final class RadioList extends PartsField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $name = $this->getInputData()->getName();
+        $name = $this->getName();
         if (empty($name)) {
             throw new LogicException('"RadioList" field requires non-empty name.');
         }
 
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_bool($value)
             && !is_string($value)

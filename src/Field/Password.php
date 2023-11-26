@@ -230,7 +230,7 @@ final class Password extends InputField implements
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Password field requires a string or null value.');
@@ -238,7 +238,7 @@ final class Password extends InputField implements
 
         $inputAttributes = $this->getInputAttributes();
 
-        return Html::passwordInput($this->getInputData()->getName(), $value, $inputAttributes)->render();
+        return Html::passwordInput($this->getName(), $value, $inputAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

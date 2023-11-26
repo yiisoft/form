@@ -71,8 +71,8 @@ final class TextTest extends TestCase
     {
         $expected = <<<HTML
         <div>
-        <label for="the-name">Name</label>
-        <input type="text" id="the-name" name="the-name" value placeholder="Typed your name here">
+        <label for="textform-name">Name</label>
+        <input type="text" id="textform-name" name="the-name" value placeholder="Typed your name here">
         <div>Input your full name.</div>
         <div>Value cannot be blank.</div>
         </div>

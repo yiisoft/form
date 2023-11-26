@@ -161,7 +161,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
 
     final protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException(
@@ -172,7 +172,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
 
         $inputAttributes = $this->getInputAttributes();
 
-        return Html::input($this->getInputType(), $this->getInputData()->getName(), $value, $inputAttributes)->render();
+        return Html::input($this->getInputType(), $this->getName(), $value, $inputAttributes)->render();
     }
 
     abstract protected function getInputType(): string;
