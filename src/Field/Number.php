@@ -191,7 +191,7 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_numeric($value) && $value !== null) {
             throw new InvalidArgumentException('Number field requires a numeric or null value.');
@@ -199,7 +199,7 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
 
         $inputAttributes = $this->getInputAttributes();
 
-        return Html::input('number', $this->getInputData()->getName(), $value, $inputAttributes)->render();
+        return Html::input('number', $this->getName(), $value, $inputAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

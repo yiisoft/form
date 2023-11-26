@@ -239,7 +239,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Email field requires a string or null value.');
@@ -247,7 +247,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
 
         $attributes = $this->getInputAttributes();
 
-        return Html::input('email', $this->getInputData()->getName(), $value, $attributes)->render();
+        return Html::input('email', $this->getName(), $value, $attributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

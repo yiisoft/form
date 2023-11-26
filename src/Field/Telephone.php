@@ -225,7 +225,7 @@ final class Telephone extends InputField implements EnrichmentFromRulesInterface
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException('Telephone field requires a string or null value.');
@@ -233,7 +233,7 @@ final class Telephone extends InputField implements EnrichmentFromRulesInterface
 
         $inputAttributes = $this->getInputAttributes();
 
-        return Html::input('tel', $this->getInputData()->getName(), $value, $inputAttributes)->render();
+        return Html::input('tel', $this->getName(), $value, $inputAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

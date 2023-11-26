@@ -215,7 +215,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
 
         if (!is_bool($value)
             && !is_string($value)
@@ -237,7 +237,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
         unset($inputAttributes['value']);
         $inputValue ??= '1';
 
-        $checkbox = Html::checkbox($this->getInputData()->getName(), $inputValue, $inputAttributes);
+        $checkbox = Html::checkbox($this->getName(), $inputValue, $inputAttributes);
 
         $label = $this->inputLabel ?? $this->getInputData()->getLabel();
 

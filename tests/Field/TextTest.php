@@ -41,7 +41,7 @@ final class TextTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testWithoutForm(): void
+    public function testEmpty(): void
     {
         $expected = <<<HTML
         <div>
@@ -50,6 +50,95 @@ final class TextTest extends TestCase
         HTML;
 
         $result = Text::widget()->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCustomName(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <input type="text" name="the-name">
+        </div>
+        HTML;
+
+        $result = Text::widget()->name('the-name')->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCustomNameAfterInputData(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="textform-name">Name</label>
+        <input type="text" id="textform-name" name="the-name" value placeholder="Typed your name here">
+        <div>Input your full name.</div>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->name('the-name')
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCustomNameBeforeInputData(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="textform-name">Name</label>
+        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+        <div>Input your full name.</div>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->name('the-name')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCustomValueAfterInputData(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="textform-name">Name</label>
+        <input type="text" id="textform-name" name="TextForm[name]" value="42" placeholder="Typed your name here">
+        <div>Input your full name.</div>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->value('42')
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCustomValueBeforeInputData(): void
+    {
+        $expected = <<<HTML
+        <div>
+        <label for="textform-name">Name</label>
+        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+        <div>Input your full name.</div>
+        <div>Value cannot be blank.</div>
+        </div>
+        HTML;
+
+        $result = Text::widget()
+            ->value('42')
+            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->render();
 
         $this->assertSame($expected, $result);
     }

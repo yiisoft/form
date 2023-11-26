@@ -260,7 +260,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
 
     protected function generateInput(): string
     {
-        $value = $this->getInputData()->getValue();
+        $value = $this->getValue();
         $multiple = (bool) ($this->inputAttributes['multiple'] ?? false);
 
         if ($multiple) {
@@ -290,7 +290,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
 
         return $this->select
             ->addAttributes($selectAttributes)
-            ->name($this->getInputData()->getName())
+            ->name($this->getName())
             ->values($value)
             ->render();
     }
