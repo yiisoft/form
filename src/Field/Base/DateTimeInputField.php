@@ -10,9 +10,8 @@ use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
 use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -140,22 +139,11 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-            }
+            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
         }
     }
 

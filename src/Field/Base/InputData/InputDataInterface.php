@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\InputData;
 
-use Yiisoft\Validator\Helper\RulesNormalizer;
-
-/**
- * @psalm-import-type NormalizedRulesList from RulesNormalizer
- */
 interface InputDataInterface
 {
     public function getName(): ?string;
@@ -25,10 +20,7 @@ interface InputDataInterface
 
     public function isValidated(): bool;
 
-    /**
-     * @psalm-return NormalizedRulesList
-     */
-    public function getValidationRules(): iterable;
+    public function getValidationRules(): mixed;
 
     /**
      * @return string[]

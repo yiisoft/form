@@ -600,6 +600,12 @@ final class ThemeTest extends TestCase
     private function initializeThemeContainer(array $parameters): void
     {
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(['default' => $parameters], defaultConfig: 'default');
+        ThemeContainer::initialize(
+            ['default' => $parameters],
+            defaultConfig: 'default',
+            validationRulesEnrichmenters: [
+                FormModelInputData::class => dirname(__DIR__) . '/src/yii-validator-rules-enrichmenter.php',
+            ],
+        );
     }
 }

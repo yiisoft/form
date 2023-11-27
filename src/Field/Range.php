@@ -11,10 +11,8 @@ use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\Number as NumberRule;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -189,31 +187,11 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-
-                if ($rule instanceof NumberRule) {
-                    if (null !== $min = $rule->getMin()) {
-                        $this->inputAttributes['min'] = $min;
-                    }
-                    if (null !== $max = $rule->getMax()) {
-                        $this->inputAttributes['max'] = $max;
-                    }
-                }
-            }
+            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
         }
     }
 
