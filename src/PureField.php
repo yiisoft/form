@@ -32,7 +32,7 @@ use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Url;
 
-class Field
+class PureField
 {
     /**
      * @var string|null
