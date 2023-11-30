@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
-use Yiisoft\Form\YiiValidator\FormModel;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModel;
 use Yiisoft\Form\Tests\TestSupport\Dto\Coordinates;
 use Yiisoft\Validator\Rule\Nested;
 use Yiisoft\Validator\Rule\Required;

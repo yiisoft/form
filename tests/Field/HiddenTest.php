@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiiValidator\FormModelInputData;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Form\ThemeContainer;

@@ -6,12 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiiValidator\FormModelInputData;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidator\ValidationRulesEnricher;
+use Yiisoft\Form\YiisoftYiiValidatableForm\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 

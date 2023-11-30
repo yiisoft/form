@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiiValidator\FormModelInputData;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\StringableObject;

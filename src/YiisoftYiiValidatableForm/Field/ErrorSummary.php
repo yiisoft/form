@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\YiiValidator\Field;
+namespace Yiisoft\Form\YiisoftYiiValidatableForm\Field;
 
 use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Html\Html;

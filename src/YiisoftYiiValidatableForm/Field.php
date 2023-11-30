@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\YiiValidator;
+namespace Yiisoft\Form\YiisoftYiiValidatableForm;
 
 use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Form\Field\Button;
@@ -13,7 +13,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
-use Yiisoft\Form\YiiValidator\Field\ErrorSummary;
+use Yiisoft\Form\YiisoftYiiValidatableForm\Field\ErrorSummary;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Field\Hidden;

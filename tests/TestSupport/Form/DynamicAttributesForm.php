@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\TestSupport\Form;
 
 use Yiisoft\Arrays\ArrayHelper;
-use Yiisoft\Form\YiiValidator\FormModel;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModel;
 
 final class DynamicAttributesForm extends FormModel
 {

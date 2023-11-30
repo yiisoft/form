@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiiValidator\FormModelInputData;
-use Yiisoft\Form\YiiValidator\Field;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
+use Yiisoft\Form\YiisoftYiiValidatableForm\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidator\Field\ErrorSummary;
+use Yiisoft\Form\YiisoftYiiValidatableForm\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
-use Yiisoft\Form\YiiValidator\ValidationRulesEnricher;
+use Yiisoft\Form\YiisoftYiiValidatableForm\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 

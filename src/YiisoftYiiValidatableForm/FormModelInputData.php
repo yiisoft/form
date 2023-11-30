@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\YiiValidator;
+namespace Yiisoft\Form\YiisoftYiiValidatableForm;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;

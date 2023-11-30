@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field\Part;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiiValidator\FormModelInputData;
+use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\Field\Part\Error;
