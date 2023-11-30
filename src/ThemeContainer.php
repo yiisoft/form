@@ -60,8 +60,7 @@ final class ThemeContainer
         array $configs = [],
         ?string $defaultConfig = null,
         ?ValidationRulesEnrichmenterInterface $validationRulesEnrichmenter = null,
-    ): void
-    {
+    ): void {
         self::$configs = $configs;
         self::$defaultConfig = $defaultConfig;
         self::$themes = [];
