@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use Stringable;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
@@ -19,9 +19,9 @@ use Yiisoft\Html\Html;
  * @link https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/file
  */
-final class File extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
+final class File extends InputField implements EnrichFromValidationRulesInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use ValidationClassTrait;
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
@@ -154,7 +154,7 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
+        if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }

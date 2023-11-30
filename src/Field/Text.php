@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
@@ -23,9 +23,9 @@ use function is_string;
  * @link https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/text
  */
-final class Text extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Text extends InputField implements EnrichFromValidationRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -203,7 +203,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
+        if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }

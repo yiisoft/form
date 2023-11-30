@@ -207,7 +207,7 @@ final class TelephoneTest extends TestCase
         );
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -234,14 +234,14 @@ final class TelephoneTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Telephone::widget()
             ->inputData(new FormModelInputData(new TelephoneForm(), $attribute))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->useContainer(false);
 
         $this->assertSame($expected, $field->render());

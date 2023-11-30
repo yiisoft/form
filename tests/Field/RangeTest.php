@@ -347,7 +347,7 @@ HTML_WRAP;
         );
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -366,15 +366,15 @@ HTML_WRAP;
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Range::widget()
             ->inputData(new FormModelInputData(new RangeForm(), $attribute))
             ->hideLabel()
             ->useContainer(false)
-            ->enrichmentFromRules(true);
+            ->enrichFromValidationRules(true);
 
         $this->assertSame($expected, $field->render());
     }

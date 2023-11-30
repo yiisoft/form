@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
@@ -21,9 +21,9 @@ use function is_string;
  * @link https://html.spec.whatwg.org/multipage/input.html#telephone-state-(type=tel)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/tel
  */
-final class Telephone extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Telephone extends InputField implements EnrichFromValidationRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -187,7 +187,7 @@ final class Telephone extends InputField implements EnrichmentFromRulesInterface
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
+        if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }

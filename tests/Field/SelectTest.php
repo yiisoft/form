@@ -597,12 +597,12 @@ final class SelectTest extends TestCase
         $widget->render();
     }
 
-    public function testEnrichmentFromRules(): void
+    public function testEnrichFromValidationRules(): void
     {
         $result = Select::widget()
             ->inputData(new FormModelInputData(new SelectForm(), 'color'))
             ->optionsData(['red' => 'Red'])
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->hideLabel()
             ->useContainer(false)
             ->render();
@@ -616,12 +616,12 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRulesWithWhen(): void
+    public function testEnrichFromValidationRulesWithWhen(): void
     {
         $result = Select::widget()
             ->inputData(new FormModelInputData(new SelectForm(), 'requiredWhen'))
             ->optionsData(['red' => 'Red'])
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->hideLabel()
             ->useContainer(false)
             ->render();

@@ -6,8 +6,8 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
@@ -22,9 +22,9 @@ use Yiisoft\Html\Tag\Select as SelectTag;
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/select
  */
-final class Select extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
+final class Select extends InputField implements EnrichFromValidationRulesInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use ValidationClassTrait;
 
     private SelectTag $select;
@@ -241,7 +241,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
+        if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }

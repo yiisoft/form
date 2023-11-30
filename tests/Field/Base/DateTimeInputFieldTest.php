@@ -178,12 +178,12 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRules1(): void
+    public function testEnrichFromValidationRules(): void
     {
         $result = StubDateTimeInputField::widget()
             ->inputData(new FormModelInputData(new DateForm(), 'main'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML
@@ -195,12 +195,12 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRulesWithWhen(): void
+    public function testEnrichFromValidationRulesWithWhen(): void
     {
         $result = StubDateTimeInputField::widget()
             ->inputData(new FormModelInputData(new DateForm(), 'second'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML

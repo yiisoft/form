@@ -236,12 +236,12 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRules(): void
+    public function testEnrichFromValidationRules(): void
     {
         $result = File::widget()
             ->inputData(new FormModelInputData(new FileForm(), 'image'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML
@@ -253,12 +253,12 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRulesWithWhen(): void
+    public function testEnrichFromValidationRulesWithWhen(): void
     {
         $result = File::widget()
             ->inputData(new FormModelInputData(new FileForm(), 'photo'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML

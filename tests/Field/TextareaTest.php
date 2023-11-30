@@ -246,7 +246,7 @@ final class TextareaTest extends TestCase
         $widget->render();
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -265,15 +265,15 @@ final class TextareaTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Textarea::widget()
             ->inputData(new FormModelInputData(new TextareaForm(), $attribute))
             ->hideLabel()
             ->useContainer(false)
-            ->enrichmentFromRules(true);
+            ->enrichFromValidationRules(true);
 
         $this->assertSame($expected, $field->render());
     }

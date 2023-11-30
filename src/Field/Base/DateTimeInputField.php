@@ -6,8 +6,8 @@ namespace Yiisoft\Form\Field\Base;
 
 use InvalidArgumentException;
 use ReflectionClass;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Form\ThemeContainer;
@@ -15,9 +15,9 @@ use Yiisoft\Html\Html;
 
 use function is_string;
 
-abstract class DateTimeInputField extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
+abstract class DateTimeInputField extends InputField implements EnrichFromValidationRulesInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use ValidationClassTrait;
 
     /**
@@ -142,7 +142,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
+        if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }

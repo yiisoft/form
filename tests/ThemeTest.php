@@ -44,7 +44,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 [
-                    'enrichmentFromRules' => true,
+                    'enrichFromValidationRules' => true,
                 ],
                 'company',
             ],

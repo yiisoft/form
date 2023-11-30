@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
@@ -21,9 +21,9 @@ use function is_string;
  * @link https://html.spec.whatwg.org/multipage/input.html#url-state-(type=url)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/url
  */
-final class Url extends InputField implements PlaceholderInterface, ValidationClassInterface, EnrichmentFromRulesInterface
+final class Url extends InputField implements PlaceholderInterface, ValidationClassInterface, EnrichFromValidationRulesInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -187,7 +187,7 @@ final class Url extends InputField implements PlaceholderInterface, ValidationCl
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
+        if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
