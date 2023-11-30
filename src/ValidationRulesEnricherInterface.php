@@ -6,7 +6,7 @@ namespace Yiisoft\Form;
 
 use Yiisoft\Form\Field\Base\BaseField;
 
-interface ValidationRulesEnrichmenterInterface
+interface ValidationRulesEnricherInterface
 {
     public function process(BaseField $field, mixed $rules): ?array;
 }

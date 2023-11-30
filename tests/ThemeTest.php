@@ -14,7 +14,7 @@ use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
-use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -604,7 +604,7 @@ final class ThemeTest extends TestCase
         ThemeContainer::initialize(
             ['default' => $parameters],
             defaultConfig: 'default',
-            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter(),
+            validationRulesEnricher: new YiiValidatorRulesEnricher(),
         );
     }
 }

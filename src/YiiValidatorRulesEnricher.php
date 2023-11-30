@@ -26,7 +26,7 @@ use Yiisoft\Validator\WhenInterface;
 
 use function is_iterable;
 
-final class YiiValidatorRulesEnrichmenter implements ValidationRulesEnrichmenterInterface
+final class YiiValidatorRulesEnricher implements ValidationRulesEnricherInterface
 {
     public function process(BaseField $field, mixed $rules): ?array
     {

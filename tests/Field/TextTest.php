@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -22,7 +22,7 @@ final class TextTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
         );
     }
 

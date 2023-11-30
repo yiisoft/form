@@ -10,7 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -23,7 +23,7 @@ final class SelectTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
         );
     }
 

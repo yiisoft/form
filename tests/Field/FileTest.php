@@ -9,7 +9,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,7 +20,7 @@ final class FileTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
         );
     }
 

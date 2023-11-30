@@ -23,7 +23,7 @@ final class ThemeContainer
      */
     private static array $themes = [];
 
-    private static ?ValidationRulesEnrichmenterInterface $validationRulesEnrichmenter = null;
+    private static ?ValidationRulesEnricherInterface $validationRulesEnricher = null;
 
     /**
      * @param array<string,array> $configs Array of configurations with {@see Theme::__construct()}
@@ -59,12 +59,12 @@ final class ThemeContainer
     public static function initialize(
         array $configs = [],
         ?string $defaultConfig = null,
-        ?ValidationRulesEnrichmenterInterface $validationRulesEnrichmenter = null,
+        ?ValidationRulesEnricherInterface $validationRulesEnricher = null,
     ): void {
         self::$configs = $configs;
         self::$defaultConfig = $defaultConfig;
         self::$themes = [];
-        self::$validationRulesEnrichmenter = $validationRulesEnrichmenter;
+        self::$validationRulesEnricher = $validationRulesEnricher;
     }
 
     public static function getTheme(?string $name = null): ?Theme
@@ -86,6 +86,6 @@ final class ThemeContainer
 
     public static function getEnrichment(BaseField $field, InputDataInterface $inputData): array
     {
-        return self::$validationRulesEnrichmenter?->process($field, $inputData->getValidationRules()) ?? [];
+        return self::$validationRulesEnricher?->process($field, $inputData->getValidationRules()) ?? [];
     }
 }

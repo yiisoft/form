@@ -10,7 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -21,7 +21,7 @@ final class TelephoneTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
         );
     }
 
