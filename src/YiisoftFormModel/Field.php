@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\YiisoftFormModel;
 
-use Yiisoft\Form\YiisoftFormModel\FormModelInterface;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;

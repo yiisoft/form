@@ -12,7 +12,6 @@ use Yiisoft\Form\Exception\StaticObjectPropertyException;
 use Yiisoft\Form\Exception\UndefinedArrayElementException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\Exception\ValueNotFoundException;
-use Yiisoft\Form\YiisoftFormModel\FormModelInterface;
 use Yiisoft\Hydrator\Validator\ValidatedInputTrait;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;
