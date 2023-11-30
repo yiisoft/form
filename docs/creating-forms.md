@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use Yiisoft\Form\YiisoftYiiValidatableForm\FormModel;
+use Yiisoft\Form\YiisoftFormModel\FormModel;
 use Yiisoft\Translator\TranslatorInterface;
 
 final class LoginForm extends FormModel
@@ -80,8 +80,8 @@ In the controller, we will pass an instance of that `formModel` to the `view`:
 
 declare(strict_types=1);
 
-use Yiisoft\Form\YiisoftYiiValidatableForm\FormModel;
-use Yiisoft\Form\YiisoftYiiValidatableForm\Field;
+use Yiisoft\Form\YiisoftFormModel\FormModel;
+use Yiisoft\Form\YiisoftFormModel\Field;
 use Yiisoft\Html\Html;
 use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Translator\Translator;

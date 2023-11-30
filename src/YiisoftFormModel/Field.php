@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\YiisoftYiiValidatableForm;
+namespace Yiisoft\Form\YiisoftFormModel;
 
-use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\YiisoftFormModel\FormModelInterface;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
@@ -13,7 +13,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
-use Yiisoft\Form\YiisoftYiiValidatableForm\Field\ErrorSummary;
+use Yiisoft\Form\YiisoftFormModel\Field\ErrorSummary;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Field\Hidden;

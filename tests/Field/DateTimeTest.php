@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
+use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Tests\Support\Form\DateTimeForm;
 use Yiisoft\Form\ThemeContainer;

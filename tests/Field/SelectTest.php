@@ -6,11 +6,11 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftYiiValidatableForm\FormModelInputData;
+use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftYiiValidatableForm\ValidationRulesEnricher;
+use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Test\Support\Container\SimpleContainer;

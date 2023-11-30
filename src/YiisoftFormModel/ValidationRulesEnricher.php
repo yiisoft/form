@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\YiisoftYiiValidatableForm;
+namespace Yiisoft\Form\YiisoftFormModel;
 
 use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Form\Field\Base\DateTimeInputField;
