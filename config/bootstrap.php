@@ -14,7 +14,7 @@ return [
         ThemeContainer::initialize(
             $params['yiisoft/form']['configs'],
             $params['yiisoft/form']['defaultConfig'],
-            $params['yiisoft/form']['validationRulesEnrichmenter'],
+            $params['yiisoft/form']['validationRulesEnricher'],
         );
     },
 ];
