@@ -155,13 +155,17 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
     protected function generateInput(): string
     {
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         $tag = Html::file($this->getName(), attributes: $inputAttributes);
         if ($this->uncheckValue !== null) {

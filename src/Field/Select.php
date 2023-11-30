@@ -242,7 +242,7 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -252,7 +252,6 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
         $multiple = (bool) ($this->inputAttributes['multiple'] ?? false);
 
         if ($multiple) {
-            /** @var mixed $value */
             $value ??= [];
             if (!is_iterable($value)) {
                 throw new InvalidArgumentException(
@@ -272,10 +271,14 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
             }
             $value = $value === null ? [] : [$value];
         }
+
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $selectAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
+
         /** @psalm-var iterable<int, Stringable|scalar> $value */
-
-        $selectAttributes = $this->getInputAttributes();
-
         return $this->select
             ->addAttributes($selectAttributes)
             ->name($this->getName())

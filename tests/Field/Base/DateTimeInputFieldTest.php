@@ -10,6 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,9 +21,7 @@ final class DateTimeInputFieldTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenters: [
-                FormModelInputData::class => dirname(__DIR__, 3) . '/src/yii-validator-rules-enrichmenter.php',
-            ],
+            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
         );
     }
 
@@ -179,7 +178,7 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRules(): void
+    public function testEnrichmentFromRules1(): void
     {
         $result = StubDateTimeInputField::widget()
             ->inputData(new FormModelInputData(new DateForm(), 'main'))

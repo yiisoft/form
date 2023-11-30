@@ -193,7 +193,7 @@ final class Password extends InputField implements
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -205,7 +205,11 @@ final class Password extends InputField implements
             throw new InvalidArgumentException('Password field requires a string or null value.');
         }
 
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         return Html::passwordInput($this->getName(), $value, $inputAttributes)->render();
     }

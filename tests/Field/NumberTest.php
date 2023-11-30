@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -21,9 +22,7 @@ final class NumberTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenters: [
-                FormModelInputData::class => dirname(__DIR__, 2) . '/src/yii-validator-rules-enrichmenter.php',
-            ],
+            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
         );
     }
 

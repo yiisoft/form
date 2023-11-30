@@ -204,7 +204,7 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -216,7 +216,11 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
             throw new InvalidArgumentException('Text field requires a string or null value.');
         }
 
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         return Html::textInput($this->getName(), $value, $inputAttributes)->render();
     }

@@ -202,7 +202,7 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -214,9 +214,13 @@ final class Email extends InputField implements EnrichmentFromRulesInterface, Pl
             throw new InvalidArgumentException('Email field requires a string or null value.');
         }
 
-        $attributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
-        return Html::input('email', $this->getName(), $value, $attributes)->render();
+        return Html::input('email', $this->getName(), $value, $inputAttributes)->render();
     }
 
     protected function prepareContainerAttributes(array &$attributes): void

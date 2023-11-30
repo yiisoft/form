@@ -143,7 +143,7 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -158,7 +158,11 @@ abstract class DateTimeInputField extends InputField implements EnrichmentFromRu
             );
         }
 
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         return Html::input($this->getInputType(), $this->getName(), $value, $inputAttributes)->render();
     }

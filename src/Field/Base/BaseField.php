@@ -18,6 +18,7 @@ abstract class BaseField extends Widget
     protected string $containerTag = 'div';
     protected array $containerAttributes = [];
     protected bool $useContainer = true;
+    protected array $enrichment = [];
 
     private bool $isStartedByBegin = false;
 
@@ -123,6 +124,8 @@ abstract class BaseField extends Widget
         if ($this->useContainer) {
             $result .= "\n" . Html::closeTag($this->containerTag);
         }
+
+        $this->enrichment = [];
 
         return $result;
     }

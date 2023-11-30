@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnrichmenter;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -21,9 +22,7 @@ final class RangeTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnrichmenters: [
-                FormModelInputData::class => dirname(__DIR__, 2) . '/src/yii-validator-rules-enrichmenter.php',
-            ],
+            validationRulesEnrichmenter: new YiiValidatorRulesEnrichmenter()
         );
     }
 

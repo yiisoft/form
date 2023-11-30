@@ -191,7 +191,7 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -203,7 +203,13 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
             throw new InvalidArgumentException('Range field requires a string, numeric or null value.');
         }
 
-        $tag = Html::range($this->getName(), $value, $this->getInputAttributes());
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
+
+        $tag = Html::range($this->getName(), $value, $inputAttributes);
         if ($this->showOutput) {
             $tag = $tag
                 ->showOutput()

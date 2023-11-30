@@ -219,7 +219,7 @@ final class Textarea extends InputField implements
     {
         parent::beforeRender();
         if ($this->enrichmentFromRules) {
-            ThemeContainer::enrichmentValidationRules($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -231,7 +231,11 @@ final class Textarea extends InputField implements
             throw new InvalidArgumentException('Textarea field requires a string or null value.');
         }
 
-        $textareaAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $textareaAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         return Html::textarea($this->getName(), $value, $textareaAttributes)->render();
     }
