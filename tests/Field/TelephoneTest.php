@@ -10,6 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +20,9 @@ final class TelephoneTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testBase(): void
@@ -204,7 +207,7 @@ final class TelephoneTest extends TestCase
         );
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -231,14 +234,14 @@ final class TelephoneTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Telephone::widget()
             ->inputData(new FormModelInputData(new TelephoneForm(), $attribute))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->useContainer(false);
 
         $this->assertSame($expected, $field->render());

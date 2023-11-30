@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
@@ -40,7 +40,7 @@ final class Theme
         private ?string $invalidClass = null,
         private ?string $inputValidClass = null,
         private ?string $inputInvalidClass = null,
-        private ?bool $enrichmentFromRules = null,
+        private ?bool $enrichFromValidationRules = null,
         private array $fieldConfigs = [],
     ) {
         if ($labelClass !== null) {
@@ -148,9 +148,9 @@ final class Theme
             }
         }
 
-        if (is_a($class, EnrichmentFromRulesInterface::class, true)) {
-            if ($this->enrichmentFromRules !== null) {
-                $config['enrichmentFromRules()'] = [$this->enrichmentFromRules];
+        if (is_a($class, EnrichFromValidationRulesInterface::class, true)) {
+            if ($this->enrichFromValidationRules !== null) {
+                $config['enrichFromValidationRules()'] = [$this->enrichFromValidationRules];
             }
         }
 

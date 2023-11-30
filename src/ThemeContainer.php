@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form;
 
+use Yiisoft\Form\Field\Base\BaseField;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
+
 use function array_key_exists;
 
 final class ThemeContainer
@@ -19,6 +22,8 @@ final class ThemeContainer
      * @psalm-var array<string,Theme|null>
      */
     private static array $themes = [];
+
+    private static ?ValidationRulesEnricherInterface $validationRulesEnricher = null;
 
     /**
      * @param array<string,array> $configs Array of configurations with {@see Theme::__construct()}
@@ -51,11 +56,15 @@ final class ThemeContainer
      * ```
      * @param string|null $defaultConfig Configuration name that will be used for create fields by default.
      */
-    public static function initialize(array $configs = [], ?string $defaultConfig = null): void
-    {
+    public static function initialize(
+        array $configs = [],
+        ?string $defaultConfig = null,
+        ?ValidationRulesEnricherInterface $validationRulesEnricher = null,
+    ): void {
         self::$configs = $configs;
         self::$defaultConfig = $defaultConfig;
         self::$themes = [];
+        self::$validationRulesEnricher = $validationRulesEnricher;
     }
 
     public static function getTheme(?string $name = null): ?Theme
@@ -73,5 +82,10 @@ final class ThemeContainer
         }
 
         return self::$themes[$name];
+    }
+
+    public static function getEnrichment(BaseField $field, InputDataInterface $inputData): array
+    {
+        return self::$validationRulesEnricher?->process($field, $inputData->getValidationRules()) ?? [];
     }
 }

@@ -28,6 +28,9 @@ final class FormModelInputData implements InputDataInterface
     ) {
     }
 
+    /**
+     * @psalm-return NormalizedRulesList
+     */
     public function getValidationRules(): iterable
     {
         if ($this->validationRules === null) {

@@ -51,12 +51,12 @@ Adds methods for using placeholder. Could be applied to children of `InputField`
 To apply common field configuration when field is created through a field factory, class must implement
 `PlaceholderInterface`.
 
-#### `EnrichmentFromRulesTrait`
+#### `EnrichFromValidationRulesTrait`
 
 Adds method to set option of enrichment field from form model rules.
 
 To apply common field configuration when field is created through a field factory class must implement
-`EnrichmentFromRulesInterface`.
+`EnrichFromValidationRulesInterface`.
 
 ## Field Configuration
 

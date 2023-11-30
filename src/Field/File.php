@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use Stringable;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 /**
  * Represents `<input>` element of type "file" are ley the user choose one or more files from their device storage.
@@ -20,9 +19,9 @@ use Yiisoft\Validator\WhenInterface;
  * @link https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/file
  */
-final class File extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
+final class File extends InputField implements EnrichFromValidationRulesInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use ValidationClassTrait;
 
     private bool|float|int|string|Stringable|null $uncheckValue = null;
@@ -152,28 +151,21 @@ final class File extends InputField implements EnrichmentFromRulesInterface, Val
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-            }
+        if ($this->enrichFromValidationRules) {
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
     protected function generateInput(): string
     {
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         $tag = Html::file($this->getName(), attributes: $inputAttributes);
         if ($this->uncheckValue !== null) {

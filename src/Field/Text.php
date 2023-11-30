@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\Length;
-use Yiisoft\Validator\Rule\Regex;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -26,9 +23,9 @@ use function is_string;
  * @link https://html.spec.whatwg.org/multipage/input.html#text-(type=text)-state-and-search-state-(type=search)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/text
  */
-final class Text extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Text extends InputField implements EnrichFromValidationRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -203,39 +200,11 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-
-                if ($rule instanceof Length) {
-                    if (null !== $min = $rule->getMin()) {
-                        $this->inputAttributes['minlength'] = $min;
-                    }
-                    if (null !== $max = $rule->getMax()) {
-                        $this->inputAttributes['maxlength'] = $max;
-                    }
-                }
-
-                if ($rule instanceof Regex) {
-                    if (!$rule->isNot()) {
-                        $this->inputAttributes['pattern'] = Html::normalizeRegexpPattern(
-                            $rule->getPattern()
-                        );
-                    }
-                }
-            }
+        if ($this->enrichFromValidationRules) {
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -247,7 +216,11 @@ final class Text extends InputField implements EnrichmentFromRulesInterface, Pla
             throw new InvalidArgumentException('Text field requires a string or null value.');
         }
 
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         return Html::textInput($this->getName(), $value, $inputAttributes)->render();
     }

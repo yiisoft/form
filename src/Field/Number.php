@@ -6,17 +6,15 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\Number as NumberRule;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 /**
  * Represents `<input>` element of type "number" are used to let the user enter and edit a telephone number.
@@ -24,9 +22,9 @@ use Yiisoft\Validator\WhenInterface;
  * @link https://html.spec.whatwg.org/multipage/input.html#number-state-(type=number)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/number
  */
-final class Number extends InputField implements EnrichmentFromRulesInterface, PlaceholderInterface, ValidationClassInterface
+final class Number extends InputField implements EnrichFromValidationRulesInterface, PlaceholderInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use PlaceholderTrait;
     use ValidationClassTrait;
 
@@ -161,31 +159,11 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-
-                if ($rule instanceof NumberRule) {
-                    if (null !== $min = $rule->getMin()) {
-                        $this->inputAttributes['min'] = $min;
-                    }
-                    if (null !== $max = $rule->getMax()) {
-                        $this->inputAttributes['max'] = $max;
-                    }
-                }
-            }
+        if ($this->enrichFromValidationRules) {
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -197,7 +175,11 @@ final class Number extends InputField implements EnrichmentFromRulesInterface, P
             throw new InvalidArgumentException('Number field requires a numeric or null value.');
         }
 
-        $inputAttributes = $this->getInputAttributes();
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
 
         return Html::input('number', $this->getName(), $value, $inputAttributes)->render();
     }

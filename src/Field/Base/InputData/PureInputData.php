@@ -12,9 +12,9 @@ final class PureInputData implements InputDataInterface
     ) {
     }
 
-    public function getValidationRules(): array
+    public function getValidationRules(): mixed
     {
-        return [];
+        return null;
     }
 
     public function getName(): ?string

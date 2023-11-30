@@ -10,6 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Url;
 use Yiisoft\Form\Tests\Support\Form\UrlForm;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +20,9 @@ final class UrlTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function tesBase(): void
@@ -226,7 +229,7 @@ final class UrlTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -269,14 +272,14 @@ final class UrlTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Url::widget()
             ->inputData(new FormModelInputData(new UrlForm(), $attribute))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->useContainer(false);
 
         $this->assertSame($expected, $field->render());

@@ -10,6 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +20,9 @@ final class TextareaTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testTextarea(): void
@@ -243,7 +246,7 @@ final class TextareaTest extends TestCase
         $widget->render();
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -262,15 +265,15 @@ final class TextareaTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Textarea::widget()
             ->inputData(new FormModelInputData(new TextareaForm(), $attribute))
             ->hideLabel()
             ->useContainer(false)
-            ->enrichmentFromRules(true);
+            ->enrichFromValidationRules(true);
 
         $this->assertSame($expected, $field->render());
     }

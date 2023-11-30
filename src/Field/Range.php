@@ -6,15 +6,13 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Validator\Rule\Number as NumberRule;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 use function is_string;
 
@@ -25,9 +23,9 @@ use function is_string;
  * @link https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/range
  */
-final class Range extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
+final class Range extends InputField implements EnrichFromValidationRulesInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use ValidationClassTrait;
 
     private bool $showOutput = false;
@@ -189,31 +187,11 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-
-                if ($rule instanceof NumberRule) {
-                    if (null !== $min = $rule->getMin()) {
-                        $this->inputAttributes['min'] = $min;
-                    }
-                    if (null !== $max = $rule->getMax()) {
-                        $this->inputAttributes['max'] = $max;
-                    }
-                }
-            }
+        if ($this->enrichFromValidationRules) {
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -225,7 +203,13 @@ final class Range extends InputField implements EnrichmentFromRulesInterface, Va
             throw new InvalidArgumentException('Range field requires a string, numeric or null value.');
         }
 
-        $tag = Html::range($this->getName(), $value, $this->getInputAttributes());
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $inputAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
+
+        $tag = Html::range($this->getName(), $value, $inputAttributes);
         if ($this->showOutput) {
             $tag = $tag
                 ->showOutput()

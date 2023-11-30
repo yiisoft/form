@@ -10,6 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +20,9 @@ final class DateTimeInputFieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testMax(): void
@@ -175,12 +178,12 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRules(): void
+    public function testEnrichFromValidationRules(): void
     {
         $result = StubDateTimeInputField::widget()
             ->inputData(new FormModelInputData(new DateForm(), 'main'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML
@@ -192,12 +195,12 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRulesWithWhen(): void
+    public function testEnrichFromValidationRulesWithWhen(): void
     {
         $result = StubDateTimeInputField::widget()
             ->inputData(new FormModelInputData(new DateForm(), 'second'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML

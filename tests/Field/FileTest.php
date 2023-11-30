@@ -9,6 +9,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -18,7 +19,9 @@ final class FileTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testBase(): void
@@ -233,12 +236,12 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRules(): void
+    public function testEnrichFromValidationRules(): void
     {
         $result = File::widget()
             ->inputData(new FormModelInputData(new FileForm(), 'image'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML
@@ -250,12 +253,12 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testEnrichmentFromRulesWithWhen(): void
+    public function testEnrichFromValidationRulesWithWhen(): void
     {
         $result = File::widget()
             ->inputData(new FormModelInputData(new FileForm(), 'photo'))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->render();
 
         $expected = <<<HTML

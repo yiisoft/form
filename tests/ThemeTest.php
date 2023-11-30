@@ -14,6 +14,7 @@ use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -43,7 +44,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 [
-                    'enrichmentFromRules' => true,
+                    'enrichFromValidationRules' => true,
                 ],
                 'company',
             ],
@@ -600,6 +601,10 @@ final class ThemeTest extends TestCase
     private function initializeThemeContainer(array $parameters): void
     {
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(['default' => $parameters], defaultConfig: 'default');
+        ThemeContainer::initialize(
+            ['default' => $parameters],
+            defaultConfig: 'default',
+            validationRulesEnricher: new YiiValidatorRulesEnricher(),
+        );
     }
 }

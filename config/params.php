@@ -8,5 +8,6 @@ return [
             'default' => [],
         ],
         'defaultConfig' => 'default',
+        'validationRulesEnricher' => null,
     ],
 ];

@@ -10,6 +10,7 @@ use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\Tests\Support\Form\PasswordForm;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,7 +20,9 @@ final class PasswordTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testBase(): void
@@ -214,7 +217,7 @@ final class PasswordTest extends TestCase
         $widget->render();
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -241,14 +244,14 @@ final class PasswordTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Password::widget()
             ->inputData(new FormModelInputData(new PasswordForm(), $attribute))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->useContainer(false);
 
         $this->assertSame($expected, $field->render());

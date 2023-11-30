@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,7 +21,9 @@ final class NumberTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testBase(): void
@@ -292,7 +295,7 @@ final class NumberTest extends TestCase
         $field->render();
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -311,14 +314,14 @@ final class NumberTest extends TestCase
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Number::widget()
             ->inputData(new FormModelInputData(new NumberForm(), $attribute))
             ->hideLabel()
-            ->enrichmentFromRules(true)
+            ->enrichFromValidationRules(true)
             ->useContainer(false);
 
         $this->assertSame($expected, $field->render());

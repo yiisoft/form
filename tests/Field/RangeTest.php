@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\YiiValidatorRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,7 +21,9 @@ final class RangeTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize();
+        ThemeContainer::initialize(
+            validationRulesEnricher: new YiiValidatorRulesEnricher()
+        );
     }
 
     public function testBase(): void
@@ -344,7 +347,7 @@ HTML_WRAP;
         );
     }
 
-    public function dataEnrichmentFromRules(): array
+    public function dataEnrichFromValidationRules(): array
     {
         return [
             'required' => [
@@ -363,15 +366,15 @@ HTML_WRAP;
     }
 
     /**
-     * @dataProvider dataEnrichmentFromRules
+     * @dataProvider dataEnrichFromValidationRules
      */
-    public function testEnrichmentFromRules(string $expected, string $attribute): void
+    public function testEnrichFromValidationRules(string $expected, string $attribute): void
     {
         $field = Range::widget()
             ->inputData(new FormModelInputData(new RangeForm(), $attribute))
             ->hideLabel()
             ->useContainer(false)
-            ->enrichmentFromRules(true);
+            ->enrichFromValidationRules(true);
 
         $this->assertSame($expected, $field->render());
     }

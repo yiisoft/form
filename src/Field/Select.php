@@ -6,16 +6,15 @@ namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
 use Stringable;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesInterface;
-use Yiisoft\Form\Field\Base\EnrichmentFromRules\EnrichmentFromRulesTrait;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
+use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
+use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
-use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\WhenInterface;
 
 /**
  * Represents `<select>` element that provides a menu of options.
@@ -23,9 +22,9 @@ use Yiisoft\Validator\WhenInterface;
  * @link https://html.spec.whatwg.org/multipage/form-elements.html#the-select-element
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/select
  */
-final class Select extends InputField implements EnrichmentFromRulesInterface, ValidationClassInterface
+final class Select extends InputField implements EnrichFromValidationRulesInterface, ValidationClassInterface
 {
-    use EnrichmentFromRulesTrait;
+    use EnrichFromValidationRulesTrait;
     use ValidationClassTrait;
 
     private SelectTag $select;
@@ -239,22 +238,11 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
         return $new;
     }
 
-    /**
-     * @psalm-suppress MixedAssignment,MixedArgument
-     */
     protected function beforeRender(): void
     {
         parent::beforeRender();
-        if ($this->enrichmentFromRules) {
-            foreach ($this->getInputData()->getValidationRules() as $rule) {
-                if ($rule instanceof WhenInterface && $rule->getWhen() !== null) {
-                    continue;
-                }
-
-                if ($rule instanceof Required) {
-                    $this->inputAttributes['required'] = true;
-                }
-            }
+        if ($this->enrichFromValidationRules) {
+            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
     }
 
@@ -264,7 +252,6 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
         $multiple = (bool) ($this->inputAttributes['multiple'] ?? false);
 
         if ($multiple) {
-            /** @var mixed $value */
             $value ??= [];
             if (!is_iterable($value)) {
                 throw new InvalidArgumentException(
@@ -284,10 +271,14 @@ final class Select extends InputField implements EnrichmentFromRulesInterface, V
             }
             $value = $value === null ? [] : [$value];
         }
+
+        /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
+        $selectAttributes = array_merge(
+            $this->enrichment['inputAttributes'] ?? [],
+            $this->getInputAttributes()
+        );
+
         /** @psalm-var iterable<int, Stringable|scalar> $value */
-
-        $selectAttributes = $this->getInputAttributes();
-
         return $this->select
             ->addAttributes($selectAttributes)
             ->name($this->getName())
