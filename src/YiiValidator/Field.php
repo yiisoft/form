@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\YiiValidator;
 
 use Yiisoft\Form\FormModelInterface;
-use Yiisoft\Form\YiiValidator\FormModelInputData;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
