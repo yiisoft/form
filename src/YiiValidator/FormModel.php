@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Form\YiiValidator;
 
 use InvalidArgumentException;
 use ReflectionClass;
@@ -12,6 +12,7 @@ use Yiisoft\Form\Exception\StaticObjectPropertyException;
 use Yiisoft\Form\Exception\UndefinedArrayElementException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\Exception\ValueNotFoundException;
+use Yiisoft\Form\FormModelInterface;
 use Yiisoft\Hydrator\Validator\ValidatedInputTrait;
 use Yiisoft\Strings\Inflector;
 use Yiisoft\Strings\StringHelper;

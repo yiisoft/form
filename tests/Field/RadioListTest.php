@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\YiiValidator\FormModelInputData;
 use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\Tests\Support\Form\RadioListForm;
 use Yiisoft\Form\ThemeContainer;

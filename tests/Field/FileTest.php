@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\YiiValidator\FormModelInputData;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnricher;
+use Yiisoft\Form\YiiValidator\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,7 +20,7 @@ final class FileTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnricher: new YiiValidatorRulesEnricher()
+            validationRulesEnricher: new ValidationRulesEnricher()
         );
     }
 

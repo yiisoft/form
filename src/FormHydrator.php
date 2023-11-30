@@ -23,7 +23,7 @@ final class FormHydrator
      * @psalm-param MapType $map
      */
     public function populate(
-        FormModel $model,
+        FormModelInterface $model,
         mixed $data,
         array $map = [],
         bool $strict = false,

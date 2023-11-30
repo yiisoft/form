@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Support\Form;
 
-use Yiisoft\Form\FormModel;
+use Yiisoft\Form\YiiValidator\FormModel;
 
 final class LabelForm extends FormModel
 {

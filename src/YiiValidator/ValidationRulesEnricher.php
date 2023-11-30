@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Form\YiiValidator;
 
 use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Form\Field\Base\DateTimeInputField;
@@ -16,6 +16,7 @@ use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Url;
+use Yiisoft\Form\ValidationRulesEnricherInterface;
 use Yiisoft\Html\Html;
 use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Number as NumberRule;
@@ -26,7 +27,7 @@ use Yiisoft\Validator\WhenInterface;
 
 use function is_iterable;
 
-final class YiiValidatorRulesEnricher implements ValidationRulesEnricherInterface
+final class ValidationRulesEnricher implements ValidationRulesEnricherInterface
 {
     public function process(BaseField $field, mixed $rules): ?array
     {

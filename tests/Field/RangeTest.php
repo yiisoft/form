@@ -6,12 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\YiiValidator\FormModelInputData;
 use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnricher;
+use Yiisoft\Form\YiiValidator\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -22,7 +22,7 @@ final class RangeTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnricher: new YiiValidatorRulesEnricher()
+            validationRulesEnricher: new ValidationRulesEnricher()
         );
     }
 

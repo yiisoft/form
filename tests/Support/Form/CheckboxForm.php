@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Support\Form;
 
 use stdClass;
-use Yiisoft\Form\FormModel;
+use Yiisoft\Form\YiiValidator\FormModel;
 
 final class CheckboxForm extends FormModel
 {
