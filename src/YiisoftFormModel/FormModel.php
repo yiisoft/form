@@ -224,9 +224,6 @@ abstract class FormModel implements FormModelInterface
                 if ($property->isStatic()) {
                     throw new StaticObjectPropertyException($this->makePropertyPathString($keys));
                 }
-                if (PHP_VERSION_ID < 80100) {
-                    $property->setAccessible(true);
-                }
                 $value = $property->getValue($value);
                 continue;
             }
@@ -268,10 +265,6 @@ abstract class FormModel implements FormModelInterface
                 return null;
             }
 
-            if (PHP_VERSION_ID < 80100) {
-                $property->setAccessible(true);
-            }
-            /** @var mixed $value */
             $value = $property->getValue($value);
             if (!is_object($value)) {
                 return null;
