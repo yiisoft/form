@@ -6,11 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Url;
-use Yiisoft\Form\Tests\Support\Form\UrlForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,15 +18,21 @@ final class UrlTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
-    public function tesBase(): void
+    public function testBase(): void
     {
+        $inputData = new PureInputData(
+            id: 'urlform-site',
+            name: 'UrlForm[site]',
+            value: '',
+            label: 'Your site',
+            hint: 'Enter your site URL.',
+        );
+
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'site'))
+            ->inputData($inputData)
             ->render();
 
         $expected = <<<HTML
@@ -45,14 +49,14 @@ final class UrlTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->maxlength(95)
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" maxlength="95">
+            <input type="url" name="test" maxlength="95">
             </div>
             HTML;
 
@@ -62,14 +66,14 @@ final class UrlTest extends TestCase
     public function testMinlength(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->minlength(3)
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" minlength="3">
+            <input type="url" name="test" minlength="3">
             </div>
             HTML;
 
@@ -79,14 +83,14 @@ final class UrlTest extends TestCase
     public function testPattern(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->pattern('\w+')
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" pattern="\w+">
+            <input type="url" name="test" pattern="\w+">
             </div>
             HTML;
 
@@ -96,14 +100,14 @@ final class UrlTest extends TestCase
     public function testReadonly(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->readonly()
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" readonly>
+            <input type="url" name="test" readonly>
             </div>
             HTML;
 
@@ -113,14 +117,14 @@ final class UrlTest extends TestCase
     public function testRequired(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->required()
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" required>
+            <input type="url" name="test" required>
             </div>
             HTML;
 
@@ -130,14 +134,14 @@ final class UrlTest extends TestCase
     public function testDisabled(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->disabled()
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" disabled>
+            <input type="url" name="test" disabled>
             </div>
             HTML;
 
@@ -147,14 +151,14 @@ final class UrlTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->ariaDescribedBy('hint')
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" aria-describedby="hint">
+            <input type="url" name="test" aria-describedby="hint">
             </div>
             HTML;
 
@@ -164,14 +168,14 @@ final class UrlTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->ariaLabel('test')
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" aria-label="test">
+            <input type="url" name="test" aria-label="test">
             </div>
             HTML;
 
@@ -181,14 +185,14 @@ final class UrlTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->autofocus()
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" autofocus>
+            <input type="url" name="test" autofocus>
             </div>
             HTML;
 
@@ -198,14 +202,14 @@ final class UrlTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->tabIndex(5)
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" tabindex="5">
+            <input type="url" name="test" tabindex="5">
             </div>
             HTML;
 
@@ -215,80 +219,23 @@ final class UrlTest extends TestCase
     public function testSize(): void
     {
         $result = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'post'))
+            ->name('test')
             ->size(99)
             ->hideLabel()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="url" id="urlform-post" name="UrlForm[post]" size="99">
+            <input type="url" name="test" size="99">
             </div>
             HTML;
 
         $this->assertSame($expected, $result);
     }
 
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="url" id="urlform-company" name="UrlForm[company]" value required>',
-                'company',
-            ],
-            'has-length' => [
-                '<input type="url" id="urlform-home" name="UrlForm[home]" value maxlength="199" minlength="50">',
-                'home',
-            ],
-            'regex' => [
-                '<input type="url" id="urlform-code" name="UrlForm[code]" value pattern="\w+">',
-                'code',
-            ],
-            'regex-not' => [
-                '<input type="url" id="urlform-nocode" name="UrlForm[nocode]" value>',
-                'nocode',
-            ],
-            'url' => [
-                '<input type="url" id="urlform-shop" name="UrlForm[shop]" value pattern="^((?i)http|https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
-                'shop',
-            ],
-            'url-regex' => [
-                '<input type="url" id="urlform-beach" name="UrlForm[beach]" value pattern="\w+">',
-                'beach',
-            ],
-            'regex-url' => [
-                '<input type="url" id="urlform-beach2" name="UrlForm[beach2]" value pattern="^((?i)http|https):\/\/(([a-zA-Z0-9][a-zA-Z0-9_-]*)(\.[a-zA-Z0-9][a-zA-Z0-9_-]*)+)(?::\d{1,5})?([?\/#].*$|$)">',
-                'beach2',
-            ],
-            'url-with-idn' => [
-                '<input type="url" id="urlform-urlwithidn" name="UrlForm[urlWithIdn]" value>',
-                'urlWithIdn',
-            ],
-            'regex-and-url-with-idn' => [
-                '<input type="url" id="urlform-regexandurlwithidn" name="UrlForm[regexAndUrlWithIdn]" value pattern="\w+">',
-                'regexAndUrlWithIdn',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), $attribute))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->useContainer(false);
-
-        $this->assertSame($expected, $field->render());
-    }
-
     public function testInvalidValue(): void
     {
-        $widget = Url::widget()
-            ->inputData(new FormModelInputData(new UrlForm(), 'age'));
+        $widget = Url::widget()->value(42);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('URL field requires a string or null value.');
