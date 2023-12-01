@@ -6,11 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Email;
-use Yiisoft\Form\Tests\Support\Form\EmailForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,16 +18,20 @@ final class EmailTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
-        $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'main'))
-            ->render();
+        $inputDate = new PureInputData(
+            name: 'EmailForm[main]',
+            value: '',
+            label: 'Main email',
+            hint: 'Email for notifications.',
+            id: 'emailform-main',
+        );
+
+        $result = Email::widget()->inputData($inputDate)->render();
 
         $expected = <<<HTML
             <div>
@@ -45,14 +47,13 @@ final class EmailTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->maxlength(99)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" maxlength="99">
+            <input type="email" name="mainEmail" maxlength="99">
             </div>
             HTML;
 
@@ -62,14 +63,13 @@ final class EmailTest extends TestCase
     public function testMinlength(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->minlength(5)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" minlength="5">
+            <input type="email" name="mainEmail" minlength="5">
             </div>
             HTML;
 
@@ -79,14 +79,13 @@ final class EmailTest extends TestCase
     public function testMultiple(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->multiple()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" multiple>
+            <input type="email" name="mainEmail" multiple>
             </div>
             HTML;
 
@@ -96,14 +95,13 @@ final class EmailTest extends TestCase
     public function testPattern(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->pattern('\w+@\w+')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" pattern="\w+@\w+">
+            <input type="email" name="mainEmail" pattern="\w+@\w+">
             </div>
             HTML;
 
@@ -113,14 +111,13 @@ final class EmailTest extends TestCase
     public function testReadonly(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->readonly()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" readonly>
+            <input type="email" name="mainEmail" readonly>
             </div>
             HTML;
 
@@ -130,14 +127,13 @@ final class EmailTest extends TestCase
     public function testRequired(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->required()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" required>
+            <input type="email" name="mainEmail" required>
             </div>
             HTML;
 
@@ -147,14 +143,13 @@ final class EmailTest extends TestCase
     public function testSize(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->size(99)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" size="99">
+            <input type="email" name="mainEmail" size="99">
             </div>
             HTML;
 
@@ -164,14 +159,13 @@ final class EmailTest extends TestCase
     public function testDisabled(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->disabled()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" disabled>
+            <input type="email" name="mainEmail" disabled>
             </div>
             HTML;
 
@@ -181,14 +175,13 @@ final class EmailTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->ariaDescribedBy('hint')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" aria-describedby="hint">
+            <input type="email" name="mainEmail" aria-describedby="hint">
             </div>
             HTML;
 
@@ -198,14 +191,13 @@ final class EmailTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->ariaLabel('test')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" aria-label="test">
+            <input type="email" name="mainEmail" aria-label="test">
             </div>
             HTML;
 
@@ -215,14 +207,13 @@ final class EmailTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->autofocus()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" autofocus>
+            <input type="email" name="mainEmail" autofocus>
             </div>
             HTML;
 
@@ -232,14 +223,13 @@ final class EmailTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), 'second'))
+            ->name('mainEmail')
             ->tabIndex(2)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="emailform-second">Second</label>
-            <input type="email" id="emailform-second" name="EmailForm[second]" tabindex="2">
+            <input type="email" name="mainEmail" tabindex="2">
             </div>
             HTML;
 
@@ -248,51 +238,11 @@ final class EmailTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = Email::widget()->inputData(new FormModelInputData(new EmailForm(), 'age'));
+        $field = Email::widget()->value(7);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Email field requires a string or null value.');
         $field->render();
-    }
-
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="email" id="emailform-cto" name="EmailForm[cto]" required>',
-                'cto',
-            ],
-            'has-length' => [
-                '<input type="email" id="emailform-teamlead" name="EmailForm[teamlead]" maxlength="199" minlength="10">',
-                'teamlead',
-            ],
-            'regex' => [
-                '<input type="email" id="emailform-code" name="EmailForm[code]" pattern="\w+@\w+">',
-                'code',
-            ],
-            'regex-not' => [
-                '<input type="email" id="emailform-nocode" name="EmailForm[nocode]">',
-                'nocode',
-            ],
-            'required-with-when' => [
-                '<input type="email" id="emailform-requiredwhen" name="EmailForm[requiredWhen]">',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Email::widget()
-            ->inputData(new FormModelInputData(new EmailForm(), $attribute))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->useContainer(false);
-
-        $this->assertSame($expected, $field->render());
     }
 
     public function testImmutability(): void
