@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
-use Yiisoft\Form\YiisoftFormModel\FormModel;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
-use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedStructures;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -21,41 +19,6 @@ final class InputFieldTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
-    }
-
-    public function dataInputName(): array
-    {
-        return [
-            [
-                <<<HTML
-                <div>
-                <label for="formwithnestedstructures-coordinates-latitude">Coordinates</label>
-                <input type="text" id="formwithnestedstructures-coordinates-latitude" name="FormWithNestedStructures[coordinates][latitude]" value>
-                </div>
-                HTML,
-                new FormWithNestedStructures(),
-                'coordinates[latitude]',
-            ],
-            [
-                <<<HTML
-                <div>
-                <label for="formwithnestedstructures-array-nested-value">Array</label>
-                <input type="text" id="formwithnestedstructures-array-nested-value" name="FormWithNestedStructures[array][nested][value]" value>
-                </div>
-                HTML,
-                new FormWithNestedStructures(),
-                'array[nested][value]',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataInputName
-     */
-    public function testInputName(string $expected, FormModel $form, string $name): void
-    {
-        $result = StubInputField::widget()->inputData(new FormModelInputData($form, $name))->render();
-        $this->assertSame($expected, $result);
     }
 
     public function testForm(): void

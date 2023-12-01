@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Exception;
+namespace Yiisoft\Form\YiisoftFormModel\Exception;
 
 final class PropertyNotSupportNestedValuesException extends ValueNotFoundException
 {
