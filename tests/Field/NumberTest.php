@@ -6,12 +6,10 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Number;
-use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -21,15 +19,21 @@ final class NumberTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
+        $inputData = new PureInputData(
+            name: 'NumberForm[age]',
+            value: 42,
+            hint: 'Full years.',
+            label: 'Your age',
+            id: 'numberform-age',
+        );
+
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'age'))
+            ->inputData($inputData)
             ->render();
 
         $expected = <<<HTML
@@ -47,23 +51,23 @@ final class NumberTest extends TestCase
     {
         return [
             'int' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" max="42">',
+                '<input type="number" name="count" max="42">',
                 42,
             ],
             'string' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" max="53">',
+                '<input type="number" name="count" max="53">',
                 '53',
             ],
             'float' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" max="5.9">',
+                '<input type="number" name="count" max="5.9">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" max="7">',
+                '<input type="number" name="count" max="7">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]">',
+                '<input type="number" name="count">',
                 null,
             ],
         ];
@@ -75,7 +79,7 @@ final class NumberTest extends TestCase
     public function testMax(string $expected, $value): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->max($value)
@@ -88,23 +92,23 @@ final class NumberTest extends TestCase
     {
         return [
             'int' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" min="42">',
+                '<input type="number" name="count" min="42">',
                 42,
             ],
             'string' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" min="53">',
+                '<input type="number" name="count" min="53">',
                 '53',
             ],
             'float' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" min="5.9">',
+                '<input type="number" name="count" min="5.9">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" min="7">',
+                '<input type="number" name="count" min="7">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]">',
+                '<input type="number" name="count">',
                 null,
             ],
         ];
@@ -116,7 +120,7 @@ final class NumberTest extends TestCase
     public function testMin(string $expected, $value): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->min($value)
@@ -129,23 +133,23 @@ final class NumberTest extends TestCase
     {
         return [
             'int' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" step="1">',
+                '<input type="number" name="count" step="1">',
                 1,
             ],
             'string' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" step="2">',
+                '<input type="number" name="count" step="2">',
                 '2',
             ],
             'float' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" step="5.9">',
+                '<input type="number" name="count" step="5.9">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]" step="7">',
+                '<input type="number" name="count" step="7">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="number" id="numberform-count" name="NumberForm[count]">',
+                '<input type="number" name="count">',
                 null,
             ],
         ];
@@ -157,7 +161,7 @@ final class NumberTest extends TestCase
     public function testStep(string $expected, $value): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->step($value)
@@ -169,14 +173,13 @@ final class NumberTest extends TestCase
     public function testReadonly(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->readonly()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" readonly>
+            <input type="number" name="count" readonly>
             </div>
             HTML;
 
@@ -186,14 +189,13 @@ final class NumberTest extends TestCase
     public function testRequired(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->required()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" required>
+            <input type="number" name="count" required>
             </div>
             HTML;
 
@@ -203,14 +205,13 @@ final class NumberTest extends TestCase
     public function testDisabled(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->disabled()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" disabled>
+            <input type="number" name="count" disabled>
             </div>
             HTML;
 
@@ -220,14 +221,13 @@ final class NumberTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->ariaDescribedBy('hint')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" aria-describedby="hint">
+            <input type="number" name="count" aria-describedby="hint">
             </div>
             HTML;
 
@@ -237,14 +237,13 @@ final class NumberTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->ariaLabel('test')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" aria-label="test">
+            <input type="number" name="count" aria-label="test">
             </div>
             HTML;
 
@@ -254,14 +253,13 @@ final class NumberTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->autofocus()
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" autofocus>
+            <input type="number" name="count" autofocus>
             </div>
             HTML;
 
@@ -271,14 +269,13 @@ final class NumberTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'count'))
+            ->name('count')
             ->tabIndex(5)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="numberform-count">Count</label>
-            <input type="number" id="numberform-count" name="NumberForm[count]" tabindex="5">
+            <input type="number" name="count" tabindex="5">
             </div>
             HTML;
 
@@ -287,44 +284,11 @@ final class NumberTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), 'name'));
+        $field = Number::widget()->value('hello');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Number field requires a numeric or null value.');
         $field->render();
-    }
-
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="number" id="numberform-weight" name="NumberForm[weight]" required>',
-                'weight',
-            ],
-            'number' => [
-                '<input type="number" id="numberform-step" name="NumberForm[step]" min="5" max="95">',
-                'step',
-            ],
-            'required-with-when' => [
-                '<input type="number" id="numberform-requiredwhen" name="NumberForm[requiredWhen]">',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Number::widget()
-            ->inputData(new FormModelInputData(new NumberForm(), $attribute))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->useContainer(false);
-
-        $this->assertSame($expected, $field->render());
     }
 
     public function testImmutability(): void
