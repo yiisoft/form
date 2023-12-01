@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\Field;
 use Yiisoft\Form\Field\Fieldset;
-use Yiisoft\Form\Tests\Support\Form\FieldsetForm;
+use Yiisoft\Form\PureField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Legend;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -24,13 +23,11 @@ final class FieldsetTest extends TestCase
 
     public function testBase(): void
     {
-        $form = new FieldsetForm();
-
         $result = Fieldset::widget()->begin()
             . "\n"
-            . Field::text($form, 'firstName')->useContainer(false)
+            . PureField::text('firstName', '')->useContainer(false)
             . "\n"
-            . Field::text($form, 'lastName')->useContainer(false)
+            . PureField::text('lastName', '')->useContainer(false)
             . "\n"
             . Fieldset::end();
 
@@ -38,10 +35,8 @@ final class FieldsetTest extends TestCase
             <<<HTML
             <div>
             <fieldset>
-            <label for="fieldsetform-firstname">First name</label>
-            <input type="text" id="fieldsetform-firstname" name="FieldsetForm[firstName]" value>
-            <label for="fieldsetform-lastname">Last name</label>
-            <input type="text" id="fieldsetform-lastname" name="FieldsetForm[lastName]" value>
+            <input type="text" name="firstName" value>
+            <input type="text" name="lastName" value>
             </fieldset>
             </div>
             HTML,
@@ -51,13 +46,11 @@ final class FieldsetTest extends TestCase
 
     public function testContent(): void
     {
-        $form = new FieldsetForm();
-
         $result = Fieldset::widget()
             ->content(
-                Field::text($form, 'firstName')->useContainer(false),
+                PureField::text('firstName', '')->useContainer(false),
                 "\n",
-                Field::text($form, 'lastName')->useContainer(false),
+                PureField::text('lastName', '')->useContainer(false),
             )
             ->render();
 
@@ -65,10 +58,8 @@ final class FieldsetTest extends TestCase
             <<<HTML
             <div>
             <fieldset>
-            <label for="fieldsetform-firstname">First name</label>
-            <input type="text" id="fieldsetform-firstname" name="FieldsetForm[firstName]" value>
-            <label for="fieldsetform-lastname">Last name</label>
-            <input type="text" id="fieldsetform-lastname" name="FieldsetForm[lastName]" value>
+            <input type="text" name="firstName" value>
+            <input type="text" name="lastName" value>
             </fieldset>
             </div>
             HTML,
