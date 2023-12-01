@@ -22,7 +22,7 @@
         "php": "^8.1",
         "ext-mbstring": "*",
         "yiisoft/friendly-exception": "^1.0",
-        "yiisoft/html": "^3.2",
+        "yiisoft/html": "^3.3",
         "yiisoft/http": "^1.2",
         "yiisoft/hydrator": "dev-master",
         "yiisoft/hydrator-validator": "dev-master",

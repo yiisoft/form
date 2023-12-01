@@ -70,10 +70,7 @@ abstract class ButtonField extends PartsField
     final public function addButtonClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->buttonAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->buttonAttributes, $class);
         return $new;
     }
 

@@ -158,10 +158,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function addInputLabelClass(?string ...$class): self
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->inputLabelAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->inputLabelAttributes, $class);
         return $new;
     }
 
