@@ -439,8 +439,7 @@ final class ThemeTest extends TestCase
         array $factoryParameters,
         PureInputData $inputData,
         ?array $enricherResult = null,
-    ): void
-    {
+    ): void {
         $this->initializeThemeContainer($factoryParameters, $enricherResult);
 
         $result = Text::widget()

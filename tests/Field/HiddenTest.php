@@ -7,7 +7,6 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
