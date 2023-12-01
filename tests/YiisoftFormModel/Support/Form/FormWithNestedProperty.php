@@ -24,21 +24,21 @@ final class FormWithNestedProperty extends FormModel implements RulesProviderInt
         $this->coordinates = new Coordinates();
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'id' => 'ID',
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'id' => 'Readonly ID',
         ];
     }
 
-    public function getAttributePlaceholders(): array
+    public function getPropertyPlaceholders(): array
     {
         return [
             'id' => 'Type ID.',

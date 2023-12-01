@@ -10,14 +10,14 @@ final class DateTimeLocalForm extends FormModel
 {
     private string $partyDate = '2017-06-01T08:30';
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'partyDate' => 'Date of party',
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'partyDate' => 'Party date.',

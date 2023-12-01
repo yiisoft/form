@@ -170,7 +170,7 @@ final class FieldTest extends TestCase
     public function testErrorSummary(): void
     {
         $result = Field::errorSummary(ErrorSummaryForm::validated())
-            ->onlyAttributes('name')
+            ->onlyProperties('name')
             ->render();
 
         $expected = <<<'HTML'

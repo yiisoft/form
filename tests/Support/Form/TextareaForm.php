@@ -26,7 +26,7 @@ final class TextareaForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'desc' => 'Description',

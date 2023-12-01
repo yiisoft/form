@@ -11,7 +11,7 @@ final class HintForm extends FormModel
     private ?string $name = null;
     private ?int $age = null;
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'name' => 'Write your name.',

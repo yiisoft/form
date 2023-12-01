@@ -47,9 +47,9 @@ final class FormModelInputData implements InputDataInterface
      * according to the form and the property names. For example, if the form name is `Post`
      * then the input name generated for the `content` property would be `Post[content]`.
      *
-     * See {@see getPropertyName()} for explanation of attribute expression.
+     * See {@see getPropertyName()} for explanation of property expression.
      *
-     * @throws InvalidArgumentException If the attribute name contains non-word characters or empty form name for
+     * @throws InvalidArgumentException If the property name contains non-word characters or empty form name for
      * tabular inputs.
      * @return string|null The generated input name.
      */
@@ -78,22 +78,22 @@ final class FormModelInputData implements InputDataInterface
     public function getValue(): mixed
     {
         $parsedName = $this->parseProperty($this->property);
-        return $this->model->getAttributeValue($parsedName['name'] . $parsedName['suffix']);
+        return $this->model->getPropertyValue($parsedName['name'] . $parsedName['suffix']);
     }
 
     public function getLabel(): ?string
     {
-        return $this->model->getAttributeLabel($this->getPropertyName());
+        return $this->model->getPropertyLabel($this->getPropertyName());
     }
 
     public function getHint(): ?string
     {
-        return $this->model->getAttributeHint($this->getPropertyName());
+        return $this->model->getPropertyHint($this->getPropertyName());
     }
 
     public function getPlaceholder(): ?string
     {
-        $placeholder = $this->model->getAttributePlaceholder($this->getPropertyName());
+        $placeholder = $this->model->getPropertyPlaceholder($this->getPropertyName());
         return $placeholder === '' ? null : $placeholder;
     }
 
@@ -104,7 +104,7 @@ final class FormModelInputData implements InputDataInterface
      *
      * For example, if {@see getInputName()} returns `Post[content]`, this method will return `post-content`.
      *
-     * @throws InvalidArgumentException If the attribute name contains non-word characters.
+     * @throws InvalidArgumentException If the property name contains non-word characters.
      * @return string|null The generated input ID.
      */
     public function getId(): ?string
@@ -136,7 +136,7 @@ final class FormModelInputData implements InputDataInterface
     {
         $property = $this->parseProperty($this->property)['name'];
 
-        if (!$this->model->hasAttribute($property)) {
+        if (!$this->model->hasProperty($property)) {
             throw new InvalidArgumentException('Property "' . $property . '" does not exist.');
         }
 

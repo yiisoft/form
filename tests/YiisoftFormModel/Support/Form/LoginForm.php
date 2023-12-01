@@ -47,7 +47,7 @@ class LoginForm extends FormModel implements RulesProviderInterface
         $this->rememberMe = $value;
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'login' => 'Write your id or email.',
@@ -55,7 +55,7 @@ class LoginForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'login' => 'Login:',
@@ -64,7 +64,7 @@ class LoginForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributePlaceholders(): array
+    public function getPropertyPlaceholders(): array
     {
         return [
             'login' => 'Type Username or Email.',

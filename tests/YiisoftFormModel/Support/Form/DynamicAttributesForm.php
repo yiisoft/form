@@ -13,15 +13,15 @@ final class DynamicAttributesForm extends FormModel
     {
     }
 
-    public function hasAttribute(string $attribute): bool
+    public function hasProperty(string $property): bool
     {
-        return ArrayHelper::keyExists($this->attributes, $attribute);
+        return ArrayHelper::keyExists($this->attributes, $property);
     }
 
-    public function getAttributeValue(string $attribute): mixed
+    public function getPropertyValue(string $property): mixed
     {
-        if ($this->hasAttribute($attribute)) {
-            return $this->attributes[$attribute];
+        if ($this->hasProperty($property)) {
+            return $this->attributes[$property];
         }
 
         return null;
@@ -29,7 +29,7 @@ final class DynamicAttributesForm extends FormModel
 
     public function setAttribute(string $name, $value): void
     {
-        if ($this->hasAttribute($name)) {
+        if ($this->hasProperty($name)) {
             $this->attributes[$name] = $value;
         }
     }

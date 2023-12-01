@@ -15,7 +15,7 @@ final class ErrorForm extends FormModel implements RulesProviderInterface
     private string $name = '';
     private int $age = 42;
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'name' => 'Name',

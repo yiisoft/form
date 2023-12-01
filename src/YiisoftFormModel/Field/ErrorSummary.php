@@ -16,7 +16,7 @@ final class ErrorSummary extends BaseField
     private ?Result $validationResult = null;
     private bool $encode = true;
     private bool $showAllErrors = false;
-    private array $onlyAttributes = [];
+    private array $onlyProperties = [];
 
     private string $footer = '';
     private array $footerAttributes = [];
@@ -52,14 +52,14 @@ final class ErrorSummary extends BaseField
     }
 
     /**
-     * Specific attributes to be filtered out when rendering the error summary.
+     * Specific properties to be filtered out when rendering the error summary.
      *
-     * @param array $names The attribute names to be included in error summary.
+     * @param array $names The property names to be included in error summary.
      */
-    public function onlyAttributes(string ...$names): self
+    public function onlyProperties(string ...$names): self
     {
         $new = clone $this;
-        $new->onlyAttributes = $names;
+        $new->onlyProperties = $names;
         return $new;
     }
 
@@ -69,7 +69,7 @@ final class ErrorSummary extends BaseField
     public function onlyCommonErrors(): self
     {
         $new = clone $this;
-        $new->onlyAttributes = [''];
+        $new->onlyProperties = [''];
         return $new;
     }
 
@@ -197,14 +197,14 @@ final class ErrorSummary extends BaseField
 
         if ($this->showAllErrors) {
             $errors = $this->getAllErrors();
-        } elseif ($this->onlyAttributes !== []) {
-            $errors = array_intersect_key($this->getFirstErrors(), array_flip($this->onlyAttributes));
+        } elseif ($this->onlyProperties !== []) {
+            $errors = array_intersect_key($this->getFirstErrors(), array_flip($this->onlyProperties));
         } else {
             $errors = $this->getFirstErrors();
         }
 
         /**
-         * If there are the same error messages for different attributes, array_unique will leave gaps between
+         * If there are the same error messages for different properties, array_unique will leave gaps between
          * sequential keys. Applying array_values to reorder array keys.
          *
          * @var string[]
@@ -214,13 +214,13 @@ final class ErrorSummary extends BaseField
 
     private function getAllErrors(): array
     {
-        if ($this->onlyAttributes === []) {
+        if ($this->onlyProperties === []) {
             return $this->validationResult?->getErrorMessages() ?? [];
         }
 
         $result = [];
-        foreach ($this->validationResult?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
-            if (in_array($attribute, $this->onlyAttributes, true)) {
+        foreach ($this->validationResult?->getErrorMessagesIndexedByPath() ?? [] as $property => $messages) {
+            if (in_array($property, $this->onlyProperties, true)) {
                 $result[] = $messages;
             }
         }
@@ -231,9 +231,9 @@ final class ErrorSummary extends BaseField
     private function getFirstErrors(): array
     {
         $result = [];
-        foreach ($this->validationResult?->getErrorMessagesIndexedByPath() ?? [] as $attribute => $messages) {
+        foreach ($this->validationResult?->getErrorMessagesIndexedByPath() ?? [] as $property => $messages) {
             if (isset($messages[0])) {
-                $result[$attribute] = $messages[0];
+                $result[$property] = $messages[0];
             }
         }
         return $result;

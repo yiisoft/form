@@ -38,89 +38,87 @@ abstract class FormModel implements FormModelInterface
     private static ?Inflector $inflector = null;
 
     /**
-     * Returns the text hint for the specified attribute.
+     * Returns the text hint for the specified property.
      *
-     * @param string $attribute the attribute name.
+     * @param string $property The property name.
      *
-     * @return string the attribute hint.
+     * @return string The property hint.
      */
-    public function getAttributeHint(string $attribute): string
+    public function getPropertyHint(string $property): string
     {
-        return $this->readAttributeMetaValue(self::META_HINT, $attribute) ?? '';
+        return $this->readPropertyMetaValue(self::META_HINT, $property) ?? '';
     }
 
     /**
-     * Returns the attribute hints.
+     * Returns the property hints.
      *
-     * Attribute hints are mainly used for display purpose. For example, given an attribute `isPublic`, we can declare
+     * Property hints are mainly used for display purpose. For example, given a property `isPublic`, we can declare
      * a hint `Whether the post should be visible for not logged-in users`, which provides user-friendly description of
-     * the attribute meaning and can be displayed to end users.
+     * the property meaning and can be displayed to end users.
      *
      * Unlike label hint will not be generated, if its explicit declaration is omitted.
      *
      * Note, in order to inherit hints defined in the parent class, a child class needs to merge the parent hints with
      * child hints using functions such as `array_merge()`.
      *
-     * @return array attribute hints (name => hint)
+     * @return array Property hints (name => hint)
      *
      * @psalm-return array<string,string>
      */
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [];
     }
 
     /**
-     * Returns the text label for the specified attribute.
+     * Returns the text label for the specified property.
      *
-     * @param string $attribute The attribute name.
+     * @param string $property The property name.
      *
-     * @return string The attribute label.
+     * @return string The property label.
      */
-    public function getAttributeLabel(string $attribute): string
+    public function getPropertyLabel(string $property): string
     {
-        return $this->readAttributeMetaValue(self::META_LABEL, $attribute) ?? $this->generateAttributeLabel($attribute);
+        return $this->readPropertyMetaValue(self::META_LABEL, $property) ?? $this->generatePropertyLabel($property);
     }
 
     /**
-     * Returns the attribute labels.
+     * Returns the property labels.
      *
-     * Attribute labels are mainly used for display purpose. For example, given an attribute `firstName`, we can
+     * Attribute labels are mainly used for display purpose. For example, given a property `firstName`, we can
      * declare a label `First Name` which is more user-friendly and can be displayed to end users.
      *
-     * By default, an attribute label is generated automatically. This method allows you to
-     * explicitly specify attribute labels.
+     * By default, a property label is generated automatically. This method allows you to
+     * explicitly specify property labels.
      *
      * Note, in order to inherit labels defined in the parent class, a child class needs to merge the parent labels
      * with child labels using functions such as `array_merge()`.
      *
-     * @return array attribute labels (name => label)
-     *
-     * {@see \Yiisoft\Form\FormModel::getAttributeLabel()}
+     * @return array Property labels (name => label)
      *
      * @psalm-return array<string,string>
      */
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [];
     }
 
     /**
-     * Returns the text placeholder for the specified attribute.
+     * Returns the text placeholder for the specified property.
      *
-     * @param string $attribute the attribute name.
+     * @param string $property The property name.
      *
-     * @return string the attribute placeholder.
+     * @return string The property placeholder.
      */
-    public function getAttributePlaceholder(string $attribute): string
+    public function getPropertyPlaceholder(string $property): string
     {
-        return $this->readAttributeMetaValue(self::META_PLACEHOLDER, $attribute) ?? '';
+        return $this->readPropertyMetaValue(self::META_PLACEHOLDER, $property) ?? '';
     }
 
-    public function getAttributeValue(string $attribute): mixed
+    public function getPropertyValue(string $property): mixed
     {
         try {
-            return $this->readAttributeValue($attribute);
+            return $this->readPropertyValue($property);
         } catch (PropertyNotSupportNestedValuesException $exception) {
             return $exception->getValue() === null
                 ? null
@@ -131,13 +129,13 @@ abstract class FormModel implements FormModelInterface
     }
 
     /**
-     * Returns the attribute placeholders.
+     * Returns the property placeholders.
      *
-     * @return array attribute placeholder (name => placeholder)
+     * @return array Property placeholders (name => placeholder)
      *
      * @psalm-return array<string,string>
      */
-    public function getAttributePlaceholders(): array
+    public function getPropertyPlaceholders(): array
     {
         return [];
     }
@@ -146,11 +144,11 @@ abstract class FormModel implements FormModelInterface
      * Returns the form name that this model class should use.
      *
      * The form name is mainly used by {@see \Yiisoft\Form\InputData\HtmlForm} to determine how to name the input
-     * fields for the attributes in a model.
-     * If the form name is "A" and an attribute name is "b", then the corresponding input name would be "A[b]".
+     * fields for the properties in a model.
+     * If the form name is "A" and a property name is "b", then the corresponding input name would be "A[b]".
      * If the form name is an empty string, then the input name would be "b".
      *
-     * The purpose of the above naming schema is that for forms which contain multiple different models, the attributes
+     * The purpose of the above naming schema is that for forms which contain multiple different models, the properties
      * of each model are grouped in sub-arrays of the POST-data, and it is easier to differentiate between them.
      *
      * By default, this method returns the model class name (without the namespace part) as the form name. You may
@@ -173,12 +171,12 @@ abstract class FormModel implements FormModelInterface
     }
 
     /**
-     * If there is such attribute in the set.
+     * If there is such property in the set.
      */
-    public function hasAttribute(string $attribute): bool
+    public function hasProperty(string $property): bool
     {
         try {
-            $this->readAttributeValue($attribute);
+            $this->readPropertyValue($property);
         } catch (ValueNotFoundException) {
             return false;
         }
@@ -197,9 +195,9 @@ abstract class FormModel implements FormModelInterface
      * @throws PropertyNotSupportNestedValuesException
      * @throws ValueNotFoundException
      */
-    private function readAttributeValue(string $attribute): mixed
+    private function readPropertyValue(string $path): mixed
     {
-        $path = $this->normalizePath($attribute);
+        $path = $this->normalizePath($path);
 
         $value = $this;
         $keys = [[static::class, $this]];
@@ -235,9 +233,9 @@ abstract class FormModel implements FormModelInterface
         return $value;
     }
 
-    private function readAttributeMetaValue(int $metaKey, string $attribute): ?string
+    private function readPropertyMetaValue(int $metaKey, string $path): ?string
     {
-        $path = $this->normalizePath($attribute);
+        $path = $this->normalizePath($path);
 
         $value = $this;
         $n = 0;
@@ -245,9 +243,9 @@ abstract class FormModel implements FormModelInterface
             if ($value instanceof self) {
                 $nestedAttribute = implode('.', array_slice($path, $n));
                 $data = match ($metaKey) {
-                    self::META_LABEL => $value->getAttributeLabels(),
-                    self::META_HINT => $value->getAttributeHints(),
-                    self::META_PLACEHOLDER => $value->getAttributePlaceholders(),
+                    self::META_LABEL => $value->getPropertyLabels(),
+                    self::META_HINT => $value->getPropertyHints(),
+                    self::META_PLACEHOLDER => $value->getPropertyPlaceholders(),
                     default => throw new InvalidArgumentException('Invalid meta key.'),
                 };
                 if (array_key_exists($nestedAttribute, $data)) {
@@ -277,35 +275,35 @@ abstract class FormModel implements FormModelInterface
     }
 
     /**
-     * Generates a user-friendly attribute label based on the give attribute name.
+     * Generates a user-friendly property label based on the give property name.
      *
      * This is done by replacing underscores, dashes and dots with blanks and changing the first letter of each word to
      * upper case.
      *
      * For example, 'department_name' or 'DepartmentName' will generate 'Department Name'.
      *
-     * @param string $attribute The attribute name.
+     * @param string $property The property name.
      *
-     * @return string The attribute label.
+     * @return string The property label.
      */
-    private function generateAttributeLabel(string $attribute): string
+    private function generatePropertyLabel(string $property): string
     {
         if (self::$inflector === null) {
             self::$inflector = new Inflector();
         }
 
         return StringHelper::uppercaseFirstCharacterInEachWord(
-            self::$inflector->toWords($attribute)
+            self::$inflector->toWords($property)
         );
     }
 
     /**
      * @return string[]
      */
-    private function normalizePath(string $attribute): array
+    private function normalizePath(string $path): array
     {
-        $attribute = str_replace(['][', '['], '.', rtrim($attribute, ']'));
-        return StringHelper::parsePath($attribute);
+        $path = str_replace(['][', '['], '.', rtrim($path, ']'));
+        return StringHelper::parsePath($path);
     }
 
     /**
