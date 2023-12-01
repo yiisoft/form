@@ -30,6 +30,7 @@ use Yiisoft\Form\Field\SubmitButton;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Field\Textarea;
+use Yiisoft\Form\Field\Time;
 use Yiisoft\Form\Field\Url;
 
 class PureField
@@ -250,6 +251,16 @@ class PureField
         ?string $theme = null,
     ): Textarea {
         return Textarea::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new PureInputData($name, $value));
+    }
+
+    final public static function time(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Time {
+        return Time::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new PureInputData($name, $value));
     }
 
