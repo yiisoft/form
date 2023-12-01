@@ -19,7 +19,7 @@ final class CheckboxForm extends FormModel
         $this->object = new stdClass();
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'red' => 'Red color',
@@ -28,7 +28,7 @@ final class CheckboxForm extends FormModel
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'red' => 'If need red color.',

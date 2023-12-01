@@ -8,7 +8,7 @@ final class PropertyNotSupportNestedValuesException extends ValueNotFoundExcepti
 {
     public function __construct(string $property, private mixed $value)
     {
-        parent::__construct('Property "' . $property . '" is not a nested attribute.');
+        parent::__construct('Property "' . $property . '" not support nested values.');
     }
 
     public function getValue(): mixed

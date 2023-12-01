@@ -32,7 +32,7 @@ final class SelectForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'number' => 'Select number',

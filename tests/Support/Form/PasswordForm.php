@@ -32,14 +32,14 @@ final class PasswordForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'old' => 'Old password',
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'old' => 'Enter your old password.',

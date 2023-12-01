@@ -35,7 +35,7 @@ final class TextForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'name' => 'Name',
@@ -45,14 +45,14 @@ final class TextForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'name' => 'Input your full name.',
         ];
     }
 
-    public function getAttributePlaceholders(): array
+    public function getPropertyPlaceholders(): array
     {
         return [
             'name' => 'Typed your name here',

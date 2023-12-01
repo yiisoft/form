@@ -12,14 +12,14 @@ final class RadioListForm extends FormModel
     private ?int $number = null;
     private array $data = [];
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'color' => 'Select color',
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'color' => 'Color of box.',

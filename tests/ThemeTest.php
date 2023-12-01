@@ -385,7 +385,7 @@ final class ThemeTest extends TestCase
             [
                 'fieldConfigs' => [
                     ErrorSummary::class => [
-                        'onlyAttributes()' => ['name'],
+                        'onlyProperties()' => ['name'],
                     ],
                 ],
             ],

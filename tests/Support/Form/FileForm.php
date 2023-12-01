@@ -22,7 +22,7 @@ final class FileForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'avatar' => 'Avatar',

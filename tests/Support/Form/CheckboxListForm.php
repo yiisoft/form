@@ -11,14 +11,14 @@ final class CheckboxListForm extends FormModel
     public array $color = [];
     public int $age = 42;
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'color' => 'Select one or more colors',
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'color' => 'Color of box.',

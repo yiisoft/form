@@ -27,7 +27,7 @@ final class UrlForm extends FormModel implements RulesProviderInterface
     public int $age = 42;
     public ?int $requiredWhen = null;
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'site' => 'Your site',
@@ -50,7 +50,7 @@ final class UrlForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'site' => 'Enter your site URL.',

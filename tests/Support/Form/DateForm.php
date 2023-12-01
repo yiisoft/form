@@ -25,7 +25,7 @@ final class DateForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'birthday' => 'Your birthday',
@@ -33,7 +33,7 @@ final class DateForm extends FormModel implements RulesProviderInterface
         ];
     }
 
-    public function getAttributeHints(): array
+    public function getPropertyHints(): array
     {
         return [
             'birthday' => 'Birthday date.',

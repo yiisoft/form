@@ -10,7 +10,7 @@ final class LabelForm extends FormModel
 {
     private ?string $name = null;
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'name' => 'Name',

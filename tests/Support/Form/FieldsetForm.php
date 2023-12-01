@@ -11,7 +11,7 @@ final class FieldsetForm extends FormModel
     public string $firstName = '';
     public string $lastName = '';
 
-    public function getAttributeLabels(): array
+    public function getPropertyLabels(): array
     {
         return [
             'firstName' => 'First name',

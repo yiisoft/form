@@ -54,7 +54,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('age')
+            ->onlyProperties('age')
             ->encode(false)
             ->render();
 
@@ -74,7 +74,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('year')
+            ->onlyProperties('year')
             ->showAllErrors()
             ->render();
 
@@ -121,7 +121,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('year')
+            ->onlyProperties('year')
             ->footer('Footer text.')
             ->footerAttributes(['class' => 'footer'])
             ->render();
@@ -143,7 +143,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('year')
+            ->onlyProperties('year')
             ->header('Header text.')
             ->headerAttributes(['class' => 'header'])
             ->render();
@@ -164,7 +164,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('year')
+            ->onlyProperties('year')
             ->listAttributes(['class' => 'errorsList'])
             ->render();
 
@@ -184,7 +184,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('year')
+            ->onlyProperties('year')
             ->listAttributes(['class' => 'list'])
             ->listClass('errorsList')
             ->render();
@@ -205,7 +205,7 @@ final class ErrorSummaryTest extends TestCase
     {
         $result = ErrorSummary::widget()
             ->validationResult(ErrorSummaryForm::validated()->getValidationResult())
-            ->onlyAttributes('year')
+            ->onlyProperties('year')
             ->listClass('errorsList')
             ->addListClass('errorsList-tiny')
             ->render();
@@ -235,7 +235,7 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($field, $field->validationResult(new Result()));
         $this->assertNotSame($field, $field->encode(false));
         $this->assertNotSame($field, $field->showAllErrors());
-        $this->assertNotSame($field, $field->onlyAttributes());
+        $this->assertNotSame($field, $field->onlyProperties());
         $this->assertNotSame($field, $field->onlyCommonErrors());
         $this->assertNotSame($field, $field->header(''));
         $this->assertNotSame($field, $field->headerAttributes([]));
