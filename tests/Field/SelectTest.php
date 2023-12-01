@@ -6,11 +6,10 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use stdClass;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Select;
-use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -22,15 +21,19 @@ final class SelectTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
+        $inputData = new PureInputData(
+            name: 'SelectForm[number]',
+            label: 'Select number',
+            id: 'selectform-number',
+        );
+
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'number'))
+            ->inputData($inputData)
             ->optionsData([
                 1 => 'One',
                 2 => 'Two',
@@ -53,7 +56,8 @@ final class SelectTest extends TestCase
     public function testSelectedSingle(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'count'))
+            ->name('count')
+            ->value('15')
             ->optionsData([
                 10 => 'Ten',
                 15 => 'Fifteen',
@@ -63,8 +67,7 @@ final class SelectTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label for="selectform-count">Select count</label>
-            <select id="selectform-count" name="SelectForm[count]">
+            <select name="count">
             <option value="10">Ten</option>
             <option value="15" selected>Fifteen</option>
             <option value="20">Twenty</option>
@@ -77,8 +80,15 @@ final class SelectTest extends TestCase
 
     public function testSelectedMultiple(): void
     {
+        $inputData = new PureInputData(
+            name: 'SelectForm[letters]',
+            value: ['A', 'C'],
+            label: 'Select letters',
+            id: 'selectform-letters',
+        );
+
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'letters'))
+            ->inputData($inputData)
             ->optionsData([
                 'A' => 'Letter A',
                 'B' => 'Letter B',
@@ -106,12 +116,12 @@ final class SelectTest extends TestCase
     {
         return [
             [
-                '<select id="selectform-item" name="SelectForm[item]"></select>',
+                '<select name="item"></select>',
                 [],
             ],
             [
                 <<<HTML
-                <select id="selectform-item" name="SelectForm[item]">
+                <select name="item">
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 </select>
@@ -127,7 +137,7 @@ final class SelectTest extends TestCase
             ],
             [
                 <<<HTML
-                <select id="selectform-item" name="SelectForm[item]">
+                <select name="item">
                 <option value="1">One</option>
                 <optgroup>
                 <option value="1.1">One.One</option>
@@ -158,7 +168,7 @@ final class SelectTest extends TestCase
     public function testItems(string $expected, array $items): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->items(...$items)
             ->hideLabel()
             ->useContainer(false)
@@ -170,7 +180,7 @@ final class SelectTest extends TestCase
     public function testOptions(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->options(
                 Option::tag()
                     ->value('1')
@@ -184,7 +194,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]">
+            <select name="item">
             <option value="1">One</option>
             <option value="2">Two</option>
             </select>
@@ -196,14 +206,14 @@ final class SelectTest extends TestCase
     public function testOptionsData(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One', '2' => 'Two'])
             ->hideLabel()
             ->useContainer(false)
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]">
+            <select name="item">
             <option value="1">One</option>
             <option value="2">Two</option>
             </select>
@@ -215,14 +225,14 @@ final class SelectTest extends TestCase
     public function testOptionsDataEncode(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => '<b>One</b>'])
             ->hideLabel()
             ->useContainer(false)
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]">
+            <select name="item">
             <option value="1">&lt;b&gt;One&lt;/b&gt;</option>
             </select>
             HTML;
@@ -233,14 +243,14 @@ final class SelectTest extends TestCase
     public function testOptionsDataWithoutEncode(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => '<b>One</b>'], false)
             ->hideLabel()
             ->useContainer(false)
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]">
+            <select name="item">
             <option value="1"><b>One</b></option>
             </select>
             HTML;
@@ -251,7 +261,7 @@ final class SelectTest extends TestCase
     public function testOptionsDataWithGroups(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData([
                 1 => 'One',
                 'Test Group' => [
@@ -264,7 +274,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]">
+            <select name="item">
             <option value="1">One</option>
             <optgroup label="Test Group">
             <option value="2">Two</option>
@@ -279,7 +289,7 @@ final class SelectTest extends TestCase
     public function testOptionsAndGroupsAttributes(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(
                 data: [
                     1 => 'One',
@@ -305,7 +315,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]">
+            <select name="item">
             <option value="1" data-key="42">One</option>
             <optgroup label="Group A">
             <option value="2">Two</option>
@@ -324,7 +334,7 @@ final class SelectTest extends TestCase
     public function testDisabled(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->disabled()
             ->hideLabel()
@@ -332,7 +342,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" disabled>
+            <select name="item" disabled>
             <option value="1">One</option>
             </select>
             HTML;
@@ -343,7 +353,7 @@ final class SelectTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->ariaDescribedBy('hint')
             ->hideLabel()
@@ -351,7 +361,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" aria-describedby="hint">
+            <select name="item" aria-describedby="hint">
             <option value="1">One</option>
             </select>
             HTML;
@@ -362,7 +372,7 @@ final class SelectTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->ariaLabel('test')
             ->hideLabel()
@@ -370,7 +380,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" aria-label="test">
+            <select name="item" aria-label="test">
             <option value="1">One</option>
             </select>
             HTML;
@@ -381,7 +391,7 @@ final class SelectTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->autofocus()
             ->hideLabel()
@@ -389,7 +399,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" autofocus>
+            <select name="item" autofocus>
             <option value="1">One</option>
             </select>
             HTML;
@@ -400,7 +410,7 @@ final class SelectTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->tabIndex(5)
             ->hideLabel()
@@ -408,7 +418,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" tabindex="5">
+            <select name="item" tabindex="5">
             <option value="1">One</option>
             </select>
             HTML;
@@ -419,7 +429,7 @@ final class SelectTest extends TestCase
     public function testMultiple(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->multiple()
             ->hideLabel()
@@ -427,8 +437,8 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <input type="hidden" name="SelectForm[item]" value>
-            <select id="selectform-item" name="SelectForm[item][]" multiple>
+            <input type="hidden" name="item" value>
+            <select name="item[]" multiple>
             <option value="1">One</option>
             </select>
             HTML;
@@ -441,7 +451,7 @@ final class SelectTest extends TestCase
         return [
             [
                 <<<HTML
-                <select id="selectform-item" name="SelectForm[item]">
+                <select name="item">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -449,7 +459,7 @@ final class SelectTest extends TestCase
             ],
             [
                 <<<HTML
-                <select id="selectform-item" name="SelectForm[item]">
+                <select name="item">
                 <option value>Please select...</option>
                 <option value="1">One</option>
                 </select>
@@ -465,7 +475,7 @@ final class SelectTest extends TestCase
     public function testPrompt(string $expected, ?string $text): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->prompt($text)
             ->hideLabel()
@@ -480,7 +490,7 @@ final class SelectTest extends TestCase
         return [
             [
                 <<<HTML
-                <select id="selectform-item" name="SelectForm[item]">
+                <select name="item">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -488,7 +498,7 @@ final class SelectTest extends TestCase
             ],
             [
                 <<<HTML
-                <select id="selectform-item" name="SelectForm[item]">
+                <select name="item">
                 <option>Please select...</option>
                 <option value="1">One</option>
                 </select>
@@ -504,7 +514,7 @@ final class SelectTest extends TestCase
     public function testPromptOption(string $expected, ?Option $option): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->promptOption($option)
             ->hideLabel()
@@ -517,7 +527,7 @@ final class SelectTest extends TestCase
     public function testRequired(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->required()
             ->hideLabel()
@@ -525,7 +535,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" required>
+            <select name="item" required>
             <option value="1">One</option>
             </select>
             HTML;
@@ -536,7 +546,7 @@ final class SelectTest extends TestCase
     public function testSize(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->size(10)
             ->hideLabel()
@@ -544,7 +554,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select id="selectform-item" name="SelectForm[item]" size="10">
+            <select name="item" size="10">
             <option value="1">One</option>
             </select>
             HTML;
@@ -555,7 +565,7 @@ final class SelectTest extends TestCase
     public function testUnselectValue(): void
     {
         $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'item'))
+            ->name('item')
             ->optionsData(['1' => 'One'])
             ->unselectValue('no')
             ->hideLabel()
@@ -563,8 +573,8 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <input type="hidden" name="SelectForm[item]" value="no">
-            <select id="selectform-item" name="SelectForm[item]">
+            <input type="hidden" name="item" value="no">
+            <select name="item">
             <option value="1">One</option>
             </select>
             HTML;
@@ -574,8 +584,7 @@ final class SelectTest extends TestCase
 
     public function testSingleInvalidValue(): void
     {
-        $widget = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'object'));
+        $widget = Select::widget()->value(new stdClass());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -586,53 +595,11 @@ final class SelectTest extends TestCase
 
     public function testMultipleInvalidValue(): void
     {
-        $widget = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'count'))
-            ->multiple();
+        $widget = Select::widget()->value('one')->multiple();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'Select field with multiple option requires iterable or null value.'
-        );
+        $this->expectExceptionMessage('Select field with multiple option requires iterable or null value.');
         $widget->render();
-    }
-
-    public function testEnrichFromValidationRules(): void
-    {
-        $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'color'))
-            ->optionsData(['red' => 'Red'])
-            ->enrichFromValidationRules(true)
-            ->hideLabel()
-            ->useContainer(false)
-            ->render();
-
-        $expected = <<<HTML
-            <select id="selectform-color" name="SelectForm[color]" required>
-            <option value="red">Red</option>
-            </select>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testEnrichFromValidationRulesWithWhen(): void
-    {
-        $result = Select::widget()
-            ->inputData(new FormModelInputData(new SelectForm(), 'requiredWhen'))
-            ->optionsData(['red' => 'Red'])
-            ->enrichFromValidationRules(true)
-            ->hideLabel()
-            ->useContainer(false)
-            ->render();
-
-        $expected = <<<HTML
-            <select id="selectform-requiredwhen" name="SelectForm[requiredWhen]">
-            <option value="red">Red</option>
-            </select>
-            HTML;
-
-        $this->assertSame($expected, $result);
     }
 
     public function testImmutability(): void
