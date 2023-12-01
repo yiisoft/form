@@ -6,9 +6,19 @@ namespace Yiisoft\Form\Field\Base\InputData;
 
 final class PureInputData implements InputDataInterface
 {
+    /**
+     * @param string[] $validationErrors
+     *
+     * @psalm-param list<string> $validationErrors
+     */
     public function __construct(
         private ?string $name = null,
         private mixed $value = null,
+        private ?string $label = null,
+        private ?string $hint = null,
+        private ?string $placeholder = null,
+        private ?string $id = null,
+        private ?array $validationErrors = null,
     ) {
     }
 
@@ -29,31 +39,31 @@ final class PureInputData implements InputDataInterface
 
     public function getLabel(): ?string
     {
-        return null;
+        return $this->label;
     }
 
     public function getHint(): ?string
     {
-        return null;
+        return $this->hint;
     }
 
     public function getPlaceholder(): ?string
     {
-        return null;
+        return $this->placeholder;
     }
 
     public function getId(): ?string
     {
-        return null;
+        return $this->id;
     }
 
     public function isValidated(): bool
     {
-        return false;
+        return $this->validationErrors !== null;
     }
 
     public function getValidationErrors(): array
     {
-        return [];
+        return $this->validationErrors ?? [];
     }
 }
