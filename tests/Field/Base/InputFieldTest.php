@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
-use Yiisoft\Form\FormModel;
+use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\YiisoftFormModel\FormModel;
 use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedStructures;

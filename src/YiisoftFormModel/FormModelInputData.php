@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base\InputData;
+namespace Yiisoft\Form\YiisoftFormModel;
 
 use InvalidArgumentException;
 use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
 use Yiisoft\Form\Exception\StaticObjectPropertyException;
 use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
 use Yiisoft\Form\Exception\ValueNotFoundException;
-use Yiisoft\Form\FormModelInterface;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Validator\Helper\RulesNormalizer;
 
 /**

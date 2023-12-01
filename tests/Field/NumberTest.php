@@ -6,12 +6,12 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Tests\Support\Form\NumberForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnricher;
+use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -22,7 +22,7 @@ final class NumberTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnricher: new YiiValidatorRulesEnricher()
+            validationRulesEnricher: new ValidationRulesEnricher()
         );
     }
 

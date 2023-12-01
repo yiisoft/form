@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field;
+namespace Yiisoft\Form\YiisoftFormModel\Field;
 
 use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Html\Html;

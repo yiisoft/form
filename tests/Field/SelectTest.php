@@ -6,11 +6,11 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\FormModelInputData;
+use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\Tests\Support\Form\SelectForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiiValidatorRulesEnricher;
+use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -23,7 +23,7 @@ final class SelectTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
-            validationRulesEnricher: new YiiValidatorRulesEnricher()
+            validationRulesEnricher: new ValidationRulesEnricher()
         );
     }
 

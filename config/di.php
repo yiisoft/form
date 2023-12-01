@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Yiisoft\Definitions\Reference;
-use Yiisoft\Form\FormHydrator;
+use Yiisoft\Form\YiisoftFormModel\FormHydrator;
 use Yiisoft\Hydrator\Validator\ValidatingHydrator;
 
 return [

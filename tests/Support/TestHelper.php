@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Support;
 
-use Yiisoft\Form\FormHydrator;
+use Yiisoft\Form\YiisoftFormModel\FormHydrator;
 use Yiisoft\Hydrator\Hydrator;
 use Yiisoft\Hydrator\Validator\Attribute\ValidateResolver;
 use Yiisoft\Hydrator\Validator\ValidatingHydrator;

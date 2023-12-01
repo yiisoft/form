@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Form\YiisoftFormModel;
 
 use Yiisoft\Hydrator\ArrayData;
 use Yiisoft\Hydrator\HydratorInterface;
@@ -23,7 +23,7 @@ final class FormHydrator
      * @psalm-param MapType $map
      */
     public function populate(
-        FormModel $model,
+        FormModelInterface $model,
         mixed $data,
         array $map = [],
         bool $strict = false,
