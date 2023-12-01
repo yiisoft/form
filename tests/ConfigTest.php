@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\PureField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Hidden;
-use Yiisoft\Form\Tests\Support\Form\HiddenForm;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
