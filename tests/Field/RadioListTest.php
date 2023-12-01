@@ -6,9 +6,8 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\RadioList;
-use Yiisoft\Form\Tests\Support\Form\RadioListForm;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
@@ -26,12 +25,18 @@ final class RadioListTest extends TestCase
 
     public function testBase(): void
     {
+        $inputData = new PureInputData(
+            name: 'RadioListForm[color]',
+            label: 'Select color',
+            hint: 'Color of box.',
+        );
+
         $result = RadioList::widget()
             ->items([
                 'red' => 'Red',
                 'blue' => 'Blue',
             ])
-            ->inputData(new FormModelInputData(new RadioListForm(), 'color'))
+            ->inputData($inputData)
             ->render();
 
         $expected = <<<'HTML'
@@ -51,7 +56,7 @@ final class RadioListTest extends TestCase
     public function testRadioAttributes(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two'])
             ->useContainer(false)
             ->hideLabel()
@@ -71,7 +76,7 @@ final class RadioListTest extends TestCase
     public function testAddRadioAttributes(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two'])
             ->useContainer(false)
             ->hideLabel()
@@ -92,7 +97,7 @@ final class RadioListTest extends TestCase
     public function testRadioAttributesReplace(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two'])
             ->useContainer(false)
             ->hideLabel()
@@ -113,7 +118,7 @@ final class RadioListTest extends TestCase
     public function testAddIndividualInputAttributes(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two', 3 => 'Three'])
             ->useContainer(false)
             ->hideLabel()
@@ -138,7 +143,7 @@ final class RadioListTest extends TestCase
     public function testIndividualUncheckInputAttributes(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two'])
             ->useContainer(false)
             ->hideLabel()
@@ -163,7 +168,7 @@ final class RadioListTest extends TestCase
     public function testAddIndividualInputAttributesMerge(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two', 3 => 'Three'])
             ->useContainer(false)
             ->hideLabel()
@@ -192,7 +197,7 @@ final class RadioListTest extends TestCase
     public function testIndividualInputAttributesReplace(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two', 3 => 'Three'])
             ->useContainer(false)
             ->hideLabel()
@@ -220,7 +225,7 @@ final class RadioListTest extends TestCase
     public function testItems(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => '<b>Two</b>'])
             ->useContainer(false)
             ->hideLabel()
@@ -239,7 +244,7 @@ final class RadioListTest extends TestCase
     public function testItemsWithoutEncodeLabel(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => '<b>Two</b>'], false)
             ->useContainer(false)
             ->hideLabel()
@@ -294,7 +299,7 @@ final class RadioListTest extends TestCase
     public function testItemsFromValues(string $expected, array $values): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->itemsFromValues($values)
@@ -306,7 +311,7 @@ final class RadioListTest extends TestCase
     public function testItemsFromValuesWithoutEncodeLabel(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->itemsFromValues([
@@ -375,7 +380,7 @@ final class RadioListTest extends TestCase
     public function testUncheckValue(string $expected, $value): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -388,7 +393,7 @@ final class RadioListTest extends TestCase
     public function testUncheckValueDisabled(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -410,7 +415,7 @@ final class RadioListTest extends TestCase
     public function testUncheckValueForm(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -432,7 +437,7 @@ final class RadioListTest extends TestCase
     public function testSeparator(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -453,7 +458,7 @@ final class RadioListTest extends TestCase
     public function testItemFormatter(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -481,7 +486,7 @@ final class RadioListTest extends TestCase
     public function testForm(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -501,7 +506,7 @@ final class RadioListTest extends TestCase
     public function testDisabled(): void
     {
         $result = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'number'))
+            ->name('RadioListForm[number]')
             ->useContainer(false)
             ->hideLabel()
             ->items([1 => 'One', 2 => 'Two'])
@@ -520,8 +525,7 @@ final class RadioListTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $field = RadioList::widget()
-            ->inputData(new FormModelInputData(new RadioListForm(), 'data'));
+        $field = RadioList::widget()->name('test')->value([]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"RadioList" field requires a string, numeric, bool, Stringable or null value.');
