@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\YiisoftFormModel;
 
-use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
-use Yiisoft\Form\Exception\StaticObjectPropertyException;
-use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
-use Yiisoft\Form\Exception\ValueNotFoundException;
+use Yiisoft\Form\YiisoftFormModel\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\YiisoftFormModel\Exception\StaticObjectPropertyException;
+use Yiisoft\Form\YiisoftFormModel\Exception\UndefinedObjectPropertyException;
+use Yiisoft\Form\YiisoftFormModel\Exception\ValueNotFoundException;
 use Yiisoft\Hydrator\Validator\ValidatedInputInterface;
 
 interface FormModelInterface extends ValidatedInputInterface

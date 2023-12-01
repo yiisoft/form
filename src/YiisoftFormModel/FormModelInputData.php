@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Yiisoft\Form\YiisoftFormModel;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
-use Yiisoft\Form\Exception\StaticObjectPropertyException;
-use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
-use Yiisoft\Form\Exception\ValueNotFoundException;
+use Yiisoft\Form\YiisoftFormModel\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\YiisoftFormModel\Exception\StaticObjectPropertyException;
+use Yiisoft\Form\YiisoftFormModel\Exception\UndefinedObjectPropertyException;
+use Yiisoft\Form\YiisoftFormModel\Exception\ValueNotFoundException;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Validator\Helper\RulesNormalizer;
 

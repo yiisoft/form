@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\TestSupport\Form;
+namespace Yiisoft\Form\Tests\YiisoftFormModel\Support\Form;
 
 use Yiisoft\Form\YiisoftFormModel\FormModel;
-use Yiisoft\Form\Tests\TestSupport\Dto\Coordinates;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Dto\Coordinates;
 
 final class FormWithNestedStructures extends FormModel
 {

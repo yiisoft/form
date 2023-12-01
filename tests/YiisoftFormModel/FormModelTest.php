@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests;
+namespace Yiisoft\Form\Tests\YiisoftFormModel;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
-use Yiisoft\Form\Exception\PropertyNotSupportNestedValuesException;
-use Yiisoft\Form\Exception\UndefinedObjectPropertyException;
-use Yiisoft\Form\YiisoftFormModel\FormModel;
 use Yiisoft\Form\Tests\Support\Form\NestedForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\Tests\Support\TestHelper;
-use Yiisoft\Form\Tests\TestSupport\Dto\Coordinates;
-use Yiisoft\Form\Tests\TestSupport\Form\CustomFormNameForm;
-use Yiisoft\Form\Tests\TestSupport\Form\DefaultFormNameForm;
-use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedProperty;
-use Yiisoft\Form\Tests\TestSupport\Form\FormWithNestedStructures;
-use Yiisoft\Form\Tests\TestSupport\Form\LoginForm;
-use Yiisoft\Form\Tests\TestSupport\TestTrait;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Dto\Coordinates;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\CustomFormNameForm;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\DefaultFormNameForm;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\FormWithNestedProperty;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\FormWithNestedStructures;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\LoginForm;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\TestTrait;
+use Yiisoft\Form\YiisoftFormModel\Exception\PropertyNotSupportNestedValuesException;
+use Yiisoft\Form\YiisoftFormModel\Exception\UndefinedObjectPropertyException;
+use Yiisoft\Form\YiisoftFormModel\FormModel;
+use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 
-require __DIR__ . '/TestSupport/Form/NonNamespacedForm.php';
+require __DIR__ . '/Support/Form/NonNamespacedForm.php';
 
 final class FormModelTest extends TestCase
 {
@@ -218,7 +218,7 @@ final class FormModelTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Undefined object property: "Yiisoft\Form\Tests\TestSupport\Form\LoginForm::noExist".'
+            'Undefined object property: "Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\LoginForm::noExist".'
         );
         $form->getAttributeValue('noExist');
     }

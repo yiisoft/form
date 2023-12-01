@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\TestSupport\Dto;
+namespace Yiisoft\Form\Tests\YiisoftFormModel\Support\Dto;
 
 final class Coordinates
 {
