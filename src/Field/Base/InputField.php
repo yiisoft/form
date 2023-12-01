@@ -81,10 +81,7 @@ abstract class InputField extends PartsField
     final public function addInputClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->inputAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->inputAttributes, $class);
         return $new;
     }
 

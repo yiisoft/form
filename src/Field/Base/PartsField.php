@@ -170,10 +170,7 @@ abstract class PartsField extends BaseField
     final public function addInputContainerClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->inputContainerAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->inputContainerAttributes, $class);
         return $new;
     }
 
@@ -232,10 +229,7 @@ abstract class PartsField extends BaseField
     final public function addLabelClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->labelAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->labelAttributes, $class);
         return $new;
     }
 
@@ -301,10 +295,7 @@ abstract class PartsField extends BaseField
     final public function addHintClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->hintAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->hintAttributes, $class);
         return $new;
     }
 
@@ -370,10 +361,7 @@ abstract class PartsField extends BaseField
     final public function addErrorClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->errorAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->errorAttributes, $class);
         return $new;
     }
 

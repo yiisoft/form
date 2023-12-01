@@ -79,10 +79,7 @@ abstract class BaseField extends Widget
     final public function addContainerClass(?string ...$class): static
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->containerAttributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->containerAttributes, $class);
         return $new;
     }
 

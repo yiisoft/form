@@ -90,10 +90,7 @@ final class Hint extends Widget
     public function addClass(?string ...$class): self
     {
         $new = clone $this;
-        Html::addCssClass(
-            $new->attributes,
-            array_filter($class, static fn ($c) => $c !== null),
-        );
+        Html::addCssClass($new->attributes, $class);
         return $new;
     }
 
