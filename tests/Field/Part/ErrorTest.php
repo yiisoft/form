@@ -6,14 +6,11 @@ namespace Yiisoft\Form\Tests\Field\Part;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\Field\Part\Error;
-use Yiisoft\Form\Tests\Support\Form\ErrorForm;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Validator\Validator;
 use Yiisoft\Widget\WidgetFactory;
 
 final class ErrorTest extends TestCase
@@ -27,26 +24,32 @@ final class ErrorTest extends TestCase
 
     public function testBase(): void
     {
-        $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
-            ->render();
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
+        $result = Error::widget()->inputData($inputData)->render();
 
         $this->assertSame('<div>Value cannot be blank.</div>', $result);
     }
 
-    public function testAttributeWithoutError(): void
+    public function testWithoutError(): void
     {
-        $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'age'))
-            ->render();
+        $inputData = new PureInputData();
+
+        $result = Error::widget()->inputData($inputData)->render();
 
         $this->assertSame('', $result);
     }
 
     public function testCustomTag(): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->tag('b')
             ->render();
 
@@ -64,8 +67,12 @@ final class ErrorTest extends TestCase
 
     public function testAddAttributes(): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->addAttributes(['class' => 'red'])
             ->addAttributes(['data-number' => 18])
             ->render();
@@ -75,8 +82,12 @@ final class ErrorTest extends TestCase
 
     public function testAttributes(): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->attributes(['class' => 'red'])
             ->attributes(['data-number' => 18])
             ->render();
@@ -97,8 +108,12 @@ final class ErrorTest extends TestCase
      */
     public function testId(string $expectedId, ?string $id): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->id($id)
             ->render();
 
@@ -125,8 +140,12 @@ final class ErrorTest extends TestCase
      */
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->addClass('main')
             ->addClass(...$class)
             ->render();
@@ -150,8 +169,12 @@ final class ErrorTest extends TestCase
      */
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->addClass($class)
             ->render();
 
@@ -179,8 +202,12 @@ final class ErrorTest extends TestCase
      */
     public function testClass(string $expectedClassAttribute, array $class): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->class('red')
             ->class(...$class)
             ->render();
@@ -192,8 +219,12 @@ final class ErrorTest extends TestCase
 
     public function testEncode(): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->message('your name >')
             ->render();
 
@@ -202,8 +233,12 @@ final class ErrorTest extends TestCase
 
     public function testWithoutEncode(): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->message('<b>your name</b>')
             ->encode(false)
             ->render();
@@ -213,8 +248,12 @@ final class ErrorTest extends TestCase
 
     public function testCustomMessage(): void
     {
+        $inputData = new PureInputData(
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->message('Invalid name.')
             ->render();
 
@@ -223,8 +262,13 @@ final class ErrorTest extends TestCase
 
     public function testCustomMessageWithoutError(): void
     {
+        $inputData = new PureInputData(
+            label: 'Age',
+            validationErrors: [],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'age'))
+            ->inputData($inputData)
             ->message('Invalid name.')
             ->render();
 
@@ -233,8 +277,13 @@ final class ErrorTest extends TestCase
 
     public function testMessageCallback(): void
     {
+        $inputData = new PureInputData(
+            label: 'Name',
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->messageCallback(
                 static fn (string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message
             )
@@ -245,8 +294,13 @@ final class ErrorTest extends TestCase
 
     public function testMessageCallbackWithCustomMessage(): void
     {
+        $inputData = new PureInputData(
+            label: 'Name',
+            validationErrors: ['Value cannot be blank.'],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'name'))
+            ->inputData($inputData)
             ->message('Invalid value.')
             ->messageCallback(
                 static fn (string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message
@@ -258,8 +312,13 @@ final class ErrorTest extends TestCase
 
     public function testMessageCallbackWithMessageAndWithoutError(): void
     {
+        $inputData = new PureInputData(
+            label: 'Age',
+            validationErrors: [],
+        );
+
         $result = Error::widget()
-            ->inputData(new FormModelInputData($this->createValidatedErrorForm(), 'age'))
+            ->inputData($inputData)
             ->message('Invalid value.')
             ->messageCallback(
                 static fn (string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message
@@ -267,12 +326,5 @@ final class ErrorTest extends TestCase
             ->render();
 
         $this->assertSame('<div>Attribute "Age" error: Invalid value.</div>', $result);
-    }
-
-    private function createValidatedErrorForm(): ErrorForm
-    {
-        $form = new ErrorForm();
-        (new Validator())->validate($form);
-        return $form;
     }
 }
