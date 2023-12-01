@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
-use Yiisoft\Form\YiisoftFormModel\Field;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Part\Error;
+use Yiisoft\Form\Field\Part\Hint;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\Field\ErrorSummary;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Form\Tests\Support\Form\ErrorSummaryForm;
-use Yiisoft\Form\Tests\Support\Form\TextForm;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -33,7 +31,15 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 [],
-                'name',
+                new PureInputData(
+                    name: 'TextForm[name]',
+                    value: '',
+                    label: 'Name',
+                    hint: 'Input your full name.',
+                    placeholder: 'Typed your name here',
+                    id: 'textform-name',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -46,7 +52,14 @@ final class ThemeTest extends TestCase
                 [
                     'enrichFromValidationRules' => true,
                 ],
-                'company',
+                new PureInputData(
+                    name: 'TextForm[company]',
+                    value: '',
+                    label: 'Company',
+                    id: 'textform-company',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
+                ['inputAttributes' => ['required' => true]],
             ],
             [
                 <<<'HTML'
@@ -59,7 +72,12 @@ final class ThemeTest extends TestCase
                     'containerTag' => 'section',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<HTML
@@ -69,7 +87,12 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['containerClass' => 'wrapper'],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<HTML
@@ -79,7 +102,12 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['containerClass' => ['wrapper', 'red']],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<HTML
@@ -89,7 +117,12 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['inputClass' => 'red'],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<HTML
@@ -99,7 +132,12 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['inputClass' => ['red', 'blue']],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<'HTML'
@@ -109,7 +147,12 @@ final class ThemeTest extends TestCase
                 [
                     'useContainer' => false,
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             'common-template' => [
                 <<<'HTML'
@@ -125,7 +168,15 @@ final class ThemeTest extends TestCase
                 [
                     'template' => "<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>",
                 ],
-                'name',
+                new PureInputData(
+                    name: 'TextForm[name]',
+                    value: '',
+                    label: 'Name',
+                    hint: 'Input your full name.',
+                    placeholder: 'Typed your name here',
+                    id: 'textform-name',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -138,7 +189,12 @@ final class ThemeTest extends TestCase
                     'setInputId' => false,
                     'inputAttributes' => ['class' => 'form-control'],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<'HTML'
@@ -160,7 +216,15 @@ final class ThemeTest extends TestCase
                         'attributes()' => [['class' => 'red']],
                     ],
                 ],
-                'name',
+                new PureInputData(
+                    name: 'TextForm[name]',
+                    value: '',
+                    label: 'Name',
+                    hint: 'Input your full name.',
+                    placeholder: 'Typed your name here',
+                    id: 'textform-name',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -174,7 +238,15 @@ final class ThemeTest extends TestCase
                 [
                     'usePlaceholder' => false,
                 ],
-                'name',
+                new PureInputData(
+                    name: 'TextForm[name]',
+                    value: '',
+                    label: 'Name',
+                    hint: 'Input your full name.',
+                    placeholder: 'Typed your name here',
+                    id: 'textform-name',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -188,7 +260,15 @@ final class ThemeTest extends TestCase
                 [
                     'usePlaceholder' => false,
                 ],
-                'name',
+                new PureInputData(
+                    name: 'TextForm[name]',
+                    value: '',
+                    label: 'Name',
+                    hint: 'Input your full name.',
+                    placeholder: 'Typed your name here',
+                    id: 'textform-name',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -209,7 +289,12 @@ final class ThemeTest extends TestCase
                         ],
                     ],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<'HTML'
@@ -222,7 +307,13 @@ final class ThemeTest extends TestCase
                     'validClass' => 'valid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                    validationErrors: [],
+                ),
             ],
             [
                 <<<'HTML'
@@ -236,7 +327,13 @@ final class ThemeTest extends TestCase
                     'invalidClass' => 'invalid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                'company',
+                new PureInputData(
+                    name: 'TextForm[company]',
+                    value: '',
+                    label: 'Company',
+                    id: 'textform-company',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -249,7 +346,13 @@ final class ThemeTest extends TestCase
                     'inputValidClass' => 'valid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                    validationErrors: [],
+                ),
             ],
             [
                 <<<'HTML'
@@ -263,7 +366,13 @@ final class ThemeTest extends TestCase
                     'inputInvalidClass' => 'invalid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                'company',
+                new PureInputData(
+                    name: 'TextForm[company]',
+                    value: '',
+                    label: 'Company',
+                    id: 'textform-company',
+                    validationErrors: ['Value cannot be blank.'],
+                ),
             ],
             [
                 <<<'HTML'
@@ -276,7 +385,12 @@ final class ThemeTest extends TestCase
                     'inputContainerTag' => 'div',
                     'inputContainerAttributes' => ['class' => 'control'],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<'HTML'
@@ -289,7 +403,12 @@ final class ThemeTest extends TestCase
                     'inputContainerTag' => 'div',
                     'inputContainerClass' => 'control',
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
             [
                 <<<'HTML'
@@ -302,7 +421,12 @@ final class ThemeTest extends TestCase
                     'inputContainerTag' => 'div',
                     'inputContainerClass' => ['control', 'red'],
                 ],
-                'job',
+                new PureInputData(
+                    name: 'TextForm[job]',
+                    value: '',
+                    label: 'Job',
+                    id: 'textform-job',
+                ),
             ],
         ];
     }
@@ -310,12 +434,17 @@ final class ThemeTest extends TestCase
     /**
      * @dataProvider dataText
      */
-    public function testText(string $expected, array $factoryParameters, string $attribute): void
+    public function testText(
+        string $expected,
+        array $factoryParameters,
+        PureInputData $inputData,
+        ?array $enricherResult = null,
+    ): void
     {
-        $this->initializeThemeContainer($factoryParameters);
+        $this->initializeThemeContainer($factoryParameters, $enricherResult);
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), $attribute))
+            ->inputData($inputData)
             ->render();
 
         $this->assertSame($expected, $result);
@@ -331,8 +460,15 @@ final class ThemeTest extends TestCase
             ],
         ]);
 
+        $inputData = new PureInputData(
+            id: 'textform-job',
+            label: 'Job',
+            name: 'TextForm[job]',
+            value: '',
+        );
+
         $result = Text::widget(theme: 'custom-theme')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->render();
 
         $this->assertSame(
@@ -344,59 +480,6 @@ final class ThemeTest extends TestCase
                 HTML,
             $result
         );
-    }
-
-    public function dataErrorSummary(): array
-    {
-        return [
-            'base' => [
-                <<<'HTML'
-                <div>
-                <p>Please fix the following errors:</p>
-                <ul>
-                <li>Value cannot be blank.</li>
-                </ul>
-                </div>
-                HTML,
-                [],
-            ],
-            'non-exists-common-methods' => [
-                <<<'HTML'
-                <div>
-                <p>Please fix the following errors:</p>
-                <ul>
-                <li>Value cannot be blank.</li>
-                </ul>
-                </div>
-                HTML,
-                [
-                    'template' => '{input}',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataErrorSummary
-     */
-    public function testErrorSummary(string $expected, array $factoryParameters): void
-    {
-        $factoryParameters = array_merge(
-            [
-                'fieldConfigs' => [
-                    ErrorSummary::class => [
-                        'onlyProperties()' => ['name'],
-                    ],
-                ],
-            ],
-            $factoryParameters
-        );
-
-        $this->initializeThemeContainer($factoryParameters);
-
-        $result = Field::errorSummary(ErrorSummaryForm::validated())->render();
-
-        $this->assertSame($expected, $result);
     }
 
     public function dataFieldSet(): array
@@ -421,7 +504,7 @@ final class ThemeTest extends TestCase
     {
         $this->initializeThemeContainer($factoryParameters);
 
-        $result = Field::fieldset()->render();
+        $result = Fieldset::widget()->render();
 
         $this->assertSame($expected, $result);
     }
@@ -500,7 +583,7 @@ final class ThemeTest extends TestCase
         $this->initializeThemeContainer($factoryParameters);
 
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData(new PureInputData(id: 'textform-job', label: 'Job'))
             ->render();
 
         $this->assertSame($expected, $result);
@@ -547,7 +630,9 @@ final class ThemeTest extends TestCase
     {
         $this->initializeThemeContainer($factoryParameters);
 
-        $result = Field::hint(new TextForm(), 'name')->render();
+        $result = Hint::widget()
+            ->content('Input your full name.')
+            ->render();
 
         $this->assertSame($expected, $result);
     }
@@ -593,18 +678,20 @@ final class ThemeTest extends TestCase
     {
         $this->initializeThemeContainer($factoryParameters);
 
-        $result = Field::error(TextForm::validated(), 'name')->render();
+        $result = Error::widget()
+            ->message('Value cannot be blank.')
+            ->render();
 
         $this->assertSame($expected, $result);
     }
 
-    private function initializeThemeContainer(array $parameters): void
+    private function initializeThemeContainer(array $parameters, ?array $enricherResult = null): void
     {
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
             ['default' => $parameters],
             defaultConfig: 'default',
-            validationRulesEnricher: new ValidationRulesEnricher(),
+            validationRulesEnricher: new StubValidationRulesEnricher($enricherResult),
         );
     }
 }
