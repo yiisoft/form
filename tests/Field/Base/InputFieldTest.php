@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
-use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -24,14 +22,14 @@ final class InputFieldTest extends TestCase
     public function testForm(): void
     {
         $result = StubInputField::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'company'))
+            ->name('company')
+            ->value('')
             ->form('CreatePost')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="textform-company">Company</label>
-            <input type="text" id="textform-company" name="TextForm[company]" value form="CreatePost">
+            <input type="text" name="company" value form="CreatePost">
             </div>
             HTML;
 
@@ -57,15 +55,15 @@ final class InputFieldTest extends TestCase
     public function testAddInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'company'))
+            ->name('company')
+            ->value('')
             ->addInputClass('main')
             ->addInputClass(...$class)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="textform-company">Company</label>
-            <input type="text" id="textform-company"$expectedClassAttribute name="TextForm[company]" value>
+            <input type="text"$expectedClassAttribute name="company" value>
             </div>
             HTML;
 
@@ -87,14 +85,14 @@ final class InputFieldTest extends TestCase
     public function testAddInputNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubInputField::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'company'))
+            ->name('company')
+            ->value('')
             ->addInputClass($class)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="textform-company">Company</label>
-            <input type="text" id="textform-company"$expectedClassAttribute name="TextForm[company]" value>
+            <input type="text"$expectedClassAttribute name="company" value>
             </div>
             HTML;
 
@@ -121,15 +119,15 @@ final class InputFieldTest extends TestCase
     public function testInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'company'))
+            ->name('company')
+            ->value('')
             ->inputClass('red')
             ->inputClass(...$class)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="textform-company">Company</label>
-            <input type="text" id="textform-company"$expectedClassAttribute name="TextForm[company]" value>
+            <input type="text"$expectedClassAttribute name="company" value>
             </div>
             HTML;
 

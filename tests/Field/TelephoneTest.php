@@ -6,11 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Telephone;
-use Yiisoft\Form\Tests\Support\Form\TelephoneForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,15 +18,21 @@ final class TelephoneTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
+        $inputData = new PureInputData(
+            name: 'TelephoneForm[number]',
+            value: '',
+            id: 'telephoneform-number',
+            label: 'Phone',
+            hint: 'Enter your phone.',
+        );
+
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'number'))
+            ->inputData($inputData)
             ->render();
 
         $expected = <<<HTML
@@ -45,14 +49,14 @@ final class TelephoneTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->maxlength(12)
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" maxlength="12">',
+            '<input type="tel" name="phone" maxlength="12">',
             $result
         );
     }
@@ -60,14 +64,14 @@ final class TelephoneTest extends TestCase
     public function testMinlength(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->minlength(7)
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" minlength="7">',
+            '<input type="tel" name="phone" minlength="7">',
             $result
         );
     }
@@ -75,14 +79,14 @@ final class TelephoneTest extends TestCase
     public function testPattern(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->pattern('\d+')
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" pattern="\d+">',
+            '<input type="tel" name="phone" pattern="\d+">',
             $result
         );
     }
@@ -90,14 +94,14 @@ final class TelephoneTest extends TestCase
     public function testReadonly(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->readonly()
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" readonly>',
+            '<input type="tel" name="phone" readonly>',
             $result
         );
     }
@@ -105,14 +109,14 @@ final class TelephoneTest extends TestCase
     public function testRequired(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->required()
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" required>',
+            '<input type="tel" name="phone" required>',
             $result
         );
     }
@@ -120,14 +124,14 @@ final class TelephoneTest extends TestCase
     public function testDisabled(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->disabled()
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" disabled>',
+            '<input type="tel" name="phone" disabled>',
             $result
         );
     }
@@ -135,14 +139,14 @@ final class TelephoneTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->ariaDescribedBy('hint')
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" aria-describedby="hint">',
+            '<input type="tel" name="phone" aria-describedby="hint">',
             $result
         );
     }
@@ -150,14 +154,14 @@ final class TelephoneTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->ariaLabel('test')
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" aria-label="test">',
+            '<input type="tel" name="phone" aria-label="test">',
             $result
         );
     }
@@ -165,14 +169,14 @@ final class TelephoneTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->autofocus()
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" autofocus>',
+            '<input type="tel" name="phone" autofocus>',
             $result
         );
     }
@@ -180,14 +184,14 @@ final class TelephoneTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->tabIndex(5)
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" tabindex="5">',
+            '<input type="tel" name="phone" tabindex="5">',
             $result
         );
     }
@@ -195,62 +199,21 @@ final class TelephoneTest extends TestCase
     public function testSize(): void
     {
         $result = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'main'))
+            ->name('phone')
             ->useContainer(false)
             ->hideLabel()
             ->size(9)
             ->render();
 
         $this->assertSame(
-            '<input type="tel" id="telephoneform-main" name="TelephoneForm[main]" size="9">',
+            '<input type="tel" name="phone" size="9">',
             $result
         );
     }
 
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="tel" id="telephoneform-office1" name="TelephoneForm[office1]" required>',
-                'office1',
-            ],
-            'has-length' => [
-                '<input type="tel" id="telephoneform-office2" name="TelephoneForm[office2]" maxlength="199" minlength="10">',
-                'office2',
-            ],
-            'regex' => [
-                '<input type="tel" id="telephoneform-code" name="TelephoneForm[code]" pattern="\w+">',
-                'code',
-            ],
-            'regex-not' => [
-                '<input type="tel" id="telephoneform-nocode" name="TelephoneForm[nocode]">',
-                'nocode',
-            ],
-            'required-with-when' => [
-                '<input type="tel" id="telephoneform-requiredwhen" name="TelephoneForm[requiredWhen]">',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), $attribute))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->useContainer(false);
-
-        $this->assertSame($expected, $field->render());
-    }
-
     public function testInvalidValue(): void
     {
-        $widget = Telephone::widget()
-            ->inputData(new FormModelInputData(new TelephoneForm(), 'age'));
+        $widget = Telephone::widget()->value(7);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Telephone field requires a string or null value.');

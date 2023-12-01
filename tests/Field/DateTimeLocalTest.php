@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\DateTimeLocal;
-use Yiisoft\Form\Tests\Support\Form\DateTimeLocalForm;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -23,17 +22,23 @@ final class DateTimeLocalTest extends TestCase
 
     public function testBase(): void
     {
-        $result = DateTimeLocal::widget()
-            ->inputData(new FormModelInputData(new DateTimeLocalForm(), 'partyDate'))
-            ->render();
+        $inputData = new PureInputData(
+            name: 'partyDate',
+            value: '2017-06-01T08:30',
+            label: 'Date of party',
+            hint: 'Party date.',
+            id: 'datetimelocalform-partydate',
+        );
 
-        $expected = <<<'HTML'
-        <div>
-        <label for="datetimelocalform-partydate">Date of party</label>
-        <input type="datetime-local" id="datetimelocalform-partydate" name="DateTimeLocalForm[partyDate]" value="2017-06-01T08:30">
-        <div>Party date.</div>
-        </div>
-        HTML;
+        $result = DateTimeLocal::widget()->inputData($inputData)->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="datetimelocalform-partydate">Date of party</label>
+            <input type="datetime-local" id="datetimelocalform-partydate" name="partyDate" value="2017-06-01T08:30">
+            <div>Party date.</div>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }

@@ -6,12 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Form\Tests\Support\Form\TextForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -21,135 +18,136 @@ final class TextTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'TextForm[name]',
+            value: '',
+            id: 'textform-name',
+            label: 'Name',
+            hint: 'Input your full name.',
+            placeholder: 'Typed your name here',
+            validationErrors: ['Value cannot be blank.'],
+        );
 
-        $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
-            ->render();
+        $result = Text::widget()->inputData($inputData)->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="textform-name">Name</label>
+            <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+            <div>Input your full name.</div>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testEmpty(): void
     {
-        $expected = <<<HTML
-        <div>
-        <input type="text">
-        </div>
-        HTML;
-
         $result = Text::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomName(): void
     {
-        $expected = <<<HTML
-        <div>
-        <input type="text" name="the-name">
-        </div>
-        HTML;
-
         $result = Text::widget()->name('the-name')->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="the-name">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomNameAfterInputData(): void
     {
-        $expected = <<<HTML
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="the-name" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('test', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->name('the-name')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="the-name" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomNameBeforeInputData(): void
     {
-        $expected = <<<HTML
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('test', '');
 
         $result = Text::widget()
             ->name('the-name')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="test" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomValueAfterInputData(): void
     {
-        $expected = <<<HTML
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value="42" placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('test', '42');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
-            ->value('42')
+            ->inputData($inputData)
+            ->value('7')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="test" value="7">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomValueBeforeInputData(): void
     {
-        $expected = <<<HTML
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('test', '42');
 
         $result = Text::widget()
-            ->value('42')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->value('7')
+            ->inputData($inputData)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="test" value="42">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInvalidValue(): void
     {
-        $widget = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'age'));
+        $widget = Text::widget()->value(7);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text field requires a string or null value.');
@@ -158,648 +156,713 @@ final class TextTest extends TestCase
 
     public function testWithoutContainer(): void
     {
-        $expected = <<<'HTML'
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->render();
 
-        $this->assertSame($expected, $result);
+        $this->assertSame('<input type="text" name="job" value>', $result);
     }
 
     public function testCustomContainerTag(): void
     {
-        $expected = <<<'HTML'
-        <section>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        </section>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->containerTag('section')
             ->render();
+
+        $expected = <<<HTML
+            <section>
+            <input type="text" name="job" value>
+            </section>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testEmptyContainerTag(): void
     {
+        $widget = Text::widget();
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
-        Text::widget()
-            ->inputData(new PureInputData())
-            ->containerTag('');
+        $widget->containerTag('');
     }
 
     public function testContainerAttributes(): void
     {
-        $expected = <<<'HTML'
-        <div id="main" class="wrapper">
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->containerAttributes(['class' => 'wrapper', 'id' => 'main'])
             ->render();
+
+        $expected = <<<HTML
+            <div id="main" class="wrapper">
+            <input type="text" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomTemplate(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <div class="wrap">
-        <div>Input your full name.</div>
-        <label for="textform-name">Name</label>
-        <div>Value cannot be blank.</div>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        </div>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'TextForm[name]',
+            value: '',
+            id: 'textform-name',
+            label: 'Name',
+            placeholder: 'Typed your name here',
+            hint: 'Input your full name.',
+            validationErrors: ['Value cannot be blank.'],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->template("<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>")
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div class="wrap">
+            <div>Input your full name.</div>
+            <label for="textform-name">Name</label>
+            <div>Value cannot be blank.</div>
+            <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+            </div>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomInputId(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="CustomID">Job</label>
-        <input type="text" id="CustomID" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            label: 'Job',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->inputId('CustomID')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="CustomID">Job</label>
+            <input type="text" id="CustomID" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testDoNotSetInputId(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label>Job</label>
-        <input type="text" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            label: 'Job',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->setInputId(false)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label>Job</label>
+            <input type="text" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomLabelConfig(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label>Your job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            id: 'job-id',
+            label: 'Job',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->labelConfig([
                 'setFor()' => [false],
                 'content()' => ['Your job'],
             ])
             ->render();
 
+        $expected = <<<HTML
+            <div>
+            <label>Your job</label>
+            <input type="text" id="job-id" name="job" value>
+            </div>
+            HTML;
+
         $this->assertSame($expected, $result);
     }
 
     public function testCustomLabel(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Your job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            label: 'Job',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->label('Your job')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label>Your job</label>
+            <input type="text" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomHintConfig(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        <b class="red">Input your full name.</b>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'TextForm[name]',
+            value: '',
+            hint: 'Input your full name.',
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'name'))
+            ->inputData($inputData)
             ->hintConfig([
                 'tag()' => ['b'],
                 'attributes()' => [['class' => 'red']],
             ])
             ->render();
 
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="TextForm[name]" value>
+            <b class="red">Input your full name.</b>
+            </div>
+            HTML;
+
         $this->assertSame($expected, $result);
     }
 
     public function testCustomHint(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Custom hint.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'TextForm[name]',
+            value: '',
+            hint: 'Input your full name.',
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'name'))
+            ->inputData($inputData)
             ->hint('Custom hint.')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="TextForm[name]" value>
+            <div>Custom hint.</div>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testCustomErrorConfig(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <b class="red">Value cannot be blank.</b>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'test',
+            validationErrors: ['Value cannot be blank.'],
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->errorConfig([
                 'tag()' => ['b'],
                 'attributes()' => [['class' => 'red']],
             ])
             ->render();
 
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="test">
+            <b class="red">Value cannot be blank.</b>
+            </div>
+            HTML;
+
         $this->assertSame($expected, $result);
     }
 
     public function testOverridePlaceholder(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Input your pretty name">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'TextForm[name]',
+            value: '',
+            placeholder: 'Your name',
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->placeholder('Input your pretty name')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="TextForm[name]" value placeholder="Input your pretty name">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testDoNotSetPlaceholder(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value>
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'TextForm[name]',
+            value: '',
+            placeholder: 'Your name',
+        );
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->usePlaceholder(false)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="TextForm[name]" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testAddInputAttributes(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" class="red" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->addInputAttributes(['class' => 'red'])
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" class="red" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInputAttributesOverridePlaceholderFromForm(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-name">Name</label>
-        <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Input your pretty name">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '', placeholder: 'Your name');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->inputAttributes(['placeholder' => 'Input your pretty name'])
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value placeholder="Input your pretty name">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInputAttributesOverrideIdFromForm(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="MyID">Name</label>
-        <input type="text" id="MyID" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('name', '', id: 'test-id', label: 'Name');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->inputAttributes(['id' => 'MyID'])
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="MyID">Name</label>
+            <input type="text" id="MyID" name="name" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInputIdOverrideIdFromAttributes(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="CustomID">Name</label>
-        <input type="text" id="CustomID" name="TextForm[name]" value placeholder="Typed your name here">
-        <div>Input your full name.</div>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('name', '', id: 'test-id', label: 'Name');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(TextForm::validated(), 'name'))
+            ->inputData($inputData)
             ->inputId('CustomID')
             ->inputAttributes(['id' => 'MyID'])
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="CustomID">Name</label>
+            <input type="text" id="CustomID" name="name" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testDirname(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value dirname="test">
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->dirname('test')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value dirname="test">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testMaxlength(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value maxlength="5">
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->maxlength(5)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value maxlength="5">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testMinlength(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value minlength="5">
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->minlength(5)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value minlength="5">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testPattern(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value pattern="[0-9]{3}">
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->pattern('[0-9]{3}')
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value pattern="[0-9]{3}">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testSize(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value size="12">
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->size(12)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value size="12">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testReadonly(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->readonly()
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value readonly>',
+            '<input type="text" name="job" value readonly>',
             $result
         );
     }
 
     public function testRequired(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->required()
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value required>',
+            '<input type="text" name="job" value required>',
             $result
         );
     }
 
     public function testDisabled(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->disabled()
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value disabled>',
+            '<input type="text" name="job" value disabled>',
             $result
         );
     }
 
     public function testAriaDescribedBy(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->ariaDescribedBy('hint')
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value aria-describedby="hint">',
+            '<input type="text" name="job" value aria-describedby="hint">',
             $result
         );
     }
 
     public function testAriaLabel(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->ariaLabel('test')
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value aria-label="test">',
+            '<input type="text" name="job" value aria-label="test">',
             $result
         );
     }
 
     public function testAutofocus(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->autofocus()
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value autofocus>',
+            '<input type="text" name="job" value autofocus>',
             $result
         );
     }
 
     public function testTabIndex(): void
     {
+        $inputData = new PureInputData('job', '');
+
         $result = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
             ->tabIndex(5)
             ->render();
 
         $this->assertSame(
-            '<input type="text" id="textform-job" name="TextForm[job]" value tabindex="5">',
+            '<input type="text" name="job" value tabindex="5">',
             $result
         );
     }
 
     public function testValidationClassForNonValidatedForm(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData('job', '');
 
         $result = Text::widget()
             ->invalidClass('invalid')
             ->validClass('valid')
-            ->inputData(new FormModelInputData(new TextForm(), 'job'))
+            ->inputData($inputData)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInvalidClass(): void
     {
-        $expected = <<<'HTML'
-        <div class="invalid">
-        <label for="textform-company">Company</label>
-        <input type="text" id="textform-company" name="TextForm[company]" value>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'company',
+            value: '',
+            validationErrors: ['Value cannot be blank.'],
+        );
 
         $result = Text::widget()
             ->invalidClass('invalid')
             ->validClass('valid')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'company'))
+            ->inputData($inputData)
             ->render();
+
+        $expected = <<<HTML
+            <div class="invalid">
+            <input type="text" name="company" value>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testValidClass(): void
     {
-        $expected = <<<'HTML'
-        <div class="valid">
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
             ->invalidClass('invalid')
             ->validClass('valid')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->render();
+
+        $expected = <<<HTML
+            <div class="valid">
+            <input type="text" name="job" value>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInputInvalidClass(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-company">Company</label>
-        <input type="text" id="textform-company" class="invalid" name="TextForm[company]" value>
-        <div>Value cannot be blank.</div>
-        </div>
-        HTML;
+        $inputData = new PureInputData('company', '', validationErrors: ['Value cannot be blank.']);
 
         $result = Text::widget()
             ->inputInvalidClass('invalid')
             ->inputValidClass('valid')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'company'))
+            ->inputData($inputData)
             ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" class="invalid" name="company" value>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
 
     public function testInputValidClass(): void
     {
-        $expected = <<<'HTML'
-        <div>
-        <label for="textform-job">Job</label>
-        <input type="text" id="textform-job" class="valid" name="TextForm[job]" value>
-        </div>
-        HTML;
+        $inputData = new PureInputData(
+            name: 'job',
+            value: '',
+            validationErrors: [],
+        );
 
         $result = Text::widget()
             ->inputInvalidClass('invalid')
             ->inputValidClass('valid')
-            ->inputData(new FormModelInputData(TextForm::validated(), 'job'))
+            ->inputData($inputData)
             ->render();
 
+        $expected = <<<HTML
+            <div>
+            <input type="text" class="valid" name="job" value>
+            </div>
+            HTML;
+
         $this->assertSame($expected, $result);
-    }
-
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="text" id="textform-company" name="TextForm[company]" value required>',
-                'company',
-            ],
-            'has-length' => [
-                '<input type="text" id="textform-shortdesc" name="TextForm[shortdesc]" value maxlength="199" minlength="10">',
-                'shortdesc',
-            ],
-            'regex' => [
-                '<input type="text" id="textform-code" name="TextForm[code]" value pattern="\w+">',
-                'code',
-            ],
-            'regex-not' => [
-                '<input type="text" id="textform-nocode" name="TextForm[nocode]" value>',
-                'nocode',
-            ],
-            'required-with-when' => [
-                '<input type="text" id="textform-requiredwhen" name="TextForm[requiredWhen]">',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Text::widget()
-            ->inputData(new FormModelInputData(new TextForm(), $attribute))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->useContainer(false);
-
-        $this->assertSame($expected, $field->render());
     }
 
     public function testImmutability(): void

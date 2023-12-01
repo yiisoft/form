@@ -6,12 +6,10 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Range;
-use Yiisoft\Form\Tests\Support\Form\RangeForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -21,15 +19,20 @@ final class RangeTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
+        $inputData = new PureInputData(
+            name: 'RangeForm[volume]',
+            value: 23,
+            label: 'Volume level',
+            id: 'rangeform-volume',
+        );
+
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
+            ->inputData($inputData)
             ->min(1)
             ->max(100)
             ->render();
@@ -47,7 +50,8 @@ final class RangeTest extends TestCase
     public function testAddOutputAttributes(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
+            ->name('volume')
+            ->value(23)
             ->showOutput()
             ->addOutputAttributes(['class' => 'red'])
             ->addOutputAttributes(['id' => 'UID'])
@@ -55,8 +59,7 @@ final class RangeTest extends TestCase
 
         $expected = <<<HTML_WRAP
 <div>
-<label for="rangeform-volume">Volume level</label>
-<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input type="range" name="volume" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <span id="UID" class="red">23</span>
 </div>
 HTML_WRAP;
@@ -67,7 +70,8 @@ HTML_WRAP;
     public function testOutputAttributes(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
+            ->name('volume')
+            ->value(23)
             ->showOutput()
             ->outputAttributes(['class' => 'red'])
             ->outputAttributes(['id' => 'UID'])
@@ -75,8 +79,7 @@ HTML_WRAP;
 
         $expected = <<<HTML_WRAP
 <div>
-<label for="rangeform-volume">Volume level</label>
-<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input type="range" name="volume" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <span id="UID">23</span>
 </div>
 HTML_WRAP;
@@ -87,7 +90,8 @@ HTML_WRAP;
     public function testWithOutput(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
+            ->name('volume')
+            ->value(23)
             ->min(1)
             ->max(100)
             ->showOutput()
@@ -96,8 +100,7 @@ HTML_WRAP;
 
         $expected = <<<HTML_WRAP
 <div>
-<label for="rangeform-volume">Volume level</label>
-<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input type="range" name="volume" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <span id="UID">23</span>
 </div>
 HTML_WRAP;
@@ -108,7 +111,8 @@ HTML_WRAP;
     public function testCustomOutputTag(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'volume'))
+            ->name('volume')
+            ->value(23)
             ->showOutput()
             ->outputTag('div')
             ->outputAttributes(['id' => 'UID'])
@@ -116,8 +120,7 @@ HTML_WRAP;
 
         $expected = <<<HTML_WRAP
 <div>
-<label for="rangeform-volume">Volume level</label>
-<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input type="range" name="volume" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <div id="UID">23</div>
 </div>
 HTML_WRAP;
@@ -138,23 +141,23 @@ HTML_WRAP;
     {
         return [
             'int' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" max="42">',
+                '<input type="range" name="count" max="42">',
                 42,
             ],
             'string' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" max="53">',
+                '<input type="range" name="count" max="53">',
                 '53',
             ],
             'float' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" max="5.9">',
+                '<input type="range" name="count" max="5.9">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" max="7">',
+                '<input type="range" name="count" max="7">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]">',
+                '<input type="range" name="count">',
                 null,
             ],
         ];
@@ -166,7 +169,7 @@ HTML_WRAP;
     public function testMax(string $expected, $value): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->max($value)
@@ -179,23 +182,23 @@ HTML_WRAP;
     {
         return [
             'int' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" min="42">',
+                '<input type="range" name="count" min="42">',
                 42,
             ],
             'string' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" min="53">',
+                '<input type="range" name="count" min="53">',
                 '53',
             ],
             'float' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" min="5.9">',
+                '<input type="range" name="count" min="5.9">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" min="7">',
+                '<input type="range" name="count" min="7">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]">',
+                '<input type="range" name="count">',
                 null,
             ],
         ];
@@ -207,7 +210,7 @@ HTML_WRAP;
     public function testMin(string $expected, $value): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->min($value)
@@ -220,23 +223,23 @@ HTML_WRAP;
     {
         return [
             'int' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" step="42">',
+                '<input type="range" name="count" step="42">',
                 42,
             ],
             'string' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" step="53">',
+                '<input type="range" name="count" step="53">',
                 '53',
             ],
             'float' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" step="5.9">',
+                '<input type="range" name="count" step="5.9">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" step="7">',
+                '<input type="range" name="count" step="7">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]">',
+                '<input type="range" name="count">',
                 null,
             ],
         ];
@@ -248,7 +251,7 @@ HTML_WRAP;
     public function testStep(string $expected, $value): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->step($value)
@@ -260,14 +263,14 @@ HTML_WRAP;
     public function testList(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->list('TheList')
             ->render();
 
         $this->assertSame(
-            '<input type="range" id="rangeform-count" name="RangeForm[count]" list="TheList">',
+            '<input type="range" name="count" list="TheList">',
             $result
         );
     }
@@ -275,14 +278,14 @@ HTML_WRAP;
     public function testDisabled(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
             ->render();
 
         $this->assertSame(
-            '<input type="range" id="rangeform-count" name="RangeForm[count]" disabled>',
+            '<input type="range" name="count" disabled>',
             $result
         );
     }
@@ -290,14 +293,14 @@ HTML_WRAP;
     public function testAriaDescribedBy(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
             ->render();
 
         $this->assertSame(
-            '<input type="range" id="rangeform-count" name="RangeForm[count]" aria-describedby="hint">',
+            '<input type="range" name="count" aria-describedby="hint">',
             $result
         );
     }
@@ -305,14 +308,14 @@ HTML_WRAP;
     public function testAriaLabel(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
             ->render();
 
         $this->assertSame(
-            '<input type="range" id="rangeform-count" name="RangeForm[count]" aria-label="test">',
+            '<input type="range" name="count" aria-label="test">',
             $result
         );
     }
@@ -320,14 +323,14 @@ HTML_WRAP;
     public function testAutofocus(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->autofocus()
             ->render();
 
         $this->assertSame(
-            '<input type="range" id="rangeform-count" name="RangeForm[count]" autofocus>',
+            '<input type="range" name="count" autofocus>',
             $result
         );
     }
@@ -335,54 +338,21 @@ HTML_WRAP;
     public function testTabIndex(): void
     {
         $result = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'count'))
+            ->name('count')
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(5)
             ->render();
 
         $this->assertSame(
-            '<input type="range" id="rangeform-count" name="RangeForm[count]" tabindex="5">',
+            '<input type="range" name="count" tabindex="5">',
             $result
         );
     }
 
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" required>',
-                'volume',
-            ],
-            'number' => [
-                '<input type="range" id="rangeform-count" name="RangeForm[count]" min="1" max="9">',
-                'count',
-            ],
-            'required-with-when' => [
-                '<input type="range" id="rangeform-requiredwhen" name="RangeForm[requiredWhen]">',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), $attribute))
-            ->hideLabel()
-            ->useContainer(false)
-            ->enrichFromValidationRules(true);
-
-        $this->assertSame($expected, $field->render());
-    }
-
     public function testInvalidValue(): void
     {
-        $field = Range::widget()
-            ->inputData(new FormModelInputData(new RangeForm(), 'flag'));
+        $field = Range::widget()->value([]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range field requires a string, numeric or null value.');

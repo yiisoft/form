@@ -6,11 +6,8 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
-use Yiisoft\Form\Tests\Support\Form\DateForm;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,24 +17,22 @@ final class DateTimeInputFieldTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testMax(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->max('2030-12-31')
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" max="2030-12-31">
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" max="2030-12-31">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -45,16 +40,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testMin(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->min('1999-01-01')
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" min="1999-01-01">
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" min="1999-01-01">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -62,16 +57,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->ariaDescribedBy('hint')
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" aria-describedby="hint">
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" aria-describedby="hint">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -79,16 +74,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->ariaLabel('test')
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" aria-label="test">
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" aria-label="test">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -96,16 +91,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testAutofocus(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->autofocus()
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" autofocus>
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" autofocus>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -113,16 +108,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testTabIndex(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->tabIndex(5)
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" tabindex="5">
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" tabindex="5">
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -130,16 +125,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testReadonly(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->readonly()
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" readonly>
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" readonly>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -147,16 +142,16 @@ final class DateTimeInputFieldTest extends TestCase
     public function testRequired(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->required()
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" required>
-        </div>
-        HTML;
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" name="releaseDate" required>
+            </div>
+            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -164,48 +159,14 @@ final class DateTimeInputFieldTest extends TestCase
     public function testDisabled(): void
     {
         $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'endDate'))
+            ->name('releaseDate')
             ->hideLabel()
             ->disabled()
             ->render();
 
-        $expected = <<<'HTML'
-        <div>
-        <input type="datetime" id="dateform-enddate" name="DateForm[endDate]" disabled>
-        </div>
-        HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testEnrichFromValidationRules(): void
-    {
-        $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'main'))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->render();
-
         $expected = <<<HTML
             <div>
-            <input type="datetime" id="dateform-main" name="DateForm[main]" required>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testEnrichFromValidationRulesWithWhen(): void
-    {
-        $result = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'second'))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="datetime" id="dateform-second" name="DateForm[second]">
+            <input type="datetime" name="releaseDate" disabled>
             </div>
             HTML;
 
@@ -214,8 +175,7 @@ final class DateTimeInputFieldTest extends TestCase
 
     public function testInvalidValue(): void
     {
-        $widget = StubDateTimeInputField::widget()
-            ->inputData(new FormModelInputData(new DateForm(), 'age'));
+        $widget = StubDateTimeInputField::widget()->value(7);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('StubDateTimeInputField field requires a string or null value.');

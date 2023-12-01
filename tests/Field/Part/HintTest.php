@@ -6,10 +6,8 @@ namespace Yiisoft\Form\Tests\Field\Part;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Part\Hint;
-use Yiisoft\Form\Tests\Support\Form\HintForm;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -25,18 +23,16 @@ final class HintTest extends TestCase
 
     public function testBase(): void
     {
-        $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
-            ->render();
+        $inputData = new PureInputData(hint: 'Write your name.');
+
+        $result = Hint::widget()->inputData($inputData)->render();
 
         $this->assertSame('<div>Write your name.</div>', $result);
     }
 
-    public function testAttributeWithoutHint(): void
+    public function testEmpty(): void
     {
-        $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'age'))
-            ->render();
+        $result = Hint::widget()->render();
 
         $this->assertSame('', $result);
     }
@@ -44,7 +40,7 @@ final class HintTest extends TestCase
     public function testCustomTag(): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->tag('b')
             ->render();
 
@@ -61,7 +57,7 @@ final class HintTest extends TestCase
     public function testAddAttributes(): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->addAttributes(['class' => 'red'])
             ->addAttributes(['data-number' => 18])
             ->render();
@@ -72,7 +68,7 @@ final class HintTest extends TestCase
     public function testAttributes(): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->attributes(['class' => 'red'])
             ->attributes(['data-number' => 18])
             ->render();
@@ -94,7 +90,7 @@ final class HintTest extends TestCase
     public function testId(string $expectedId, ?string $id): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->id($id)
             ->render();
 
@@ -122,7 +118,7 @@ final class HintTest extends TestCase
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->addClass('main')
             ->addClass(...$class)
             ->render();
@@ -147,7 +143,7 @@ final class HintTest extends TestCase
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->addClass($class)
             ->render();
 
@@ -176,7 +172,7 @@ final class HintTest extends TestCase
     public function testClass(string $expectedClassAttribute, array $class): void
     {
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->content('Write your name.')
             ->class('red')
             ->class(...$class)
             ->render();
@@ -188,8 +184,10 @@ final class HintTest extends TestCase
 
     public function testCustomContent(): void
     {
+        $inputData = new PureInputData(hint: 'Write your name.');
+
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->inputData($inputData)
             ->content('Override hint.')
             ->render();
 
@@ -198,8 +196,10 @@ final class HintTest extends TestCase
 
     public function testEmptyContent(): void
     {
+        $inputData = new PureInputData(hint: 'Write your name.');
+
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->inputData($inputData)
             ->content('')
             ->render();
 
@@ -208,8 +208,10 @@ final class HintTest extends TestCase
 
     public function testEncode(): void
     {
+        $inputData = new PureInputData(hint: 'Write your name.');
+
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->inputData($inputData)
             ->content('your name >')
             ->render();
 
@@ -218,8 +220,10 @@ final class HintTest extends TestCase
 
     public function testWithoutEncode(): void
     {
+        $inputData = new PureInputData(hint: 'Write your name.');
+
         $result = Hint::widget()
-            ->inputData(new FormModelInputData(new HintForm(), 'name'))
+            ->inputData($inputData)
             ->content('<b>your name</b>')
             ->encode(false)
             ->render();

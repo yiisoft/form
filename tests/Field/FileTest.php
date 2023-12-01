@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\File;
-use Yiisoft\Form\Tests\Support\Form\FileForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -19,21 +17,23 @@ final class FileTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
-        $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
-            ->render();
+        $inputData = new PureInputData(
+            name: 'avatar',
+            id: 'id-test',
+            label: 'Avatar',
+        );
+
+        $result = File::widget()->inputData($inputData)->render();
 
         $expected = <<<HTML
             <div>
-            <label for="fileform-avatar">Avatar</label>
-            <input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            <label for="id-test">Avatar</label>
+            <input type="file" id="id-test" name="avatar">
             </div>
             HTML;
 
@@ -43,14 +43,14 @@ final class FileTest extends TestCase
     public function testAccept(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->accept('.png,.jpg')
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" accept=".png,.jpg">',
+            '<input type="file" name="avatar" accept=".png,.jpg">',
             $result
         );
     }
@@ -58,14 +58,14 @@ final class FileTest extends TestCase
     public function testMultiple(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->multiple()
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" multiple>',
+            '<input type="file" name="avatar" multiple>',
             $result
         );
     }
@@ -73,14 +73,14 @@ final class FileTest extends TestCase
     public function testRequired(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->required()
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" required>',
+            '<input type="file" name="avatar" required>',
             $result
         );
     }
@@ -88,14 +88,14 @@ final class FileTest extends TestCase
     public function testDisabled(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" disabled>',
+            '<input type="file" name="avatar" disabled>',
             $result
         );
     }
@@ -103,14 +103,14 @@ final class FileTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" aria-describedby="hint">',
+            '<input type="file" name="avatar" aria-describedby="hint">',
             $result
         );
     }
@@ -118,14 +118,14 @@ final class FileTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" aria-label="test">',
+            '<input type="file" name="avatar" aria-label="test">',
             $result
         );
     }
@@ -133,14 +133,14 @@ final class FileTest extends TestCase
     public function testTabIndex(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(3)
             ->render();
 
         $this->assertSame(
-            '<input type="file" id="fileform-avatar" name="FileForm[avatar]" tabindex="3">',
+            '<input type="file" name="avatar" tabindex="3">',
             $result
         );
     }
@@ -148,14 +148,14 @@ final class FileTest extends TestCase
     public function testUncheckValue(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->uncheckValue('0')
             ->render();
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="FileForm[avatar]" value="0"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            <input type="hidden" name="avatar" value="0"><input type="file" name="avatar">
             </div>
             HTML;
 
@@ -165,7 +165,7 @@ final class FileTest extends TestCase
     public function testUncheckValueDisabled(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->uncheckValue('0')
             ->disabled()
@@ -173,7 +173,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="FileForm[avatar]" value="0" disabled><input type="file" id="fileform-avatar" name="FileForm[avatar]" disabled>
+            <input type="hidden" name="avatar" value="0" disabled><input type="file" name="avatar" disabled>
             </div>
             HTML;
 
@@ -183,7 +183,7 @@ final class FileTest extends TestCase
     public function testUncheckValueForm(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->uncheckValue('0')
             ->form('CreatePost')
@@ -191,7 +191,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="FileForm[avatar]" value="0" form="CreatePost"><input type="file" id="fileform-avatar" name="FileForm[avatar]" form="CreatePost">
+            <input type="hidden" name="avatar" value="0" form="CreatePost"><input type="file" name="avatar" form="CreatePost">
             </div>
             HTML;
 
@@ -201,7 +201,7 @@ final class FileTest extends TestCase
     public function testAddUncheckInputAttributes(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->uncheckValue('0')
             ->addUncheckInputAttributes(['data-key' => '100'])
@@ -210,7 +210,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" id="TEST" name="FileForm[avatar]" value="0" data-key="100"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
+            <input type="hidden" id="TEST" name="avatar" value="0" data-key="100"><input type="file" name="avatar">
             </div>
             HTML;
 
@@ -220,7 +220,7 @@ final class FileTest extends TestCase
     public function testUncheckInputAttributes(): void
     {
         $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'avatar'))
+            ->name('avatar')
             ->hideLabel()
             ->uncheckValue('0')
             ->uncheckInputAttributes(['data-key' => '100'])
@@ -229,41 +229,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" id="TEST" name="FileForm[avatar]" value="0"><input type="file" id="fileform-avatar" name="FileForm[avatar]">
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testEnrichFromValidationRules(): void
-    {
-        $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'image'))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="file" id="fileform-image" name="FileForm[image]" required>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testEnrichFromValidationRulesWithWhen(): void
-    {
-        $result = File::widget()
-            ->inputData(new FormModelInputData(new FileForm(), 'photo'))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="file" id="fileform-photo" name="FileForm[photo]">
+            <input type="hidden" id="TEST" name="avatar" value="0"><input type="file" name="avatar">
             </div>
             HTML;
 

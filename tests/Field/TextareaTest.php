@@ -6,11 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Textarea;
-use Yiisoft\Form\Tests\Support\Form\TextareaForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,21 +18,21 @@ final class TextareaTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testTextarea(): void
     {
+        $inputData = new PureInputData('desc', id: 'test-id', label: 'Description');
+
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->inputData($inputData)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label for="textareaform-desc">Description</label>
-            <textarea id="textareaform-desc" name="TextareaForm[desc]"></textarea>
+            <label for="test-id">Description</label>
+            <textarea id="test-id" name="desc"></textarea>
             </div>
             HTML;
 
@@ -44,14 +42,14 @@ final class TextareaTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->maxlength(100)
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" maxlength="100"></textarea>',
+            '<textarea name="TextareaForm[desc]" maxlength="100"></textarea>',
             $result
         );
     }
@@ -59,14 +57,14 @@ final class TextareaTest extends TestCase
     public function testMinlength(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->minlength(7)
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" minlength="7"></textarea>',
+            '<textarea name="TextareaForm[desc]" minlength="7"></textarea>',
             $result
         );
     }
@@ -74,14 +72,14 @@ final class TextareaTest extends TestCase
     public function testDirname(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->dirname('test')
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" dirname="test"></textarea>',
+            '<textarea name="TextareaForm[desc]" dirname="test"></textarea>',
             $result
         );
     }
@@ -89,14 +87,14 @@ final class TextareaTest extends TestCase
     public function testReadonly(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->readonly()
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" readonly></textarea>',
+            '<textarea name="TextareaForm[desc]" readonly></textarea>',
             $result
         );
     }
@@ -104,14 +102,14 @@ final class TextareaTest extends TestCase
     public function testRequired(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->required()
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" required></textarea>',
+            '<textarea name="TextareaForm[desc]" required></textarea>',
             $result
         );
     }
@@ -119,14 +117,14 @@ final class TextareaTest extends TestCase
     public function testDisabled(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" disabled></textarea>',
+            '<textarea name="TextareaForm[desc]" disabled></textarea>',
             $result
         );
     }
@@ -134,14 +132,14 @@ final class TextareaTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" aria-describedby="hint"></textarea>',
+            '<textarea name="TextareaForm[desc]" aria-describedby="hint"></textarea>',
             $result
         );
     }
@@ -149,14 +147,14 @@ final class TextareaTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" aria-label="test"></textarea>',
+            '<textarea name="TextareaForm[desc]" aria-label="test"></textarea>',
             $result
         );
     }
@@ -164,14 +162,14 @@ final class TextareaTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->autofocus()
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" autofocus></textarea>',
+            '<textarea name="TextareaForm[desc]" autofocus></textarea>',
             $result
         );
     }
@@ -179,14 +177,14 @@ final class TextareaTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(5)
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" tabindex="5"></textarea>',
+            '<textarea name="TextareaForm[desc]" tabindex="5"></textarea>',
             $result
         );
     }
@@ -194,14 +192,14 @@ final class TextareaTest extends TestCase
     public function testCols(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->cols(12)
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" cols="12"></textarea>',
+            '<textarea name="TextareaForm[desc]" cols="12"></textarea>',
             $result
         );
     }
@@ -209,14 +207,14 @@ final class TextareaTest extends TestCase
     public function testRows(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
             ->rows(7)
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" rows="7"></textarea>',
+            '<textarea name="TextareaForm[desc]" rows="7"></textarea>',
             $result
         );
     }
@@ -224,58 +222,25 @@ final class TextareaTest extends TestCase
     public function testWrap(): void
     {
         $result = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'desc'))
+            ->name('desc')
             ->hideLabel()
             ->useContainer(false)
             ->wrap('hard')
             ->render();
 
         $this->assertSame(
-            '<textarea id="textareaform-desc" name="TextareaForm[desc]" wrap="hard"></textarea>',
+            '<textarea name="desc" wrap="hard"></textarea>',
             $result
         );
     }
 
     public function testInvalidValue(): void
     {
-        $widget = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), 'age'));
+        $widget = Textarea::widget()->value(7);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Textarea field requires a string or null value.');
         $widget->render();
-    }
-
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<textarea id="textareaform-bio" name="TextareaForm[bio]" required></textarea>',
-                'bio',
-            ],
-            'has-length' => [
-                '<textarea id="textareaform-shortdesc" name="TextareaForm[shortdesc]" maxlength="199" minlength="10"></textarea>',
-                'shortdesc',
-            ],
-            'required-with-when' => [
-                '<textarea id="textareaform-requiredwhen" name="TextareaForm[requiredWhen]"></textarea>',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Textarea::widget()
-            ->inputData(new FormModelInputData(new TextareaForm(), $attribute))
-            ->hideLabel()
-            ->useContainer(false)
-            ->enrichFromValidationRules(true);
-
-        $this->assertSame($expected, $field->render());
     }
 
     public function testImmutability(): void

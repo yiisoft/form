@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Part;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Part\Label;
-use Yiisoft\Form\Tests\Support\Form\LabelForm;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -24,33 +23,33 @@ final class LabelTest extends TestCase
 
     public function testBase(): void
     {
-        $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
-            ->render();
+        $inputData = new PureInputData(label: 'Name', id: 'id-test');
 
-        $this->assertSame('<label for="labelform-name">Name</label>', $result);
+        $result = Label::widget()->inputData($inputData)->render();
+
+        $this->assertSame('<label for="id-test">Name</label>', $result);
     }
 
     public function testAddAttributes(): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->addAttributes(['class' => 'red'])
             ->addAttributes(['data-number' => 18])
             ->render();
 
-        $this->assertSame('<label class="red" data-number="18" for="labelform-name">Name</label>', $result);
+        $this->assertSame('<label class="red" data-number="18">Name</label>', $result);
     }
 
     public function testAttributes(): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->attributes(['class' => 'red'])
             ->attributes(['data-number' => 18])
             ->render();
 
-        $this->assertSame('<label data-number="18" for="labelform-name">Name</label>', $result);
+        $this->assertSame('<label data-number="18">Name</label>', $result);
     }
 
     public function dataId(): array
@@ -67,11 +66,11 @@ final class LabelTest extends TestCase
     public function testId(string $expectedId, ?string $id): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->id($id)
             ->render();
 
-        $expected = '<label' . $expectedId . ' for="labelform-name">Name</label>';
+        $expected = '<label' . $expectedId . '>Name</label>';
 
         $this->assertSame($expected, $result);
     }
@@ -95,12 +94,12 @@ final class LabelTest extends TestCase
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->addClass('main')
             ->addClass(...$class)
             ->render();
 
-        $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
+        $expected = '<label' . $expectedClassAttribute . '>Name</label>';
 
         $this->assertSame($expected, $result);
     }
@@ -120,11 +119,11 @@ final class LabelTest extends TestCase
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->addClass($class)
             ->render();
 
-        $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
+        $expected = '<label' . $expectedClassAttribute . '>Name</label>';
 
         $this->assertSame($expected, $result);
     }
@@ -149,12 +148,12 @@ final class LabelTest extends TestCase
     public function testClass(string $expectedClassAttribute, array $class): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->class('red')
             ->class(...$class)
             ->render();
 
-        $expected = '<label' . $expectedClassAttribute . ' for="labelform-name">Name</label>';
+        $expected = '<label' . $expectedClassAttribute . '>Name</label>';
 
         $this->assertSame($expected, $result);
     }
@@ -162,7 +161,7 @@ final class LabelTest extends TestCase
     public function testDoNotSetFor(): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->setFor(false)
             ->render();
 
@@ -171,8 +170,10 @@ final class LabelTest extends TestCase
 
     public function customFor(): void
     {
+        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->forId('MyID')
             ->render();
 
@@ -182,7 +183,7 @@ final class LabelTest extends TestCase
     public function testDoNotUseInputId(): void
     {
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->content('Name')
             ->useInputId(false)
             ->render();
 
@@ -191,8 +192,10 @@ final class LabelTest extends TestCase
 
     public function testCustomForWithDoNotUseInputId(): void
     {
+        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->useInputId(false)
             ->forId('MyID')
             ->render();
@@ -202,8 +205,10 @@ final class LabelTest extends TestCase
 
     public function testCustomContent(): void
     {
+        $inputData = new PureInputData(label: 'Name', id: 'labelform-name');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->content('Your name')
             ->render();
 
@@ -212,8 +217,10 @@ final class LabelTest extends TestCase
 
     public function testEmptyContent(): void
     {
+        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->content('')
             ->render();
 
@@ -222,28 +229,34 @@ final class LabelTest extends TestCase
 
     public function testContentAsStringableObject(): void
     {
+        $inputData = new PureInputData(label: 'Name');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->content(new StringableObject('Your name'))
             ->render();
 
-        $this->assertSame('<label for="labelform-name">Your name</label>', $result);
+        $this->assertSame('<label>Your name</label>', $result);
     }
 
     public function testEncode(): void
     {
+        $inputData = new PureInputData(label: 'Name');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->content('Your name >')
             ->render();
 
-        $this->assertSame('<label for="labelform-name">Your name &gt;</label>', $result);
+        $this->assertSame('<label>Your name &gt;</label>', $result);
     }
 
     public function testWithoutEncode(): void
     {
+        $inputData = new PureInputData(label: 'Name', id: 'labelform-name');
+
         $result = Label::widget()
-            ->inputData(new FormModelInputData(new LabelForm(), 'name'))
+            ->inputData($inputData)
             ->content('<b>Name</b>')
             ->encode(false)
             ->render();

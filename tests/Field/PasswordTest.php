@@ -6,11 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\YiisoftFormModel\FormModelInputData;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Password;
-use Yiisoft\Form\Tests\Support\Form\PasswordForm;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\YiisoftFormModel\ValidationRulesEnricher;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
 
@@ -20,15 +18,21 @@ final class PasswordTest extends TestCase
     {
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
-        ThemeContainer::initialize(
-            validationRulesEnricher: new ValidationRulesEnricher()
-        );
+        ThemeContainer::initialize();
     }
 
     public function testBase(): void
     {
+        $inputData = new PureInputData(
+            name: 'PasswordForm[old]',
+            value: '',
+            label: 'Old password',
+            hint: 'Enter your old password.',
+            id: 'passwordform-old',
+        );
+
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'old'))
+            ->inputData($inputData)
             ->render();
 
         $expected = <<<HTML
@@ -45,14 +49,14 @@ final class PasswordTest extends TestCase
     public function testMaxlength(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->maxlength(9)
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" maxlength="9">',
+            '<input type="password" name="newPassword" maxlength="9">',
             $result
         );
     }
@@ -60,14 +64,14 @@ final class PasswordTest extends TestCase
     public function testMinlength(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->minlength(3)
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" minlength="3">',
+            '<input type="password" name="newPassword" minlength="3">',
             $result
         );
     }
@@ -75,14 +79,14 @@ final class PasswordTest extends TestCase
     public function testPattern(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->pattern('\d+')
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" pattern="\d+">',
+            '<input type="password" name="newPassword" pattern="\d+">',
             $result
         );
     }
@@ -90,14 +94,14 @@ final class PasswordTest extends TestCase
     public function testReadonly(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->readonly()
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" readonly>',
+            '<input type="password" name="newPassword" readonly>',
             $result
         );
     }
@@ -105,14 +109,14 @@ final class PasswordTest extends TestCase
     public function testRequired(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->required()
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" required>',
+            '<input type="password" name="newPassword" required>',
             $result
         );
     }
@@ -120,14 +124,14 @@ final class PasswordTest extends TestCase
     public function testDisabled(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->disabled()
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" disabled>',
+            '<input type="password" name="newPassword" disabled>',
             $result
         );
     }
@@ -135,14 +139,14 @@ final class PasswordTest extends TestCase
     public function testAriaDescribedBy(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->ariaDescribedBy('hint')
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" aria-describedby="hint">',
+            '<input type="password" name="newPassword" aria-describedby="hint">',
             $result
         );
     }
@@ -150,14 +154,14 @@ final class PasswordTest extends TestCase
     public function testAriaLabel(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->ariaLabel('test')
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" aria-label="test">',
+            '<input type="password" name="newPassword" aria-label="test">',
             $result
         );
     }
@@ -165,14 +169,14 @@ final class PasswordTest extends TestCase
     public function testAutofocus(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->autofocus()
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" autofocus>',
+            '<input type="password" name="newPassword" autofocus>',
             $result
         );
     }
@@ -180,14 +184,14 @@ final class PasswordTest extends TestCase
     public function testTabIndex(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->tabIndex(4)
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" tabindex="4">',
+            '<input type="password" name="newPassword" tabindex="4">',
             $result
         );
     }
@@ -195,65 +199,24 @@ final class PasswordTest extends TestCase
     public function testSize(): void
     {
         $result = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'post'))
+            ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
             ->size(7)
             ->render();
 
         $this->assertSame(
-            '<input type="password" id="passwordform-post" name="PasswordForm[post]" size="7">',
+            '<input type="password" name="newPassword" size="7">',
             $result
         );
     }
 
     public function testInvalidValue(): void
     {
-        $widget = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), 'age'));
+        $widget = Password::widget()->value(42);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Password field requires a string or null value.');
         $widget->render();
-    }
-
-    public function dataEnrichFromValidationRules(): array
-    {
-        return [
-            'required' => [
-                '<input type="password" id="passwordform-entry1" name="PasswordForm[entry1]" required>',
-                'entry1',
-            ],
-            'has-length' => [
-                '<input type="password" id="passwordform-entry2" name="PasswordForm[entry2]" maxlength="199" minlength="10">',
-                'entry2',
-            ],
-            'regex' => [
-                '<input type="password" id="passwordform-code" name="PasswordForm[code]" pattern="\w+">',
-                'code',
-            ],
-            'regex-not' => [
-                '<input type="password" id="passwordform-nocode" name="PasswordForm[nocode]">',
-                'nocode',
-            ],
-            'required-with-when' => [
-                '<input type="password" id="passwordform-requiredwhen" name="PasswordForm[requiredWhen]">',
-                'requiredWhen',
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider dataEnrichFromValidationRules
-     */
-    public function testEnrichFromValidationRules(string $expected, string $attribute): void
-    {
-        $field = Password::widget()
-            ->inputData(new FormModelInputData(new PasswordForm(), $attribute))
-            ->hideLabel()
-            ->enrichFromValidationRules(true)
-            ->useContainer(false);
-
-        $this->assertSame($expected, $field->render());
     }
 }
