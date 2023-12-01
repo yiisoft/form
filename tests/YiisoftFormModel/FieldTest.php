@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests;
+namespace Yiisoft\Form\Tests\YiisoftFormModel;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Tests\YiisoftFormModel\Support\Form\TimeForm;
 use Yiisoft\Form\YiisoftFormModel\Field;
 use Yiisoft\Form\Tests\Support\Form\CheckboxForm;
 use Yiisoft\Form\Tests\Support\Form\CheckboxListForm;
@@ -402,6 +403,20 @@ final class FieldTest extends TestCase
             HTML,
             $result
         );
+    }
+
+    public function testTime(): void
+    {
+        $html = Field::time(new TimeForm(), 'start')->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="timeform-start">Start</label>
+            <input type="time" id="timeform-start" name="TimeForm[start]" value="14:00:23">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testUrl(): void

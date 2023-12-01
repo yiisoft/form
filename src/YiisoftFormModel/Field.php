@@ -12,6 +12,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
+use Yiisoft\Form\Field\Time;
 use Yiisoft\Form\YiisoftFormModel\Field\ErrorSummary;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\File;
@@ -259,6 +260,16 @@ class Field
         ?string $theme = null,
     ): Textarea {
         return Textarea::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new FormModelInputData($formModel, $property));
+    }
+
+    final public static function time(
+        FormModelInterface $formModel,
+        string $property,
+        array $config = [],
+        ?string $theme = null,
+    ): Time {
+        return Time::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new FormModelInputData($formModel, $property));
     }
 
