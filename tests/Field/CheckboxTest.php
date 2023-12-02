@@ -449,10 +449,9 @@ final class CheckboxTest extends TestCase
 
     public function testAriaDescibedBy(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
-
         $result = Checkbox::widget()
-            ->inputData($inputData)
+            ->name('test-name')
+            ->label('Blue color')
             ->ariaDescribedBy('hint')
             ->uncheckValue(null)
             ->render();
