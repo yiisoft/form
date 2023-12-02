@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Part\Error;
@@ -18,7 +19,7 @@ use Yiisoft\Widget\WidgetFactory;
 
 final class ThemeTest extends TestCase
 {
-    public function dataText(): array
+    public static function dataText(): array
     {
         return [
             [
@@ -431,9 +432,7 @@ final class ThemeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataText
-     */
+    #[DataProvider('dataText')]
     public function testText(
         string $expected,
         array $factoryParameters,
@@ -481,7 +480,7 @@ final class ThemeTest extends TestCase
         );
     }
 
-    public function dataFieldSet(): array
+    public static function dataFieldSet(): array
     {
         return [
             'empty' => [
@@ -496,9 +495,7 @@ final class ThemeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataFieldSet
-     */
+    #[DataProvider('dataFieldSet')]
     public function testFieldSet(string $expected, array $factoryParameters): void
     {
         $this->initializeThemeContainer($factoryParameters);
@@ -530,7 +527,7 @@ final class ThemeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataLabel(): array
+    public static function dataLabel(): array
     {
         return [
             'simple' => [
@@ -574,9 +571,7 @@ final class ThemeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataLabel
-     */
+    #[DataProvider('dataLabel')]
     public function testLabel(string $expected, array $factoryParameters): void
     {
         $this->initializeThemeContainer($factoryParameters);
@@ -588,7 +583,7 @@ final class ThemeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataHint(): array
+    public static function dataHint(): array
     {
         return [
             [
@@ -622,9 +617,7 @@ final class ThemeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataHint
-     */
+    #[DataProvider('dataHint')]
     public function testHint(string $expected, array $factoryParameters): void
     {
         $this->initializeThemeContainer($factoryParameters);
@@ -636,7 +629,7 @@ final class ThemeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataError(): array
+    public static function dataError(): array
     {
         return [
             [
@@ -670,9 +663,7 @@ final class ThemeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataError
-     */
+    #[DataProvider('dataError')]
     public function testError(string $expected, array $factoryParameters): void
     {
         $this->initializeThemeContainer($factoryParameters);

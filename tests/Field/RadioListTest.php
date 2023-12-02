@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\RadioList;
@@ -260,7 +261,7 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataItemsFromValues(): array
+    public static function dataItemsFromValues(): array
     {
         return [
             [
@@ -293,9 +294,7 @@ final class RadioListTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataItemsFromValues
-     */
+    #[DataProvider('dataItemsFromValues')]
     public function testItemsFromValues(string $expected, array $values): void
     {
         $result = RadioList::widget()
@@ -330,7 +329,7 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataUncheckValue(): array
+    public static function dataUncheckValue(): array
     {
         return [
             [
@@ -374,9 +373,7 @@ final class RadioListTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataUncheckValue
-     */
+    #[DataProvider('dataUncheckValue')]
     public function testUncheckValue(string $expected, $value): void
     {
         $result = RadioList::widget()

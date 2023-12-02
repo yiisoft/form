@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Range;
@@ -137,7 +138,7 @@ HTML_WRAP;
         $field->outputTag('');
     }
 
-    public function dataMax(): array
+    public static function dataMax(): array
     {
         return [
             'int' => [
@@ -163,9 +164,7 @@ HTML_WRAP;
         ];
     }
 
-    /**
-     * @dataProvider dataMax
-     */
+    #[DataProvider('dataMax')]
     public function testMax(string $expected, $value): void
     {
         $result = Range::widget()
@@ -178,7 +177,7 @@ HTML_WRAP;
         $this->assertSame($expected, $result);
     }
 
-    public function dataMin(): array
+    public static function dataMin(): array
     {
         return [
             'int' => [
@@ -204,9 +203,7 @@ HTML_WRAP;
         ];
     }
 
-    /**
-     * @dataProvider dataMin
-     */
+    #[DataProvider('dataMin')]
     public function testMin(string $expected, $value): void
     {
         $result = Range::widget()
@@ -219,7 +216,7 @@ HTML_WRAP;
         $this->assertSame($expected, $result);
     }
 
-    public function dataStep(): array
+    public static function dataStep(): array
     {
         return [
             'int' => [
@@ -245,9 +242,7 @@ HTML_WRAP;
         ];
     }
 
-    /**
-     * @dataProvider dataStep
-     */
+    #[DataProvider('dataStep')]
     public function testStep(string $expected, $value): void
     {
         $result = Range::widget()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field\Base;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubButtonField;
 use Yiisoft\Form\ThemeContainer;
@@ -96,7 +97,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataButtonId(): array
+    public static function dataButtonId(): array
     {
         return [
             ['', null],
@@ -104,9 +105,7 @@ final class ButtonFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataButtonId
-     */
+    #[DataProvider('dataButtonId')]
     public function testButtonId(string $expectedId, ?string $id): void
     {
         $result = StubButtonField::widget()
@@ -122,7 +121,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataName(): array
+    public static function dataProviderName(): array
     {
         return [
             ['', null],
@@ -130,9 +129,7 @@ final class ButtonFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataName
-     */
+    #[DataProvider('dataProviderName')]
     public function testName(string $expectedNameAttribute, ?string $name): void
     {
         $result = StubButtonField::widget()
@@ -238,7 +235,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddButtonClass(): array
+    public static function dataAddButtonClass(): array
     {
         return [
             [' class="main"', []],
@@ -250,10 +247,9 @@ final class ButtonFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAddButtonClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataAddButtonClass')]
     public function testAddButtonClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubButtonField::widget()
@@ -270,7 +266,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddButtonNewClass(): array
+    public static function dataAddButtonNewClass(): array
     {
         return [
             ['', null],
@@ -279,9 +275,7 @@ final class ButtonFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddButtonNewClass
-     */
+    #[DataProvider('dataAddButtonNewClass')]
     public function testAddButtonNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubButtonField::widget()
@@ -297,7 +291,7 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataButtonClass(): array
+    public static function dataButtonClass(): array
     {
         return [
             ['', []],
@@ -310,10 +304,9 @@ final class ButtonFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataButtonClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataButtonClass')]
     public function testButtonClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubButtonField::widget()

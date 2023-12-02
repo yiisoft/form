@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Base;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Tests\Support\StubPartsField;
@@ -400,7 +401,7 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddContainerClass(): array
+    public static function dataAddContainerClass(): array
     {
         return [
             [' class="main"', []],
@@ -412,10 +413,9 @@ final class PartsFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAddContainerClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataAddContainerClass')]
     public function testAddContainerClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubPartsField::widget()
@@ -434,7 +434,7 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddContainerNewClass(): array
+    public static function dataAddContainerNewClass(): array
     {
         return [
             ['', null],
@@ -443,9 +443,7 @@ final class PartsFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddContainerNewClass
-     */
+    #[DataProvider('dataAddContainerNewClass')]
     public function testAddContainerNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubPartsField::widget()
@@ -463,7 +461,7 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataContainerClass(): array
+    public static function dataContainerClass(): array
     {
         return [
             ['', []],
@@ -476,10 +474,9 @@ final class PartsFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataContainerClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataContainerClass')]
     public function testContainerClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubPartsField::widget()
