@@ -12,8 +12,8 @@ use Yiisoft\Form\ThemeContainer;
 return [
     static function (ContainerInterface $container) use ($params) {
         ThemeContainer::initialize(
-            $params['yiisoft/form']['configs'],
-            $params['yiisoft/form']['defaultConfig'],
+            $params['yiisoft/form']['themes'],
+            $params['yiisoft/form']['defaultTheme'],
             $params['yiisoft/form']['validationRulesEnricher'],
         );
     },

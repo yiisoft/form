@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 return [
     'yiisoft/form' => [
-        'configs' => [
+        'themes' => [
             'default' => [],
         ],
-        'defaultConfig' => 'default',
+        'defaultTheme' => 'default',
         'validationRulesEnricher' => null,
     ],
 ];

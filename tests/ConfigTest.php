@@ -36,7 +36,7 @@ final class ConfigTest extends TestCase
     public function testCustomParams(): void
     {
         $params = $this->getParams();
-        $params['yiisoft/form']['configs'] = [
+        $params['yiisoft/form']['themes'] = [
             'simple' => [
                 'fieldConfigs' => [
                     Hidden::class => [
@@ -45,7 +45,7 @@ final class ConfigTest extends TestCase
                 ],
             ],
         ];
-        $params['yiisoft/form']['defaultConfig'] = 'simple';
+        $params['yiisoft/form']['defaultTheme'] = 'simple';
 
         $bootstrapList = $this->getBootstrapList($params);
         $bootstrap = array_shift($bootstrapList);
