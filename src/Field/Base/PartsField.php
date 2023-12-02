@@ -31,6 +31,7 @@ abstract class PartsField extends BaseField
     protected string $templateBegin = "{label}\n{input}";
     protected string $templateEnd = "{input}\n{hint}\n{error}";
     protected string $template = "{label}\n{input}\n{hint}\n{error}";
+    protected ?string $label = null;
     protected ?bool $hideLabel = null;
 
     /**
@@ -236,7 +237,7 @@ abstract class PartsField extends BaseField
     final public function label(?string $content): static
     {
         $new = clone $this;
-        $new->labelConfig['content()'] = [$content];
+        $new->label = $content;
         return $new;
     }
 
@@ -468,7 +469,12 @@ abstract class PartsField extends BaseField
 
     private function generateLabel(): string
     {
-        $label = Label::widget([], $this->labelConfig);
+        $labelConfig = $this->labelConfig;
+        if ($this->label !== null) {
+            $labelConfig['content()'] = [$this->label];
+        }
+
+        $label = Label::widget([], $labelConfig);
 
         $labelAttributes = $this->labelAttributes;
         if (!empty($labelAttributes)) {

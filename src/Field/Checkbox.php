@@ -236,9 +236,8 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
         $checkbox = Html::checkbox($this->getName(), $inputValue, $inputAttributes);
 
-        $label = $this->inputLabel ?? $this->getInputData()->getLabel();
-
         if ($this->enclosedByLabel) {
+            $label = $this->inputLabel ?? $this->label ?? $this->getInputData()->getLabel();
             $checkbox = $checkbox
                 ->label($label, $this->inputLabelAttributes)
                 ->labelEncode($this->inputLabelEncode);
