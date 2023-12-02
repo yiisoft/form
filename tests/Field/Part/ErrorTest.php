@@ -26,10 +26,29 @@ final class ErrorTest extends TestCase
     public function testBase(): void
     {
         $inputData = new PureInputData(
-            validationErrors: ['Value cannot be blank.'],
+            validationErrors: ['Value cannot be blank.', 'Value is bad.'],
         );
 
         $result = Error::widget()->inputData($inputData)->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testOnlyFirst(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->onlyFirst()
+            ->render();
 
         $this->assertSame('<div>Value cannot be blank.</div>', $result);
     }
@@ -321,5 +340,243 @@ final class ErrorTest extends TestCase
             ->render();
 
         $this->assertSame('<div>Attribute "Age" error: Invalid value.</div>', $result);
+    }
+
+    public function testSeparator(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->separator("\n<div>---</div>\n")
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            Value cannot be blank.
+            <div>---</div>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeader(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->header('Field errors:')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div>Field errors:</div>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeaderTag(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->header('Field errors:')
+            ->headerTag('b')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <b>Field errors:</b>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeaderWithoutTag(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank', 'Value is bad')
+            ->header('Field errors:')
+            ->headerTag(null)
+            ->separator(', ')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            Field errors:
+            Value cannot be blank, Value is bad
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testEmptyHeaderTag(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        Error::widget()->headerTag('');
+    }
+
+    public function testHeaderAttributes(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->header('Field errors:')
+            ->headerAttributes(['class' => 'errorHeader'])
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div class="errorHeader">Field errors:</div>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testAddHeaderAttributes(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->header('Field errors:')
+            ->headerAttributes(['class' => 'errorHeader'])
+            ->addHeaderAttributes(['data-id' => 'test'])
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div class="errorHeader" data-id="test">Field errors:</div>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeaderEncode(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->header('Field errors >')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div>Field errors &gt;</div>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeaderWithoutEncode(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->header('<b>Field errors</b>')
+            ->headerEncode(false)
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div><b>Field errors</b></div>
+            Value cannot be blank.
+            <br>
+            Value is bad.
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testErrorTag(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->errorTag('i')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <i>Value cannot be blank.</i>
+            <br>
+            <i>Value is bad.</i>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testEmptyErrorTag(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        Error::widget()->errorTag('');
+    }
+
+    public function testErrorAttributes(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->errorTag('i')
+            ->errorAttributes(['class' => 'error'])
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <i class="error">Value cannot be blank.</i>
+            <br>
+            <i class="error">Value is bad.</i>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testAddErrorAttributes(): void
+    {
+        $result = Error::widget()
+            ->message('Value cannot be blank.', 'Value is bad.')
+            ->errorTag('i')
+            ->errorAttributes(['class' => 'error'])
+            ->addErrorAttributes(['data-id' => 'x1'])
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <i class="error" data-id="x1">Value cannot be blank.</i>
+            <br>
+            <i class="error" data-id="x1">Value is bad.</i>
+            </div>
+            HTML,
+            $result
+        );
     }
 }
