@@ -366,10 +366,10 @@ abstract class PartsField extends BaseField
         return $new;
     }
 
-    final public function error(?string $message): static
+    final public function error(?string $message, string ...$messages): static
     {
         $new = clone $this;
-        $new->errorConfig['message()'] = [$message];
+        $new->errorConfig['message()'] = [$message, ...$messages];
         return $new;
     }
 
