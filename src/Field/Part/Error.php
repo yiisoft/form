@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field\Part;
 
 use InvalidArgumentException;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
@@ -16,6 +17,8 @@ use function call_user_func;
 /**
  * Represent a field validation error (if there are several errors, the first one is used). If field is no validation
  * error, field part will be hidden.
+ *
+ * @psalm-type MessageCallback = callable(string, InputDataInterface): string
  */
 final class Error extends Widget
 {
@@ -33,6 +36,7 @@ final class Error extends Widget
 
     /**
      * @var callable|null
+     * @psalm-var MessageCallback|null
      */
     private $messageCallback = null;
 
@@ -124,11 +128,13 @@ final class Error extends Widget
 
     /**
      * Callback that will be called to obtain an error message.
+     *
+     * @psalm-param MessageCallback|null $callback
      */
-    public function messageCallback(?callable $value): self
+    public function messageCallback(?callable $callback): self
     {
         $new = clone $this;
-        $new->messageCallback = $value;
+        $new->messageCallback = $callback;
         return $new;
     }
 
@@ -146,7 +152,6 @@ final class Error extends Widget
         }
 
         if ($this->messageCallback !== null) {
-            /** @var string $message */
             $message = call_user_func(
                 $this->messageCallback,
                 $message,
