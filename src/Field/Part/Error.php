@@ -9,11 +9,8 @@ use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
-use Yiisoft\Html\NoEncode;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
-
-use function call_user_func;
 
 /**
  * Represent a field validation error (if there are several errors, the first one is used). If field is no validation
@@ -271,7 +268,7 @@ final class Error extends Widget
         $messageCallback = $this->messageCallback;
         if ($messageCallback !== null) {
             $messages = array_map(
-                fn(string $message) => call_user_func($messageCallback, $message, $this->getInputData()),
+                fn(string $message) => $messageCallback($message, $this->getInputData()),
                 $messages,
             );
         }
