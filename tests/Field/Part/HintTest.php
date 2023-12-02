@@ -85,7 +85,7 @@ final class HintTest extends TestCase
         ];
     }
 
-     #[DataProvider('dataId')]
+    #[DataProvider('dataId')]
     public function testId(string $expectedId, ?string $id): void
     {
         $result = Hint::widget()
@@ -135,7 +135,7 @@ final class HintTest extends TestCase
         ];
     }
 
-     #[DataProvider('dataAddNewClass')]
+    #[DataProvider('dataAddNewClass')]
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Hint::widget()

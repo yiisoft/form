@@ -79,7 +79,7 @@ final class InputFieldTest extends TestCase
         ];
     }
 
-     #[DataProvider('dataAddInputNewClass')]
+    #[DataProvider('dataAddInputNewClass')]
     public function testAddInputNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubInputField::widget()

@@ -81,7 +81,7 @@ final class BaseFieldTest extends TestCase
         ];
     }
 
-     #[DataProvider('dataAddContainerNewClass')]
+    #[DataProvider('dataAddContainerNewClass')]
     public function testAddContainerNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubBaseField::widget()
