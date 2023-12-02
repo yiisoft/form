@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field\Base;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubFieldContentTrait;
@@ -62,7 +63,7 @@ final class FieldContentTraitTest extends TestCase
         $this->assertSame('&lt;b&gt;A &gt; B&lt;/b&gt;', $result);
     }
 
-    public function dataContent(): array
+    public static function dataContent(): array
     {
         return [
             'string' => ['hello', 'hello'],
@@ -75,9 +76,7 @@ final class FieldContentTraitTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataContent
-     */
+    #[DataProvider('dataContent')]
     public function testContent(string $expected, $content): void
     {
         $object = new StubFieldContentTrait();

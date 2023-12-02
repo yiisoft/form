@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\SubmitButton;
 use Yiisoft\Form\ThemeContainer;
@@ -56,7 +57,7 @@ final class SubmitButtonTest extends TestCase
         );
     }
 
-    public function dataDisabled(): array
+    public static function dataDisabled(): array
     {
         return [
             ['<button type="submit"></button>', false],
@@ -64,9 +65,7 @@ final class SubmitButtonTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataDisabled
-     */
+    #[DataProvider('dataDisabled')]
     public function testDisabled(string $expected, ?bool $disabled): void
     {
         $result = SubmitButton::widget()

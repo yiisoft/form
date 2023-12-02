@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field\Base;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\ThemeContainer;
@@ -36,7 +37,7 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddInputClass(): array
+    public static function dataAddInputClass(): array
     {
         return [
             [' class="main"', []],
@@ -48,10 +49,9 @@ final class InputFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAddInputClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataAddInputClass')]
     public function testAddInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()
@@ -70,7 +70,7 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddInputNewClass(): array
+    public static function dataAddInputNewClass(): array
     {
         return [
             ['', null],
@@ -79,9 +79,7 @@ final class InputFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddInputNewClass
-     */
+    #[DataProvider('dataAddInputNewClass')]
     public function testAddInputNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubInputField::widget()
@@ -99,7 +97,7 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputClass(): array
+    public static function dataInputClass(): array
     {
         return [
             ['', []],
@@ -112,10 +110,9 @@ final class InputFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataInputClass')]
     public function testInputClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubInputField::widget()

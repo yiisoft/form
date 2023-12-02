@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
@@ -112,7 +113,7 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataItems(): array
+    public static function dataItems(): array
     {
         return [
             [
@@ -162,9 +163,7 @@ final class SelectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataItems
-     */
+    #[DataProvider('dataItems')]
     public function testItems(string $expected, array $items): void
     {
         $result = Select::widget()
@@ -446,7 +445,7 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataPrompt(): array
+    public static function dataPrompt(): array
     {
         return [
             [
@@ -469,9 +468,7 @@ final class SelectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataPrompt
-     */
+    #[DataProvider('dataPrompt')]
     public function testPrompt(string $expected, ?string $text): void
     {
         $result = Select::widget()
@@ -485,7 +482,7 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataPromptOption(): array
+    public static function dataPromptOption(): array
     {
         return [
             [
@@ -508,9 +505,7 @@ final class SelectTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataPromptOption
-     */
+    #[DataProvider('dataPromptOption')]
     public function testPromptOption(string $expected, ?Option $option): void
     {
         $result = Select::widget()

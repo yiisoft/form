@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Image;
 use Yiisoft\Form\Tests\Support\StringableObject;
@@ -51,7 +52,7 @@ final class ImageTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataWidth(): array
+    public static function dataWidth(): array
     {
         return [
             'int' => [
@@ -89,9 +90,7 @@ final class ImageTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataWidth
-     */
+    #[DataProvider('dataWidth')]
     public function testWidth(string $expected, $width): void
     {
         $result = Image::widget()
@@ -101,7 +100,7 @@ final class ImageTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataHeight(): array
+    public static function dataHeight(): array
     {
         return [
             'int' => [
@@ -139,9 +138,7 @@ final class ImageTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataHeight
-     */
+    #[DataProvider('dataHeight')]
     public function testHeight(string $expected, $height): void
     {
         $result = Image::widget()
@@ -166,7 +163,7 @@ final class ImageTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAutofocus(): array
+    public static function dataAutofocus(): array
     {
         return [
             ['<input type="image">', false],
@@ -174,9 +171,7 @@ final class ImageTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAutofocus
-     */
+    #[DataProvider('dataAutofocus')]
     public function testAutofocus(string $expected, ?bool $autofocus): void
     {
         $result = Image::widget()
@@ -187,7 +182,7 @@ final class ImageTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataDisabled(): array
+    public static function dataDisabled(): array
     {
         return [
             ['<input type="image">', false],
@@ -195,9 +190,7 @@ final class ImageTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataDisabled
-     */
+    #[DataProvider('dataDisabled')]
     public function testDisabled(string $expected, ?bool $disabled): void
     {
         $result = Image::widget()

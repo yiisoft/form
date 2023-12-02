@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field\Base;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubBaseField;
 use Yiisoft\Form\ThemeContainer;
@@ -19,7 +20,7 @@ final class BaseFieldTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function dataContainerId(): array
+    public static function dataContainerId(): array
     {
         return [
             ['', null],
@@ -27,9 +28,7 @@ final class BaseFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataContainerId
-     */
+    #[DataProvider('dataContainerId')]
     public function testContainerId(string $expectedId, ?string $id): void
     {
         $result = StubBaseField::widget()
@@ -45,7 +44,7 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddContainerClass(): array
+    public static function dataAddContainerClass(): array
     {
         return [
             [' class="main"', []],
@@ -56,11 +55,7 @@ final class BaseFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddContainerClass
-     *
-     * @param string[] $class
-     */
+    #[DataProvider('dataAddContainerClass')]
     public function testAddContainerClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubBaseField::widget()
@@ -77,7 +72,7 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddContainerNewClass(): array
+    public static function dataAddContainerNewClass(): array
     {
         return [
             ['', null],
@@ -86,9 +81,7 @@ final class BaseFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddContainerNewClass
-     */
+    #[DataProvider('dataAddContainerNewClass')]
     public function testAddContainerNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = StubBaseField::widget()
@@ -104,7 +97,7 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataContainerClass(): array
+    public static function dataContainerClass(): array
     {
         return [
             ['', []],
@@ -117,10 +110,9 @@ final class BaseFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider dataContainerClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataContainerClass')]
     public function testContainerClass(string $expectedClassAttribute, array $class): void
     {
         $result = StubBaseField::widget()

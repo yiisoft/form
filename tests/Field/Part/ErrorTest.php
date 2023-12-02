@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Part;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
@@ -95,7 +96,7 @@ final class ErrorTest extends TestCase
         $this->assertSame('<div data-number="18">Value cannot be blank.</div>', $result);
     }
 
-    public function dataId(): array
+    public static function dataId(): array
     {
         return [
             ['', null],
@@ -103,9 +104,7 @@ final class ErrorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataId
-     */
+    #[DataProvider('dataId')]
     public function testId(string $expectedId, ?string $id): void
     {
         $inputData = new PureInputData(
@@ -122,7 +121,7 @@ final class ErrorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddClass(): array
+    public static function dataAddClass(): array
     {
         return [
             [' class="main"', []],
@@ -134,10 +133,9 @@ final class ErrorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAddClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataAddClass')]
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $inputData = new PureInputData(
@@ -155,7 +153,7 @@ final class ErrorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddNewClass(): array
+    public static function dataAddNewClass(): array
     {
         return [
             ['', null],
@@ -164,9 +162,7 @@ final class ErrorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddNewClass
-     */
+    #[DataProvider('dataAddNewClass')]
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $inputData = new PureInputData(
@@ -183,7 +179,7 @@ final class ErrorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataClass(): array
+    public static function dataClass(): array
     {
         return [
             ['', []],
@@ -196,10 +192,9 @@ final class ErrorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataClass')]
     public function testClass(string $expectedClassAttribute, array $class): void
     {
         $inputData = new PureInputData(

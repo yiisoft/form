@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Part;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Part\Hint;
@@ -76,7 +77,7 @@ final class HintTest extends TestCase
         $this->assertSame('<div data-number="18">Write your name.</div>', $result);
     }
 
-    public function dataId(): array
+    public static function dataId(): array
     {
         return [
             ['', null],
@@ -84,9 +85,7 @@ final class HintTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataId
-     */
+    #[DataProvider('dataId')]
     public function testId(string $expectedId, ?string $id): void
     {
         $result = Hint::widget()
@@ -99,7 +98,7 @@ final class HintTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddClass(): array
+    public static function dataAddClass(): array
     {
         return [
             [' class="main"', []],
@@ -111,10 +110,9 @@ final class HintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAddClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataAddClass')]
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
         $result = Hint::widget()
@@ -128,7 +126,7 @@ final class HintTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddNewClass(): array
+    public static function dataAddNewClass(): array
     {
         return [
             ['', null],
@@ -137,9 +135,7 @@ final class HintTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddNewClass
-     */
+    #[DataProvider('dataAddNewClass')]
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $result = Hint::widget()
@@ -152,7 +148,7 @@ final class HintTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataClass(): array
+    public static function dataClass(): array
     {
         return [
             ['', []],
@@ -165,10 +161,9 @@ final class HintTest extends TestCase
     }
 
     /**
-     * @dataProvider dataClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataClass')]
     public function testClass(string $expectedClassAttribute, array $class): void
     {
         $result = Hint::widget()

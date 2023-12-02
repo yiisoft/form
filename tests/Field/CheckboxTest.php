@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
@@ -96,7 +97,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataUncheckValue(): array
+    public static function dataUncheckValue(): array
     {
         return [
             ['', null],
@@ -109,9 +110,7 @@ final class CheckboxTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataUncheckValue
-     */
+    #[DataProvider('dataUncheckValue')]
     public function testUncheckValue(string $expectedInput, mixed $uncheckValue): void
     {
         $inputData = new PureInputData('test-name', label: 'Blue color');
@@ -305,7 +304,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputLabelId(): array
+    public static function dataInputLabelId(): array
     {
         return [
             ['', null],
@@ -313,9 +312,7 @@ final class CheckboxTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataInputLabelId
-     */
+    #[DataProvider('dataInputLabelId')]
     public function testInputLabelId(string $expectedId, ?string $id): void
     {
         $inputData = new PureInputData('test-name', label: 'Blue color');
@@ -334,7 +331,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddInputLabelClass(): array
+    public static function dataAddInputLabelClass(): array
     {
         return [
             [' class="main"', []],
@@ -346,10 +343,9 @@ final class CheckboxTest extends TestCase
     }
 
     /**
-     * @dataProvider dataAddInputLabelClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataAddInputLabelClass')]
     public function testAddInputLabelClass(string $expectedClassAttribute, array $class): void
     {
         $inputData = new PureInputData('test-name', label: 'Blue color');
@@ -369,7 +365,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataAddInputLabelNewClass(): array
+    public static function dataAddInputLabelNewClass(): array
     {
         return [
             ['', null],
@@ -378,9 +374,7 @@ final class CheckboxTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataAddInputLabelNewClass
-     */
+    #[DataProvider('dataAddInputLabelNewClass')]
     public function testAddInputLabelNewClass(string $expectedClassAttribute, ?string $class): void
     {
         $inputData = new PureInputData('test-name', label: 'Blue color');
@@ -399,7 +393,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function dataInputLabelClass(): array
+    public static function dataInputLabelClass(): array
     {
         return [
             ['', []],
@@ -412,10 +406,9 @@ final class CheckboxTest extends TestCase
     }
 
     /**
-     * @dataProvider dataInputLabelClass
-     *
      * @param string[] $class
      */
+    #[DataProvider('dataInputLabelClass')]
     public function testInputLabelClass(string $expectedClassAttribute, array $class): void
     {
         $inputData = new PureInputData('test-name', label: 'Blue color');
