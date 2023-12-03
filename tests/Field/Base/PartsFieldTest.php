@@ -104,6 +104,21 @@ final class PartsFieldTest extends TestCase
         $field->tokens(['{before}' => new stdClass()]);
     }
 
+    public function testHideLabel(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddLabelAttributes(): void
     {
         $result = StubPartsField::widget()
@@ -529,5 +544,7 @@ final class PartsFieldTest extends TestCase
         $this->assertNotSame($field, $field->errorClass());
         $this->assertNotSame($field, $field->addErrorClass());
         $this->assertNotSame($field, $field->error(null));
+        $this->assertNotSame($field, $field->templateBegin(''));
+        $this->assertNotSame($field, $field->templateEnd(''));
     }
 }
