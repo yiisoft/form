@@ -256,6 +256,23 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testLabelAttributesWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->labelConfig(['class()' => ['green']])
+            ->label('test')
+            ->labelAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label id="KEY">test</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testLabelId(): void
     {
         $result = StubPartsField::widget()
@@ -306,6 +323,23 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testLabelClassWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->labelConfig(['class()' => ['green']])
+            ->label('test')
+            ->labelClass('blue')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label class="blue">test</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddHintAttributes(): void
     {
         $result = StubPartsField::widget()
@@ -328,6 +362,23 @@ final class PartsFieldTest extends TestCase
         $result = StubPartsField::widget()
             ->hint('test')
             ->hintAttributes(['class' => 'red'])
+            ->hintAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div id="KEY">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testHintAttributesWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->hintConfig(['class()' => ['green']])
+            ->hint('test')
             ->hintAttributes(['id' => 'KEY'])
             ->render();
 
@@ -390,6 +441,23 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testHintClassWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->hintConfig(['class()' => ['green']])
+            ->hint('test')
+            ->hintClass('red')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div class="red">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddErrorAttributes(): void
     {
         $result = StubPartsField::widget()
@@ -410,6 +478,24 @@ final class PartsFieldTest extends TestCase
     public function testErrorAttributes(): void
     {
         $result = StubPartsField::widget()
+            ->error('test')
+            ->errorAttributes(['class' => 'red'])
+            ->errorAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div id="KEY">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testErrorAttributesWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->errorConfig(['class()' => ['green']])
             ->error('test')
             ->errorAttributes(['class' => 'red'])
             ->errorAttributes(['id' => 'KEY'])
@@ -468,6 +554,23 @@ final class PartsFieldTest extends TestCase
         $expected = <<<HTML
             <div>
             <div class="blue">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testErrorClassWithErrorConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->errorConfig(['class()' => ['green']])
+            ->error('test')
+            ->errorClass('red')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div class="red">test</div>
             </div>
             HTML;
 
