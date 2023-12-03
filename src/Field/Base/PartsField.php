@@ -349,7 +349,7 @@ abstract class PartsField extends BaseField
     final public function errorClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->errorAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->errorAttributes['class'] = $class;
         $new->replaceErrorClass = true;
         return $new;
     }
