@@ -126,11 +126,6 @@ final class Theme
         if (is_a($class, InputField::class, true)) {
             if ($this->setInputId !== null) {
                 $config['setInputId()'] = [$this->setInputId];
-                if ($this->setInputId === false) {
-                    $config['labelConfig()'] = [
-                        $this->labelConfig + ['useInputId()' => [false]],
-                    ];
-                }
             }
             if ($this->inputAttributes !== []) {
                 $config['inputAttributes()'] = [$this->inputAttributes];

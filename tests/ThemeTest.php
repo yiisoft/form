@@ -63,6 +63,21 @@ final class ThemeTest extends TestCase
                 ['inputAttributes' => ['required' => true]],
             ],
             [
+                <<<HTML
+                <div>
+                <input type="text" name="TextForm[company]" value>
+                </div>
+                HTML,
+                [
+                    'enrichFromValidationRules' => false,
+                ],
+                new PureInputData(
+                    name: 'TextForm[company]',
+                    value: '',
+                ),
+                ['inputAttributes' => ['required' => true]],
+            ],
+            [
                 <<<'HTML'
                 <section class="wrapper">
                 <label for="textform-job">Job</label>
