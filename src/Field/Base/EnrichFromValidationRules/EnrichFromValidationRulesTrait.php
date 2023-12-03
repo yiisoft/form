@@ -8,7 +8,7 @@ trait EnrichFromValidationRulesTrait
 {
     private bool $enrichFromValidationRules = false;
 
-    public function enrichFromValidationRules(bool $enrich): self
+    public function enrichFromValidationRules(bool $enrich = true): self
     {
         $new = clone $this;
         $new->enrichFromValidationRules = $enrich;

@@ -8,8 +8,13 @@ use Yiisoft\Form\Field\Base\BaseField;
 
 final class StubBaseField extends BaseField
 {
+    public function __construct(
+        private ?string $content = 'test',
+    ) {
+    }
+
     protected function generateContent(): ?string
     {
-        return 'test';
+        return $this->content;
     }
 }

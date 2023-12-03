@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Select;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
@@ -595,6 +596,44 @@ final class SelectTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select field with multiple option requires iterable or null value.');
         $widget->render();
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Select::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <select data-test="1"></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Select::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <select></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testImmutability(): void

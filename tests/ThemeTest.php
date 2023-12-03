@@ -675,7 +675,23 @@ final class ThemeTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    private function initializeThemeContainer(array $parameters, ?array $enricherResult = null): void
+    public function testNotExistTheme(): void
+    {
+        $this->initializeThemeContainer();
+
+        $html = Text::widget(theme: 'not-exist')->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <input type="text">
+            </div>
+            HTML,
+            $html
+        );
+    }
+
+    private function initializeThemeContainer(array $parameters = [], ?array $enricherResult = null): void
     {
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(

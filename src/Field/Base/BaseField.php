@@ -113,6 +113,7 @@ abstract class BaseField extends Widget
 
         $content = $this->generateContent();
         if ($content === null) {
+            $this->enrichment = [];
             return '';
         }
 
@@ -123,7 +124,6 @@ abstract class BaseField extends Widget
         }
 
         $this->enrichment = [];
-
         return $result;
     }
 

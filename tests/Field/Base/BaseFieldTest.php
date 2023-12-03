@@ -174,6 +174,24 @@ final class BaseFieldTest extends TestCase
         );
     }
 
+    public function testNullContent(): void
+    {
+        $result = StubBaseField::widget(['content' => null])->render();
+        $this->assertSame('', $result);
+    }
+
+    public function testEmptyContent(): void
+    {
+        $result = StubBaseField::widget(['content' => ''])->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubBaseField::widget();

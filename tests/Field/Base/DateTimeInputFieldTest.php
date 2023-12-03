@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -180,6 +181,44 @@ final class DateTimeInputFieldTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('StubDateTimeInputField field requires a string or null value.');
         $widget->render();
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = StubDateTimeInputField::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="datetime" data-test="1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = StubDateTimeInputField::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="datetime">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testImmutability(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\CheckboxList;
@@ -330,6 +331,24 @@ final class CheckboxListTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"CheckboxList" field requires iterable or null value.');
+        $field->render();
+    }
+
+    public function testWithoutName(): void
+    {
+        $field = CheckboxList::widget();
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('"CheckboxList" field requires non-empty name.');
+        $field->render();
+    }
+
+    public function testEmptyName(): void
+    {
+        $field = CheckboxList::widget()->name('');
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('"CheckboxList" field requires non-empty name.');
         $field->render();
     }
 

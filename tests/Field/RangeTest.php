@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Tests\Support\StringableObject;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -352,5 +353,43 @@ HTML_WRAP;
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Range field requires a string, numeric or null value.');
         $field->render();
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Range::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="range" data-test="1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Range::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="range">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 }

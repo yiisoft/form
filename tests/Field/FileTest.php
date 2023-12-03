@@ -7,6 +7,7 @@ namespace Yiisoft\Form\Tests\Field;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\File;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -234,6 +235,44 @@ final class FileTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = File::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="file" data-test="1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = File::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="file">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testImmutability(): void

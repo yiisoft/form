@@ -274,33 +274,18 @@ class PureField
             ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function label(
-        ?string $name = null,
-        mixed $value = null,
-        array $config = [],
-        ?string $theme = null,
-    ): Label {
-        return Label::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+    final public static function label(?string $content = null, array $config = [], ?string $theme = null): Label
+    {
+        return Label::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)->content($content);
     }
 
-    final public static function hint(
-        ?string $name = null,
-        mixed $value = null,
-        array $config = [],
-        ?string $theme = null,
-    ): Hint {
-        return Hint::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+    final public static function hint(?string $content = null, array $config = [], ?string $theme = null): Hint
+    {
+        return Hint::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)->content($content);
     }
 
-    final public static function error(
-        ?string $name = null,
-        mixed $value = null,
-        array $config = [],
-        ?string $theme = null,
-    ): Error {
-        return Error::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+    final public static function error(?string $message = null, array $config = [], ?string $theme = null): Error
+    {
+        return Error::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)->message($message);
     }
 }
