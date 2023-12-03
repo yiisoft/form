@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Email;
@@ -22,25 +23,63 @@ final class EmailTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputDate = new PureInputData(
-            name: 'EmailForm[main]',
-            value: '',
-            label: 'Main email',
-            hint: 'Email for notifications.',
-            id: 'emailform-main',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="emailform-main">Main email</label>
+                <input type="email" id="emailform-main" name="EmailForm[main]" value>
+                <div>Email for notifications.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'EmailForm[main]',
+                    value: '',
+                    label: 'Main email',
+                    hint: 'Email for notifications.',
+                    id: 'emailform-main',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="email" class="valid" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="email" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+            'placeholder' => [
+                <<<HTML
+                <div>
+                <input type="email" name="main" value placeholder="test">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', placeholder: 'test'),
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
-        $result = Email::widget()->inputData($inputDate)->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="emailform-main">Main email</label>
-            <input type="email" id="emailform-main" name="EmailForm[main]" value>
-            <div>Email for notifications.</div>
-            </div>
-            HTML;
+        $result = Email::widget()->inputData($inputData)->render();
 
         $this->assertSame($expected, $result);
     }
