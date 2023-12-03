@@ -210,6 +210,18 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testBeforeRenderBeginEnd(): void
+    {
+        $field = StubBaseField::widget([
+            'beforeRenderBeginContent' => '1',
+            'beforeRenderEndContent' => '2',
+        ]);
+
+        $result = $field->begin() . '-' . $field->end();
+
+        $this->assertSame("<div>\n1-2\n</div>", $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubBaseField::widget();
