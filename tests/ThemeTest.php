@@ -272,16 +272,17 @@ final class ThemeTest extends TestCase
                 ),
             ],
             [
-                <<<'HTML'
+                <<<HTML
                 <div class="main-wrapper">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value data-type="input-text">
+                <input type="text" id="textform-job" class="test-class" name="TextForm[job]" value data-type="input-text">
                 </div>
                 HTML,
                 [
                     'containerTag' => 'section',
                     'containerAttributes' => ['class' => 'wrapper'],
                     'inputAttributes' => ['data-type' => 'field'],
+                    'inputClass' => ['test-class'],
                     'fieldConfigs' => [
                         Text::class => [
                             'containerTag()' => ['div'],
