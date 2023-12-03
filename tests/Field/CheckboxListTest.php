@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use LogicException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\CheckboxList;
@@ -24,12 +25,48 @@ final class CheckboxListTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'CheckboxListForm[color]',
-            label: 'Select one or more colors',
-            hint: 'Color of box.',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label>Select one or more colors</label>
+                <div>
+                <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
+                <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+                </div>
+                <div>Color of box.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'CheckboxListForm[color]',
+                    label: 'Select one or more colors',
+                    hint: 'Color of box.',
+                    id: 'UID',
+                ),
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <div>
+                <label><input type="checkbox" name="color[]" value="red"> Red</label>
+                <label><input type="checkbox" name="color[]" value="blue"> Blue</label>
+                </div>
+                </div>
+                HTML,
+                new PureInputData(name: 'color', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = CheckboxList::widget()
@@ -40,17 +77,6 @@ final class CheckboxListTest extends TestCase
             ->inputData($inputData)
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label>Select one or more colors</label>
-            <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
-            </div>
-            <div>Color of box.</div>
-            </div>
-            HTML;
-
         $this->assertSame($expected, $result);
     }
 
@@ -59,7 +85,7 @@ final class CheckboxListTest extends TestCase
         $result = CheckboxList::widget()
             ->items([
                 'red' => 'Red',
-                'blue' => 'Blue',
+                'blue' => 'Blue >',
             ])
             ->name('CheckboxListForm[color]')
             ->addCheckboxAttributes(['class' => 'control'])
@@ -70,7 +96,7 @@ final class CheckboxListTest extends TestCase
             <div>
             <div>
             <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red" data-key="x100"> Red</label>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue" data-key="x100"> Blue</label>
+            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue" data-key="x100"> Blue &gt;</label>
             </div>
             </div>
             HTML;
@@ -176,6 +202,25 @@ final class CheckboxListTest extends TestCase
             <div>
             <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> <b>Red</b></label>
             <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> <b>Blue</b></label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testItemsFromValues(): void
+    {
+        $result = CheckboxList::widget()
+            ->itemsFromValues(['Red', 'Blue >'])
+            ->name('color')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label><input type="checkbox" name="color[]" value="Red"> Red</label>
+            <label><input type="checkbox" name="color[]" value="Blue &gt;"> Blue &gt;</label>
             </div>
             </div>
             HTML;
