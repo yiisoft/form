@@ -10,6 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\RadioList;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
@@ -541,6 +542,26 @@ final class RadioListTest extends TestCase
             <div>
             <label><input type="radio" name="RadioListForm[number]" value="1" disabled> One</label>
             <label><input type="radio" name="RadioListForm[number]" value="2" disabled> Two</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testWithStringableValue(): void
+    {
+        $result = RadioList::widget()
+            ->name('number')
+            ->useContainer(false)
+            ->hideLabel()
+            ->items([1 => 'One', 2 => 'Two'])
+            ->value(new StringableObject('2'))
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label><input type="radio" name="number" value="1"> One</label>
+            <label><input type="radio" name="number" value="2" checked> Two</label>
             </div>
             HTML;
 
