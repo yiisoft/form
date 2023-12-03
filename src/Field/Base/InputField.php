@@ -102,7 +102,6 @@ abstract class InputField extends PartsField
 
     final protected function prepareIdInInputAttributes(array &$attributes): void
     {
-        /** @var mixed $idFromTag */
         $idFromTag = $attributes['id'] ?? null;
         if ($idFromTag !== null) {
             $this->inputIdFromTag = (string) $idFromTag;
