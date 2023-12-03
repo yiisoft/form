@@ -26,12 +26,58 @@ final class SelectTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'SelectForm[number]',
-            label: 'Select number',
-            id: 'selectform-number',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="selectform-number">Select number</label>
+                <select id="selectform-number" name="SelectForm[number]">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                </select>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'SelectForm[number]',
+                    label: 'Select number',
+                    id: 'selectform-number',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <select class="valid" name="number">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                </select>
+                </div>
+                HTML,
+                new PureInputData(name: 'number', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <select name="number">
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                </select>
+                </div>
+                HTML,
+                new PureInputData(name: 'number', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = Select::widget()
@@ -42,16 +88,6 @@ final class SelectTest extends TestCase
             ])
             ->render();
 
-        $expected = <<<HTML
-            <div>
-            <label for="selectform-number">Select number</label>
-            <select id="selectform-number" name="SelectForm[number]">
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            </select>
-            </div>
-            HTML;
-
         $this->assertSame($expected, $result);
     }
 
@@ -59,7 +95,7 @@ final class SelectTest extends TestCase
     {
         $result = Select::widget()
             ->name('count')
-            ->value('15')
+            ->value(15)
             ->optionsData([
                 10 => 'Ten',
                 15 => 'Fifteen',

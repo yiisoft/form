@@ -248,7 +248,7 @@ final class Select extends InputField implements EnrichFromValidationRulesInterf
     protected function generateInput(): string
     {
         $value = $this->getValue();
-        $multiple = (bool) ($this->inputAttributes['multiple'] ?? false);
+        $multiple = $this->inputAttributes['multiple'] ?? false;
 
         if ($multiple) {
             $value ??= [];
