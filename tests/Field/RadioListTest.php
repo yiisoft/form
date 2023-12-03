@@ -25,12 +25,47 @@ final class RadioListTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'RadioListForm[color]',
-            label: 'Select color',
-            hint: 'Color of box.',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label>Select color</label>
+                <div>
+                <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
+                <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
+                </div>
+                <div>Color of box.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'RadioListForm[color]',
+                    label: 'Select color',
+                    hint: 'Color of box.',
+                ),
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <div>
+                <label><input type="radio" name="color" value="red"> Red</label>
+                <label><input type="radio" name="color" value="blue"> Blue</label>
+                </div>
+                </div>
+                HTML,
+                new PureInputData(name: 'color', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = RadioList::widget()
@@ -40,17 +75,6 @@ final class RadioListTest extends TestCase
             ])
             ->inputData($inputData)
             ->render();
-
-        $expected = <<<'HTML'
-            <div>
-            <label>Select color</label>
-            <div>
-            <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
-            <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
-            </div>
-            <div>Color of box.</div>
-            </div>
-            HTML;
 
         $this->assertSame($expected, $result);
     }
