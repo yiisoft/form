@@ -17,7 +17,7 @@ trait FieldContentTrait
     private bool $doubleEncodeContent = true;
 
     /**
-     * @psalm-var list<string|Stringable>
+     * @psalm-var array<array-key, string|Stringable>
      */
     private array $content = [];
 
@@ -53,7 +53,7 @@ trait FieldContentTrait
     final public function content(string|Stringable ...$content): static
     {
         $new = clone $this;
-        $new->content = array_values($content);
+        $new->content = $content;
         return $new;
     }
 
