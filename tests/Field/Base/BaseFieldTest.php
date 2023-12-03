@@ -133,9 +133,11 @@ final class BaseFieldTest extends TestCase
     {
         $field = StubBaseField::widget();
 
-        $result = $field->begin() . 'content' . StubBaseField::end();
+        $result1 = $field->begin() . 'content' . $field->render();
+        $result2 = $field->render();
 
-        $this->assertSame('<div>content</div>', $result);
+        $this->assertSame('<div>content</div>', $result1);
+        $this->assertSame("<div>\ntest\n</div>", $result2);
     }
 
     public function testBeginEndWithoutContainer(): void
@@ -190,6 +192,34 @@ final class BaseFieldTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testAddContainerAttributes(): void
+    {
+        $result = StubBaseField::widget()
+            ->addContainerAttributes(['id' => 'key'])
+            ->addContainerAttributes(['class' => 'green'])
+            ->render();
+
+        $expected = <<<HTML
+            <div id="key" class="green">
+            test
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testBeforeRenderBeginEnd(): void
+    {
+        $field = StubBaseField::widget([
+            'beforeRenderBeginContent' => '1',
+            'beforeRenderEndContent' => '2',
+        ]);
+
+        $result = $field->begin() . '-' . $field->end();
+
+        $this->assertSame("<div>\n1-2\n</div>", $result);
     }
 
     public function testImmutability(): void

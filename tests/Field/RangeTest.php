@@ -24,13 +24,50 @@ final class RangeTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'RangeForm[volume]',
-            value: 23,
-            label: 'Volume level',
-            id: 'rangeform-volume',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="rangeform-volume">Volume level</label>
+                <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100">
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'RangeForm[volume]',
+                    value: 23,
+                    label: 'Volume level',
+                    id: 'rangeform-volume',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="range" class="valid" name="main" min="1" max="100">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="range" name="main" min="1" max="100">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = Range::widget()
@@ -38,13 +75,6 @@ final class RangeTest extends TestCase
             ->min(1)
             ->max(100)
             ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="rangeform-volume">Volume level</label>
-            <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100">
-            </div>
-            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -391,5 +421,24 @@ HTML_WRAP;
             HTML;
 
         $this->assertSame($expected, $html);
+    }
+
+    public function testImmutability(): void
+    {
+        $field = Range::widget();
+
+        $this->assertNotSame($field, $field->addOutputAttributes([]));
+        $this->assertNotSame($field, $field->outputAttributes([]));
+        $this->assertNotSame($field, $field->outputTag('div'));
+        $this->assertNotSame($field, $field->showOutput());
+        $this->assertNotSame($field, $field->tabIndex(null));
+        $this->assertNotSame($field, $field->autofocus());
+        $this->assertNotSame($field, $field->ariaLabel(null));
+        $this->assertNotSame($field, $field->ariaDescribedBy(null));
+        $this->assertNotSame($field, $field->disabled());
+        $this->assertNotSame($field, $field->list(null));
+        $this->assertNotSame($field, $field->step(null));
+        $this->assertNotSame($field, $field->min(null));
+        $this->assertNotSame($field, $field->max(null));
     }
 }

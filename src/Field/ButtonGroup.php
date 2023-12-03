@@ -89,10 +89,6 @@ final class ButtonGroup extends PartsField
 
     protected function generateInput(): string
     {
-        $html = $this->widget->render();
-
-        return $html !== ''
-            ? "\n" . $html . "\n"
-            : '';
+        return $this->widget->render();
     }
 }

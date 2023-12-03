@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Telephone;
@@ -22,27 +23,63 @@ final class TelephoneTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'TelephoneForm[number]',
-            value: '',
-            id: 'telephoneform-number',
-            label: 'Phone',
-            hint: 'Enter your phone.',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="telephoneform-number">Phone</label>
+                <input type="tel" id="telephoneform-number" name="TelephoneForm[number]" value>
+                <div>Enter your phone.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'TelephoneForm[number]',
+                    value: '',
+                    id: 'telephoneform-number',
+                    label: 'Phone',
+                    hint: 'Enter your phone.',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="tel" class="valid" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="tel" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+            'placeholder' => [
+                <<<HTML
+                <div>
+                <input type="tel" name="main" value placeholder="test">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', placeholder: 'test'),
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
-        $result = Telephone::widget()
-            ->inputData($inputData)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="telephoneform-number">Phone</label>
-            <input type="tel" id="telephoneform-number" name="TelephoneForm[number]" value>
-            <div>Enter your phone.</div>
-            </div>
-            HTML;
+        $result = Telephone::widget()->inputData($inputData)->render();
 
         $this->assertSame($expected, $result);
     }

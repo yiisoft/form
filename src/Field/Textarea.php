@@ -217,7 +217,6 @@ final class Textarea extends InputField implements
 
     protected function beforeRender(): void
     {
-        parent::beforeRender();
         if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }

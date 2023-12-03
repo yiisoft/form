@@ -10,6 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\RadioList;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
@@ -25,12 +26,48 @@ final class RadioListTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'RadioListForm[color]',
-            label: 'Select color',
-            hint: 'Color of box.',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label>Select color</label>
+                <div>
+                <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
+                <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
+                </div>
+                <div>Color of box.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'RadioListForm[color]',
+                    label: 'Select color',
+                    hint: 'Color of box.',
+                    id: 'UID',
+                ),
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <div>
+                <label><input type="radio" name="color" value="red"> Red</label>
+                <label><input type="radio" name="color" value="blue"> Blue</label>
+                </div>
+                </div>
+                HTML,
+                new PureInputData(name: 'color', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = RadioList::widget()
@@ -41,17 +78,6 @@ final class RadioListTest extends TestCase
             ->inputData($inputData)
             ->render();
 
-        $expected = <<<'HTML'
-            <div>
-            <label>Select color</label>
-            <div>
-            <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
-            <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
-            </div>
-            <div>Color of box.</div>
-            </div>
-            HTML;
-
         $this->assertSame($expected, $result);
     }
 
@@ -60,6 +86,7 @@ final class RadioListTest extends TestCase
         $result = RadioList::widget()
             ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two'])
+            ->value(2)
             ->useContainer(false)
             ->hideLabel()
             ->radioAttributes(['class' => 'red'])
@@ -68,7 +95,7 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <div>
             <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2"> Two</label>
+            <label><input type="radio" class="red" name="RadioListForm[number]" value="2" checked> Two</label>
             </div>
             HTML;
 
@@ -515,6 +542,26 @@ final class RadioListTest extends TestCase
             <div>
             <label><input type="radio" name="RadioListForm[number]" value="1" disabled> One</label>
             <label><input type="radio" name="RadioListForm[number]" value="2" disabled> Two</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testWithStringableValue(): void
+    {
+        $result = RadioList::widget()
+            ->name('number')
+            ->useContainer(false)
+            ->hideLabel()
+            ->items([1 => 'One', 2 => 'Two'])
+            ->value(new StringableObject('2'))
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label><input type="radio" name="number" value="1"> One</label>
+            <label><input type="radio" name="number" value="2" checked> Two</label>
             </div>
             HTML;
 

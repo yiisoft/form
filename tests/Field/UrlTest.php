@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Url;
@@ -22,27 +23,75 @@ final class UrlTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            id: 'urlform-site',
-            name: 'UrlForm[site]',
-            value: '',
-            label: 'Your site',
-            hint: 'Enter your site URL.',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="urlform-site">Your site</label>
+                <input type="url" id="urlform-site" name="UrlForm[site]" value>
+                <div>Enter your site URL.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'UrlForm[site]',
+                    value: '',
+                    label: 'Your site',
+                    hint: 'Enter your site URL.',
+                    id: 'urlform-site',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="url" class="valid" name="site" value>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'site',
+                    value: '',
+                    validationErrors: [],
+                ),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="url" name="site" value>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'site',
+                    value: '',
+                    validationErrors: [],
+                ),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+            'placeholder' => [
+                <<<HTML
+                <div>
+                <input type="url" name="site" value placeholder="test">
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'site',
+                    value: '',
+                    placeholder: 'test'
+                ),
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
-        $result = Url::widget()
-            ->inputData($inputData)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="urlform-site">Your site</label>
-            <input type="url" id="urlform-site" name="UrlForm[site]" value>
-            <div>Enter your site URL.</div>
-            </div>
-            HTML;
+        $result = Url::widget()->inputData($inputData)->render();
 
         $this->assertSame($expected, $result);
     }

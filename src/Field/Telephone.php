@@ -186,7 +186,6 @@ final class Telephone extends InputField implements EnrichFromValidationRulesInt
 
     protected function beforeRender(): void
     {
-        parent::beforeRender();
         if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }

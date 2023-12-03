@@ -6,6 +6,8 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -31,6 +33,37 @@ final class InputFieldTest extends TestCase
         $expected = <<<HTML
             <div>
             <input type="text" name="company" value form="CreatePost">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testAddInputAttributes(): void
+    {
+        $result = StubInputField::widget()
+            ->addInputAttributes(['class' => 'red'])
+            ->addInputAttributes(['id' => 'key'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" id="key" class="red" value>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testStringableInputId(): void
+    {
+        $result = StubInputField::widget()
+            ->inputAttributes(['id' => new StringableObject('key')])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" id="key" value>
             </div>
             HTML;
 
@@ -142,5 +175,8 @@ final class InputFieldTest extends TestCase
         $this->assertNotSame($field, $field->addInputAttributes([]));
         $this->assertNotSame($field, $field->addInputClass());
         $this->assertNotSame($field, $field->inputClass());
+        $this->assertNotSame($field, $field->inputData(new PureInputData()));
+        $this->assertNotSame($field, $field->name(null));
+        $this->assertNotSame($field, $field->value(null));
     }
 }

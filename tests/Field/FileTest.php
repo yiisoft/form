@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\File;
@@ -21,22 +22,48 @@ final class FileTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'avatar',
-            id: 'id-test',
-            label: 'Avatar',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="id-test">Avatar</label>
+                <input type="file" id="id-test" name="avatar">
+                </div>
+                HTML,
+                new PureInputData(name: 'avatar', id: 'id-test', label: 'Avatar'),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="file" class="valid" name="avatar">
+                </div>
+                HTML,
+                new PureInputData(name: 'avatar', value: '', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="file" name="avatar">
+                </div>
+                HTML,
+                new PureInputData(name: 'avatar', value: '', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = File::widget()->inputData($inputData)->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="id-test">Avatar</label>
-            <input type="file" id="id-test" name="avatar">
-            </div>
-            HTML;
 
         $this->assertSame($expected, $result);
     }

@@ -270,5 +270,8 @@ final class LabelTest extends TestCase
         $this->assertNotSame($label, $label->useInputId(true));
         $this->assertNotSame($label, $label->content(null));
         $this->assertNotSame($label, $label->encode(true));
+        $this->assertNotSame($label, $label->id(null));
+        $this->assertNotSame($label, $label->class(null));
+        $this->assertNotSame($label, $label->addClass(null));
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Textarea;
@@ -22,20 +23,56 @@ final class TextareaTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testTextarea(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData('desc', id: 'test-id', label: 'Description');
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="test-id">Description</label>
+                <textarea id="test-id" name="desc"></textarea>
+                </div>
+                HTML,
+                new PureInputData('desc', id: 'test-id', label: 'Description'),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <textarea class="valid" name="desc"></textarea>
+                </div>
+                HTML,
+                new PureInputData(name: 'desc', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <textarea name="desc"></textarea>
+                </div>
+                HTML,
+                new PureInputData(name: 'desc', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+            'placeholder' => [
+                <<<HTML
+                <div>
+                <textarea name="desc" placeholder="test"></textarea>
+                </div>
+                HTML,
+                new PureInputData(name: 'desc', placeholder: 'test'),
+            ],
+        ];
+    }
 
-        $result = Textarea::widget()
-            ->inputData($inputData)
-            ->render();
+    #[DataProvider('dataBase')]
+    public function testTextarea(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
+        );
 
-        $expected = <<<HTML
-            <div>
-            <label for="test-id">Description</label>
-            <textarea id="test-id" name="desc"></textarea>
-            </div>
-            HTML;
+        $result = Textarea::widget()->inputData($inputData)->render();
 
         $this->assertSame($expected, $result);
     }

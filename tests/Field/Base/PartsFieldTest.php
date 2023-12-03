@@ -68,6 +68,52 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testBeginFull(): void
+    {
+        $field = StubPartsField::widget()
+            ->error('error')
+            ->label('label')
+            ->hint('hint')
+            ->setBeginInputHtml('input')
+            ->templateBegin("{label}\n{input}\n{hint}\n{error}");
+
+        $result = $field->begin();
+        $field::end();
+
+        $expected = <<<HTML
+            <div>
+            <label>label</label>
+            input
+            <div>hint</div>
+            <div>error</div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testEndFull(): void
+    {
+        $field = StubPartsField::widget()
+            ->error('error')
+            ->label('label')
+            ->hint('hint')
+            ->setEndInputHtml('input')
+            ->templateEnd("{label}\n{input}\n{hint}\n{error}");
+
+        $field->begin();
+        $result = $field::end();
+
+        $expected = <<<HTML
+            <label>label</label>
+            input
+            <div>hint</div>
+            <div>error</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testBuiltinToken(): void
     {
         $field = StubPartsField::widget();
@@ -104,6 +150,78 @@ final class PartsFieldTest extends TestCase
         $field->tokens(['{before}' => new stdClass()]);
     }
 
+    public function testHideLabel(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testHideLabelBegin(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->hideLabel()
+            ->begin();
+
+        $this->assertSame('<div>', $result);
+    }
+
+    public function testHideLabelEnd(): void
+    {
+        $field = StubPartsField::widget()
+            ->label('test')
+            ->hideLabel()
+            ->templateEnd('{label}');
+        $field->begin();
+
+        $this->assertSame('</div>', $field::end());
+    }
+
+    public function testShouldHideLabel(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->setShouldHideLabelValue(true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testShouldHideLabelBegin(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->setShouldHideLabelValue(true)
+            ->begin();
+
+        $this->assertSame('<div>', $result);
+    }
+
+    public function testShouldHideLabelEnd(): void
+    {
+        $field = StubPartsField::widget()
+            ->label('test')
+            ->setShouldHideLabelValue(true)
+            ->templateEnd('{label}');
+        $field->begin();
+
+        $this->assertSame('</div>', $field::end());
+    }
+
     public function testAddLabelAttributes(): void
     {
         $result = StubPartsField::widget()
@@ -126,6 +244,23 @@ final class PartsFieldTest extends TestCase
         $result = StubPartsField::widget()
             ->label('test')
             ->labelAttributes(['class' => 'red'])
+            ->labelAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label id="KEY">test</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testLabelAttributesWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->labelConfig(['class()' => ['green']])
+            ->label('test')
             ->labelAttributes(['id' => 'KEY'])
             ->render();
 
@@ -188,6 +323,23 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testLabelClassWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->labelConfig(['class()' => ['green']])
+            ->label('test')
+            ->labelClass('blue')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label class="blue">test</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddHintAttributes(): void
     {
         $result = StubPartsField::widget()
@@ -210,6 +362,23 @@ final class PartsFieldTest extends TestCase
         $result = StubPartsField::widget()
             ->hint('test')
             ->hintAttributes(['class' => 'red'])
+            ->hintAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div id="KEY">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testHintAttributesWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->hintConfig(['class()' => ['green']])
+            ->hint('test')
             ->hintAttributes(['id' => 'KEY'])
             ->render();
 
@@ -272,6 +441,23 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testHintClassWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->hintConfig(['class()' => ['green']])
+            ->hint('test')
+            ->hintClass('red')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div class="red">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddErrorAttributes(): void
     {
         $result = StubPartsField::widget()
@@ -292,6 +478,24 @@ final class PartsFieldTest extends TestCase
     public function testErrorAttributes(): void
     {
         $result = StubPartsField::widget()
+            ->error('test')
+            ->errorAttributes(['class' => 'red'])
+            ->errorAttributes(['id' => 'KEY'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div id="KEY">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testErrorAttributesWithConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->errorConfig(['class()' => ['green']])
             ->error('test')
             ->errorAttributes(['class' => 'red'])
             ->errorAttributes(['id' => 'KEY'])
@@ -350,6 +554,23 @@ final class PartsFieldTest extends TestCase
         $expected = <<<HTML
             <div>
             <div class="blue">test</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testErrorClassWithErrorConfig(): void
+    {
+        $result = StubPartsField::widget()
+            ->errorConfig(['class()' => ['green']])
+            ->error('test')
+            ->errorClass('red')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div class="red">test</div>
             </div>
             HTML;
 
@@ -529,5 +750,7 @@ final class PartsFieldTest extends TestCase
         $this->assertNotSame($field, $field->errorClass());
         $this->assertNotSame($field, $field->addErrorClass());
         $this->assertNotSame($field, $field->error(null));
+        $this->assertNotSame($field, $field->templateBegin(''));
+        $this->assertNotSame($field, $field->templateEnd(''));
     }
 }

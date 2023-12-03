@@ -63,6 +63,21 @@ final class ThemeTest extends TestCase
                 ['inputAttributes' => ['required' => true]],
             ],
             [
+                <<<HTML
+                <div>
+                <input type="text" name="TextForm[company]" value>
+                </div>
+                HTML,
+                [
+                    'enrichFromValidationRules' => false,
+                ],
+                new PureInputData(
+                    name: 'TextForm[company]',
+                    value: '',
+                ),
+                ['inputAttributes' => ['required' => true]],
+            ],
+            [
                 <<<'HTML'
                 <section class="wrapper">
                 <label for="textform-job">Job</label>
@@ -272,16 +287,17 @@ final class ThemeTest extends TestCase
                 ),
             ],
             [
-                <<<'HTML'
+                <<<HTML
                 <div class="main-wrapper">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value data-type="input-text">
+                <input type="text" id="textform-job" class="test-class" name="TextForm[job]" value data-type="input-text">
                 </div>
                 HTML,
                 [
                     'containerTag' => 'section',
                     'containerAttributes' => ['class' => 'wrapper'],
                     'inputAttributes' => ['data-type' => 'field'],
+                    'inputClass' => ['test-class'],
                     'fieldConfigs' => [
                         Text::class => [
                             'containerTag()' => ['div'],
@@ -442,6 +458,79 @@ final class ThemeTest extends TestCase
         $this->initializeThemeContainer($factoryParameters, $enricherResult);
 
         $result = Text::widget()
+            ->inputData($inputData)
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function dataTextWithNotDefaultTheme(): array
+    {
+        return [
+            'labelConfig' => [
+                <<<'HTML'
+                <div>
+                <label class="red">Job</label>
+                <input type="text" name="job" value>
+                </div>
+                HTML,
+                [
+                    'labelConfig' => ['class()' => ['red']],
+                ],
+                new PureInputData(
+                    name: 'job',
+                    value: '',
+                    label: 'Job',
+                ),
+            ],
+            'hintConfig' => [
+                <<<'HTML'
+                <div>
+                <input type="text" name="job" value>
+                <div class="red">Job</div>
+                </div>
+                HTML,
+                [
+                    'hintConfig' => ['class()' => ['red']],
+                ],
+                new PureInputData(
+                    name: 'job',
+                    value: '',
+                    hint: 'Job',
+                ),
+            ],
+            'errorConfig' => [
+                <<<'HTML'
+                <div>
+                <input type="text" name="job" value>
+                <div class="red">Error</div>
+                </div>
+                HTML,
+                [
+                    'errorConfig' => ['class()' => ['red']],
+                ],
+                new PureInputData(
+                    name: 'job',
+                    value: '',
+                    validationErrors: ['Error'],
+                ),
+            ],
+        ];
+    }
+
+    #[DataProvider('dataTextWithNotDefaultTheme')]
+    public function testTextWithNotDefaultTheme(
+        string $expected,
+        array $factoryParameters,
+        PureInputData $inputData,
+    ): void {
+        WidgetFactory::initialize(new SimpleContainer());
+        ThemeContainer::initialize(
+            ['default' => [], 'custom-theme' => $factoryParameters],
+            defaultConfig: 'default',
+        );
+
+        $result = Text::widget(theme: 'custom-theme')
             ->inputData($inputData)
             ->render();
 

@@ -406,7 +406,7 @@ final class ErrorTest extends TestCase
     {
         $result = Error::widget()
             ->message('Value cannot be blank', 'Value is bad')
-            ->header('Field errors:')
+            ->header('Field errors >')
             ->headerTag(null)
             ->separator(', ')
             ->render();
@@ -414,7 +414,7 @@ final class ErrorTest extends TestCase
         $this->assertSame(
             <<<HTML
             <div>
-            Field errors:
+            Field errors &gt;
             Value cannot be blank, Value is bad
             </div>
             HTML,
@@ -578,5 +578,30 @@ final class ErrorTest extends TestCase
             HTML,
             $result
         );
+    }
+
+    public function testImmutability(): void
+    {
+        $error = Error::widget();
+
+        $this->assertNotSame($error, $error->messageCallback(null));
+        $this->assertNotSame($error, $error->message(null));
+        $this->assertNotSame($error, $error->addErrorAttributes([]));
+        $this->assertNotSame($error, $error->errorAttributes([]));
+        $this->assertNotSame($error, $error->errorTag('div'));
+        $this->assertNotSame($error, $error->headerEncode(true));
+        $this->assertNotSame($error, $error->addHeaderAttributes([]));
+        $this->assertNotSame($error, $error->headerAttributes([]));
+        $this->assertNotSame($error, $error->headerTag('div'));
+        $this->assertNotSame($error, $error->header(null));
+        $this->assertNotSame($error, $error->separator(''));
+        $this->assertNotSame($error, $error->encode(true));
+        $this->assertNotSame($error, $error->class(null));
+        $this->assertNotSame($error, $error->addClass(null));
+        $this->assertNotSame($error, $error->id(null));
+        $this->assertNotSame($error, $error->addAttributes([]));
+        $this->assertNotSame($error, $error->attributes([]));
+        $this->assertNotSame($error, $error->tag('div'));
+        $this->assertNotSame($error, $error->onlyFirst());
     }
 }

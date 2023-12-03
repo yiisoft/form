@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Password;
@@ -22,27 +23,63 @@ final class PasswordTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'PasswordForm[old]',
-            value: '',
-            label: 'Old password',
-            hint: 'Enter your old password.',
-            id: 'passwordform-old',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="passwordform-old">Old password</label>
+                <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
+                <div>Enter your old password.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'PasswordForm[old]',
+                    value: '',
+                    label: 'Old password',
+                    hint: 'Enter your old password.',
+                    id: 'passwordform-old',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="password" class="valid" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="password" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+            'placeholder' => [
+                <<<HTML
+                <div>
+                <input type="password" name="main" value placeholder="test">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', placeholder: 'test'),
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
-        $result = Password::widget()
-            ->inputData($inputData)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="passwordform-old">Old password</label>
-            <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
-            <div>Enter your old password.</div>
-            </div>
-            HTML;
+        $result = Password::widget()->inputData($inputData)->render();
 
         $this->assertSame($expected, $result);
     }
@@ -257,5 +294,22 @@ final class PasswordTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $html);
+    }
+
+    public function testImmutability(): void
+    {
+        $field = Password::widget();
+
+        $this->assertNotSame($field, $field->size(null));
+        $this->assertNotSame($field, $field->tabIndex(null));
+        $this->assertNotSame($field, $field->autofocus());
+        $this->assertNotSame($field, $field->ariaLabel(null));
+        $this->assertNotSame($field, $field->ariaDescribedBy(null));
+        $this->assertNotSame($field, $field->disabled());
+        $this->assertNotSame($field, $field->required());
+        $this->assertNotSame($field, $field->readonly());
+        $this->assertNotSame($field, $field->pattern(null));
+        $this->assertNotSame($field, $field->minlength(null));
+        $this->assertNotSame($field, $field->maxlength(null));
     }
 }

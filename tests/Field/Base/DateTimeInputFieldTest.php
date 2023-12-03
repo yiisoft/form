@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field\Base;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
@@ -19,6 +21,59 @@ final class DateTimeInputFieldTest extends TestCase
         parent::setUp();
         WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
+    }
+
+    public static function dataBase(): array
+    {
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="dt-main">Main date</label>
+                <input type="datetime" id="dt-main" name="dt" value>
+                <div>Need correct date</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'dt',
+                    value: '',
+                    label: 'Main date',
+                    hint: 'Need correct date',
+                    id: 'dt-main',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="datetime" class="valid" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="datetime" name="main" value>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
+        );
+
+        $result = StubDateTimeInputField::widget()->inputData($inputData)->render();
+
+        $this->assertSame($expected, $result);
     }
 
     public function testMax(): void
@@ -234,5 +289,6 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertNotSame($field, $field->readonly());
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->disabled());
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
     }
 }

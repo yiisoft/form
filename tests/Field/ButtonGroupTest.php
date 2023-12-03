@@ -44,14 +44,14 @@ final class ButtonGroupTest extends TestCase
         $result = ButtonGroup::widget()
             ->buttonsData([
                 ['Reset', 'type' => 'reset', 'class' => 'default'],
-                ['Send', 'type' => 'submit', 'class' => 'primary'],
+                ['Send >', 'type' => 'submit', 'class' => 'primary'],
             ])
             ->render();
 
         $expected = <<<HTML
             <div>
             <button type="reset" class="default">Reset</button>
-            <button type="submit" class="primary">Send</button>
+            <button type="submit" class="primary">Send &gt;</button>
             </div>
             HTML;
 

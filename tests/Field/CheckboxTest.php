@@ -24,24 +24,54 @@ final class CheckboxTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'CheckboxForm[red]',
-            value: '1',
-            label: 'Red color',
-            hint: 'If need red color.',
-            id: 'checkboxform-red',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <input type="hidden" name="CheckboxForm[red]" value="0"><label><input type="checkbox" id="checkboxform-red" name="CheckboxForm[red]" value="1" checked> Red color</label>
+                <div>If need red color.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'CheckboxForm[red]',
+                    value: '1',
+                    label: 'Red color',
+                    hint: 'If need red color.',
+                    id: 'checkboxform-red',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="hidden" name="main" value="0"><input type="checkbox" class="valid" name="main" value="1" checked>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '1', validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="hidden" name="main" value="0"><input type="checkbox" name="main" value="1" checked>
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: '1', validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = Checkbox::widget()->inputData($inputData)->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="hidden" name="CheckboxForm[red]" value="0"><label><input type="checkbox" id="checkboxform-red" name="CheckboxForm[red]" value="1" checked> Red color</label>
-            <div>If need red color.</div>
-            </div>
-            HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -147,20 +177,41 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testBothLabels(): void
+    public function testAllLabels(): void
     {
         $inputData = new PureInputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
+            ->label('Hello')
             ->inputLabel('Yes')
             ->hideLabel(false)
             ->render();
 
         $expected = <<<HTML
             <div>
-            <label>Blue color</label>
+            <label>Hello</label>
             <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> Yes</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testWithoutInputLabel(): void
+    {
+        $inputData = new PureInputData('test-name', label: 'Blue color');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->label('Hello')
+            ->hideLabel(false)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label>Hello</label>
+            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> Hello</label>
             </div>
             HTML;
 
@@ -549,5 +600,6 @@ final class CheckboxTest extends TestCase
         $this->assertNotSame($widget, $widget->ariaLabel(null));
         $this->assertNotSame($widget, $widget->autofocus());
         $this->assertNotSame($widget, $widget->tabIndex(null));
+        $this->assertNotSame($widget, $widget->inputLabelEncode(true));
     }
 }

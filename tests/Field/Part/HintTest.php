@@ -235,5 +235,8 @@ final class HintTest extends TestCase
         $this->assertNotSame($widget, $widget->addAttributes([]));
         $this->assertNotSame($widget, $widget->content(''));
         $this->assertNotSame($widget, $widget->encode(false));
+        $this->assertNotSame($widget, $widget->addClass(null));
+        $this->assertNotSame($widget, $widget->class(null));
+        $this->assertNotSame($widget, $widget->id(null));
     }
 }
