@@ -43,6 +43,7 @@ final class RadioListTest extends TestCase
                     name: 'RadioListForm[color]',
                     label: 'Select color',
                     hint: 'Color of box.',
+                    id: 'UID',
                 ),
             ],
             'container-valid-class' => [
@@ -84,6 +85,7 @@ final class RadioListTest extends TestCase
         $result = RadioList::widget()
             ->name('RadioListForm[number]')
             ->items([1 => 'One', 2 => 'Two'])
+            ->value(2)
             ->useContainer(false)
             ->hideLabel()
             ->radioAttributes(['class' => 'red'])
@@ -92,7 +94,7 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <div>
             <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2"> Two</label>
+            <label><input type="radio" class="red" name="RadioListForm[number]" value="2" checked> Two</label>
             </div>
             HTML;
 
