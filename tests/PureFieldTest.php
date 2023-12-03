@@ -51,7 +51,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -83,7 +83,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -115,7 +115,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -153,7 +153,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -191,7 +191,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -223,7 +223,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -255,7 +255,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -287,7 +287,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -320,7 +320,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -353,7 +353,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -378,12 +378,12 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'inputClass' => 'green'
+                'inputClass' => 'green',
             ],
         ]);
 
         $html = ThemedPureField::hidden(theme: 'test')->render();
-        
+
         $this->assertSame('<input type="hidden" class="green">', $html);
     }
 
@@ -404,7 +404,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -436,7 +436,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -468,7 +468,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -506,7 +506,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -544,7 +544,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -589,7 +589,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -621,7 +621,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -666,7 +666,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -698,7 +698,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -730,7 +730,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -762,7 +762,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -794,7 +794,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -826,7 +826,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'containerTag' => 'span'
+                'containerTag' => 'span',
             ],
         ]);
 
@@ -857,7 +857,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'labelClass' => 'red'
+                'labelClass' => 'red',
             ],
         ]);
 
@@ -882,7 +882,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'hintClass' => 'red'
+                'hintClass' => 'red',
             ],
         ]);
 
@@ -907,7 +907,7 @@ final class PureFieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'errorClass' => 'red'
+                'errorClass' => 'red',
             ],
         ]);
 
