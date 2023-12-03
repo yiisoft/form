@@ -217,7 +217,7 @@ abstract class PartsField extends BaseField
     final public function labelClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->labelAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->labelAttributes['class'] = $class;
         $new->replaceLabelClass = true;
         return $new;
     }
@@ -283,7 +283,7 @@ abstract class PartsField extends BaseField
     final public function hintClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->hintAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->hintAttributes['class'] = $class;
         $new->replaceHintClass = true;
         return $new;
     }
@@ -481,7 +481,7 @@ abstract class PartsField extends BaseField
             if ($this->replaceLabelAttributes) {
                 $label = $label->attributes($labelAttributes);
             } else {
-                /** @var string|string[]|null $class */
+                /** @psalm-var array<array-key,string|null>|string|null $class */
                 $class = $this->labelAttributes['class'] ?? null;
                 unset($labelAttributes['class']);
 
@@ -507,7 +507,7 @@ abstract class PartsField extends BaseField
             if ($this->replaceHintAttributes) {
                 $hint = $hint->attributes($hintAttributes);
             } else {
-                /** @var string|string[]|null $class */
+                /** @psalm-var array<array-key,string|null>|string|null $class */
                 $class = $this->hintAttributes['class'] ?? null;
                 unset($hintAttributes['class']);
 
@@ -533,7 +533,7 @@ abstract class PartsField extends BaseField
             if ($this->replaceErrorAttributes) {
                 $error = $error->attributes($errorAttributes);
             } else {
-                /** @var string|string[]|null $class */
+                /** @psalm-var array<array-key,string|null>|string|null $class */
                 $class = $this->errorAttributes['class'] ?? null;
                 unset($errorAttributes['class']);
 
