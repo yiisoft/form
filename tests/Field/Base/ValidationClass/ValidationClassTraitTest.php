@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Base\ValidationClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
-use Yiisoft\Form\Tests\Support\ValidationClassTrait\ValidationClassField;
+use Yiisoft\Form\Tests\Support\ValidationClass\ValidationClassField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;

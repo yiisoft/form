@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests\Support\ValidationClassTrait;
+namespace Yiisoft\Form\Tests\Support\ValidationClass;
 
 final class ValidationClassField extends BaseValidationClass
 {
