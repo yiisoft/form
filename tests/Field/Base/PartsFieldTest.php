@@ -68,6 +68,52 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testBeginFull(): void
+    {
+        $field = StubPartsField::widget()
+            ->error('error')
+            ->label('label')
+            ->hint('hint')
+            ->setBeginInputHtml('input')
+            ->templateBegin("{label}\n{input}\n{hint}\n{error}");
+
+        $result = $field->begin();
+        $field::end();
+
+        $expected = <<<HTML
+            <div>
+            <label>label</label>
+            input
+            <div>hint</div>
+            <div>error</div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testEndFull(): void
+    {
+        $field = StubPartsField::widget()
+            ->error('error')
+            ->label('label')
+            ->hint('hint')
+            ->setEndInputHtml('input')
+            ->templateEnd("{label}\n{input}\n{hint}\n{error}");
+
+        $field->begin();
+        $result = $field::end();
+
+        $expected = <<<HTML
+            <label>label</label>
+            input
+            <div>hint</div>
+            <div>error</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testBuiltinToken(): void
     {
         $field = StubPartsField::widget();
@@ -144,7 +190,7 @@ final class PartsFieldTest extends TestCase
     {
         $result = StubPartsField::widget()
             ->label('test')
-            ->shouldHideLabelValue(true)
+            ->setShouldHideLabelValue(true)
             ->render();
 
         $expected = <<<HTML
@@ -159,7 +205,7 @@ final class PartsFieldTest extends TestCase
     {
         $result = StubPartsField::widget()
             ->label('test')
-            ->shouldHideLabelValue(true)
+            ->setShouldHideLabelValue(true)
             ->begin();
 
         $this->assertSame('<div>', $result);
@@ -169,7 +215,7 @@ final class PartsFieldTest extends TestCase
     {
         $field = StubPartsField::widget()
             ->label('test')
-            ->shouldHideLabelValue(true)
+            ->setShouldHideLabelValue(true)
             ->templateEnd('{label}');
         $field->begin();
 
