@@ -200,7 +200,6 @@ final class Email extends InputField implements EnrichFromValidationRulesInterfa
 
     protected function beforeRender(): void
     {
-        parent::beforeRender();
         if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }

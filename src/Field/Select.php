@@ -240,7 +240,6 @@ final class Select extends InputField implements EnrichFromValidationRulesInterf
 
     protected function beforeRender(): void
     {
-        parent::beforeRender();
         if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }

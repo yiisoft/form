@@ -141,7 +141,6 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
 
     protected function beforeRender(): void
     {
-        parent::beforeRender();
         if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }

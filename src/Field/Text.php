@@ -202,7 +202,6 @@ final class Text extends InputField implements EnrichFromValidationRulesInterfac
 
     protected function beforeRender(): void
     {
-        parent::beforeRender();
         if ($this->enrichFromValidationRules) {
             $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
         }
