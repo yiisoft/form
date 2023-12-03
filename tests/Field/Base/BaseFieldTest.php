@@ -133,9 +133,11 @@ final class BaseFieldTest extends TestCase
     {
         $field = StubBaseField::widget();
 
-        $result = $field->begin() . 'content' . StubBaseField::end();
+        $result1 = $field->begin() . 'content' . $field->render();
+        $result2 = $field->render();
 
-        $this->assertSame('<div>content</div>', $result);
+        $this->assertSame('<div>content</div>', $result1);
+        $this->assertSame("<div>\ntest\n</div>", $result2);
     }
 
     public function testBeginEndWithoutContainer(): void
