@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Email;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -243,6 +244,44 @@ final class EmailTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Email field requires a string or null value.');
         $field->render();
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Email::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="email" data-test="1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Email::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="email">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testImmutability(): void

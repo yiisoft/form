@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Telephone;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Widget\WidgetFactory;
@@ -218,6 +219,44 @@ final class TelephoneTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Telephone field requires a string or null value.');
         $widget->render();
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Telephone::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="tel" data-test="1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Telephone::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="tel">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testImmutability(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
@@ -526,6 +527,24 @@ final class RadioListTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"RadioList" field requires a string, numeric, bool, Stringable or null value.');
+        $field->render();
+    }
+
+    public function testWithoutName(): void
+    {
+        $field = RadioList::widget();
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('"RadioList" field requires non-empty name.');
+        $field->render();
+    }
+
+    public function testEmptyName(): void
+    {
+        $field = RadioList::widget()->name('');
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('"RadioList" field requires non-empty name.');
         $field->render();
     }
 
