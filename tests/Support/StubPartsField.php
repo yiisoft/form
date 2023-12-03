@@ -9,6 +9,7 @@ use Yiisoft\Form\Field\Base\PartsField;
 final class StubPartsField extends PartsField
 {
     private ?string $inputHtml = null;
+    private ?bool $shouldHideLabelValue = null;
 
     public function setInputHtml(string $html): self
     {
@@ -19,5 +20,16 @@ final class StubPartsField extends PartsField
     protected function generateInput(): string
     {
         return $this->inputHtml ?? parent::generateInput();
+    }
+
+    public function shouldHideLabelValue(?bool $value): self
+    {
+        $this->shouldHideLabelValue = $value;
+        return $this;
+    }
+
+    protected function shouldHideLabel(): bool
+    {
+        return $this->shouldHideLabelValue ?? parent::shouldHideLabel();
     }
 }

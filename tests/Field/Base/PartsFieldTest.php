@@ -119,6 +119,63 @@ final class PartsFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testHideLabelBegin(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->hideLabel()
+            ->begin();
+
+        $this->assertSame('<div>', $result);
+    }
+
+    public function testHideLabelEnd(): void
+    {
+        $field = StubPartsField::widget()
+            ->label('test')
+            ->hideLabel()
+            ->templateEnd('{label}');
+        $field->begin();
+
+        $this->assertSame('</div>', $field::end());
+    }
+
+    public function testShouldHideLabel(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->shouldHideLabelValue(true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testShouldHideLabelBegin(): void
+    {
+        $result = StubPartsField::widget()
+            ->label('test')
+            ->shouldHideLabelValue(true)
+            ->begin();
+
+        $this->assertSame('<div>', $result);
+    }
+
+    public function testShouldHideLabelEnd(): void
+    {
+        $field = StubPartsField::widget()
+            ->label('test')
+            ->shouldHideLabelValue(true)
+            ->templateEnd('{label}');
+        $field->begin();
+
+        $this->assertSame('</div>', $field::end());
+    }
+
     public function testAddLabelAttributes(): void
     {
         $result = StubPartsField::widget()
