@@ -24,27 +24,65 @@ final class NumberTest extends TestCase
         ThemeContainer::initialize();
     }
 
-    public function testBase(): void
+    public static function dataBase(): array
     {
-        $inputData = new PureInputData(
-            name: 'NumberForm[age]',
-            value: 42,
-            hint: 'Full years.',
-            label: 'Your age',
-            id: 'numberform-age',
+        return [
+            'base' => [
+                <<<HTML
+                <div>
+                <label for="numberform-age">Your age</label>
+                <input type="number" id="numberform-age" name="NumberForm[age]" value="42">
+                <div>Full years.</div>
+                </div>
+                HTML,
+                new PureInputData(
+                    name: 'NumberForm[age]',
+                    value: 42,
+                    hint: 'Full years.',
+                    label: 'Your age',
+                    id: 'numberform-age',
+                ),
+            ],
+            'input-valid-class' => [
+                <<<HTML
+                <div>
+                <input type="number" class="valid" name="main" value="1">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: 1, validationErrors: []),
+                ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
+            ],
+            'container-valid-class' => [
+                <<<HTML
+                <div class="valid">
+                <input type="number" name="main" value="1">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: 1, validationErrors: []),
+                ['validClass' => 'valid', 'invalidClass' => 'invalid'],
+            ],
+            'placeholder' => [
+                <<<HTML
+                <div>
+                <input type="number" name="main" value="1" placeholder="test">
+                </div>
+                HTML,
+                new PureInputData(name: 'main', value: 1, placeholder: 'test'),
+            ],
+        ];
+    }
+
+    #[DataProvider('dataBase')]
+    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    {
+        ThemeContainer::initialize(
+            configs: ['default' => $theme],
+            defaultConfig: 'default',
         );
 
         $result = Number::widget()
             ->inputData($inputData)
             ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label for="numberform-age">Your age</label>
-            <input type="number" id="numberform-age" name="NumberForm[age]" value="42">
-            <div>Full years.</div>
-            </div>
-            HTML;
 
         $this->assertSame($expected, $result);
     }
