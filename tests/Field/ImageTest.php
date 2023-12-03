@@ -168,16 +168,17 @@ final class ImageTest extends TestCase
         return [
             ['<input type="image">', false],
             ['<input type="image" autofocus>', true],
+            ['<input type="image" autofocus>', null],
         ];
     }
 
     #[DataProvider('dataAutofocus')]
     public function testAutofocus(string $expected, ?bool $autofocus): void
     {
-        $result = Image::widget()
-            ->autofocus($autofocus)
-            ->useContainer(false)
-            ->render();
+        $widget = Image::widget()->useContainer(false);
+        $widget = $autofocus === null ? $widget->autofocus() : $widget->autofocus($autofocus);
+
+        $result = $widget->render();
 
         $this->assertSame($expected, $result);
     }
@@ -187,16 +188,17 @@ final class ImageTest extends TestCase
         return [
             ['<input type="image">', false],
             ['<input type="image" disabled>', true],
+            ['<input type="image" disabled>', null],
         ];
     }
 
     #[DataProvider('dataDisabled')]
     public function testDisabled(string $expected, ?bool $disabled): void
     {
-        $result = Image::widget()
-            ->disabled($disabled)
-            ->useContainer(false)
-            ->render();
+        $widget = Image::widget()->useContainer(false);
+        $widget = $disabled === null ? $widget->disabled() : $widget->disabled($disabled);
+
+        $result = $widget->render();
 
         $this->assertSame($expected, $result);
     }
