@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Test\Support\Container\SimpleContainer;
@@ -142,5 +143,8 @@ final class InputFieldTest extends TestCase
         $this->assertNotSame($field, $field->addInputAttributes([]));
         $this->assertNotSame($field, $field->addInputClass());
         $this->assertNotSame($field, $field->inputClass());
+        $this->assertNotSame($field, $field->inputData(new PureInputData()));
+        $this->assertNotSame($field, $field->name(null));
+        $this->assertNotSame($field, $field->value(null));
     }
 }
