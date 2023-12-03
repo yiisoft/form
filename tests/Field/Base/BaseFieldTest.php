@@ -194,6 +194,22 @@ final class BaseFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testAddContainerAttributes(): void
+    {
+        $result = StubBaseField::widget()
+            ->addContainerAttributes(['id' => 'key'])
+            ->addContainerAttributes(['class' => 'green'])
+            ->render();
+
+        $expected = <<<HTML
+            <div id="key" class="green">
+            test
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubBaseField::widget();
