@@ -13,6 +13,7 @@ use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
+use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Field\Hidden;
@@ -114,6 +115,14 @@ class PureField
     ): Email {
         return Email::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new PureInputData($name, $value));
+    }
+
+    final public static function errorSummary(
+        array $errors = [],
+        array $config = [],
+        ?string $theme = null,
+    ): ErrorSummary {
+        return ErrorSummary::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)->errors($errors);
     }
 
     final public static function fieldset(array $config = [], ?string $theme = null): Fieldset

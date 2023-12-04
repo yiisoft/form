@@ -302,6 +302,44 @@ final class PureFieldTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testErrorSummary(): void
+    {
+        $html = PureField::errorSummary(['key' => ['e1', 'e2']])->render();
+
+        $expected = <<<HTML
+            <div>
+            <ul>
+            <li>e1</li>
+            <li>e2</li>
+            </ul>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testErrorSummaryWithTheme(): void
+    {
+        ThemeContainer::initialize([
+            'test' => [
+                'containerTag' => 'span',
+            ],
+        ]);
+
+        $html = ThemedPureField::errorSummary(['key' => ['e1', 'e2']], theme: 'test')->render();
+
+        $expected = <<<HTML
+            <span>
+            <ul>
+            <li>e1</li>
+            <li>e2</li>
+            </ul>
+            </span>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
     public function testFieldset(): void
     {
         $html = PureField::fieldset()->render();
