@@ -34,6 +34,9 @@ use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\Field\Time;
 use Yiisoft\Form\Field\Url;
 
+/**
+ * @psalm-import-type Errors from ErrorSummary
+ */
 class PureField
 {
     /**
@@ -117,6 +120,9 @@ class PureField
             ->inputData(new PureInputData($name, $value));
     }
 
+    /**
+     * @psalm-param Errors $errors
+     */
     final public static function errorSummary(
         array $errors = [],
         array $config = [],
