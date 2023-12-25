@@ -19,7 +19,7 @@ return [
         Checkbox::class => [
             'addContainerClass()' => ['form-check'],
             'inputClass()' => ['form-check-input'],
-            'inputLabelClass()' => ['form-check-label']
+            'inputLabelClass()' => ['form-check-label'],
         ],
         ErrorSummary::class => [
             'containerClass()' => ['alert alert-danger'],
@@ -27,7 +27,7 @@ return [
             'header()' => [''],
         ],
         SubmitButton::class => [
-            'buttonClass()' => ['btn btn-primary']
+            'buttonClass()' => ['btn btn-primary'],
         ],
     ],
 ];
