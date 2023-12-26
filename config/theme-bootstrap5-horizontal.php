@@ -14,9 +14,9 @@ use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\Field\SubmitButton;
 
 return [
-    'template' => "{label}\n{input}\n{hint}\n{error}",
-    'containerClass' => 'mb-3',
-    'labelClass' => 'form-label',
+    'template' => "{label}\n<div class=\"col-sm-10\">{input}\n{hint}\n{error}</div>",
+    'containerClass' => 'mb-3 row',
+    'labelClass' => 'col-sm-2 col-form-label',
     'inputClass' => 'form-control',
     'hintClass' => 'form-text',
     'errorClass' => 'invalid-feedback',

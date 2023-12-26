@@ -8,15 +8,19 @@ use Yiisoft\Form\PureField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 
-$root = dirname(__DIR__, 2);
+/**
+ * @var array $params
+ */
+
+$root = dirname(__DIR__);
 
 require_once $root . '/vendor/autoload.php';
 
 ThemeContainer::initialize(
     [
-        'bootstrap5-vertical' => require $root . '/config/theme-bootstrap5-vertical.php',
+        'theme' => require $root . '/config/' . $params['file'],
     ],
-    'bootstrap5-vertical',
+    'theme',
 );
 
 echo '<!DOCTYPE html>';
@@ -25,7 +29,8 @@ echo '<!DOCTYPE html>';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yii Form — Bootstrap5 Vertical Theme</title>
+    <title>Yii Form — <?= Html::encode($params['name']) ?></title>
+    <?= $params['head'] ?>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
