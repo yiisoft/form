@@ -3,11 +3,14 @@
 declare(strict_types=1);
 
 use Yiisoft\Form\Field\Button;
+use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\RadioList;
+use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\Field\ResetButton;
+use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\Field\SubmitButton;
 
 return [
@@ -46,6 +49,16 @@ return [
         ],
         ResetButton::class => [
             'buttonClass()' => ['btn btn-secondary'],
+        ],
+        ButtonGroup::class => [
+            'addContainerClass()' => ['btn-group'],
+            'addButtonAttributes()' => [['class' => 'btn btn-secondary']],
+        ],
+        Range::class => [
+            'inputClass()' => ['form-range'],
+        ],
+        Select::class => [
+            'inputClass()' => ['form-select'],
         ],
     ],
 ];

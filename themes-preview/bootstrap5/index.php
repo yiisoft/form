@@ -6,6 +6,7 @@ use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\PureField;
 use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Html\Html;
 
 $root = dirname(__DIR__, 2);
 
@@ -57,6 +58,14 @@ echo '<!DOCTYPE html>';
 
     echo PureField::telephone()->label('Telephone Field')->placeholder('Placeholder');
 
+    echo PureField::number()->label('Number Field')->placeholder('Placeholder');
+
+    echo PureField::range()->label('Range Field');
+
+    echo PureField::select()
+        ->label('Select Field')
+        ->optionsData(['Red', 'Green', 'Blue']);
+
     echo PureField::checkbox()->label('Checkbox Field');
 
     echo PureField::checkboxList('checkbox-list')
@@ -76,6 +85,8 @@ echo '<!DOCTYPE html>';
     echo PureField::submitButton('Submit Button');
 
     echo PureField::resetButton('Reset Button');
+
+    echo PureField::buttonGroup()->buttonsData([['This'], ['is'], ['button'], ['group']]);
     ?>
 </div>
 </body>
