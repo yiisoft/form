@@ -363,6 +363,29 @@ final class NumberTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company');
+
+        $result = Number::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <input type="number" class="invalid" name="company">
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = Number::widget();

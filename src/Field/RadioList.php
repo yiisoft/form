@@ -161,9 +161,17 @@ final class RadioList extends PartsField implements ValidationClassInterface
         }
         /** @psalm-var Stringable|scalar $value */
 
+        $radioAttributes = [];
+        $this->addInputValidationClassToAttributes(
+            $radioAttributes,
+            $this->getInputData(),
+            $this->hasCustomError() ? true : null,
+        );
+
         return $this->widget
             ->name($name)
             ->value($value)
+            ->addRadioAttributes($radioAttributes)
             ->render();
     }
 
@@ -191,6 +199,10 @@ final class RadioList extends PartsField implements ValidationClassInterface
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        $this->addValidationClassToAttributes($attributes, $this->getInputData());
+        $this->addValidationClassToAttributes(
+            $attributes,
+            $this->getInputData(),
+            $this->hasCustomError() ? true : null,
+        );
     }
 }

@@ -302,6 +302,29 @@ final class FileTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company', '');
+
+        $result = File::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <input type="file" class="invalid" name="company">
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = File::widget();

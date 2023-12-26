@@ -672,6 +672,29 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company', '');
+
+        $result = Select::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <select class="invalid" name="company"></select>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = Select::widget();

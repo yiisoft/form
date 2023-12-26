@@ -319,6 +319,29 @@ final class TextareaTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company', '');
+
+        $result = Textarea::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <textarea class="invalid" name="company"></textarea>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = Textarea::widget();

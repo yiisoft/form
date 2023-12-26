@@ -397,6 +397,36 @@ final class CheckboxListTest extends TestCase
         $field->render();
     }
 
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company', ['red']);
+
+        $result = CheckboxList::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <div>
+            <label><input type="checkbox" class="invalid" name="company[]" value="red" checked> Red</label>
+            <label><input type="checkbox" class="invalid" name="company[]" value="blue"> Blue</label>
+            </div>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = CheckboxList::widget();
