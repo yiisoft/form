@@ -8,15 +8,12 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubBaseField;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class BaseFieldTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
@@ -151,7 +148,6 @@ final class BaseFieldTest extends TestCase
 
     public function testCustomTheme(): void
     {
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
             configs: [
                 'default' => [

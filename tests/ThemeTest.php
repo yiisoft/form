@@ -14,8 +14,6 @@ use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class ThemeTest extends TestCase
 {
@@ -524,7 +522,6 @@ final class ThemeTest extends TestCase
         array $factoryParameters,
         PureInputData $inputData,
     ): void {
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
             ['default' => [], 'custom-theme' => $factoryParameters],
             defaultConfig: 'default',
@@ -539,7 +536,6 @@ final class ThemeTest extends TestCase
 
     public function testTextWithCustomTheme(): void
     {
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize([
             'custom-theme' => [
                 'inputContainerTag' => 'div',
@@ -782,7 +778,6 @@ final class ThemeTest extends TestCase
 
     private function initializeThemeContainer(array $parameters = [], ?array $enricherResult = null): void
     {
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize(
             ['default' => $parameters],
             defaultConfig: 'default',

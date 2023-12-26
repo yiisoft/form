@@ -9,15 +9,12 @@ use Yiisoft\Form\PureField;
 use Yiisoft\Form\Tests\Support\ThemedPureField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class PureFieldTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
