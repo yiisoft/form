@@ -101,6 +101,12 @@ echo '<!DOCTYPE html>';
             'colors' => ['Value must be array or iterable.'],
         ]
     )->header('Error Summary');
+
+    echo PureField::label('Label Example');
+
+    echo PureField::hint('Hint Example');
+
+    echo PureField::error('Error Example')->addAttributes(['style' => 'display: block;']);
     ?>
 </div>
 </body>
