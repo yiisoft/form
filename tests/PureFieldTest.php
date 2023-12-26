@@ -435,6 +435,19 @@ final class PureFieldTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testImageWithUrl(): void
+    {
+        $html = PureField::image('image.png')->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="image" src="image.png">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
     public function testImageWithTheme(): void
     {
         ThemeContainer::initialize([

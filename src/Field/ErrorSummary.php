@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
+use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Html\Html;
+use Yiisoft\Html\Tag\CustomTag;
 
 use function in_array;
 
@@ -24,8 +26,15 @@ final class ErrorSummary extends BaseField
 
     private string $footer = '';
     private array $footerAttributes = [];
+
+    /**
+     * @var non-empty-string|null
+     */
+    private ?string $headerTag = 'div';
     private string $header = '';
+    private bool $headerEncode = true;
     private array $headerAttributes = [];
+
     private array $listAttributes = [];
 
     /**
@@ -112,6 +121,32 @@ final class ErrorSummary extends BaseField
     }
 
     /**
+     * Set the header tag name.
+     *
+     * @param string|null $tag Header tag name.
+     */
+    public function headerTag(?string $tag): self
+    {
+        if ($tag === '') {
+            throw new InvalidArgumentException('Tag name cannot be empty.');
+        }
+
+        $new = clone $this;
+        $new->headerTag = $tag;
+        return $new;
+    }
+
+    /**
+     * Whether header content should be HTML-encoded.
+     */
+    public function headerEncode(bool $encode): self
+    {
+        $new = clone $this;
+        $new->headerEncode = $encode;
+        return $new;
+    }
+
+    /**
      * Set header attributes for the error summary.
      *
      * @param array $values Attribute values indexed by attribute names.
@@ -173,7 +208,13 @@ final class ErrorSummary extends BaseField
         $content = [];
 
         if ($this->header !== '') {
-            $content[] = Html::div($this->header, $this->headerAttributes)->render();
+            $content[] = $this->headerTag === null
+                ? ($this->headerEncode ? Html::encode($this->header) : $this->header)
+                : CustomTag::name($this->headerTag)
+                    ->attributes($this->headerAttributes)
+                    ->content($this->header)
+                    ->encode($this->headerEncode)
+                    ->render();
         }
 
         $content[] = Html::ul()

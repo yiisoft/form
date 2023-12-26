@@ -1,0 +1,6 @@
+{
+    "name": "yiisoft-form-bootstrap5",
+    "dependencies": {
+        "bootstrap": "^5"
+    }
+}

@@ -125,6 +125,48 @@ final class CheckboxListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testAddCheckboxLabelAttributes(): void
+    {
+        $result = CheckboxList::widget()
+            ->itemsFromValues(['Red', 'Blue'])
+            ->name('CheckboxListForm[color]')
+            ->addCheckboxLabelAttributes(['class' => 'control'])
+            ->addCheckboxLabelAttributes(['data-key' => 'x100'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label class="control" data-key="x100"><input type="checkbox" name="CheckboxListForm[color][]" value="Red"> Red</label>
+            <label class="control" data-key="x100"><input type="checkbox" name="CheckboxListForm[color][]" value="Blue"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCheckboxLabelAttributes(): void
+    {
+        $result = CheckboxList::widget()
+            ->itemsFromValues(['Red', 'Blue'])
+            ->name('CheckboxListForm[color]')
+            ->checkboxLabelAttributes(['data-key' => 'x100'])
+            ->checkboxLabelAttributes(['class' => 'control'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label class="control"><input type="checkbox" name="CheckboxListForm[color][]" value="Red"> Red</label>
+            <label class="control"><input type="checkbox" name="CheckboxListForm[color][]" value="Blue"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddIndividualInputAttributes(): void
     {
         $result = CheckboxList::widget()
@@ -430,6 +472,8 @@ final class CheckboxListTest extends TestCase
 
         $this->assertNotSame($field, $field->checkboxAttributes([]));
         $this->assertNotSame($field, $field->addCheckboxAttributes([]));
+        $this->assertNotSame($field, $field->checkboxLabelAttributes([]));
+        $this->assertNotSame($field, $field->addCheckboxLabelAttributes([]));
         $this->assertNotSame($field, $field->individualInputAttributes([]));
         $this->assertNotSame($field, $field->addIndividualInputAttributes([]));
         $this->assertNotSame($field, $field->items([]));
