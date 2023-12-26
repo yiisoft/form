@@ -446,6 +446,11 @@ abstract class PartsField extends BaseField
         return $this->makeContent($this->templateEnd, $parts);
     }
 
+    final protected function hasCustomError(): bool
+    {
+        return isset($this->errorConfig['message()']);
+    }
+
     private function generateInputContainerBegin(): string
     {
         return $this->inputContainerTag === null

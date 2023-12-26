@@ -595,6 +595,33 @@ final class RadioListTest extends TestCase
         $field->render();
     }
 
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('number', 2);
+
+        $result = RadioList::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->items([1 => 'One', 2 => 'Two'])
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <div>
+            <label><input type="radio" class="invalid" name="number" value="1"> One</label>
+            <label><input type="radio" class="invalid" name="number" value="2" checked> Two</label>
+            </div>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = RadioList::widget();

@@ -159,9 +159,17 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
         }
         /** @psalm-var iterable<int, Stringable|scalar> $value */
 
+        $checkboxAttributes = [];
+        $this->addInputValidationClassToAttributes(
+            $checkboxAttributes,
+            $this->getInputData(),
+            $this->hasCustomError() ? true : null,
+        );
+
         return $this->widget
             ->name($name)
             ->values($value)
+            ->addCheckboxAttributes($checkboxAttributes)
             ->render();
     }
 
@@ -189,6 +197,10 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        $this->addValidationClassToAttributes($attributes, $this->getInputData());
+        $this->addValidationClassToAttributes(
+            $attributes,
+            $this->getInputData(),
+            $this->hasCustomError() ? true : null,
+        );
     }
 }

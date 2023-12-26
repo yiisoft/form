@@ -226,12 +226,20 @@ final class Text extends InputField implements EnrichFromValidationRulesInterfac
 
     protected function prepareContainerAttributes(array &$attributes): void
     {
-        $this->addValidationClassToAttributes($attributes, $this->getInputData());
+        $this->addValidationClassToAttributes(
+            $attributes,
+            $this->getInputData(),
+            $this->hasCustomError() ? true : null,
+        );
     }
 
     protected function prepareInputAttributes(array &$attributes): void
     {
         $this->preparePlaceholderInInputAttributes($attributes);
-        $this->addInputValidationClassToAttributes($attributes, $this->getInputData());
+        $this->addInputValidationClassToAttributes(
+            $attributes,
+            $this->getInputData(),
+            $this->hasCustomError() ? true : null,
+        );
     }
 }
