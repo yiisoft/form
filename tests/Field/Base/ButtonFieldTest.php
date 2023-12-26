@@ -9,15 +9,12 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubButtonField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\Button as ButtonTag;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class ButtonFieldTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 

@@ -9,15 +9,12 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class TextTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
@@ -859,6 +856,29 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <input type="text" class="valid" name="job" value>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company', '');
+
+        $result = Text::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <input type="text" class="invalid" name="company" value>
+            <div>Value cannot be blank.</div>
             </div>
             HTML;
 

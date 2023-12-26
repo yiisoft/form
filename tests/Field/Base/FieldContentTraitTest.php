@@ -11,15 +11,12 @@ use Yiisoft\Form\Tests\Support\StubFieldContentTrait;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Tag\P;
 use Yiisoft\Html\Tag\Span;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class FieldContentTraitTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 

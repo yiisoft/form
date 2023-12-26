@@ -8,15 +8,12 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\PureField;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Hidden;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class ConfigTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
@@ -30,7 +27,7 @@ final class ConfigTest extends TestCase
 
         $this->assertIsCallable($bootstrap);
 
-        $bootstrap(new SimpleContainer());
+        $bootstrap();
     }
 
     public function testCustomParams(): void
@@ -49,7 +46,7 @@ final class ConfigTest extends TestCase
 
         $bootstrapList = $this->getBootstrapList($params);
         $bootstrap = array_shift($bootstrapList);
-        $bootstrap(new SimpleContainer());
+        $bootstrap();
 
         $input = PureField::hidden('key', 'x100');
 

@@ -57,21 +57,29 @@ trait ValidationClassTrait
         return $new;
     }
 
-    protected function addValidationClassToAttributes(array &$attributes, InputDataInterface $inputData): void
-    {
+    protected function addValidationClassToAttributes(
+        array &$attributes,
+        InputDataInterface $inputData,
+        ?bool $hasCustomError = null,
+    ): void {
         $this->addClassesToAttributes(
             $attributes,
             $inputData,
+            $hasCustomError,
             $this->invalidClass,
             $this->validClass,
         );
     }
 
-    protected function addInputValidationClassToAttributes(array &$attributes, InputDataInterface $inputData): void
-    {
+    protected function addInputValidationClassToAttributes(
+        array &$attributes,
+        InputDataInterface $inputData,
+        ?bool $hasCustomError = null,
+    ): void {
         $this->addClassesToAttributes(
             $attributes,
             $inputData,
+            $hasCustomError,
             $this->inputInvalidClass,
             $this->inputValidClass,
         );
@@ -80,14 +88,15 @@ trait ValidationClassTrait
     private function addClassesToAttributes(
         array &$attributes,
         InputDataInterface $inputData,
+        ?bool $hasCustomError,
         ?string $invalidClass,
         ?string $validClass,
     ): void {
-        if (!$inputData->isValidated()) {
+        if (!$inputData->isValidated() && $hasCustomError === null) {
             return;
         }
 
-        $hasErrors = !empty($inputData->getValidationErrors());
+        $hasErrors = $hasCustomError || !empty($inputData->getValidationErrors());
 
         if ($hasErrors && $invalidClass !== null) {
             Html::addCssClass($attributes, $invalidClass);

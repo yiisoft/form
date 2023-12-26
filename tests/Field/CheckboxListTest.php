@@ -13,15 +13,12 @@ use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class CheckboxListTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
@@ -395,6 +392,36 @@ final class CheckboxListTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('"CheckboxList" field requires non-empty name.');
         $field->render();
+    }
+
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('company', ['red']);
+
+        $result = CheckboxList::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <div>
+            <label><input type="checkbox" class="invalid" name="company[]" value="red" checked> Red</label>
+            <label><input type="checkbox" class="invalid" name="company[]" value="blue"> Blue</label>
+            </div>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
     }
 
     public function testImmutability(): void

@@ -14,15 +14,12 @@ use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class RadioListTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
@@ -593,6 +590,33 @@ final class RadioListTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('"RadioList" field requires non-empty name.');
         $field->render();
+    }
+
+    public function testInvalidClassesWithCustomError(): void
+    {
+        $inputData = new PureInputData('number', 2);
+
+        $result = RadioList::widget()
+            ->invalidClass('invalidWrap')
+            ->inputValidClass('validWrap')
+            ->inputInvalidClass('invalid')
+            ->inputValidClass('valid')
+            ->inputData($inputData)
+            ->items([1 => 'One', 2 => 'Two'])
+            ->error('Value cannot be blank.')
+            ->render();
+
+        $expected = <<<HTML
+            <div class="invalidWrap">
+            <div>
+            <label><input type="radio" class="invalid" name="number" value="1"> One</label>
+            <label><input type="radio" class="invalid" name="number" value="2" checked> Two</label>
+            </div>
+            <div>Value cannot be blank.</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
     }
 
     public function testImmutability(): void
