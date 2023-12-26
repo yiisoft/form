@@ -221,6 +221,30 @@ final class ErrorSummaryTest extends TestCase
         );
     }
 
+    public function testHeaderEncodeWithutTag(): void
+    {
+        $errors = ['key' => ['error1', 'error2']];
+
+        $result = ErrorSummary::widget()
+            ->errors($errors)
+            ->header('Field errors >')
+            ->headerTag(null)
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            Field errors &gt;
+            <ul>
+            <li>error1</li>
+            <li>error2</li>
+            </ul>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
     public function testHeaderWithoutEncode(): void
     {
         $errors = ['key' => ['error1', 'error2']];
@@ -345,6 +369,8 @@ final class ErrorSummaryTest extends TestCase
         $this->assertNotSame($field, $field->footerAttributes([]));
         $this->assertNotSame($field, $field->header(''));
         $this->assertNotSame($field, $field->headerAttributes([]));
+        $this->assertNotSame($field, $field->headerTag(null));
+        $this->assertNotSame($field, $field->headerEncode(true));
         $this->assertNotSame($field, $field->listAttributes([]));
         $this->assertNotSame($field, $field->addListClass());
         $this->assertNotSame($field, $field->listClass());

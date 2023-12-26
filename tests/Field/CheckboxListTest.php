@@ -472,6 +472,8 @@ final class CheckboxListTest extends TestCase
 
         $this->assertNotSame($field, $field->checkboxAttributes([]));
         $this->assertNotSame($field, $field->addCheckboxAttributes([]));
+        $this->assertNotSame($field, $field->checkboxLabelAttributes([]));
+        $this->assertNotSame($field, $field->addCheckboxLabelAttributes([]));
         $this->assertNotSame($field, $field->individualInputAttributes([]));
         $this->assertNotSame($field, $field->addIndividualInputAttributes([]));
         $this->assertNotSame($field, $field->items([]));
