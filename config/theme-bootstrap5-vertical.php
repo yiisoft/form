@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\ErrorSummary;
+use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\Field\SubmitButton;
 
 return [
@@ -24,6 +25,11 @@ return [
         ],
         CheckboxList::class => [
             'addCheckboxAttributes()' => [['class' => 'form-check-input']],
+            'addCheckboxLabelAttributes()' => [['class' => 'form-check']],
+        ],
+        RadioList::class => [
+            'addRadioAttributes()' => [['class' => 'form-check-input']],
+            'addRadioLabelAttributes()' => [['class' => 'form-check']],
         ],
         ErrorSummary::class => [
             'containerClass()' => ['alert alert-danger'],

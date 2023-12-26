@@ -62,6 +62,10 @@ echo '<!DOCTYPE html>';
     echo PureField::checkboxList('checkbox-list')
         ->label('Checkbox List Field')
         ->itemsFromValues(['One', 'Two', 'Three']);
+
+    echo PureField::radioList('radio-list')
+        ->label('Radio List Field')
+        ->itemsFromValues(['One', 'Two', 'Three']);
     ?>
 </div>
 </body>

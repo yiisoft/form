@@ -49,6 +49,20 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
         return $new;
     }
 
+    public function checkboxLabelAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->checkboxLabelAttributes($attributes);
+        return $new;
+    }
+
+    public function addCheckboxLabelAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->addCheckboxLabelAttributes($attributes);
+        return $new;
+    }
+
     /**
      * @param array[] $attributes
      */

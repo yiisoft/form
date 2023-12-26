@@ -120,6 +120,48 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testAddRadioLabelAttributes(): void
+    {
+        $result = RadioList::widget()
+            ->itemsFromValues(['Red', 'Blue'])
+            ->name('RadioListForm[color]')
+            ->addRadioLabelAttributes(['class' => 'control'])
+            ->addRadioLabelAttributes(['data-key' => 'x100'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label class="control" data-key="x100"><input type="radio" name="RadioListForm[color]" value="Red"> Red</label>
+            <label class="control" data-key="x100"><input type="radio" name="RadioListForm[color]" value="Blue"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testRadioLabelAttributes(): void
+    {
+        $result = RadioList::widget()
+            ->itemsFromValues(['Red', 'Blue'])
+            ->name('RadioListForm[color]')
+            ->radioLabelAttributes(['data-key' => 'x100'])
+            ->radioLabelAttributes(['class' => 'control'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label class="control"><input type="radio" name="RadioListForm[color]" value="Red"> Red</label>
+            <label class="control"><input type="radio" name="RadioListForm[color]" value="Blue"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testRadioAttributesReplace(): void
     {
         $result = RadioList::widget()
