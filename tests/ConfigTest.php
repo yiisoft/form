@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\PureField;
 use Yiisoft\Form\ThemeContainer;
@@ -54,6 +55,23 @@ final class ConfigTest extends TestCase
             '<input type="hidden" id="TestId" name="key" value="x100">',
             $input->render()
         );
+    }
+
+    public static function dataTheme(): array
+    {
+        $configDir = dirname(__DIR__) . '/config';
+        return [
+            [$configDir . '/theme-bootstrap5-horizontal.php'],
+            [$configDir . '/theme-bootstrap5-vertical.php'],
+        ];
+    }
+
+    #[DataProvider('dataTheme')]
+    public function testTheme(string $theme): void
+    {
+        $result = require $theme;
+
+        $this->assertIsArray($result);
     }
 
     private function getBootstrapList(?array $params = null): array
