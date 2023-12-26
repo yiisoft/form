@@ -12,13 +12,9 @@ use Yiisoft\Html\Html;
  * @var array $params
  */
 
-$root = dirname(__DIR__);
-
-require_once $root . '/vendor/autoload.php';
-
 ThemeContainer::initialize(
     [
-        'theme' => require $root . '/config/' . $params['file'],
+        'theme' => require $params['file'],
     ],
     'theme',
 );
