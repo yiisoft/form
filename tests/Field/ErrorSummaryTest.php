@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\ErrorSummary;
@@ -140,6 +141,108 @@ final class ErrorSummaryTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testHeaderTag(): void
+    {
+        $errors = ['key' => ['error1', 'error2']];
+
+        $result = ErrorSummary::widget()
+            ->errors($errors)
+            ->header('Field errors:')
+            ->headerTag('b')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <b>Field errors:</b>
+            <ul>
+            <li>error1</li>
+            <li>error2</li>
+            </ul>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeaderWithoutTag(): void
+    {
+        $errors = ['key' => ['error1', 'error2']];
+
+        $result = ErrorSummary::widget()
+            ->errors($errors)
+            ->header('Field errors:')
+            ->headerTag(null)
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            Field errors:
+            <ul>
+            <li>error1</li>
+            <li>error2</li>
+            </ul>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testEmptyHeaderTag(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Tag name cannot be empty.');
+        ErrorSummary::widget()->headerTag('');
+    }
+
+    public function testHeaderEncode(): void
+    {
+        $errors = ['key' => ['error1', 'error2']];
+
+        $result = ErrorSummary::widget()
+            ->errors($errors)
+            ->header('Field errors >')
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div>Field errors &gt;</div>
+            <ul>
+            <li>error1</li>
+            <li>error2</li>
+            </ul>
+            </div>
+            HTML,
+            $result
+        );
+    }
+
+    public function testHeaderWithoutEncode(): void
+    {
+        $errors = ['key' => ['error1', 'error2']];
+
+        $result = ErrorSummary::widget()
+            ->errors($errors)
+            ->header('<b>Field errors</b>')
+            ->headerEncode(false)
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <div><b>Field errors</b></div>
+            <ul>
+            <li>error1</li>
+            <li>error2</li>
+            </ul>
+            </div>
+            HTML,
+            $result
+        );
     }
 
     public function testFooter(): void

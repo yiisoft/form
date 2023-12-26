@@ -39,7 +39,8 @@ return [
         ErrorSummary::class => [
             'containerClass()' => ['alert alert-danger'],
             'listAttributes()' => [['class' => 'mb-0']],
-            'header()' => [''],
+            'headerTag()' => ['h4'],
+            'headerAttributes()' => [['class' => 'alert-heading']],
         ],
         Button::class => [
             'buttonClass()' => ['btn btn-secondary'],

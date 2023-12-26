@@ -87,6 +87,20 @@ echo '<!DOCTYPE html>';
     echo PureField::resetButton('Reset Button');
 
     echo PureField::buttonGroup()->buttonsData([['This'], ['is'], ['button'], ['group']]);
+
+    $fieldset = PureField::fieldset()->legend('Fieldset');
+    echo $fieldset->begin();
+    echo PureField::text()->label('First Name');
+    echo PureField::text()->label('Last Name');
+    echo $fieldset::end();
+
+    echo PureField::errorSummary(
+        [
+            'name' => ['Value not passed.'],
+            'number' => ['Value must be no greater than 7.'],
+            'colors' => ['Value must be array or iterable.'],
+        ]
+    )->header('Error Summary');
     ?>
 </div>
 </body>

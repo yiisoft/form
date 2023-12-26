@@ -5,3 +5,6 @@ assets:
 
 html:
 	docker run --rm -it -w /app/ -u `id -u`:`id -g` -v `realpath ../`:/app php:8.3-alpine3.19 /app/themes-preview/html.sh
+
+watch:
+	docker run --rm -it -w /app/ -u `id -u`:`id -g` -v `realpath ../`:/app php:8.3-alpine3.19 watch -n 3 /app/themes-preview/html.sh
