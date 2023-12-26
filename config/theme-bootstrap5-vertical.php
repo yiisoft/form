@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\SubmitButton;
 
@@ -20,6 +21,9 @@ return [
             'addContainerClass()' => ['form-check'],
             'inputClass()' => ['form-check-input'],
             'inputLabelClass()' => ['form-check-label'],
+        ],
+        CheckboxList::class => [
+            'addCheckboxAttributes()' => [['class' => 'form-check-input']],
         ],
         ErrorSummary::class => [
             'containerClass()' => ['alert alert-danger'],
