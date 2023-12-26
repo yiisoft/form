@@ -9,15 +9,12 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class TextTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 

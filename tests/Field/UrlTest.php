@@ -11,15 +11,12 @@ use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Url;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class UrlTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 

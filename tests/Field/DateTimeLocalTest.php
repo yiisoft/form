@@ -8,15 +8,12 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class DateTimeLocalTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 

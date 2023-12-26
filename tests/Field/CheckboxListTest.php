@@ -13,15 +13,12 @@ use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class CheckboxListTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 

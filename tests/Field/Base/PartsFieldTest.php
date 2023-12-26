@@ -10,15 +10,12 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Tests\Support\StubPartsField;
 use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Test\Support\Container\SimpleContainer;
-use Yiisoft\Widget\WidgetFactory;
 
 final class PartsFieldTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        WidgetFactory::initialize(new SimpleContainer());
         ThemeContainer::initialize();
     }
 
