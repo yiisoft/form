@@ -70,6 +70,12 @@ echo '<!DOCTYPE html>';
     echo PureField::file()->label('File Field');
 
     echo PureField::image('image-field.png');
+
+    echo PureField::button('Button');
+
+    echo PureField::submitButton('Submit Button');
+
+    echo PureField::resetButton('Reset Button');
     ?>
 </div>
 </body>

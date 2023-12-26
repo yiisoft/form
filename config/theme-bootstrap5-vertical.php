@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\RadioList;
+use Yiisoft\Form\Field\ResetButton;
 use Yiisoft\Form\Field\SubmitButton;
 
 return [
@@ -36,8 +38,14 @@ return [
             'listAttributes()' => [['class' => 'mb-0']],
             'header()' => [''],
         ],
+        Button::class => [
+            'buttonClass()' => ['btn btn-secondary'],
+        ],
         SubmitButton::class => [
             'buttonClass()' => ['btn btn-primary'],
+        ],
+        ResetButton::class => [
+            'buttonClass()' => ['btn btn-secondary'],
         ],
     ],
 ];
