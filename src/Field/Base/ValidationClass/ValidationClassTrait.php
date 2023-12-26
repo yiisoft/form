@@ -61,8 +61,7 @@ trait ValidationClassTrait
         array &$attributes,
         InputDataInterface $inputData,
         ?bool $hasCustomError = null,
-    ): void
-    {
+    ): void {
         $this->addClassesToAttributes(
             $attributes,
             $inputData,
@@ -76,8 +75,7 @@ trait ValidationClassTrait
         array &$attributes,
         InputDataInterface $inputData,
         ?bool $hasCustomError = null,
-    ): void
-    {
+    ): void {
         $this->addClassesToAttributes(
             $attributes,
             $inputData,
