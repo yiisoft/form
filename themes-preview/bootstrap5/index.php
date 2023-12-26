@@ -66,6 +66,10 @@ echo '<!DOCTYPE html>';
     echo PureField::radioList('radio-list')
         ->label('Radio List Field')
         ->itemsFromValues(['One', 'Two', 'Three']);
+
+    echo PureField::file()->label('File Field');
+
+    echo PureField::image('image-field.png');
     ?>
 </div>
 </body>

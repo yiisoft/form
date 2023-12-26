@@ -156,9 +156,15 @@ class PureField
             ->inputData(new PureInputData($name, $value));
     }
 
-    final public static function image(array $config = [], ?string $theme = null): Image
+    final public static function image(?string $url = null, array $config = [], ?string $theme = null): Image
     {
-        return Image::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
+        $field = Image::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME);
+
+        if ($url !== null) {
+            $field = $field->src($url);
+        }
+
+        return $field;
     }
 
     final public static function number(
