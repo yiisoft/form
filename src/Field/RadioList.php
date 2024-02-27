@@ -27,6 +27,7 @@ final class RadioList extends PartsField implements ValidationClassInterface
     use ValidationClassTrait;
 
     private RadioListWidget $widget;
+    private array $radioAttributes = [];
 
     public function __construct()
     {
@@ -36,14 +37,14 @@ final class RadioList extends PartsField implements ValidationClassInterface
     public function radioAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->radioAttributes($attributes);
+        $new->radioAttributes = $attributes;
         return $new;
     }
 
     public function addRadioAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->addRadioAttributes($attributes);
+        $new->radioAttributes = array_merge($new->radioAttributes, $attributes);
         return $new;
     }
 
@@ -175,7 +176,7 @@ final class RadioList extends PartsField implements ValidationClassInterface
         }
         /** @psalm-var Stringable|scalar $value */
 
-        $radioAttributes = [];
+        $radioAttributes = $this->radioAttributes;
         $this->addInputValidationClassToAttributes(
             $radioAttributes,
             $this->getInputData(),

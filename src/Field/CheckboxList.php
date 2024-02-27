@@ -29,6 +29,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     use ValidationClassTrait;
 
     private CheckboxListWidget $widget;
+    private array $checkboxAttributes = [];
 
     public function __construct()
     {
@@ -38,14 +39,14 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     public function checkboxAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->checkboxAttributes($attributes);
+        $new->checkboxAttributes = $attributes;
         return $new;
     }
 
     public function addCheckboxAttributes(array $attributes): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->addCheckboxAttributes($attributes);
+        $new->checkboxAttributes = array_merge($new->checkboxAttributes, $attributes);
         return $new;
     }
 
@@ -173,7 +174,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
         }
         /** @psalm-var iterable<int, Stringable|scalar> $value */
 
-        $checkboxAttributes = [];
+        $checkboxAttributes = $this->checkboxAttributes;
         $this->addInputValidationClassToAttributes(
             $checkboxAttributes,
             $this->getInputData(),

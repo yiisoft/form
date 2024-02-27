@@ -32,10 +32,12 @@ return [
         CheckboxList::class => [
             'addCheckboxAttributes()' => [['class' => 'form-check-input']],
             'addCheckboxLabelAttributes()' => [['class' => 'form-check']],
+            'addErrorClass()' => ['d-block'],
         ],
         RadioList::class => [
             'addRadioAttributes()' => [['class' => 'form-check-input']],
             'addRadioLabelAttributes()' => [['class' => 'form-check']],
+            'addErrorClass()' => ['d-block'],
         ],
         ErrorSummary::class => [
             'containerClass()' => ['alert alert-danger'],
