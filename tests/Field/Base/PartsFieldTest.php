@@ -750,4 +750,56 @@ final class PartsFieldTest extends TestCase
         $this->assertNotSame($field, $field->templateBegin(''));
         $this->assertNotSame($field, $field->templateEnd(''));
     }
+
+    public function testBeforeInput(): void
+    {
+        $field = StubPartsField::widget()->setInputHtml('<input>');
+
+        $readyField = $field->beforeInput('before');
+
+        $this->assertNotSame($field, $readyField);
+        $this->assertSame(
+            <<<HTML
+            <div>
+            before<input>
+            </div>
+            HTML,
+            $readyField->render()
+        );
+    }
+
+    public function testAfterInput(): void
+    {
+        $field = StubPartsField::widget()->setInputHtml('<input>');
+
+        $readyField = $field->afterInput('after');
+
+        $this->assertNotSame($field, $readyField);
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <input>after
+            </div>
+            HTML,
+            $readyField->render()
+        );
+    }
+
+    public function testFullInput(): void
+    {
+        $field = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('span')
+            ->beforeInput('before')
+            ->afterInput('after');
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <span>before<input>after</span>
+            </div>
+            HTML,
+            $field->render()
+        );
+    }
 }
