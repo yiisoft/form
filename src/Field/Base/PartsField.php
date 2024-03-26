@@ -40,6 +40,9 @@ abstract class PartsField extends BaseField
     protected ?string $inputContainerTag = null;
     protected array $inputContainerAttributes = [];
 
+    private string|Stringable $beforeInput = '';
+    private string|Stringable $afterInput = '';
+
     private bool $replaceLabelAttributes = false;
     private bool $replaceLabelClass = false;
     private array $labelAttributes = [];
@@ -172,6 +175,20 @@ abstract class PartsField extends BaseField
     {
         $new = clone $this;
         Html::addCssClass($new->inputContainerAttributes, $class);
+        return $new;
+    }
+
+    final public function beforeInput(string|Stringable $content): static
+    {
+        $new = clone $this;
+        $new->beforeInput = $content;
+        return $new;
+    }
+
+    final public function afterInput(string|Stringable $content): static
+    {
+        $new = clone $this;
+        $new->afterInput = $content;
         return $new;
     }
 
@@ -412,7 +429,9 @@ abstract class PartsField extends BaseField
     {
         $parts = [
             '{input}' => $this->generateInputContainerBegin()
+                . $this->beforeInput
                 . $this->generateInput()
+                . $this->afterInput
                 . $this->generateInputContainerEnd(),
             '{label}' => ($this->hideLabel ?? $this->shouldHideLabel()) ? '' : $this->generateLabel(),
             '{hint}' => $this->generateHint(),
