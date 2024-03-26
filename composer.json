@@ -16,8 +16,6 @@
         "chat": "https://t.me/yii3en",
         "source": "https://github.com/yiisoft/form"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^8.1",
         "yiisoft/friendly-exception": "^1.0",
