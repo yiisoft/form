@@ -784,4 +784,22 @@ final class PartsFieldTest extends TestCase
             $readyField->render()
         );
     }
+
+    public function testFullInput(): void
+    {
+        $field = StubPartsField::widget()
+            ->setInputHtml('<input>')
+            ->inputContainerTag('span')
+            ->beforeInput('before')
+            ->afterInput('after');
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <span>before<input>after</span>
+            </div>
+            HTML,
+            $field->render()
+        );
+    }
 }
