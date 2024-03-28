@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
+use DateTimeInterface;
 use Yiisoft\Form\Field\Base\DateTimeInputField;
 
 /**
@@ -18,5 +19,10 @@ final class Date extends DateTimeInputField
     protected function getInputType(): string
     {
         return 'date';
+    }
+
+    protected function formatDateTime(DateTimeInterface $value): string
+    {
+        return $value->format('Y-m-d');
     }
 }
