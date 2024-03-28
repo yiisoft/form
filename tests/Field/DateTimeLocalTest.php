@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\DateTimeLocal;
@@ -38,5 +39,21 @@ final class DateTimeLocalTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testWithDateTimeInterface(): void
+    {
+        $value = (new DateTime('1996-12-19'))->setTime(20, 35);
+
+        $result = DateTimeLocal::widget()->value($value)->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <input type="datetime-local" value="1996-12-19T20:35">
+            </div>
+            HTML,
+            $result,
+        );
     }
 }
