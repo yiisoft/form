@@ -6,6 +6,7 @@ namespace Field;
 
 namespace Yiisoft\Form\Tests\Field;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Time;
 use Yiisoft\Form\ThemeContainer;
@@ -48,5 +49,21 @@ final class TimeTest extends TestCase
         HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testWithDateTimeInterface(): void
+    {
+        $value = (new DateTimeImmutable('1996-12-19'))->setTime(20, 35);
+
+        $result = Time::widget()->value($value)->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <input type="time" value="20:35">
+            </div>
+            HTML,
+            $result,
+        );
     }
 }

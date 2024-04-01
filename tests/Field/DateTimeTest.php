@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\DateTime;
@@ -38,5 +39,21 @@ final class DateTimeTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testWithDateTimeInterface(): void
+    {
+        $value = (new DateTimeImmutable('1996-12-19'))->setTime(20, 35);
+
+        $result = DateTime::widget()->value($value)->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <input type="datetime" value="1996-12-19T20:35">
+            </div>
+            HTML,
+            $result,
+        );
     }
 }

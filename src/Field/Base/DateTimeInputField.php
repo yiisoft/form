@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base;
 
+use DateTimeInterface;
 use InvalidArgumentException;
 use ReflectionClass;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
@@ -150,7 +151,9 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
     {
         $value = $this->getValue();
 
-        if (!is_string($value) && $value !== null) {
+        if ($value instanceof DateTimeInterface) {
+            $value = $this->formatDateTime($value);
+        } elseif (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException(
                 (new ReflectionClass($this))->getShortName() .
                 ' field requires a string or null value.'
@@ -165,6 +168,8 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
 
         return Html::input($this->getInputType(), $this->getName(), $value, $inputAttributes)->render();
     }
+
+    abstract protected function formatDateTime(DateTimeInterface $value): string;
 
     abstract protected function getInputType(): string;
 

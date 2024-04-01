@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Date;
@@ -55,5 +56,21 @@ final class DateTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    public function testWithDateTimeInterface(): void
+    {
+        $result = Date::widget()
+            ->value(new DateTime('1996-12-19'))
+            ->render();
+
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <input type="date" value="1996-12-19">
+            </div>
+            HTML,
+            $result,
+        );
     }
 }
