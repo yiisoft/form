@@ -27,7 +27,7 @@ The package helps with implementing data entry forms.
 The package could be installed with composer:
 
 ```shell
-composer require yiisoft/form --prefer-dist
+composer require yiisoft/form
 ```
 
 ## General usage
