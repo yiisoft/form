@@ -15,7 +15,18 @@
 [![type-coverage](https://shepherd.dev/github/yiisoft/form/coverage.svg)](https://shepherd.dev/github/yiisoft/form)
 [![psalm-level](https://shepherd.dev/github/yiisoft/form/level.svg)](https://shepherd.dev/github/yiisoft/form)
 
-The package helps with implementing data entry forms.
+The packages provide a set of widgets to help with dynamic server-side generation of HTML forms. The following widgets are available out of the box:
+
+- input fields: `Checkbox`, `CheckboxList`, `Date`, `DateTime`, `DateTimeLocal`, `Email`, `File`, `Hidden`, `Image`, 
+`Number`, `Password`, `RadioList`, `Range`, `Select`, `Telephone`, `Text`, `Textarea`, `Time`, `Url`;
+- buttons: `Button`, `ResetButton`, `SubmitButton`;
+- group widgets: `ButtonGroup`, `Fieldset`. 
+- other: `ErrorSummary`.
+
+Two themes are available out of the box:
+
+- Bootstrap 5 Horizontal,
+- Bootstrap 5 Vertical.
 
 ## Requirements
 
@@ -32,44 +43,65 @@ composer require yiisoft/form
 
 ## General usage
 
-General topics:
+Configure themes (optional):
 
-- [Creating Forms](docs/creating-forms.md)
-- [Fields Configuration](docs/fields-configuration.md)
-- [Creating and Using Custom Fields](docs/creating-fields.md)
+```php
+use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\ThemePath;
 
-Fields available out of the box:
+ThemeContainer::initialize(
+    config: [
+        'vertical' => require ThemePath::BOOTSTRAP5_VERTICAL,
+        'horizontal' => require ThemePath::BOOTSTRAP5_HORIZONTAL,
+    ],
+    defaultConfig: 'vertical',
+);
+```
 
-- [Button](docs/fields/button.md)
-- [ButtonGroup](docs/fields/button-group.md)
-- [Checkbox](docs/fields/checkbox.md)
-- [CheckboxList](docs/fields/checkbox-list.md)
-- [Date](docs/fields/date.md)
-- [DateTime](docs/fields/date-time.md)
-- [DateTimeLocal](docs/fields/date-time-local.md)
-- [Email](docs/fields/email.md)
-- [ErrorSummary](docs/fields/error-summary.md)
-- [Fieldset](docs/fields/fieldset.md)
-- [File](docs/fields/file.md)
-- [Hidden](docs/fields/hidden.md)
-- [Image](docs/fields/image.md)
-- [Number](docs/fields/number.md)
-- [Password](docs/fields/password.md)
-- [RadioList](docs/fields/radio-list.md)
-- [Range](docs/fields/range.md)
-- [ResetButton](docs/fields/reset-button.md)
-- [Select](docs/fields/select.md)
-- [SubmitButton](docs/fields/submit-button.md)
-- [Telephone](docs/fields/telephone.md)
-- [Text](docs/fields/text.md)
-- [Textarea](docs/fields/textarea.md)
-- [Url](docs/fields/url.md)
+... and use `PureField` helper for create widgets:
 
-Field parts:
+```php
+use Yiisoft\Form\PureField;
 
-- [Error](docs/field-parts/error.md)
-- [Hint](docs/field-parts/hint.md)
-- [Label](docs/field-parts/label.md)
+echo PureField::text('firstName', theme: 'horizontal')->label('First Name')->autofocus();
+echo PureField::text('lastName', theme: 'horizontal')->label('Last Name');
+echo PureField::select('sex')->label('Sex')->optionsData(['m' => 'Male', 'f' => 'Female'])->prompt('—');
+echo PureField::number('age')->label('Age')->hint('Please enter your age.');
+echo PureField::submitButton('Submit')->buttonClass('primary');
+```
+
+The result of executing the code above will be:
+
+```html
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">First Name</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" name="firstName" autofocus>
+    </div>
+</div>
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Last Name</label>
+    <div class="col-sm-10">
+        <input type="text" class="form-control" name="lastName">
+    </div>
+</div>
+<div class="mb-3">
+    <label class="form-label">Sex</label>
+    <select class="form-select" name="sex">
+        <option value>—</option>
+        <option value="m">Male</option>
+        <option value="f">Female</option>
+    </select>
+</div>
+<div class="mb-3">
+    <label class="form-label">Age</label>
+    <input type="number" class="form-control" name="age">
+    <div class="form-text">Please enter your age.</div>
+</div>
+<div class="mb-3">
+    <button type="submit" class="primary">Submit</button>
+</div>
+```
 
 ## Documentation
 
