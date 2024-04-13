@@ -96,8 +96,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
      *
      * When this option is specified, the checkbox will be enclosed by a label tag.
      *
-     * @param string|null $value
-     *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
     public function inputLabel(?string $value): self
