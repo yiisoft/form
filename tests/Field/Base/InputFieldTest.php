@@ -161,6 +161,38 @@ final class InputFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testPrepareValue(): void
+    {
+        $result = StubInputField::widget()
+            ->value(9)
+            ->prepareValue(static fn ($value) => $value * 2)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" value="18">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testPrepareValueWithInputData(): void
+    {
+        $result = StubInputField::widget()
+            ->inputData(new PureInputData(value: 9))
+            ->prepareValue(static fn ($value) => $value * 2)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" value="18">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = StubInputField::widget();
@@ -175,5 +207,6 @@ final class InputFieldTest extends TestCase
         $this->assertNotSame($field, $field->inputData(new PureInputData()));
         $this->assertNotSame($field, $field->name(null));
         $this->assertNotSame($field, $field->value(null));
+        $this->assertNotSame($field, $field->prepareValue(null));
     }
 }

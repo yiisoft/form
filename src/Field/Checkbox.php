@@ -96,8 +96,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
      *
      * When this option is specified, the checkbox will be enclosed by a label tag.
      *
-     * @param string|null $value
-     *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
     public function inputLabel(?string $value): self
@@ -172,7 +170,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function inputValue(bool|float|int|string|Stringable|null $value): self
     {
         $new = clone $this;
-        $new->inputValue = $this->prepareValue($value);
+        $new->inputValue = $this->prepareCheckboxValue($value);
         return $new;
     }
 
@@ -206,7 +204,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function uncheckValue(bool|float|int|string|Stringable|null $value): self
     {
         $new = clone $this;
-        $new->uncheckValue = $this->prepareValue($value);
+        $new->uncheckValue = $this->prepareCheckboxValue($value);
         return $new;
     }
 
@@ -225,12 +223,12 @@ final class Checkbox extends InputField implements ValidationClassInterface
             );
         }
 
-        $value = $this->prepareValue($value);
+        $value = $this->prepareCheckboxValue($value);
 
         $inputAttributes = $this->getInputAttributes();
 
         $inputValue = $this->inputValue;
-        $inputValue ??= $this->prepareValue($inputAttributes['value'] ?? null);
+        $inputValue ??= $this->prepareCheckboxValue($inputAttributes['value'] ?? null);
         unset($inputAttributes['value']);
         $inputValue ??= '1';
 
@@ -260,7 +258,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
         return $this->enclosedByLabel;
     }
 
-    private function prepareValue(mixed $value): ?string
+    private function prepareCheckboxValue(mixed $value): ?string
     {
         if ($value === null) {
             return null;
