@@ -15,7 +15,7 @@
 [![type-coverage](https://shepherd.dev/github/yiisoft/form/coverage.svg)](https://shepherd.dev/github/yiisoft/form)
 [![psalm-level](https://shepherd.dev/github/yiisoft/form/level.svg)](https://shepherd.dev/github/yiisoft/form)
 
-The packages provide a set of widgets to help with dynamic server-side generation of HTML forms. The following widgets are available out of the box:
+The package provides a set of widgets to help with dynamic server-side generation of HTML forms. The following widgets are available out of the box:
 
 - input fields: `Checkbox`, `CheckboxList`, `Date`, `DateTime`, `DateTimeLocal`, `Email`, `File`, `Hidden`, `Image`, 
 `Number`, `Password`, `RadioList`, `Range`, `Select`, `Telephone`, `Text`, `Textarea`, `Time`, `Url`;
