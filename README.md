@@ -31,83 +31,8 @@ composer require yiisoft/form --prefer-dist
 
 ## Documentation
 
-- English
-
-  - [Creating Forms](docs/guide/en/creating-forms.md)
-  - [Fields Configuration](docs/guide/en/fields-configuration.md)
-  - [Creating and Using Custom Fields](docs/guide/en/creating-fields.md)
-  
-  Fields available out of the box:
-  
-  - [Button](docs/guide/en/fields/button.md)
-  - [ButtonGroup](docs/guide/en/fields/button-group.md)
-  - [Checkbox](docs/guide/en/fields/checkbox.md)
-  - [CheckboxList](docs/guide/en/fields/checkbox-list.md)
-  - [Date](docs/guide/en/fields/date.md)
-  - [DateTime](docs/guide/en/fields/date-time.md)
-  - [DateTimeLocal](docs/guide/en/fields/date-time-local.md)
-  - [Email](docs/guide/en/fields/email.md)
-  - [ErrorSummary](docs/guide/en/fields/error-summary.md)
-  - [Fieldset](docs/guide/en/fields/fieldset.md)
-  - [File](docs/guide/en/fields/file.md)
-  - [Hidden](docs/guide/en/fields/hidden.md)
-  - [Image](docs/guide/en/fields/image.md)
-  - [Number](docs/guide/en/fields/number.md)
-  - [Password](docs/guide/en/fields/password.md)
-  - [RadioList](docs/guide/en/fields/radio-list.md)
-  - [Range](docs/guide/en/fields/range.md)
-  - [ResetButton](docs/guide/en/fields/reset-button.md)
-  - [Select](docs/guide/en/fields/select.md)
-  - [SubmitButton](docs/guide/en/fields/submit-button.md)
-  - [Telephone](docs/guide/en/fields/telephone.md)
-  - [Text](docs/guide/en/fields/text.md)
-  - [Textarea](docs/guide/en/fields/textarea.md)
-  - [Url](docs/guide/en/fields/url.md)
-  
-  Field parts:
-  
-  - [Error](docs/guide/en/field-parts/error.md)
-  - [Hint](docs/guide/en/field-parts/hint.md)
-  - [Label](docs/guide/en/field-parts/label.md)
-
-- Portuguese - Brazil
-
-  - [Creating Forms](docs/guide/pt-BR/creating-forms.md)
-  - [Fields Configuration](docs/guide/pt-BR/fields-configuration.md)
-  - [Creating and Using Custom Fields](docs/guide/pt-BR/creating-fields.md)
-  
-  Fields available out of the box:
-  
-  - [Button](docs/guide/pt-BR/fields/button.md)
-  - [ButtonGroup](docs/guide/pt-BR/fields/button-group.md)
-  - [Checkbox](docs/guide/pt-BR/fields/checkbox.md)
-  - [CheckboxList](docs/guide/pt-BR/fields/checkbox-list.md)
-  - [Date](docs/guide/pt-BR/fields/date.md)
-  - [DateTime](docs/guide/pt-BR/fields/date-time.md)
-  - [DateTimeLocal](docs/guide/pt-BR/fields/date-time-local.md)
-  - [Email](docs/guide/pt-BR/fields/email.md)
-  - [ErrorSummary](docs/guide/pt-BR/fields/error-summary.md)
-  - [Fieldset](docs/guide/pt-BR/fields/fieldset.md)
-  - [File](docs/guide/pt-BR/fields/file.md)
-  - [Hidden](docs/guide/pt-BR/fields/hidden.md)
-  - [Image](docs/guide/pt-BR/fields/image.md)
-  - [Number](docs/guide/pt-BR/fields/number.md)
-  - [Password](docs/guide/pt-BR/fields/password.md)
-  - [RadioList](docs/guide/pt-BR/fields/radio-list.md)
-  - [Range](docs/guide/pt-BR/fields/range.md)
-  - [ResetButton](docs/guide/pt-BR/fields/reset-button.md)
-  - [Select](docs/guide/pt-BR/fields/select.md)
-  - [SubmitButton](docs/guide/pt-BR/fields/submit-button.md)
-  - [Telephone](docs/guide/pt-BR/fields/telephone.md)
-  - [Text](docs/guide/pt-BR/fields/text.md)
-  - [Textarea](docs/guide/pt-BR/fields/textarea.md)
-  - [Url](docs/guide/pt-BR/fields/url.md)
-  
-  Field parts:
-  
-  - [Error](docs/guide/pt-BR/field-parts/error.md)
-  - [Hint](docs/guide/pt-BR/field-parts/hint.md)
-  - [Label](docs/guide/pt-BR/field-parts/label.md)
+- [To learn how to use read](docs/guide/README.md#english)
+- [Para aprender como usar leia](docs/guide/README.md#português---brasil)
 
 Testing:
 
