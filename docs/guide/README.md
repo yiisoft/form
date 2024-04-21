@@ -2,6 +2,7 @@
 
 - [English](#english)
 - [Português - Brasil](#português---brasil)
+- [Internals](.././internals.md)
 
 ## English
 
@@ -80,10 +81,6 @@
 - [Error](docs/guide/pt-BR/field-parts/error.md)
 - [Hint](docs/guide/pt-BR/field-parts/hint.md)
 - [Label](docs/guide/pt-BR/field-parts/label.md)
-
-Testing:
-
-- More information can be found in the [Internals.](docs/internals.md)
 
 ## Support
 
