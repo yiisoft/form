@@ -29,80 +29,19 @@ The package could be installed with composer:
 composer require yiisoft/form --prefer-dist
 ```
 
-## General usage
+## Documentation
 
-General topics:
+- [English](docs/guide/en/README.md)
+- [Português - Brasil](docs/guide/pt-BR/README.md)
 
-- [Creating Forms](docs/creating-forms.md)
-- [Fields Configuration](docs/fields-configuration.md)
-- [Creating and Using Custom Fields](docs/creating-fields.md)
+Testing:
 
-Fields available out of the box:
+- [Internals](docs/internals.md)
 
-- [Button](docs/fields/button.md)
-- [ButtonGroup](docs/fields/button-group.md)
-- [Checkbox](docs/fields/checkbox.md)
-- [CheckboxList](docs/fields/checkbox-list.md)
-- [Date](docs/fields/date.md)
-- [DateTime](docs/fields/date-time.md)
-- [DateTimeLocal](docs/fields/date-time-local.md)
-- [Email](docs/fields/email.md)
-- [ErrorSummary](docs/fields/error-summary.md)
-- [Fieldset](docs/fields/fieldset.md)
-- [File](docs/fields/file.md)
-- [Hidden](docs/fields/hidden.md)
-- [Image](docs/fields/image.md)
-- [Number](docs/fields/number.md)
-- [Password](docs/fields/password.md)
-- [RadioList](docs/fields/radio-list.md)
-- [Range](docs/fields/range.md)
-- [ResetButton](docs/fields/reset-button.md)
-- [Select](docs/fields/select.md)
-- [SubmitButton](docs/fields/submit-button.md)
-- [Telephone](docs/fields/telephone.md)
-- [Text](docs/fields/text.md)
-- [Textarea](docs/fields/textarea.md)
-- [Url](docs/fields/url.md)
+## Support
 
-Field parts:
-
-- [Error](docs/field-parts/error.md)
-- [Hint](docs/field-parts/hint.md)
-- [Label](docs/field-parts/label.md)
-
-## Testing
-
-### Unit testing
-
-The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
-
-```shell
-./vendor/bin/phpunit
-```
-
-### Mutation testing
-
-The package tests are checked with [Infection](https://infection.github.io/) mutation framework with
-[Infection Static Analysis Plugin](https://github.com/Roave/infection-static-analysis-plugin). To run it:
-
-```shell
-./vendor/bin/roave-infection-static-analysis-plugin
-```
-
-### Static analysis
-
-The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
-
-```shell
-./vendor/bin/psalm
-```
-
-## License
-
-The Yii Form is free software. It is released under the terms of the BSD License.
-Please see [`LICENSE`](./LICENSE.md) for more information.
-
-Maintained by [Yii Software](https://www.yiiframework.com/).
+If you need help or have a question, the [Yii Forum](https://forum.yiiframework.com/c/yii-3-0/63) is a good place for that.
+You may also check out other [Yii Community Resources](https://www.yiiframework.com/community).
 
 ## Support the project
 
@@ -115,3 +54,10 @@ Maintained by [Yii Software](https://www.yiiframework.com/).
 [![Telegram](https://img.shields.io/badge/telegram-join-1DA1F2?style=flat&logo=telegram)](https://t.me/yii3en)
 [![Facebook](https://img.shields.io/badge/facebook-join-1DA1F2?style=flat&logo=facebook&logoColor=ffffff)](https://www.facebook.com/groups/yiitalk)
 [![Slack](https://img.shields.io/badge/slack-join-1DA1F2?style=flat&logo=slack)](https://yiiframework.com/go/slack)
+
+## License
+
+The Yii Form is free software. It is released under the terms of the BSD License.
+Please see [`LICENSE`](./LICENSE.md) for more information.
+
+Maintained by [Yii Software](https://www.yiiframework.com/).
