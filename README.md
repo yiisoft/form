@@ -31,8 +31,8 @@ composer require yiisoft/form --prefer-dist
 
 ## Documentation
 
-- [To learn how to use read](docs/guide/README.md#english)
-- [Para aprender como usar leia](docs/guide/README.md#português---brasil)
+- [English](docs/guide/en/README.md)
+- [Português - Brasil](docs/guide/pt-BR/README.md)
 
 Testing:
 
