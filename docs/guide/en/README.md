@@ -4,7 +4,7 @@
 - [Fields Configuration](fields-configuration.md)
 - [Creating and Using Custom Fields](creating-fields.md)
   
-  Fields available out of the box:
+Fields available out of the box:
   
 - [Button](fields/button.md)
 - [ButtonGroup](fields/button-group.md)
@@ -31,7 +31,7 @@
 - [Textarea](fields/textarea.md)
 - [Url](fields/url.md)
   
-  Field parts:
+Field parts:
   
 - [Error](field-parts/error.md)
 - [Hint](field-parts/hint.md)
