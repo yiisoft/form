@@ -76,10 +76,6 @@ final class LoginForm extends FormModel
 In the controller, we will pass an instance of that `formModel` to the `view`:
 
 ```php
-<?php
-
-declare(strict_types=1);
-
 use Yiisoft\Form\YiisoftFormModel\FormModel;
 use Yiisoft\Form\YiisoftFormModel\Field;
 use Yiisoft\Html\Html;
