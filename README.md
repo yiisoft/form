@@ -31,17 +31,11 @@ composer require yiisoft/form --prefer-dist
 
 ## Documentation
 
-- [English](docs/guide/en/README.md)
-- [Português - Brasil](docs/guide/pt-BR/README.md)
-
-Testing:
-
+- [Guide](docs/guide/en/README.md)
 - [Internals](docs/internals.md)
 
-## Support
-
-If you need help or have a question, the [Yii Forum](https://forum.yiiframework.com/c/yii-3-0/63) is a good place for that.
-You may also check out other [Yii Community Resources](https://www.yiiframework.com/community).
+If you need help or have a question, the [Yii Forum](https://forum.yiiframework.com/c/yii-3-0/63) is a good place for
+that. You may also check out other [Yii Community Resources](https://www.yiiframework.com/community).
 
 ## Support the project
 
