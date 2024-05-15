@@ -12,13 +12,13 @@ final class PureInputData implements InputDataInterface
      * @psalm-param list<string> $validationErrors
      */
     public function __construct(
-        private ?string $name = null,
-        private mixed $value = null,
-        private ?string $label = null,
-        private ?string $hint = null,
-        private ?string $placeholder = null,
-        private ?string $id = null,
-        private ?array $validationErrors = null,
+        private readonly ?string $name = null,
+        private readonly mixed $value = null,
+        private readonly ?string $label = null,
+        private readonly ?string $hint = null,
+        private readonly ?string $placeholder = null,
+        private readonly ?string $id = null,
+        private readonly ?array $validationErrors = null,
     ) {
     }
 

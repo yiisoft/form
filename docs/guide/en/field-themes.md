@@ -22,3 +22,5 @@ Two themes are available out of the box:
 
 - Bootstrap 5 Horizontal,
 - Bootstrap 5 Vertical.
+
+TODO: describe `themes-preview`
