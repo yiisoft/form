@@ -73,7 +73,7 @@ Sets base configuration of field via parameter "fieldConfigs" of a field factory
 ],
 ```
 
-Detailed information about configuration of fields see [here](fields-configuration.md).
+Detailed information about configuration of fields see [Fields Configuration](fields-configuration.md).
 
 ## Example of Custom Field
 
