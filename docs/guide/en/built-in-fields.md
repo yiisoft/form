@@ -25,6 +25,7 @@ Fields available out of the box:
 - [Telephone](fields/telephone.md)
 - [Text](fields/text.md)
 - [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
 - [Url](fields/url.md)
 
 Field parts:
