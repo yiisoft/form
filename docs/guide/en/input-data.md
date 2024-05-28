@@ -7,7 +7,7 @@ Input data is an abstraction for storing some common information about input and
 - Label - the label associated with this form (visible to the end user)
 - Hint - complimentary text explaining certain details regarding this input
 - Placeholder - the prefilled value, used as a default or an example
-- Id - unique identifier in DOM (HTML)
+- ID - unique identifier in DOM (HTML)
 - Validation state (whether the input has been already validated)
 - Validation rules - validation rules in the format supported by [validator](https://github.com/yiisoft/validator)
 - Validation errors - the list of validation errors for this attribute
