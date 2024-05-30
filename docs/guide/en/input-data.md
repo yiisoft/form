@@ -1,6 +1,7 @@
 # Input data
 
-Input data is an abstraction for storing some common information about input and its validation rules / state:
+Input data is an abstraction for storing input's value and some common meta information along with its validation rules 
+/ state:
 
 - Name - unique name of an input within the form (not visible to the end user)
 - Value - filled value that is about to be sent to the server

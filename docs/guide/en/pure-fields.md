@@ -31,6 +31,8 @@ $field
     ->inputId('ID');
 ```
 
+For more info about input data, see this guide [section](input-data.md).
+
 ## Applying theme
 
 To additionally apply theme, you can pass it as argument to a specific field's method (supported by both helper and 
