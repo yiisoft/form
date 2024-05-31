@@ -7,53 +7,34 @@ Represents `<select>` element that provides a menu of options. Documentation:
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public ?string $color = 'f00';
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'color' => 'Select color',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Select;
+
+$inputData = new PureInputData(
+    name: 'SelectForm[number]',
+    label: 'Select number',
+    id: 'selectform-number',
+);
 echo Select::widget()
-    ->formAttribute($profileForm, 'color')
+    ->inputData($inputData)
     ->optionsData([
-        'f00' => 'Red',
-        '0f0' => 'Green',
-        '00f' => 'Blue',
-    ]);
+        1 => 'One',
+        2 => 'Two',
+    ])
+    ->render();
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="profileform-color">Select color</label>
-    <select id="profileform-color" name="ProfileForm[color]">
-        <option value="f00">Red</option>
-        <option value="0f0">Green</option>
-        <option value="00f">Blue</option>
+    <label for="selectform-number">Select number</label>
+    <select id="selectform-number" name="SelectForm[number]">
+        <option value="1">One</option>
+        <option value="2">Two</option>
     </select>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- number or numeric string (see [is_numeric()](https://www.php.net/manual/en/function.is-numeric.php))
-- `bool`
-- `null`
-- any stringable values
-
-Multiple select requires iterable or `null` value.

@@ -1,49 +1,37 @@
 # Range Field
 
-Represents `<input>` element of type "range" lets the user to specify a numeric value which must be no less than a given
-value, and no more than another given value. Documentation:
+Represents `<input>` element of type "range" that lets the user specify a numeric value which must be no less than a 
+given value, and no more than another given value. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#range-state-(type=range))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/range)
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public ?int $age = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'age' => 'Your age',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
-echo Number::widget()
-    ->formAttribute($profileForm, 'age')
-    ->min(21)
-    ->max(150);
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Range;
+
+$inputData = new PureInputData(
+    name: 'RangeForm[volume]',
+    value: 23,
+    label: 'Volume level',
+    id: 'rangeform-volume',
+);
+echo Range::widget()
+    ->inputData($inputData)
+    ->min(1)
+    ->max(100)
+    ->render();
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="profileform-age">Your age</label>
-    <input type="range" id="profileform-age" name="ProfileForm[age]" min="21" max="150">
+    <label for="rangeform-volume">Volume level</label>
+    <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100">
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- number or numeric string (see [is_numeric()](https://www.php.net/manual/en/function.is-numeric.php))
-- `null`
