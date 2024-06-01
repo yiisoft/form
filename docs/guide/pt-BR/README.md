@@ -11,7 +11,6 @@ Campos disponíveis:
 - [Checkbox](fields/checkbox.md)
 - [CheckboxList](fields/checkbox-list.md)
 - [Date](fields/date.md)
-- [DateTime](fields/date-time.md)
 - [DateTimeLocal](fields/date-time-local.md)
 - [Email](fields/email.md)
 - [ErrorSummary](fields/error-summary.md)
