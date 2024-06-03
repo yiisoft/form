@@ -1,18 +1,18 @@
 # Pure fields
 
 To ease the creation of the fields with `\Yiisoft\Form\Field\Base\InputData\PureInputData` as a data source, use
-corresponding helper (`\Yiisoft\Form\PureField`):
+corresponding helper (`\Yiisoft\Form\Field\Factory\PureField`):
 
 ```php
-use Yiisoft\Form\PureField;
+use Yiisoft\Form\Field\Factory\PureField;
 
 $field = PureField::text('name', 'value');
 ```
 
-or factory (`\Yiisoft\Form\PureFieldFactory`):
+or factory (`\Yiisoft\Form\Field\Factory\PureFieldFactory`):
 
 ```php
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\PureFieldFactory;
 
 $factory = new PureFieldFactory();
 $factory->text('name', 'value');
@@ -39,8 +39,7 @@ To additionally apply theme, you can pass it as argument to a specific field's m
 factory):
 
 ```php
-use Yiisoft\Form\PureField;
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\PureField;use Yiisoft\Form\Field\Factory\PureFieldFactory;
 
 // Using helper
 
@@ -55,7 +54,7 @@ $factory->text('name', 'value');
 To apply the theme for all fields, either pass it as argument in constructor (supported by factory).
 
 ```php
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\PureFieldFactory;
 
 $factory = new PureFieldFactory('my-theme');
 $factory->text('name', 'value');
@@ -64,7 +63,7 @@ $factory->text('name', 'value');
 or override the theme property via class inheritance (supported by helper):
 
 ```php
-use Yiisoft\Form\PureField;
+use Yiisoft\Form\Field\Factory\PureField;
 
 final class ThemedPureField extends PureField
 {

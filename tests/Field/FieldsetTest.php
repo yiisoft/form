@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Factory\PureField;
 use Yiisoft\Form\Field\Fieldset;
-use Yiisoft\Form\PureField;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Legend;
 

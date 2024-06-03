@@ -6,8 +6,8 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Factory\PureField;
 use Yiisoft\Form\Field\Hidden;
-use Yiisoft\Form\PureField;
 use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ConfigTest extends TestCase

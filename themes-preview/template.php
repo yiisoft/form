@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Factory\PureField;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Form\PureField;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 

@@ -62,7 +62,7 @@ ThemeContainer::initialize(
 ... and use `PureField` helper to create widgets:
 
 ```php
-use Yiisoft\Form\PureField;
+use Yiisoft\Form\Field\Factory\PureField;
 
 echo PureField::text('firstName', theme: 'horizontal')->label('First Name')->autofocus();
 echo PureField::text('lastName', theme: 'horizontal')->label('Last Name');

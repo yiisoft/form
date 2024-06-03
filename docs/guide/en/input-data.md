@@ -40,5 +40,5 @@ $inputData = new PureInputData(
 $result = Text::widget()->inputData($inputData)->render();
 ```
 
-The other way is to use `\Yiisoft\Form\PureField` or `\Yiisoft\Form\PureFieldFactory`, please refer to 
-[Pure fields](pure-fields.md) for details.
+The other way is to use `\Yiisoft\Form\Field\Factory\PureField` or `\Yiisoft\Form\Field\Factory\PureFieldFactory`,
+please refer to [Pure fields](pure-fields.md) for details.

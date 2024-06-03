@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\InputData;
 
-use Yiisoft\Form\PureField;
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\PureField;
+use Yiisoft\Form\Field\Factory\PureFieldFactory;
 
 /**
  * Simple input data implementation that can be used within this package. All parameters are passed from outer scope.
