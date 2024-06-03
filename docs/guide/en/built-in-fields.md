@@ -7,7 +7,6 @@ Fields available out of the box:
 - [Checkbox](fields/checkbox.md)
 - [CheckboxList](fields/checkbox-list.md)
 - [Date](fields/date.md)
-- [DateTime](fields/date-time.md)
 - [DateTimeLocal](fields/date-time-local.md)
 - [Email](fields/email.md)
 - [ErrorSummary](fields/error-summary.md)
@@ -25,6 +24,7 @@ Fields available out of the box:
 - [Telephone](fields/telephone.md)
 - [Text](fields/text.md)
 - [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
 - [Url](fields/url.md)
 
 Field parts:

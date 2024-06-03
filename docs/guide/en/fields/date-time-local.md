@@ -8,49 +8,28 @@ the year, month, and day as well as the time in hours and minutes. Documentation
 
 ## Usage Example
 
-Form model:
-
-```php
-final class CreateForm extends FormModel
-{
-    public ?string $publishDate = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'name' => 'Publish date',
-        ];
-    }
-
-    public function getAttributeHints(): array
-    {
-        return [
-            'name' => 'Input publish date of post.',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
-echo DateTimeLocal::widget()
-    ->formAttribute($createForm, 'publishDate')
-    ->min('2022-01-01T00:00')
-    ->max('2038-12-31T19:30');
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\DateTimeLocal;
+
+$inputData = new PureInputData(
+    name: 'partyDate',
+    value: '2017-06-01T08:30',
+    label: 'Date of party',
+    hint: 'Party date.',
+    id: 'datetimelocalform-partydate',
+);
+echo DateTimeLocal::widget()->inputData($inputData)->render();
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="createform-publishdate">Publish date</label>
-    <input type="datetime-local" id="createform-publishdate" name="CreateForm[publishDate]" min="2022-01-01T00:00" max="2038-12-31T19:30">
-    <div>Input publish date of post.</div>
+    <label for="datetimelocalform-partydate">Date of party</label>
+    <input type="datetime-local" id="datetimelocalform-partydate" name="partyDate" value="2017-06-01T08:30">
+    <div>Party date.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`

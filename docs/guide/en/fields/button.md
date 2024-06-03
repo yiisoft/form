@@ -10,7 +10,9 @@ Represents `<button>` element of type "button". It is rendered as button without
 Widget:
 
 ```php
-echo Button::widget()->content('Click Me');
+use Yiisoft\Form\Field\Button;
+
+echo Button::widget()->content('Click Me')->render();
 ```
 
 Result will be:

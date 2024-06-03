@@ -7,40 +7,28 @@ Represents `<input>` element of type "password" that lets the user to securely e
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public ?string $password = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'password' => 'Enter password',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
-echo Password::widget()
-    ->formAttribute($profileForm, 'password')
-    ->minlength(8);
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Password;
+
+$inputData = new PureInputData(
+    name: 'PasswordForm[old]',
+    value: '',
+    label: 'Old password',
+    hint: 'Enter your old password.',
+    id: 'passwordform-old',
+);
+echo Password::widget()->inputData($inputData)->render();
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="profileform-password">Enter password</label>
-    <input type="password" id="profileform-password" name="ProfileForm[password]" minlength="8">
+    <label for="passwordform-old">Old password</label>
+    <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
+    <div>Enter your old password.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`

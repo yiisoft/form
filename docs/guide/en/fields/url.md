@@ -7,38 +7,28 @@ Represents `<input>` element of type "url" that lets the user enter and edit an 
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public ?string $site = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'site' => 'Your site',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
-echo Url::widget()->formAttribute($profileForm, 'site');
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Url;
+
+$inputData = new PureInputData(
+    name: 'UrlForm[site]',
+    value: '',
+    label: 'Your site',
+    hint: 'Enter your site URL.',
+    id: 'urlform-site',
+);
+echo Url::widget()->inputData($inputData)->render();
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="profileform-site">Your site</label>
-    <input type="url" id="profileform-site" name="ProfileForm[site]">
+    <label for="urlform-site">Your site</label>
+    <input type="url" id="urlform-site" name="UrlForm[site]" value>
+    <div>Enter your site URL.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`

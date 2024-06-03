@@ -202,38 +202,6 @@ final class PureFieldFactoryTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
-    public function testDateTime(): void
-    {
-        $html = (new PureFieldFactory())->dateTime()->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="datetime">
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $html);
-    }
-
-    public function testDateTimeWithTheme(): void
-    {
-        ThemeContainer::initialize([
-            'test' => [
-                'containerTag' => 'span',
-            ],
-        ]);
-
-        $html = (new PureFieldFactory('default'))->dateTime(theme: 'test')->render();
-
-        $expected = <<<HTML
-            <span>
-            <input type="datetime">
-            </span>
-            HTML;
-
-        $this->assertSame($expected, $html);
-    }
-
     public function testDateTimeLocal(): void
     {
         $html = (new PureFieldFactory())->dateTimeLocal()->render();

@@ -1,42 +1,31 @@
 # Radio List Field
 
-Represents a list of radio buttons with a single selection.
+Represents a list of radio buttons with a single selection. Documentation:
+
+- [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#radio-button-state-(type=radio))
+- [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/radio)
 
 ## Usage Example
-
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public string $color = 'red';
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'color' => 'Select color',
-        ];
-    }
-
-    public function getAttributeHints(): array
-    {
-        return [
-            'color' => 'Your personal color.',
-        ];
-    }
-}
-```
 
 Widget:
 
 ```php
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\RadioList;
+
+$inputData = new PureInputData(
+    name: 'RadioListForm[color]',
+    label: 'Select color',
+    hint: 'Color of box.',
+    id: 'UID',
+);
 echo RadioList::widget()
-    ->formAttribute($profileForm, 'color')
     ->items([
-        'f00' => 'Red',
-        '0f0' => 'Green',
-        '00f' => 'Blue',
-    ]);
+        'red' => 'Red',
+        'blue' => 'Blue',
+    ])
+    ->inputData($inputData)
+    ->render();
 ```
 
 Result will be:
@@ -45,18 +34,9 @@ Result will be:
 <div>
     <label>Select color</label>
     <div>
-        <label><input type="radio" name="ProfileForm[color]" value="f00" checked> Red</label>
-        <label><input type="radio" name="ProfileForm[color]" value="0f0"> Green</label>
-        <label><input type="radio" name="ProfileForm[color]" value="00f"> Blue</label>
+        <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
+        <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
     </div>
-    <div>Your personal color.</div>
+    <div>Color of box.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- number or numeric string (see [is_numeric()](https://www.php.net/manual/en/function.is-numeric.php))
-- `bool`
-- `null`
-- any stringable values
