@@ -448,10 +448,10 @@ final class ThemeTest extends TestCase
 
     #[DataProvider('dataText')]
     public function testText(
-        string    $expected,
-        array     $factoryParameters,
+        string $expected,
+        array $factoryParameters,
         InputData $inputData,
-        ?array    $enricherResult = null,
+        ?array $enricherResult = null,
     ): void {
         $this->initializeThemeContainer($factoryParameters, $enricherResult);
 
@@ -518,8 +518,8 @@ final class ThemeTest extends TestCase
 
     #[DataProvider('dataTextWithNotDefaultTheme')]
     public function testTextWithNotDefaultTheme(
-        string    $expected,
-        array     $factoryParameters,
+        string $expected,
+        array $factoryParameters,
         InputData $inputData,
     ): void {
         ThemeContainer::initialize(
