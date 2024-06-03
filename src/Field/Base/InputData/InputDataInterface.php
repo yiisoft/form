@@ -24,7 +24,7 @@ interface InputDataInterface
     public function getValue(): mixed;
 
     /**
-     * The label associated with this form (visible to the end user).
+     * The label associated with this field (visible to the end user).
      *
      * @return string|null Input label or null if missing.
      */
