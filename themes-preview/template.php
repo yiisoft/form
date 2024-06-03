@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
-use Yiisoft\Form\Field\Factory\PureField;
+use Yiisoft\Form\Field\Factory\Field;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
@@ -32,70 +32,70 @@ echo '<!DOCTYPE html>';
 <body>
 <div style="max-width: 1000px;padding: 24px;margin: 0 auto">
     <?php
-    echo PureField::text()->label('Text Field')->placeholder('Placeholder')->hint('Example of hint');
+    echo Field::text()->label('Text Field')->placeholder('Placeholder')->hint('Example of hint');
 
     echo Text::widget()
         ->inputData(new PureInputData(validationErrors: []))
         ->label('Valid Text Field')
         ->placeholder('Placeholder');
 
-    echo PureField::text()->label('Invalid Text Field')->placeholder('Placeholder')->error('Example of error');
+    echo Field::text()->label('Invalid Text Field')->placeholder('Placeholder')->error('Example of error');
 
-    echo PureField::textarea()->label('Textarea Field')->placeholder('Placeholder');
+    echo Field::textarea()->label('Textarea Field')->placeholder('Placeholder');
 
-    echo PureField::password()->label('Password Field')->placeholder('Placeholder');
+    echo Field::password()->label('Password Field')->placeholder('Placeholder');
 
-    echo PureField::url()->label('Url Field')->placeholder('Placeholder');
+    echo Field::url()->label('Url Field')->placeholder('Placeholder');
 
-    echo PureField::email()->label('Email Field')->placeholder('Placeholder');
+    echo Field::email()->label('Email Field')->placeholder('Placeholder');
 
-    echo PureField::time()->label('Time Field');
+    echo Field::time()->label('Time Field');
 
-    echo PureField::date()->label('Date Field');
+    echo Field::date()->label('Date Field');
 
-    echo PureField::dateTime()->label('DateTime Field');
+    echo Field::dateTime()->label('DateTime Field');
 
-    echo PureField::dateTimeLocal()->label('DateTimeLocal Field');
+    echo Field::dateTimeLocal()->label('DateTimeLocal Field');
 
-    echo PureField::telephone()->label('Telephone Field')->placeholder('Placeholder');
+    echo Field::telephone()->label('Telephone Field')->placeholder('Placeholder');
 
-    echo PureField::number()->label('Number Field')->placeholder('Placeholder');
+    echo Field::number()->label('Number Field')->placeholder('Placeholder');
 
-    echo PureField::range()->label('Range Field');
+    echo Field::range()->label('Range Field');
 
-    echo PureField::select()
+    echo Field::select()
         ->label('Select Field')
         ->optionsData(['Red', 'Green', 'Blue']);
 
-    echo PureField::checkbox()->label('Checkbox Field');
+    echo Field::checkbox()->label('Checkbox Field');
 
-    echo PureField::checkboxList('checkbox-list')
+    echo Field::checkboxList('checkbox-list')
         ->label('Checkbox List Field')
         ->itemsFromValues(['One', 'Two', 'Three']);
 
-    echo PureField::radioList('radio-list')
+    echo Field::radioList('radio-list')
         ->label('Radio List Field')
         ->itemsFromValues(['One', 'Two', 'Three']);
 
-    echo PureField::file()->label('File Field');
+    echo Field::file()->label('File Field');
 
-    echo PureField::image('image-field.png');
+    echo Field::image('image-field.png');
 
-    echo PureField::button('Button');
+    echo Field::button('Button');
 
-    echo PureField::submitButton('Submit Button');
+    echo Field::submitButton('Submit Button');
 
-    echo PureField::resetButton('Reset Button');
+    echo Field::resetButton('Reset Button');
 
-    echo PureField::buttonGroup()->buttonsData([['This'], ['is'], ['button'], ['group']]);
+    echo Field::buttonGroup()->buttonsData([['This'], ['is'], ['button'], ['group']]);
 
-    $fieldset = PureField::fieldset()->legend('Fieldset');
+    $fieldset = Field::fieldset()->legend('Fieldset');
     echo $fieldset->begin();
-    echo PureField::text()->label('First Name');
-    echo PureField::text()->label('Last Name');
+    echo Field::text()->label('First Name');
+    echo Field::text()->label('Last Name');
     echo $fieldset::end();
 
-    echo PureField::errorSummary(
+    echo Field::errorSummary(
         [
             'name' => ['Value not passed.'],
             'number' => ['Value must be no greater than 7.'],
@@ -103,11 +103,11 @@ echo '<!DOCTYPE html>';
         ]
     )->header('Error Summary');
 
-    echo PureField::label('Label Example');
+    echo Field::label('Label Example');
 
-    echo PureField::hint('Hint Example');
+    echo Field::hint('Hint Example');
 
-    echo PureField::error('Error Example')->addAttributes(['style' => 'display: block;']);
+    echo Field::error('Error Example')->addAttributes(['style' => 'display: block;']);
     ?>
 </div>
 </body>

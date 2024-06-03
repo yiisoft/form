@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\InputData;
 
-use Yiisoft\Form\Field\Factory\PureField;
+use Yiisoft\Form\Field\Factory\Field;
 use Yiisoft\Form\Field\Factory\PureFieldFactory;
 
 /**
@@ -12,7 +12,7 @@ use Yiisoft\Form\Field\Factory\PureFieldFactory;
  * Reaarding validation, it does not support state and rules, stores the result errors only. For more advanced
  * implementation take a look at form model ({@link https://github.com/yiisoft/form-model}) package.
  *
- * To simplify adding to field, {@see PureField} helper or {@see PureFieldFactory} can be used.
+ * To simplify adding to field, {@see Field} helper or {@see PureFieldFactory} can be used.
  */
 final class PureInputData implements InputDataInterface
 {

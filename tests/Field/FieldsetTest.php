@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Factory\PureField;
+use Yiisoft\Form\Field\Factory\Field;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Legend;
@@ -22,9 +22,9 @@ final class FieldsetTest extends TestCase
     {
         $result = Fieldset::widget()->begin()
             . "\n"
-            . PureField::text('firstName', '')->useContainer(false)
+            . Field::text('firstName', '')->useContainer(false)
             . "\n"
-            . PureField::text('lastName', '')->useContainer(false)
+            . Field::text('lastName', '')->useContainer(false)
             . "\n"
             . Fieldset::end();
 
@@ -45,9 +45,9 @@ final class FieldsetTest extends TestCase
     {
         $result = Fieldset::widget()
             ->content(
-                PureField::text('firstName', '')->useContainer(false),
+                Field::text('firstName', '')->useContainer(false),
                 "\n",
-                PureField::text('lastName', '')->useContainer(false),
+                Field::text('lastName', '')->useContainer(false),
             )
             ->render();
 

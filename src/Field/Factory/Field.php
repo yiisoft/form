@@ -36,7 +36,7 @@ use Yiisoft\Form\Field\Url;
 /**
  * @psalm-import-type Errors from ErrorSummary
  */
-class PureField
+class Field
 {
     /**
      * @var string|null

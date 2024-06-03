@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Support;
 
-use Yiisoft\Form\Field\Factory\PureField;
+use Yiisoft\Form\Field\Factory\Field;
 
-final class ThemedPureField extends PureField
+final class ThemedField extends Field
 {
     protected const DEFAULT_THEME = 'default';
 }

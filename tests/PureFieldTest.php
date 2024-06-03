@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Factory\PureField;
-use Yiisoft\Form\Tests\Support\ThemedPureField;
+use Yiisoft\Form\Field\Factory\Field;
+use Yiisoft\Form\Tests\Support\ThemedField;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 
@@ -20,7 +20,7 @@ final class PureFieldTest extends TestCase
 
     public function testButton(): void
     {
-        $html = PureField::button()->render();
+        $html = Field::button()->render();
 
         $expected = <<<HTML
             <div>
@@ -33,7 +33,7 @@ final class PureFieldTest extends TestCase
 
     public function testButtonWithContent(): void
     {
-        $html = PureField::button('Start')->render();
+        $html = Field::button('Start')->render();
 
         $expected = <<<HTML
             <div>
@@ -52,7 +52,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::button(theme: 'test')->render();
+        $html = ThemedField::button(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -65,7 +65,7 @@ final class PureFieldTest extends TestCase
 
     public function testButtonGroup(): void
     {
-        $html = PureField::buttonGroup()->buttons(Button::tag())->render();
+        $html = Field::buttonGroup()->buttons(Button::tag())->render();
 
         $expected = <<<HTML
             <div>
@@ -84,7 +84,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::buttonGroup(theme: 'test')->buttons(Button::tag())->render();
+        $html = ThemedField::buttonGroup(theme: 'test')->buttons(Button::tag())->render();
 
         $expected = <<<HTML
             <span>
@@ -97,7 +97,7 @@ final class PureFieldTest extends TestCase
 
     public function testCheckbox(): void
     {
-        $html = PureField::checkbox()->render();
+        $html = Field::checkbox()->render();
 
         $expected = <<<HTML
             <div>
@@ -116,7 +116,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::checkbox(theme: 'test')->render();
+        $html = ThemedField::checkbox(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -129,7 +129,7 @@ final class PureFieldTest extends TestCase
 
     public function testCheckboxList(): void
     {
-        $html = PureField::checkboxList()
+        $html = Field::checkboxList()
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -154,7 +154,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::checkboxList(theme: 'test')
+        $html = ThemedField::checkboxList(theme: 'test')
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -173,7 +173,7 @@ final class PureFieldTest extends TestCase
 
     public function testDate(): void
     {
-        $html = PureField::date()->render();
+        $html = Field::date()->render();
 
         $expected = <<<HTML
             <div>
@@ -192,7 +192,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::date(theme: 'test')->render();
+        $html = ThemedField::date(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -205,7 +205,7 @@ final class PureFieldTest extends TestCase
 
     public function testDateTimeLocal(): void
     {
-        $html = PureField::dateTimeLocal()->render();
+        $html = Field::dateTimeLocal()->render();
 
         $expected = <<<HTML
             <div>
@@ -224,7 +224,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::dateTimeLocal(theme: 'test')->render();
+        $html = ThemedField::dateTimeLocal(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -237,7 +237,7 @@ final class PureFieldTest extends TestCase
 
     public function testEmail(): void
     {
-        $html = PureField::email()->render();
+        $html = Field::email()->render();
 
         $expected = <<<HTML
             <div>
@@ -256,7 +256,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::email(theme: 'test')->render();
+        $html = ThemedField::email(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -269,7 +269,7 @@ final class PureFieldTest extends TestCase
 
     public function testErrorSummary(): void
     {
-        $html = PureField::errorSummary(['key' => ['e1', 'e2']])->render();
+        $html = Field::errorSummary(['key' => ['e1', 'e2']])->render();
 
         $expected = <<<HTML
             <div>
@@ -291,7 +291,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::errorSummary(['key' => ['e1', 'e2']], theme: 'test')->render();
+        $html = ThemedField::errorSummary(['key' => ['e1', 'e2']], theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -307,7 +307,7 @@ final class PureFieldTest extends TestCase
 
     public function testFieldset(): void
     {
-        $html = PureField::fieldset()->render();
+        $html = Field::fieldset()->render();
 
         $expected = <<<HTML
             <div>
@@ -327,7 +327,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::fieldset(theme: 'test')->render();
+        $html = ThemedField::fieldset(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -341,7 +341,7 @@ final class PureFieldTest extends TestCase
 
     public function testFile(): void
     {
-        $html = PureField::file()->render();
+        $html = Field::file()->render();
 
         $expected = <<<HTML
             <div>
@@ -360,7 +360,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::file(theme: 'test')->render();
+        $html = ThemedField::file(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -373,7 +373,7 @@ final class PureFieldTest extends TestCase
 
     public function testHidden(): void
     {
-        $html = PureField::hidden()->render();
+        $html = Field::hidden()->render();
         $this->assertSame('<input type="hidden">', $html);
     }
 
@@ -385,14 +385,14 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::hidden(theme: 'test')->render();
+        $html = ThemedField::hidden(theme: 'test')->render();
 
         $this->assertSame('<input type="hidden" class="green">', $html);
     }
 
     public function testImage(): void
     {
-        $html = PureField::image()->render();
+        $html = Field::image()->render();
 
         $expected = <<<HTML
             <div>
@@ -405,7 +405,7 @@ final class PureFieldTest extends TestCase
 
     public function testImageWithUrl(): void
     {
-        $html = PureField::image('image.png')->render();
+        $html = Field::image('image.png')->render();
 
         $expected = <<<HTML
             <div>
@@ -424,7 +424,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::image(theme: 'test')->render();
+        $html = ThemedField::image(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -437,7 +437,7 @@ final class PureFieldTest extends TestCase
 
     public function testNumber(): void
     {
-        $html = PureField::number()->render();
+        $html = Field::number()->render();
 
         $expected = <<<HTML
             <div>
@@ -456,7 +456,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::number(theme: 'test')->render();
+        $html = ThemedField::number(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -469,7 +469,7 @@ final class PureFieldTest extends TestCase
 
     public function testPassword(): void
     {
-        $html = PureField::password()->render();
+        $html = Field::password()->render();
 
         $expected = <<<HTML
             <div>
@@ -488,7 +488,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::password(theme: 'test')->render();
+        $html = ThemedField::password(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -501,7 +501,7 @@ final class PureFieldTest extends TestCase
 
     public function testRadioList(): void
     {
-        $html = PureField::radioList()
+        $html = Field::radioList()
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -526,7 +526,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::radioList(theme: 'test')
+        $html = ThemedField::radioList(theme: 'test')
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -545,7 +545,7 @@ final class PureFieldTest extends TestCase
 
     public function testRange(): void
     {
-        $html = PureField::range()->render();
+        $html = Field::range()->render();
 
         $expected = <<<HTML
             <div>
@@ -564,7 +564,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::range(theme: 'test')->render();
+        $html = ThemedField::range(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -577,7 +577,7 @@ final class PureFieldTest extends TestCase
 
     public function testResetButton(): void
     {
-        $html = PureField::resetButton()->render();
+        $html = Field::resetButton()->render();
 
         $expected = <<<HTML
             <div>
@@ -590,7 +590,7 @@ final class PureFieldTest extends TestCase
 
     public function testResetButtonWithContent(): void
     {
-        $html = PureField::resetButton('Reset')->render();
+        $html = Field::resetButton('Reset')->render();
 
         $expected = <<<HTML
             <div>
@@ -609,7 +609,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::resetButton(theme: 'test')->render();
+        $html = ThemedField::resetButton(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -622,7 +622,7 @@ final class PureFieldTest extends TestCase
 
     public function testSelect(): void
     {
-        $html = PureField::select()->render();
+        $html = Field::select()->render();
 
         $expected = <<<HTML
             <div>
@@ -641,7 +641,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::select(theme: 'test')->render();
+        $html = ThemedField::select(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -654,7 +654,7 @@ final class PureFieldTest extends TestCase
 
     public function testSubmitButton(): void
     {
-        $html = PureField::submitButton()->render();
+        $html = Field::submitButton()->render();
 
         $expected = <<<HTML
             <div>
@@ -667,7 +667,7 @@ final class PureFieldTest extends TestCase
 
     public function testSubmitButtonWithContent(): void
     {
-        $html = PureField::submitButton('Go')->render();
+        $html = Field::submitButton('Go')->render();
 
         $expected = <<<HTML
             <div>
@@ -686,7 +686,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::submitButton(theme: 'test')->render();
+        $html = ThemedField::submitButton(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -699,7 +699,7 @@ final class PureFieldTest extends TestCase
 
     public function testTelephone(): void
     {
-        $html = PureField::telephone()->render();
+        $html = Field::telephone()->render();
 
         $expected = <<<HTML
             <div>
@@ -718,7 +718,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::telephone(theme: 'test')->render();
+        $html = ThemedField::telephone(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -731,7 +731,7 @@ final class PureFieldTest extends TestCase
 
     public function testText(): void
     {
-        $html = PureField::text()->render();
+        $html = Field::text()->render();
 
         $expected = <<<HTML
             <div>
@@ -750,7 +750,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::text(theme: 'test')->render();
+        $html = ThemedField::text(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -763,7 +763,7 @@ final class PureFieldTest extends TestCase
 
     public function testTextarea(): void
     {
-        $html = PureField::textarea()->render();
+        $html = Field::textarea()->render();
 
         $expected = <<<HTML
             <div>
@@ -782,7 +782,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::textarea(theme: 'test')->render();
+        $html = ThemedField::textarea(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -795,7 +795,7 @@ final class PureFieldTest extends TestCase
 
     public function testTime(): void
     {
-        $html = PureField::time()->render();
+        $html = Field::time()->render();
 
         $expected = <<<HTML
             <div>
@@ -814,7 +814,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::time(theme: 'test')->render();
+        $html = ThemedField::time(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -827,7 +827,7 @@ final class PureFieldTest extends TestCase
 
     public function testUrl(): void
     {
-        $html = PureField::url()->render();
+        $html = Field::url()->render();
 
         $expected = <<<HTML
             <div>
@@ -846,7 +846,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::url(theme: 'test')->render();
+        $html = ThemedField::url(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -859,13 +859,13 @@ final class PureFieldTest extends TestCase
 
     public function testLabel(): void
     {
-        $html = PureField::label()->render();
+        $html = Field::label()->render();
         $this->assertSame('', $html);
     }
 
     public function testLabelWithContent(): void
     {
-        $html = PureField::label('test')->render();
+        $html = Field::label('test')->render();
         $this->assertSame('<label>test</label>', $html);
     }
 
@@ -877,20 +877,20 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::label('hello', theme: 'test')->render();
+        $html = ThemedField::label('hello', theme: 'test')->render();
 
         $this->assertSame('<label class="red">hello</label>', $html);
     }
 
     public function testHint(): void
     {
-        $html = PureField::hint()->render();
+        $html = Field::hint()->render();
         $this->assertSame('', $html);
     }
 
     public function testHintWithContent(): void
     {
-        $html = PureField::hint('test')->render();
+        $html = Field::hint('test')->render();
         $this->assertSame('<div>test</div>', $html);
     }
 
@@ -902,20 +902,20 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::hint('hello', theme: 'test')->render();
+        $html = ThemedField::hint('hello', theme: 'test')->render();
 
         $this->assertSame('<div class="red">hello</div>', $html);
     }
 
     public function testError(): void
     {
-        $html = PureField::error()->render();
+        $html = Field::error()->render();
         $this->assertSame('', $html);
     }
 
     public function testErrorWithMessage(): void
     {
-        $html = PureField::error('test')->render();
+        $html = Field::error('test')->render();
         $this->assertSame('<div>test</div>', $html);
     }
 
@@ -927,7 +927,7 @@ final class PureFieldTest extends TestCase
             ],
         ]);
 
-        $html = ThemedPureField::error('hello', theme: 'test')->render();
+        $html = ThemedField::error('hello', theme: 'test')->render();
 
         $this->assertSame('<div class="red">hello</div>', $html);
     }
