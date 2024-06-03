@@ -64,7 +64,7 @@ interface InputDataInterface
     public function getValidationRules(): mixed;
 
     /**
-     * the list of validation errors for this attribute
+     * The list of validation errors for this attribute.
      *
      * @return string[] Input validation errors.
      * @psalm-return list<string>
