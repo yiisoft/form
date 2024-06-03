@@ -1,7 +1,7 @@
-# Pure fields
+# Creating fields
 
-To ease the creation of the fields with `\Yiisoft\Form\Field\Base\InputData\PureInputData` as a data source, use
-corresponding helper (`\Yiisoft\Form\Field\Factory\PureField`):
+To ease the creation of the fields with `\Yiisoft\Form\Field\Base\InputData\InputData` as a data source, use
+corresponding helper (`\Yiisoft\Form\Field\Factory\Field`):
 
 ```php
 use Yiisoft\Form\Field\Factory\Field;
@@ -9,7 +9,7 @@ use Yiisoft\Form\Field\Factory\Field;
 $field = Field::text('name', 'value');
 ```
 
-or factory (`\Yiisoft\Form\Field\Factory\PureFieldFactory`):
+or factory (`\Yiisoft\Form\Field\Factory\FieldFactory`):
 
 ```php
 use Yiisoft\Form\Field\Factory\FieldFactory;
@@ -66,7 +66,7 @@ or override the theme property via class inheritance (supported by helper):
 ```php
 use Yiisoft\Form\Field\Factory\Field;
 
-final class ThemedPureField extends Field
+final class ThemedField extends Field
 {
     protected const DEFAULT_THEME = 'default';
 }
@@ -75,7 +75,7 @@ final class ThemedPureField extends Field
 and use this class instead:
 
 ```php
-ThemedPureField::text('name', 'value');
+ThemedField::text('name', 'value');
 ```
 
 Which one to choose depends on the situation, but factory has some advantages:
