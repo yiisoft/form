@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -31,7 +31,7 @@ final class TelephoneTest extends TestCase
                 <div>Enter your phone.</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'TelephoneForm[number]',
                     value: '',
                     id: 'telephoneform-number',
@@ -45,7 +45,7 @@ final class TelephoneTest extends TestCase
                 <input type="tel" class="valid" name="main" value>
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '', validationErrors: []),
+                new InputData(name: 'main', value: '', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -54,7 +54,7 @@ final class TelephoneTest extends TestCase
                 <input type="tel" name="main" value>
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '', validationErrors: []),
+                new InputData(name: 'main', value: '', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
             'placeholder' => [
@@ -63,13 +63,13 @@ final class TelephoneTest extends TestCase
                 <input type="tel" name="main" value placeholder="test">
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '', placeholder: 'test'),
+                new InputData(name: 'main', value: '', placeholder: 'test'),
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -295,7 +295,7 @@ final class TelephoneTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Telephone::widget()
             ->invalidClass('invalidWrap')

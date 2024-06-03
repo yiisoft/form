@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -37,7 +37,7 @@ final class RadioListTest extends TestCase
                 <div>Color of box.</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'RadioListForm[color]',
                     label: 'Select color',
                     hint: 'Color of box.',
@@ -53,14 +53,14 @@ final class RadioListTest extends TestCase
                 </div>
                 </div>
                 HTML,
-                new PureInputData(name: 'color', validationErrors: []),
+                new InputData(name: 'color', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -636,7 +636,7 @@ final class RadioListTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('number', 2);
+        $inputData = new InputData('number', 2);
 
         $result = RadioList::widget()
             ->invalidClass('invalidWrap')

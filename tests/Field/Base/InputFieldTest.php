@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubInputField;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -180,7 +180,7 @@ final class InputFieldTest extends TestCase
     public function testPrepareValueWithInputData(): void
     {
         $result = StubInputField::widget()
-            ->inputData(new PureInputData(value: 9))
+            ->inputData(new InputData(value: 9))
             ->prepareValue(static fn ($value) => $value * 2)
             ->render();
 
@@ -204,7 +204,7 @@ final class InputFieldTest extends TestCase
         $this->assertNotSame($field, $field->addInputAttributes([]));
         $this->assertNotSame($field, $field->addInputClass());
         $this->assertNotSame($field, $field->inputClass());
-        $this->assertNotSame($field, $field->inputData(new PureInputData()));
+        $this->assertNotSame($field, $field->inputData(new InputData()));
         $this->assertNotSame($field, $field->name(null));
         $this->assertNotSame($field, $field->value(null));
         $this->assertNotSame($field, $field->prepareValue(null));

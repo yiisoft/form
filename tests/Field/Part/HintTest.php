@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Part;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -21,7 +21,7 @@ final class HintTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData(hint: 'Write your name.');
+        $inputData = new InputData(hint: 'Write your name.');
 
         $result = Hint::widget()->inputData($inputData)->render();
 
@@ -176,7 +176,7 @@ final class HintTest extends TestCase
 
     public function testCustomContent(): void
     {
-        $inputData = new PureInputData(hint: 'Write your name.');
+        $inputData = new InputData(hint: 'Write your name.');
 
         $result = Hint::widget()
             ->inputData($inputData)
@@ -188,7 +188,7 @@ final class HintTest extends TestCase
 
     public function testEmptyContent(): void
     {
-        $inputData = new PureInputData(hint: 'Write your name.');
+        $inputData = new InputData(hint: 'Write your name.');
 
         $result = Hint::widget()
             ->inputData($inputData)
@@ -200,7 +200,7 @@ final class HintTest extends TestCase
 
     public function testEncode(): void
     {
-        $inputData = new PureInputData(hint: 'Write your name.');
+        $inputData = new InputData(hint: 'Write your name.');
 
         $result = Hint::widget()
             ->inputData($inputData)
@@ -212,7 +212,7 @@ final class HintTest extends TestCase
 
     public function testWithoutEncode(): void
     {
-        $inputData = new PureInputData(hint: 'Write your name.');
+        $inputData = new InputData(hint: 'Write your name.');
 
         $result = Hint::widget()
             ->inputData($inputData)
@@ -226,7 +226,7 @@ final class HintTest extends TestCase
     public function testImmutability(): void
     {
         $widget = Hint::widget();
-        $this->assertNotSame($widget, $widget->inputData(new PureInputData()));
+        $this->assertNotSame($widget, $widget->inputData(new InputData()));
         $this->assertNotSame($widget, $widget->tag('b'));
         $this->assertNotSame($widget, $widget->attributes([]));
         $this->assertNotSame($widget, $widget->addAttributes([]));

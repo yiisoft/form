@@ -11,10 +11,10 @@ the year, month, and day as well as the time in hours and minutes. Documentation
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\DateTimeLocal;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'partyDate',
     value: '2017-06-01T08:30',
     label: 'Date of party',

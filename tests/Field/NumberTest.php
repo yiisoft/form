@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Number;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
@@ -32,7 +32,7 @@ final class NumberTest extends TestCase
                 <div>Full years.</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'NumberForm[age]',
                     value: 42,
                     hint: 'Full years.',
@@ -46,7 +46,7 @@ final class NumberTest extends TestCase
                 <input type="number" class="valid" name="main" value="1">
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: 1, validationErrors: []),
+                new InputData(name: 'main', value: 1, validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -55,7 +55,7 @@ final class NumberTest extends TestCase
                 <input type="number" name="main" value="1">
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: 1, validationErrors: []),
+                new InputData(name: 'main', value: 1, validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
             'placeholder' => [
@@ -64,13 +64,13 @@ final class NumberTest extends TestCase
                 <input type="number" name="main" value="1" placeholder="test">
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: 1, placeholder: 'test'),
+                new InputData(name: 'main', value: 1, placeholder: 'test'),
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -362,7 +362,7 @@ final class NumberTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company');
+        $inputData = new InputData('company');
 
         $result = Number::widget()
             ->invalidClass('invalidWrap')

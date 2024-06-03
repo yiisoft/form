@@ -10,15 +10,15 @@ Represents `<fieldset>` element used to group several controls. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Text;
 
 echo Fieldset::widget()->begin()
 . "\n"
-. Text::widget()->inputData(new PureInputData('firstName', ''))->useContainer(false),
+. Text::widget()->inputData(new InputData('firstName', ''))->useContainer(false),
 . "\n"
-. Text::widget()->inputData(new PureInputData('lastName', ''))->useContainer(false),
+. Text::widget()->inputData(new InputData('lastName', ''))->useContainer(false),
 . "\n"
 . Fieldset::end();
 ```
@@ -26,15 +26,15 @@ echo Fieldset::widget()->begin()
 or
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Text;
 
 echo Fieldset::widget()
     ->content(
-        Text::widget()->inputData(new PureInputData('firstName', ''))->useContainer(false),
+        Text::widget()->inputData(new InputData('firstName', ''))->useContainer(false),
         . "\n"
-        . Text::widget()->inputData(new PureInputData('lastName', ''))->useContainer(false),
+        . Text::widget()->inputData(new InputData('lastName', ''))->useContainer(false),
     )
     ->render();
 

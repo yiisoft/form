@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
@@ -30,7 +30,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 [],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[name]',
                     value: '',
                     label: 'Name',
@@ -51,7 +51,7 @@ final class ThemeTest extends TestCase
                 [
                     'enrichFromValidationRules' => true,
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[company]',
                     value: '',
                     label: 'Company',
@@ -69,7 +69,7 @@ final class ThemeTest extends TestCase
                 [
                     'enrichFromValidationRules' => false,
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[company]',
                     value: '',
                 ),
@@ -86,7 +86,7 @@ final class ThemeTest extends TestCase
                     'containerTag' => 'section',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -101,7 +101,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['containerClass' => 'wrapper'],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -116,7 +116,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['containerClass' => ['wrapper', 'red']],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -131,7 +131,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['inputClass' => 'red'],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -146,7 +146,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 ['inputClass' => ['red', 'blue']],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -161,7 +161,7 @@ final class ThemeTest extends TestCase
                 [
                     'useContainer' => false,
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -182,7 +182,7 @@ final class ThemeTest extends TestCase
                 [
                     'template' => "<div class=\"wrap\">\n{hint}\n{label}\n{error}\n{input}\n</div>",
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[name]',
                     value: '',
                     label: 'Name',
@@ -203,7 +203,7 @@ final class ThemeTest extends TestCase
                     'setInputId' => false,
                     'inputAttributes' => ['class' => 'form-control'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -230,7 +230,7 @@ final class ThemeTest extends TestCase
                         'attributes()' => [['class' => 'red']],
                     ],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[name]',
                     value: '',
                     label: 'Name',
@@ -252,7 +252,7 @@ final class ThemeTest extends TestCase
                 [
                     'usePlaceholder' => false,
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[name]',
                     value: '',
                     label: 'Name',
@@ -274,7 +274,7 @@ final class ThemeTest extends TestCase
                 [
                     'usePlaceholder' => false,
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[name]',
                     value: '',
                     label: 'Name',
@@ -304,7 +304,7 @@ final class ThemeTest extends TestCase
                         ],
                     ],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -322,7 +322,7 @@ final class ThemeTest extends TestCase
                     'validClass' => 'valid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -342,7 +342,7 @@ final class ThemeTest extends TestCase
                     'invalidClass' => 'invalid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[company]',
                     value: '',
                     label: 'Company',
@@ -361,7 +361,7 @@ final class ThemeTest extends TestCase
                     'inputValidClass' => 'valid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -381,7 +381,7 @@ final class ThemeTest extends TestCase
                     'inputInvalidClass' => 'invalid',
                     'containerAttributes' => ['class' => 'wrapper'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[company]',
                     value: '',
                     label: 'Company',
@@ -400,7 +400,7 @@ final class ThemeTest extends TestCase
                     'inputContainerTag' => 'div',
                     'inputContainerAttributes' => ['class' => 'control'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -418,7 +418,7 @@ final class ThemeTest extends TestCase
                     'inputContainerTag' => 'div',
                     'inputContainerClass' => 'control',
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -436,7 +436,7 @@ final class ThemeTest extends TestCase
                     'inputContainerTag' => 'div',
                     'inputContainerClass' => ['control', 'red'],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'TextForm[job]',
                     value: '',
                     label: 'Job',
@@ -448,10 +448,10 @@ final class ThemeTest extends TestCase
 
     #[DataProvider('dataText')]
     public function testText(
-        string $expected,
-        array $factoryParameters,
-        PureInputData $inputData,
-        ?array $enricherResult = null,
+        string    $expected,
+        array     $factoryParameters,
+        InputData $inputData,
+        ?array    $enricherResult = null,
     ): void {
         $this->initializeThemeContainer($factoryParameters, $enricherResult);
 
@@ -475,7 +475,7 @@ final class ThemeTest extends TestCase
                 [
                     'labelConfig' => ['class()' => ['red']],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'job',
                     value: '',
                     label: 'Job',
@@ -491,7 +491,7 @@ final class ThemeTest extends TestCase
                 [
                     'hintConfig' => ['class()' => ['red']],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'job',
                     value: '',
                     hint: 'Job',
@@ -507,7 +507,7 @@ final class ThemeTest extends TestCase
                 [
                     'errorConfig' => ['class()' => ['red']],
                 ],
-                new PureInputData(
+                new InputData(
                     name: 'job',
                     value: '',
                     validationErrors: ['Error'],
@@ -518,9 +518,9 @@ final class ThemeTest extends TestCase
 
     #[DataProvider('dataTextWithNotDefaultTheme')]
     public function testTextWithNotDefaultTheme(
-        string $expected,
-        array $factoryParameters,
-        PureInputData $inputData,
+        string    $expected,
+        array     $factoryParameters,
+        InputData $inputData,
     ): void {
         ThemeContainer::initialize(
             ['default' => [], 'custom-theme' => $factoryParameters],
@@ -543,7 +543,7 @@ final class ThemeTest extends TestCase
             ],
         ]);
 
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             id: 'textform-job',
             label: 'Job',
             name: 'TextForm[job]',
@@ -662,7 +662,7 @@ final class ThemeTest extends TestCase
         $this->initializeThemeContainer($factoryParameters);
 
         $result = Label::widget()
-            ->inputData(new PureInputData(id: 'textform-job', label: 'Job'))
+            ->inputData(new InputData(id: 'textform-job', label: 'Job'))
             ->render();
 
         $this->assertSame($expected, $result);

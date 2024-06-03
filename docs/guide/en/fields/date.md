@@ -11,10 +11,10 @@ the input or with a special date picker interface. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Date;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'DateForm[birthday]',
     value: '1996-12-19',
     label: 'Your birthday',

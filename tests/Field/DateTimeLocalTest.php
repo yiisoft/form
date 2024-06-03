@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -20,7 +20,7 @@ final class DateTimeLocalTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'partyDate',
             value: '2017-06-01T08:30',
             label: 'Date of party',

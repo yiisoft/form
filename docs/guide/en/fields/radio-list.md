@@ -10,10 +10,10 @@ Represents a list of radio buttons with a single selection. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\RadioList;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'RadioListForm[color]',
     label: 'Select color',
     hint: 'Color of box.',

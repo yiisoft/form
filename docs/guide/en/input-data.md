@@ -22,13 +22,13 @@ exceptions are buttons, images, etc.
 
 ## Usage with fields
 
-To add input data to a field: 
+To add input data to a field:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Text;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'TextForm[name]',
     value: '',
     label: 'Name',

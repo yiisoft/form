@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -20,7 +20,7 @@ final class HiddenTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData('key', 'x100', id: 'hiddenform-key');
+        $inputData = new InputData('key', 'x100', id: 'hiddenform-key');
 
         $field = Hidden::widget()->inputData($inputData);
 

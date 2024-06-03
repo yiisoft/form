@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
@@ -36,7 +36,7 @@ final class CheckboxListTest extends TestCase
                 <div>Color of box.</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'CheckboxListForm[color]',
                     label: 'Select one or more colors',
                     hint: 'Color of box.',
@@ -52,14 +52,14 @@ final class CheckboxListTest extends TestCase
                 </div>
                 </div>
                 HTML,
-                new PureInputData(name: 'color', validationErrors: []),
+                new InputData(name: 'color', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -438,7 +438,7 @@ final class CheckboxListTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', ['red']);
+        $inputData = new InputData('company', ['red']);
 
         $result = CheckboxList::widget()
             ->invalidClass('invalidWrap')

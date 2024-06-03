@@ -10,10 +10,10 @@ Represents `<input>` element of type "url" that lets the user enter and edit an 
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Url;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'UrlForm[site]',
     value: '',
     label: 'Your site',

@@ -18,7 +18,7 @@ trait InputDataTrait
     final protected function getInputData(): InputDataInterface
     {
         if ($this->inputData === null) {
-            $this->inputData = new PureInputData();
+            $this->inputData = new InputData();
         }
 
         return $this->inputData;

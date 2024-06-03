@@ -11,10 +11,10 @@ activated. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Checkbox;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'CheckboxForm[red]',
     value: '1',
     label: 'Red color',

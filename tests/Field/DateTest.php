@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -20,7 +20,7 @@ final class DateTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'DateForm[birthday]',
             value: '1996-12-19',
             label: 'Your birthday',

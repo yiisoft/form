@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Factory\Field;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -35,7 +35,7 @@ echo '<!DOCTYPE html>';
     echo Field::text()->label('Text Field')->placeholder('Placeholder')->hint('Example of hint');
 
     echo Text::widget()
-        ->inputData(new PureInputData(validationErrors: []))
+        ->inputData(new InputData(validationErrors: []))
         ->label('Valid Text Field')
         ->placeholder('Placeholder');
 

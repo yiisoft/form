@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -20,7 +20,7 @@ final class TextTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
             label: 'Name',
@@ -72,7 +72,7 @@ final class TextTest extends TestCase
 
     public function testCustomNameAfterInputData(): void
     {
-        $inputData = new PureInputData('test', '');
+        $inputData = new InputData('test', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -90,7 +90,7 @@ final class TextTest extends TestCase
 
     public function testCustomNameBeforeInputData(): void
     {
-        $inputData = new PureInputData('test', '');
+        $inputData = new InputData('test', '');
 
         $result = Text::widget()
             ->name('the-name')
@@ -108,7 +108,7 @@ final class TextTest extends TestCase
 
     public function testCustomValueAfterInputData(): void
     {
-        $inputData = new PureInputData('test', '42');
+        $inputData = new InputData('test', '42');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -126,7 +126,7 @@ final class TextTest extends TestCase
 
     public function testCustomValueBeforeInputData(): void
     {
-        $inputData = new PureInputData('test', '42');
+        $inputData = new InputData('test', '42');
 
         $result = Text::widget()
             ->value('7')
@@ -153,7 +153,7 @@ final class TextTest extends TestCase
 
     public function testWithoutContainer(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             validationErrors: [],
@@ -169,7 +169,7 @@ final class TextTest extends TestCase
 
     public function testCustomContainerTag(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             validationErrors: [],
@@ -200,7 +200,7 @@ final class TextTest extends TestCase
 
     public function testContainerAttributes(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             validationErrors: [],
@@ -222,7 +222,7 @@ final class TextTest extends TestCase
 
     public function testCustomTemplate(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
             id: 'textform-name',
@@ -253,7 +253,7 @@ final class TextTest extends TestCase
 
     public function testCustomInputId(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             label: 'Job',
@@ -277,7 +277,7 @@ final class TextTest extends TestCase
 
     public function testDoNotSetInputId(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             label: 'Job',
@@ -301,7 +301,7 @@ final class TextTest extends TestCase
 
     public function testCustomLabelConfig(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             id: 'job-id',
@@ -329,7 +329,7 @@ final class TextTest extends TestCase
 
     public function testCustomLabel(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             label: 'Job',
@@ -353,7 +353,7 @@ final class TextTest extends TestCase
 
     public function testCustomHintConfig(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
             hint: 'Input your full name.',
@@ -379,7 +379,7 @@ final class TextTest extends TestCase
 
     public function testCustomHint(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
             hint: 'Input your full name.',
@@ -402,7 +402,7 @@ final class TextTest extends TestCase
 
     public function testCustomErrorConfig(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'test',
             validationErrors: ['Value cannot be blank.'],
         );
@@ -427,7 +427,7 @@ final class TextTest extends TestCase
 
     public function testOverridePlaceholder(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
             placeholder: 'Your name',
@@ -449,7 +449,7 @@ final class TextTest extends TestCase
 
     public function testDoNotSetPlaceholder(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
             placeholder: 'Your name',
@@ -471,7 +471,7 @@ final class TextTest extends TestCase
 
     public function testAddInputAttributes(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -489,7 +489,7 @@ final class TextTest extends TestCase
 
     public function testInputAttributesOverridePlaceholderFromForm(): void
     {
-        $inputData = new PureInputData('job', '', placeholder: 'Your name');
+        $inputData = new InputData('job', '', placeholder: 'Your name');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -507,7 +507,7 @@ final class TextTest extends TestCase
 
     public function testInputAttributesOverrideIdFromForm(): void
     {
-        $inputData = new PureInputData('name', '', id: 'test-id', label: 'Name');
+        $inputData = new InputData('name', '', id: 'test-id', label: 'Name');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -526,7 +526,7 @@ final class TextTest extends TestCase
 
     public function testInputIdOverrideIdFromAttributes(): void
     {
-        $inputData = new PureInputData('name', '', id: 'test-id', label: 'Name');
+        $inputData = new InputData('name', '', id: 'test-id', label: 'Name');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -546,7 +546,7 @@ final class TextTest extends TestCase
 
     public function testDirname(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -564,7 +564,7 @@ final class TextTest extends TestCase
 
     public function testMaxlength(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -582,7 +582,7 @@ final class TextTest extends TestCase
 
     public function testMinlength(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -600,7 +600,7 @@ final class TextTest extends TestCase
 
     public function testPattern(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -618,7 +618,7 @@ final class TextTest extends TestCase
 
     public function testSize(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -636,7 +636,7 @@ final class TextTest extends TestCase
 
     public function testReadonly(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -653,7 +653,7 @@ final class TextTest extends TestCase
 
     public function testRequired(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -670,7 +670,7 @@ final class TextTest extends TestCase
 
     public function testDisabled(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -687,7 +687,7 @@ final class TextTest extends TestCase
 
     public function testAriaDescribedBy(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -704,7 +704,7 @@ final class TextTest extends TestCase
 
     public function testAriaLabel(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -721,7 +721,7 @@ final class TextTest extends TestCase
 
     public function testAutofocus(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -738,7 +738,7 @@ final class TextTest extends TestCase
 
     public function testTabIndex(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->inputData($inputData)
@@ -755,7 +755,7 @@ final class TextTest extends TestCase
 
     public function testValidationClassForNonValidatedForm(): void
     {
-        $inputData = new PureInputData('job', '');
+        $inputData = new InputData('job', '');
 
         $result = Text::widget()
             ->invalidClass('invalid')
@@ -774,7 +774,7 @@ final class TextTest extends TestCase
 
     public function testInvalidClass(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'company',
             value: '',
             validationErrors: ['Value cannot be blank.'],
@@ -798,7 +798,7 @@ final class TextTest extends TestCase
 
     public function testValidClass(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             validationErrors: [],
@@ -821,7 +821,7 @@ final class TextTest extends TestCase
 
     public function testInputInvalidClass(): void
     {
-        $inputData = new PureInputData('company', '', validationErrors: ['Value cannot be blank.']);
+        $inputData = new InputData('company', '', validationErrors: ['Value cannot be blank.']);
 
         $result = Text::widget()
             ->inputInvalidClass('invalid')
@@ -841,7 +841,7 @@ final class TextTest extends TestCase
 
     public function testInputValidClass(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'job',
             value: '',
             validationErrors: [],
@@ -864,7 +864,7 @@ final class TextTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Text::widget()
             ->invalidClass('invalidWrap')

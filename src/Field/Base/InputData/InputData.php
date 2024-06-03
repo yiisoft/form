@@ -14,7 +14,7 @@ use Yiisoft\Form\Field\Factory\FieldFactory;
  *
  * To simplify adding to field, {@see Field} helper or {@see FieldFactory} can be used.
  */
-final class PureInputData implements InputDataInterface
+final class InputData implements InputDataInterface
 {
     /**
      * @param string[] $validationErrors
