@@ -10,7 +10,6 @@ use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\Date;
-use Yiisoft\Form\Field\DateTime;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Field\ErrorSummary;
@@ -87,16 +86,6 @@ class PureField
         ?string $theme = null,
     ): Date {
         return Date::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
-    }
-
-    final public static function dateTime(
-        ?string $name = null,
-        mixed $value = null,
-        array $config = [],
-        ?string $theme = null,
-    ): DateTime {
-        return DateTime::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new PureInputData($name, $value));
     }
 

@@ -1,46 +1,27 @@
 # Textarea Field
 
-Represents `<textarea>` element that create a multi-line plain-text editing control. Documentation:
+Represents `<textarea>` element which is a multi-line plain-text editing control. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/form-elements.html#the-textarea-element)
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/textarea)
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProductForm extends FormModel
-{
-    public ?string $shortdesc = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'shortdesc' => 'Short description',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
-echo Textarea::widget()
-    ->formAttribute($productForm, 'shortdesc')
-    ->rows(7);
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Textarea;
+
+$inputData = new PureInputData('desc', id: 'test-id', label: 'Description');
+echo Textarea::widget()->inputData($inputData)->render();
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="productform-shortdesc">Short description</label>
-    <textarea id="productform-shortdesc" name="ProductForm[shortdesc]" rows="7"></textarea>
+    <label for="test-id">Description</label>
+    <textarea id="test-id" name="desc"></textarea>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`

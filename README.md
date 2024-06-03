@@ -24,7 +24,7 @@ The following widgets are available out of the box:
 - group widgets: `ButtonGroup`, `Fieldset`. 
 - other: `ErrorSummary`.
 
-Two themes are available out of the box:
+These themes are available out of the box:
 
 - Bootstrap 5 Horizontal,
 - Bootstrap 5 Vertical.
