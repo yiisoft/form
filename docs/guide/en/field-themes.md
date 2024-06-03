@@ -1,7 +1,8 @@
 # Form field themes
 
-ThemeContainer configuration, ThemePath usage, built-in themes
+Themes are used to customize fields' appearance. They can be applied both for individual fields and field sets.
 
+## Container configuration
 
 Configure themes (optional):
 
@@ -18,9 +19,11 @@ ThemeContainer::initialize(
 );
 ```
 
-Two themes are available out of the box:
+These themes are available out of the box:
 
 - Bootstrap 5 Horizontal,
 - Bootstrap 5 Vertical.
 
-TODO: describe `themes-preview`
+ThemeContainer configuration, ThemePath usage, built-in themes.
+
+TODO: describe `themes-preview`.
