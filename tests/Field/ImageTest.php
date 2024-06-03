@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Image;
 use Yiisoft\Form\Tests\Support\StringableObject;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ImageTest extends TestCase
 {

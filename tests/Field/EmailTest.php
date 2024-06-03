@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class EmailTest extends TestCase
 {

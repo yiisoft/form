@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Button;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ButtonTest extends TestCase
 {

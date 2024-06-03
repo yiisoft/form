@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\File;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class FileTest extends TestCase
 {

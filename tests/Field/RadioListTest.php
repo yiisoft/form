@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\Tests\Support\StringableObject;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 

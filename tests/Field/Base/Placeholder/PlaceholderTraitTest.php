@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Base\Placeholder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\Placeholder\PlaceholderField;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class PlaceholderTraitTest extends TestCase
 {

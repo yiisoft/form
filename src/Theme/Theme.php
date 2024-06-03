@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Form\Theme;
 
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
 use Yiisoft\Form\Field\Base\InputField;

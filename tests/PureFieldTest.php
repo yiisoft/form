@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\PureField;
 use Yiisoft\Form\Tests\Support\ThemedPureField;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 
 final class PureFieldTest extends TestCase

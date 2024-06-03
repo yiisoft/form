@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Form\ThemePath;
+use Yiisoft\Form\Theme\ThemePath;
 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 

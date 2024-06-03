@@ -6,8 +6,8 @@ ThemeContainer configuration, ThemePath usage, built-in themes
 Configure themes (optional):
 
 ```php
-use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\ThemePath;
+use Yiisoft\Form\Theme\ThemeContainer;
+use Yiisoft\Form\Theme\ThemePath;
 
 ThemeContainer::initialize(
     config: [

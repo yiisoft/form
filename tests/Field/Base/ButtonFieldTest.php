@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubButtonField;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 
 final class ButtonFieldTest extends TestCase

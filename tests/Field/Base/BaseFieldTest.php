@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field\Base;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Tests\Support\StubBaseField;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class BaseFieldTest extends TestCase
 {

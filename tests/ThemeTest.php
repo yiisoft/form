@@ -7,13 +7,13 @@ namespace Yiisoft\Form\Tests;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Error;
 use Yiisoft\Form\Field\Part\Hint;
-use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Part\Label;
-use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ThemeTest extends TestCase
 {

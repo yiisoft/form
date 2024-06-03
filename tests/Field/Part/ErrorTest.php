@@ -7,10 +7,10 @@ namespace Yiisoft\Form\Tests\Field\Part;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
+use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Part\Error;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ErrorTest extends TestCase
 {

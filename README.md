@@ -47,8 +47,8 @@ composer require yiisoft/form
 Configure themes (optional):
 
 ```php
-use Yiisoft\Form\ThemeContainer;
-use Yiisoft\Form\ThemePath;
+use Yiisoft\Form\Theme\ThemeContainer;
+use Yiisoft\Form\Theme\ThemePath;
 
 ThemeContainer::initialize(
     config: [

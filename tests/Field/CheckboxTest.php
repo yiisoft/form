@@ -11,7 +11,7 @@ use stdClass;
 use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Tests\Support\StringableObject;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class CheckboxTest extends TestCase
 {

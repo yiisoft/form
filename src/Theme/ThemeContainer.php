@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Form\Theme;
 
 use Yiisoft\Form\Field\Base\BaseField;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
+use Yiisoft\Form\ValidationRulesEnricherInterface;
 
 use function array_key_exists;
 
