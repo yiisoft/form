@@ -12,9 +12,9 @@ $field = Field::text('name', 'value');
 or factory (`\Yiisoft\Form\Field\Factory\PureFieldFactory`):
 
 ```php
-use Yiisoft\Form\Field\Factory\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\FieldFactory;
 
-$factory = new PureFieldFactory();
+$factory = new FieldFactory();
 $factory->text('name', 'value');
 ```
 
@@ -40,7 +40,7 @@ factory):
 
 ```php
 use Yiisoft\Form\Field\Factory\Field;
-use Yiisoft\Form\Field\Factory\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\FieldFactory;
 
 // Using helper
 
@@ -48,16 +48,16 @@ Field::text('name', 'value', 'my-theme');
 
 // Using factory
 
-$factory = new PureFieldFactory();
+$factory = new FieldFactory();
 $factory->text('name', 'value');
 ```
 
 To apply the theme for all fields, either pass it as argument in constructor (supported by factory).
 
 ```php
-use Yiisoft\Form\Field\Factory\PureFieldFactory;
+use Yiisoft\Form\Field\Factory\FieldFactory;
 
-$factory = new PureFieldFactory('my-theme');
+$factory = new FieldFactory('my-theme');
 $factory->text('name', 'value');
 ```
 

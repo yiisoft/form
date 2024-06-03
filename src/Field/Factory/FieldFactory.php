@@ -36,7 +36,7 @@ use Yiisoft\Form\Field\Url;
 /**
  * @psalm-import-type Errors from ErrorSummary
  */
-class PureFieldFactory
+class FieldFactory
 {
     final public function __construct(
         protected readonly ?string $defaultTheme = null,
