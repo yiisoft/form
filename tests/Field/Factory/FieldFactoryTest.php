@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests;
+namespace Yiisoft\Form\Tests\Field\Factory;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Factory\FieldFactory;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 
-final class PureFieldFactoryTest extends TestCase
+final class FieldFactoryTest extends TestCase
 {
     protected function setUp(): void
     {

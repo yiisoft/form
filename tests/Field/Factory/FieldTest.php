@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests;
+namespace Yiisoft\Form\Tests\Field\Factory;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Factory\Field;
