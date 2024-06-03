@@ -10,7 +10,7 @@ use Yiisoft\Form\Tests\Support\ThemedField;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 
-final class PureFieldTest extends TestCase
+final class FieldTest extends TestCase
 {
     protected function setUp(): void
     {
