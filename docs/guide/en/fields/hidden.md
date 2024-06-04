@@ -15,7 +15,7 @@ use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Hidden;
 
 $inputData = new InputData('key', 'x100', id: 'hiddenform-key');
-echo Hidden::widget()->inputData($inputData)->render();
+echo Hidden::widget()->inputData($inputData);
 ```
 
 Result will be:

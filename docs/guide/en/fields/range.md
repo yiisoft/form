@@ -23,8 +23,7 @@ $inputData = new InputData(
 echo Range::widget()
     ->inputData($inputData)
     ->min(1)
-    ->max(100)
-    ->render();
+    ->max(100);
 ```
 
 Result will be:

@@ -21,8 +21,7 @@ $inputData = new InputData(
     id: 'numberform-age',
 );
 echo Number::widget()
-    ->inputData($inputData)
-    ->render();
+    ->inputData($inputData);
 ```
 
 Result will be:

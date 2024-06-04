@@ -22,7 +22,7 @@ $inputData = new InputData(
     id: 'textform-name',
     validationErrors: ['Value cannot be blank.'],
 );
-echo Text::widget()->inputData($inputData)->render();
+echo Text::widget()->inputData($inputData);
 ```
 
 Result will be:

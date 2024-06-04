@@ -21,7 +21,7 @@ $inputData = new InputData(
     hint: 'Party date.',
     id: 'datetimelocalform-partydate',
 );
-echo DateTimeLocal::widget()->inputData($inputData)->render();
+echo DateTimeLocal::widget()->inputData($inputData);
 ```
 
 Result will be:

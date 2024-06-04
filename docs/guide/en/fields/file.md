@@ -15,7 +15,7 @@ use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\File;
 
 $inputData = new InputData(name: 'avatar', id: 'id-test', label: 'Avatar');
-echo File::widget()->inputData($inputData)->render();
+echo File::widget()->inputData($inputData);
 ```
 
 Result will be:

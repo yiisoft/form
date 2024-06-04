@@ -20,7 +20,7 @@ $inputData = new InputData(
     hint: 'Enter your old password.',
     id: 'passwordform-old',
 );
-echo Password::widget()->inputData($inputData)->render();
+echo Password::widget()->inputData($inputData);
 ```
 
 Result will be:

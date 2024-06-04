@@ -20,7 +20,7 @@ $inputData = new InputData(
     label: 'Phone',
     hint: 'Enter your phone.',
 );
-echo Telephone::widget()->inputData($inputData)->render();
+echo Telephone::widget()->inputData($inputData);
 ```
 
 Result will be:

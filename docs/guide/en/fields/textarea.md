@@ -14,7 +14,7 @@ use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Textarea;
 
 $inputData = new InputData('desc', id: 'test-id', label: 'Description');
-echo Textarea::widget()->inputData($inputData)->render();
+echo Textarea::widget()->inputData($inputData);
 ```
 
 Result will be:

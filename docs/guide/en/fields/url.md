@@ -20,7 +20,7 @@ $inputData = new InputData(
     hint: 'Enter your site URL.',
     id: 'urlform-site',
 );
-echo Url::widget()->inputData($inputData)->render();
+echo Url::widget()->inputData($inputData);
 ```
 
 Result will be:

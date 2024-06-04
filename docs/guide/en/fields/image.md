@@ -14,8 +14,7 @@ use Yiisoft\Form\Field\Image;
 
 echo Image::widget()
     ->src('btn.png')
-    ->alt('Go')
-    ->render();
+    ->alt('Go');
 ```
 
 Result will be:

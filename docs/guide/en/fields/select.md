@@ -23,8 +23,7 @@ echo Select::widget()
     ->optionsData([
         1 => 'One',
         2 => 'Two',
-    ])
-    ->render();
+    ]);
 ```
 
 Result will be:

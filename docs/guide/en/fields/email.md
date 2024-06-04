@@ -21,7 +21,7 @@ $inputData = new InputData(
     hint: 'Email for notifications.',
     id: 'emailform-main',
 );
-echo Email::widget()->inputData($inputData)->render();;
+echo Email::widget()->inputData($inputData);
 ```
 
 Result will be:

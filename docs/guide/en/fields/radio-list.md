@@ -24,8 +24,7 @@ echo RadioList::widget()
         'red' => 'Red',
         'blue' => 'Blue',
     ])
-    ->inputData($inputData)
-    ->render();
+    ->inputData($inputData);
 ```
 
 Result will be:

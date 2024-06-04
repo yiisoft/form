@@ -35,9 +35,7 @@ echo Fieldset::widget()
         Text::widget()->inputData(new InputData('firstName', ''))->useContainer(false),
         . "\n"
         . Text::widget()->inputData(new InputData('lastName', ''))->useContainer(false),
-    )
-    ->render();
-
+    );
 ```
 
 Result will be:

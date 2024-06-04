@@ -21,7 +21,7 @@ $inputData = new InputData(
     hint: 'If need red color.',
     id: 'checkboxform-red',
 );
-echo Checkbox::widget()->inputData($inputData)->render();
+echo Checkbox::widget()->inputData($inputData);
 ```
 
 Result will be:
