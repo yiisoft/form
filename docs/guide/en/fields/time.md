@@ -13,7 +13,7 @@ Widget:
 ```php
 use Yiisoft\Form\Field\Time;
 
-echo Time::widget()->render();
+echo Time::widget();
 ```
 
 Result will be:

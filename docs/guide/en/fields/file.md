@@ -11,11 +11,12 @@ Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\File;
 
-$inputData = new PureInputData(name: 'avatar', id: 'id-test', label: 'Avatar');
-echo File::widget()->inputData($inputData)->render();
+echo File::widget()
+    ->name('avatar')
+    ->inputId('id-test')
+    ->label('Avatar');
 ```
 
 Result will be:
