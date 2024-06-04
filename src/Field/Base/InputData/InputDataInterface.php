@@ -40,7 +40,7 @@ interface InputDataInterface
     public function getHint(): ?string;
 
     /**
-     * The prefilled value, used as a default or an example.
+     * The value used as an example to help user fill the actual value.
      *
      * @return string|null Input placeholder or null if no placeholder is used.
      */
