@@ -10,19 +10,15 @@ Represents `<input>` element of type "text" which is a basic single-line text fi
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Text;
 
-$inputData = new PureInputData(
-    name: 'TextForm[name]',
-    value: '',
-    label: 'Name',
-    hint: 'Input your full name.',
-    placeholder: 'Type your name here',
-    id: 'textform-name',
-    validationErrors: ['Value cannot be blank.'],
-);
-echo Text::widget()->inputData($inputData)->render();
+echo Text::widget()
+    ->name('TextForm[name]')
+    ->value('')
+    ->label('Name')
+    ->hint('Input your full name.')
+    ->placeholder('Type your name here')
+    ->inputId('textform-name');
 ```
 
 Result will be:
@@ -32,6 +28,5 @@ Result will be:
     <label for="textform-name">Name</label>
     <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Type your name here">
     <div>Input your full name.</div>
-    <div>Value cannot be blank.</div>
 </div>
 ```

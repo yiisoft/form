@@ -11,9 +11,7 @@ values. Documentation:
 Widget:
 
 ```php
-echo ResetButton::widget()
-    ->content('Reset Form')
-    ->render();
+echo ResetButton::widget()->content('Reset Form');
 ```
 
 Result will be:

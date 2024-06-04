@@ -12,9 +12,7 @@ Widget:
 ```php
 use Yiisoft\Form\Field\SubmitButton;
 
-echo SubmitButton::widget()
-    ->content('Go!')
-    ->render();
+echo SubmitButton::widget()->content('Go!');
 ```
 
 Result will be:

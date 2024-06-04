@@ -12,7 +12,7 @@ Widget:
 ```php
 use Yiisoft\Form\Field\Button;
 
-echo Button::widget()->content('Click Me')->render();
+echo Button::widget()->content('Click Me');
 ```
 
 Result will be:

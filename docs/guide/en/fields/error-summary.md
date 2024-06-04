@@ -8,7 +8,7 @@ Widget:
 
 ```php
 $errors = ['name' => ['Value cannot be blank.'], 'age' => ['Value must be no less than 18.']];
-echo ErrorSummary::widget()->errors($errors)->render();
+echo ErrorSummary::widget()->errors($errors);
 ```
 
 Result will be:
