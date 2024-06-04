@@ -11,17 +11,14 @@ activated. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Checkbox;
 
-$inputData = new InputData(
-    name: 'CheckboxForm[red]',
-    value: '1',
-    label: 'Red color',
-    hint: 'If need red color.',
-    id: 'checkboxform-red',
-);
-echo Checkbox::widget()->inputData($inputData);
+echo Checkbox::widget()
+    ->name('CheckboxForm[red]')
+    ->value('1')
+    ->label('Red color')
+    ->hint('If need red color.')
+    ->inputId('checkboxform-red');
 ```
 
 Result will be:

@@ -10,11 +10,12 @@ Represents `<textarea>` element which is a multi-line plain-text editing control
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Textarea;
 
-$inputData = new InputData('desc', id: 'test-id', label: 'Description');
-echo Textarea::widget()->inputData($inputData);
+echo Textarea::widget()
+    ->name('desc')
+    ->inputId('test-id')
+    ->label('Description');
 ```
 
 Result will be:

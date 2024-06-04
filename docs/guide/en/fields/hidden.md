@@ -11,11 +11,12 @@ by users when a form is submitted. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Hidden;
 
-$inputData = new InputData('key', 'x100', id: 'hiddenform-key');
-echo Hidden::widget()->inputData($inputData);
+echo Hidden::widget()
+    ->name('key')
+    ->value('x100')
+    ->inputId('hiddenform-key');
 ```
 
 Result will be:

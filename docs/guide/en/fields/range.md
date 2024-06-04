@@ -11,17 +11,13 @@ given value, and no more than another given value. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Range;
 
-$inputData = new InputData(
-    name: 'RangeForm[volume]',
-    value: 23,
-    label: 'Volume level',
-    id: 'rangeform-volume',
-);
 echo Range::widget()
-    ->inputData($inputData)
+    ->name('RangeForm[volume]')
+    ->value(23)
+    ->label('Volume level')
+    ->inputId('rangeform-volume')
     ->min(1)
     ->max(100);
 ```

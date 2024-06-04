@@ -10,16 +10,12 @@ Represents `<select>` element that provides a menu of options. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Select;
 
-$inputData = new InputData(
-    name: 'SelectForm[number]',
-    label: 'Select number',
-    id: 'selectform-number',
-);
 echo Select::widget()
-    ->inputData($inputData)
+    ->name('SelectForm[number]')
+    ->label('Select number')
+    ->inputId('selectform-number')
     ->optionsData([
         1 => 'One',
         2 => 'Two',

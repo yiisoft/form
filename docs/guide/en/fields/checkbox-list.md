@@ -7,21 +7,16 @@ Represents a list of [checkboxes](checkbox.md) with multiple selection.
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\CheckboxList;
 
-$inputData = new InputData(
-    name: 'CheckboxListForm[color]',
-    label: 'Select one or more colors',
-    hint: 'Color of box.',
-    id: 'UID',
-);
 echo CheckboxList::widget()
+    ->name('CheckboxListForm[color]')
+    ->label('Select one or more colors')
+    ->hint('Color of box.')
     ->items([
         'red' => 'Red',
         'blue' => 'Blue',
-    ])
-    ->inputData($inputData);
+    ]);
 ```
 
 Result will be:

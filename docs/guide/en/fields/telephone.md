@@ -10,17 +10,14 @@ Represents `<input>` element of type "tel" that lets the user enter and edit a t
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Telephone;
 
-$inputData = new InputData(
-    name: 'TelephoneForm[number]',
-    value: '',
-    id: 'telephoneform-number',
-    label: 'Phone',
-    hint: 'Enter your phone.',
-);
-echo Telephone::widget()->inputData($inputData);
+echo Telephone::widget()
+    ->name('TelephoneForm[number]')
+    ->value('')
+    ->inputId('telephoneform-number')
+    ->label('Phone')
+    ->hint('Enter your phone.');
 ```
 
 Result will be:

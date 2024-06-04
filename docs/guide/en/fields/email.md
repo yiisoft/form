@@ -11,17 +11,14 @@ attribute is specified, a list of e-mail addresses is accepted. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\InputData;
 use Yiisoft\Form\Field\Email;
 
-$inputData = new InputData(
-    name: 'EmailForm[main]',
-    value: '',
-    label: 'Main email',
-    hint: 'Email for notifications.',
-    id: 'emailform-main',
-);
-echo Email::widget()->inputData($inputData);
+echo Email::widget()
+    ->name('EmailForm[main]')
+    ->value('')
+    ->label('Main email')
+    ->hint('Email for notifications.')
+    ->inputId('emailform-main');
 ```
 
 Result will be:
