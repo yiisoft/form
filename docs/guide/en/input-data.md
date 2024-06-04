@@ -10,10 +10,11 @@ Input data is an abstraction for storing input's value and some common meta info
 - Placeholder - the prefilled value, used as a default or an example
 - ID - unique identifier in DOM (HTML)
 - Validation state (whether the input has been already validated)
-- Validation rules - validation rules in the format supported by [validator](https://github.com/yiisoft/validator)
+- Validation rules - validation rules in any format. They are intended to be processed by 
+  `\Yiisoft\Form\ValidationRulesEnricherInterface::process()`
 - Validation errors - the list of validation errors for this attribute
 
-Input data classes must implement `Yiisoft\Form\Field\Base\InputDataInterface` interface. This package already provides
+Input data classes must implement `\Yiisoft\Form\Field\Base\InputDataInterface` interface. This package already provides
 ready to use implementation - `\Yiisoft\Form\Field\Base\InputData\InputData`. 
 
 Once created, it can be added to existing field. From [built-in fields](built-in-fields.md) the fields that are intended
