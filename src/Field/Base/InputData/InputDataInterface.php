@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\InputData;
 
+use Yiisoft\Form\ValidationRulesEnricherInterface;
+
 /**
  * Represents some common information about input and its validation rules / state.
  */
@@ -38,7 +40,7 @@ interface InputDataInterface
     public function getHint(): ?string;
 
     /**
-     * The prefilled value, used as a default or an example.
+     * The value used as an example to help user fill the actual value.
      *
      * @return string|null Input placeholder or null if no placeholder is used.
      */
@@ -57,7 +59,8 @@ interface InputDataInterface
     public function isValidated(): bool;
 
     /**
-     * Validation rules in the format supported by validator ({@link https://github.com/yiisoft/validator}).
+     * Validation rules in any format. They are intended to be processed by
+     * {@see ValidationRulesEnricherInterface::process()}.
      *
      * @return mixed Input validation rules.
      */
