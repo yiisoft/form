@@ -9,7 +9,7 @@ use Yiisoft\Form\PureFieldFactory;
 
 /**
  * Simple input data implementation that can be used within this package. All parameters are passed from outer scope.
- * Reaarding validation, it does not support state and rules, stores the result errors only. For more advanced
+ * Regarding validation, it does not support state and rules, stores the result errors only. For more advanced
  * implementation take a look at form model ({@link https://github.com/yiisoft/form-model}) package.
  *
  * To simplify adding to field, {@see PureField} helper or {@see PureFieldFactory} can be used.

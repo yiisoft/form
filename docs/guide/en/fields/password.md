@@ -10,17 +10,14 @@ Represents `<input>` element of type "password" that lets the user to securely e
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Password;
 
-$inputData = new PureInputData(
-    name: 'PasswordForm[old]',
-    value: '',
-    label: 'Old password',
-    hint: 'Enter your old password.',
-    id: 'passwordform-old',
-);
-echo Password::widget()->inputData($inputData)->render();
+echo Password::widget()
+    ->name('PasswordForm[old]')
+    ->value('')
+    ->label('Old password')
+    ->hint('Enter your old password.')
+    ->inputId('passwordform-old');
 ```
 
 Result will be:

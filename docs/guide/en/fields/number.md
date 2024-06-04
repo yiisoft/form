@@ -10,19 +10,14 @@ Represents `<input>` element of type "number" that lets the user enter a number.
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Number;
 
-$inputData = new PureInputData(
-    name: 'NumberForm[age]',
-    value: 42,
-    hint: 'Full years.',
-    label: 'Your age',
-    id: 'numberform-age',
-);
 echo Number::widget()
-    ->inputData($inputData)
-    ->render();
+    ->name('NumberForm[age]')
+    ->value(42)
+    ->hint('Full years.')
+    ->label('Your age')
+    ->inputId('numberform-age');
 ```
 
 Result will be:

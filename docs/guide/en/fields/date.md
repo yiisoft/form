@@ -11,17 +11,14 @@ the input or with a special date picker interface. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Date;
 
-$inputData = new PureInputData(
-    name: 'DateForm[birthday]',
-    value: '1996-12-19',
-    label: 'Your birthday',
-    hint: 'Birthday date.',
-    id: 'dateform-birthday',
-);
-echo Date::widget()->inputData($inputData);
+echo Date::widget()
+    ->name('DateForm[birthday]')
+    ->value('1996-12-19')
+    ->label('Your birthday')
+    ->hint('Birthday date.')
+    ->inputId('dateform-birthday');
 ```
 
 Result will be:

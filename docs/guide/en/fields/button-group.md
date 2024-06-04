@@ -13,8 +13,7 @@ echo ButtonGroup::widget()
     ->buttons(
         Html::resetButton('Reset Data'),
         Html::submitButton('Send'),
-    )
-    ->render();
+    );
 ```
 
 Result will be:
