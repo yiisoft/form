@@ -7,7 +7,7 @@ namespace Yiisoft\Form\Tests\Field;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\SubmitButton;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 
 final class SubmitButtonTest extends TestCase

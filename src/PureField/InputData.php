@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base\InputData;
+namespace Yiisoft\Form\PureField;
 
-final class PureInputData implements InputDataInterface
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
+
+final class InputData implements InputDataInterface
 {
     /**
      * @param string[] $validationErrors

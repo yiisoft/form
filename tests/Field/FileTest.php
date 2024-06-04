@@ -6,10 +6,10 @@ namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\File;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class FileTest extends TestCase
 {
@@ -29,7 +29,7 @@ final class FileTest extends TestCase
                 <input type="file" id="id-test" name="avatar">
                 </div>
                 HTML,
-                new PureInputData(name: 'avatar', id: 'id-test', label: 'Avatar'),
+                new InputData(name: 'avatar', id: 'id-test', label: 'Avatar'),
             ],
             'input-valid-class' => [
                 <<<HTML
@@ -37,7 +37,7 @@ final class FileTest extends TestCase
                 <input type="file" class="valid" name="avatar">
                 </div>
                 HTML,
-                new PureInputData(name: 'avatar', value: '', validationErrors: []),
+                new InputData(name: 'avatar', value: '', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -46,14 +46,14 @@ final class FileTest extends TestCase
                 <input type="file" name="avatar">
                 </div>
                 HTML,
-                new PureInputData(name: 'avatar', value: '', validationErrors: []),
+                new InputData(name: 'avatar', value: '', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -301,7 +301,7 @@ final class FileTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = File::widget()
             ->invalidClass('invalidWrap')

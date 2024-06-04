@@ -8,10 +8,10 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StringableObject;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class CheckboxTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class CheckboxTest extends TestCase
                 <div>If need red color.</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'CheckboxForm[red]',
                     value: '1',
                     label: 'Red color',
@@ -45,7 +45,7 @@ final class CheckboxTest extends TestCase
                 <input type="hidden" name="main" value="0"><input type="checkbox" class="valid" name="main" value="1" checked>
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '1', validationErrors: []),
+                new InputData(name: 'main', value: '1', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -54,14 +54,14 @@ final class CheckboxTest extends TestCase
                 <input type="hidden" name="main" value="0"><input type="checkbox" name="main" value="1" checked>
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '1', validationErrors: []),
+                new InputData(name: 'main', value: '1', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -75,7 +75,7 @@ final class CheckboxTest extends TestCase
 
     public function testFalseValue(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()->inputData($inputData)->render();
 
@@ -90,7 +90,7 @@ final class CheckboxTest extends TestCase
 
     public function testInputValue(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Red color');
+        $inputData = new InputData('test-name', label: 'Red color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -108,7 +108,7 @@ final class CheckboxTest extends TestCase
 
     public function testCheckedInputValue(): void
     {
-        $inputData = new PureInputData('test-name', 42, label: 'Your age 42?');
+        $inputData = new InputData('test-name', 42, label: 'Your age 42?');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -140,7 +140,7 @@ final class CheckboxTest extends TestCase
     #[DataProvider('dataUncheckValue')]
     public function testUncheckValue(string $expectedInput, mixed $uncheckValue): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -157,7 +157,7 @@ final class CheckboxTest extends TestCase
 
     public function testNotEnclosedByLabel(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -176,7 +176,7 @@ final class CheckboxTest extends TestCase
 
     public function testAllLabels(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -197,7 +197,7 @@ final class CheckboxTest extends TestCase
 
     public function testWithoutInputLabel(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -217,7 +217,7 @@ final class CheckboxTest extends TestCase
 
     public function testBothLabelsWithNotEnclosedByLabel(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -238,7 +238,7 @@ final class CheckboxTest extends TestCase
 
     public function testInputLabelEncode(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -256,7 +256,7 @@ final class CheckboxTest extends TestCase
 
     public function testInputLabelNotEncode(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -275,7 +275,7 @@ final class CheckboxTest extends TestCase
 
     public function testInputLabelEncodeNotEnclosedByLabel(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -295,7 +295,7 @@ final class CheckboxTest extends TestCase
 
     public function testInputLabelNotEncodeNotEnclosedByLabel(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -316,7 +316,7 @@ final class CheckboxTest extends TestCase
 
     public function testAddInputLabelAttributes(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -335,7 +335,7 @@ final class CheckboxTest extends TestCase
 
     public function testInputLabelAttributes(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -363,7 +363,7 @@ final class CheckboxTest extends TestCase
     #[DataProvider('dataInputLabelId')]
     public function testInputLabelId(string $expectedId, ?string $id): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -396,7 +396,7 @@ final class CheckboxTest extends TestCase
     #[DataProvider('dataAddInputLabelClass')]
     public function testAddInputLabelClass(string $expectedClassAttribute, array $class): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -425,7 +425,7 @@ final class CheckboxTest extends TestCase
     #[DataProvider('dataAddInputLabelNewClass')]
     public function testAddInputLabelNewClass(string $expectedClassAttribute, ?string $class): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -459,7 +459,7 @@ final class CheckboxTest extends TestCase
     #[DataProvider('dataInputLabelClass')]
     public function testInputLabelClass(string $expectedClassAttribute, array $class): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -478,7 +478,7 @@ final class CheckboxTest extends TestCase
 
     public function testDisabled(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -515,7 +515,7 @@ final class CheckboxTest extends TestCase
 
     public function testAriaLabel(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -534,7 +534,7 @@ final class CheckboxTest extends TestCase
 
     public function testAutofocus(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -553,7 +553,7 @@ final class CheckboxTest extends TestCase
 
     public function testTabIndex(): void
     {
-        $inputData = new PureInputData('test-name', label: 'Blue color');
+        $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
@@ -581,7 +581,7 @@ final class CheckboxTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Checkbox::widget()
             ->invalidClass('invalidWrap')

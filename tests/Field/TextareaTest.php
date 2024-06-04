@@ -7,10 +7,10 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Textarea;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class TextareaTest extends TestCase
 {
@@ -30,7 +30,7 @@ final class TextareaTest extends TestCase
                 <textarea id="test-id" name="desc"></textarea>
                 </div>
                 HTML,
-                new PureInputData('desc', id: 'test-id', label: 'Description'),
+                new InputData('desc', id: 'test-id', label: 'Description'),
             ],
             'input-valid-class' => [
                 <<<HTML
@@ -38,7 +38,7 @@ final class TextareaTest extends TestCase
                 <textarea class="valid" name="desc"></textarea>
                 </div>
                 HTML,
-                new PureInputData(name: 'desc', validationErrors: []),
+                new InputData(name: 'desc', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -47,7 +47,7 @@ final class TextareaTest extends TestCase
                 <textarea name="desc"></textarea>
                 </div>
                 HTML,
-                new PureInputData(name: 'desc', validationErrors: []),
+                new InputData(name: 'desc', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
             'placeholder' => [
@@ -56,13 +56,13 @@ final class TextareaTest extends TestCase
                 <textarea name="desc" placeholder="test"></textarea>
                 </div>
                 HTML,
-                new PureInputData(name: 'desc', placeholder: 'test'),
+                new InputData(name: 'desc', placeholder: 'test'),
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testTextarea(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testTextarea(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -318,7 +318,7 @@ final class TextareaTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Textarea::widget()
             ->invalidClass('invalidWrap')

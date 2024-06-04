@@ -9,7 +9,7 @@ namespace Yiisoft\Form\Tests\Field;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Time;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class TimeTest extends TestCase
 {

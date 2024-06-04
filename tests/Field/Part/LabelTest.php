@@ -6,10 +6,10 @@ namespace Yiisoft\Form\Tests\Field\Part;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Part\Label;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StringableObject;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class LabelTest extends TestCase
 {
@@ -21,7 +21,7 @@ final class LabelTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+        $inputData = new InputData(label: 'Name', id: 'id-test');
 
         $result = Label::widget()->inputData($inputData)->render();
 
@@ -162,7 +162,7 @@ final class LabelTest extends TestCase
 
     public function customFor(): void
     {
-        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+        $inputData = new InputData(label: 'Name', id: 'id-test');
 
         $result = Label::widget()
             ->inputData($inputData)
@@ -184,7 +184,7 @@ final class LabelTest extends TestCase
 
     public function testCustomForWithDoNotUseInputId(): void
     {
-        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+        $inputData = new InputData(label: 'Name', id: 'id-test');
 
         $result = Label::widget()
             ->inputData($inputData)
@@ -197,7 +197,7 @@ final class LabelTest extends TestCase
 
     public function testCustomContent(): void
     {
-        $inputData = new PureInputData(label: 'Name', id: 'labelform-name');
+        $inputData = new InputData(label: 'Name', id: 'labelform-name');
 
         $result = Label::widget()
             ->inputData($inputData)
@@ -209,7 +209,7 @@ final class LabelTest extends TestCase
 
     public function testEmptyContent(): void
     {
-        $inputData = new PureInputData(label: 'Name', id: 'id-test');
+        $inputData = new InputData(label: 'Name', id: 'id-test');
 
         $result = Label::widget()
             ->inputData($inputData)
@@ -221,7 +221,7 @@ final class LabelTest extends TestCase
 
     public function testContentAsStringableObject(): void
     {
-        $inputData = new PureInputData(label: 'Name');
+        $inputData = new InputData(label: 'Name');
 
         $result = Label::widget()
             ->inputData($inputData)
@@ -233,7 +233,7 @@ final class LabelTest extends TestCase
 
     public function testEncode(): void
     {
-        $inputData = new PureInputData(label: 'Name');
+        $inputData = new InputData(label: 'Name');
 
         $result = Label::widget()
             ->inputData($inputData)
@@ -245,7 +245,7 @@ final class LabelTest extends TestCase
 
     public function testWithoutEncode(): void
     {
-        $inputData = new PureInputData(label: 'Name', id: 'labelform-name');
+        $inputData = new InputData(label: 'Name', id: 'labelform-name');
 
         $result = Label::widget()
             ->inputData($inputData)

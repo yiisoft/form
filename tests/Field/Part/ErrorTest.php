@@ -7,10 +7,10 @@ namespace Yiisoft\Form\Tests\Field\Part;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 use Yiisoft\Form\Field\Part\Error;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ErrorTest extends TestCase
 {
@@ -22,7 +22,7 @@ final class ErrorTest extends TestCase
 
     public function testBase(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.', 'Value is bad.'],
         );
 
@@ -52,7 +52,7 @@ final class ErrorTest extends TestCase
 
     public function testWithoutError(): void
     {
-        $inputData = new PureInputData();
+        $inputData = new InputData();
 
         $result = Error::widget()->inputData($inputData)->render();
 
@@ -61,7 +61,7 @@ final class ErrorTest extends TestCase
 
     public function testCustomTag(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -78,13 +78,13 @@ final class ErrorTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Tag name cannot be empty.');
         Error::widget()
-            ->inputData(new PureInputData())
+            ->inputData(new InputData())
             ->tag('');
     }
 
     public function testAddAttributes(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -99,7 +99,7 @@ final class ErrorTest extends TestCase
 
     public function testAttributes(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -123,7 +123,7 @@ final class ErrorTest extends TestCase
     #[DataProvider('dataId')]
     public function testId(string $expectedId, ?string $id): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -154,7 +154,7 @@ final class ErrorTest extends TestCase
     #[DataProvider('dataAddClass')]
     public function testAddClass(string $expectedClassAttribute, array $class): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -181,7 +181,7 @@ final class ErrorTest extends TestCase
     #[DataProvider('dataAddNewClass')]
     public function testAddNewClass(string $expectedClassAttribute, ?string $class): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -213,7 +213,7 @@ final class ErrorTest extends TestCase
     #[DataProvider('dataClass')]
     public function testClass(string $expectedClassAttribute, array $class): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -230,7 +230,7 @@ final class ErrorTest extends TestCase
 
     public function testEncode(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -244,7 +244,7 @@ final class ErrorTest extends TestCase
 
     public function testWithoutEncode(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -259,7 +259,7 @@ final class ErrorTest extends TestCase
 
     public function testCustomMessage(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -273,7 +273,7 @@ final class ErrorTest extends TestCase
 
     public function testCustomMessageWithoutError(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             label: 'Age',
             validationErrors: [],
         );
@@ -288,7 +288,7 @@ final class ErrorTest extends TestCase
 
     public function testMessageCallback(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             label: 'Name',
             validationErrors: ['Value cannot be blank.'],
         );
@@ -305,7 +305,7 @@ final class ErrorTest extends TestCase
 
     public function testMessageCallbackWithCustomMessage(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             label: 'Name',
             validationErrors: ['Value cannot be blank.'],
         );
@@ -323,7 +323,7 @@ final class ErrorTest extends TestCase
 
     public function testMessageCallbackWithMessageAndWithoutError(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             label: 'Age',
             validationErrors: [],
         );

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\InputData;
 
+use Yiisoft\Form\PureField\InputData;
+
 trait InputDataTrait
 {
     private ?InputDataInterface $inputData = null;
@@ -18,7 +20,7 @@ trait InputDataTrait
     final protected function getInputData(): InputDataInterface
     {
         if ($this->inputData === null) {
-            $this->inputData = new PureInputData();
+            $this->inputData = new InputData();
         }
 
         return $this->inputData;
