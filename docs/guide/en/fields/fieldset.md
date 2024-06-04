@@ -10,15 +10,14 @@ Represents `<fieldset>` element used to group several controls. Documentation:
 Widget:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Text;
 
 echo Fieldset::widget()->begin()
 . "\n"
-. Text::widget()->inputData(new PureInputData('firstName', ''))->useContainer(false),
+. Text::widget()->name('firstName')->useContainer(false),
 . "\n"
-. Text::widget()->inputData(new PureInputData('lastName', ''))->useContainer(false),
+. Text::widget()->name('lastName')->useContainer(false),
 . "\n"
 . Fieldset::end();
 ```
@@ -26,18 +25,15 @@ echo Fieldset::widget()->begin()
 or
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Fieldset;
 use Yiisoft\Form\Field\Text;
 
 echo Fieldset::widget()
     ->content(
-        Text::widget()->inputData(new PureInputData('firstName', ''))->useContainer(false),
+        Text::widget()->name('firstName')->useContainer(false),
         . "\n"
-        . Text::widget()->inputData(new PureInputData('lastName', ''))->useContainer(false),
-    )
-    ->render();
-
+        . Text::widget()->name('lastName')->useContainer(false),
+    );
 ```
 
 Result will be:
