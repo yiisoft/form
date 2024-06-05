@@ -11,7 +11,7 @@ use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesT
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 
 use function is_string;

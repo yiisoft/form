@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Tests;
+namespace Yiisoft\Form\Tests\PureField;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\PureFieldFactory;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\PureField\FieldFactory;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
 
-final class PureFieldFactoryTest extends TestCase
+final class FieldFactoryTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -19,7 +19,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testButton(): void
     {
-        $html = (new PureFieldFactory())->button()->render();
+        $html = (new FieldFactory())->button()->render();
 
         $expected = <<<HTML
             <div>
@@ -32,7 +32,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testButtonWithContent(): void
     {
-        $html = (new PureFieldFactory())->button('Start')->render();
+        $html = (new FieldFactory())->button('Start')->render();
 
         $expected = <<<HTML
             <div>
@@ -51,7 +51,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->button(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->button(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -64,7 +64,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testButtonGroup(): void
     {
-        $html = (new PureFieldFactory())->buttonGroup()->buttons(Button::tag())->render();
+        $html = (new FieldFactory())->buttonGroup()->buttons(Button::tag())->render();
 
         $expected = <<<HTML
             <div>
@@ -83,7 +83,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->buttonGroup(theme: 'test')->buttons(Button::tag())->render();
+        $html = (new FieldFactory('default'))->buttonGroup(theme: 'test')->buttons(Button::tag())->render();
 
         $expected = <<<HTML
             <span>
@@ -96,7 +96,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testCheckbox(): void
     {
-        $html = (new PureFieldFactory())->checkbox()->render();
+        $html = (new FieldFactory())->checkbox()->render();
 
         $expected = <<<HTML
             <div>
@@ -115,7 +115,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->checkbox(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->checkbox(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -128,7 +128,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testCheckboxList(): void
     {
-        $html = (new PureFieldFactory())->checkboxList()
+        $html = (new FieldFactory())->checkboxList()
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -153,7 +153,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->checkboxList(theme: 'test')
+        $html = (new FieldFactory('default'))->checkboxList(theme: 'test')
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -172,7 +172,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testDate(): void
     {
-        $html = (new PureFieldFactory())->date()->render();
+        $html = (new FieldFactory())->date()->render();
 
         $expected = <<<HTML
             <div>
@@ -191,7 +191,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->date(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->date(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -204,7 +204,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testDateTimeLocal(): void
     {
-        $html = (new PureFieldFactory())->dateTimeLocal()->render();
+        $html = (new FieldFactory())->dateTimeLocal()->render();
 
         $expected = <<<HTML
             <div>
@@ -223,7 +223,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->dateTimeLocal(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->dateTimeLocal(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -236,7 +236,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testEmail(): void
     {
-        $html = (new PureFieldFactory())->email()->render();
+        $html = (new FieldFactory())->email()->render();
 
         $expected = <<<HTML
             <div>
@@ -255,7 +255,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->email(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->email(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -268,7 +268,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testErrorSummary(): void
     {
-        $html = (new PureFieldFactory())->errorSummary(['key' => ['e1', 'e2']])->render();
+        $html = (new FieldFactory())->errorSummary(['key' => ['e1', 'e2']])->render();
 
         $expected = <<<HTML
             <div>
@@ -290,7 +290,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->errorSummary(['key' => ['e1', 'e2']], theme: 'test')->render();
+        $html = (new FieldFactory('default'))->errorSummary(['key' => ['e1', 'e2']], theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -306,7 +306,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testFieldset(): void
     {
-        $html = (new PureFieldFactory())->fieldset()->render();
+        $html = (new FieldFactory())->fieldset()->render();
 
         $expected = <<<HTML
             <div>
@@ -326,7 +326,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->fieldset(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->fieldset(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -340,7 +340,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testFile(): void
     {
-        $html = (new PureFieldFactory())->file()->render();
+        $html = (new FieldFactory())->file()->render();
 
         $expected = <<<HTML
             <div>
@@ -359,7 +359,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->file(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->file(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -372,7 +372,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testHidden(): void
     {
-        $html = (new PureFieldFactory())->hidden()->render();
+        $html = (new FieldFactory())->hidden()->render();
         $this->assertSame('<input type="hidden">', $html);
     }
 
@@ -384,14 +384,14 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->hidden(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->hidden(theme: 'test')->render();
 
         $this->assertSame('<input type="hidden" class="green">', $html);
     }
 
     public function testImage(): void
     {
-        $html = (new PureFieldFactory())->image()->render();
+        $html = (new FieldFactory())->image()->render();
 
         $expected = <<<HTML
             <div>
@@ -404,7 +404,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testImageWithUrl(): void
     {
-        $html = (new PureFieldFactory())->image('image.png')->render();
+        $html = (new FieldFactory())->image('image.png')->render();
 
         $expected = <<<HTML
             <div>
@@ -423,7 +423,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->image(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->image(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -436,7 +436,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testNumber(): void
     {
-        $html = (new PureFieldFactory())->number()->render();
+        $html = (new FieldFactory())->number()->render();
 
         $expected = <<<HTML
             <div>
@@ -455,7 +455,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->number(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->number(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -468,7 +468,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testPassword(): void
     {
-        $html = (new PureFieldFactory())->password()->render();
+        $html = (new FieldFactory())->password()->render();
 
         $expected = <<<HTML
             <div>
@@ -487,7 +487,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->password(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->password(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -500,7 +500,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testRadioList(): void
     {
-        $html = (new PureFieldFactory())->radioList()
+        $html = (new FieldFactory())->radioList()
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -525,7 +525,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->radioList(theme: 'test')
+        $html = (new FieldFactory('default'))->radioList(theme: 'test')
             ->name('test')
             ->itemsFromValues(['a', 'b'])
             ->render();
@@ -544,7 +544,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testRange(): void
     {
-        $html = (new PureFieldFactory())->range()->render();
+        $html = (new FieldFactory())->range()->render();
 
         $expected = <<<HTML
             <div>
@@ -563,7 +563,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->range(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->range(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -576,7 +576,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testResetButton(): void
     {
-        $html = (new PureFieldFactory())->resetButton()->render();
+        $html = (new FieldFactory())->resetButton()->render();
 
         $expected = <<<HTML
             <div>
@@ -589,7 +589,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testResetButtonWithContent(): void
     {
-        $html = (new PureFieldFactory())->resetButton('Reset')->render();
+        $html = (new FieldFactory())->resetButton('Reset')->render();
 
         $expected = <<<HTML
             <div>
@@ -608,7 +608,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->resetButton(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->resetButton(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -621,7 +621,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testSelect(): void
     {
-        $html = (new PureFieldFactory())->select()->render();
+        $html = (new FieldFactory())->select()->render();
 
         $expected = <<<HTML
             <div>
@@ -640,7 +640,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->select(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->select(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -653,7 +653,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testSubmitButton(): void
     {
-        $html = (new PureFieldFactory())->submitButton()->render();
+        $html = (new FieldFactory())->submitButton()->render();
 
         $expected = <<<HTML
             <div>
@@ -666,7 +666,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testSubmitButtonWithContent(): void
     {
-        $html = (new PureFieldFactory())->submitButton('Go')->render();
+        $html = (new FieldFactory())->submitButton('Go')->render();
 
         $expected = <<<HTML
             <div>
@@ -685,7 +685,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->submitButton(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->submitButton(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -698,7 +698,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testTelephone(): void
     {
-        $html = (new PureFieldFactory())->telephone()->render();
+        $html = (new FieldFactory())->telephone()->render();
 
         $expected = <<<HTML
             <div>
@@ -717,7 +717,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->telephone(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->telephone(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -730,7 +730,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testText(): void
     {
-        $html = (new PureFieldFactory())->text()->render();
+        $html = (new FieldFactory())->text()->render();
 
         $expected = <<<HTML
             <div>
@@ -749,7 +749,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->text(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->text(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -762,7 +762,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testTextarea(): void
     {
-        $html = (new PureFieldFactory())->textarea()->render();
+        $html = (new FieldFactory())->textarea()->render();
 
         $expected = <<<HTML
             <div>
@@ -781,7 +781,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->textarea(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->textarea(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -794,7 +794,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testTime(): void
     {
-        $html = (new PureFieldFactory())->time()->render();
+        $html = (new FieldFactory())->time()->render();
 
         $expected = <<<HTML
             <div>
@@ -813,7 +813,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->time(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->time(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -826,7 +826,7 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testUrl(): void
     {
-        $html = (new PureFieldFactory())->url()->render();
+        $html = (new FieldFactory())->url()->render();
 
         $expected = <<<HTML
             <div>
@@ -845,7 +845,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->url(theme: 'test')->render();
+        $html = (new FieldFactory('default'))->url(theme: 'test')->render();
 
         $expected = <<<HTML
             <span>
@@ -858,13 +858,13 @@ final class PureFieldFactoryTest extends TestCase
 
     public function testLabel(): void
     {
-        $html = (new PureFieldFactory())->label()->render();
+        $html = (new FieldFactory())->label()->render();
         $this->assertSame('', $html);
     }
 
     public function testLabelWithContent(): void
     {
-        $html = (new PureFieldFactory())->label('test')->render();
+        $html = (new FieldFactory())->label('test')->render();
         $this->assertSame('<label>test</label>', $html);
     }
 
@@ -876,20 +876,20 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->label('hello', theme: 'test')->render();
+        $html = (new FieldFactory('default'))->label('hello', theme: 'test')->render();
 
         $this->assertSame('<label class="red">hello</label>', $html);
     }
 
     public function testHint(): void
     {
-        $html = (new PureFieldFactory())->hint()->render();
+        $html = (new FieldFactory())->hint()->render();
         $this->assertSame('', $html);
     }
 
     public function testHintWithContent(): void
     {
-        $html = (new PureFieldFactory())->hint('test')->render();
+        $html = (new FieldFactory())->hint('test')->render();
         $this->assertSame('<div>test</div>', $html);
     }
 
@@ -901,20 +901,20 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->hint('hello', theme: 'test')->render();
+        $html = (new FieldFactory('default'))->hint('hello', theme: 'test')->render();
 
         $this->assertSame('<div class="red">hello</div>', $html);
     }
 
     public function testError(): void
     {
-        $html = (new PureFieldFactory())->error()->render();
+        $html = (new FieldFactory())->error()->render();
         $this->assertSame('', $html);
     }
 
     public function testErrorWithMessage(): void
     {
-        $html = (new PureFieldFactory())->error('test')->render();
+        $html = (new FieldFactory())->error('test')->render();
         $this->assertSame('<div>test</div>', $html);
     }
 
@@ -926,7 +926,7 @@ final class PureFieldFactoryTest extends TestCase
             ],
         ]);
 
-        $html = (new PureFieldFactory('default'))->error('hello', theme: 'test')->render();
+        $html = (new FieldFactory('default'))->error('hello', theme: 'test')->render();
 
         $this->assertSame('<div class="red">hello</div>', $html);
     }

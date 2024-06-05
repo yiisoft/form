@@ -6,9 +6,9 @@ namespace Yiisoft\Form\Tests\Field\Base\ValidationClass;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\ValidationClass\ValidationClassField;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ValidationClassTraitTest extends TestCase
 {
@@ -48,7 +48,7 @@ final class ValidationClassTraitTest extends TestCase
         $result = $field
             ->useContainer(false)
             ->template('{input}')
-            ->inputData(new PureInputData(validationErrors: $validationErrors))
+            ->inputData(new InputData(validationErrors: $validationErrors))
             ->render();
 
         $this->assertSame($expected, $result);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 /**
  * @var array $params

@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form;
+namespace Yiisoft\Form\PureField;
 
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
@@ -36,7 +35,7 @@ use Yiisoft\Form\Field\Url;
 /**
  * @psalm-import-type Errors from ErrorSummary
  */
-class PureField
+class Field
 {
     /**
      * @var string|null
@@ -66,7 +65,7 @@ class PureField
         ?string $theme = null,
     ): Checkbox {
         return Checkbox::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function checkboxList(
@@ -76,7 +75,7 @@ class PureField
         ?string $theme = null,
     ): CheckboxList {
         return CheckboxList::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function date(
@@ -86,7 +85,7 @@ class PureField
         ?string $theme = null,
     ): Date {
         return Date::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function dateTimeLocal(
@@ -96,7 +95,7 @@ class PureField
         ?string $theme = null,
     ): DateTimeLocal {
         return DateTimeLocal::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function email(
@@ -106,7 +105,7 @@ class PureField
         ?string $theme = null,
     ): Email {
         return Email::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     /**
@@ -132,7 +131,7 @@ class PureField
         ?string $theme = null,
     ): File {
         return File::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function hidden(
@@ -142,7 +141,7 @@ class PureField
         ?string $theme = null,
     ): Hidden {
         return Hidden::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function image(?string $url = null, array $config = [], ?string $theme = null): Image
@@ -163,7 +162,7 @@ class PureField
         ?string $theme = null,
     ): Number {
         return Number::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function password(
@@ -173,7 +172,7 @@ class PureField
         ?string $theme = null,
     ): Password {
         return Password::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function radioList(
@@ -183,7 +182,7 @@ class PureField
         ?string $theme = null,
     ): RadioList {
         return RadioList::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function range(
@@ -193,7 +192,7 @@ class PureField
         ?string $theme = null,
     ): Range {
         return Range::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function resetButton(
@@ -217,7 +216,7 @@ class PureField
         ?string $theme = null,
     ): Select {
         return Select::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function submitButton(
@@ -241,7 +240,7 @@ class PureField
         ?string $theme = null,
     ): Telephone {
         return Telephone::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function text(
@@ -251,7 +250,7 @@ class PureField
         ?string $theme = null,
     ): Text {
         return Text::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function textarea(
@@ -261,7 +260,7 @@ class PureField
         ?string $theme = null,
     ): Textarea {
         return Textarea::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function time(
@@ -271,7 +270,7 @@ class PureField
         ?string $theme = null,
     ): Time {
         return Time::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function url(
@@ -281,7 +280,7 @@ class PureField
         ?string $theme = null,
     ): Url {
         return Url::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
-            ->inputData(new PureInputData($name, $value));
+            ->inputData(new InputData($name, $value));
     }
 
     final public static function label(?string $content = null, array $config = [], ?string $theme = null): Label

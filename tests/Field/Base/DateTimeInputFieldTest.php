@@ -7,10 +7,10 @@ namespace Yiisoft\Form\Tests\Field\Base;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class DateTimeInputFieldTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class DateTimeInputFieldTest extends TestCase
                 <div>Need correct date</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'dt',
                     value: '',
                     label: 'Main date',
@@ -45,7 +45,7 @@ final class DateTimeInputFieldTest extends TestCase
                 <input type="datetime" class="valid" name="main" value>
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '', validationErrors: []),
+                new InputData(name: 'main', value: '', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -54,14 +54,14 @@ final class DateTimeInputFieldTest extends TestCase
                 <input type="datetime" name="main" value>
                 </div>
                 HTML,
-                new PureInputData(name: 'main', value: '', validationErrors: []),
+                new InputData(name: 'main', value: '', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -275,7 +275,7 @@ final class DateTimeInputFieldTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = StubDateTimeInputField::widget()
             ->invalidClass('invalidWrap')

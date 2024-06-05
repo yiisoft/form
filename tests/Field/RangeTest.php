@@ -7,11 +7,11 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Range;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class RangeTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class RangeTest extends TestCase
                 <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100">
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'RangeForm[volume]',
                     value: 23,
                     label: 'Volume level',
@@ -44,7 +44,7 @@ final class RangeTest extends TestCase
                 <input type="range" class="valid" name="main" min="1" max="100">
                 </div>
                 HTML,
-                new PureInputData(name: 'main', validationErrors: []),
+                new InputData(name: 'main', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -53,14 +53,14 @@ final class RangeTest extends TestCase
                 <input type="range" name="main" min="1" max="100">
                 </div>
                 HTML,
-                new PureInputData(name: 'main', validationErrors: []),
+                new InputData(name: 'main', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -422,7 +422,7 @@ HTML_WRAP;
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Range::widget()
             ->invalidClass('invalidWrap')
