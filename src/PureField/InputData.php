@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Form\Field\Base\InputData;
+namespace Yiisoft\Form\PureField;
 
-use Yiisoft\Form\PureField;
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 
 /**
  * Simple input data implementation that can be used within this package. All parameters are passed from outer scope.
  * Regarding validation, it does not support state and rules, stores the result errors only. For more advanced
  * implementation take a look at form model ({@link https://github.com/yiisoft/form-model}) package.
  *
- * To simplify adding to field, {@see PureField} helper or {@see PureFieldFactory} can be used.
+ * To simplify adding to field, {@see Field} helper or {@see FieldFactory} can be used.
  */
-final class PureInputData implements InputDataInterface
+final class InputData implements InputDataInterface
 {
     /**
      * @param string[] $validationErrors
