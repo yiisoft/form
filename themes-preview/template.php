@@ -53,8 +53,6 @@ echo '<!DOCTYPE html>';
 
     echo PureField::date()->label('Date Field');
 
-    echo PureField::dateTime()->label('DateTime Field');
-
     echo PureField::dateTimeLocal()->label('DateTimeLocal Field');
 
     echo PureField::telephone()->label('Telephone Field')->placeholder('Placeholder');
