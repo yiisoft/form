@@ -6,7 +6,7 @@ namespace Yiisoft\Form\Field\Part;
 
 use Stringable;
 use Yiisoft\Form\Field\Base\InputData\InputDataTrait;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Widget\Widget;
 

@@ -8,10 +8,10 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Select;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 
@@ -36,7 +36,7 @@ final class SelectTest extends TestCase
                 </select>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'SelectForm[number]',
                     label: 'Select number',
                     id: 'selectform-number',
@@ -51,7 +51,7 @@ final class SelectTest extends TestCase
                 </select>
                 </div>
                 HTML,
-                new PureInputData(name: 'number', validationErrors: []),
+                new InputData(name: 'number', validationErrors: []),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
             ],
             'container-valid-class' => [
@@ -63,14 +63,14 @@ final class SelectTest extends TestCase
                 </select>
                 </div>
                 HTML,
-                new PureInputData(name: 'number', validationErrors: []),
+                new InputData(name: 'number', validationErrors: []),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
             ],
         ];
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -115,7 +115,7 @@ final class SelectTest extends TestCase
 
     public function testSelectedMultiple(): void
     {
-        $inputData = new PureInputData(
+        $inputData = new InputData(
             name: 'SelectForm[letters]',
             value: ['A', 'C'],
             label: 'Select letters',
@@ -671,7 +671,7 @@ final class SelectTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Select::widget()
             ->invalidClass('invalidWrap')

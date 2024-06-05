@@ -7,10 +7,10 @@ namespace Yiisoft\Form\Tests\Field;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
 use Yiisoft\Form\Field\Url;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
-use Yiisoft\Form\ThemeContainer;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class UrlTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class UrlTest extends TestCase
                 <div>Enter your site URL.</div>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'UrlForm[site]',
                     value: '',
                     label: 'Your site',
@@ -45,7 +45,7 @@ final class UrlTest extends TestCase
                 <input type="url" class="valid" name="site" value>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'site',
                     value: '',
                     validationErrors: [],
@@ -58,7 +58,7 @@ final class UrlTest extends TestCase
                 <input type="url" name="site" value>
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'site',
                     value: '',
                     validationErrors: [],
@@ -71,7 +71,7 @@ final class UrlTest extends TestCase
                 <input type="url" name="site" value placeholder="test">
                 </div>
                 HTML,
-                new PureInputData(
+                new InputData(
                     name: 'site',
                     value: '',
                     placeholder: 'test'
@@ -81,7 +81,7 @@ final class UrlTest extends TestCase
     }
 
     #[DataProvider('dataBase')]
-    public function testBase(string $expected, PureInputData $inputData, array $theme = []): void
+    public function testBase(string $expected, InputData $inputData, array $theme = []): void
     {
         ThemeContainer::initialize(
             configs: ['default' => $theme],
@@ -329,7 +329,7 @@ final class UrlTest extends TestCase
 
     public function testInvalidClassesWithCustomError(): void
     {
-        $inputData = new PureInputData('company', '');
+        $inputData = new InputData('company', '');
 
         $result = Url::widget()
             ->invalidClass('invalidWrap')

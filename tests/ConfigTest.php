@@ -6,9 +6,9 @@ namespace Yiisoft\Form\Tests;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\PureField;
-use Yiisoft\Form\ThemeContainer;
 use Yiisoft\Form\Field\Hidden;
+use Yiisoft\Form\PureField\Field;
+use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ConfigTest extends TestCase
 {
@@ -49,7 +49,7 @@ final class ConfigTest extends TestCase
         $bootstrap = array_shift($bootstrapList);
         $bootstrap();
 
-        $input = PureField::hidden('key', 'x100');
+        $input = Field::hidden('key', 'x100');
 
         $this->assertSame(
             '<input type="hidden" id="TestId" name="key" value="x100">',
