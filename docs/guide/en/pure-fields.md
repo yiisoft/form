@@ -1,20 +1,20 @@
-# Pure fields
+# Creating fields
 
-To ease the creation of the fields with `\Yiisoft\Form\Field\Base\InputData\PureInputData` as a data source, use
-corresponding helper (`\Yiisoft\Form\PureField`):
+To ease the creation of the fields with `\Yiisoft\Form\PureField\InputData` as a data source, use
+corresponding helper (`\Yiisoft\Form\PureField\Field`):
 
 ```php
-use Yiisoft\Form\PureField;
+use Yiisoft\Form\PureField\Field;
 
-$field = PureField::text('name', 'value');
+$field = Field::text('name', 'value');
 ```
 
-or factory (`\Yiisoft\Form\PureFieldFactory`):
+or factory (`\Yiisoft\Form\PureField\FieldFactory`):
 
 ```php
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\PureField\FieldFactory;
 
-$factory = new PureFieldFactory();
+$factory = new FieldFactory();
 $factory->text('name', 'value');
 ```
 
@@ -39,34 +39,34 @@ To additionally apply theme, you can pass it as argument to a specific field's m
 factory):
 
 ```php
-use Yiisoft\Form\PureField;
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\PureField\Field;
+use Yiisoft\Form\PureField\FieldFactory;
 
 // Using helper
 
-PureField::text('name', 'value', 'my-theme');
+Field::text('name', 'value', 'my-theme');
 
 // Using factory
 
-$factory = new PureFieldFactory();
+$factory = new FieldFactory();
 $factory->text('name', 'value');
 ```
 
 To apply the theme for all fields, either pass it as argument in constructor (supported by factory).
 
 ```php
-use Yiisoft\Form\PureFieldFactory;
+use Yiisoft\Form\PureField\FieldFactory;
 
-$factory = new PureFieldFactory('my-theme');
+$factory = new FieldFactory('my-theme');
 $factory->text('name', 'value');
 ```
 
 or override the theme property via class inheritance (supported by helper):
 
 ```php
-use Yiisoft\Form\PureField;
+use Yiisoft\Form\PureField\Field;
 
-final class ThemedPureField extends PureField
+final class ThemedField extends Field
 {
     protected const DEFAULT_THEME = 'default';
 }
@@ -75,7 +75,7 @@ final class ThemedPureField extends PureField
 and use this class instead:
 
 ```php
-ThemedPureField::text('name', 'value');
+ThemedField::text('name', 'value');
 ```
 
 Which one to choose depends on the situation, but factory has some advantages:

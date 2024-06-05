@@ -15,7 +15,7 @@ Input data is an abstraction for storing input's value and some common meta info
 - Validation errors - the list of validation errors for this attribute
 
 Input data classes must implement `\Yiisoft\Form\Field\Base\InputDataInterface` interface. This package already provides
-ready to use implementation - `\Yiisoft\Form\Field\Base\InputData\PureInputData`. 
+ready to use implementation - `\Yiisoft\Form\PureField\InputData`. 
 
 Once created, it can be added to existing field. From [built-in fields](built-in-fields.md) the fields that are intended
 to be used for user's input or at least pass data (for example, hidden inputs) have support for adding input data. The 
@@ -26,10 +26,10 @@ exceptions are buttons, images, etc.
 To add input data to a field:
 
 ```php
-use Yiisoft\Form\Field\Base\InputData\PureInputData;
+use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Field\Text;
 
-$inputData = new PureInputData(
+$inputData = new InputData(
     name: 'TextForm[name]',
     value: '',
     label: 'Name',
@@ -41,5 +41,5 @@ $inputData = new PureInputData(
 $result = Text::widget()->inputData($inputData)->render();
 ```
 
-The other way is to use `\Yiisoft\Form\PureField` or `\Yiisoft\Form\PureFieldFactory`, please refer to 
+The other way is to use `\Yiisoft\Form\PureField\Field` or `\Yiisoft\Form\PureField\FieldFactory`, please refer to 
 [Pure fields](pure-fields.md) for details.

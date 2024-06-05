@@ -59,16 +59,16 @@ ThemeContainer::initialize(
 );
 ```
 
-... and use `PureField` helper to create widgets:
+... and use `Field` helper to create widgets:
 
 ```php
-use Yiisoft\Form\PureField;
+use Yiisoft\Form\PureField\Field;
 
-echo PureField::text('firstName', theme: 'horizontal')->label('First Name')->autofocus();
-echo PureField::text('lastName', theme: 'horizontal')->label('Last Name');
-echo PureField::select('sex')->label('Sex')->optionsData(['m' => 'Male', 'f' => 'Female'])->prompt('—');
-echo PureField::number('age')->label('Age')->hint('Please enter your age.');
-echo PureField::submitButton('Submit')->buttonClass('primary');
+echo Field::text('firstName', theme: 'horizontal')->label('First Name')->autofocus();
+echo Field::text('lastName', theme: 'horizontal')->label('Last Name');
+echo Field::select('sex')->label('Sex')->optionsData(['m' => 'Male', 'f' => 'Female'])->prompt('—');
+echo Field::number('age')->label('Age')->hint('Please enter your age.');
+echo Field::submitButton('Submit')->buttonClass('primary');
 ```
 
 The result of executing the code above will be:
