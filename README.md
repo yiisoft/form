@@ -59,7 +59,7 @@ ThemeContainer::initialize(
 );
 ```
 
-... and use `PureField` helper to create widgets:
+... and use `Field` helper to create widgets:
 
 ```php
 use Yiisoft\Form\PureField;
