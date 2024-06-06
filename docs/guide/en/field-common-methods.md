@@ -1,4 +1,4 @@
-# Common field properties
+# Common field methods
 
 - [`containerTag`](#containerTag)
 - [`containerAttributes`](#containerattributes)
@@ -6,7 +6,8 @@
 - [`useContainer`](#usecontainer)
 - [`template`](#template)
 - [`templateBegin` / `templateEnd`](#templatebegin--templateend)
-- [`inputContainertag`]
+- [`inputContainerTag`](#inputcontainertag)
+- [`inputContainerAttributes`](#inputcontainerattributes)
 
 ## `containerTag`
 
