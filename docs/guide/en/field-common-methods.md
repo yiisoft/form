@@ -8,8 +8,9 @@
 - [`templateBegin` / `templateEnd`](#templatebegin--templateend)
 - [`inputContainerTag`](#inputcontainertag)
 - [`inputContainerAttributes`](#inputcontainerattributes)
+- [`inputContainerClass`](#inputcontainerclass)
 
-## `containerTag`
+### `containerTag`
 
 HTML tag for outer container that wraps the field.
 
@@ -31,7 +32,7 @@ Result:
 
 When no specified, `div` tag is used.
 
-## `containerAttributes`
+### `containerAttributes`
 
 HTML attributes for outer container that wraps the field.
 
@@ -53,7 +54,7 @@ Result:
 
 No attributes are used by default.
 
-## `containerClass`
+### `containerClass`
 
 HTML class for outer container that wraps the field.
 
@@ -73,7 +74,7 @@ echo Text::widget()->containerClass('field-container');
 
 No class is used by default.
 
-## `useContainer`
+### `useContainer`
 
 Whether to use outer container that wraps the field.
 
@@ -107,7 +108,7 @@ Result:
 </div>
 ```
 
-## `template`
+### `template`
 
 A template for a field where placeholders are field parts. This template is used when field is created using `widget()` 
 method.
@@ -144,7 +145,7 @@ Result:
 </div>
 ```
 
-## `templateBegin` / `templateEnd`
+### `templateBegin` / `templateEnd`
 
 Template for a field where placeholders are field parts. These templates are used when field is created using `begin()`
 and `end()` methods.
@@ -189,7 +190,7 @@ echo Fieldset::widget()
 </div>
 ```
 
-## `inputContainerTag`
+### `inputContainerTag`
 
 HTML tag for outer container that wraps the input.
 
@@ -211,7 +212,7 @@ Result:
 
 When no specified, no container is used for input.
 
-## `inputContainerAttributes`
+### `inputContainerAttributes`
 
 HTML attributes for outer container that wraps the input. Input container tag must be specified too in order for 
 container to be created.
@@ -236,6 +237,159 @@ Result:
 
 When no specified, no attributes is used for input.
 
+### `inputContainerClass`
+
+HTML class for outer container that wraps the input. Input container tag must be specified too in order for container to 
+be created.
+
+Usage:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+echo Text::widget()->inputContainerClass('input-container');
+```
+
+```html
+<div>
+    <span class="input-container"><input type="text"></span>
+</div>
+```
+
+No class is used by default.
+
+## Field part
+
+Field part is a component that a field consists of. There are 3 of them:
+
+- Label;
+- Hint;
+- Error.
+
+### Visibility / content
+
+By default, neither of field parts are shown. To show them, call self-titled methods:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+Text::widget()
+    ->label('Name')   
+    ->hint('Enter name')
+    ->error('Name is not valid.');
+```
+
+Result:
+
+```html
+<div>
+    <label>Name</label>
+    <input type="text">
+    <div>Enter name</div>
+    <div>Name is not valid.</div>
+</div>
+```
+
+### Attributes
+
+HTML attributes for field part.
+
+Usage:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+echo Text::widget()
+    ->label('Name')
+    ->labelAttributes(['class' => 'label'])
+    ->hint('Enter name')
+    ->hintAttributes(['class' => 'hint'])
+    ->error('Name is not valid.')
+    ->errorAttributes(['class' => 'error']);
+```
+
+> These methods are used together with [visibility / content] methods.  
+
+Result:
+
+```html
+<div>
+    <label class="label">Name</label>
+    <input type="text">
+    <div class="hint">Enter name</div>
+    <div class="error">Name is not valid.</div>
+</div>
+```
+
+To add attributes to the existing ones:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget()
+    ->label('Name')
+    ->labelAttributes(['class' => 'label'])
+    ->hint('Enter name')
+    ->hintAttributes(['class' => 'hint'])
+    ->error('Name is not valid.')
+    ->errorAttributes(['class' => 'error']);
+    
+/** @var $condition bool */
+if ($condition) {
+    $field = $field
+        ->addLabelAttributes(['data-type' => 'label'])
+        ->addHintAttributes(['data-type' => 'hint'])
+        ->addErrorAttributes(['data-type' => 'error']);
+}
+
+echo $field;
+```
+
+Result:
+
+```html
+<div>
+    <label class="label" data-type="label">Name</label>
+    <input type="text">
+    <div class="hint" data-type="hint">Enter name</div>
+    <div class="error" data-type="error">Name is not valid.</div>
+</div>
+```
+
+Note that values within the same attribute will not be merged, newly added overrides previous one:
+
+```php
+$field = Text::widget()
+    ->label('Name')
+    ->labelAttributes(['class' => 'label'])
+    ->hint('Enter name')
+    ->hintAttributes(['class' => 'hint'])
+    ->error('Name is not valid.')
+    ->errorAttributes(['class' => 'error']);
+
+
+/** @var $condition bool */
+if ($condition) {
+    $field = $field
+        ->addLabelAttributes(['class' => 'info'])
+        ->addHintAttributes(['class' => 'info'])
+        ->addErrorAttributes(['class' => 'info']);
+}
+
+echo $field;
+```
+
+Result:
+
+```html
+<div>
+    <label class="info">Name</label>
+    <input type="text">
+    <div class="info">Enter name</div>
+    <div class="info">Name is not valid.</div>
+</div>
+```
+
 ---
 
 BaseField
@@ -247,8 +401,8 @@ PartsField
 tokens(tokens: array): PartsField
 token(token: string, value: string|Stringable): PartsField
 
-
 hideLabel([hide: bool|null = true]): PartsField
+
 inputContainerTag(tag: null|string): PartsField
 inputContainerAttributes(attributes: array): PartsField
 addInputContainerAttributes(attributes: array): PartsField
@@ -258,24 +412,18 @@ beforeInput(content: string|Stringable): PartsField
 afterInput(content: string|Stringable): PartsField
 
 labelConfig(config: array): PartsField
-labelAttributes(attributes: array): PartsField
-addLabelAttributes(attributes: array): PartsField
 labelId(id: null|string): PartsField
 labelClass(...class: null|string): PartsField
 addLabelClass(...class: null|string): PartsField
 label(content: null|string): PartsField
 
 hintConfig(config: array): PartsField
-hintAttributes(attributes: array): PartsField
-addHintAttributes(attributes: array): PartsField
 hintId(id: null|string): PartsField
 hintClass(...class: null|string): PartsField
 addHintClass(...class: null|string): PartsField
 hint(content: null|string): PartsField
 
 errorConfig(config: array): PartsField
-errorAttributes(attributes: array): PartsField
-addErrorAttributes(attributes: array): PartsField
 errorId(id: null|string): PartsField
 errorClass(...class: null|string): PartsField
 addErrorClass(...class: null|string): PartsField
