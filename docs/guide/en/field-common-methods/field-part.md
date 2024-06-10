@@ -279,6 +279,8 @@ if ($condition) {
         ->addHintClass('info')
         ->addErrorClass('info');
 }
+
+echo $field;
 ```
 
 > The field must be visible (use [visibility / content](#visibility--content) methods or set content with

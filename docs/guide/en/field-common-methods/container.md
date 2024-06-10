@@ -44,6 +44,56 @@ Result:
 
 No attributes are used by default.
 
+To add attributes to the existing ones:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget()->containerAttributes(['class' => 'field-container']);
+    
+/** @var $condition bool */
+if ($condition) {
+    $field = $field->addContainerAttributes(['data-type' => 'name']);       
+}
+
+echo $field;
+```
+
+Result:
+
+```html
+<div class="field-container" data-type="name">
+    <input type="text">
+</div>
+```
+
+Note that values within the same attribute will not be merged, newly added overrides previous ones:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget()->containerAttributes(['class' => 'field-container']);
+    
+/** @var $condition bool */
+if ($condition) {
+    $field = $field->addContainerAttributes(['class' => 'focus']);       
+}
+
+echo $field;
+```
+
+Result:
+
+```html
+<div class="focus">
+    <input type="text">
+</div>
+```
+
+## Id
+
+TODO
+
 ## Class
 
 HTML class for outer container that wraps the field.
@@ -63,6 +113,52 @@ echo Text::widget()->containerClass('field-container');
 ```
 
 No class is used by default.
+
+To add classes to the existing ones:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget()->containerClass('field-container');
+
+/** @var $condition bool */
+if ($condition) {
+    $field = $field->addContainerClass('focus');
+}
+
+echo $field;
+```
+
+Result:
+
+```html
+<div class="field-container focus">
+    <input type="text">
+</div>
+```
+
+For multiple classes, separate them with space:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget()->containerClass('field-container');
+
+/** @var $condition bool */
+if ($condition) {
+    $field = $field->addContainerClass('focus info');
+}
+
+echo $field;
+```
+
+Result:
+
+```html
+<div class="field-container focus info">
+    <input type="text">
+</div>
+```
 
 ## Inclusion / exclusion
 
