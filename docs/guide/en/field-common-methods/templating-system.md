@@ -1,9 +1,11 @@
-### `template`
+# Templating system
+
+## Template
 
 A template for a field where tokens (placeholders) are field parts. This template is used when field is created using 
 `widget()` method.
 
-Supported placeholders:
+Supported tokens:
 
 - `{label}`;
 - `{hint}`;
@@ -35,10 +37,8 @@ Result:
 </div>
 ```
 
-### `templateBegin` / `templateEnd`
-
-Template for a field where placeholders are field parts. These templates are used when field is created using `begin()`
-and `end()` methods.
+When field is created using `begin()` and `end()` methods, customization of templates is done via `templateBegin()` and
+`templateEnd()` methods.
 
 Defaults:
 
@@ -77,5 +77,31 @@ echo Fieldset::widget()
         <input type="text" name="lastName">
     </fieldset>
     <div>Name is not valid.</div>
+</div>
+```
+
+## Tokens
+
+Tokens (placeholders) are field parts in the template. You can register custom tokens like this:
+
+```php
+Text::widget()
+    // Multiple tokens at once
+    ->tokens([
+        '{before}' => '<section>',
+        '{after}' => '</section>',
+    ])
+    // One token
+    ->token('{icon}', '<span class="icon"></span>')
+    ->template("{before}\n{input}\n{icon}\n{after}");
+```
+
+Result:
+
+```html
+<div>
+    <section>
+        <span class="icon"></span>
+    </section>
 </div>
 ```
