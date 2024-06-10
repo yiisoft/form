@@ -1,5 +1,11 @@
 # Common field methods
 
+- [Container](field-common-methods/container.md)
+  - [Tag](field-common-methods/container.md#tag)
+  - [Attributes](field-common-methods/container.md#attributes)
+  - [ID](field-common-methods/container.md#id)
+  - [class](field-common-methods/container.md#class)
+  - [Inclusion / exclusion](field-common-methods/container.md#inclusion--exclusion)
 - [Field parts](field-common-methods/field-part.md)
   - [Visibility / content](field-common-methods/field-part.md#visibility--content) 
   - [Config](field-common-methods/field-part.md#config)
@@ -9,11 +15,6 @@
 - [Templating system](field-common-methods/templating-system.md)
   - [Template](field-common-methods/templating-system.md#template)
   - [Tokens](field-common-methods/templating-system.md#tokens)
-
-- [`containerTag`](#containerTag)
-- [`containerAttributes`](#containerattributes)
-- [`containerClass`](#containerclass)
-- [`useContainer`](#usecontainer)
 
 - [`inputContainerTag`](#inputcontainertag)
 - [`inputContainerAttributes`](#inputcontainerattributes)
@@ -89,17 +90,15 @@ No class is used by default.
 
 ---
 
-BaseField
-
-- containerId
 
 PartsField
 
 inputContainerTag(tag: null|string): PartsField
+
 inputContainerAttributes(attributes: array): PartsField
 addInputContainerAttributes(attributes: array): PartsField
-inputContainerClass(...class: null|string): PartsField
 
+inputContainerClass(...class: null|string): PartsField
 addInputContainerClass(...class: null|string): PartsField
 
 beforeInput(content: string|Stringable): PartsField

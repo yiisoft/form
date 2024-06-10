@@ -90,9 +90,25 @@ Result:
 </div>
 ```
 
-## Id
+## ID
 
-TODO
+HTML ID for outer container that wraps the field.
+
+Usage:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+echo Text::widget()->containerId('field-container');
+```
+
+```html
+<div id="field-container">
+    <input type="text">
+</div>
+```
+
+No ID is used by default.
 
 ## Class
 
