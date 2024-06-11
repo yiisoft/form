@@ -16,13 +16,11 @@
   - [Attributes](field-common-methods/field-part.md#attributes)
   - [ID](field-common-methods/field-part.md#id)
   - [Class](field-common-methods/field-part.md#class)
+- [Input](field-common-methods/input.md) 
+  - [Attributes](field-common-methods/input.md#attributes)
+  - [ID](field-common-methods/input.md#id)
+  - [Class](field-common-methods/input.md#class)
+  - [Form](field-common-methods/input.md#form)
 - [Templating system](field-common-methods/templating-system.md)
   - [Template](field-common-methods/templating-system.md#template)
   - [Tokens](field-common-methods/templating-system.md#tokens)
-
----
-
-PartsField
-
-beforeInput(content: string|Stringable): PartsField
-afterInput(content: string|Stringable): PartsField

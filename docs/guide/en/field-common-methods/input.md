@@ -1,83 +1,5 @@
 # Input
 
-## Form
-
-HTML ID for the form this input belongs to.
-
-Usage:
-
-```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->form('contact-form');
-```
-
-Result:
-
-```html
-<div>
-    <input type="text" form="contact-form">
-</div>
-```
-
-## ID
-
-HTML ID for input.
-
-Usage:
-
-```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->inputId('input');
-```
-
-Result:
-
-```html
-<div>
-    <input type="text" id="input">
-</div>
-```
-
-No ID is used by default.
-
-There is an additional method to control whether ID should be set. It can be disabled:
-
-```php
-use Yiisoft\Form\Field\Text;
-
-$field = Text::widget();
-
-/** @var bool $condition */
-if ($condition) {
-    $field = $field->setInputId(false);
-}
-
-$field = $field->inputId('input')
-
-echo $field;
-```
-
-> The order of method calls is not important.
-
-To enable it:
-
-```php
-use Yiisoft\Form\Field\Text;
-
-$field = Text::widget();
-
-/** @var bool $condition */
-if ($condition) {
-    $field = $field->setInputId();
-}
-
-$field = $field->inputId('input')
-
-echo $field;
-```
-
 ## Attributes
 
 HTML attributes for input.
@@ -147,6 +69,64 @@ Result:
 </div>
 ```
 
+## ID
+
+HTML ID for input.
+
+Usage:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+echo Text::widget()->inputId('input');
+```
+
+Result:
+
+```html
+<div>
+    <input type="text" id="input">
+</div>
+```
+
+No ID is used by default.
+
+There is an additional method to control whether ID should be set. It can be disabled:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget();
+
+/** @var bool $condition */
+if ($condition) {
+    $field = $field->setInputId(false);
+}
+
+$field = $field->inputId('input')
+
+echo $field;
+```
+
+> The order of method calls is not important.
+
+To enable it:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget();
+
+/** @var bool $condition */
+if ($condition) {
+    $field = $field->setInputId();
+}
+
+$field = $field->inputId('input')
+
+echo $field;
+```
+
 ## Class
 
 HTML class for input.
@@ -208,5 +188,25 @@ Result:
 ```html
 <div>
     <input type="text" class="input focus info">
+</div>
+```
+
+## Form
+
+HTML ID for the form this input belongs to.
+
+Usage:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+echo Text::widget()->form('contact-form');
+```
+
+Result:
+
+```html
+<div>
+    <input type="text" form="contact-form">
 </div>
 ```
