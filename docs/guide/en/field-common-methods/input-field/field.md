@@ -1,5 +1,7 @@
 # Input field
 
+Input field is a parts field with exactly 1 input element.
+
 ## Attributes
 
 HTML attributes for input.

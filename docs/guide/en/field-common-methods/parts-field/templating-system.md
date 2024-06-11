@@ -2,7 +2,7 @@
 
 ## Template
 
-A template for a field where tokens (placeholders) are field parts. This template is used when field is created using 
+A template for a field where tokens (placeholders) are field parts. This template is used when field is created using
 `widget()` method.
 
 Supported tokens:

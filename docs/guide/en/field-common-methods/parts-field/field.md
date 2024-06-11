@@ -1,10 +1,13 @@
-# Field part
+# Parts field
 
-Field part is a component that a field consists of. There are 3 of them:
+Parts field consists of 4 elements:
 
 - Label;
 - Hint;
+- Input;
 - Error.
+
+Input here can be composite and can contain multiple elements.
 
 ## Visibility / content
 
@@ -112,7 +115,7 @@ echo Text::widget()
     ->errorAttributes(['class' => 'error']);
 ```
 
-> The field part must be visible (use [visibility / content](#visibility--content) methods or set content with 
+> The field part must be visible (use [visibility / content](#visibility--content) methods or set content with
 > [config](#config)).
 
 Result:
