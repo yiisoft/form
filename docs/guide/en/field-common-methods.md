@@ -1,6 +1,6 @@
 # Common field methods
 
-- [Base field](field-common-methods/base-field/field.md)
+- Base field
   - [Container](field-common-methods/base-field/container.md)
     - [Tag](field-common-methods/base-field/container.md#tag)
     - [Attributes](field-common-methods/base-field/container.md#attributes)
