@@ -112,7 +112,7 @@ echo Text::widget()
     ->errorAttributes(['class' => 'error']);
 ```
 
-> The field must be visible (use [visibility / content](#visibility--content) methods or set content with 
+> The field part must be visible (use [visibility / content](#visibility--content) methods or set content with 
 > [config](#config)).
 
 Result:
@@ -164,6 +164,8 @@ Result:
 Note that values within the same attribute will not be merged, newly added overrides previous ones:
 
 ```php
+use Yiisoft\Form\Field\Text;
+
 $field = Text::widget()
     ->label('Name')
     ->labelAttributes(['class' => 'label'])
@@ -213,7 +215,7 @@ echo Text::widget()
     ->errorId('error');
 ```
 
-> The field must be visible (use [visibility / content](#visibility--content) methods or set content with
+> The field part must be visible (use [visibility / content](#visibility--content) methods or set content with
 > [config](#config)).
 
 Result:
@@ -245,7 +247,7 @@ echo Text::widget()
     ->errorClass('error');
 ```
 
-> The field must be visible (use [visibility / content](#visibility--content) methods or set content with
+> The field part must be visible (use [visibility / content](#visibility--content) methods or set content with
 > [config](#config)).
 
 Result:
@@ -283,7 +285,7 @@ if ($condition) {
 echo $field;
 ```
 
-> The field must be visible (use [visibility / content](#visibility--content) methods or set content with
+> The field part must be visible (use [visibility / content](#visibility--content) methods or set content with
 > [config](#config)).
 
 Result:
@@ -311,7 +313,7 @@ $field = Text::widget()
     ->errorClass('error');
 
 /** @var $condition bool */
-if (true) {
+if ($condition) {
     $field = $field
         ->addLabelClass('info theme')
         ->addHintClass('info theme')

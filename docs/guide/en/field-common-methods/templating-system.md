@@ -80,6 +80,28 @@ echo Fieldset::widget()
 </div>
 ```
 
+### Content before and after input
+
+There is also a possibility to customize content before and after the input without redefining template and using custom
+tokens:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+echo Text::widget()
+    ->inputContainerTag('span')
+    ->beforeInput('before')
+    ->afterInput('after');
+```
+
+Result:
+
+```html
+<div>
+    <span>before<input type="text">after</span>
+</div>
+```
+
 ## Tokens
 
 Tokens (placeholders) are field parts in the template. You can register custom tokens like this:
