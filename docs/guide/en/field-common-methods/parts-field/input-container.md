@@ -20,7 +20,7 @@ Result:
 </div>
 ```
 
-When no specified, no container is used for input.
+When not specified, no container is used for input.
 
 ## Attributes
 
