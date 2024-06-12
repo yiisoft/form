@@ -22,7 +22,7 @@ Result:
 </div>
 ```
 
-To add attributes to the existing ones:
+To add attributes to existing ones:
 
 ```php
 use Yiisoft\Form\Field\Text;
