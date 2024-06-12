@@ -116,7 +116,7 @@ echo Text::widget()
 </div>
 ```
 
-When no specified, no class is used for input.
+When not specified, no class is used for input.
 
 To add classes to the existing ones:
 
