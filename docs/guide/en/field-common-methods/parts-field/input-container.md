@@ -45,7 +45,7 @@ Result:
 </div>
 ```
 
-When no specified, no attributes are used for input.
+When not specified, no attributes are used for input.
 
 To add attributes to the existing ones:
 
