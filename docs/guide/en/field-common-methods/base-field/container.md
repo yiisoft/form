@@ -20,7 +20,7 @@ Result:
 </span>
 ```
 
-When no specified, `div` tag is used.
+When not specified, `div` tag is used.
 
 ## Attributes
 
