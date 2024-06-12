@@ -1,33 +1,150 @@
-# Fields configuration
+# Field configuration
 
 Fields could be configured on multiple levels:
 
-- widget factory configuration;
-- common configuration from theme (optional);
-- individual configuration from theme (optional);
-- configuration at the place of use.
-
-More specific configuration has more priority.
+- Widget factory configuration:
+  - With definitions;
+  - With themes and default theme selected;
+  - With themes and theme specified at field level.
+- Widget configuration.
 
 ## Widget factory configuration
 
 Widget factory could be used to configure fields. It is handy to use it to set global defaults.
 
-TODO: provide example
+### With definitions
 
-See [yiisoft/widget guide on themes](https://github.com/yiisoft/widget/blob/master/docs/guide/en/themes.md).
+You can use definitions:
 
+```php
+use Psr\Container\ContainerInterface;
+use Yiisoft\Form\Field\Base\BaseField;
+use Yiisoft\Form\Field\Base\InputField;use Yiisoft\Form\Field\Base\PartsField;use Yiisoft\Form\Field\Text;
+use Yiisoft\Widget\Widget;
+use Yiisoft\Widget\WidgetFactory;
 
-## Common configuration from theme (optional)
+WidgetFactory::initialize(
+    /** @var ContainerInterface $container */
+    $container,
+    definitions: [        
+        Text::class => [
+            'containerClass()' => ['field-container']
+        ],
+    ], 
+);
+echo Text::widget();
+```
 
-TODO: describe
+Result:
 
-## Individual configuration from theme (optional);
+```html
+<div class="field-container">
+    <input type="text">
+</div>
+```
 
-TODO: describe
+### With themes
 
-## configuration at the place of use
+Alternatively, themes can be used. To apply the theme automatically, set default theme.
 
-TODO: add example of config passed through widget() call
-    
-    
+```php
+use Psr\Container\ContainerInterface;
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Widget\WidgetFactory;
+
+WidgetFactory::initialize(
+    /** @var ContainerInterface $container */
+    $container,
+    themes: [
+        'valid' => [
+            Text::class => [
+                'containerClass()' => ['field-container valid'],
+            ],
+        ],
+        'invalid' => [
+            Text::class => [
+                'containerClass()' => ['field-container invalid']
+            ],       
+        ],
+    ],
+    defaultTheme: 'valid',  
+);
+$field = Text::widget();
+```
+
+Result:
+
+```html
+<div class="field-container valid">
+    <input type="text">
+</div>
+```
+
+Regardless of default theme set, it's also possible to control theme at specific widget level:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget(theme: 'invalid');
+```
+
+Result:
+
+```html
+<div class="field-container invalid">
+    <input type="text">
+</div>
+```
+
+See [yiisoft/widget guide on themes](https://github.com/yiisoft/widget/blob/master/docs/guide/en/themes.md) for more 
+details.
+
+Regarding themes, there is an additional approach covered in [Field themes](field-themes.md) section.  
+
+## Widget configuration
+
+Config could be also passed through `widget()` call for specific field at the place of usage:
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget(
+    config: [
+        'containerClass()' => ['field-container'],    
+    ],
+);
+```
+
+## Configuration priority
+
+More specific configuration has more priority:
+
+```php
+use Psr\Container\ContainerInterface;
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Widget\WidgetFactory;
+
+WidgetFactory::initialize(
+    /** @var ContainerInterface $container */
+    $container,
+    definitions: [
+        Text::class => [
+            'containerClass()' => ['field-container valid'],
+        ],        
+    ],
+);
+$field = Text::widget(
+    config: [
+        'containerClass()' => ['field-container invalid'],    
+    ],
+);
+echo $field;
+```
+
+Result:
+
+```html
+<div class="field-container invalid">
+    <input type="text">
+</div>
+```
