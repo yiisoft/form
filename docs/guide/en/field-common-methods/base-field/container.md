@@ -130,7 +130,7 @@ echo Text::widget()->containerClass('field-container');
 
 No class is used by default.
 
-To add classes to the existing ones:
+To add classes to existing ones:
 
 ```php
 use Yiisoft\Form\Field\Text;
