@@ -164,7 +164,7 @@ Result:
 </div>
 ```
 
-Note that values within the same attribute will not be merged, newly added overrides previous ones:
+Note that values within the same attribute will not be merged, newly added value overrides previous one:
 
 ```php
 use Yiisoft\Form\Field\Text;
