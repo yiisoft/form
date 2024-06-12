@@ -97,7 +97,7 @@ Result:
 
 ## Class
 
-HTML class for outer container that wraps the input. Input container tag must be specified too in order for container to
+HTML class for outer container that wraps the input. Input container tag must be specified for container to
 be created.
 
 Usage:
