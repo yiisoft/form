@@ -118,7 +118,7 @@ echo Text::widget()
 
 When not specified, no class is used for input.
 
-To add classes to the existing ones:
+To add classes to existing ones:
 
 ```php
 use Yiisoft\Form\Field\Text;
