@@ -24,7 +24,7 @@ When not specified, no container is used for input.
 
 ## Attributes
 
-HTML attributes for outer container that wraps the input. Input container tag must be specified too in order for
+HTML attributes for outer container that wraps the input. Input container tag must be specified for
 container to be created.
 
 Usage:
