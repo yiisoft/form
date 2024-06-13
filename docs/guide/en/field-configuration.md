@@ -1,6 +1,6 @@
 # Field configuration
 
-Fields could be configured on multiple levels:
+Fields could be configured on multiple levels.
 
 - Widget factory configuration:
   - With definitions;
