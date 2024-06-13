@@ -103,7 +103,7 @@ Result:
 See [yiisoft/widget guide on themes](https://github.com/yiisoft/widget/blob/master/docs/guide/en/themes.md) for more 
 details.
 
-Regarding themes, there is an additional approach covered in [Field themes](field-themes.md) section.  
+Note that there is an additional approach covered in [Field themes](field-themes.md) section.  
 
 ## Widget configuration
 
