@@ -45,7 +45,9 @@ Result:
 
 ### With themes
 
-Alternatively, themes can be used. To apply the theme automatically, set default theme.
+Themes could be used in case you want to have multiple configuration sets
+and the ability to switch from one to another. To apply the theme automatically,
+specify it as default theme.
 
 ```php
 use Psr\Container\ContainerInterface;
