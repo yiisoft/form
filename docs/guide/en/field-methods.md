@@ -805,7 +805,9 @@ To add attributes to existing ones instead of replacing, use `addInputAttributes
 same attribute will not be merged, newly added value overrides previous one.
 
 ```php
-echo \Yiisoft\Form\Field\Text::widget()->inputAttributes(['class' => 'input', 'data-sort' => 1]);
+echo \Yiisoft\Form\Field\Text::widget()
+    ->inputAttributes(['class' => 'input', 'data-type' => 'name'])
+    ->addInputAttributes(['class' => 'focus', 'data-sort' => 1]);
 ```
 
 ```html
@@ -848,7 +850,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->inputId('input');
 ```
 
-### `inputClass` / `addInputClasses()`
+### `inputClass` / `addInputClass()`
 
 HTML class for input. In case of multiple classes, pass them as separate arguments.
 
@@ -893,7 +895,117 @@ echo \Yiisoft\Form\Field\Text::widget()->form('contact-form');
 
 ## `ButtonField` based fields
 
-...
+### `buttonAttributes()` / `addButtonAttributes()`
+
+HTML attributes for button.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->buttonAttributes(['class' => 'button', 'data-type' => 'action']);
+```
+
+```html
+<div>
+    <button type="button" class="button" data-type="action"></button>
+</div>
+```
+
+To add attributes to existing ones instead of replacing, use `addButtonAttributes()` method. Note that values within the
+same attribute will not be merged, newly added value overrides previous one.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()
+    ->buttonAttributes(['class' => 'button', 'data-type' => 'name'])
+    ->addButtonAttributes(['class' => 'focus', 'data-sort' => 1]);
+```
+
+```html
+<div>
+    <button type="button" class="focus" data-type="name" data-sort="1"></button>
+</div>
+```
+
+### `buttonId()`
+
+HTML ID for button.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->buttonId('button');
+```
+
+```html
+<div>
+    <button type="button" id="button"></button>
+</div>
+```
+
+### `buttonClass` / `addButtonClass()`
+
+HTML class for button. In case of multiple classes, pass them as separate arguments.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->buttonClass('button', 'focus');
+```
+
+```html
+<div>
+    <button type="button" class="button focus"></button>
+</div>
+```
+
+To add classes to the existing ones instead of replacing, use `addButtonClass()` method. In case of multiple classes,
+pass them as separate arguments.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()
+    ->buttonClass('button')
+    ->addButtonClass('focus', 'primary');
+```
+
+```html
+<div>
+    <button type="button" class="button focus primary"></button>
+</div>
+```
+
+### `name()`
+
+HTML name for button used in form data. 
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->name('language');
+```
+
+```html
+<div>
+    <button type="button" name="language"></button>
+</div>
+```
+
+Pass `null` to not set any name (default):
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->name(null);
+```
+
+### `ariaDescribedBy()`
+
+HTML ID of the element providing some additional information about the current element that some users might need.  
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description');
+```
+
+```html
+<div>
+    <button type="button" aria-describedby="language-description"></button>
+</div>
+```
+
+Pass `null` to not set this attribute (default):
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy(null);
+```
 
 ## `DateTimeInputField` based fields
 

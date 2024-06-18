@@ -18,6 +18,8 @@ final class ButtonTest extends TestCase
 
     public function testBase(): void
     {
+        $result = \Yiisoft\Form\Field\Button::widget()->name('button')->render();
+
         $result = Button::widget()
             ->content('Click Me')
             ->render();
