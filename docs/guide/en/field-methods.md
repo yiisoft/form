@@ -148,7 +148,7 @@ Parts field consists of 4 elements:
 - Input;
 - Error.
 
-Input here can be composite and can contain multiple elements.
+Input here can be composite and can contain multiple elements (parts).
 
 ### `label()`
 
