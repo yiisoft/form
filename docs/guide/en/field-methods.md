@@ -27,15 +27,9 @@ And interfaces:
 
 HTML tag for outer container that wraps the field.
 
-Usage:
-
 ```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->containerTag('span');
+echo \Yiisoft\Form\Field\Text::widget()->containerTag('span');
 ```
-
-Result:
 
 ```html
 <span>
@@ -49,15 +43,9 @@ When not specified, `div` tag is used.
 
 HTML attributes for outer container that wraps the field.
 
-Usage:
-
 ```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->containerAttributes(['class' => 'field-container']);
+echo Yiisoft\Form\Field\Text::widget()->containerAttributes(['class' => 'field-container']);
 ```
-
-Result:
 
 ```html
 <div class="field-container">
@@ -67,48 +55,17 @@ Result:
 
 No attributes are used by default.
 
-To add attributes to the existing ones:
+To add attributes to the existing ones instead of replacing, use `addContainerAttributes()` method. Note that values 
+within the same attribute will not be merged, newly added value overrides previous one.
 
 ```php
-use Yiisoft\Form\Field\Text;
-
-$field = Text::widget()->containerAttributes(['class' => 'field-container']);
-    
-/** @var $condition bool */
-if ($condition) {
-    $field = $field->addContainerAttributes(['data-type' => 'name']);       
-}
-
-echo $field;
+echo \Yiisoft\Form\Field\Text::widget()
+    ->containerAttributes(['class' => 'field-container', 'data-type' => 'name'])
+    ->addContainerAttributes(['class' => 'focus', 'data-sort' => 1]);
 ```
-
-Result:
 
 ```html
-<div class="field-container" data-type="name">
-    <input type="text">
-</div>
-```
-
-Note that values within the same attribute will not be merged, newly added value overrides previous one:
-
-```php
-use Yiisoft\Form\Field\Text;
-
-$field = Text::widget()->containerAttributes(['class' => 'field-container']);
-    
-/** @var $condition bool */
-if ($condition) {
-    $field = $field->addContainerAttributes(['class' => 'focus']);       
-}
-
-echo $field;
-```
-
-Result:
-
-```html
-<div class="focus">
+<div class="focus" data-type="name" data-sort="1">
     <input type="text">
 </div>
 ```
@@ -117,12 +74,8 @@ Result:
 
 HTML ID for outer container that wraps the field.
 
-Usage:
-
 ```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->containerId('field-container');
+echo \Yiisoft\Form\Field\Text::widget()->containerId('field-container');
 ```
 
 ```html
@@ -135,40 +88,11 @@ No ID is used by default.
 
 ### `containerClass()` / `addContainerClass()`
 
-HTML class for outer container that wraps the field.
-
-Usage:
+HTML class for outer container that wraps the field. In case of multiple classes, pass them as separate arguments.
 
 ```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->containerClass('field-container');
+echo \Yiisoft\Form\Field\Text::widget()->containerClass('field-container', 'focus');
 ```
-
-```html
-<div class="field-container">
-    <input type="text">
-</div>
-```
-
-No class is used by default.
-
-To add classes to existing ones:
-
-```php
-use Yiisoft\Form\Field\Text;
-
-$field = Text::widget()->containerClass('field-container');
-
-/** @var $condition bool */
-if ($condition) {
-    $field = $field->addContainerClass('focus');
-}
-
-echo $field;
-```
-
-Result:
 
 ```html
 <div class="field-container focus">
@@ -176,25 +100,21 @@ Result:
 </div>
 ```
 
-For multiple classes, separate them with space:
+No class is used by default.
+
+To add classes to existing ones, instead of replacing, use `addContainerClass()` method. In case of multiple classes, 
+pass them as separate arguments.
 
 ```php
-use Yiisoft\Form\Field\Text;
-
-$field = Text::widget()->containerClass('field-container');
-
-/** @var $condition bool */
-if ($condition) {
-    $field = $field->addContainerClass('focus info');
-}
-
-echo $field;
+echo \Yiisoft\Form\Field\Text::widget()
+    ->containerClass('field-container')
+    ->addContainerClass('focus', 'primary');
 ```
 
 Result:
 
 ```html
-<div class="field-container focus info">
+<div class="field-container focus primary">
     <input type="text">
 </div>
 ```
@@ -206,12 +126,8 @@ Whether to use outer container that wraps the field.
 To disable container:
 
 ```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->useContainer(false);
+echo Yiisoft\Form\Field\Text::widget()->useContainer(false);
 ```
-
-Result:
 
 ```html
 <input type="text">
@@ -220,17 +136,7 @@ Result:
 Enable container (default):
 
 ```php
-use Yiisoft\Form\Field\Text;
-
-echo Text::widget()->useContainer(true);
-```
-
-Result:
-
-```html
-<div>
-    <input type="text">
-</div>
+echo \Yiisoft\Form\Field\Text::widget()->useContainer();
 ```
 
 ## `PartsField` based fields
