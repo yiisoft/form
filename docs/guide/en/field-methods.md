@@ -785,7 +785,7 @@ Text::widget()
 
 ## `InputField` based fields
 
-Input field is a parts field with exactly 1 input element.
+Input field is a [parts field](#partsfield-based-fields) with exactly 1 input element.
 
 ### `inputAttributes()` / `addInputAttributes()`
 
