@@ -587,7 +587,7 @@ them as separate arguments.
 echo \Yiisoft\Form\Field\Text::widget()
     ->label('Name')
     ->labelClass('label')
-    ->addLabelClass('focus primary');    
+    ->addLabelClass('focus', 'primary');    
 ```
 
 ```html
@@ -666,6 +666,94 @@ echo \Yiisoft\Form\Field\Text::widget()
 <div>
     <input type="text">
     <div class="error focus primary">Name is not valid</div>
+</div>
+```
+
+### `inputContainerTag()`
+
+HTML tag for outer container that wraps the input.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->inputContainerTag('span');
+```
+
+```html
+<div>
+    <span><input type="text"></span>
+</div>
+```
+
+When not specified, no container is used for input.
+
+### `inputContainerAttributes()` / `addInputContainerAttributes()`
+
+HTML attributes for outer container that wraps the input. Input container tag must be specified for container to be 
+created.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->inputContainerTag('span');
+    ->inputContainerAttributes(['class' => 'input-container', 'data-type' => 'name']);
+```
+
+```html
+<div>
+    <span class="input-container" data-type="name"><input type="text"></span>
+</div>
+```
+
+When not specified, no attributes are used for input.
+
+To add attributes to the existing ones instead of replacing, use `addInputContainerAttributes()` method. Note that 
+values within the same attribute will not be merged, newly added value overrides previous one.
+
+```php
+use Yiisoft\Form\Field\Text;
+
+$field = Text::widget()
+    ->inputContainerTag('span')
+    ->inputContainerAttributes(['class' => 'input-container', 'data-type' => 'name'])
+    ->addInputContainerAttributes(['class' => 'focus', 'data-sort' => 1]);
+```
+
+```html
+<div>
+    <span class="focus" data-type="name" data-sort="1"><input type="text"></span>
+</div>
+```
+
+### `inputContainerClass()` / `addInputContainerClass()`
+
+HTML class for outer container that wraps the input. Input container tag must be specified for container to be created. 
+In case of multiple classes, pass them as separate arguments.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->inputContainerTag('span')
+    ->inputContainerClass('input-container', 'focus');
+```
+
+```html
+<div>
+    <span class="input-container focus"><input type="text"></span>
+</div>
+```
+
+When not specified, no class is used for input.
+
+To add class to existing ones instead of replacing, use `inputContainerClass()` method. In case of multiple classes, 
+pass them as separate arguments.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->inputContainerTag('span')
+    ->inputContainerClass('input-container')
+    ->addInputContainerAttributes('focus', 'primary');
+```
+
+```html
+<div>
+    <span class="input-container focus primary"><input type="text"></span>
 </div>
 ```
 
