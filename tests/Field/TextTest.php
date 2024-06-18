@@ -20,12 +20,6 @@ final class TextTest extends TestCase
 
     public function testBase(): void
     {
-        $result = Text::widget()
-            ->label('Name')
-            ->labelClass('label')
-            ->addLabelClass('focus primary')
-            ->render();
-
         $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
