@@ -879,7 +879,111 @@ Text::widget()
 
 ## `InputField` based fields
 
-...
+Input field is a parts field with exactly 1 input element.
+
+### `inputAttributes()` / `addInputAttributes()`
+
+HTML attributes for input.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->inputAttributes(['class' => 'input', 'data-type' => 'name']);
+```
+
+```html
+<div>
+    <input type="text" class="input" data-type="name">
+</div>
+```
+
+To add attributes to existing ones instead of replacing, use `addInputAttributes()` method. Note that values within the
+same attribute will not be merged, newly added value overrides previous one.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->inputAttributes(['class' => 'input', 'data-sort' => 1]);
+```
+
+```html
+<div>
+    <input type="text" class="focus" data-type="name" data-sort="1">
+</div>
+```
+
+### `inputId()`
+
+HTML ID for input.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->inputId('input');
+```
+
+```html
+<div>
+    <input type="text" id="input">
+</div>
+```
+
+### `setInputId()`
+
+There is an additional method to control whether ID should be set. It can be disabled:
+
+```php
+echo = \Yiisoft\Form\Field\Text::widget()
+    ->setInputId(false)
+    ->inputId('input');
+```
+
+> The order of method calls is not important.
+
+To enable it (default):
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->setInputId()
+    ->inputId('input');
+```
+
+### `inputClass` / `addInputClasses()`
+
+HTML class for input. In case of multiple classes, pass them as separate arguments.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->inputClass('input', 'focus');
+```
+
+```html
+<div>
+    <input type="text" class="input focus">
+</div>
+```
+
+To add classes to the existing ones instead of replacing, use `addInputClass()` method. In case of multiple classes,
+pass them as separate arguments.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->inputClass('input')
+    ->addInputClass('focus', 'primary');
+```
+
+```html
+<div>
+    <input type="text" class="input focus primary">
+</div>
+```
+
+### `form()`
+
+HTML ID for the form this input belongs to.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->form('contact-form');
+```
+
+```html
+<div>
+    <input type="text" form="contact-form">
+</div>
+```
 
 ## `ButtonField` based fields
 
