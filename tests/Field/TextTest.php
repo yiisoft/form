@@ -6,14 +6,9 @@ namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Base\BaseField;
-use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Theme\ThemeContainer;
-use Yiisoft\Widget\Widget;
-use Yiisoft\Widget\WidgetFactory;
 
 final class TextTest extends TestCase
 {
@@ -25,7 +20,7 @@ final class TextTest extends TestCase
 
     public function testBase(): void
     {
-        $result = \Yiisoft\Form\Field\Text::widget()
+        $result = Text::widget()
             ->label('Name')
             ->labelClass('label')
             ->addLabelClass('focus primary')
