@@ -1106,6 +1106,27 @@ echo \Yiisoft\Form\Field\Text::widget()->form('contact-form');
 echo \Yiisoft\Form\Field\Button::widget()->disabled(false);
 ```
 
+### `button()`
+
+Instead of configuring button field using its separate methods, you can prepare `Button` HTML tag in advance and pass it 
+via single method:
+
+```php
+use Yiisoft\Html\Tag\Button as ButtonTag;
+use Yiisoft\Form\Field\Button as ButtonField; 
+
+$tag = ButtonTag::tag()
+    ->class('red')
+    ->content('Go!');
+echo ButtonField::widget()->button($tag);
+```
+
+```html
+<div>
+    <button type="button" class="red">Go!</button>
+</div>
+```
+
 ## `DateTimeInputField` based fields
 
 ...
