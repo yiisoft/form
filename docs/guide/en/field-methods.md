@@ -989,7 +989,7 @@ echo \Yiisoft\Form\Field\Button::widget()->name(null);
 
 ### `ariaDescribedBy()`
 
-HTML ID of the element providing some additional information about the current element that some users might need.  
+HTML ID of the element providing some additional information about the button that some users might need.  
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description');
@@ -1007,10 +1007,9 @@ Pass `null` to not set this attribute (default when method is not called):
 echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy(null);
 ```
 
-### `arialabel()`
+### `ariaLabel()`
 
-Defines string value that labels an interactive element. Can be useful for buttons containing SVG or icon font without 
-text.
+Describes button with a string value. Can be useful for buttons containing SVG or icon font without text.
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->ariaLabel('Close');
@@ -1030,7 +1029,7 @@ echo \Yiisoft\Form\Field\Button::widget()->ariaLabel(null);
 
 ### `autoFocus()`
 
-Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus at the same time.
+Focus on the button when the page loads. Only one form element could be in focus at the same time.
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->autofocus();
@@ -1042,7 +1041,7 @@ echo \Yiisoft\Form\Field\Button::widget()->autofocus();
 </div>
 ```
 
-Pass `false` to not automatically focus on this element (default when method is not called):
+Pass `false` to not automatically focus on this button (default when method is not called):
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->autofocus(false);
@@ -1050,7 +1049,7 @@ echo \Yiisoft\Form\Field\Button::widget()->autofocus(false);
 
 ### `tabIndex()`
 
-Defines index for focusing on element with "Tab" button:
+Defines index for focusing on button with "Tab" key:
 
 - `-1` - focus is ignored;
 - `0` - focus order is determined by order of the elements in the page source;
@@ -1074,7 +1073,7 @@ echo \Yiisoft\Form\Field\Button::widget()->tabIndex(null);
 
 ### `disabled()`
 
-Prevents element from being edited, focused and submitted within the form.
+Prevents button from being focused and its value from being submitted within the form.
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->disabled();
@@ -1087,6 +1086,10 @@ echo \Yiisoft\Form\Field\Button::widget()->disabled();
 ```
 
 Pass `false` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->disabled(false);
+```
 
 ### `form()`
 
@@ -1129,7 +1132,191 @@ echo ButtonField::widget()->button($tag);
 
 ## `DateTimeInputField` based fields
 
-...
+### `max()`
+
+Indicates maximum allowed value for the element.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->max('2024-05-31');
+```
+
+```html
+<div>
+    <input type="date" max="2024-05-31">
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->max(null);
+```
+
+### `min()`
+
+Indicates minimum allowed value for the element.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->min('2024-06-01');
+```
+
+```html
+<div>
+    <input type="date" min="2024-06-01">
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->min(null);
+```
+
+### `ariaDescribedBy()`
+
+HTML ID of the element providing some additional information about the datetime element that some users might need.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->ariaDescribedBy('date-description');
+```
+
+```html
+<div>
+    <input type="date" aria-describedby="date-description">
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->ariaDescribedBy(null);
+```
+
+### `ariaLabel()`
+
+Describes datetime element with a string value.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->ariaLabel('Date');
+```
+
+```html
+<div>
+    <input type="date" aria-label="Date">
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->ariaLabel(null);
+```
+
+### `autoFocus()`
+
+Focus on the datetime element when the page loads. Only one form element could be in focus at the same time.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->autofocus();
+```
+
+```html
+<div>
+    <input type="date" autofocus>
+</div>
+```
+
+Pass `false` to not automatically focus on this datetime element (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->autofocus(false);
+```
+
+### `tabIndex()`
+
+Defines index for focusing on datetime element with "Tab" key:
+
+- `-1` - focus is ignored;
+- `0` - focus order is determined by order of the elements in the page source;
+- Positive integer - exact focus order.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->tabIndex(3);
+```
+
+```html
+<div>
+    <input type="date" tabindex="3">
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->tabIndex(null);
+```
+
+### `readonly()`
+
+Prevents the datetime element from being edited. However, it still can be interacted with and its value included in the
+form data during submission. To completely disable it, use `disabled()`.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->readonly();
+```
+
+```html
+<div>
+    <input type="date" readonly>
+</div>
+```
+
+Pass `false` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->readonly(false);
+```
+
+### `required()`
+
+Makes this datetime element required for filling in the form it belongs to.
+
+```php
+echo Yiisoft\Form\Field\Date::widget()->required();
+```
+
+```html
+<div>
+    <input type="date" required>
+</div>
+```
+
+Pass `false` to make the datetime element optional for filling (default when method is not called):
+
+```php
+echo Yiisoft\Form\Field\Date::widget()->required(false);
+```
+
+### `disabled()`
+
+Prevents datetime element from being edited, focused and submitted within the form. To disallow editing only, use
+`readonly()` method.
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->disabled();
+```
+
+```html
+<div>
+    <input type="date" disabled>
+</div>
+```
+
+Pass `false` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Date::widget()->disabled(false);
+```
 
 ## `PlaceholderInterface` implemented fields
 
