@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Theme\ThemeContainer;
 
 final class ButtonTest extends TestCase
@@ -18,12 +17,6 @@ final class ButtonTest extends TestCase
 
     public function testBase(): void
     {
-        $result = Button::widget()->name('button')->render();
-
-        $result = Button::widget()
-            ->content('Click Me')
-            ->render();
-
         $this->assertSame(
             <<<HTML
             <div>
