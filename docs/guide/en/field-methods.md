@@ -981,7 +981,7 @@ echo \Yiisoft\Form\Field\Button::widget()->name('language');
 </div>
 ```
 
-Pass `null` to not set any name (default):
+Pass `null` to not set any name (default when method is not called):
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->name(null);
@@ -1001,10 +1001,109 @@ echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description
 </div>
 ```
 
-Pass `null` to not set this attribute (default):
+Pass `null` to not set this attribute (default when method is not called):
 
 ```php
 echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy(null);
+```
+
+### `arialabel()`
+
+Defines string value that labels an interactive element. Can be useful for buttons containing SVG or icon font without 
+text.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->ariaLabel('Close');
+```
+
+```html
+<div>
+    <button type="button" aria-label="Close"></button>
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->ariaLabel(null);
+```
+
+### `autoFocus()`
+
+Focus on the control (put cursor into it) when the page loads. Only one form element could be in focus at the same time.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->autofocus();
+```
+
+```html
+<div>
+    <button type="button" autofocus></button>
+</div>
+```
+
+Pass `false` to not automatically focus on this element (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->autofocus(false);
+```
+
+### `tabIndex()`
+
+Defines index for focusing on element with "Tab" button:
+
+- `-1` - focus is ignored;
+- `0` - focus order is determined by order of the elements in the page source;
+- Positive integer - exact focus order.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->tabIndex(3);
+```
+
+```html
+<div>
+    <button type="button" tabindex="3"></button>
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->tabIndex(null);
+```
+
+### `disabled()`
+
+Prevents element from being edited, focused and submitted within the form.
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->disabled();
+```
+
+```html
+<div>
+    <button type="button" disabled></button>
+</div>
+```
+
+Pass `false` to not set this attribute (default when method is not called):
+
+### `form()`
+
+HTML ID for the form this button belongs to.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->form('contact-form');
+```
+
+```html
+<div>
+    <button type="button" form="contacts-form"></button>
+</div>
+```
+
+```php
+echo \Yiisoft\Form\Field\Button::widget()->disabled(false);
 ```
 
 ## `DateTimeInputField` based fields
