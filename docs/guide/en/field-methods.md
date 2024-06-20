@@ -1366,39 +1366,12 @@ echo \Yiisoft\Form\Field\Text::widget()->usePlaceholder();
 
 ### `enrichFromValidationRules()`
 
-Whether to enrich this field from validation rules. This means that you can provide extra input attributes configuration
-depending on validation rules that will be automatically applied:
+Whether to enrich this field from validation rules. Read more about this concept [here](validation-rules-enrichment.md).
 
 ```php
 use Yiisoft\Form\Theme\ThemeContainer;
 
 echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules();
-```
-
-Note that in order for this to work, you need also configure validation rules enricher. It's done globally via theme
-container:
-
-```php
-use Yiisoft\Form\Field\Base\BaseField;
-use Yiisoft\Form\ValidationRulesEnricherInterface;
-
-final class MyValidationRulesEnricher implements ValidationRulesEnricherInterface 
-{
-    public function process(BaseField $field, mixed $rules): ?array
-    {
-        return ['inputAttributes' => ['data-has-error' => true]];
-    }
-}
-```
-
-```php
-\Yiisoft\Form\Theme\ThemeContainer::initialize(validationRulesEnricher: new MyValidationRulesEnricher());
-```
-
-```html
-<div>
-    <input type="email" data-has-error>
-</div>
 ```
 
 Pass `false` to not enrich this field from validation rules (default when method is not called):
