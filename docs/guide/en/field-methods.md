@@ -1320,11 +1320,92 @@ echo \Yiisoft\Form\Field\Date::widget()->disabled(false);
 
 ## `PlaceholderInterface` implemented fields
 
-...
+### `placeholder()`
+
+Defines the value used as an example to help user fill the actual value.
+
+```php
+echo Yiisoft\Form\Field\Text::widget()->placeholder('John');
+```
+
+```html
+<div>
+    <input type="text" placeholder="John">
+</div>
+```
+
+Pass `null` to not set this attribute (default when method is not called):
+
+```php
+echo Yiisoft\Form\Field\Text::widget()->placeholder(null);
+```
+
+### `usePlaceholder()`
+
+Whether to use placeholder - the example value intended to help user fill the actual value.
+
+To disable placeholder:
+
+```php
+echo Yiisoft\Form\Field\Text::widget()->useContainer(false);
+```
+
+```html
+<div>
+    <input type="text">
+</div>
+```
+
+Enable placeholder (default):
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()->usePlaceholder();
+```
 
 ## `EnrichFromValidationRulesInterface` implemented fields
 
-...
+### `enrichFromValidationRules()`
+
+Whether to enrich this field from validation rules. This means that you can provide extra input attributes configuration
+depending on validation rules that will be automatically applied:
+
+```php
+use Yiisoft\Form\Theme\ThemeContainer;
+
+echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules();
+```
+
+Note that in order for this to work, you need also configure validation rules enricher. It's done globally via theme
+container:
+
+```php
+use Yiisoft\Form\Field\Base\BaseField;
+use Yiisoft\Form\ValidationRulesEnricherInterface;
+
+final class MyValidationRulesEnricher implements ValidationRulesEnricherInterface 
+{
+    public function process(BaseField $field, mixed $rules): ?array
+    {
+        return ['inputAttributes' => ['data-has-error' => true]];
+    }
+}
+```
+
+```php
+\Yiisoft\Form\Theme\ThemeContainer::initialize(validationRulesEnricher: new MyValidationRulesEnricher());
+```
+
+```html
+<div>
+    <input type="email" data-has-error>
+</div>
+```
+
+Pass `false` to not enrich this field from validation rules (default when method is not called):
+
+```php
+echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules(false);
+```
 
 ## `ValidationClassInterface` implemented fields
 
