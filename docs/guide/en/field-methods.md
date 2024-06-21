@@ -1382,4 +1382,96 @@ echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules(false);
 
 ## `ValidationClassInterface` implemented fields
 
-...
+### `invalidClass()`
+
+Sets HTML class for the field container when the field has been validated and has validation errors.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->error('Name is not valid.')
+    ->invalidClass('invalid');
+```
+
+or
+
+```php
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\PureField\InputData;
+
+echo Text::widget()
+    ->inputData(new InputData(validationErrors: ['Name is not valid.']))
+    ->invalidClass('invalid');
+```
+
+```html
+<div class="invalid">
+    <input type="text">
+    <div>Name is not valid.</div>
+</div>
+```
+
+### `validClass()`
+
+Sets HTML class for the field container when the field has been validated and has no validation errors.
+
+```php
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\PureField\InputData;
+
+echo Text::widget()
+    ->inputData(new InputData(validationErrors: []))
+    ->validClass('valid');
+```
+
+```html
+<div class="valid">
+    <input type="text">
+</div>
+```
+
+### `inputInvalidClass()`
+
+Sets HTML class for the input when the field has been validated and has validation errors.
+
+```php
+echo \Yiisoft\Form\Field\Text::widget()
+    ->error('Name is not valid.')
+    ->inputInvalidClass('invalid');
+```
+
+or
+
+```php
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\PureField\InputData;
+
+echo Text::widget()
+    ->inputData(new InputData(validationErrors: ['Name is not valid.']))
+    ->inputInvalidClass('invalid');
+```
+
+```html
+<div>
+    <input type="text" class="invalid">
+    <div>Name is not valid.</div>
+</div>
+```
+
+### `inputValidClass()`
+
+Sets HTML class for the input when the field has been validated and has no validation errors.
+
+```php
+use Yiisoft\Form\Field\Text;
+use Yiisoft\Form\PureField\InputData;
+
+echo Text::widget()
+    ->inputData(new InputData(validationErrors: []))
+    ->inputValidClass('valid');
+```
+
+```html
+<div>
+    <input type="text" class="valid">
+</div>
+```
