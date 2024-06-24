@@ -23,6 +23,33 @@ And interfaces:
 `BaseField` class defines field's outer container. `ErrorSummary` is an example of fields inherited directly from 
 `BaseField `.
 
+Built-in fields that extend from `BaseField`:
+
+- [Button](fields/button.md)
+- [ButtonGroup](fields/button-group.md)
+- [Checkbox](fields/checkbox.md)
+- [CheckboxList](fields/checkbox-list.md)
+- [Date](fields/date.md)
+- [DateTimeLocal](fields/date-time-local.md)
+- [Email](fields/email.md)
+- [ErrorSummary](fields/error-summary.md)
+- [Fieldset](fields/fieldset.md)
+- [File](fields/file.md)
+- [Hidden](fields/hidden.md)
+- [Image](fields/image.md)
+- [Number](fields/number.md)
+- [Password](fields/password.md)
+- [RadioList](fields/radio-list.md)
+- [Range](fields/range.md)
+- [ResetButton](fields/reset-button.md)
+- [Select](fields/select.md)
+- [SubmitButton](fields/submit-button.md)
+- [Telephone](fields/telephone.md)
+- [Text](fields/text.md)
+- [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
+- [Url](fields/url.md)
+
 ### `containerTag()`
 
 HTML tag for outer container that wraps the field.
@@ -149,6 +176,32 @@ Parts field consists of 4 elements:
 - Error.
 
 Input here can be composite and can contain multiple elements (parts).
+
+Built-in fields that extend from `PartsField`:
+
+- [Button](fields/button.md)
+- [ButtonGroup](fields/button-group.md)
+- [Checkbox](fields/checkbox.md)
+- [CheckboxList](fields/checkbox-list.md)
+- [Date](fields/date.md)
+- [DateTimeLocal](fields/date-time-local.md)
+- [Email](fields/email.md)
+- [Fieldset](fields/fieldset.md)
+- [File](fields/file.md)
+- [Hidden](fields/hidden.md)
+- [Image](fields/image.md)
+- [Number](fields/number.md)
+- [Password](fields/password.md)
+- [RadioList](fields/radio-list.md)
+- [Range](fields/range.md)
+- [ResetButton](fields/reset-button.md)
+- [Select](fields/select.md)
+- [SubmitButton](fields/submit-button.md)
+- [Telephone](fields/telephone.md)
+- [Text](fields/text.md)
+- [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
+- [Url](fields/url.md)
 
 ### `label()`
 
@@ -787,6 +840,24 @@ Text::widget()
 
 Input field is a [parts field](#partsfield-based-fields) with exactly 1 input element.
 
+Built-in fields that extend from `InputField`:
+
+- [Checkbox](fields/checkbox.md)
+- [Date](fields/date.md)
+- [DateTimeLocal](fields/date-time-local.md)
+- [Email](fields/email.md)
+- [File](fields/file.md)
+- [Hidden](fields/hidden.md)
+- [Number](fields/number.md)
+- [Password](fields/password.md)
+- [Range](fields/range.md)
+- [Select](fields/select.md)
+- [Telephone](fields/telephone.md)
+- [Text](fields/text.md)
+- [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
+- [Url](fields/url.md)
+
 ### `inputAttributes()` / `addInputAttributes()`
 
 HTML attributes for input.
@@ -894,6 +965,14 @@ echo \Yiisoft\Form\Field\Text::widget()->form('contact-form');
 ```
 
 ## `ButtonField` based fields
+
+These fields represent clickable button. They can be used for submitting / resetting form, opening dialogs, etc.
+
+Built-in fields that extend from `ButtonField`:
+
+- [Button](fields/button.md)
+- [ResetButton](fields/reset-button.md)
+- [SubmitButton](fields/submit-button.md)
 
 ### `buttonAttributes()` / `addButtonAttributes()`
 
@@ -1132,6 +1211,14 @@ echo ButtonField::widget()->button($tag);
 
 ## `DateTimeInputField` based fields
 
+These fields are used for entering date and time, either separately or altogether.
+
+Built-in fields that extend from `DateTimeInputField`:
+
+- [Date](fields/date.md)
+- [DateTimeLocal](fields/date-time-local.md)
+- [Time](fields/time.md)
+
 ### `max()`
 
 Indicates maximum allowed value for the element.
@@ -1320,6 +1407,20 @@ echo \Yiisoft\Form\Field\Date::widget()->disabled(false);
 
 ## `PlaceholderInterface` implemented fields
 
+These fields can provide a placeholder - the value used as an example to help user fill the actual value. It's shown
+inside the input when its value is empty (usually in a faded fashion). Note that it's not a value and it's not 
+submitted within the form data. 
+
+Built-in fields that implement `PlaceholderIntarface`:
+
+- [Email](fields/email.md)
+- [Number](fields/number.md)
+- [Password](fields/password.md)
+- [Telephone](fields/telephone.md)
+- [Text](fields/text.md)
+- [Textarea](fields/textarea.md)
+- [Url](fields/url.md)
+
 ### `placeholder()`
 
 Defines the value used as an example to help user fill the actual value.
@@ -1364,9 +1465,28 @@ echo \Yiisoft\Form\Field\Text::widget()->usePlaceholder();
 
 ## `EnrichFromValidationRulesInterface` implemented fields
 
+With these fields, it's possible to enrich them from validation rules. Read more about this concept 
+[here](validation-rules-enrichment.md).
+
+Built-in fields that implement `EnrichFromValidationRulesInterface`:
+
+- [Date](fields/date.md)
+- [DateTimeLocal](fields/date-time-local.md)
+- [Email](fields/email.md)
+- [File](fields/file.md)
+- [Number](fields/number.md)
+- [Password](fields/password.md)
+- [Range](fields/range.md)
+- [Select](fields/select.md)
+- [Telephone](fields/telephone.md)
+- [Text](fields/text.md)
+- [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
+- [Url](fields/url.md)
+
 ### `enrichFromValidationRules()`
 
-Whether to enrich this field from validation rules. Read more about this concept [here](validation-rules-enrichment.md).
+Whether to enrich this field from validation rules.
 
 ```php
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -1381,6 +1501,27 @@ echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules(false);
 ```
 
 ## `ValidationClassInterface` implemented fields
+
+With these fields it's possible to reflect validation state, either on the input or on the field container.  
+
+Built-in fields that implement `EnrichFromValidationRulesInterface`:
+
+- [Checkbox](fields/checkbox.md)
+- [CheckboxList](fields/checkbox-list.md)
+- [Date](fields/date.md)
+- [DateTimeLocal](fields/date-time-local.md)
+- [Email](fields/email.md)
+- [File](fields/file.md)
+- [Number](fields/number.md)
+- [Password](fields/password.md)
+- [RadioList](fields/radio-list.md)
+- [Range](fields/range.md)
+- [Select](fields/select.md)
+- [Telephone](fields/telephone.md)
+- [Text](fields/text.md)
+- [Textarea](fields/textarea.md)
+- [Time](fields/time.md)
+- [Url](fields/url.md)
 
 ### `invalidClass()`
 
