@@ -6,6 +6,6 @@ namespace Yiisoft\Form\Theme;
 
 final class ThemePath
 {
-    public const BOOTSTRAP5_HORIZONTAL = __DIR__ . '/../config/theme-bootstrap5-horizontal.php';
-    public const BOOTSTRAP5_VERTICAL = __DIR__ . '/../config/theme-bootstrap5-vertical.php';
+    public const BOOTSTRAP5_HORIZONTAL = __DIR__ . '/../../config/theme-bootstrap5-horizontal.php';
+    public const BOOTSTRAP5_VERTICAL = __DIR__ . '/../../config/theme-bootstrap5-vertical.php';
 }
