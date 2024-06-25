@@ -154,7 +154,7 @@ final class File extends InputField implements EnrichFromValidationRulesInterfac
     protected function beforeRender(): void
     {
         if ($this->enrichFromValidationRules) {
-            $this->enrichment = ThemeContainer::getEnrichment($this, $this->getInputData());
+            $this->enrichment = ThemeContainer::getValidationRulesEnrichment($this, $this->getInputData());
         }
     }
 

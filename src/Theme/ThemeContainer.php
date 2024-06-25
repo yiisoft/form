@@ -85,7 +85,7 @@ final class ThemeContainer
         return self::$themes[$name];
     }
 
-    public static function getEnrichment(BaseField $field, InputDataInterface $inputData): array
+    public static function getValidationRulesEnrichment(BaseField $field, InputDataInterface $inputData): array
     {
         return self::$validationRulesEnricher?->process($field, $inputData->getValidationRules()) ?? [];
     }
