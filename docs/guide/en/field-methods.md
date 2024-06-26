@@ -391,7 +391,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->hintAttributes(['class' => 'hint', 'data-type' => 'name']);
 ```
 
-> The hint must be visible (use [`hint()`](#hint) or [`hintConfig()](#hintconfig) methods).
+> The hint must be visible (use [`hint()`](#hint) or [`hintConfig()`](#hintconfig) methods).
 
 ```html
 <div>
