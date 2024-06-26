@@ -328,7 +328,7 @@ echo \Yiisoft\Form\Field\Text::widget()->hintConfig(['content()' => ['Enter name
 
 ### `errorConfig()`
 
-Config with [definitions](https://github.com/yiisoft/definitions) for error.
+Config with [definitions](https://github.com/yiisoft/definitions) for `Error` widget.
 
 Usage:
 
