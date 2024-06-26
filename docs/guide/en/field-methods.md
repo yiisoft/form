@@ -294,7 +294,7 @@ echo $field;
 
 ### `labelConfig()`
 
-Config with [definitions](https://github.com/yiisoft/definitions) for label.
+Config with [definitions](https://github.com/yiisoft/definitions) for `Label` widget.
 
 Usage:
 
