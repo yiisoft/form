@@ -497,8 +497,6 @@ Result:
 </div>
 ```
 
-```labelClass```
-
 ### `errorId()`
 
 HTML ID for error.
