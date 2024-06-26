@@ -721,7 +721,7 @@ echo \Yiisoft\Form\Field\Text::widget()
 A template for a field where tokens (placeholders) are field parts. This template is used when field is created using
 `widget()` method.
 
-Supported tokens:
+Built-in tokens:
 
 - `{label}`;
 - `{hint}`;
