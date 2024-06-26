@@ -507,7 +507,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->errorId('error');
 ```
 
-> The error must be visible (use [`error()`](#error) or [errorlConfig()](#errorconfig) methods).
+> The error must be visible (use [`error()`](#error) or [`errorConfig()`](#errorconfig) methods).
 
 Result:
 
