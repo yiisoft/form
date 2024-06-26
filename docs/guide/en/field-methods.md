@@ -530,7 +530,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->labelClass('label', 'focus');
 ```
 
-> The label must be visible (use [`label()`](#label) or [`labelConfig()](#labelconfig) methods).:
+> The label must be visible (use [`label()`](#label) or [`labelConfig()`](#labelconfig) methods).:
 
 ```html
 <div>
