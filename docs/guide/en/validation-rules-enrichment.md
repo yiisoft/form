@@ -1,6 +1,6 @@
 # Validation rules enrichment
 
-Enrichment of the fields from validation rules is the concept allowing:
+Enrichment of the fields from validation rules is the concept / extension point allowing:
 
 - provide extra configuration / parameters depending on validation rules in the class implementing
   `Yiisoft\Form\ValidationRulesEnricherInterface`;
