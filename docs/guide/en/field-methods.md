@@ -467,7 +467,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->labelId('label');
 ```
 
-> The label must be visible (use [`label()`](#label) or [`labelConfig()](#labelconfig) methods).
+> The label must be visible (use [`label()`](#label) or [`labelConfig()`](#labelconfig) methods).
 
 ```html
 <div>
