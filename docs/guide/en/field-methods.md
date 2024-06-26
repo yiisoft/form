@@ -486,7 +486,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->hintId('hint');
 ```
 
-> The hint must be visible (use [`hint()`](#hint) or [hintlConfig()](#hintconfig) methods).
+> The hint must be visible (use [`hint()`](#hint) or [`hintConfig()`](#hintconfig) methods).
 
 Result:
 
