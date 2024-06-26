@@ -311,7 +311,7 @@ echo \Yiisoft\Form\Field\Text::widget()->labelConfig(['content()' => ['Name'], '
 
 ### `hintConfig()`
 
-Config with [definitions](https://github.com/yiisoft/definitions) for hint.
+Config with [definitions](https://github.com/yiisoft/definitions) for `Hint` widget.
 
 Usage:
 
