@@ -103,7 +103,7 @@ The field will be enriched automatically:
 
 ```html
 <div aria-required="true">
-    <input type="text">
+    <input type="text" required>
 </div>
 ```
 
