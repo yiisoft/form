@@ -566,7 +566,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->hintClass('hint', 'focus');
 ```
 
-> The hint must be visible (use [`hint()`](#hint) or [`hintConfig()](#hintconfig) methods).:
+> The hint must be visible (use [`hint()`](#hint) or [`hintConfig()`](#hintconfig) methods).:
 
 ```html
 <div>
