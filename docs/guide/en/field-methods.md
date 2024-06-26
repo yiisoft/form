@@ -170,10 +170,10 @@ echo \Yiisoft\Form\Field\Text::widget()->useContainer();
 
 Parts field consists of 4 elements:
 
-- Label;
-- Hint;
-- Input;
-- Error.
+- label;
+- hint;
+- input;
+- error.
 
 Input here can be composite and can contain multiple elements (parts).
 
