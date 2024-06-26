@@ -353,7 +353,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->labelAttributes(['class' => 'label', 'data-type' => 'name']);
 ```
 
-> The label must be visible (use [`label()`](#label) or [`labelConfig()](#labelconfig) methods).
+> The label must be visible (use [`label()`](#label) or [`labelConfig()`](#labelconfig) methods).
 
 ```html
 <div>
