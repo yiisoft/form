@@ -602,7 +602,7 @@ echo \Yiisoft\Form\Field\Text::widget()
     ->errorClass('error', 'focus');
 ```
 
-> The error must be visible (use [`error()`](#error) or [`errorConfig()](#errorconfig) methods).:
+> The error must be visible (use [`error()`](#error) or [`errorConfig()`](#errorconfig) methods).:
 
 ```html
 <div>
