@@ -18,11 +18,7 @@ You can use definitions:
 
 ```php
 use Psr\Container\ContainerInterface;
-use Yiisoft\Form\Field\Base\BaseField;
-use Yiisoft\Form\Field\Base\InputField;
-use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Text;
-use Yiisoft\Widget\Widget;
 use Yiisoft\Widget\WidgetFactory;
 
 WidgetFactory::initialize(
