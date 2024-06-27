@@ -84,7 +84,7 @@ Result:
 </div>
 ```
 
-Regardless of default theme set, it's also possible to control theme at specific widget level:
+If you want to use a specific theme for a single widget, it's possible to specify it at the widget call:
 
 ```php
 use Yiisoft\Form\Field\Text;
