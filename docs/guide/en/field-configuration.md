@@ -6,7 +6,7 @@ Fields could be configured on multiple levels.
   - With definitions;
   - With a default theme;
   - With a theme specified at the field level.
-- Widget configuration.
+- Configuration passed to the widget when it is used.
 
 ## Widget factory configuration
 
