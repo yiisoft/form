@@ -107,7 +107,7 @@ Note that there is an additional approach covered in [Field themes](field-themes
 
 ## Widget configuration
 
-Config could be also passed through `widget()` call for specific field at the place of usage:
+Config could be specified in a `widget()` call for specific field at the place of usage:
 
 ```php
 use Yiisoft\Form\Field\Text;
