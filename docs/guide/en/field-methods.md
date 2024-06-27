@@ -218,7 +218,7 @@ echo \Yiisoft\Form\Field\Text::widget()->label('Name');
 </div>
 ```
 
-Another way is to use [config].
+Another way is to use [`labelConfig()`](#labelconfig) method.
 
 ### `hint()`
 
@@ -235,7 +235,7 @@ echo \Yiisoft\Form\Field\Text::widget()->hint('Enter name');
 </div>
 ```
 
-Another way is to use [config].
+Another way is to use [`hintConfig()`](#hintconfig) method.
 
 ### `error()`
 
@@ -252,7 +252,7 @@ echo \Yiisoft\Form\Field\Text::widget()->error('Name is not valid.');
 </div>
 ```
 
-Another way is to use [config].
+Another way is to use [`errorConfig()`](#errorconfig) method.
 
 ### `hideLabel()`
 
