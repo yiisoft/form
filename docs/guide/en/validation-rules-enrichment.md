@@ -72,7 +72,7 @@ final class MyTextField extends InputField
     
     protected function prepareContainerAttributes(array &$attributes): void 
     { 
-        $attributes = array_merge($attributes, $this->enrichment['containerAttributes']); 
+        $attributes = array_merge($attributes, $this->enrichment['containerAttributes'] ?? []); 
         
         return parent::prepareContainerAttrbiutes($attributes);
     }
@@ -139,7 +139,7 @@ or enable it (default):
 echo Yiisoft\Form\Field\Text::widget()->enrichFromValidationRules();
 ```
 
-## Other implementations
+## Implementations
 
 [Form Model](https://github.com/yiisoft/form-model) package has its
 [own implementation](https://github.com/yiisoft/form-model/blob/master/src/ValidationRulesEnricher.php) of validation
