@@ -139,7 +139,7 @@ or enable it (default):
 echo Yiisoft\Form\Field\Text::widget()->enrichFromValidationRules();
 ```
 
-## Other implementations
+## Implementations
 
 [Form Model](https://github.com/yiisoft/form-model) package has its
 [own implementation](https://github.com/yiisoft/form-model/blob/master/src/ValidationRulesEnricher.php) of validation
