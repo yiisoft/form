@@ -39,6 +39,7 @@ class Field
 {
     /**
      * @var string|null
+     * @psalm-suppress MissingClassConstType
      */
     protected const DEFAULT_THEME = null;
 

@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Range;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -399,6 +400,23 @@ HTML_WRAP;
             HTML;
 
         $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
+    {
+        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
+
+        $actualHtml = Range::widget()
+            ->enrichFromValidationRules()
+            ->inputData(new InputData(validationRules: [['required']]))
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="range" required>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testEnrichFromValidationRulesDisabled(): void

@@ -15,6 +15,9 @@ use function in_array;
 
 abstract class PartsField extends BaseField
 {
+    /**
+     * @psalm-suppress MissingClassConstType
+     */
     private const BUILTIN_TOKENS = [
         '{input}',
         '{label}',
