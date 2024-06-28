@@ -37,7 +37,7 @@ Adds methods for using form model.
 
 Adds methods for setting and generating custom field content.
 
-#### `VaidationClassTrait` 
+#### `ValidationClassTrait` 
 
 Adds methods for setting valid and invalid CSS classes.
 

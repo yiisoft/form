@@ -6,6 +6,13 @@ namespace Yiisoft\Form\PureField;
 
 use Yiisoft\Form\Field\Base\InputData\InputDataInterface;
 
+/**
+ * Simple input data implementation that can be used within this package. All parameters are passed from outer scope.
+ * Regarding validation, it does not support state and rules, stores the result errors only. For more advanced
+ * implementation take a look at form model ({@link https://github.com/yiisoft/form-model}) package.
+ *
+ * To simplify adding to field, {@see Field} helper or {@see FieldFactory} can be used.
+ */
 final class InputData implements InputDataInterface
 {
     /**
@@ -14,14 +21,14 @@ final class InputData implements InputDataInterface
      * @psalm-param list<string> $validationErrors
      */
     public function __construct(
-        private ?string $name = null,
-        private mixed $value = null,
-        private ?string $label = null,
-        private ?string $hint = null,
-        private ?string $placeholder = null,
-        private ?string $id = null,
-        private mixed $validationRules = null,
-        private ?array $validationErrors = null,
+        private readonly ?string $name = null,
+        private readonly mixed $value = null,
+        private readonly ?string $label = null,
+        private readonly ?string $hint = null,
+        private readonly ?string $placeholder = null,
+        private readonly ?string $id = null,
+        private readonly mixed $validationRules = null,
+        private readonly ?array $validationErrors = null,
     ) {
     }
 

@@ -10,13 +10,15 @@ Represents `<button>` element of type "submit" that is rendered as button for su
 Widget:
 
 ```php
-echo SubmitButton::widget()->content('Send');
+use Yiisoft\Form\Field\SubmitButton;
+
+echo SubmitButton::widget()->content('Go!');
 ```
 
 Result will be:
 
 ```html
 <div>
-    <button type="submit">Send</button>
+    <button type="submit">Go!</button>
 </div>
 ```

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field\Base\EnrichFromValidationRules;
 
+use Yiisoft\Form\ValidationRulesEnricherInterface;
+
 /**
- * Fields implementing `EnrichFromValidationRulesInterface` can automatically configuration based on validation rules.
+ * Controls whether a field's configuration should be enriched by additional configuration / parameters provided by
+ * {@see ValidationRulesEnricherInterface::process()}.
  */
 interface EnrichFromValidationRulesInterface
 {
     /**
-     * Enable/disable automatic configuration based on validation rules.
+     * Enable/disable enrichment based on validation rules.
      */
     public function enrichFromValidationRules(bool $enrich): self;
 }

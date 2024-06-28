@@ -25,10 +25,10 @@ final class TextTest extends TestCase
         $inputData = new InputData(
             name: 'TextForm[name]',
             value: '',
-            id: 'textform-name',
             label: 'Name',
             hint: 'Input your full name.',
-            placeholder: 'Typed your name here',
+            placeholder: 'Type your name here',
+            id: 'textform-name',
             validationErrors: ['Value cannot be blank.'],
         );
 
@@ -37,7 +37,7 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="textform-name">Name</label>
-            <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+            <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Type your name here">
             <div>Input your full name.</div>
             <div>Value cannot be blank.</div>
             </div>

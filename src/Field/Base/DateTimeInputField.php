@@ -103,7 +103,7 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
     }
 
     /**
-     * A boolean attribute that controls whether or not the user can edit the form control.
+     * A boolean attribute that controls whether the user can edit the form control.
      *
      * @param bool $value Whether to allow the value to be edited by the user.
      *

@@ -10,6 +10,8 @@ Represents `<input>` element of type "image" that is used to create graphical su
 Widget:
 
 ```php
+use Yiisoft\Form\Field\Image;
+
 echo Image::widget()
     ->src('btn.png')
     ->alt('Go');

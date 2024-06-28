@@ -1,12 +1,14 @@
 # Button Group Field
 
-Represents a button group widget.
+Represents a group of [buttons](button.md), multiple types can be used.
 
 ## Usage Example
 
 Widget:
 
 ```php
+use Yiisoft\Form\Field\ButtonGroup;
+
 echo ButtonGroup::widget()
     ->buttons(
         Html::resetButton('Reset Data'),
