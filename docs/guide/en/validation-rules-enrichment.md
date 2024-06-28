@@ -72,7 +72,7 @@ final class MyTextField extends InputField
     
     protected function prepareContainerAttributes(array &$attributes): void 
     { 
-        $attributes = array_merge($attributes, $this->enrichment['containerAttributes']); 
+        $attributes = array_merge($attributes, $this->enrichment['containerAttributes'] ?? []); 
         
         return parent::prepareContainerAttrbiutes($attributes);
     }
