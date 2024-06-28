@@ -1,14 +1,14 @@
-# Checkbox Field
+# Campo de caixa de seleção
 
-Represents `<input>` element of type "checkbox" that rendered by default as boxes that are checked (ticked) when
-activated. Documentation:
+Representa o elemento `<input>` do tipo "checkbox" que é renderizado por padrão como caixas marcadas (marcadas) quando
+ativado. Documentação:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#checkbox-state-(type=checkbox))
 - [MDN Web Docs](https://developer.mozilla.org/docs/Web/HTML/Element/input/checkbox)
 
-## Usage Example
+## Exemplo de uso
 
-Form model:
+Modelo de formulário:
 
 ```php
 final class ProfileForm extends FormModel
@@ -37,7 +37,7 @@ Widget:
 echo Checkbox::widget()->formAttribute($profileForm, 'subscribe');
 ```
 
-Result will be:
+O resultado será:
 
 ```html
 <div>
@@ -49,8 +49,8 @@ Result will be:
 </div>
 ```
 
-## Supported Values
+## Valores suportados
 
 - `bool`
 - `null`
-- any stringable values
+- quaisquer valores stringáveis
