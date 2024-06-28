@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Password;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -272,6 +273,23 @@ final class PasswordTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
+    {
+        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
+
+        $actualHtml = Password::widget()
+            ->enrichFromValidationRules()
+            ->inputData(new InputData(validationRules: [['required']]))
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="password" required>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testEnrichFromValidationRulesDisabled(): void

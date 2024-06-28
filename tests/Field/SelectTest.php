@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
@@ -648,6 +649,23 @@ final class SelectTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
+    {
+        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
+
+        $actualHtml = Select::widget()
+            ->enrichFromValidationRules()
+            ->inputData(new InputData(validationRules: [['required']]))
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <select required></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testEnrichFromValidationRulesDisabled(): void

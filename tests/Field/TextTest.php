@@ -8,6 +8,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
+use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 
 final class TextTest extends TestCase
@@ -149,6 +151,61 @@ final class TextTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Text field requires a string or null value.');
         $widget->render();
+    }
+
+    public function testEnrichFromValidationRulesEnabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Text::widget()->enrichFromValidationRules()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text" data-test="1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
+    {
+        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
+
+        $actualHtml = Text::widget()
+            ->enrichFromValidationRules()
+            ->inputData(new InputData(validationRules: [['required']]))
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="text" required>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesDisabled(): void
+    {
+        ThemeContainer::initialize(
+            validationRulesEnricher: new StubValidationRulesEnricher([
+                'inputAttributes' => ['data-test' => 1],
+            ]),
+        );
+
+        $html = Text::widget()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="text">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
     }
 
     public function testWithoutContainer(): void
