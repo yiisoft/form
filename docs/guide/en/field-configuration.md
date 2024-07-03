@@ -131,7 +131,7 @@ ThemeContainer::initialize(
 
 When using [Yii Config](https://github.com/yiisoft/config), there is no need to manually interact with theme cotnainer,
 it's initialized automatically during application's bootstrap. Here is an example of relevant `config/params.php` file
-section:
+section for configuration:
 
 ```php
 use Yiisoft\Form\Theme\ThemePath;
