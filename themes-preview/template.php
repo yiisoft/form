@@ -53,8 +53,6 @@ echo '<!DOCTYPE html>';
 
     echo Field::date()->label('Date Field');
 
-    echo Field::dateTime()->label('DateTime Field');
-
     echo Field::dateTimeLocal()->label('DateTimeLocal Field');
 
     echo Field::telephone()->label('Telephone Field')->placeholder('Placeholder');
