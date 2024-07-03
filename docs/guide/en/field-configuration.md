@@ -32,14 +32,11 @@ for outer container that wraps the input.
 - [`inputContainerClass`](field-methods.md#inputcontainerclass--addinputcontainerclass) - HTML class for outer container
 that wraps the input.
 - [`labelClass`](field-methods.md#labelclass--addlabelclass) - HTML class for label.
-- [`labelConfig`](field-methods.md#labelconfig) - Config with [definitions](https://github.com/yiisoft/definitions) for
-`Label` widget.
+- [`labelConfig`](field-methods.md#labelconfig) - Config with [definitions](https://github.com/yiisoft/definitions) for `Label` widget.
 - [`hintClass`](field-methods.md#hintclass--addhintclass) - HTML class for hint.
-- [`hintConfig`](field-methods.md#hintconfig) - config with [definitions](https://github.com/yiisoft/definitions) for
-- `Hint` widget.
+- [`hintConfig`](field-methods.md#hintconfig) - config with [definitions](https://github.com/yiisoft/definitions) for `Hint` widget.
 - [`errorClass`](field-methods.md#errorclass--adderrorclass) - HTML class for error.
-- [`errorConfig`](field-methods.md#errorconfig) - config with [definitions](https://github.com/yiisoft/definitions) for
-- `Error` widget.
+- [`errorConfig`](field-methods.md#errorconfig) - config with [definitions](https://github.com/yiisoft/definitions) for `Error` widget.
 - [`usePlaceholder`](field-methods.md#useplaceholder) - whether to use placeholder - the example value intended to help
 user fill the actual value.
 - [`validClass`](field-methods.md#validclass) - HTML class for the field container when the field has been validated and
