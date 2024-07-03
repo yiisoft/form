@@ -148,25 +148,3 @@ return [
 ```
 
 No built-in themes and validation rules enricher are used by default.
-
-## Themes' preview
-
-This package ships with the demo for built-in themes featuring all available fields.
-
-Prerequisites:
-
-- Docker.
-
-Generating HTML files:
-
-```shell
-cd themes-preview
-make
-```
-
-The generated files will be available at the following paths:
-
-- `themes-preview/bootstrap5/bootstrap5-horizontal.html`;
-- `themes-preview/bootstrap5/bootstrap5-vertical.html`;
-
-Use the interner browser of your choice to view them. 

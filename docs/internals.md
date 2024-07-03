@@ -42,3 +42,25 @@ dependencies are correctly defined in `composer.json`. To run the checker, execu
 ```shell
 ./vendor/bin/composer-require-checker
 ```
+
+## Themes' preview
+
+This package ships with the demo for built-in themes featuring all available fields.
+
+Prerequisites:
+
+- Docker.
+
+Generating HTML files:
+
+```shell
+cd themes-preview
+make
+```
+
+The generated files will be available at the following paths:
+
+- `themes-preview/bootstrap5/bootstrap5-horizontal.html`;
+- `themes-preview/bootstrap5/bootstrap5-vertical.html`;
+
+Use the interner browser of your choice to view them. 
