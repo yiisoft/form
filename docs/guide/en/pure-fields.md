@@ -1,4 +1,4 @@
-# Creating fields
+# Pure fields
 
 To ease the creation of the fields with `\Yiisoft\Form\PureField\InputData` as a data source, use
 corresponding helper (`\Yiisoft\Form\PureField\Field`):

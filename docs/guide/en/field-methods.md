@@ -900,7 +900,7 @@ echo \Yiisoft\Form\Field\Text::widget()->inputId('input');
 
 ### `setInputId()`
 
-There is an additional method to control whether ID should be set. It can be disabled:
+An additional method to control whether HTML ID for input should be set. It can be disabled:
 
 ```php
 echo = \Yiisoft\Form\Field\Text::widget()
