@@ -23,7 +23,7 @@ template is used when field is rendered.
 using `begin()` and `end()` methods.
 - [`templateEnd`](field-methods.md#templatebegin--templateend) - ending template for the case when field is created
 using `begin()` and `end()` methods.
-- [`setInputId`](field-methods.md#setinputid) - whether HTML ID for input should be set.
+- [`shouldSetInputId`](field-methods.md#shouldsetinputid) - whether HTML ID for input should be set.
 - [`inputAttributes`](field-methods.md#inputattributes--addinputattributes) - HTML attributes for input.
 - [`inputClass`](field-methods.md#inputclass--addinputclass) - HTML class for input.
 - [`inputContainerTag`](field-methods.md#inputcontainertag) - HTML tag for outer container that wraps the input.
