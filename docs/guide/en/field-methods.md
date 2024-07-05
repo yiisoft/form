@@ -898,13 +898,13 @@ echo \Yiisoft\Form\Field\Text::widget()->inputId('input');
 </div>
 ```
 
-### `setInputId()`
+### `shouldSetInputId()`
 
 An additional method to control whether HTML ID for input should be set. It can be disabled:
 
 ```php
 echo = \Yiisoft\Form\Field\Text::widget()
-    ->setInputId(false)
+    ->shouldSetInputId(false)
     ->inputId('input');
 ```
 
@@ -914,7 +914,7 @@ To enable it (default):
 
 ```php
 echo \Yiisoft\Form\Field\Text::widget()
-    ->setInputId()
+    ->shouldSetInputId()
     ->inputId('input');
 ```
 
