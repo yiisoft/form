@@ -8,29 +8,19 @@ by users when a form is submitted. Documentation:
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public string $action = 'update';
-}
-```
-
 Widget:
 
 ```php
-echo Hidden::widget()->formAttribute($profileForm, 'action');
+use Yiisoft\Form\Field\Hidden;
+
+echo Hidden::widget()
+    ->name('key')
+    ->value('x100')
+    ->inputId('hiddenform-key');
 ```
 
 Result will be:
 
 ```html
-<input type="hidden" id="profileform-action" name="ProfileForm[action]" value="update">
+<input type="hidden" id="hiddenform-key" name="key" value="x100">
 ```
-
-## Supported Values
-
-- `string`
-- number or numeric string (see [is_numeric()](https://www.php.net/manual/en/function.is-numeric.php))
-- `null`

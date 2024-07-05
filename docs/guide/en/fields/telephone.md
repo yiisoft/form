@@ -7,40 +7,25 @@ Represents `<input>` element of type "tel" that lets the user enter and edit a t
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public ?string $phone = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'phone' => 'Your phone number',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
+use Yiisoft\Form\Field\Telephone;
+
 echo Telephone::widget()
-    ->formAttribute($profileForm, 'phone')
-    ->pattern('[0-9]{3}-[0-9]{3}-[0-9]{4}');
+    ->name('TelephoneForm[number]')
+    ->value('')
+    ->inputId('telephoneform-number')
+    ->label('Phone')
+    ->hint('Enter your phone.');
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="profileform-phone">Your phone number</label>
-    <input type="tel" id="profileform-phone" name="ProfileForm[phone]" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+    <label for="telephoneform-number">Phone</label>
+    <input type="tel" id="telephoneform-number" name="TelephoneForm[number]" value>
+    <div>Enter your phone.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`

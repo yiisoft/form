@@ -1,6 +1,6 @@
 # Email Field
 
-Represents `<input>` element of type "email" that lets the user to enter and edit an e-mail address, or, if the "multiple"
+Represents `<input>` element of type "email" that lets the user enter and edit an e-mail address, or, if the "multiple"
 attribute is specified, a list of e-mail addresses is accepted. Documentation:
 
 - [HTML Living Standard](https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email))
@@ -8,40 +8,25 @@ attribute is specified, a list of e-mail addresses is accepted. Documentation:
 
 ## Usage Example
 
-Form model:
-
-```php
-final class ProfileForm extends FormModel
-{
-    public ?string $email = null;
-
-    public function getAttributeLabels(): array
-    {
-        return [
-            'email' => 'Your e-mail',
-        ];
-    }
-}
-```
-
 Widget:
 
 ```php
+use Yiisoft\Form\Field\Email;
+
 echo Email::widget()
-    ->formAttribute($profileForm, 'email')
-    ->required();
+    ->name('EmailForm[main]')
+    ->value('')
+    ->label('Main email')
+    ->hint('Email for notifications.')
+    ->inputId('emailform-main');
 ```
 
 Result will be:
 
 ```html
 <div>
-    <label for="profileform-email">Your e-mail</label>
-    <input type="email" id="profileform-email" name="ProfileForm[email]" required>
+    <label for="emailform-main">Main email</label>
+    <input type="email" id="emailform-main" name="EmailForm[main]" value>
+    <div>Email for notifications.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`
