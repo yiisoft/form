@@ -1,19 +1,19 @@
-# Creating and Using Custom Fields
+# Creating and using custom fields
 
 You may create your own fields based on the abstract fields included in the package.
 
-## Creating Field Class
+## Creating field class
 
 Field class must extend `Yiisoft\Form\Field\Base\BaseField` or one of his children and implement necessary abstract 
 methods. 
 
-### Base Classes
+### Base classes
 
-- `BaseField` — base class that contains common functionality of fields.
-- `PartsField` — class extends `BaseField`. It adds templating functionality and parts of field (label, hint, error).
-- `InputField` — class extends `PartsField`. It adds form model support (in most cases, this class is used as a base).
-- `ButtonField` — specific class for button fields, extends `PartsField`.
-- `DateTimeInputField` — specific class for creating form controls with date and/or time input, extends `InputField`.
+- `BaseField` — base class that contains common functionality for all fields.
+- `PartsField` — class extending `BaseField`. It adds templating functionality and field parts (label, hint, error).
+- `InputField` — class extending `PartsField`. It adds form model support (in most cases, this class is used as a base).
+- `ButtonField` — specific class for button fields, extending `PartsField`.
+- `DateTimeInputField` — specific class for creating form controls with date and/or time input, extending `InputField`.
 
 Base abstract classes structure:
 
@@ -25,7 +25,7 @@ flowchart BT
   PartsField  -->  BaseField 
 ```
 
-### Feature Traits
+### Feature traits
 
 You can use feature traits for your field class.
 
@@ -41,7 +41,7 @@ Adds methods for setting and generating custom field content.
 
 Adds methods for setting valid and invalid CSS classes.
 
-To apply common field configuration when field is created through a field factory, class must implement 
+To apply common field configuration when field is created through a field factory, class must implement
 `ValidationClassInterface`.
 
 #### `PlaceholderTrait`
@@ -60,7 +60,7 @@ To apply common field configuration when field is created through a field factor
 
 ## Field Configuration
 
-Sets base configuration of field via parameter "fieldConfigs" of a field factory. For example:
+Base configuration of field is set via `fieldConfigs` parameter of a field factory. For example:
 
 ```php
 'fieldConfigs' => [
@@ -73,9 +73,9 @@ Sets base configuration of field via parameter "fieldConfigs" of a field factory
 ],
 ```
 
-Detailed information about configuration of fields see [here](fields-configuration.md).
+Detailed information about configuration of fields can be seen [here](field-configuration.md).
 
-## Example of Custom Field
+## Example of custom field
 
 Field class:
 
