@@ -23,7 +23,7 @@ final class Theme
         private ?string $template = null,
         private ?string $templateBegin = null,
         private ?string $templateEnd = null,
-        private ?bool $setInputId = null,
+        private ?bool $shouldSetInputId = null,
         private array $inputAttributes = [],
         private string|array|null $inputClass = null,
         private ?string $inputContainerTag = null,
@@ -124,8 +124,8 @@ final class Theme
         }
 
         if (is_a($class, InputField::class, true)) {
-            if ($this->setInputId !== null) {
-                $config['setInputId()'] = [$this->setInputId];
+            if ($this->shouldSetInputId !== null) {
+                $config['shouldSetInputId()'] = [$this->shouldSetInputId];
             }
             if ($this->inputAttributes !== []) {
                 $config['inputAttributes()'] = [$this->inputAttributes];

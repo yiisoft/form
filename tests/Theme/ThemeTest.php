@@ -200,7 +200,7 @@ final class ThemeTest extends TestCase
                 </div>
                 HTML,
                 [
-                    'setInputId' => false,
+                    'shouldSetInputId' => false,
                     'inputAttributes' => ['class' => 'form-control'],
                 ],
                 new InputData(

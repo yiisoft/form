@@ -16,7 +16,7 @@ abstract class InputField extends PartsField
 
     protected ?string $inputId = null;
     protected ?string $inputIdFromTag = null;
-    protected bool $setInputId = true;
+    protected bool $shouldSetInputId = true;
 
     protected array $inputAttributes = [];
 
@@ -40,10 +40,10 @@ abstract class InputField extends PartsField
         return $new;
     }
 
-    final public function setInputId(bool $value): static
+    final public function shouldSetInputId(bool $value): static
     {
         $new = clone $this;
-        $new->setInputId = $value;
+        $new->shouldSetInputId = $value;
         return $new;
     }
 
@@ -107,7 +107,7 @@ abstract class InputField extends PartsField
             $this->inputIdFromTag = (string) $idFromTag;
         }
 
-        if ($this->setInputId) {
+        if ($this->shouldSetInputId) {
             if ($this->inputId !== null) {
                 $attributes['id'] = $this->inputId;
             } elseif ($idFromTag === null) {
@@ -120,7 +120,7 @@ abstract class InputField extends PartsField
     {
         $label = $label->inputData($this->getInputData());
 
-        if ($this->setInputId === false) {
+        if ($this->shouldSetInputId === false) {
             $label = $label->useInputId(false);
         }
 
