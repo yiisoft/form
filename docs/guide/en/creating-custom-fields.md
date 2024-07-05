@@ -7,23 +7,7 @@ You may create your own fields based on the abstract fields included in the pack
 Field class must extend `Yiisoft\Form\Field\Base\BaseField` or one of his children and implement necessary abstract 
 methods. 
 
-### Base classes
-
-- `BaseField` — base class that contains common functionality for all fields.
-- `PartsField` — class extending `BaseField`. It adds templating functionality and field parts (label, hint, error).
-- `InputField` — class extending `PartsField`. It adds form model support (in most cases, this class is used as a base).
-- `ButtonField` — specific class for button fields, extending `PartsField`.
-- `DateTimeInputField` — specific class for creating form controls with date and/or time input, extending `InputField`.
-
-Base abstract classes structure:
-
-```mermaid
-flowchart BT
-  ButtonField  -->  PartsField 
-  DateTimeInputField  -->  InputField 
-  InputField  -->  PartsField 
-  PartsField  -->  BaseField 
-```
+Full list of available base classes with their hierarchy is available [here](field-methods.md#base-classes).
 
 ### Feature traits
 

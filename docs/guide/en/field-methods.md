@@ -2,7 +2,18 @@
 
 Depending on which class the field is based on and which interfaces it implements, the different methods are available.
 
-Package provides base classes, with following hierarchy:
+# Base classes
+
+Package provides these base abstract classes:
+
+- `BaseField` — base class that contains common functionality for all fields.
+- `PartsField` — class extending `BaseField`. It adds templating functionality and field parts (label, hint, error).
+- `InputField` — class extending `PartsField`. It adds form model support (in most cases, this class is used as a base).
+- `ButtonField` — specific class for button fields, extending `PartsField`.
+- `DateTimeInputField` — specific class for creating form controls with date and/or time input, extending `InputField`.
+
+
+The hierarchy is the following:
 
 ```mermaid
 flowchart RL
