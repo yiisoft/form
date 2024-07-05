@@ -30,8 +30,3 @@ Result will be:
     <div>Email for notifications.</div>
 </div>
 ```
-
-## Supported Values
-
-- `string`
-- `null`
