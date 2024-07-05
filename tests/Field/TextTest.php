@@ -343,7 +343,7 @@ final class TextTest extends TestCase
 
         $result = Text::widget()
             ->inputData($inputData)
-            ->setInputId(false)
+            ->shouldSetInputId(false)
             ->render();
 
         $expected = <<<HTML

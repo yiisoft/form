@@ -199,7 +199,7 @@ final class InputFieldTest extends TestCase
 
         $this->assertNotSame($field, $field->form(null));
         $this->assertNotSame($field, $field->inputId(null));
-        $this->assertNotSame($field, $field->setInputId(true));
+        $this->assertNotSame($field, $field->shouldSetInputId(true));
         $this->assertNotSame($field, $field->inputAttributes([]));
         $this->assertNotSame($field, $field->addInputAttributes([]));
         $this->assertNotSame($field, $field->addInputClass());
