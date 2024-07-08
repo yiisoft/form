@@ -142,19 +142,37 @@ final class ButtonFieldTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = StubButtonField::widget()
-            ->ariaDescribedBy('hint')
+        return [
+            'one element' => [
+                ['hint'],
+                <<<HTML
+                <div>
+                <button type="button" aria-describedby="hint"></button>
+                </div>
+                HTML,
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                <<<HTML
+                <div>
+                <button type="button" aria-describedby="hint1 hint2"></button>
+                </div>
+                HTML,
+            ],
+
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(string|array|null $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = StubButtonField::widget()
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
 
-        $expected = <<<HTML
-                    <div>
-                    <button type="button" aria-describedby="hint"></button>
-                    </div>
-                    HTML;
-
-        $this->assertSame($expected, $result);
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void
