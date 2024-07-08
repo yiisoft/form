@@ -161,7 +161,6 @@ final class ButtonFieldTest extends TestCase
                 </div>
                 HTML,
             ],
-
         ];
     }
 
