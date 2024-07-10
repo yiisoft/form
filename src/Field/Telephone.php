@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
