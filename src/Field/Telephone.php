@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
@@ -114,10 +115,10 @@ final class Telephone extends InputField implements EnrichFromValidationRulesInt
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    public function ariaDescribedBy(?string $value): self
+    public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
         return $new;
     }
 

@@ -200,19 +200,59 @@ final class ImageTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Image::widget()
-            ->ariaDescribedBy('hint')
+        return [
+            'one element' => [
+                ['hint'],
+                <<<HTML
+                <div>
+                <input type="image" aria-describedby="hint">
+                </div>
+                HTML,
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                <<<HTML
+                <div>
+                <input type="image" aria-describedby="hint1 hint2">
+                </div>
+                HTML,
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                <<<HTML
+                <div>
+                <input type="image" aria-describedby="hint1 hint2 hint3">
+                </div>
+                HTML,
+            ],
+            'only null' => [
+                [null, null],
+                <<<HTML
+                <div>
+                <input type="image">
+                </div>
+                HTML,
+            ],
+            'empty string' => [
+                [''],
+                <<<HTML
+                <div>
+                <input type="image" aria-describedby>
+                </div>
+                HTML,
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Image::widget()
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
-
-        $expected = <<<HTML
-            <div>
-            <input type="image" aria-describedby="hint">
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

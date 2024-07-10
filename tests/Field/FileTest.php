@@ -126,19 +126,42 @@ final class FileTest extends TestCase
         );
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = File::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                '<input type="file" name="avatar" aria-describedby="hint">',
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                '<input type="file" name="avatar" aria-describedby="hint1 hint2">',
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                '<input type="file" name="avatar" aria-describedby="hint1 hint2 hint3">',
+            ],
+            'only null' => [
+                [null, null],
+                '<input type="file" name="avatar">',
+            ],
+            'empty string' => [
+                [''],
+                '<input type="file" name="avatar" aria-describedby>',
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = File::widget()
             ->name('avatar')
             ->hideLabel()
             ->useContainer(false)
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
-
-        $this->assertSame(
-            '<input type="file" name="avatar" aria-describedby="hint">',
-            $result
-        );
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

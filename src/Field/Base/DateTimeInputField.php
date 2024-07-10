@@ -46,10 +46,10 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    final public function ariaDescribedBy(?string $value): static
+    final public function ariaDescribedBy(?string ...$value): static
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
         return $new;
     }
 
