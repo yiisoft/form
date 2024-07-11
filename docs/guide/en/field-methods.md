@@ -1076,15 +1076,15 @@ echo \Yiisoft\Form\Field\Button::widget()->name(null);
 
 ### `ariaDescribedBy()`
 
-HTML ID of the element providing some additional information about the button that some users might need.  
+HTML ID of the element(s) providing some additional information about the button that some users might need.  
 
 ```php
-echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description');
+echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description1', 'language-description2');
 ```
 
 ```html
 <div>
-    <button type="button" aria-describedby="language-description"></button>
+    <button type="button" aria-describedby="language-description1 language-description2"></button>
 </div>
 ```
 
@@ -1269,15 +1269,15 @@ echo \Yiisoft\Form\Field\Date::widget()->min(null);
 
 ### `ariaDescribedBy()`
 
-HTML ID of the element providing some additional information about the datetime element that some users might need.
+HTML ID of the element(s) providing some additional information about the datetime element that some users might need.
 
 ```php
-echo \Yiisoft\Form\Field\Date::widget()->ariaDescribedBy('date-description');
+echo \Yiisoft\Form\Field\Date::widget()->ariaDescribedBy('date-description1', 'date-description2');
 ```
 
 ```html
 <div>
-    <input type="date" aria-describedby="date-description">
+    <input type="date" aria-describedby="date-description1 date-description2">
 </div>
 ```
 

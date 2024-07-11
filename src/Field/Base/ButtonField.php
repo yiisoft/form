@@ -89,10 +89,10 @@ abstract class ButtonField extends PartsField
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    final public function ariaDescribedBy(?string $value): static
+    final public function ariaDescribedBy(?string ...$value): static
     {
         $new = clone $this;
-        $new->buttonAttributes['aria-describedby'] = $value;
+        $new->buttonAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
         return $new;
     }
 

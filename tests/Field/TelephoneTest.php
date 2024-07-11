@@ -172,19 +172,42 @@ final class TelephoneTest extends TestCase
         );
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Telephone::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                '<input type="tel" name="phone" aria-describedby="hint">',
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                '<input type="tel" name="phone" aria-describedby="hint1 hint2">',
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                '<input type="tel" name="phone" aria-describedby="hint1 hint2 hint3">',
+            ],
+            'only null' => [
+                [null, null],
+                '<input type="tel" name="phone">',
+            ],
+            'empty string' => [
+                [''],
+                '<input type="tel" name="phone" aria-describedby>',
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Telephone::widget()
             ->name('phone')
             ->useContainer(false)
             ->hideLabel()
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
-
-        $this->assertSame(
-            '<input type="tel" name="phone" aria-describedby="hint">',
-            $result
-        );
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

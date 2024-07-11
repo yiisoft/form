@@ -172,19 +172,42 @@ final class PasswordTest extends TestCase
         );
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Password::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                '<input type="password" name="newPassword" aria-describedby="hint">',
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                '<input type="password" name="newPassword" aria-describedby="hint1 hint2">',
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                '<input type="password" name="newPassword" aria-describedby="hint1 hint2 hint3">',
+            ],
+            'only null' => [
+                [null, null],
+                '<input type="password" name="newPassword">',
+            ],
+            'empty string' => [
+                [''],
+                '<input type="password" name="newPassword" aria-describedby>',
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Password::widget()
             ->name('newPassword')
             ->hideLabel()
             ->useContainer(false)
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
-
-        $this->assertSame(
-            '<input type="password" name="newPassword" aria-describedby="hint">',
-            $result
-        );
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

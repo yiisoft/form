@@ -37,10 +37,10 @@ final class Checkbox extends InputField implements ValidationClassInterface
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    public function ariaDescribedBy(?string $value): self
+    public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
         return $new;
     }
 

@@ -384,23 +384,63 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Select::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                <<<HTML
+                <select name="item" aria-describedby="hint">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                <<<HTML
+                <select name="item" aria-describedby="hint1 hint2">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                <<<HTML
+                <select name="item" aria-describedby="hint1 hint2 hint3">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'only null' => [
+                [null, null],
+                <<<HTML
+                <select name="item">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'empty string' => [
+                [''],
+                <<<HTML
+                <select name="item" aria-describedby>
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Select::widget()
             ->name('item')
             ->optionsData(['1' => 'One'])
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->hideLabel()
             ->useContainer(false)
             ->render();
-
-        $expected = <<<HTML
-            <select name="item" aria-describedby="hint">
-            <option value="1">One</option>
-            </select>
-            HTML;
-
-        $this->assertSame($expected, $result);
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

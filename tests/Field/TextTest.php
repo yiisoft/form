@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\PureField\InputData;
@@ -742,21 +743,44 @@ final class TextTest extends TestCase
         );
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
+    {
+        return [
+            'one element' => [
+                ['hint'],
+                '<input type="text" name="job" value aria-describedby="hint">',
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                '<input type="text" name="job" value aria-describedby="hint1 hint2">',
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                '<input type="text" name="job" value aria-describedby="hint1 hint2 hint3">',
+            ],
+            'only null' => [
+                [null, null],
+                '<input type="text" name="job" value>',
+            ],
+            'empty string' => [
+                [''],
+                '<input type="text" name="job" value aria-describedby>',
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
     {
         $inputData = new InputData('job', '');
-
-        $result = Text::widget()
+        $actualHtml = Text::widget()
             ->inputData($inputData)
             ->useContainer(false)
             ->hideLabel()
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
 
-        $this->assertSame(
-            '<input type="text" name="job" value aria-describedby="hint">',
-            $result
-        );
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

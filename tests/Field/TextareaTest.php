@@ -165,19 +165,42 @@ final class TextareaTest extends TestCase
         );
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Textarea::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                '<textarea name="TextareaForm[desc]" aria-describedby="hint"></textarea>',
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                '<textarea name="TextareaForm[desc]" aria-describedby="hint1 hint2"></textarea>',
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                '<textarea name="TextareaForm[desc]" aria-describedby="hint1 hint2 hint3"></textarea>',
+            ],
+            'only null' => [
+                [null, null],
+                '<textarea name="TextareaForm[desc]"></textarea>',
+            ],
+            'empty string' => [
+                [''],
+                '<textarea name="TextareaForm[desc]" aria-describedby></textarea>',
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Textarea::widget()
             ->name('TextareaForm[desc]')
             ->hideLabel()
             ->useContainer(false)
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->render();
-
-        $this->assertSame(
-            '<textarea name="TextareaForm[desc]" aria-describedby="hint"></textarea>',
-            $result
-        );
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void
