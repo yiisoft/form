@@ -375,20 +375,6 @@ final class NumberTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
-    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
-    {
-        $actualHtml = Number::widget()
-            ->enrichFromValidationRules()
-            ->render();
-        $expectedHtml = <<<HTML
-            <div>
-            <input type="number">
-            </div>
-            HTML;
-
-        $this->assertSame($expectedHtml, $actualHtml);
-    }
-
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Number::widget()

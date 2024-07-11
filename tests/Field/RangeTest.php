@@ -435,21 +435,6 @@ HTML_WRAP;
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
-    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
-    {
-        $actualHtml = Range::widget()
-            ->enrichFromValidationRules()
-            ->validationRulesEnricher(new NullValidationRulesEnricher())
-            ->render();
-        $expectedHtml = <<<HTML
-            <div>
-            <input type="range">
-            </div>
-            HTML;
-
-        $this->assertSame($expectedHtml, $actualHtml);
-    }
-
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Range::widget()

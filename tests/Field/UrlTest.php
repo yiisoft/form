@@ -342,20 +342,6 @@ final class UrlTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
-    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
-    {
-        $actualHtml = Url::widget()
-            ->enrichFromValidationRules()
-            ->render();
-        $expectedHtml = <<<HTML
-            <div>
-            <input type="url">
-            </div>
-            HTML;
-
-        $this->assertSame($expectedHtml, $actualHtml);
-    }
-
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Url::widget()

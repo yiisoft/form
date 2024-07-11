@@ -218,8 +218,8 @@ final class Textarea extends InputField implements
     {
         if ($this->enrichFromValidationRules) {
             $this->enrichment = $this
-                ?->validationRulesEnricher
-                ->process($this, $this->getInputData()->getValidationRules())
+                ->validationRulesEnricher
+                ?->process($this, $this->getInputData()->getValidationRules())
                 ?? [];
         }
     }
