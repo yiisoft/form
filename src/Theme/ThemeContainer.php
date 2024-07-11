@@ -51,7 +51,8 @@ final class ThemeContainer
      * ```
      * @param string|null $defaultConfig Configuration name that will be used for create fields by default.
      */
-    public static function initialize(array $configs = [], ?string $defaultConfig = null): void {
+    public static function initialize(array $configs = [], ?string $defaultConfig = null): void
+    {
         self::$configs = $configs;
         self::$defaultConfig = $defaultConfig;
         self::$themes = [];

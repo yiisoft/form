@@ -12,7 +12,6 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderTrait;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
-use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 
 use function is_string;
