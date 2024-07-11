@@ -453,9 +453,10 @@ final class ThemeTest extends TestCase
         InputData $inputData,
         ?array $enricherResult = null,
     ): void {
-        $this->initializeThemeContainer($factoryParameters, $enricherResult);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Text::widget()
+            ->validationRulesEnricher(new StubValidationRulesEnricher($enricherResult))
             ->inputData($inputData)
             ->render();
 
@@ -776,12 +777,8 @@ final class ThemeTest extends TestCase
         );
     }
 
-    private function initializeThemeContainer(array $parameters = [], ?array $enricherResult = null): void
+    private function initializeThemeContainer(array $parameters = []): void
     {
-        ThemeContainer::initialize(
-            ['default' => $parameters],
-            defaultConfig: 'default',
-            validationRulesEnricher: new StubValidationRulesEnricher($enricherResult),
-        );
+        ThemeContainer::initialize(['default' => $parameters], defaultConfig: 'default');
     }
 }
