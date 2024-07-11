@@ -413,5 +413,7 @@ final class UrlTest extends TestCase
         $this->assertNotSame($field, $field->autofocus());
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->size(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

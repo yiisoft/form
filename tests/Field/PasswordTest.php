@@ -379,5 +379,7 @@ final class PasswordTest extends TestCase
         $this->assertNotSame($field, $field->pattern(null));
         $this->assertNotSame($field, $field->minlength(null));
         $this->assertNotSame($field, $field->maxlength(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

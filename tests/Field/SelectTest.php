@@ -758,5 +758,7 @@ final class SelectTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->size(null));
         $this->assertNotSame($field, $field->unselectValue(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

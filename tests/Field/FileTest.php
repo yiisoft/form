@@ -384,5 +384,7 @@ final class FileTest extends TestCase
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->uncheckInputAttributes([]));
         $this->assertNotSame($field, $field->addUncheckInputAttributes([]));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

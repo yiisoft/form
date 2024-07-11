@@ -508,5 +508,7 @@ HTML_WRAP;
         $this->assertNotSame($field, $field->step(null));
         $this->assertNotSame($field, $field->min(null));
         $this->assertNotSame($field, $field->max(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

@@ -404,5 +404,7 @@ final class TextareaTest extends TestCase
         $this->assertNotSame($field, $field->cols(null));
         $this->assertNotSame($field, $field->rows(null));
         $this->assertNotSame($field, $field->wrap(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

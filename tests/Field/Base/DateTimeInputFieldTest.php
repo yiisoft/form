@@ -358,5 +358,6 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->disabled());
         $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }
