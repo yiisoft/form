@@ -439,7 +439,6 @@ HTML_WRAP;
     {
         $actualHtml = Range::widget()
             ->enrichFromValidationRules()
-            ->validationRulesEnricher(new NullValidationRulesEnricher())
             ->render();
         $expectedHtml = <<<HTML
             <div>
