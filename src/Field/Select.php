@@ -11,7 +11,6 @@ use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesT
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
-use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
