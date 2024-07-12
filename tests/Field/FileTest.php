@@ -314,6 +314,20 @@ final class FileTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = File::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="file">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = File::widget()
@@ -370,5 +384,7 @@ final class FileTest extends TestCase
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->uncheckInputAttributes([]));
         $this->assertNotSame($field, $field->addUncheckInputAttributes([]));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

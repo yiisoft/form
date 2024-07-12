@@ -342,6 +342,20 @@ final class UrlTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Url::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="url">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Url::widget()
@@ -399,5 +413,7 @@ final class UrlTest extends TestCase
         $this->assertNotSame($field, $field->autofocus());
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->size(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

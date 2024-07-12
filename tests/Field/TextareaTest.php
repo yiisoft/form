@@ -331,6 +331,20 @@ final class TextareaTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Textarea::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <textarea></textarea>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Textarea::widget()
@@ -390,5 +404,7 @@ final class TextareaTest extends TestCase
         $this->assertNotSame($field, $field->cols(null));
         $this->assertNotSame($field, $field->rows(null));
         $this->assertNotSame($field, $field->wrap(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

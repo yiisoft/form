@@ -684,6 +684,20 @@ final class SelectTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Select::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <select></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Select::widget()
@@ -744,5 +758,7 @@ final class SelectTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->size(null));
         $this->assertNotSame($field, $field->unselectValue(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

@@ -288,6 +288,20 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = StubDateTimeInputField::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="datetime">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = StubDateTimeInputField::widget()
@@ -344,5 +358,6 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->disabled());
         $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

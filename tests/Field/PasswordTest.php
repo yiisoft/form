@@ -308,6 +308,20 @@ final class PasswordTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Password::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="password">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
         $html = Password::widget()
@@ -365,5 +379,7 @@ final class PasswordTest extends TestCase
         $this->assertNotSame($field, $field->pattern(null));
         $this->assertNotSame($field, $field->minlength(null));
         $this->assertNotSame($field, $field->maxlength(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }
