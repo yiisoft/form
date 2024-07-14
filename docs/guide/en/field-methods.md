@@ -1497,8 +1497,6 @@ Built-in fields that implement `EnrichFromValidationRulesInterface`:
 Whether to enrich this field from validation rules.
 
 ```php
-use Yiisoft\Form\Theme\ThemeContainer;
-
 echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules();
 ```
 
@@ -1506,6 +1504,17 @@ Pass `false` to not enrich this field from validation rules (default when method
 
 ```php
 echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules(false);
+```
+
+### `validationRulesEnricher()`
+
+[Validation rules enricher](validation-rules-enrichment.md) instance. Enrichment must be activated via 
+[`enrichFromValidationRules`](#enrichfromvalidationrules) in order for this method to take effect.
+
+```php
+echo Yiisoft\Form\Field\Email::widget()
+    ->enrichFromValidationRules()
+    ->validationRulesEnricher(new MyValidationRulesEnricher());
 ```
 
 ## `ValidationClassInterface` implemented fields

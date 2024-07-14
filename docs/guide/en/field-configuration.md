@@ -49,6 +49,8 @@ and has validation errors.
 and has validation errors.
 - [`enrichFromValidationRules`](field-methods.md#enrichfromvalidationrules) - whether to 
 [enrich](validation-rules-enrichment.md) this field from validation rules.
+- [`validationRulesEnricher`](field-methods.md#validationrulesenricher) - 
+[validation rules enricher](validation-rules-enrichment.md) instance.
 - `fieldConfigs` - configuration sets by field type declared using [definitions](https://github.com/yiisoft/definitions)
 syntax.
 
