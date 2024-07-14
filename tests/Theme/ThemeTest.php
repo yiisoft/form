@@ -12,6 +12,7 @@ use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -564,6 +565,25 @@ final class ThemeTest extends TestCase
                 HTML,
             $result
         );
+    }
+
+    public function testTextWithValidationRulesEnricher(): void
+    {
+        $this->initializeThemeContainer([
+            'enrichFromValidationRules' => true,
+            'validationRulesEnricher' => new RequiredValidationRulesEnricher(),
+        ]);
+
+        $actualHtml = Text::widget()
+            ->inputData(new InputData(validationRules: [['required']]))
+            ->render();
+        $expectedHtml = <<<'HTML'
+        <div>
+        <input type="text" required>
+        </div>
+        HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public static function dataFieldSet(): array
