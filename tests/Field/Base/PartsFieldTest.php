@@ -8,6 +8,8 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Stringable;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubPartsField;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -145,6 +147,16 @@ final class PartsFieldTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Token value should be string or Stringable. stdClass given.');
         $field->tokens(['{before}' => new stdClass()]);
+    }
+
+    public function testStringableTokenValue(): void
+    {
+        $actualHtml = StubPartsField::widget()
+            ->tokens(['{custom}' => new StringableObject('value')])
+            ->template('{custom}')
+            ->useContainer(false)
+            ->render();
+        $this->assertSame('value', $actualHtml);
     }
 
     public function testHideLabel(): void

@@ -575,8 +575,23 @@ final class CheckboxTest extends TestCase
         $field = Checkbox::widget()->value(new stdClass());
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Checkbox widget requires a string, numeric, bool, Stringable or null value.');
+        $this->expectExceptionMessage('Checkbox widget requires a string, Stringable, numeric, bool or null value.');
         $field->render();
+    }
+
+    public function testStringableValue(): void
+    {
+        $actualHtml = Checkbox::widget()
+            ->inputValue('value')
+            ->value(new StringableObject('value'))
+            ->render();
+        $expectedHtml = <<<HTML
+        <div>
+        <input type="checkbox" value="value" checked>
+        </div>
+        HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testInvalidClassesWithCustomError(): void

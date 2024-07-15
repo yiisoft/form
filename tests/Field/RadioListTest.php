@@ -616,6 +616,21 @@ final class RadioListTest extends TestCase
         $field->render();
     }
 
+    public function testStringableValue(): void
+    {
+        $actualHtml = RadioList::widget()
+            ->name('name')
+            ->value(new StringableObject('value'))
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->useContainer(false)
+            ->render();
+        $expectedHtml = '';
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testWithoutName(): void
     {
         $field = RadioList::widget();

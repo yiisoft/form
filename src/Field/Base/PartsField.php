@@ -66,14 +66,7 @@ abstract class PartsField extends BaseField
         $new = clone $this;
 
         foreach ($tokens as $token => $value) {
-            if (!is_string($token)) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'Token should be string. %s given.',
-                        $token,
-                    )
-                );
-            }
+            $this->validateToken($token);
 
             if (!is_string($value) && !$value instanceof Stringable) {
                 throw new InvalidArgumentException(
@@ -83,8 +76,6 @@ abstract class PartsField extends BaseField
                     )
                 );
             }
-
-            $this->validateToken($token);
 
             $new->extraTokens[$token] = $value;
         }
@@ -580,8 +571,17 @@ abstract class PartsField extends BaseField
     /**
      * @psalm-assert non-empty-string $token
      */
-    private function validateToken(string $token): void
+    private function validateToken(mixed $token): void
     {
+        if (!is_string($token)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Token should be string. %s given.',
+                    $token,
+                )
+            );
+        }
+
         if ($token === '') {
             throw new InvalidArgumentException('Token must be non-empty string.');
         }
