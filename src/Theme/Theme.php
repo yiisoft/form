@@ -9,6 +9,7 @@ use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
+use Yiisoft\Form\ValidationRulesEnricherInterface;
 
 final class Theme
 {
@@ -41,6 +42,7 @@ final class Theme
         private ?string $inputValidClass = null,
         private ?string $inputInvalidClass = null,
         private ?bool $enrichFromValidationRules = null,
+        private ?ValidationRulesEnricherInterface $validationRulesEnricher = null,
         private array $fieldConfigs = [],
     ) {
         if ($labelClass !== null) {
@@ -146,6 +148,10 @@ final class Theme
         if (is_a($class, EnrichFromValidationRulesInterface::class, true)) {
             if ($this->enrichFromValidationRules !== null) {
                 $config['enrichFromValidationRules()'] = [$this->enrichFromValidationRules];
+            }
+
+            if ($this->validationRulesEnricher !== null) {
+                $config['validationRulesEnricher()'] = [$this->validationRulesEnricher];
             }
         }
 

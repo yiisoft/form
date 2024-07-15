@@ -49,6 +49,8 @@ and has validation errors.
 and has validation errors.
 - [`enrichFromValidationRules`](field-methods.md#enrichfromvalidationrules) - whether to 
 [enrich](validation-rules-enrichment.md) this field from validation rules.
+- [`validationRulesEnricher`](field-methods.md#validationrulesenricher) - 
+[validation rules enricher](validation-rules-enrichment.md) instance.
 - `fieldConfigs` - configuration sets by field type declared using [definitions](https://github.com/yiisoft/definitions)
 syntax.
 
@@ -91,15 +93,10 @@ ThemeContainer::initialize(
         ],      
     ],
     defaultConfig: 'main',
-    validationRulesEnricher: new MyValidationRulesEnricher(),
 );
 ```
 
-You can additionally set (optional):
-
-- config used as a default one using `defaultConfig` option;
-- [enricher](validation-rules-enrichment.md) instance used to enrich fields depending on their type from given 
-validation rules.
+You can additionally set (optional) config used as a default one using `defaultConfig` option.
 
 ## Built-in themes
 
@@ -124,6 +121,8 @@ ThemeContainer::initialize(
 );
 ```
 
+In built-in themes no [validation rules enrichers](validation-rules-enrichment.md) are used.
+
 ## Using with Yii Config
 
 When using [Yii Config](https://github.com/yiisoft/config), there is no need to manually interact with theme cotnainer,
@@ -141,10 +140,9 @@ return [
             'horizontal' => require ThemePath::BOOTSTRAP5_HORIZONTAL,
         ],
         'defaultTheme' => 'vertical',
-        'validationRulesEnricher' => new MyValidationRulesEnricher(),
     ],
     // ...
 ];
 ```
 
-No built-in themes and validation rules enricher are used by default.
+No built-in themes are used by default.

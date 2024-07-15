@@ -8,6 +8,5 @@ return [
             'default' => [],
         ],
         'defaultTheme' => 'default',
-        'validationRulesEnricher' => null,
     ],
 ];

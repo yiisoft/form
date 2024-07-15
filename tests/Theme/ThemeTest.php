@@ -12,6 +12,7 @@ use Yiisoft\Form\Field\Part\Hint;
 use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Form\Field\Text;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -453,9 +454,10 @@ final class ThemeTest extends TestCase
         InputData $inputData,
         ?array $enricherResult = null,
     ): void {
-        $this->initializeThemeContainer($factoryParameters, $enricherResult);
+        $this->initializeThemeContainer($factoryParameters);
 
         $result = Text::widget()
+            ->validationRulesEnricher(new StubValidationRulesEnricher($enricherResult))
             ->inputData($inputData)
             ->render();
 
@@ -563,6 +565,25 @@ final class ThemeTest extends TestCase
                 HTML,
             $result
         );
+    }
+
+    public function testTextWithValidationRulesEnricher(): void
+    {
+        $this->initializeThemeContainer([
+            'enrichFromValidationRules' => true,
+            'validationRulesEnricher' => new RequiredValidationRulesEnricher(),
+        ]);
+
+        $actualHtml = Text::widget()
+            ->inputData(new InputData(validationRules: [['required']]))
+            ->render();
+        $expectedHtml = <<<'HTML'
+        <div>
+        <input type="text" required>
+        </div>
+        HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public static function dataFieldSet(): array
@@ -776,12 +797,8 @@ final class ThemeTest extends TestCase
         );
     }
 
-    private function initializeThemeContainer(array $parameters = [], ?array $enricherResult = null): void
+    private function initializeThemeContainer(array $parameters = []): void
     {
-        ThemeContainer::initialize(
-            ['default' => $parameters],
-            defaultConfig: 'default',
-            validationRulesEnricher: new StubValidationRulesEnricher($enricherResult),
-        );
+        ThemeContainer::initialize(['default' => $parameters], defaultConfig: 'default');
     }
 }

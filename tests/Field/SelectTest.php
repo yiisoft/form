@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -384,23 +385,63 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testAriaDescribedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Select::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                <<<HTML
+                <select name="item" aria-describedby="hint">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                <<<HTML
+                <select name="item" aria-describedby="hint1 hint2">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                <<<HTML
+                <select name="item" aria-describedby="hint1 hint2 hint3">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'only null' => [
+                [null, null],
+                <<<HTML
+                <select name="item">
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+            'empty string' => [
+                [''],
+                <<<HTML
+                <select name="item" aria-describedby>
+                <option value="1">One</option>
+                </select>
+                HTML,
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Select::widget()
             ->name('item')
             ->optionsData(['1' => 'One'])
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->hideLabel()
             ->useContainer(false)
             ->render();
-
-        $expected = <<<HTML
-            <select name="item" aria-describedby="hint">
-            <option value="1">One</option>
-            </select>
-            HTML;
-
-        $this->assertSame($expected, $result);
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void
@@ -634,13 +675,14 @@ final class SelectTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Select::widget()->enrichFromValidationRules()->render();
+        $html = Select::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -653,10 +695,9 @@ final class SelectTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
     {
-        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
-
         $actualHtml = Select::widget()
             ->enrichFromValidationRules()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
             ->inputData(new InputData(validationRules: [['required']]))
             ->render();
         $expectedHtml = <<<HTML
@@ -668,15 +709,44 @@ final class SelectTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithNullProcessResult(): void
+    {
+        $actualHtml = Select::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(new NullValidationRulesEnricher())
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <select></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Select::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <select></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Select::widget()->render();
+        $html = Select::widget()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -728,5 +798,7 @@ final class SelectTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->size(null));
         $this->assertNotSame($field, $field->unselectValue(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }
