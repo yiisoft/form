@@ -495,22 +495,62 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testAriaDescibedBy(): void
+    public static function dataAriaDescribedBy(): array
     {
-        $result = Checkbox::widget()
+        return [
+            'one element' => [
+                ['hint'],
+                <<<HTML
+                <div>
+                <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint"> Blue color</label>
+                </div>
+                HTML,
+            ],
+            'multiple elements' => [
+                ['hint1', 'hint2'],
+                <<<HTML
+                <div>
+                <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint1 hint2"> Blue color</label>
+                </div>
+                HTML,
+            ],
+            'null with other elements' => [
+                ['hint1', null, 'hint2', null, 'hint3'],
+                <<<HTML
+                <div>
+                <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint1 hint2 hint3"> Blue color</label>
+                </div>
+                HTML,
+            ],
+            'only null' => [
+                [null, null],
+                <<<HTML
+                <div>
+                <label><input type="checkbox" name="test-name" value="1"> Blue color</label>
+                </div>
+                HTML,
+            ],
+            'empty string' => [
+                [''],
+                <<<HTML
+                <div>
+                <label><input type="checkbox" name="test-name" value="1" aria-describedby> Blue color</label>
+                </div>
+                HTML,
+            ],
+        ];
+    }
+
+    #[DataProvider('dataAriaDescribedBy')]
+    public function testAriaDescribedBy(array $ariaDescribedBy, string $expectedHtml): void
+    {
+        $actualHtml = Checkbox::widget()
             ->name('test-name')
             ->label('Blue color')
-            ->ariaDescribedBy('hint')
+            ->ariaDescribedBy(...$ariaDescribedBy)
             ->uncheckValue(null)
             ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint"> Blue color</label>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testAriaLabel(): void

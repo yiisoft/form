@@ -16,4 +16,6 @@ interface EnrichFromValidationRulesInterface
      * Enable/disable enrichment based on validation rules.
      */
     public function enrichFromValidationRules(bool $enrich): self;
+
+    public function validationRulesEnricher(?ValidationRulesEnricherInterface $enricher): self;
 }

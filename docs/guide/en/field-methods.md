@@ -1076,15 +1076,15 @@ echo \Yiisoft\Form\Field\Button::widget()->name(null);
 
 ### `ariaDescribedBy()`
 
-HTML ID of the element providing some additional information about the button that some users might need.  
+HTML ID of the element(s) providing some additional information about the button that some users might need.  
 
 ```php
-echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description');
+echo \Yiisoft\Form\Field\Button::widget()->ariaDescribedBy('language-description1', 'language-description2');
 ```
 
 ```html
 <div>
-    <button type="button" aria-describedby="language-description"></button>
+    <button type="button" aria-describedby="language-description1 language-description2"></button>
 </div>
 ```
 
@@ -1269,15 +1269,15 @@ echo \Yiisoft\Form\Field\Date::widget()->min(null);
 
 ### `ariaDescribedBy()`
 
-HTML ID of the element providing some additional information about the datetime element that some users might need.
+HTML ID of the element(s) providing some additional information about the datetime element that some users might need.
 
 ```php
-echo \Yiisoft\Form\Field\Date::widget()->ariaDescribedBy('date-description');
+echo \Yiisoft\Form\Field\Date::widget()->ariaDescribedBy('date-description1', 'date-description2');
 ```
 
 ```html
 <div>
-    <input type="date" aria-describedby="date-description">
+    <input type="date" aria-describedby="date-description1 date-description2">
 </div>
 ```
 
@@ -1497,8 +1497,6 @@ Built-in fields that implement `EnrichFromValidationRulesInterface`:
 Whether to enrich this field from validation rules.
 
 ```php
-use Yiisoft\Form\Theme\ThemeContainer;
-
 echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules();
 ```
 
@@ -1506,6 +1504,17 @@ Pass `false` to not enrich this field from validation rules (default when method
 
 ```php
 echo Yiisoft\Form\Field\Email::widget()->enrichFromValidationRules(false);
+```
+
+### `validationRulesEnricher()`
+
+[Validation rules enricher](validation-rules-enrichment.md) instance. Enrichment must be activated via 
+[`enrichFromValidationRules`](#enrichfromvalidationrules) in order for this method to take effect.
+
+```php
+echo Yiisoft\Form\Field\Email::widget()
+    ->enrichFromValidationRules()
+    ->validationRulesEnricher(new MyValidationRulesEnricher());
 ```
 
 ## `ValidationClassInterface` implemented fields

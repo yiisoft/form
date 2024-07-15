@@ -11,7 +11,6 @@ use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesT
 use Yiisoft\Form\Field\Base\InputField;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
-use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 
 use function is_string;
@@ -99,10 +98,10 @@ final class Range extends InputField implements EnrichFromValidationRulesInterfa
      *
      * @link https://w3c.github.io/aria/#aria-describedby
      */
-    public function ariaDescribedBy(?string $value): self
+    public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = $value;
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -190,7 +189,10 @@ final class Range extends InputField implements EnrichFromValidationRulesInterfa
     protected function beforeRender(): void
     {
         if ($this->enrichFromValidationRules) {
-            $this->enrichment = ThemeContainer::getValidationRulesEnrichment($this, $this->getInputData());
+            $this->enrichment = $this
+                ->validationRulesEnricher
+                ?->process($this, $this->getInputData()->getValidationRules())
+                ?? [];
         }
     }
 
