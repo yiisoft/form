@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -674,13 +675,14 @@ final class SelectTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Select::widget()->enrichFromValidationRules()->render();
+        $html = Select::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -693,10 +695,9 @@ final class SelectTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
     {
-        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
-
         $actualHtml = Select::widget()
             ->enrichFromValidationRules()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
             ->inputData(new InputData(validationRules: [['required']]))
             ->render();
         $expectedHtml = <<<HTML
@@ -708,15 +709,44 @@ final class SelectTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithNullProcessResult(): void
+    {
+        $actualHtml = Select::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(new NullValidationRulesEnricher())
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <select></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Select::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <select></select>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Select::widget()->render();
+        $html = Select::widget()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -768,5 +798,7 @@ final class SelectTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->size(null));
         $this->assertNotSame($field, $field->unselectValue(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

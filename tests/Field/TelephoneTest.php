@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Telephone;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -281,13 +282,14 @@ final class TelephoneTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Telephone::widget()->enrichFromValidationRules()->render();
+        $html = Telephone::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -300,10 +302,9 @@ final class TelephoneTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
     {
-        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
-
         $actualHtml = Telephone::widget()
             ->enrichFromValidationRules()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
             ->inputData(new InputData(validationRules: [['required']]))
             ->render();
         $expectedHtml = <<<HTML
@@ -315,15 +316,44 @@ final class TelephoneTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithNullProcessResult(): void
+    {
+        $actualHtml = Telephone::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(new NullValidationRulesEnricher())
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="tel">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Telephone::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="tel">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Telephone::widget()->render();
+        $html = Telephone::widget()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -372,5 +402,7 @@ final class TelephoneTest extends TestCase
         $this->assertNotSame($field, $field->autofocus());
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->size(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

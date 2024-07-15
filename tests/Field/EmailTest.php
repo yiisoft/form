@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Email;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -325,13 +326,14 @@ final class EmailTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Email::widget()->enrichFromValidationRules()->render();
+        $html = Email::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -344,10 +346,9 @@ final class EmailTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
     {
-        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
-
         $actualHtml = Email::widget()
             ->enrichFromValidationRules()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
             ->inputData(new InputData(validationRules: [['required']]))
             ->render();
         $expectedHtml = <<<HTML
@@ -359,15 +360,44 @@ final class EmailTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithNullProcessResult(): void
+    {
+        $actualHtml = Email::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(new NullValidationRulesEnricher())
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="email">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Email::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="email">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Email::widget()->render();
+        $html = Email::widget()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -417,5 +447,7 @@ final class EmailTest extends TestCase
         $this->assertNotSame($field, $field->ariaLabel(null));
         $this->assertNotSame($field, $field->autofocus());
         $this->assertNotSame($field, $field->tabIndex(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

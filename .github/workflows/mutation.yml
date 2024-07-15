@@ -30,5 +30,6 @@ jobs:
         ['ubuntu-latest']
       php: >-
         ['8.2']
+      bin-name: infection
     secrets:
       STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

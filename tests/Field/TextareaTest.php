@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -304,13 +305,14 @@ final class TextareaTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Textarea::widget()->enrichFromValidationRules()->render();
+        $html = Textarea::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -323,10 +325,9 @@ final class TextareaTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
     {
-        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
-
         $actualHtml = Textarea::widget()
             ->enrichFromValidationRules()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
             ->inputData(new InputData(validationRules: [['required']]))
             ->render();
         $expectedHtml = <<<HTML
@@ -338,15 +339,44 @@ final class TextareaTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithNullProcessResult(): void
+    {
+        $actualHtml = Textarea::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(new NullValidationRulesEnricher())
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <textarea></textarea>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = Textarea::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <textarea></textarea>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = Textarea::widget()->render();
+        $html = Textarea::widget()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -397,5 +427,7 @@ final class TextareaTest extends TestCase
         $this->assertNotSame($field, $field->cols(null));
         $this->assertNotSame($field, $field->rows(null));
         $this->assertNotSame($field, $field->wrap(null));
+        $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }

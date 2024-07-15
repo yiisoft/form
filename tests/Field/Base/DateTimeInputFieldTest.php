@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubDateTimeInputField;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
@@ -278,13 +279,14 @@ final class DateTimeInputFieldTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = StubDateTimeInputField::widget()->enrichFromValidationRules()->render();
+        $html = StubDateTimeInputField::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -297,10 +299,9 @@ final class DateTimeInputFieldTest extends TestCase
 
     public function testEnrichFromValidationRulesEnabledWithProvidedRules(): void
     {
-        ThemeContainer::initialize(validationRulesEnricher: new RequiredValidationRulesEnricher());
-
         $actualHtml = StubDateTimeInputField::widget()
             ->enrichFromValidationRules()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
             ->inputData(new InputData(validationRules: [['required']]))
             ->render();
         $expectedHtml = <<<HTML
@@ -312,15 +313,44 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
+    public function testEnrichFromValidationRulesEnabledWithNullProcessResult(): void
+    {
+        $actualHtml = StubDateTimeInputField::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(new NullValidationRulesEnricher())
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="datetime">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
+    public function testEnrichFromValidationRulesEnabledWithoutEnricher(): void
+    {
+        $actualHtml = StubDateTimeInputField::widget()
+            ->enrichFromValidationRules()
+            ->render();
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="datetime">
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
+
     public function testEnrichFromValidationRulesDisabled(): void
     {
-        ThemeContainer::initialize(
-            validationRulesEnricher: new StubValidationRulesEnricher([
-                'inputAttributes' => ['data-test' => 1],
-            ]),
-        );
-
-        $html = StubDateTimeInputField::widget()->render();
+        $html = StubDateTimeInputField::widget()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher([
+                    'inputAttributes' => ['data-test' => 1],
+                ])
+            )
+            ->render();
 
         $expected = <<<HTML
             <div>
@@ -368,5 +398,6 @@ final class DateTimeInputFieldTest extends TestCase
         $this->assertNotSame($field, $field->required());
         $this->assertNotSame($field, $field->disabled());
         $this->assertNotSame($field, $field->enrichFromValidationRules());
+        $this->assertNotSame($field, $field->validationRulesEnricher(null));
     }
 }
