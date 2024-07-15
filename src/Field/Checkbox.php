@@ -12,7 +12,6 @@ use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_bool;
-use function is_object;
 use function is_string;
 
 /**
