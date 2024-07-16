@@ -135,7 +135,7 @@ final class PartsFieldTest extends TestCase
         $field = StubPartsField::widget();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Token should be string. 0 given.');
+        $this->expectExceptionMessage('Token should be string. int given.');
         $field->tokens(['hello']);
     }
 

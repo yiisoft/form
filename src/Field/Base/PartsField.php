@@ -577,7 +577,7 @@ abstract class PartsField extends BaseField
             throw new InvalidArgumentException(
                 sprintf(
                     'Token should be string. %s given.',
-                    $token,
+                    get_debug_type($token),
                 )
             );
         }
