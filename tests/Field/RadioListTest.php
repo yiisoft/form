@@ -612,24 +612,29 @@ final class RadioListTest extends TestCase
         $field = RadioList::widget()->name('test')->value([]);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('"RadioList" field requires a string, numeric, bool, Stringable or null value.');
+        $this->expectExceptionMessage('"RadioList" field requires a string, Stringable, numeric, bool or null value.');
         $field->render();
     }
 
-//    public function testStringableValue(): void
-//    {
-//        $actualHtml = RadioList::widget()
-//            ->name('name')
-//            ->value(new StringableObject('value'))
-//            ->items([
-//                'red' => 'Red',
-//                'blue' => 'Blue',
-//            ])
-//            ->useContainer(false)
-//            ->render();
-//        $expectedHtml = '';
-//        $this->assertSame($expectedHtml, $actualHtml);
-//    }
+    public function testStringableValue(): void
+    {
+        $actualHtml = RadioList::widget()
+            ->name('name')
+            ->value(new StringableObject('red'))
+            ->items([
+                'red' => 'Red',
+                'blue' => 'Blue',
+            ])
+            ->useContainer(false)
+            ->render();
+        $expectedHtml = <<<HTML
+        <div>
+        <label><input type="radio" name="name" value="red" checked> Red</label>
+        <label><input type="radio" name="name" value="blue"> Blue</label>
+        </div>
+        HTML;
+        $this->assertSame($expectedHtml, $actualHtml);
+    }
 
     public function testWithoutName(): void
     {
