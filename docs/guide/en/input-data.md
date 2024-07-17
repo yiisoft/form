@@ -36,6 +36,7 @@ $inputData = new InputData(
     hint: 'Input your full name.',
     placeholder: 'Type your name here',
     id: 'textform-name',
+    validationRules: [['required']],
     validationErrors: ['Value cannot be blank.'],
 );
 $result = Text::widget()->inputData($inputData)->render();

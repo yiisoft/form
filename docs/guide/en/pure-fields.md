@@ -28,7 +28,8 @@ $field
     ->label('Label')
     ->hint('Hint')
     ->placeholder('Placeholder')
-    ->inputId('ID');
+    ->inputId('ID')
+    ->error('Name is not valid');
 ```
 
 For more info about input data, see this guide [section](input-data.md).
