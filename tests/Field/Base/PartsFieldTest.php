@@ -121,6 +121,15 @@ final class PartsFieldTest extends TestCase
         $field->token('{hint}', 'hello');
     }
 
+    public function testBuiltinTokens(): void
+    {
+        $field = StubPartsField::widget();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Token name "{hint}" is built-in.');
+        $field->tokens(['{hint}' => 'hello']);
+    }
+
     public function testEmptyToken(): void
     {
         $field = StubPartsField::widget();
@@ -128,6 +137,15 @@ final class PartsFieldTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Token must be non-empty string.');
         $field->token('', 'hello');
+    }
+
+    public function testEmptyTokens(): void
+    {
+        $field = StubPartsField::widget();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Token must be non-empty string.');
+        $field->tokens(['' => 'hello']);
     }
 
     public function testNonStringTokenName(): void
