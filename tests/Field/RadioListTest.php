@@ -587,33 +587,52 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testWithStringableValue(): void
-    {
-        $result = RadioList::widget()
-            ->name('number')
-            ->useContainer(false)
-            ->hideLabel()
-            ->items([1 => 'One', 2 => 'Two'])
-            ->value(new StringableObject('2'))
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label><input type="radio" name="number" value="1"> One</label>
-            <label><input type="radio" name="number" value="2" checked> Two</label>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
     public function testInvalidValue(): void
     {
         $field = RadioList::widget()->name('test')->value([]);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('"RadioList" field requires a string, numeric, bool, Stringable or null value.');
+        $this->expectExceptionMessage('"RadioList" field requires a string, Stringable, numeric, bool or null value.');
         $field->render();
+    }
+
+    public static function dataValue(): array
+    {
+        return [
+            'bool' => [
+                true,
+                <<<HTML
+                <div>
+                <label><input type="radio" name="number" value="1" checked> One</label>
+                <label><input type="radio" name="number" value="2"> Two</label>
+                </div>
+                HTML,
+            ],
+            'stringable' => [
+                new StringableObject('1'),
+                <<<HTML
+                <div>
+                <label><input type="radio" name="number" value="1" checked> One</label>
+                <label><input type="radio" name="number" value="2"> Two</label>
+                </div>
+                HTML,
+            ],
+        ];
+    }
+
+    #[DataProvider('dataValue')]
+    public function testValue(mixed $value, string $expectedHtml): void
+    {
+        $actualHtml = RadioList::widget()
+            ->name('number')
+            ->value($value)
+            ->items([
+                '1' => 'One',
+                '2' => 'Two',
+            ])
+            ->useContainer(false)
+            ->render();
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testWithoutName(): void

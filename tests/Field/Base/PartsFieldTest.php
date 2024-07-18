@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubPartsField;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -120,6 +121,15 @@ final class PartsFieldTest extends TestCase
         $field->token('{hint}', 'hello');
     }
 
+    public function testBuiltinTokens(): void
+    {
+        $field = StubPartsField::widget();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Token name "{hint}" is built-in.');
+        $field->tokens(['{hint}' => 'hello']);
+    }
+
     public function testEmptyToken(): void
     {
         $field = StubPartsField::widget();
@@ -129,12 +139,21 @@ final class PartsFieldTest extends TestCase
         $field->token('', 'hello');
     }
 
+    public function testEmptyTokens(): void
+    {
+        $field = StubPartsField::widget();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Token must be non-empty string.');
+        $field->tokens(['' => 'hello']);
+    }
+
     public function testNonStringTokenName(): void
     {
         $field = StubPartsField::widget();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Token should be string. 0 given.');
+        $this->expectExceptionMessage('Token should be string. int given.');
         $field->tokens(['hello']);
     }
 
@@ -145,6 +164,16 @@ final class PartsFieldTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Token value should be string or Stringable. stdClass given.');
         $field->tokens(['{before}' => new stdClass()]);
+    }
+
+    public function testStringableTokenValue(): void
+    {
+        $actualHtml = StubPartsField::widget()
+            ->tokens(['{custom}' => new StringableObject('value')])
+            ->template('{custom}')
+            ->useContainer(false)
+            ->render();
+        $this->assertSame('value', $actualHtml);
     }
 
     public function testHideLabel(): void

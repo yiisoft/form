@@ -260,14 +260,15 @@ final class Select extends InputField implements EnrichFromValidationRulesInterf
                 );
             }
         } else {
-            if (!is_bool($value)
+            if (
+                !is_bool($value)
                 && !is_string($value)
+                && !$value instanceof Stringable
                 && !is_numeric($value)
                 && $value !== null
-                && (!is_object($value) || !method_exists($value, '__toString'))
             ) {
                 throw new InvalidArgumentException(
-                    'Non-multiple Select field requires a string, numeric, bool, Stringable or null value.'
+                    'Non-multiple Select field requires a string, Stringable, numeric, bool or null value.'
                 );
             }
             $value = $value === null ? [] : [$value];

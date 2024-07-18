@@ -12,6 +12,7 @@ use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
@@ -659,7 +660,7 @@ final class SelectTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Non-multiple Select field requires a string, numeric, bool, Stringable or null value.'
+            'Non-multiple Select field requires a string, Stringable, numeric, bool or null value.'
         );
         $widget->render();
     }
@@ -671,6 +672,21 @@ final class SelectTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select field with multiple option requires iterable or null value.');
         $widget->render();
+    }
+
+    public function testStringableValue(): void
+    {
+        $actualHtml = Select::widget()
+            ->optionsData(['1' => 'One'])
+            ->value(new StringableObject('1'))
+            ->useContainer(false)
+            ->render();
+        $expectedHtml = <<<HTML
+        <select>
+        <option value="1" selected>One</option>
+        </select>
+        HTML;
+        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testEnrichFromValidationRulesEnabled(): void

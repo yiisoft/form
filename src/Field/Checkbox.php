@@ -12,7 +12,6 @@ use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_bool;
-use function is_object;
 use function is_string;
 
 /**
@@ -211,15 +210,15 @@ final class Checkbox extends InputField implements ValidationClassInterface
     protected function generateInput(): string
     {
         $value = $this->getValue();
-
-        if (!is_bool($value)
+        if (
+            !is_bool($value)
             && !is_string($value)
+            && !$value instanceof Stringable
             && !is_numeric($value)
             && $value !== null
-            && (!is_object($value) || !method_exists($value, '__toString'))
         ) {
             throw new InvalidArgumentException(
-                'Checkbox widget requires a string, numeric, bool, Stringable or null value.'
+                'Checkbox widget requires a string, Stringable, numeric, bool or null value.'
             );
         }
 
