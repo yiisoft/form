@@ -172,8 +172,8 @@ final class Number extends InputField implements EnrichFromValidationRulesInterf
     {
         $value = $this->getValue();
 
-        if (!is_numeric($value) && $value !== null) {
-            throw new InvalidArgumentException('Number field requires a numeric or null value.');
+        if (!is_numeric($value) && $value !== '' && $value !== null) {
+            throw new InvalidArgumentException('Number field requires a numeric, an empty string or null value.');
         }
 
         /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */

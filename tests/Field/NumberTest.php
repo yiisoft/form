@@ -355,12 +355,42 @@ final class NumberTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function dataValues(): array
+    {
+        return [
+            [null, null],
+            [' value', ''],
+            [' value="0"', 0],
+            [' value="0.5"', 0.5],
+            [' value="1"', 1],
+            [' value="42"', '42'],
+            [' value="0.5"', '0.5'],
+        ];
+    }
+
+    #[DataProvider('dataValues')]
+    public function testValues(?string $expected, mixed $value): void
+    {
+        $result = Number::widget()
+            ->name('test')
+            ->value($value)
+            ->render();
+
+        $expectedHtml = <<<HTML
+            <div>
+            <input type="number" name="test"$expected>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedHtml, $result);
+    }
+
     public function testInvalidValue(): void
     {
         $field = Number::widget()->value('hello');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Number field requires a numeric or null value.');
+        $this->expectExceptionMessage('Number field requires a numeric, an empty string or null value.');
         $field->render();
     }
 
