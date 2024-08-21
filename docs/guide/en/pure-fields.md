@@ -45,12 +45,12 @@ use Yiisoft\Form\PureField\FieldFactory;
 
 // Using helper
 
-Field::text('name', 'value', 'my-theme');
+Field::text('name', 'value', theme: 'my-theme');
 
 // Using factory
 
 $factory = new FieldFactory();
-$factory->text('name', 'value');
+$factory->text('name', 'value', theme: 'my-theme');
 ```
 
 To apply the theme for all fields, either pass it as argument in constructor (supported by factory).

@@ -5,7 +5,7 @@ Input data is an abstraction for storing input's value and some common meta info
 
 - Name - unique name of an input within the form (not visible to the end user)
 - Value - filled value that is about to be sent to the server
-- Label - the label associated with this form (visible to the end user)
+- Label - the label associated with this input (visible to the end user)
 - Hint - complimentary text explaining certain details regarding this input
 - Placeholder - the value used as an example to help user fill the actual value
 - ID - unique identifier in DOM (HTML)
