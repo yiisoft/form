@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
+use Stringable;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesTrait;
 use Yiisoft\Form\Field\Base\InputField;
@@ -228,8 +229,15 @@ final class Textarea extends InputField implements
     {
         $value = $this->getValue();
 
-        if (!is_string($value) && $value !== null) {
-            throw new InvalidArgumentException('Textarea field requires a string or null value.');
+        if (!(
+            is_string($value)
+            || is_array($value)
+            || $value instanceof Stringable
+            || $value === null
+        )) {
+            throw new InvalidArgumentException(
+                'Textarea field requires a string, a stringable object, an array of strings or null value.'
+            );
         }
 
         /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
@@ -238,6 +246,9 @@ final class Textarea extends InputField implements
             $this->getInputAttributes()
         );
 
+        /**
+         * @var string|string[]|Stringable|null $value We guess that array value is array of strings.
+         */
         return Html::textarea($this->getName(), $value, $textareaAttributes)->render();
     }
 

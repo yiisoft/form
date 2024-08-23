@@ -11,6 +11,7 @@ use Yiisoft\Form\Field\Textarea;
 use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 
@@ -33,6 +34,24 @@ final class TextareaTest extends TestCase
                 </div>
                 HTML,
                 new InputData('desc', id: 'test-id', label: 'Description'),
+            ],
+            'stringable-value' => [
+                <<<HTML
+                <div>
+                <textarea name="desc">test</textarea>
+                </div>
+                HTML,
+                new InputData('desc', new StringableObject('test')),
+            ],
+            'array-of-strings-value' => [
+                <<<HTML
+                <div>
+                <textarea name="desc">a
+                b
+                c</textarea>
+                </div>
+                HTML,
+                new InputData('desc', ['a', 'b', 'c']),
             ],
             'input-valid-class' => [
                 <<<HTML
@@ -299,7 +318,9 @@ final class TextareaTest extends TestCase
         $widget = Textarea::widget()->value(7);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Textarea field requires a string or null value.');
+        $this->expectExceptionMessage(
+            'Textarea field requires a string, a stringable object, an array of strings or null value.'
+        );
         $widget->render();
     }
 
