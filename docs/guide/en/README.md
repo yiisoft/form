@@ -6,4 +6,4 @@
 - [Fields' enrichment from validation rules](validation-rules-enrichment.md)
 - [Input data](input-data.md)
 - [Pure fields](pure-fields.md)
-- [Creating custom fields](creating-fields.md)
+- [Creating custom fields](creating-custom-fields.md)
