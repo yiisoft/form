@@ -18,8 +18,8 @@
 The package provides a set of widgets to help with dynamic server-side generation of HTML forms.
 The following widgets are available out of the box:
 
-- input fields: `Checkbox`, `CheckboxList`, `Date`, `DateTime`, `DateTimeLocal`, `Email`, `File`, `Hidden`, `Image`, 
-`Number`, `Password`, `RadioList`, `Range`, `Select`, `Telephone`, `Text`, `Textarea`, `Time`, `Url`;
+- input fields: `Checkbox`, `CheckboxList`, `Date`, `DateTimeLocal`, `Email`, `File`, `Hidden`, `Image`, 
+  `Number`, `Password`, `RadioList`, `Range`, `Select`, `Telephone`, `Text`, `Textarea`, `Time`, `Url`;
 - buttons: `Button`, `ResetButton`, `SubmitButton`;
 - group widgets: `ButtonGroup`, `Fieldset`. 
 - other: `ErrorSummary`.
@@ -32,7 +32,6 @@ These themes are available out of the box:
 ## Requirements
 
 - PHP 8.1 or higher.
-- `mbstring` PHP extension.
 
 ## Installation
 
