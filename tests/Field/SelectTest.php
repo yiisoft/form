@@ -10,9 +10,11 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Select;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\IntegerEnum;
 use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StringableObject;
+use Yiisoft\Form\Tests\Support\StringEnum;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Optgroup;
@@ -91,24 +93,36 @@ final class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testSelectedSingle(): void
+    public static function dataSelectedSingle(): iterable
+    {
+        yield ['blue', 'blue'];
+        yield ['blue', new StringableObject('blue')];
+        yield ['', false];
+        yield ['1', true];
+        yield ['19', 19];
+        yield ['19.02', 19.02];
+        yield ['2', IntegerEnum::BLUE];
+        yield ['two', StringEnum::TWO];
+    }
+
+    #[DataProvider('dataSelectedSingle')]
+    public function testSelectedSingle(string $valueAsString, mixed $value): void
     {
         $result = Select::widget()
-            ->name('count')
-            ->value(15)
+            ->name('color')
+            ->value($value)
             ->optionsData([
-                10 => 'Ten',
-                15 => 'Fifteen',
-                20 => 'Twenty',
+                'red' => 'Red',
+                $valueAsString => 'Blue',
             ])
             ->render();
 
+        $expectedOption = '<option value' . ($valueAsString === '' ? '' : ('="' . $valueAsString . '"')) . ' selected>Blue</option>';
         $expected = <<<HTML
             <div>
-            <select name="count">
-            <option value="10">Ten</option>
-            <option value="15" selected>Fifteen</option>
-            <option value="20">Twenty</option>
+            <select name="color">
+            <option value="red">Red</option>
+            $expectedOption
             </select>
             </div>
             HTML;
@@ -660,7 +674,7 @@ final class SelectTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Non-multiple Select field requires a string, Stringable, numeric, bool or null value.'
+            'Non-multiple select field requires a string, Stringable, numeric, bool, backed enumeration or null value.'
         );
         $widget->render();
     }
@@ -672,21 +686,6 @@ final class SelectTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Select field with multiple option requires iterable or null value.');
         $widget->render();
-    }
-
-    public function testStringableValue(): void
-    {
-        $actualHtml = Select::widget()
-            ->optionsData(['1' => 'One'])
-            ->value(new StringableObject('1'))
-            ->useContainer(false)
-            ->render();
-        $expectedHtml = <<<HTML
-        <select>
-        <option value="1" selected>One</option>
-        </select>
-        HTML;
-        $this->assertSame($expectedHtml, $actualHtml);
     }
 
     public function testEnrichFromValidationRulesEnabled(): void

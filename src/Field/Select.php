@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
+use BackedEnum;
 use InvalidArgumentException;
 use Stringable;
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
@@ -14,6 +15,8 @@ use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Tag\Optgroup;
 use Yiisoft\Html\Tag\Option;
 use Yiisoft\Html\Tag\Select as SelectTag;
+
+use function is_scalar;
 
 /**
  * Represents `<select>` element that provides a menu of options.
@@ -261,14 +264,13 @@ final class Select extends InputField implements EnrichFromValidationRulesInterf
             }
         } else {
             if (
-                !is_bool($value)
-                && !is_string($value)
+                !is_scalar($value)
                 && !$value instanceof Stringable
-                && !is_numeric($value)
+                && !$value instanceof BackedEnum
                 && $value !== null
             ) {
                 throw new InvalidArgumentException(
-                    'Non-multiple Select field requires a string, Stringable, numeric, bool or null value.'
+                    'Non-multiple select field requires a string, Stringable, numeric, bool, backed enumeration or null value.'
                 );
             }
             $value = $value === null ? [] : [$value];
@@ -280,7 +282,7 @@ final class Select extends InputField implements EnrichFromValidationRulesInterf
             $this->getInputAttributes()
         );
 
-        /** @psalm-var iterable<int, Stringable|scalar> $value */
+        /** @psalm-var iterable<int, Stringable|scalar|BackedEnum> $value */
         return $this->select
             ->addAttributes($selectAttributes)
             ->name($this->getName())
