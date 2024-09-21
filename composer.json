@@ -19,7 +19,7 @@
     "require": {
         "php": "^8.1",
         "yiisoft/friendly-exception": "^1.0",
-        "yiisoft/html": "^3.6",
+        "yiisoft/html": "^3.7",
         "yiisoft/widget": "^2.2"
     },
     "require-dev": {

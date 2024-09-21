@@ -2,7 +2,7 @@
 
 ## 1.0.1 under development
 
-- no changes in this release.
+- Enh #363: Add backed enumeration value support to `Select` field (@vjik)
 
 ## 1.0.0 August 26, 2024
 
