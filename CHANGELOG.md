@@ -1,8 +1,8 @@
 # Yii Form Change Log
 
-## 1.1.1 under development
+## 1.2.0 under development
 
-- no changes in this release.
+- New #364: Add `Checkbox::labelPlacement()` method and mark `Checkbox::enclosedByLabel()` as deprecated (@vjik)
 
 ## 1.1.0 September 26, 2024
 
