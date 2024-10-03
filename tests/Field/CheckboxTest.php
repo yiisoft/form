@@ -702,6 +702,142 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function dataLabelPlacementWithInputLabel(): iterable
+    {
+        yield 'default' => [
+            <<<HTML
+            <div>
+            <label for="UID">Voronezh</label>
+            <input type="checkbox" id="UID" name="city" value="1"> Moscow
+            </div>
+            HTML,
+            CheckboxLabelPlacement::DEFAULT,
+        ];
+        yield 'wrap' => [
+            <<<HTML
+            <div>
+            <label><input type="checkbox" id="UID" name="city" value="1"> Moscow</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::WRAP,
+        ];
+        yield 'side' => [
+            <<<HTML
+            <div>
+            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Moscow</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::SIDE,
+        ];
+    }
+
+    #[DataProvider('dataLabelPlacementWithInputLabel')]
+    public function testLabelPlacementWithInputLabel(string $expected, CheckboxLabelPlacement $placement): void
+    {
+        $inputData = new InputData('city', label: 'Voronezh');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->inputLabel('Moscow')
+            ->inputId('UID')
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function dataLabelPlacementWithLabel(): iterable
+    {
+        yield 'default' => [
+            <<<HTML
+            <div>
+            <label for="UID">Moscow</label>
+            <input type="checkbox" id="UID" name="city" value="1">
+            </div>
+            HTML,
+            CheckboxLabelPlacement::DEFAULT,
+        ];
+        yield 'wrap' => [
+            <<<HTML
+            <div>
+            <label><input type="checkbox" id="UID" name="city" value="1"> Moscow</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::WRAP,
+        ];
+        yield 'side' => [
+            <<<HTML
+            <div>
+            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Moscow</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::SIDE,
+        ];
+    }
+
+    #[DataProvider('dataLabelPlacementWithLabel')]
+    public function testLabelPlacementWithLabel(string $expected, CheckboxLabelPlacement $placement): void
+    {
+        $inputData = new InputData('city', label: 'Voronezh');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->label('Moscow')
+            ->inputId('UID')
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function dataLabelPlacementWithLabelAndInputLabel(): iterable
+    {
+        yield 'default' => [
+            <<<HTML
+            <div>
+            <label for="UID">Vladivostok</label>
+            <input type="checkbox" id="UID" name="city" value="1"> Moscow
+            </div>
+            HTML,
+            CheckboxLabelPlacement::DEFAULT,
+        ];
+        yield 'wrap' => [
+            <<<HTML
+            <div>
+            <label><input type="checkbox" id="UID" name="city" value="1"> Moscow</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::WRAP,
+        ];
+        yield 'side' => [
+            <<<HTML
+            <div>
+            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Moscow</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::SIDE,
+        ];
+    }
+
+    #[DataProvider('dataLabelPlacementWithLabelAndInputLabel')]
+    public function testLabelPlacementWithLabelAndInputLabel(string $expected, CheckboxLabelPlacement $placement): void
+    {
+        $inputData = new InputData('city', label: 'Voronezh');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->inputLabel('Moscow')
+            ->label('Vladivostok')
+            ->inputId('UID')
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $widget = Checkbox::widget();
