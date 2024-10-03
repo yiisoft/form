@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\Field\CheckboxLabelPlacement;
 use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -657,12 +658,57 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function dataLabelPlacement(): iterable
+    {
+        yield 'default' => [
+            <<<HTML
+            <div>
+            <label for="UID">Voronezh</label>
+            <input type="checkbox" id="UID" name="city" value="1">
+            </div>
+            HTML,
+            CheckboxLabelPlacement::DEFAULT,
+        ];
+        yield 'wrap' => [
+            <<<HTML
+            <div>
+            <label><input type="checkbox" id="UID" name="city" value="1"> Voronezh</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::WRAP,
+        ];
+        yield 'side' => [
+            <<<HTML
+            <div>
+            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Voronezh</label>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::SIDE,
+        ];
+    }
+
+    #[DataProvider('dataLabelPlacement')]
+    public function testLabelPlacement(string $expected, CheckboxLabelPlacement $placement): void
+    {
+        $inputData = new InputData('city', label: 'Voronezh');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->inputId('UID')
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $widget = Checkbox::widget();
 
         $this->assertNotSame($widget, $widget->uncheckValue(null));
         $this->assertNotSame($widget, $widget->enclosedByLabel(true));
+        $this->assertNotSame($widget, $widget->labelPlacement(CheckboxLabelPlacement::DEFAULT));
         $this->assertNotSame($widget, $widget->inputLabel(null));
         $this->assertNotSame($widget, $widget->inputLabelAttributes([]));
         $this->assertNotSame($widget, $widget->addInputLabelAttributes([]));
