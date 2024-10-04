@@ -26,6 +26,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     private ?string $uncheckValue = '0';
     private bool $enclosedByLabel = true;
+    private CheckboxLabelPlacement $labelPlacement = CheckboxLabelPlacement::WRAP;
     private ?string $inputLabel = null;
     private array $inputLabelAttributes = [];
     private bool $inputLabelEncode = true;
@@ -82,6 +83,8 @@ final class Checkbox extends InputField implements ValidationClassInterface
      * If the input should be enclosed by label.
      *
      * @param bool $value If the input should be en closed by label.
+     *
+     * @deprecated Use {@see labelPLacement()} instead it.
      */
     public function enclosedByLabel(bool $value): self
     {
@@ -91,9 +94,19 @@ final class Checkbox extends InputField implements ValidationClassInterface
     }
 
     /**
-     * Label displayed next to the checkbox.
+     * Set label placement relative to checkbox input.
      *
-     * When this option is specified, the checkbox will be enclosed by a label tag.
+     * @see CheckboxLabelPlacement
+     */
+    public function labelPlacement(CheckboxLabelPlacement $placement): self
+    {
+        $new = clone $this;
+        $new->labelPlacement = $placement;
+        return $new;
+    }
+
+    /**
+     * Label displayed next to the checkbox.
      *
      * @link https://www.w3.org/TR/html52/sec-forms.html#the-label-element
      */
@@ -124,7 +137,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     }
 
     /**
-     * Set enclosed label tag ID.
+     * Set checkbox label tag ID.
      *
      * @param string|null $id Label tag ID.
      */
@@ -136,7 +149,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     }
 
     /**
-     * Replace enclosed label tag CSS classes with a new set of classes.
+     * Replace checkbox label tag CSS classes with a new set of classes.
      *
      * @param string|null ...$class One or many CSS classes.
      */
@@ -148,7 +161,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     }
 
     /**
-     * Add one or more CSS classes to the enclosed label tag.
+     * Add one or more CSS classes to the checkbox label tag.
      *
      * @param string|null ...$class One or many CSS classes.
      */
@@ -233,10 +246,17 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
         $checkbox = Html::checkbox($this->getName(), $inputValue, $inputAttributes);
 
-        if ($this->enclosedByLabel) {
+        $labelPlacement = $this->getLabelPlacement();
+
+        if ($labelPlacement === CheckboxLabelPlacement::WRAP) {
             $label = $this->inputLabel ?? $this->label ?? $this->getInputData()->getLabel();
             $checkbox = $checkbox
                 ->label($label, $this->inputLabelAttributes)
+                ->labelEncode($this->inputLabelEncode);
+        } elseif ($labelPlacement === CheckboxLabelPlacement::SIDE) {
+            $label = $this->inputLabel ?? $this->label ?? $this->getInputData()->getLabel();
+            $checkbox = $checkbox
+                ->sideLabel($label, $this->inputLabelAttributes)
                 ->labelEncode($this->inputLabelEncode);
         }
 
@@ -245,7 +265,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
             ->uncheckValue($this->uncheckValue)
             ->render();
 
-        if (!$this->enclosedByLabel && $this->inputLabel !== null) {
+        if ($labelPlacement === CheckboxLabelPlacement::DEFAULT && $this->inputLabel !== null) {
             $html .= ' ' . ($this->inputLabelEncode ? Html::encode($this->inputLabel) : $this->inputLabel);
         }
 
@@ -254,7 +274,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     protected function shouldHideLabel(): bool
     {
-        return $this->enclosedByLabel;
+        return $this->getLabelPlacement() !== CheckboxLabelPlacement::DEFAULT;
     }
 
     private function prepareCheckboxValue(mixed $value): ?string
@@ -286,5 +306,15 @@ final class Checkbox extends InputField implements ValidationClassInterface
             $this->getInputData(),
             $this->hasCustomError() ? true : null,
         );
+    }
+
+    private function getLabelPlacement(): CheckboxLabelPlacement
+    {
+        // If default value, use deprecated `enclosedByLabel` property
+        if ($this->labelPlacement === CheckboxLabelPlacement::WRAP) {
+            return $this->enclosedByLabel ? CheckboxLabelPlacement::WRAP : CheckboxLabelPlacement::DEFAULT;
+        }
+
+        return $this->labelPlacement;
     }
 }

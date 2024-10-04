@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
+use Yiisoft\Form\Field\CheckboxLabelPlacement;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\Field\ErrorSummary;
 use Yiisoft\Form\Field\RadioList;
@@ -24,8 +25,8 @@ return [
     'inputInvalidClass' => 'is-invalid',
     'fieldConfigs' => [
         Checkbox::class => [
-            'inputContainerTag()' => ['div'],
-            'addInputContainerClass()' => ['form-check'],
+            'labelPlacement()' => [CheckboxLabelPlacement::SIDE],
+            'addContainerClass()' => ['form-check'],
             'inputClass()' => ['form-check-input'],
             'inputLabelClass()' => ['form-check-label'],
         ],
