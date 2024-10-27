@@ -77,6 +77,34 @@ final class CheckboxListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testCheckboxWrap(): void
+    {
+        $result = CheckboxList::widget()
+            ->items([
+                '1' => 'Red',
+                '2' => 'Blue',
+            ])
+            ->name('test')
+            ->checkboxWrapTag('div')
+            ->checkboxWrapAttributes(['class' => 'form-check'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <div class="form-check">
+            <label><input type="checkbox" name="test[]" value="1"> Red</label>
+            </div>
+            <div class="form-check">
+            <label><input type="checkbox" name="test[]" value="2"> Blue</label>
+            </div>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testAddCheckboxAttributes(): void
     {
         $result = CheckboxList::widget()
@@ -160,6 +188,33 @@ final class CheckboxListTest extends TestCase
             <div>
             <label class="control"><input type="checkbox" name="CheckboxListForm[color][]" value="Red"> Red</label>
             <label class="control"><input type="checkbox" name="CheckboxListForm[color][]" value="Blue"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCheckboxLabelWrapDisabled(): void
+    {
+        $result = CheckboxList::widget()
+            ->items([
+                1 => 'Red',
+                2 => 'Blue',
+            ])
+            ->name('test')
+            ->checkboxLabelWrap(false)
+            ->individualInputAttributes([
+                1 => ['id' => 'id1'],
+                2 => ['id' => 'id2'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <input type="checkbox" id="id1" name="test[]" value="1"> <label for="id1">Red</label>
+            <input type="checkbox" id="id2" name="test[]" value="2"> <label for="id2">Blue</label>
             </div>
             </div>
             HTML;
@@ -470,10 +525,13 @@ final class CheckboxListTest extends TestCase
     {
         $field = CheckboxList::widget();
 
+        $this->assertNotSame($field, $field->checkboxWrapTag('div'));
+        $this->assertNotSame($field, $field->checkboxWrapAttributes([]));
         $this->assertNotSame($field, $field->checkboxAttributes([]));
         $this->assertNotSame($field, $field->addCheckboxAttributes([]));
         $this->assertNotSame($field, $field->checkboxLabelAttributes([]));
         $this->assertNotSame($field, $field->addCheckboxLabelAttributes([]));
+        $this->assertNotSame($field, $field->checkboxLabelWrap(false));
         $this->assertNotSame($field, $field->individualInputAttributes([]));
         $this->assertNotSame($field, $field->addIndividualInputAttributes([]));
         $this->assertNotSame($field, $field->items([]));

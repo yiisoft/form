@@ -31,13 +31,17 @@ return [
             'inputLabelClass()' => ['form-check-label'],
         ],
         CheckboxList::class => [
+            'checkboxWrapTag()' => ['div'],
+            'checkboxWrapAttributes()' => [['class' => 'form-check']],
             'addCheckboxAttributes()' => [['class' => 'form-check-input']],
-            'addCheckboxLabelAttributes()' => [['class' => 'form-check']],
+            'checkboxLabelWrap()' => [false],
             'addErrorClass()' => ['d-block'],
         ],
         RadioList::class => [
+            'radioWrapTag()' => ['div'],
+            'radioWrapAttributes()' => [['class' => 'form-check']],
             'addRadioAttributes()' => [['class' => 'form-check-input']],
-            'addRadioLabelAttributes()' => [['class' => 'form-check']],
+            'radioLabelWrap()' => [false],
             'addErrorClass()' => ['d-block'],
         ],
         ErrorSummary::class => [

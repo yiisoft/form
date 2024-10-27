@@ -2,7 +2,9 @@
 
 ## 1.2.1 under development
 
-- no changes in this release.
+- New #366: Add `CheckboxList` methods: `checkboxWrapTag()`, `checkboxWrapAttributes()`, `checkboxLabelWrap()` (@vjik)
+- New #366: Add `RadioList` methods: `radioWrapTag()`, `radioWrapAttributes()`, `radioLabelWrap()` (@vjik)
+- Enh #366: Improve HTML markup of checkbox and radio lists in Bootstrap 5 themes (@vjik)
 
 ## 1.2.0 October 09, 2024
 

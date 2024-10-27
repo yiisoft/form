@@ -36,6 +36,20 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
         $this->widget = CheckboxListWidget::create('');
     }
 
+    public function checkboxWrapTag(?string $name): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->checkboxWrapTag($name);
+        return $new;
+    }
+
+    public function checkboxWrapAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->checkboxWrapAttributes($attributes);
+        return $new;
+    }
+
     public function checkboxAttributes(array $attributes): self
     {
         $new = clone $this;
@@ -61,6 +75,13 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     {
         $new = clone $this;
         $new->widget = $this->widget->addCheckboxLabelAttributes($attributes);
+        return $new;
+    }
+
+    public function checkboxLabelWrap(bool $wrap): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->checkboxLabelWrap($wrap);
         return $new;
     }
 

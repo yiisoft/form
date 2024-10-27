@@ -34,6 +34,20 @@ final class RadioList extends PartsField implements ValidationClassInterface
         $this->widget = RadioListWidget::create('');
     }
 
+    public function radioWrapTag(?string $name): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->radioWrapTag($name);
+        return $new;
+    }
+
+    public function radioWrapAttributes(array $attributes): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->radioWrapAttributes($attributes);
+        return $new;
+    }
+
     public function radioAttributes(array $attributes): self
     {
         $new = clone $this;
@@ -59,6 +73,13 @@ final class RadioList extends PartsField implements ValidationClassInterface
     {
         $new = clone $this;
         $new->widget = $this->widget->addRadioLabelAttributes($attributes);
+        return $new;
+    }
+
+    public function radioLabelWrap(bool $wrap): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->radioLabelWrap($wrap);
         return $new;
     }
 
