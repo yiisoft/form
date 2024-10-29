@@ -48,6 +48,20 @@ final class RadioList extends PartsField implements ValidationClassInterface
         return $new;
     }
 
+    public function radioWrapClass(?string ...$class): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->radioWrapClass(...$class);
+        return $new;
+    }
+
+    public function addRadioWrapClass(?string ...$class): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->addRadioWrapClass(...$class);
+        return $new;
+    }
+
     public function radioAttributes(array $attributes): self
     {
         $new = clone $this;

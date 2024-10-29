@@ -106,6 +106,35 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testRadioWrapClass(): void
+    {
+        $result = RadioList::widget()
+            ->items([
+                '1' => 'Red',
+                '2' => 'Blue',
+            ])
+            ->name('test')
+            ->radioWrapTag('div')
+            ->radioWrapClass('form-check')
+            ->addRadioWrapClass('form-check-inline')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <div class="form-check form-check-inline">
+            <label><input type="radio" name="test" value="1"> Red</label>
+            </div>
+            <div class="form-check form-check-inline">
+            <label><input type="radio" name="test" value="2"> Blue</label>
+            </div>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testRadioAttributes(): void
     {
         $result = RadioList::widget()
@@ -741,6 +770,8 @@ final class RadioListTest extends TestCase
 
         $this->assertNotSame($field, $field->radioWrapTag('div'));
         $this->assertNotSame($field, $field->radioWrapAttributes([]));
+        $this->assertNotSame($field, $field->radioWrapClass());
+        $this->assertNotSame($field, $field->addRadioWrapClass());
         $this->assertNotSame($field, $field->radioAttributes([]));
         $this->assertNotSame($field, $field->addRadioAttributes([]));
         $this->assertNotSame($field, $field->addRadioLabelAttributes([]));
