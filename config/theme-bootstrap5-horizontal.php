@@ -31,14 +31,20 @@ return [
             'inputLabelClass()' => ['form-check-label'],
         ],
         CheckboxList::class => [
+            'checkboxLabelWrap()' => [false],
             'addCheckboxAttributes()' => [['class' => 'form-check-input']],
-            'addCheckboxLabelAttributes()' => [['class' => 'form-check']],
+            'addCheckboxLabelAttributes()' => [['class' => 'form-check-label']],
             'addErrorClass()' => ['d-block'],
+            'checkboxWrapTag()' => ['div'],
+            'addCheckboxWrapClass()' => ['form-check'],
         ],
         RadioList::class => [
+            'radioLabelWrap()' => [false],
             'addRadioAttributes()' => [['class' => 'form-check-input']],
-            'addRadioLabelAttributes()' => [['class' => 'form-check']],
+            'addRadioLabelAttributes()' => [['class' => 'form-check-label']],
             'addErrorClass()' => ['d-block'],
+            'radioWrapTag()' => ['div'],
+            'addRadioWrapClass()' => ['form-check'],
         ],
         ErrorSummary::class => [
             'containerClass()' => ['alert alert-danger'],

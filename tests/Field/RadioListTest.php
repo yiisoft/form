@@ -78,6 +78,63 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testRadioWrap(): void
+    {
+        $result = RadioList::widget()
+            ->items([
+                '1' => 'Red',
+                '2' => 'Blue',
+            ])
+            ->name('test')
+            ->radioWrapTag('div')
+            ->radioWrapAttributes(['class' => 'form-check'])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <div class="form-check">
+            <label><input type="radio" name="test" value="1"> Red</label>
+            </div>
+            <div class="form-check">
+            <label><input type="radio" name="test" value="2"> Blue</label>
+            </div>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testRadioWrapClass(): void
+    {
+        $result = RadioList::widget()
+            ->items([
+                '1' => 'Red',
+                '2' => 'Blue',
+            ])
+            ->name('test')
+            ->radioWrapTag('div')
+            ->radioWrapClass('form-check')
+            ->addRadioWrapClass('form-check-inline')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <div class="form-check form-check-inline">
+            <label><input type="radio" name="test" value="1"> Red</label>
+            </div>
+            <div class="form-check form-check-inline">
+            <label><input type="radio" name="test" value="2"> Blue</label>
+            </div>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testRadioAttributes(): void
     {
         $result = RadioList::widget()
@@ -177,6 +234,33 @@ final class RadioListTest extends TestCase
             <div>
             <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
             <label><input type="radio" class="red" name="RadioListForm[number]" value="2"> Two</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testRadioLabelWrapDisabled(): void
+    {
+        $result = RadioList::widget()
+            ->items([
+                1 => 'Red',
+                2 => 'Blue',
+            ])
+            ->name('test')
+            ->radioLabelWrap(false)
+            ->individualInputAttributes([
+                1 => ['id' => 'id1'],
+                2 => ['id' => 'id2'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <input type="radio" id="id1" name="test" value="1"> <label for="id1">Red</label>
+            <input type="radio" id="id2" name="test" value="2"> <label for="id2">Blue</label>
+            </div>
             </div>
             HTML;
 
@@ -684,10 +768,15 @@ final class RadioListTest extends TestCase
     {
         $field = RadioList::widget();
 
+        $this->assertNotSame($field, $field->radioWrapTag('div'));
+        $this->assertNotSame($field, $field->radioWrapAttributes([]));
+        $this->assertNotSame($field, $field->radioWrapClass());
+        $this->assertNotSame($field, $field->addRadioWrapClass());
         $this->assertNotSame($field, $field->radioAttributes([]));
         $this->assertNotSame($field, $field->addRadioAttributes([]));
         $this->assertNotSame($field, $field->addRadioLabelAttributes([]));
         $this->assertNotSame($field, $field->radioLabelAttributes([]));
+        $this->assertNotSame($field, $field->radioLabelWrap(false));
         $this->assertNotSame($field, $field->individualInputAttributes([]));
         $this->assertNotSame($field, $field->addIndividualInputAttributes([]));
         $this->assertNotSame($field, $field->items([]));
