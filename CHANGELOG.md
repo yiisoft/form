@@ -1,6 +1,6 @@
 # Yii Form Change Log
 
-## 1.2.1 under development
+## 1.3.0 October 30, 2024
 
 - New #366: Add `CheckboxList` methods: `checkboxWrapTag()`, `checkboxWrapAttributes()`, `checkboxWrapClass()`,
   `addCheckboxWrapClass()` and `checkboxLabelWrap()` (@vjik)
