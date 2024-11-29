@@ -2,7 +2,7 @@
 
 ## 1.3.1 under development
 
-- no changes in this release.
+- Enh #367: Improve "Bootstrap 5 Horizontal" theme for checkbox (@vjik)
 
 ## 1.3.0 October 30, 2024
 
