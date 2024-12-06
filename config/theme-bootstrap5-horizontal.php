@@ -26,7 +26,7 @@ return [
     'fieldConfigs' => [
         Checkbox::class => [
             'labelPlacement()' => [CheckboxLabelPlacement::SIDE],
-            'addContainerClass()' => ['form-check'],
+            'addContainerClass()' => ['form-check offset-2'],
             'inputClass()' => ['form-check-input'],
             'inputLabelClass()' => ['form-check-label'],
         ],
