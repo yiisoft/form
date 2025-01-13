@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta-storm xmlns="meta-storm">
+    <definitions>
+        <classMethod class="\Yiisoft\Form\Field\Base\BaseField" method="containerTag" argument="0">
+            <collection name="GLOBAL:html-tags"/>
+        </classMethod>
+        <classMethod class="\Yiisoft\Form\Field\Part\Hint" method="tag" argument="0">
+            <collection name="GLOBAL:html-tags"/>
+        </classMethod>
+        <classMethod class="\Yiisoft\Form\Field\Part\Error" method="tag" argument="0">
+            <collection name="GLOBAL:html-tags"/>
+        </classMethod>
+        <returnValue class="\Yiisoft\Form\Field\Base\ButtonField" method="getType">
+            <collection name="GLOBAL:html-tags"/>
+        </returnValue>
+    </definitions>
+</meta-storm>
