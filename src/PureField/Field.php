@@ -34,6 +34,8 @@ use Yiisoft\Form\Field\Url;
 
 /**
  * @psalm-import-type Errors from ErrorSummary
+ *
+ * @psalm-suppress ClassMustBeFinal We allow to extend this class to add custom fields.
  */
 class Field
 {
