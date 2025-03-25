@@ -19,8 +19,14 @@ use function is_string;
  */
 final class Hidden extends InputField
 {
-    protected bool $useContainer = false;
-    protected string $template = '{input}';
+    protected function beforeRender(): void
+    {
+        $this->template = '{input}';
+        $this->useContainer = false;
+        $this->inputContainerTag = null;
+        $this->beforeInput = '';
+        $this->afterInput = '';
+    }
 
     protected function generateInput(): string
     {
