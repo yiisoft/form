@@ -3,6 +3,7 @@
 ## 1.3.1 under development
 
 - Enh #367: Improve "Bootstrap 5 Horizontal" theme for checkbox (@vjik)
+- Chg #370: Change PHP constraint in `composer.json` to `8.1 - 8.4` (@vjik)
 
 ## 1.3.0 October 30, 2024
 

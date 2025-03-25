@@ -491,6 +491,9 @@ abstract class PartsField extends BaseField
             $parts += $this->extraTokens;
         }
 
+        /**
+         * @var string We use correct regular expression, so `preg_replace` will return string.
+         */
         return preg_replace('/^\h*\v+/m', '', trim(strtr($template, $parts)));
     }
 
