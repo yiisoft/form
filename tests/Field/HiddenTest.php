@@ -10,6 +10,8 @@ use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Theme\ThemeContainer;
 
+use function PHPUnit\Framework\assertSame;
+
 final class HiddenTest extends TestCase
 {
     protected function setUp(): void
@@ -24,7 +26,7 @@ final class HiddenTest extends TestCase
 
         $field = Hidden::widget()->inputData($inputData);
 
-        $this->assertSame(
+        assertSame(
             '<input type="hidden" id="hiddenform-key" name="key" value="x100">',
             $field->render(),
         );
@@ -37,5 +39,20 @@ final class HiddenTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hidden widget requires a string, numeric or null value.');
         $field->render();
+    }
+
+    public function testWithExtraConfiguration(): void
+    {
+        $field = Hidden::widget()
+            ->inputContainerTag('div')
+            ->useContainer(true)
+            ->template('start {input} end')
+            ->beforeInput('before')
+            ->afterInput('after');
+
+        assertSame(
+            '<input type="hidden">',
+            $field->render(),
+        );
     }
 }

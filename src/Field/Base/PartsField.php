@@ -43,8 +43,8 @@ abstract class PartsField extends BaseField
     protected ?string $inputContainerTag = null;
     protected array $inputContainerAttributes = [];
 
-    private string|Stringable $beforeInput = '';
-    private string|Stringable $afterInput = '';
+    protected string|Stringable $beforeInput = '';
+    protected string|Stringable $afterInput = '';
 
     private bool $replaceLabelAttributes = false;
     private bool $replaceLabelClass = false;

@@ -4,6 +4,8 @@
 
 - Enh #367: Improve "Bootstrap 5 Horizontal" theme for checkbox (@vjik)
 - Chg #370: Change PHP constraint in `composer.json` to `8.1 - 8.4` (@vjik)
+- Bug #371: Suppress all extra HTML for "Hidden" field (@vjik)
+- Enh #372: In `PartsFeild` class change `$beforeInput` and `$afterInput` properties' scope to protected (@vjik)
 
 ## 1.3.0 October 30, 2024
 
