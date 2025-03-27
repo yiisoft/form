@@ -1,5 +1,9 @@
 # Yii Form Change Log
 
+## 1.4.1 under development
+
+- no changes in this release.
+
 ## 1.4.0 March 27, 2025
 
 - Chg #370: Change PHP constraint in `composer.json` to `8.1 - 8.4` (@vjik)
