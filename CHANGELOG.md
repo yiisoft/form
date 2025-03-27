@@ -1,11 +1,11 @@
 # Yii Form Change Log
 
-## 1.3.1 under development
+## 1.4.0 March 27, 2025
 
-- Enh #367: Improve "Bootstrap 5 Horizontal" theme for checkbox (@vjik)
 - Chg #370: Change PHP constraint in `composer.json` to `8.1 - 8.4` (@vjik)
-- Bug #371: Suppress all extra HTML for "Hidden" field (@vjik)
+- Enh #367: Improve "Bootstrap 5 Horizontal" theme for checkbox (@vjik)
 - Enh #372: In `PartsFeild` class change `$beforeInput` and `$afterInput` properties' scope to protected (@vjik)
+- Bug #371: Suppress all extra HTML for "Hidden" field (@vjik)
 
 ## 1.3.0 October 30, 2024
 
