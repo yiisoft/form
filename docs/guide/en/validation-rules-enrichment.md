@@ -92,6 +92,19 @@ Another case is to add thematic icons: for example - letter icon for `Email` fie
 \Yiisoft\Form\Theme\ThemeContainer::initialize(validationRulesEnricher: new MyValidationRulesEnricher());
 ```
 
+Alternatively, you can configure it through the configuration array:
+
+```php
+'yiisoft/form' => [
+    'themes' => [
+        'default' => [
+            'enrichFromValidationRules' => true,
+            'validationRulesEnricher' => new MyValidationRulesEnricher(),
+        ],
+    ],
+],
+```
+
 4. Now, when creating field, provide validation rules within input data and enrichment
 
 ```php
