@@ -92,7 +92,7 @@ Another case is to add thematic icons: for example - letter icon for `Email` fie
 \Yiisoft\Form\Theme\ThemeContainer::initialize(validationRulesEnricher: new MyValidationRulesEnricher());
 ```
 
-Alternatively, you can configure it through the configuration array:
+Alternatively, you can configure it through the package configuration parameters:
 
 ```php
 'yiisoft/form' => [
