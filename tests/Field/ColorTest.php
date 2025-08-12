@@ -377,6 +377,7 @@ final class ColorTest extends TestCase
             ->invalidClass('invalid')
             ->inputData($inputData)
             ->hideLabel()
+            ->hideError()
             ->render();
 
         $expected = <<<HTML
@@ -417,6 +418,7 @@ final class ColorTest extends TestCase
             ->inputInvalidClass('invalid')
             ->inputData($inputData)
             ->hideLabel()
+            ->hideError()
             ->render();
 
         $expected = <<<HTML
