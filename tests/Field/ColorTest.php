@@ -29,13 +29,13 @@ final class ColorTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="colorform-bgcolor">Background Color</label>
-                <input type="color" id="colorform-bgcolor" name="ColorForm[bgcolor]" value>
+                <input type="color" id="colorform-bgcolor" name="ColorForm[bgcolor]">
                 <div>Select a background color.</div>
                 </div>
                 HTML,
                 new InputData(
                     name: 'ColorForm[bgcolor]',
-                    value: '',
+                    value: null,
                     label: 'Background Color',
                     hint: 'Select a background color.',
                     id: 'colorform-bgcolor',
@@ -44,12 +44,12 @@ final class ColorTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="color" class="valid" name="color" value>
+                <input type="color" class="valid" name="color">
                 </div>
                 HTML,
                 new InputData(
                     name: 'color',
-                    value: '',
+                    value: null,
                     validationErrors: [],
                 ),
                 ['inputValidClass' => 'valid', 'inputInvalidClass' => 'invalid'],
@@ -57,12 +57,12 @@ final class ColorTest extends TestCase
             'container-valid-class' => [
                 <<<HTML
                 <div class="valid">
-                <input type="color" name="color" value>
+                <input type="color" name="color">
                 </div>
                 HTML,
                 new InputData(
                     name: 'color',
-                    value: '',
+                    value: null,
                     validationErrors: [],
                 ),
                 ['validClass' => 'valid', 'invalidClass' => 'invalid'],
