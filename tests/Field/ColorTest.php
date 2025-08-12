@@ -573,17 +573,17 @@ final class ColorTest extends TestCase
     {
         $original = Color::widget()->name('original');
         $modified = $original->disabled()->readonly()->required()->autofocus();
-        
+
         // Test that original instance is not modified
         $originalHtml = $original->hideLabel()->render();
         $modifiedHtml = $modified->hideLabel()->render();
-        
+
         $expectedOriginal = <<<HTML
             <div>
             <input type="color" name="original">
             </div>
             HTML;
-            
+
         $expectedModified = <<<HTML
             <div>
             <input type="color" name="original" disabled readonly required autofocus>
@@ -640,7 +640,7 @@ final class ColorTest extends TestCase
         $widget = Color::widget()
             ->enrichFromValidationRules()
             ->inputData(new InputData('color', validationRules: [['required']]));
-        
+
         // Without enricher, should not process rules
         $result = $widget->hideLabel()->render();
 
@@ -719,7 +719,7 @@ final class ColorTest extends TestCase
     public function testCustomErrorWithValidationClasses(): void
     {
         $inputData = new InputData('color', validationErrors: []);
-        
+
         $result = Color::widget()
             ->inputData($inputData)
             ->validClass('valid-container')
