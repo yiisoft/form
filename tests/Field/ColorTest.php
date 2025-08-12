@@ -449,4 +449,295 @@ final class ColorTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
+
+    public function testDisabledFalse(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->disabled(false)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testReadonlyFalse(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->readonly(false)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testRequiredFalse(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->required(false)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testAutofocusFalse(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->autofocus(false)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testTabIndexNull(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->tabIndex(null)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testTabIndexNegative(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->tabIndex(-1)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test" tabindex="-1">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testAriaLabelNull(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->ariaLabel(null)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testImmutability(): void
+    {
+        $original = Color::widget()->name('original');
+        $modified = $original->disabled()->readonly()->required()->autofocus();
+        
+        // Test that original instance is not modified
+        $originalHtml = $original->hideLabel()->render();
+        $modifiedHtml = $modified->hideLabel()->render();
+        
+        $expectedOriginal = <<<HTML
+            <div>
+            <input type="color" name="original">
+            </div>
+            HTML;
+            
+        $expectedModified = <<<HTML
+            <div>
+            <input type="color" name="original" disabled readonly required autofocus>
+            </div>
+            HTML;
+
+        $this->assertSame($expectedOriginal, $originalHtml);
+        $this->assertSame($expectedModified, $modifiedHtml);
+    }
+
+    public function testEnrichmentAttributesMerge(): void
+    {
+        $result = Color::widget()
+            ->enrichFromValidationRules()
+            ->validationRulesEnricher(
+                new StubValidationRulesEnricher(['inputAttributes' => ['data-enriched' => 'from-validation']])
+            )
+            ->inputData(new InputData('color'))
+            ->disabled()
+            ->ariaLabel('test-label')
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="color" data-enriched="from-validation" disabled aria-label="test-label">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testValidationEnrichmentDisabledByDefault(): void
+    {
+        $widget = Color::widget()
+            ->validationRulesEnricher(new RequiredValidationRulesEnricher())
+            ->inputData(new InputData('color', validationRules: [['required']]));
+
+        // Should not have 'required' attribute since enrichFromValidationRules() was not called
+        $result = $widget->hideLabel()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="color">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testBeforeRenderEnrichmentCondition(): void
+    {
+        // Test the condition in beforeRender() that checks $this->enrichFromValidationRules
+        $widget = Color::widget()
+            ->enrichFromValidationRules()
+            ->inputData(new InputData('color', validationRules: [['required']]));
+        
+        // Without enricher, should not process rules
+        $result = $widget->hideLabel()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="color">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testInvalidValueArray(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Color field requires a string or null value.');
+        Color::widget()->name('test')->value([])->render();
+    }
+
+    public function testInvalidValueFloat(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Color field requires a string or null value.');
+        Color::widget()->name('test')->value(3.14)->render();
+    }
+
+    public function testInvalidValueBoolean(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Color field requires a string or null value.');
+        Color::widget()->name('test')->value(true)->render();
+    }
+
+    public function testInvalidValueObject(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Color field requires a string or null value.');
+        Color::widget()->name('test')->value(new \stdClass())->render();
+    }
+
+    public function testValueEmptyString(): void
+    {
+        $result = Color::widget()
+            ->name('test')
+            ->value('')
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test" value="">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testAriaDescribedByFilteringBehavior(): void
+    {
+        // Test that array_filter in ariaDescribedBy correctly filters out null values
+        $result = Color::widget()
+            ->name('test')
+            ->ariaDescribedBy('valid1', null, '', 'valid2', null)
+            ->hideLabel()
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color" name="test" aria-describedby="valid1  valid2">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testCustomErrorWithValidationClasses(): void
+    {
+        $inputData = new InputData('color', validationErrors: []);
+        
+        $result = Color::widget()
+            ->inputData($inputData)
+            ->validClass('valid-container')
+            ->invalidClass('invalid-container')
+            ->inputValidClass('valid-input')
+            ->inputInvalidClass('invalid-input')
+            ->error('Custom error message')
+            ->hideLabel()
+            ->render();
+
+        // With custom error, should show invalid classes even if no validation errors
+        $expected = <<<HTML
+            <div class="invalid-container">
+            <input type="color" class="invalid-input" name="color">
+            <div>Custom error message</div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
 }
