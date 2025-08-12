@@ -234,6 +234,38 @@ final class FieldFactoryTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testColor(): void
+    {
+        $html = (new FieldFactory())->color()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testColorWithTheme(): void
+    {
+        ThemeContainer::initialize([
+            'test' => [
+                'containerTag' => 'span',
+            ],
+        ]);
+
+        $html = (new FieldFactory('default'))->color(theme: 'test')->render();
+
+        $expected = <<<HTML
+            <span>
+            <input type="color">
+            </span>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
     public function testEmail(): void
     {
         $html = (new FieldFactory())->email()->render();

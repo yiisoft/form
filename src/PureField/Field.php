@@ -8,6 +8,7 @@ use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxList;
+use Yiisoft\Form\Field\Color;
 use Yiisoft\Form\Field\Date;
 use Yiisoft\Form\Field\DateTimeLocal;
 use Yiisoft\Form\Field\Email;
@@ -78,6 +79,16 @@ class Field
         ?string $theme = null,
     ): CheckboxList {
         return CheckboxList::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
+            ->inputData(new InputData($name, $value));
+    }
+
+    final public static function color(
+        ?string $name = null,
+        mixed $value = null,
+        array $config = [],
+        ?string $theme = null,
+    ): Color {
+        return Color::widget(config: $config, theme: $theme ?? static::DEFAULT_THEME)
             ->inputData(new InputData($name, $value));
     }
 
