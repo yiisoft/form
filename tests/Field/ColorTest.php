@@ -377,12 +377,12 @@ final class ColorTest extends TestCase
             ->invalidClass('invalid')
             ->inputData($inputData)
             ->hideLabel()
-            ->hideError()
             ->render();
 
         $expected = <<<HTML
             <div class="invalid">
             <input type="color" name="color">
+            <div>Value cannot be blank.</div>
             </div>
             HTML;
 
@@ -418,12 +418,12 @@ final class ColorTest extends TestCase
             ->inputInvalidClass('invalid')
             ->inputData($inputData)
             ->hideLabel()
-            ->hideError()
             ->render();
 
         $expected = <<<HTML
             <div>
             <input type="color" class="invalid" name="color">
+            <div>Value cannot be blank.</div>
             </div>
             HTML;
 
