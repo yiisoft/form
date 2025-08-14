@@ -380,11 +380,11 @@ final class ColorTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <div class="invalid">
-            <input type="color" name="color">
-            <div>Value cannot be blank.</div>
-            </div>
-            HTML;
+<div class="invalid">
+<input type="color" name="color">
+<div>Value cannot be blank.</div>
+</div>
+HTML;
 
         $this->assertSame($expected, $result);
     }
@@ -421,11 +421,11 @@ final class ColorTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <div>
-            <input type="color" class="invalid" name="color">
-            <div>Value cannot be blank.</div>
-            </div>
-            HTML;
+<div>
+<input type="color" class="invalid" name="color">
+<div>Value cannot be blank.</div>
+</div>
+HTML;
 
         $this->assertSame($expected, $result);
     }
