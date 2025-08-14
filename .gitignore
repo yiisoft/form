@@ -22,9 +22,13 @@ Thumbs.db
 # composer itself is not needed
 composer.phar
 
+# infection mutation testing
+infection.phar
+
 # phpunit itself is not needed
 phpunit.phar
 # local phpunit config
 /phpunit.xml
 # phpunit cache
 /.phpunit.cache/
+.phpunit.result.cache
