@@ -586,7 +586,7 @@ HTML;
 
         $expectedModified = <<<HTML
             <div>
-            <input type="color" name="original" disabled readonly required autofocus>
+            <input type="color" name="original" readonly disabled required autofocus>
             </div>
             HTML;
 
@@ -609,7 +609,7 @@ HTML;
 
         $expected = <<<HTML
             <div>
-            <input type="color" name="color" data-enriched="from-validation" disabled aria-label="test-label">
+            <input type="color" name="color" disabled data-enriched="from-validation" aria-label="test-label">
             </div>
             HTML;
 
@@ -691,7 +691,7 @@ HTML;
 
         $expected = <<<HTML
             <div>
-            <input type="color" name="test" value="">
+            <input type="color" name="test" value>
             </div>
             HTML;
 
