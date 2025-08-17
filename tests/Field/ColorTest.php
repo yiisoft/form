@@ -571,10 +571,21 @@ HTML;
 
     public function testImmutability(): void
     {
+        $field = Color::widget();
+
+        // Test that each method returns a different instance (kills CloneRemoval mutants)
+        $this->assertNotSame($field, $field->disabled());
+        $this->assertNotSame($field, $field->readonly());
+        $this->assertNotSame($field, $field->required());
+        $this->assertNotSame($field, $field->ariaDescribedBy(null));
+        $this->assertNotSame($field, $field->ariaLabel(null));
+        $this->assertNotSame($field, $field->autofocus());
+        $this->assertNotSame($field, $field->tabIndex(null));
+
+        // Test that original instance is not modified when chaining methods
         $original = Color::widget()->name('original');
         $modified = $original->disabled()->readonly()->required()->autofocus();
 
-        // Test that original instance is not modified
         $originalHtml = $original->hideLabel()->render();
         $modifiedHtml = $modified->hideLabel()->render();
 
