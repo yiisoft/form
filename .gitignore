@@ -22,8 +22,6 @@ Thumbs.db
 # composer itself is not needed
 composer.phar
 
-# infection mutation testing
-infection.phar
 
 # phpunit itself is not needed
 phpunit.phar
