@@ -18,7 +18,7 @@
 The package provides a set of widgets to help with dynamic server-side generation of HTML forms.
 The following widgets are available out of the box:
 
-- input fields: `Checkbox`, `CheckboxList`, `Date`, `DateTimeLocal`, `Email`, `File`, `Hidden`, `Image`, 
+- input fields: `Checkbox`, `CheckboxList`, `Color`, `Date`, `DateTimeLocal`, `Email`, `File`, `Hidden`, `Image`, 
   `Number`, `Password`, `RadioList`, `Range`, `Select`, `Telephone`, `Text`, `Textarea`, `Time`, `Url`;
 - buttons: `Button`, `ResetButton`, `SubmitButton`;
 - group widgets: `ButtonGroup`, `Fieldset`. 
@@ -65,6 +65,7 @@ use Yiisoft\Form\PureField\Field;
 
 echo Field::text('firstName', theme: 'horizontal')->label('First Name')->autofocus();
 echo Field::text('lastName', theme: 'horizontal')->label('Last Name');
+echo Field::color('favoriteColor')->label('Favorite Color')->value('#3498db');
 echo Field::select('sex')->label('Sex')->optionsData(['m' => 'Male', 'f' => 'Female'])->prompt('—');
 echo Field::number('age')->label('Age')->hint('Please enter your age.');
 echo Field::submitButton('Submit')->buttonClass('primary');
@@ -84,6 +85,10 @@ The result of executing the code above will be:
     <div class="col-sm-10">
         <input type="text" class="form-control" name="lastName">
     </div>
+</div>
+<div class="mb-3">
+    <label class="form-label">Favorite Color</label>
+    <input type="color" class="form-control" name="favoriteColor" value="#3498db">
 </div>
 <div class="mb-3">
     <label class="form-label">Sex</label>

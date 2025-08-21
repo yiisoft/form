@@ -22,7 +22,6 @@ Thumbs.db
 # composer itself is not needed
 composer.phar
 
-
 # phpunit itself is not needed
 phpunit.phar
 # local phpunit config

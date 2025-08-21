@@ -2,7 +2,7 @@
 
 ## 1.4.1 under development
 
-- no changes in this release.
+- New #377: Add `Color` field for HTML5 color input (@copilot)
 
 ## 1.4.0 March 27, 2025
 
