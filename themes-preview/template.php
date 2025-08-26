@@ -49,6 +49,8 @@ echo '<!DOCTYPE html>';
 
     echo Field::email()->label('Email Field')->placeholder('Placeholder');
 
+    echo Field::color()->label('Color Field')->value('#ff0000');
+
     echo Field::time()->label('Time Field');
 
     echo Field::date()->label('Date Field');

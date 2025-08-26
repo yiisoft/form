@@ -235,6 +235,38 @@ final class FieldTest extends TestCase
         $this->assertSame($expected, $html);
     }
 
+    public function testColor(): void
+    {
+        $html = Field::color()->render();
+
+        $expected = <<<HTML
+            <div>
+            <input type="color">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
+    public function testColorWithTheme(): void
+    {
+        ThemeContainer::initialize([
+            'test' => [
+                'containerTag' => 'span',
+            ],
+        ]);
+
+        $html = ThemedField::color(theme: 'test')->render();
+
+        $expected = <<<HTML
+            <span>
+            <input type="color">
+            </span>
+            HTML;
+
+        $this->assertSame($expected, $html);
+    }
+
     public function testEmail(): void
     {
         $html = Field::email()->render();
