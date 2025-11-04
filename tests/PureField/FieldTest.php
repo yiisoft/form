@@ -343,8 +343,7 @@ final class FieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <fieldset>
-            </fieldset>
+            <fieldset></fieldset>
             </div>
             HTML;
 
@@ -363,8 +362,7 @@ final class FieldTest extends TestCase
 
         $expected = <<<HTML
             <span>
-            <fieldset>
-            </fieldset>
+            <fieldset></fieldset>
             </span>
             HTML;
 
