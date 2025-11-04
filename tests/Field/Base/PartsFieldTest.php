@@ -839,7 +839,7 @@ final class PartsFieldTest extends TestCase
                 '{before}' => '<section>',
                 '{after}' => '</section>',
             ])
-            ->token("{icon}", "  <span class=\"icon\"></span>\n\n")
+            ->token('{icon}', "  <span class=\"icon\"></span>\n\n")
             ->template("{before}\n{input}\n{icon}\n{after}")
             ->render();
 
