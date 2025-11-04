@@ -75,9 +75,7 @@ final class Fieldset extends PartsField
 
     protected function generateInput(): string
     {
-        return $this->generateBeginInput()
-            . "\n"
-            . $this->generateEndInput();
+        return $this->generateBeginInput() . $this->generateEndInput();
     }
 
     protected function generateBeginInput(): string
@@ -89,7 +87,7 @@ final class Fieldset extends PartsField
     {
         $content = $this->renderContent();
 
-        return ($content !== '' ? $content . "\n" : '')
+        return ($content !== '' ? "\n" . $content . "\n" : '')
             . $this->tag->close();
     }
 }
