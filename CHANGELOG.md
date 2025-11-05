@@ -1,5 +1,9 @@
 # Yii Form Change Log
 
+## 1.5.1 under development
+
+- no changes in this release.
+
 ## 1.5.0 November 05, 2025
 
 - New #377: Add `Color` field (@samdark)
