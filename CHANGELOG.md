@@ -1,10 +1,10 @@
 # Yii Form Change Log
 
-## 1.4.1 under development
+## 1.5.0 November 05, 2025
 
 - New #377: Add `Color` field (@samdark)
-- Bug #379: Fix newline removal issues in input values (@vjik)
 - Enh #379: Improve `Fieldset` field HTML markup (@vjik)
+- Bug #379: Fix newline removal issues in input values (@vjik)
 
 ## 1.4.0 March 27, 2025
 
