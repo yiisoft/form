@@ -586,29 +586,20 @@ final class ThemeTest extends TestCase
         $this->assertSame($expectedHtml, $actualHtml);
     }
 
-    public static function dataFieldSet(): array
+    public function testEmptyFieldset(): void
     {
-        return [
-            'empty' => [
-                <<<HTML
-                <div>
-                <fieldset>
-                </fieldset>
-                </div>
-                HTML,
-                [],
-            ],
-        ];
-    }
-
-    #[DataProvider('dataFieldSet')]
-    public function testFieldSet(string $expected, array $factoryParameters): void
-    {
-        $this->initializeThemeContainer($factoryParameters);
+        $this->initializeThemeContainer();
 
         $result = Fieldset::widget()->render();
 
-        $this->assertSame($expected, $result);
+        $this->assertSame(
+            <<<HTML
+            <div>
+            <fieldset></fieldset>
+            </div>
+            HTML,
+            $result,
+        );
     }
 
     public function testFieldSetWithOverrideTemplateBeginAndTemplateEnd(): void

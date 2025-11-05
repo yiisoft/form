@@ -485,16 +485,32 @@ abstract class PartsField extends BaseField
         return $this->inputContainerTag === null ? '' : ('</' . $this->inputContainerTag . '>');
     }
 
+    /**
+     * @psalm-param array<non-empty-string, string> $parts
+     */
     private function makeContent(string $template, array $parts): string
     {
         if (!empty($this->extraTokens)) {
             $parts += $this->extraTokens;
         }
 
+        $emptyParts = [];
+        $nonEmptyParts = [];
+        foreach ($parts as $key => $value) {
+            $value = trim((string) $value);
+            if ($value === '') {
+                $emptyParts[$key] = '';
+                continue;
+            }
+            $nonEmptyParts[$key] = $value;
+        }
+
         /**
-         * @var string We use correct regular expression, so `preg_replace` will return string.
+         * @var string $result We use correct regular expression, so `preg_replace` will return string.
          */
-        return preg_replace('/^\h*\v+/m', '', trim(strtr($template, $parts)));
+        $result = preg_replace('/^\h*\v+/m', '', trim(strtr($template, $emptyParts)));
+
+        return strtr($result, $nonEmptyParts);
     }
 
     private function generateLabel(): string

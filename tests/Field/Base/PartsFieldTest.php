@@ -831,4 +831,26 @@ final class PartsFieldTest extends TestCase
             $field->render()
         );
     }
+
+    public function testTokenTrim(): void
+    {
+        $result = StubPartsField::widget()
+            ->tokens([
+                '{before}' => '<section>',
+                '{after}' => '</section>',
+            ])
+            ->token('{icon}', "  <span class=\"icon\"></span>\n\n")
+            ->template("{before}\n{input}\n{icon}\n{after}")
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <section>
+            <span class="icon"></span>
+            </section>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
 }

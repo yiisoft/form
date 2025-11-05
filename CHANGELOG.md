@@ -3,6 +3,8 @@
 ## 1.4.1 under development
 
 - New #377: Add `Color` field (@samdark)
+- Bug #379: Fix newline removal issues in input values (@vjik)
+- Enh #379: Improve `Fieldset` field HTML markup (@vjik)
 
 ## 1.4.0 March 27, 2025
 

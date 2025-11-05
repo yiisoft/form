@@ -106,8 +106,7 @@ final class FieldsetTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <fieldset disabled>
-            </fieldset>
+            <fieldset disabled></fieldset>
             </div>
             HTML;
 
@@ -122,8 +121,7 @@ final class FieldsetTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <fieldset form="CreatePost">
-            </fieldset>
+            <fieldset form="CreatePost"></fieldset>
             </div>
             HTML;
 
@@ -138,8 +136,7 @@ final class FieldsetTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <fieldset name="test">
-            </fieldset>
+            <fieldset name="test"></fieldset>
             </div>
             HTML;
 

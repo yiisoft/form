@@ -79,6 +79,23 @@ final class TextareaTest extends TestCase
                 HTML,
                 new InputData(name: 'desc', placeholder: 'test'),
             ],
+            'value-with-newlines' => [
+                <<<HTML
+                <div>
+                <textarea name="desc">
+
+
+                one
+
+
+                two
+
+
+                </textarea>
+                </div>
+                HTML,
+                new InputData('desc', "\n\n\none\n\n\ntwo\n\n\n"),
+            ],
         ];
     }
 
