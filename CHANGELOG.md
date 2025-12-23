@@ -1,6 +1,6 @@
 # Yii Form Change Log
 
-## 1.5.1 under development
+## 1.5.1 December 23, 2025
 
 - Enh #383: Add PHP 8.5 support (@vjik)
 
