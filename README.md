@@ -31,7 +31,7 @@ These themes are available out of the box:
 
 ## Requirements
 
-- PHP 8.1 or higher.
+- PHP 8.1 - 8.5.
 
 ## Installation
 
