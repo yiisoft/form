@@ -2,7 +2,7 @@
 
 ## 1.5.2 under development
 
-- Enh #384: Explicitly import classes, functions, and constants in "use" section (@mspirkov)
+- Enh #384: Explicitly import functions and constants in "use" section (@mspirkov)
 
 ## 1.5.1 December 23, 2025
 
