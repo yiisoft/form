@@ -11,8 +11,7 @@ final class StubValidationRulesEnricher implements ValidationRulesEnricherInterf
 {
     public function __construct(
         private ?array $result,
-    ) {
-    }
+    ) {}
 
     public function process(BaseField $field, mixed $rules): ?array
     {

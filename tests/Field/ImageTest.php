@@ -30,7 +30,7 @@ final class ImageTest extends TestCase
             <input type="image" src="btn.png" alt="Go">
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 

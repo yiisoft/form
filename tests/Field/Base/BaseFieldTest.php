@@ -168,7 +168,7 @@ final class BaseFieldTest extends TestCase
             test
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 

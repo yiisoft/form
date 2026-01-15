@@ -148,10 +148,10 @@ final class CheckboxTest extends TestCase
             ->uncheckValue($uncheckValue)
             ->render();
 
-        $expected = '<div>' . "\n" .
-            $expectedInput .
-            '<label><input type="checkbox" name="test-name" value="1"> Blue color</label>' . "\n" .
-            '</div>';
+        $expected = '<div>' . "\n"
+            . $expectedInput
+            . '<label><input type="checkbox" name="test-name" value="1"> Blue color</label>' . "\n"
+            . '</div>';
 
         $this->assertSame($expected, $result);
     }

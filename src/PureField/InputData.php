@@ -29,8 +29,7 @@ final class InputData implements InputDataInterface
         private readonly ?string $id = null,
         private readonly mixed $validationRules = null,
         private readonly ?array $validationErrors = null,
-    ) {
-    }
+    ) {}
 
     public function getValidationRules(): mixed
     {

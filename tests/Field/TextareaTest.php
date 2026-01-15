@@ -123,7 +123,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" maxlength="100"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -138,7 +138,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" minlength="7"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -153,7 +153,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" dirname="test"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -168,7 +168,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" readonly></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -183,7 +183,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" required></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -198,7 +198,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" disabled></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -251,7 +251,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" aria-label="test"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -266,7 +266,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" autofocus></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -281,7 +281,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" tabindex="5"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -296,7 +296,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" cols="12"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -311,7 +311,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="TextareaForm[desc]" rows="7"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -326,7 +326,7 @@ final class TextareaTest extends TestCase
 
         $this->assertSame(
             '<textarea name="desc" wrap="hard"></textarea>',
-            $result
+            $result,
         );
     }
 
@@ -336,7 +336,7 @@ final class TextareaTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Textarea field requires a string, a stringable object, an array of strings or null value.'
+            'Textarea field requires a string, a stringable object, an array of strings or null value.',
         );
         $widget->render();
     }
@@ -348,7 +348,7 @@ final class TextareaTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -412,7 +412,7 @@ final class TextareaTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

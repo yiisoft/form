@@ -86,7 +86,7 @@ final class File extends InputField implements EnrichFromValidationRulesInterfac
     public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -165,7 +165,7 @@ final class File extends InputField implements EnrichFromValidationRulesInterfac
         /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
         $inputAttributes = array_merge(
             $this->enrichment['inputAttributes'] ?? [],
-            $this->getInputAttributes()
+            $this->getInputAttributes(),
         );
 
         $tag = Html::file($this->getName(), attributes: $inputAttributes);

@@ -20,7 +20,7 @@ final class StubInputField extends InputField
         return Html::textInput(
             $this->getName(),
             (string) $this->getValue(),
-            $this->getInputAttributes()
+            $this->getInputAttributes(),
         )->render();
     }
 }

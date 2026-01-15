@@ -204,7 +204,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
         $value ??= [];
         if (!is_iterable($value)) {
             throw new InvalidArgumentException(
-                '"CheckboxList" field requires iterable or null value.'
+                '"CheckboxList" field requires iterable or null value.',
             );
         }
         /** @psalm-var iterable<int, Stringable|scalar> $value */

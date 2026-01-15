@@ -67,7 +67,7 @@ abstract class BaseField extends Widget
     final public function containerClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->containerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->containerAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
@@ -127,9 +127,7 @@ abstract class BaseField extends Widget
         return $result;
     }
 
-    protected function beforeRender(): void
-    {
-    }
+    protected function beforeRender(): void {}
 
     abstract protected function generateContent(): ?string;
 
@@ -143,9 +141,7 @@ abstract class BaseField extends Widget
         return '';
     }
 
-    protected function prepareContainerAttributes(array &$attributes): void
-    {
-    }
+    protected function prepareContainerAttributes(array &$attributes): void {}
 
     final protected static function getThemeConfig(?string $theme): array
     {

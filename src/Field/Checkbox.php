@@ -40,7 +40,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -156,7 +156,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     public function inputLabelClass(?string ...$class): self
     {
         $new = clone $this;
-        $new->inputLabelAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->inputLabelAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
@@ -231,7 +231,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
             && $value !== null
         ) {
             throw new InvalidArgumentException(
-                'Checkbox widget requires a string, Stringable, numeric, bool or null value.'
+                'Checkbox widget requires a string, Stringable, numeric, bool or null value.',
             );
         }
 
@@ -277,19 +277,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
         return $this->getLabelPlacement() !== CheckboxLabelPlacement::DEFAULT;
     }
 
-    private function prepareCheckboxValue(mixed $value): ?string
-    {
-        if ($value === null) {
-            return null;
-        }
-
-        if (is_bool($value)) {
-            return $value ? '1' : '0';
-        }
-
-        return (string) $value;
-    }
-
     protected function prepareContainerAttributes(array &$attributes): void
     {
         $this->addValidationClassToAttributes(
@@ -306,6 +293,19 @@ final class Checkbox extends InputField implements ValidationClassInterface
             $this->getInputData(),
             $this->hasCustomError() ? true : null,
         );
+    }
+
+    private function prepareCheckboxValue(mixed $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (is_bool($value)) {
+            return $value ? '1' : '0';
+        }
+
+        return (string) $value;
     }
 
     private function getLabelPlacement(): CheckboxLabelPlacement

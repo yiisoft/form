@@ -28,7 +28,7 @@ final class ButtonTest extends TestCase
             <button type="button">Click Me</button>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 }

@@ -12,6 +12,8 @@ use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Html\Html;
 
 use function in_array;
+use function is_array;
+use function is_string;
 
 abstract class PartsField extends BaseField
 {
@@ -24,12 +26,6 @@ abstract class PartsField extends BaseField
         '{hint}',
         '{error}',
     ];
-
-    /**
-     * @var string[]|Stringable[]
-     * @psalm-var array<non-empty-string,string|Stringable>
-     */
-    private array $extraTokens = [];
 
     protected string $templateBegin = "{label}\n{input}";
     protected string $templateEnd = "{input}\n{hint}\n{error}";
@@ -45,6 +41,12 @@ abstract class PartsField extends BaseField
 
     protected string|Stringable $beforeInput = '';
     protected string|Stringable $afterInput = '';
+
+    /**
+     * @var string[]|Stringable[]
+     * @psalm-var array<non-empty-string,string|Stringable>
+     */
+    private array $extraTokens = [];
 
     private bool $replaceLabelAttributes = false;
     private bool $replaceLabelClass = false;
@@ -71,7 +73,7 @@ abstract class PartsField extends BaseField
                     sprintf(
                         'Token should be string. %s given.',
                         get_debug_type($token),
-                    )
+                    ),
                 );
             }
 
@@ -80,7 +82,7 @@ abstract class PartsField extends BaseField
                     sprintf(
                         'Token value should be string or Stringable. %s given.',
                         get_debug_type($value),
-                    )
+                    ),
                 );
             }
 
@@ -165,7 +167,7 @@ abstract class PartsField extends BaseField
     final public function inputContainerClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->inputContainerAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->inputContainerAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
@@ -610,7 +612,7 @@ abstract class PartsField extends BaseField
                 sprintf(
                     'Token name "%s" is built-in.',
                     $token,
-                )
+                ),
             );
         }
     }

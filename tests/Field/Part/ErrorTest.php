@@ -36,7 +36,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -296,7 +296,7 @@ final class ErrorTest extends TestCase
         $result = Error::widget()
             ->inputData($inputData)
             ->messageCallback(
-                static fn (string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message
+                static fn(string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message,
             )
             ->render();
 
@@ -314,7 +314,7 @@ final class ErrorTest extends TestCase
             ->inputData($inputData)
             ->message('Invalid value.')
             ->messageCallback(
-                static fn (string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message
+                static fn(string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message,
             )
             ->render();
 
@@ -332,7 +332,7 @@ final class ErrorTest extends TestCase
             ->inputData($inputData)
             ->message('Invalid value.')
             ->messageCallback(
-                static fn (string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message
+                static fn(string $message, ?InputDataInterface $inputData): string => 'Attribute "' . $inputData->getLabel() . '" error: ' . $message,
             )
             ->render();
 
@@ -354,7 +354,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -374,7 +374,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -395,7 +395,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -415,7 +415,7 @@ final class ErrorTest extends TestCase
             Value cannot be blank, Value is bad
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -443,7 +443,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -465,7 +465,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -485,7 +485,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -506,7 +506,7 @@ final class ErrorTest extends TestCase
             Value is bad.
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -525,7 +525,7 @@ final class ErrorTest extends TestCase
             <i>Value is bad.</i>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -552,7 +552,7 @@ final class ErrorTest extends TestCase
             <i class="error">Value is bad.</i>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -573,7 +573,7 @@ final class ErrorTest extends TestCase
             <i class="error" data-id="x1">Value is bad.</i>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 

@@ -69,7 +69,7 @@ abstract class InputField extends PartsField
     final public function inputClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->inputAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->inputAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
@@ -96,9 +96,7 @@ abstract class InputField extends PartsField
         return $attributes;
     }
 
-    protected function prepareInputAttributes(array &$attributes): void
-    {
-    }
+    protected function prepareInputAttributes(array &$attributes): void {}
 
     final protected function prepareIdInInputAttributes(array &$attributes): void
     {

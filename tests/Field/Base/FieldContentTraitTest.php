@@ -12,6 +12,8 @@ use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\P;
 use Yiisoft\Html\Tag\Span;
 
+use function is_array;
+
 final class FieldContentTraitTest extends TestCase
 {
     protected function setUp(): void

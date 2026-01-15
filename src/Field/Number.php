@@ -105,7 +105,7 @@ final class Number extends InputField implements EnrichFromValidationRulesInterf
     public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -179,7 +179,7 @@ final class Number extends InputField implements EnrichFromValidationRulesInterf
         /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
         $inputAttributes = array_merge(
             $this->enrichment['inputAttributes'] ?? [],
-            $this->getInputAttributes()
+            $this->getInputAttributes(),
         );
 
         return Html::input('number', $this->getName(), $value, $inputAttributes)->render();

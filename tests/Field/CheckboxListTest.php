@@ -315,7 +315,7 @@ final class CheckboxListTest extends TestCase
                     'red' => '<b>Red</b>',
                     'blue' => '<b>Blue</b>',
                 ],
-                false
+                false,
             )
             ->name('CheckboxListForm[color]')
             ->render();
@@ -359,7 +359,7 @@ final class CheckboxListTest extends TestCase
                     '<b>Red</b>',
                     '<b>Blue</b>',
                 ],
-                false
+                false,
             )
             ->name('CheckboxListForm[color]')
             ->render();
@@ -478,7 +478,7 @@ final class CheckboxListTest extends TestCase
                 'blue' => 'Blue',
             ])
             ->name('CheckboxListForm[color]')
-            ->itemFormatter(static fn (CheckboxItem $item) => Html::checkbox($item->name, $item->value) . ' — ' . $item->label)
+            ->itemFormatter(static fn(CheckboxItem $item) => Html::checkbox($item->name, $item->value) . ' — ' . $item->label)
             ->render();
 
         $expected = <<<HTML

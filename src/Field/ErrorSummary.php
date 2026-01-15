@@ -10,6 +10,9 @@ use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 
 use function in_array;
+use function array_slice;
+
+use const ARRAY_FILTER_USE_KEY;
 
 /**
  * @psalm-type Errors = array<string,list<string>>

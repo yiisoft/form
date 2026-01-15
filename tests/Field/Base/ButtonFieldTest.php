@@ -39,7 +39,7 @@ final class ButtonFieldTest extends TestCase
             ->button(
                 ButtonTag::tag()
                     ->content('Start')
-                    ->class('primary')
+                    ->class('primary'),
             )
             ->render();
 

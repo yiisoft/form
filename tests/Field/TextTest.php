@@ -162,7 +162,7 @@ final class TextTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -226,7 +226,7 @@ final class TextTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -735,7 +735,7 @@ final class TextTest extends TestCase
 
         $this->assertSame(
             '<input type="text" name="job" value readonly>',
-            $result
+            $result,
         );
     }
 
@@ -752,7 +752,7 @@ final class TextTest extends TestCase
 
         $this->assertSame(
             '<input type="text" name="job" value required>',
-            $result
+            $result,
         );
     }
 
@@ -769,7 +769,7 @@ final class TextTest extends TestCase
 
         $this->assertSame(
             '<input type="text" name="job" value disabled>',
-            $result
+            $result,
         );
     }
 
@@ -826,7 +826,7 @@ final class TextTest extends TestCase
 
         $this->assertSame(
             '<input type="text" name="job" value aria-label="test">',
-            $result
+            $result,
         );
     }
 
@@ -843,7 +843,7 @@ final class TextTest extends TestCase
 
         $this->assertSame(
             '<input type="text" name="job" value autofocus>',
-            $result
+            $result,
         );
     }
 
@@ -860,7 +860,7 @@ final class TextTest extends TestCase
 
         $this->assertSame(
             '<input type="text" name="job" value tabindex="5">',
-            $result
+            $result,
         );
     }
 

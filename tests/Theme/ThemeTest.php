@@ -563,7 +563,7 @@ final class ThemeTest extends TestCase
                 <div class="control red"><input type="text" id="textform-job" name="TextForm[job]" value></div>
                 </div>
                 HTML,
-            $result
+            $result,
         );
     }
 
@@ -784,7 +784,7 @@ final class ThemeTest extends TestCase
             <input type="text">
             </div>
             HTML,
-            $html
+            $html,
         );
     }
 

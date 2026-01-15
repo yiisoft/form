@@ -76,7 +76,7 @@ final class UrlTest extends TestCase
                 new InputData(
                     name: 'site',
                     value: '',
-                    placeholder: 'test'
+                    placeholder: 'test',
                 ),
             ],
         ];
@@ -338,7 +338,7 @@ final class UrlTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -402,7 +402,7 @@ final class UrlTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

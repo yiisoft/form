@@ -31,15 +31,6 @@ trait InputDataWithCustomNameAndValueTrait
         return $new;
     }
 
-    final protected function getInputData(): InputDataInterface
-    {
-        if ($this->inputData === null) {
-            $this->inputData = new InputData();
-        }
-
-        return $this->inputData;
-    }
-
     final public function name(?string $name): static
     {
         $new = clone $this;
@@ -64,6 +55,15 @@ trait InputDataWithCustomNameAndValueTrait
         $new = clone $this;
         $new->prepareValueCallback = $callback;
         return $new;
+    }
+
+    final protected function getInputData(): InputDataInterface
+    {
+        if ($this->inputData === null) {
+            $this->inputData = new InputData();
+        }
+
+        return $this->inputData;
     }
 
     final protected function getName(): ?string

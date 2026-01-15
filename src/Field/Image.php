@@ -85,7 +85,7 @@ final class Image extends PartsField
     public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -143,7 +143,7 @@ final class Image extends PartsField
     {
         return Html::input(
             type: 'image',
-            attributes: $this->inputAttributes
+            attributes: $this->inputAttributes,
         )->render();
     }
 }

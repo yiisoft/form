@@ -48,7 +48,7 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
     final public function ariaDescribedBy(?string ...$value): static
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -157,15 +157,15 @@ abstract class DateTimeInputField extends InputField implements EnrichFromValida
             $value = $this->formatDateTime($value);
         } elseif (!is_string($value) && $value !== null) {
             throw new InvalidArgumentException(
-                (new ReflectionClass($this))->getShortName() .
-                ' field requires a string or null value.'
+                (new ReflectionClass($this))->getShortName()
+                . ' field requires a string or null value.',
             );
         }
 
         /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
         $inputAttributes = array_merge(
             $this->enrichment['inputAttributes'] ?? [],
-            $this->getInputAttributes()
+            $this->getInputAttributes(),
         );
 
         return Html::input($this->getInputType(), $this->getName(), $value, $inputAttributes)->render();
