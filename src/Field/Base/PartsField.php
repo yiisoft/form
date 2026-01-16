@@ -14,6 +14,7 @@ use Yiisoft\Html\Html;
 use function in_array;
 use function is_array;
 use function is_string;
+use function sprintf;
 
 abstract class PartsField extends BaseField
 {
