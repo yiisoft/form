@@ -12,6 +12,8 @@ use Yiisoft\Html\Html;
 use Yiisoft\Html\Tag\CustomTag;
 use Yiisoft\Widget\Widget;
 
+use function count;
+
 /**
  * Represent a field validation error (if there are several errors, the first one is used). If field is no validation
  * error, field part will be hidden.
@@ -129,7 +131,7 @@ final class Error extends Widget
     public function class(?string ...$class): self
     {
         $new = clone $this;
-        $new->attributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->attributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 

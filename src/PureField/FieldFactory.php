@@ -42,8 +42,7 @@ class FieldFactory
 {
     final public function __construct(
         protected readonly ?string $defaultTheme = null,
-    ) {
-    }
+    ) {}
 
     final public function button(?string $content = null, array $config = [], ?string $theme = null): Button
     {

@@ -28,7 +28,7 @@ final class ResetButtonTest extends TestCase
             <button type="reset">Reset Form</button>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 }

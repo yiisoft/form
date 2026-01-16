@@ -18,6 +18,9 @@ use Yiisoft\Form\Field\Part\Label;
 use Yiisoft\Html\Widget\RadioList\RadioItem;
 use Yiisoft\Html\Widget\RadioList\RadioList as RadioListWidget;
 
+use function is_bool;
+use function is_string;
+
 /**
  * @see RadioListWidget
  */
@@ -206,7 +209,7 @@ final class RadioList extends PartsField implements ValidationClassInterface
             && $value !== null
         ) {
             throw new InvalidArgumentException(
-                '"RadioList" field requires a string, Stringable, numeric, bool or null value.'
+                '"RadioList" field requires a string, Stringable, numeric, bool or null value.',
             );
         }
         /** @psalm-var Stringable|scalar $value */

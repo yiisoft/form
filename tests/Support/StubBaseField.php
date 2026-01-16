@@ -14,8 +14,7 @@ final class StubBaseField extends BaseField
         private ?string $endContent = null,
         private ?string $beforeRenderBeginContent = null,
         private ?string $beforeRenderEndContent = null,
-    ) {
-    }
+    ) {}
 
     protected function beforeRender(): void
     {

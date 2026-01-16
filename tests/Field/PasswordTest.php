@@ -94,7 +94,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" maxlength="9">',
-            $result
+            $result,
         );
     }
 
@@ -109,7 +109,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" minlength="3">',
-            $result
+            $result,
         );
     }
 
@@ -124,7 +124,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" pattern="\d+">',
-            $result
+            $result,
         );
     }
 
@@ -139,7 +139,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" readonly>',
-            $result
+            $result,
         );
     }
 
@@ -154,7 +154,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" required>',
-            $result
+            $result,
         );
     }
 
@@ -169,7 +169,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" disabled>',
-            $result
+            $result,
         );
     }
 
@@ -222,7 +222,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" aria-label="test">',
-            $result
+            $result,
         );
     }
 
@@ -237,7 +237,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" autofocus>',
-            $result
+            $result,
         );
     }
 
@@ -252,7 +252,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" tabindex="4">',
-            $result
+            $result,
         );
     }
 
@@ -267,7 +267,7 @@ final class PasswordTest extends TestCase
 
         $this->assertSame(
             '<input type="password" name="newPassword" size="7">',
-            $result
+            $result,
         );
     }
 
@@ -287,7 +287,7 @@ final class PasswordTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -351,7 +351,7 @@ final class PasswordTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

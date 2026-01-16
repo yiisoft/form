@@ -10,6 +10,8 @@ use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\PureField\Field;
 use Yiisoft\Form\Theme\ThemeContainer;
 
+use function dirname;
+
 final class ConfigTest extends TestCase
 {
     protected function setUp(): void
@@ -53,7 +55,7 @@ final class ConfigTest extends TestCase
 
         $this->assertSame(
             '<input type="hidden" id="TestId" name="key" value="x100">',
-            $input->render()
+            $input->render(),
         );
     }
 

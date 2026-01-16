@@ -30,7 +30,7 @@ final class SubmitButtonTest extends TestCase
             <button type="submit">Go!</button>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -50,7 +50,7 @@ final class SubmitButtonTest extends TestCase
             <button type="submit" class="red">Go!</button>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -87,7 +87,7 @@ final class SubmitButtonTest extends TestCase
             <button type="submit">Go!</button>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -105,7 +105,7 @@ final class SubmitButtonTest extends TestCase
             <div>Click here!</div>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -123,7 +123,7 @@ final class SubmitButtonTest extends TestCase
             <div>error message</div>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 

@@ -296,7 +296,7 @@ HTML_WRAP;
 
         $this->assertSame(
             '<input type="range" name="count" list="TheList">',
-            $result
+            $result,
         );
     }
 
@@ -311,7 +311,7 @@ HTML_WRAP;
 
         $this->assertSame(
             '<input type="range" name="count" disabled>',
-            $result
+            $result,
         );
     }
 
@@ -364,7 +364,7 @@ HTML_WRAP;
 
         $this->assertSame(
             '<input type="range" name="count" aria-label="test">',
-            $result
+            $result,
         );
     }
 
@@ -379,7 +379,7 @@ HTML_WRAP;
 
         $this->assertSame(
             '<input type="range" name="count" autofocus>',
-            $result
+            $result,
         );
     }
 
@@ -394,7 +394,7 @@ HTML_WRAP;
 
         $this->assertSame(
             '<input type="range" name="count" tabindex="5">',
-            $result
+            $result,
         );
     }
 
@@ -414,7 +414,7 @@ HTML_WRAP;
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -478,7 +478,7 @@ HTML_WRAP;
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

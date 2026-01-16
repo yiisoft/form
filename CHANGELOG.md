@@ -2,7 +2,7 @@
 
 ## 1.5.2 under development
 
-- no changes in this release.
+- Enh #384: Explicitly import functions and constants in "use" section (@mspirkov)
 
 ## 1.5.1 December 23, 2025
 

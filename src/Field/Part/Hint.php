@@ -78,7 +78,7 @@ final class Hint extends Widget
     public function class(?string ...$class): self
     {
         $new = clone $this;
-        $new->attributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->attributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 

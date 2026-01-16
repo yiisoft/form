@@ -13,6 +13,7 @@ use Yiisoft\Form\Tests\Support\NullValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\RequiredValidationRulesEnricher;
 use Yiisoft\Form\Tests\Support\StubValidationRulesEnricher;
 use Yiisoft\Form\Theme\ThemeContainer;
+use stdClass;
 
 final class ColorTest extends TestCase
 {
@@ -353,7 +354,7 @@ final class ColorTest extends TestCase
         $result = Color::widget()
             ->enrichFromValidationRules()
             ->validationRulesEnricher(
-                new StubValidationRulesEnricher(['inputAttributes' => ['data-test' => 1]])
+                new StubValidationRulesEnricher(['inputAttributes' => ['data-test' => 1]]),
             )
             ->inputData(new InputData('color'))
             ->hideLabel()
@@ -610,7 +611,7 @@ HTML;
         $result = Color::widget()
             ->enrichFromValidationRules()
             ->validationRulesEnricher(
-                new StubValidationRulesEnricher(['inputAttributes' => ['data-enriched' => 'from-validation']])
+                new StubValidationRulesEnricher(['inputAttributes' => ['data-enriched' => 'from-validation']]),
             )
             ->inputData(new InputData('color'))
             ->disabled()
@@ -689,7 +690,7 @@ HTML;
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Color field requires a string or null value.');
-        Color::widget()->name('test')->value(new \stdClass())->render();
+        Color::widget()->name('test')->value(new stdClass())->render();
     }
 
     public function testValueEmptyString(): void

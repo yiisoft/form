@@ -78,7 +78,7 @@ final class FileTest extends TestCase
 
         $this->assertSame(
             '<input type="file" name="avatar" accept=".png,.jpg">',
-            $result
+            $result,
         );
     }
 
@@ -93,7 +93,7 @@ final class FileTest extends TestCase
 
         $this->assertSame(
             '<input type="file" name="avatar" multiple>',
-            $result
+            $result,
         );
     }
 
@@ -108,7 +108,7 @@ final class FileTest extends TestCase
 
         $this->assertSame(
             '<input type="file" name="avatar" required>',
-            $result
+            $result,
         );
     }
 
@@ -123,7 +123,7 @@ final class FileTest extends TestCase
 
         $this->assertSame(
             '<input type="file" name="avatar" disabled>',
-            $result
+            $result,
         );
     }
 
@@ -176,7 +176,7 @@ final class FileTest extends TestCase
 
         $this->assertSame(
             '<input type="file" name="avatar" aria-label="test">',
-            $result
+            $result,
         );
     }
 
@@ -191,7 +191,7 @@ final class FileTest extends TestCase
 
         $this->assertSame(
             '<input type="file" name="avatar" tabindex="3">',
-            $result
+            $result,
         );
     }
 
@@ -293,7 +293,7 @@ final class FileTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -357,7 +357,7 @@ final class FileTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

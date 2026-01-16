@@ -358,7 +358,7 @@ final class SelectTest extends TestCase
                 ],
                 groupsAttributes: [
                     'Group B' => ['label' => 'Custom Label', 'data-id' => 'Group B'],
-                ]
+                ],
             )
             ->hideLabel()
             ->useContainer(false)
@@ -674,7 +674,7 @@ final class SelectTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Non-multiple select field requires a string, Stringable, numeric, bool, backed enumeration or null value.'
+            'Non-multiple select field requires a string, Stringable, numeric, bool, backed enumeration or null value.',
         );
         $widget->render();
     }
@@ -695,7 +695,7 @@ final class SelectTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -759,7 +759,7 @@ final class SelectTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

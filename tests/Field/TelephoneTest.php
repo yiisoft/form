@@ -94,7 +94,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" maxlength="12">',
-            $result
+            $result,
         );
     }
 
@@ -109,7 +109,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" minlength="7">',
-            $result
+            $result,
         );
     }
 
@@ -124,7 +124,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" pattern="\d+">',
-            $result
+            $result,
         );
     }
 
@@ -139,7 +139,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" readonly>',
-            $result
+            $result,
         );
     }
 
@@ -154,7 +154,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" required>',
-            $result
+            $result,
         );
     }
 
@@ -169,7 +169,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" disabled>',
-            $result
+            $result,
         );
     }
 
@@ -222,7 +222,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" aria-label="test">',
-            $result
+            $result,
         );
     }
 
@@ -237,7 +237,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" autofocus>',
-            $result
+            $result,
         );
     }
 
@@ -252,7 +252,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" tabindex="5">',
-            $result
+            $result,
         );
     }
 
@@ -267,7 +267,7 @@ final class TelephoneTest extends TestCase
 
         $this->assertSame(
             '<input type="tel" name="phone" size="9">',
-            $result
+            $result,
         );
     }
 
@@ -287,7 +287,7 @@ final class TelephoneTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 
@@ -351,7 +351,7 @@ final class TelephoneTest extends TestCase
             ->validationRulesEnricher(
                 new StubValidationRulesEnricher([
                     'inputAttributes' => ['data-test' => 1],
-                ])
+                ]),
             )
             ->render();
 

@@ -37,7 +37,7 @@ final class FieldsetTest extends TestCase
             </fieldset>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -60,7 +60,7 @@ final class FieldsetTest extends TestCase
             </fieldset>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 

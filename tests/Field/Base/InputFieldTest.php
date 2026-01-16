@@ -165,7 +165,7 @@ final class InputFieldTest extends TestCase
     {
         $result = StubInputField::widget()
             ->value(9)
-            ->prepareValue(static fn ($value) => $value * 2)
+            ->prepareValue(static fn($value) => $value * 2)
             ->render();
 
         $expected = <<<HTML
@@ -181,7 +181,7 @@ final class InputFieldTest extends TestCase
     {
         $result = StubInputField::widget()
             ->inputData(new InputData(value: 9))
-            ->prepareValue(static fn ($value) => $value * 2)
+            ->prepareValue(static fn($value) => $value * 2)
             ->render();
 
         $expected = <<<HTML

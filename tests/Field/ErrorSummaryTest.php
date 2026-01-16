@@ -163,7 +163,7 @@ final class ErrorSummaryTest extends TestCase
             </ul>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -187,7 +187,7 @@ final class ErrorSummaryTest extends TestCase
             </ul>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -217,7 +217,7 @@ final class ErrorSummaryTest extends TestCase
             </ul>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -241,7 +241,7 @@ final class ErrorSummaryTest extends TestCase
             </ul>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 
@@ -265,7 +265,7 @@ final class ErrorSummaryTest extends TestCase
             </ul>
             </div>
             HTML,
-            $result
+            $result,
         );
     }
 

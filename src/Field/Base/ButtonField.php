@@ -58,7 +58,7 @@ abstract class ButtonField extends PartsField
     final public function buttonClass(?string ...$class): static
     {
         $new = clone $this;
-        $new->buttonAttributes['class'] = array_filter($class, static fn ($c) => $c !== null);
+        $new->buttonAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
         return $new;
     }
 
@@ -92,7 +92,7 @@ abstract class ButtonField extends PartsField
     final public function ariaDescribedBy(?string ...$value): static
     {
         $new = clone $this;
-        $new->buttonAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->buttonAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 

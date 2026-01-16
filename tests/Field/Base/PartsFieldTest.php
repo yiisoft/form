@@ -793,7 +793,7 @@ final class PartsFieldTest extends TestCase
             before<input>
             </div>
             HTML,
-            $readyField->render()
+            $readyField->render(),
         );
     }
 
@@ -810,7 +810,7 @@ final class PartsFieldTest extends TestCase
             <input>after
             </div>
             HTML,
-            $readyField->render()
+            $readyField->render(),
         );
     }
 
@@ -828,7 +828,7 @@ final class PartsFieldTest extends TestCase
             <span>before<input>after</span>
             </div>
             HTML,
-            $field->render()
+            $field->render(),
         );
     }
 

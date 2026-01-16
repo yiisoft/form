@@ -16,6 +16,7 @@ use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassTrait;
 use Yiisoft\Html\Html;
 
 use function is_string;
+use function is_array;
 
 /**
  * Represents `<textarea>` element that create a multi-line plain-text editing control.
@@ -122,7 +123,7 @@ final class Textarea extends InputField implements
     public function ariaDescribedBy(?string ...$value): self
     {
         $new = clone $this;
-        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn (?string $v): bool => $v !== null);
+        $new->inputAttributes['aria-describedby'] = array_filter($value, static fn(?string $v): bool => $v !== null);
         return $new;
     }
 
@@ -236,14 +237,14 @@ final class Textarea extends InputField implements
             || $value === null
         )) {
             throw new InvalidArgumentException(
-                'Textarea field requires a string, a stringable object, an array of strings or null value.'
+                'Textarea field requires a string, a stringable object, an array of strings or null value.',
             );
         }
 
         /** @psalm-suppress MixedArgument We guess that enrichment contain correct values. */
         $textareaAttributes = array_merge(
             $this->enrichment['inputAttributes'] ?? [],
-            $this->getInputAttributes()
+            $this->getInputAttributes(),
         );
 
         /**

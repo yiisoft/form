@@ -11,6 +11,8 @@ use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
 use Yiisoft\Form\ValidationRulesEnricherInterface;
 
+use function is_array;
+
 final class Theme
 {
     /**
