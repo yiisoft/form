@@ -100,7 +100,7 @@ final class FieldFactoryTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="checkbox" value="1">
+            <input value="1" type="checkbox">
             </div>
             HTML;
 
@@ -119,7 +119,7 @@ final class FieldFactoryTest extends TestCase
 
         $expected = <<<HTML
             <span>
-            <input type="checkbox" value="1">
+            <input value="1" type="checkbox">
             </span>
             HTML;
 
@@ -136,8 +136,8 @@ final class FieldFactoryTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="test[]" value="a"> a</label>
-            <label><input type="checkbox" name="test[]" value="b"> b</label>
+            <label><input name="test[]" value="a" type="checkbox"> a</label>
+            <label><input name="test[]" value="b" type="checkbox"> b</label>
             </div>
             </div>
             HTML;
@@ -161,8 +161,8 @@ final class FieldFactoryTest extends TestCase
         $expected = <<<HTML
             <span>
             <div>
-            <label><input type="checkbox" name="test[]" value="a"> a</label>
-            <label><input type="checkbox" name="test[]" value="b"> b</label>
+            <label><input name="test[]" value="a" type="checkbox"> a</label>
+            <label><input name="test[]" value="b" type="checkbox"> b</label>
             </div>
             </span>
             HTML;
@@ -538,8 +538,8 @@ final class FieldFactoryTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="radio" name="test" value="a"> a</label>
-            <label><input type="radio" name="test" value="b"> b</label>
+            <label><input name="test" value="a" type="radio"> a</label>
+            <label><input name="test" value="b" type="radio"> b</label>
             </div>
             </div>
             HTML;
@@ -563,8 +563,8 @@ final class FieldFactoryTest extends TestCase
         $expected = <<<HTML
             <span>
             <div>
-            <label><input type="radio" name="test" value="a"> a</label>
-            <label><input type="radio" name="test" value="b"> b</label>
+            <label><input name="test" value="a" type="radio"> a</label>
+            <label><input name="test" value="b" type="radio"> b</label>
             </div>
             </span>
             HTML;

@@ -45,7 +45,7 @@ final class ButtonFieldTest extends TestCase
 
         $expected = <<<HTML
                     <div>
-                    <button type="button" class="primary">Start</button>
+                    <button class="primary" type="button">Start</button>
                     </div>
                     HTML;
 
@@ -66,7 +66,7 @@ final class ButtonFieldTest extends TestCase
 
         $expected = <<<HTML
                     <div>
-                    <button type="button" class="primary" data-key="main" aria-label="test"></button>
+                    <button type="button" data-key="main" class="primary" aria-label="test"></button>
                     </div>
                     HTML;
 

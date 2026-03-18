@@ -33,7 +33,7 @@ final class Select extends InputField implements EnrichFromValidationRulesInterf
 
     public function __construct()
     {
-        $this->select = SelectTag::tag();
+        $this->select = new SelectTag();
     }
 
     public function items(Optgroup|Option ...$items): self

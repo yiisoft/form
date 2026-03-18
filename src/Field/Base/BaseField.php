@@ -156,7 +156,7 @@ abstract class BaseField extends Widget
             return $content;
         }
 
-        $containerTag = CustomTag::name($this->containerTag);
+        $containerTag = new CustomTag($this->containerTag);
 
         return ($content !== '' ? $content . "\n" : '') . $containerTag->close();
     }
@@ -167,7 +167,7 @@ abstract class BaseField extends Widget
             return $content;
         }
 
-        $containerTag = CustomTag::name($this->containerTag);
+        $containerTag = new CustomTag($this->containerTag);
 
         $attributes = $this->containerAttributes;
         $this->prepareContainerAttributes($attributes);

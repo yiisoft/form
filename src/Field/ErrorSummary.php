@@ -213,7 +213,7 @@ final class ErrorSummary extends BaseField
         if ($this->header !== '') {
             $content[] = $this->headerTag === null
                 ? ($this->headerEncode ? Html::encode($this->header) : $this->header)
-                : CustomTag::name($this->headerTag)
+                : (new CustomTag($this->headerTag))
                     ->attributes($this->headerAttributes)
                     ->content($this->header)
                     ->encode($this->headerEncode)

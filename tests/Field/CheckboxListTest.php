@@ -30,8 +30,8 @@ final class CheckboxListTest extends TestCase
                 <div>
                 <label>Select one or more colors</label>
                 <div>
-                <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
-                <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+                <label><input name="CheckboxListForm[color][]" value="red" type="checkbox"> Red</label>
+                <label><input name="CheckboxListForm[color][]" value="blue" type="checkbox"> Blue</label>
                 </div>
                 <div>Color of box.</div>
                 </div>
@@ -47,8 +47,8 @@ final class CheckboxListTest extends TestCase
                 <<<HTML
                 <div class="valid">
                 <div>
-                <label><input type="checkbox" name="color[]" value="red"> Red</label>
-                <label><input type="checkbox" name="color[]" value="blue"> Blue</label>
+                <label><input name="color[]" value="red" type="checkbox"> Red</label>
+                <label><input name="color[]" value="blue" type="checkbox"> Blue</label>
                 </div>
                 </div>
                 HTML,
@@ -93,10 +93,10 @@ final class CheckboxListTest extends TestCase
             <div>
             <div>
             <div class="form-check">
-            <label><input type="checkbox" name="test[]" value="1"> Red</label>
+            <label><input name="test[]" value="1" type="checkbox"> Red</label>
             </div>
             <div class="form-check">
-            <label><input type="checkbox" name="test[]" value="2"> Blue</label>
+            <label><input name="test[]" value="2" type="checkbox"> Blue</label>
             </div>
             </div>
             </div>
@@ -122,10 +122,10 @@ final class CheckboxListTest extends TestCase
             <div>
             <div>
             <div class="form-check form-check-inline">
-            <label><input type="checkbox" name="test[]" value="1"> Red</label>
+            <label><input name="test[]" value="1" type="checkbox"> Red</label>
             </div>
             <div class="form-check form-check-inline">
-            <label><input type="checkbox" name="test[]" value="2"> Blue</label>
+            <label><input name="test[]" value="2" type="checkbox"> Blue</label>
             </div>
             </div>
             </div>
@@ -149,8 +149,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red" data-key="x100"> Red</label>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue" data-key="x100"> Blue &gt;</label>
+            <label><input name="CheckboxListForm[color][]" value="red" class="control" data-key="x100" type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" class="control" data-key="x100" type="checkbox"> Blue &gt;</label>
             </div>
             </div>
             HTML;
@@ -173,8 +173,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="red" class="control" type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" class="control" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -194,8 +194,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label class="control" data-key="x100"><input type="checkbox" name="CheckboxListForm[color][]" value="Red"> Red</label>
-            <label class="control" data-key="x100"><input type="checkbox" name="CheckboxListForm[color][]" value="Blue"> Blue</label>
+            <label class="control" data-key="x100"><input name="CheckboxListForm[color][]" value="Red" type="checkbox"> Red</label>
+            <label class="control" data-key="x100"><input name="CheckboxListForm[color][]" value="Blue" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -215,8 +215,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label class="control"><input type="checkbox" name="CheckboxListForm[color][]" value="Red"> Red</label>
-            <label class="control"><input type="checkbox" name="CheckboxListForm[color][]" value="Blue"> Blue</label>
+            <label class="control"><input name="CheckboxListForm[color][]" value="Red" type="checkbox"> Red</label>
+            <label class="control"><input name="CheckboxListForm[color][]" value="Blue" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -242,8 +242,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <input type="checkbox" id="id1" name="test[]" value="1"> <label for="id1">Red</label>
-            <input type="checkbox" id="id2" name="test[]" value="2"> <label for="id2">Blue</label>
+            <input name="test[]" value="1" id="id1" type="checkbox"> <label for="id1">Red</label>
+            <input name="test[]" value="2" id="id2" type="checkbox"> <label for="id2">Blue</label>
             </div>
             </div>
             HTML;
@@ -270,8 +270,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" class="control2" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="red" class="control" type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" class="control2" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -298,8 +298,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" class="control" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="red" type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" class="control" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -323,8 +323,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> <b>Red</b></label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> <b>Blue</b></label>
+            <label><input name="CheckboxListForm[color][]" value="red" type="checkbox"> <b>Red</b></label>
+            <label><input name="CheckboxListForm[color][]" value="blue" type="checkbox"> <b>Blue</b></label>
             </div>
             </div>
             HTML;
@@ -342,8 +342,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="color[]" value="Red"> Red</label>
-            <label><input type="checkbox" name="color[]" value="Blue &gt;"> Blue &gt;</label>
+            <label><input name="color[]" value="Red" type="checkbox"> Red</label>
+            <label><input name="color[]" value="Blue &gt;" type="checkbox"> Blue &gt;</label>
             </div>
             </div>
             HTML;
@@ -367,8 +367,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="&lt;b&gt;Red&lt;/b&gt;"> <b>Red</b></label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="&lt;b&gt;Blue&lt;/b&gt;"> <b>Blue</b></label>
+            <label><input name="CheckboxListForm[color][]" value="&lt;b&gt;Red&lt;/b&gt;" type="checkbox"> <b>Red</b></label>
+            <label><input name="CheckboxListForm[color][]" value="&lt;b&gt;Blue&lt;/b&gt;" type="checkbox"> <b>Blue</b></label>
             </div>
             </div>
             HTML;
@@ -390,8 +390,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red" form="CreatePost"> Red</label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue" form="CreatePost"> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="red" form="CreatePost" type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" form="CreatePost" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -413,8 +413,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red" disabled> Red</label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue" disabled> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="red" disabled type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" disabled type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -437,8 +437,8 @@ final class CheckboxListTest extends TestCase
             <div>
             <input type="hidden" name="CheckboxListForm[color]" value="0">
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="red" type="checkbox"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -460,9 +460,9 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="red"> Red</label>
+            <label><input name="CheckboxListForm[color][]" value="red" type="checkbox"> Red</label>
             <br>
-            <label><input type="checkbox" name="CheckboxListForm[color][]" value="blue"> Blue</label>
+            <label><input name="CheckboxListForm[color][]" value="blue" type="checkbox"> Blue</label>
             </div>
             </div>
             HTML;
@@ -484,8 +484,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <input type="checkbox" name="CheckboxListForm[color][]" value="red"> — Red
-            <input type="checkbox" name="CheckboxListForm[color][]" value="blue"> — Blue
+            <input name="CheckboxListForm[color][]" value="red" type="checkbox"> — Red
+            <input name="CheckboxListForm[color][]" value="blue" type="checkbox"> — Blue
             </div>
             </div>
             HTML;
@@ -540,8 +540,8 @@ final class CheckboxListTest extends TestCase
         $expected = <<<HTML
             <div class="invalidWrap">
             <div>
-            <label><input type="checkbox" class="invalid" name="company[]" value="red" checked> Red</label>
-            <label><input type="checkbox" class="invalid" name="company[]" value="blue"> Blue</label>
+            <label><input name="company[]" value="red" class="invalid" checked type="checkbox"> Red</label>
+            <label><input name="company[]" value="blue" class="invalid" type="checkbox"> Blue</label>
             </div>
             <div>Value cannot be blank.</div>
             </div>

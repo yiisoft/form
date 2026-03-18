@@ -19,7 +19,7 @@ final class ButtonGroup extends PartsField
 
     public function __construct()
     {
-        $this->widget = ButtonGroupWidget::create()->withoutContainer();
+        $this->widget = (new ButtonGroupWidget())->withoutContainer();
     }
 
     public function buttons(ButtonTag ...$buttons): self

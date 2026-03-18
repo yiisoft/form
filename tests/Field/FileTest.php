@@ -28,7 +28,7 @@ final class FileTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="id-test">Avatar</label>
-                <input type="file" id="id-test" name="avatar">
+                <input name="avatar" id="id-test" type="file">
                 </div>
                 HTML,
                 new InputData(name: 'avatar', id: 'id-test', label: 'Avatar'),
@@ -36,7 +36,7 @@ final class FileTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="file" class="valid" name="avatar">
+                <input name="avatar" class="valid" type="file">
                 </div>
                 HTML,
                 new InputData(name: 'avatar', value: '', validationErrors: []),
@@ -45,7 +45,7 @@ final class FileTest extends TestCase
             'container-valid-class' => [
                 <<<HTML
                 <div class="valid">
-                <input type="file" name="avatar">
+                <input name="avatar" type="file">
                 </div>
                 HTML,
                 new InputData(name: 'avatar', value: '', validationErrors: []),
@@ -77,7 +77,7 @@ final class FileTest extends TestCase
             ->render();
 
         $this->assertSame(
-            '<input type="file" name="avatar" accept=".png,.jpg">',
+            '<input name="avatar" accept=".png,.jpg" type="file">',
             $result,
         );
     }
@@ -92,7 +92,7 @@ final class FileTest extends TestCase
             ->render();
 
         $this->assertSame(
-            '<input type="file" name="avatar" multiple>',
+            '<input name="avatar" multiple type="file">',
             $result,
         );
     }
@@ -107,7 +107,7 @@ final class FileTest extends TestCase
             ->render();
 
         $this->assertSame(
-            '<input type="file" name="avatar" required>',
+            '<input name="avatar" required type="file">',
             $result,
         );
     }
@@ -122,7 +122,7 @@ final class FileTest extends TestCase
             ->render();
 
         $this->assertSame(
-            '<input type="file" name="avatar" disabled>',
+            '<input name="avatar" disabled type="file">',
             $result,
         );
     }
@@ -132,23 +132,23 @@ final class FileTest extends TestCase
         return [
             'one element' => [
                 ['hint'],
-                '<input type="file" name="avatar" aria-describedby="hint">',
+                '<input name="avatar" aria-describedby="hint" type="file">',
             ],
             'multiple elements' => [
                 ['hint1', 'hint2'],
-                '<input type="file" name="avatar" aria-describedby="hint1 hint2">',
+                '<input name="avatar" aria-describedby="hint1 hint2" type="file">',
             ],
             'null with other elements' => [
                 ['hint1', null, 'hint2', null, 'hint3'],
-                '<input type="file" name="avatar" aria-describedby="hint1 hint2 hint3">',
+                '<input name="avatar" aria-describedby="hint1 hint2 hint3" type="file">',
             ],
             'only null' => [
                 [null, null],
-                '<input type="file" name="avatar">',
+                '<input name="avatar" type="file">',
             ],
             'empty string' => [
                 [''],
-                '<input type="file" name="avatar" aria-describedby>',
+                '<input name="avatar" aria-describedby type="file">',
             ],
         ];
     }
@@ -175,7 +175,7 @@ final class FileTest extends TestCase
             ->render();
 
         $this->assertSame(
-            '<input type="file" name="avatar" aria-label="test">',
+            '<input name="avatar" aria-label="test" type="file">',
             $result,
         );
     }
@@ -190,7 +190,7 @@ final class FileTest extends TestCase
             ->render();
 
         $this->assertSame(
-            '<input type="file" name="avatar" tabindex="3">',
+            '<input name="avatar" tabindex="3" type="file">',
             $result,
         );
     }
@@ -205,7 +205,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="avatar" value="0"><input type="file" name="avatar">
+            <input type="hidden" name="avatar" value="0"><input name="avatar" type="file">
             </div>
             HTML;
 
@@ -223,7 +223,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="avatar" value="0" disabled><input type="file" name="avatar" disabled>
+            <input type="hidden" name="avatar" value="0" disabled><input name="avatar" disabled type="file">
             </div>
             HTML;
 
@@ -241,7 +241,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="avatar" value="0" form="CreatePost"><input type="file" name="avatar" form="CreatePost">
+            <input type="hidden" name="avatar" value="0" form="CreatePost"><input name="avatar" form="CreatePost" type="file">
             </div>
             HTML;
 
@@ -260,7 +260,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" id="TEST" name="avatar" value="0" data-key="100"><input type="file" name="avatar">
+            <input type="hidden" name="avatar" value="0" data-key="100" id="TEST"><input name="avatar" type="file">
             </div>
             HTML;
 
@@ -279,7 +279,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" id="TEST" name="avatar" value="0"><input type="file" name="avatar">
+            <input type="hidden" name="avatar" value="0" id="TEST"><input name="avatar" type="file">
             </div>
             HTML;
 
@@ -299,7 +299,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="file" data-test="1">
+            <input data-test="1" type="file">
             </div>
             HTML;
 
@@ -315,7 +315,7 @@ final class FileTest extends TestCase
             ->render();
         $expectedHtml = <<<HTML
             <div>
-            <input type="file" required>
+            <input required type="file">
             </div>
             HTML;
 
@@ -385,7 +385,7 @@ final class FileTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="file" class="invalid" name="company">
+            <input name="company" class="invalid" type="file">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

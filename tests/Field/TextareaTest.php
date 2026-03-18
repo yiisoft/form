@@ -30,7 +30,7 @@ final class TextareaTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="test-id">Description</label>
-                <textarea id="test-id" name="desc"></textarea>
+                <textarea name="desc" id="test-id"></textarea>
                 </div>
                 HTML,
                 new InputData('desc', id: 'test-id', label: 'Description'),
@@ -56,7 +56,7 @@ final class TextareaTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <textarea class="valid" name="desc"></textarea>
+                <textarea name="desc" class="valid"></textarea>
                 </div>
                 HTML,
                 new InputData(name: 'desc', validationErrors: []),
@@ -440,7 +440,7 @@ final class TextareaTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <textarea class="invalid" name="company"></textarea>
+            <textarea name="company" class="invalid"></textarea>
             <div>Value cannot be blank.</div>
             </div>
             HTML;

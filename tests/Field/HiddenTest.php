@@ -27,7 +27,7 @@ final class HiddenTest extends TestCase
         $field = Hidden::widget()->inputData($inputData);
 
         assertSame(
-            '<input type="hidden" id="hiddenform-key" name="key" value="x100">',
+            '<input type="hidden" name="key" value="x100" id="hiddenform-key">',
             $field->render(),
         );
     }

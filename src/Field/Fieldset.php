@@ -24,7 +24,7 @@ final class Fieldset extends PartsField
 
     public function __construct()
     {
-        $this->tag = FieldsetTag::tag();
+        $this->tag = new FieldsetTag();
     }
 
     public function legend(string|Stringable|null $content, array $attributes = []): self

@@ -33,7 +33,7 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
 
     public function __construct()
     {
-        $this->widget = CheckboxListWidget::create('');
+        $this->widget = new CheckboxListWidget('');
     }
 
     public function checkboxWrapTag(?string $name): self

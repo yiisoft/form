@@ -29,7 +29,7 @@ final class DateTimeInputFieldTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="dt-main">Main date</label>
-                <input type="datetime" id="dt-main" name="dt" value>
+                <input type="datetime" name="dt" value id="dt-main">
                 <div>Need correct date</div>
                 </div>
                 HTML,
@@ -44,7 +44,7 @@ final class DateTimeInputFieldTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="datetime" class="valid" name="main" value>
+                <input type="datetime" name="main" value class="valid">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: '', validationErrors: []),
@@ -376,7 +376,7 @@ final class DateTimeInputFieldTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="datetime" class="invalid" name="company" value>
+            <input type="datetime" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

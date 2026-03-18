@@ -54,7 +54,7 @@ final class ConfigTest extends TestCase
         $input = Field::hidden('key', 'x100');
 
         $this->assertSame(
-            '<input type="hidden" id="TestId" name="key" value="x100">',
+            '<input type="hidden" name="key" value="x100" id="TestId">',
             $input->render(),
         );
     }

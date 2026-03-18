@@ -3,6 +3,7 @@
 ## 1.5.2 under development
 
 - Enh #384: Explicitly import functions and constants in "use" section (@mspirkov)
+- Enh #386: Bump minimal `yiisoft/html` version to `3.13` and add support of `^4.0` (@vjik)
 
 ## 1.5.1 December 23, 2025
 

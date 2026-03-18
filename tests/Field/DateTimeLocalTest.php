@@ -33,7 +33,7 @@ final class DateTimeLocalTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="datetimelocalform-partydate">Date of party</label>
-            <input type="datetime-local" id="datetimelocalform-partydate" name="partyDate" value="2017-06-01T08:30">
+            <input type="datetime-local" name="partyDate" value="2017-06-01T08:30" id="datetimelocalform-partydate">
             <div>Party date.</div>
             </div>
             HTML;

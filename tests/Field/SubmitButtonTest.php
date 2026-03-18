@@ -47,7 +47,7 @@ final class SubmitButtonTest extends TestCase
         $this->assertSame(
             <<<HTML
             <div>
-            <button type="submit" class="red">Go!</button>
+            <button class="red" type="submit">Go!</button>
             </div>
             HTML,
             $result,

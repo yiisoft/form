@@ -29,7 +29,7 @@ final class TelephoneTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="telephoneform-number">Phone</label>
-                <input type="tel" id="telephoneform-number" name="TelephoneForm[number]" value>
+                <input type="tel" name="TelephoneForm[number]" value id="telephoneform-number">
                 <div>Enter your phone.</div>
                 </div>
                 HTML,
@@ -44,7 +44,7 @@ final class TelephoneTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="tel" class="valid" name="main" value>
+                <input type="tel" name="main" value class="valid">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: '', validationErrors: []),
@@ -379,7 +379,7 @@ final class TelephoneTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="tel" class="invalid" name="company" value>
+            <input type="tel" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

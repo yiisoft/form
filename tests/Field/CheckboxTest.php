@@ -28,7 +28,7 @@ final class CheckboxTest extends TestCase
             'base' => [
                 <<<HTML
                 <div>
-                <input type="hidden" name="CheckboxForm[red]" value="0"><label><input type="checkbox" id="checkboxform-red" name="CheckboxForm[red]" value="1" checked> Red color</label>
+                <input type="hidden" name="CheckboxForm[red]" value="0"><label><input name="CheckboxForm[red]" value="1" id="checkboxform-red" checked type="checkbox"> Red color</label>
                 <div>If need red color.</div>
                 </div>
                 HTML,
@@ -43,7 +43,7 @@ final class CheckboxTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="hidden" name="main" value="0"><input type="checkbox" class="valid" name="main" value="1" checked>
+                <input type="hidden" name="main" value="0"><input name="main" value="1" class="valid" checked type="checkbox">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: '1', validationErrors: []),
@@ -52,7 +52,7 @@ final class CheckboxTest extends TestCase
             'container-valid-class' => [
                 <<<HTML
                 <div class="valid">
-                <input type="hidden" name="main" value="0"><input type="checkbox" name="main" value="1" checked>
+                <input type="hidden" name="main" value="0"><input name="main" value="1" checked type="checkbox">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: '1', validationErrors: []),
@@ -82,7 +82,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -100,7 +100,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="4"> Red color</label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="4" type="checkbox"> Red color</label>
             </div>
             HTML;
 
@@ -118,7 +118,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="42" checked> Your age 42?</label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="42" checked type="checkbox"> Your age 42?</label>
             </div>
             HTML;
 
@@ -150,7 +150,7 @@ final class CheckboxTest extends TestCase
 
         $expected = '<div>' . "\n"
             . $expectedInput
-            . '<label><input type="checkbox" name="test-name" value="1"> Blue color</label>' . "\n"
+            . '<label><input name="test-name" value="1" type="checkbox"> Blue color</label>' . "\n"
             . '</div>';
 
         $this->assertSame($expected, $result);
@@ -168,7 +168,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input type="checkbox" name="test-name" value="1">
+            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox">
             </div>
             HTML;
 
@@ -189,7 +189,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Hello</label>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> Yes</label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="1" type="checkbox"> Yes</label>
             </div>
             HTML;
 
@@ -209,7 +209,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Hello</label>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> Hello</label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="1" type="checkbox"> Hello</label>
             </div>
             HTML;
 
@@ -230,7 +230,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input type="checkbox" name="test-name" value="1"> Yes
+            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox"> Yes
             </div>
             HTML;
 
@@ -248,7 +248,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> A &gt; B</label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="1" type="checkbox"> A &gt; B</label>
             </div>
             HTML;
 
@@ -267,7 +267,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label><input type="checkbox" name="test-name" value="1"> <b>Blue</b></label>
+            <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="1" type="checkbox"> <b>Blue</b></label>
             </div>
             HTML;
 
@@ -287,7 +287,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input type="checkbox" name="test-name" value="1"> A &gt; B
+            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox"> A &gt; B
             </div>
             HTML;
 
@@ -308,7 +308,7 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input type="checkbox" name="test-name" value="1"> <b>Blue</b>
+            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox"> <b>Blue</b>
             </div>
             HTML;
 
@@ -327,7 +327,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label class="red" data-key="x7"><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label class="red" data-key="x7"><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -346,7 +346,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label data-key="x7"><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label data-key="x7"><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -373,7 +373,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label$expectedId><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label$expectedId><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -407,7 +407,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label$expectedClassAttribute><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label$expectedClassAttribute><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -435,7 +435,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label$expectedClassAttribute><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label$expectedClassAttribute><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -470,7 +470,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="hidden" name="test-name" value="0"><label$expectedClassAttribute><input type="checkbox" name="test-name" value="1"> Blue color</label>
+            <input type="hidden" name="test-name" value="0"><label$expectedClassAttribute><input name="test-name" value="1" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -489,7 +489,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="checkbox" name="test-name" value="1" disabled> Blue color</label>
+            <label><input name="test-name" value="1" disabled type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -503,7 +503,7 @@ final class CheckboxTest extends TestCase
                 ['hint'],
                 <<<HTML
                 <div>
-                <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint"> Blue color</label>
+                <label><input name="test-name" value="1" aria-describedby="hint" type="checkbox"> Blue color</label>
                 </div>
                 HTML,
             ],
@@ -511,7 +511,7 @@ final class CheckboxTest extends TestCase
                 ['hint1', 'hint2'],
                 <<<HTML
                 <div>
-                <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint1 hint2"> Blue color</label>
+                <label><input name="test-name" value="1" aria-describedby="hint1 hint2" type="checkbox"> Blue color</label>
                 </div>
                 HTML,
             ],
@@ -519,7 +519,7 @@ final class CheckboxTest extends TestCase
                 ['hint1', null, 'hint2', null, 'hint3'],
                 <<<HTML
                 <div>
-                <label><input type="checkbox" name="test-name" value="1" aria-describedby="hint1 hint2 hint3"> Blue color</label>
+                <label><input name="test-name" value="1" aria-describedby="hint1 hint2 hint3" type="checkbox"> Blue color</label>
                 </div>
                 HTML,
             ],
@@ -527,7 +527,7 @@ final class CheckboxTest extends TestCase
                 [null, null],
                 <<<HTML
                 <div>
-                <label><input type="checkbox" name="test-name" value="1"> Blue color</label>
+                <label><input name="test-name" value="1" type="checkbox"> Blue color</label>
                 </div>
                 HTML,
             ],
@@ -535,7 +535,7 @@ final class CheckboxTest extends TestCase
                 [''],
                 <<<HTML
                 <div>
-                <label><input type="checkbox" name="test-name" value="1" aria-describedby> Blue color</label>
+                <label><input name="test-name" value="1" aria-describedby type="checkbox"> Blue color</label>
                 </div>
                 HTML,
             ],
@@ -566,7 +566,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="checkbox" name="test-name" value="1" aria-label="test"> Blue color</label>
+            <label><input name="test-name" value="1" aria-label="test" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -585,7 +585,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="checkbox" name="test-name" value="1" autofocus> Blue color</label>
+            <label><input name="test-name" value="1" autofocus type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -604,7 +604,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="checkbox" name="test-name" value="1" tabindex="2"> Blue color</label>
+            <label><input name="test-name" value="1" tabindex="2" type="checkbox"> Blue color</label>
             </div>
             HTML;
 
@@ -628,7 +628,7 @@ final class CheckboxTest extends TestCase
             ->render();
         $expectedHtml = <<<HTML
         <div>
-        <input type="checkbox" value="value" checked>
+        <input value="value" checked type="checkbox">
         </div>
         HTML;
 
@@ -650,7 +650,7 @@ final class CheckboxTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="hidden" name="company" value="0"><input type="checkbox" class="invalid" name="company" value="1">
+            <input type="hidden" name="company" value="0"><input name="company" value="1" class="invalid" type="checkbox">
             <div>Value cannot be blank.</div>
             </div>
             HTML;
@@ -664,7 +664,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Voronezh</label>
-            <input type="checkbox" id="UID" name="city" value="1">
+            <input name="city" value="1" id="UID" type="checkbox">
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
@@ -672,7 +672,7 @@ final class CheckboxTest extends TestCase
         yield 'wrap' => [
             <<<HTML
             <div>
-            <label><input type="checkbox" id="UID" name="city" value="1"> Voronezh</label>
+            <label><input name="city" value="1" id="UID" type="checkbox"> Voronezh</label>
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
@@ -680,7 +680,7 @@ final class CheckboxTest extends TestCase
         yield 'side' => [
             <<<HTML
             <div>
-            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Voronezh</label>
+            <input name="city" value="1" id="UID" type="checkbox"> <label for="UID">Voronezh</label>
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
@@ -708,7 +708,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Voronezh</label>
-            <input type="checkbox" id="UID" name="city" value="1"> Moscow
+            <input name="city" value="1" id="UID" type="checkbox"> Moscow
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
@@ -716,7 +716,7 @@ final class CheckboxTest extends TestCase
         yield 'wrap' => [
             <<<HTML
             <div>
-            <label><input type="checkbox" id="UID" name="city" value="1"> Moscow</label>
+            <label><input name="city" value="1" id="UID" type="checkbox"> Moscow</label>
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
@@ -724,7 +724,7 @@ final class CheckboxTest extends TestCase
         yield 'side' => [
             <<<HTML
             <div>
-            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Moscow</label>
+            <input name="city" value="1" id="UID" type="checkbox"> <label for="UID">Moscow</label>
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
@@ -753,7 +753,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Moscow</label>
-            <input type="checkbox" id="UID" name="city" value="1">
+            <input name="city" value="1" id="UID" type="checkbox">
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
@@ -761,7 +761,7 @@ final class CheckboxTest extends TestCase
         yield 'wrap' => [
             <<<HTML
             <div>
-            <label><input type="checkbox" id="UID" name="city" value="1"> Moscow</label>
+            <label><input name="city" value="1" id="UID" type="checkbox"> Moscow</label>
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
@@ -769,7 +769,7 @@ final class CheckboxTest extends TestCase
         yield 'side' => [
             <<<HTML
             <div>
-            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Moscow</label>
+            <input name="city" value="1" id="UID" type="checkbox"> <label for="UID">Moscow</label>
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
@@ -798,7 +798,7 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Vladivostok</label>
-            <input type="checkbox" id="UID" name="city" value="1"> Moscow
+            <input name="city" value="1" id="UID" type="checkbox"> Moscow
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
@@ -806,7 +806,7 @@ final class CheckboxTest extends TestCase
         yield 'wrap' => [
             <<<HTML
             <div>
-            <label><input type="checkbox" id="UID" name="city" value="1"> Moscow</label>
+            <label><input name="city" value="1" id="UID" type="checkbox"> Moscow</label>
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
@@ -814,7 +814,7 @@ final class CheckboxTest extends TestCase
         yield 'side' => [
             <<<HTML
             <div>
-            <input type="checkbox" id="UID" name="city" value="1"> <label for="UID">Moscow</label>
+            <input name="city" value="1" id="UID" type="checkbox"> <label for="UID">Moscow</label>
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,

@@ -623,7 +623,7 @@ final class PartsFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <p id="KEY" class="red"><input></p>
+            <p class="red" id="KEY"><input></p>
             </div>
             HTML;
 
