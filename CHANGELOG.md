@@ -1,5 +1,9 @@
 # Yii Form Change Log
 
+## 1.5.3 under development
+
+- no changes in this release.
+
 ## 1.5.2 March 20, 2026
 
 - Enh #384: Explicitly import functions and constants in "use" section (@mspirkov)
