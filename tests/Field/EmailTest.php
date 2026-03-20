@@ -29,7 +29,7 @@ final class EmailTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="emailform-main">Main email</label>
-                <input type="email" id="emailform-main" name="EmailForm[main]" value>
+                <input type="email" name="EmailForm[main]" value id="emailform-main">
                 <div>Email for notifications.</div>
                 </div>
                 HTML,
@@ -44,7 +44,7 @@ final class EmailTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="email" class="valid" name="main" value>
+                <input type="email" name="main" value class="valid">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: '', validationErrors: []),
@@ -423,7 +423,7 @@ final class EmailTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="email" class="invalid" name="company" value>
+            <input type="email" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

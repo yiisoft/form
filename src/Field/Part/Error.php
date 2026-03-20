@@ -280,7 +280,7 @@ final class Error extends Widget
         if ($this->header !== null) {
             $content[] = $this->headerTag === null
                 ? ($this->headerEncode ? Html::encode($this->header) : $this->header)
-                : CustomTag::name($this->headerTag)
+                : (new CustomTag($this->headerTag))
                     ->attributes($this->headerAttributes)
                     ->content($this->header)
                     ->encode($this->headerEncode)
@@ -297,14 +297,14 @@ final class Error extends Widget
             }
             $content[] = $this->errorTag === null
                 ? ($this->encode ? Html::encode($message) : $message)
-                : CustomTag::name($this->errorTag)
+                : (new CustomTag($this->errorTag))
                     ->attributes($this->errorAttributes)
                     ->content($message)
                     ->encode($this->encode)
                     ->render();
         }
 
-        return CustomTag::name($this->tag)
+        return (new CustomTag($this->tag))
             ->addAttributes($this->attributes)
             ->content(...(count($messages) === 1 ? $content : ["\n", ...$content, "\n"]))
             ->encode(false)

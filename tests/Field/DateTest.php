@@ -33,7 +33,7 @@ final class DateTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="dateform-birthday">Your birthday</label>
-            <input type="date" id="dateform-birthday" name="DateForm[birthday]" value="1996-12-19">
+            <input type="date" name="DateForm[birthday]" value="1996-12-19" id="dateform-birthday">
             <div>Birthday date.</div>
             </div>
             HTML;

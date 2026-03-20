@@ -45,7 +45,7 @@ final class InputFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text" id="key" class="red" value>
+            <input type="text" value class="red" id="key">
             </div>
             HTML;
 
@@ -60,7 +60,7 @@ final class InputFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text" id="key" value>
+            <input type="text" value id="key">
             </div>
             HTML;
 
@@ -93,7 +93,7 @@ final class InputFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text"$expectedClassAttribute name="company" value>
+            <input type="text" name="company" value$expectedClassAttribute>
             </div>
             HTML;
 
@@ -120,7 +120,7 @@ final class InputFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text"$expectedClassAttribute name="company" value>
+            <input type="text" name="company" value$expectedClassAttribute>
             </div>
             HTML;
 
@@ -154,7 +154,7 @@ final class InputFieldTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text"$expectedClassAttribute name="company" value>
+            <input type="text" name="company" value$expectedClassAttribute>
             </div>
             HTML;
 

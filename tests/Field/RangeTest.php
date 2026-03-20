@@ -30,7 +30,7 @@ final class RangeTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="rangeform-volume">Volume level</label>
-                <input type="range" id="rangeform-volume" name="RangeForm[volume]" value="23" min="1" max="100">
+                <input name="RangeForm[volume]" value="23" min="1" max="100" id="rangeform-volume" type="range">
                 </div>
                 HTML,
                 new InputData(
@@ -43,7 +43,7 @@ final class RangeTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="range" class="valid" name="main" min="1" max="100">
+                <input name="main" min="1" max="100" class="valid" type="range">
                 </div>
                 HTML,
                 new InputData(name: 'main', validationErrors: []),
@@ -52,7 +52,7 @@ final class RangeTest extends TestCase
             'container-valid-class' => [
                 <<<HTML
                 <div class="valid">
-                <input type="range" name="main" min="1" max="100">
+                <input name="main" min="1" max="100" type="range">
                 </div>
                 HTML,
                 new InputData(name: 'main', validationErrors: []),
@@ -90,8 +90,8 @@ final class RangeTest extends TestCase
 
         $expected = <<<HTML_WRAP
 <div>
-<input type="range" name="volume" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
-<span id="UID" class="red">23</span>
+<input name="volume" value="23" type="range" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<span class="red" id="UID">23</span>
 </div>
 HTML_WRAP;
 
@@ -110,7 +110,7 @@ HTML_WRAP;
 
         $expected = <<<HTML_WRAP
 <div>
-<input type="range" name="volume" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input name="volume" value="23" type="range" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <span id="UID">23</span>
 </div>
 HTML_WRAP;
@@ -131,7 +131,7 @@ HTML_WRAP;
 
         $expected = <<<HTML_WRAP
 <div>
-<input type="range" name="volume" value="23" min="1" max="100" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input name="volume" value="23" min="1" max="100" type="range" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <span id="UID">23</span>
 </div>
 HTML_WRAP;
@@ -151,7 +151,7 @@ HTML_WRAP;
 
         $expected = <<<HTML_WRAP
 <div>
-<input type="range" name="volume" value="23" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
+<input name="volume" value="23" type="range" oninput="document.getElementById(&quot;UID&quot;).innerHTML=this.value">
 <div id="UID">23</div>
 </div>
 HTML_WRAP;
@@ -172,23 +172,23 @@ HTML_WRAP;
     {
         return [
             'int' => [
-                '<input type="range" name="count" max="42">',
+                '<input name="count" max="42" type="range">',
                 42,
             ],
             'string' => [
-                '<input type="range" name="count" max="53">',
+                '<input name="count" max="53" type="range">',
                 '53',
             ],
             'float' => [
-                '<input type="range" name="count" max="5.9">',
+                '<input name="count" max="5.9" type="range">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="range" name="count" max="7">',
+                '<input name="count" max="7" type="range">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="range" name="count">',
+                '<input name="count" type="range">',
                 null,
             ],
         ];
@@ -211,23 +211,23 @@ HTML_WRAP;
     {
         return [
             'int' => [
-                '<input type="range" name="count" min="42">',
+                '<input name="count" min="42" type="range">',
                 42,
             ],
             'string' => [
-                '<input type="range" name="count" min="53">',
+                '<input name="count" min="53" type="range">',
                 '53',
             ],
             'float' => [
-                '<input type="range" name="count" min="5.9">',
+                '<input name="count" min="5.9" type="range">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="range" name="count" min="7">',
+                '<input name="count" min="7" type="range">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="range" name="count">',
+                '<input name="count" type="range">',
                 null,
             ],
         ];
@@ -250,23 +250,23 @@ HTML_WRAP;
     {
         return [
             'int' => [
-                '<input type="range" name="count" step="42">',
+                '<input name="count" step="42" type="range">',
                 42,
             ],
             'string' => [
-                '<input type="range" name="count" step="53">',
+                '<input name="count" step="53" type="range">',
                 '53',
             ],
             'float' => [
-                '<input type="range" name="count" step="5.9">',
+                '<input name="count" step="5.9" type="range">',
                 '5.9',
             ],
             'Stringable' => [
-                '<input type="range" name="count" step="7">',
+                '<input name="count" step="7" type="range">',
                 new StringableObject('7'),
             ],
             'null' => [
-                '<input type="range" name="count">',
+                '<input name="count" type="range">',
                 null,
             ],
         ];
@@ -295,7 +295,7 @@ HTML_WRAP;
             ->render();
 
         $this->assertSame(
-            '<input type="range" name="count" list="TheList">',
+            '<input name="count" list="TheList" type="range">',
             $result,
         );
     }
@@ -310,7 +310,7 @@ HTML_WRAP;
             ->render();
 
         $this->assertSame(
-            '<input type="range" name="count" disabled>',
+            '<input name="count" disabled type="range">',
             $result,
         );
     }
@@ -320,23 +320,23 @@ HTML_WRAP;
         return [
             'one element' => [
                 ['hint'],
-                '<input type="range" name="count" aria-describedby="hint">',
+                '<input name="count" aria-describedby="hint" type="range">',
             ],
             'multiple elements' => [
                 ['hint1', 'hint2'],
-                '<input type="range" name="count" aria-describedby="hint1 hint2">',
+                '<input name="count" aria-describedby="hint1 hint2" type="range">',
             ],
             'null with other elements' => [
                 ['hint1', null, 'hint2', null, 'hint3'],
-                '<input type="range" name="count" aria-describedby="hint1 hint2 hint3">',
+                '<input name="count" aria-describedby="hint1 hint2 hint3" type="range">',
             ],
             'only null' => [
                 [null, null],
-                '<input type="range" name="count">',
+                '<input name="count" type="range">',
             ],
             'empty string' => [
                 [''],
-                '<input type="range" name="count" aria-describedby>',
+                '<input name="count" aria-describedby type="range">',
             ],
         ];
     }
@@ -363,7 +363,7 @@ HTML_WRAP;
             ->render();
 
         $this->assertSame(
-            '<input type="range" name="count" aria-label="test">',
+            '<input name="count" aria-label="test" type="range">',
             $result,
         );
     }
@@ -378,7 +378,7 @@ HTML_WRAP;
             ->render();
 
         $this->assertSame(
-            '<input type="range" name="count" autofocus>',
+            '<input name="count" autofocus type="range">',
             $result,
         );
     }
@@ -393,7 +393,7 @@ HTML_WRAP;
             ->render();
 
         $this->assertSame(
-            '<input type="range" name="count" tabindex="5">',
+            '<input name="count" tabindex="5" type="range">',
             $result,
         );
     }
@@ -420,7 +420,7 @@ HTML_WRAP;
 
         $expected = <<<HTML
             <div>
-            <input type="range" data-test="1">
+            <input data-test="1" type="range">
             </div>
             HTML;
 
@@ -436,7 +436,7 @@ HTML_WRAP;
             ->render();
         $expectedHtml = <<<HTML
             <div>
-            <input type="range" required>
+            <input required type="range">
             </div>
             HTML;
 
@@ -506,7 +506,7 @@ HTML_WRAP;
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="range" class="invalid" name="company" value>
+            <input name="company" value class="invalid" type="range">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

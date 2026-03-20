@@ -29,7 +29,7 @@ final class UrlTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="urlform-site">Your site</label>
-                <input type="url" id="urlform-site" name="UrlForm[site]" value>
+                <input type="url" name="UrlForm[site]" value id="urlform-site">
                 <div>Enter your site URL.</div>
                 </div>
                 HTML,
@@ -44,7 +44,7 @@ final class UrlTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="url" class="valid" name="site" value>
+                <input type="url" name="site" value class="valid">
                 </div>
                 HTML,
                 new InputData(
@@ -430,7 +430,7 @@ final class UrlTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="url" class="invalid" name="company" value>
+            <input type="url" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

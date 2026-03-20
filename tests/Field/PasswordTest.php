@@ -29,7 +29,7 @@ final class PasswordTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="passwordform-old">Old password</label>
-                <input type="password" id="passwordform-old" name="PasswordForm[old]" value>
+                <input type="password" name="PasswordForm[old]" value id="passwordform-old">
                 <div>Enter your old password.</div>
                 </div>
                 HTML,
@@ -44,7 +44,7 @@ final class PasswordTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="password" class="valid" name="main" value>
+                <input type="password" name="main" value class="valid">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: '', validationErrors: []),
@@ -379,7 +379,7 @@ final class PasswordTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="password" class="invalid" name="company" value>
+            <input type="password" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

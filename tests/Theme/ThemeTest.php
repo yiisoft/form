@@ -25,7 +25,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-name">Name</label>
-                <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+                <input type="text" name="TextForm[name]" value id="textform-name" placeholder="Typed your name here">
                 <div>Input your full name.</div>
                 <div>Value cannot be blank.</div>
                 </div>
@@ -45,7 +45,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-company">Company</label>
-                <input type="text" id="textform-company" name="TextForm[company]" value required>
+                <input type="text" name="TextForm[company]" value required id="textform-company">
                 <div>Value cannot be blank.</div>
                 </div>
                 HTML,
@@ -80,7 +80,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <section class="wrapper">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value id="textform-job">
                 </section>
                 HTML,
                 [
@@ -98,7 +98,7 @@ final class ThemeTest extends TestCase
                 <<<HTML
                 <div class="wrapper">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value id="textform-job">
                 </div>
                 HTML,
                 ['containerClass' => 'wrapper'],
@@ -113,7 +113,7 @@ final class ThemeTest extends TestCase
                 <<<HTML
                 <div class="wrapper red">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value id="textform-job">
                 </div>
                 HTML,
                 ['containerClass' => ['wrapper', 'red']],
@@ -128,7 +128,7 @@ final class ThemeTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" class="red" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value class="red" id="textform-job">
                 </div>
                 HTML,
                 ['inputClass' => 'red'],
@@ -143,7 +143,7 @@ final class ThemeTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" class="red blue" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value class="red blue" id="textform-job">
                 </div>
                 HTML,
                 ['inputClass' => ['red', 'blue']],
@@ -157,7 +157,7 @@ final class ThemeTest extends TestCase
             [
                 <<<'HTML'
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value id="textform-job">
                 HTML,
                 [
                     'useContainer' => false,
@@ -176,7 +176,7 @@ final class ThemeTest extends TestCase
                 <div>Input your full name.</div>
                 <label for="textform-name">Name</label>
                 <div>Value cannot be blank.</div>
-                <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+                <input type="text" name="TextForm[name]" value id="textform-name" placeholder="Typed your name here">
                 </div>
                 </div>
                 HTML,
@@ -197,7 +197,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label>Job</label>
-                <input type="text" class="form-control" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value class="form-control">
                 </div>
                 HTML,
                 [
@@ -215,7 +215,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label>Name</label>
-                <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+                <input type="text" name="TextForm[name]" value id="textform-name" placeholder="Typed your name here">
                 <div class="info">Input your full name.</div>
                 <div class="red">Value cannot be blank.</div>
                 </div>
@@ -245,7 +245,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-name">Name</label>
-                <input type="text" id="textform-name" name="TextForm[name]" value>
+                <input type="text" name="TextForm[name]" value id="textform-name">
                 <div>Input your full name.</div>
                 <div>Value cannot be blank.</div>
                 </div>
@@ -267,7 +267,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-name">Name</label>
-                <input type="text" id="textform-name" name="TextForm[name]" value>
+                <input type="text" name="TextForm[name]" value id="textform-name">
                 <div>Input your full name.</div>
                 <div>Value cannot be blank.</div>
                 </div>
@@ -289,7 +289,7 @@ final class ThemeTest extends TestCase
                 <<<HTML
                 <div class="main-wrapper">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" class="test-class" name="TextForm[job]" value data-type="input-text">
+                <input type="text" name="TextForm[job]" value data-type="input-text" class="test-class" id="textform-job">
                 </div>
                 HTML,
                 [
@@ -316,7 +316,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div class="wrapper valid">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value id="textform-job">
                 </div>
                 HTML,
                 [
@@ -335,7 +335,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div class="wrapper invalid">
                 <label for="textform-company">Company</label>
-                <input type="text" id="textform-company" name="TextForm[company]" value>
+                <input type="text" name="TextForm[company]" value id="textform-company">
                 <div>Value cannot be blank.</div>
                 </div>
                 HTML,
@@ -355,7 +355,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div class="wrapper">
                 <label for="textform-job">Job</label>
-                <input type="text" id="textform-job" class="valid" name="TextForm[job]" value>
+                <input type="text" name="TextForm[job]" value id="textform-job" class="valid">
                 </div>
                 HTML,
                 [
@@ -374,7 +374,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div class="wrapper">
                 <label for="textform-company">Company</label>
-                <input type="text" id="textform-company" class="invalid" name="TextForm[company]" value>
+                <input type="text" name="TextForm[company]" value id="textform-company" class="invalid">
                 <div>Value cannot be blank.</div>
                 </div>
                 HTML,
@@ -394,7 +394,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
-                <div class="control"><input type="text" id="textform-job" name="TextForm[job]" value></div>
+                <div class="control"><input type="text" name="TextForm[job]" value id="textform-job"></div>
                 </div>
                 HTML,
                 [
@@ -412,7 +412,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
-                <div class="control"><input type="text" id="textform-job" name="TextForm[job]" value></div>
+                <div class="control"><input type="text" name="TextForm[job]" value id="textform-job"></div>
                 </div>
                 HTML,
                 [
@@ -430,7 +430,7 @@ final class ThemeTest extends TestCase
                 <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
-                <div class="control red"><input type="text" id="textform-job" name="TextForm[job]" value></div>
+                <div class="control red"><input type="text" name="TextForm[job]" value id="textform-job"></div>
                 </div>
                 HTML,
                 [
@@ -560,7 +560,7 @@ final class ThemeTest extends TestCase
             <<<'HTML'
                 <div>
                 <label for="textform-job">Job</label>
-                <div class="control red"><input type="text" id="textform-job" name="TextForm[job]" value></div>
+                <div class="control red"><input type="text" name="TextForm[job]" value id="textform-job"></div>
                 </div>
                 HTML,
             $result,

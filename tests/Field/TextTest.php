@@ -39,7 +39,7 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="textform-name">Name</label>
-            <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Type your name here">
+            <input type="text" name="TextForm[name]" value id="textform-name" placeholder="Type your name here">
             <div>Input your full name.</div>
             <div>Value cannot be blank.</div>
             </div>
@@ -300,7 +300,7 @@ final class TextTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <div id="main" class="wrapper">
+            <div class="wrapper" id="main">
             <input type="text" name="job" value>
             </div>
             HTML;
@@ -331,7 +331,7 @@ final class TextTest extends TestCase
             <div>Input your full name.</div>
             <label for="textform-name">Name</label>
             <div>Value cannot be blank.</div>
-            <input type="text" id="textform-name" name="TextForm[name]" value placeholder="Typed your name here">
+            <input type="text" name="TextForm[name]" value id="textform-name" placeholder="Typed your name here">
             </div>
             </div>
             HTML;
@@ -356,7 +356,7 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="CustomID">Job</label>
-            <input type="text" id="CustomID" name="job" value>
+            <input type="text" name="job" value id="CustomID">
             </div>
             HTML;
 
@@ -408,7 +408,7 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <label>Your job</label>
-            <input type="text" id="job-id" name="job" value>
+            <input type="text" name="job" value id="job-id">
             </div>
             HTML;
 
@@ -568,7 +568,7 @@ final class TextTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text" class="red" name="job" value>
+            <input type="text" name="job" value class="red">
             </div>
             HTML;
 
@@ -605,7 +605,7 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="MyID">Name</label>
-            <input type="text" id="MyID" name="name" value>
+            <input type="text" name="name" value id="MyID">
             </div>
             HTML;
 
@@ -625,7 +625,7 @@ final class TextTest extends TestCase
         $expected = <<<HTML
             <div>
             <label for="CustomID">Name</label>
-            <input type="text" id="CustomID" name="name" value>
+            <input type="text" name="name" value id="CustomID">
             </div>
             HTML;
 
@@ -942,7 +942,7 @@ final class TextTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text" class="invalid" name="company" value>
+            <input type="text" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;
@@ -966,7 +966,7 @@ final class TextTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <input type="text" class="valid" name="job" value>
+            <input type="text" name="job" value class="valid">
             </div>
             HTML;
 
@@ -988,7 +988,7 @@ final class TextTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="text" class="invalid" name="company" value>
+            <input type="text" name="company" value class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

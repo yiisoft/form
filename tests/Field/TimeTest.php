@@ -44,7 +44,7 @@ final class TimeTest extends TestCase
 
         $expected = <<<'HTML'
         <div>
-        <input type="time" id="appt" name="appt" min="09:00" max="18:00" required>
+        <input type="time" name="appt" min="09:00" max="18:00" required id="appt">
         </div>
         HTML;
 

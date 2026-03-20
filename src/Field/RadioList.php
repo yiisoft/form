@@ -34,7 +34,7 @@ final class RadioList extends PartsField implements ValidationClassInterface
 
     public function __construct()
     {
-        $this->widget = RadioListWidget::create('');
+        $this->widget = new RadioListWidget('');
     }
 
     public function radioWrapTag(?string $name): self

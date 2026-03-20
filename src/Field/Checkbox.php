@@ -120,7 +120,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
     /**
      * HTML attributes for the label tag.
      *
-     * {@see \Yiisoft\Html\Html::renderTagAttributes()} for details on how attributes are being rendered.
+     * {@see Html::renderTagAttributes()} for details on how attributes are being rendered.
      */
     public function inputLabelAttributes(array $attributes): self
     {

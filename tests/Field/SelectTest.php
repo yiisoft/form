@@ -153,7 +153,7 @@ final class SelectTest extends TestCase
             <div>
             <label for="selectform-letters">Select letters</label>
             <input type="hidden" name="SelectForm[letters]" value>
-            <select id="selectform-letters" name="SelectForm[letters][]" multiple>
+            <select multiple id="selectform-letters" name="SelectForm[letters][]">
             <option value="A" selected>Letter A</option>
             <option value="B">Letter B</option>
             <option value="C" selected>Letter C</option>
@@ -366,7 +366,7 @@ final class SelectTest extends TestCase
 
         $expected = <<<HTML
             <select name="item">
-            <option value="1" data-key="42">One</option>
+            <option data-key="42" value="1">One</option>
             <optgroup label="Group A">
             <option value="2">Two</option>
             <option id="UniqueOption" value="3">Three</option>
@@ -392,7 +392,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="item" disabled>
+            <select disabled name="item">
             <option value="1">One</option>
             </select>
             HTML;
@@ -406,7 +406,7 @@ final class SelectTest extends TestCase
             'one element' => [
                 ['hint'],
                 <<<HTML
-                <select name="item" aria-describedby="hint">
+                <select aria-describedby="hint" name="item">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -414,7 +414,7 @@ final class SelectTest extends TestCase
             'multiple elements' => [
                 ['hint1', 'hint2'],
                 <<<HTML
-                <select name="item" aria-describedby="hint1 hint2">
+                <select aria-describedby="hint1 hint2" name="item">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -422,7 +422,7 @@ final class SelectTest extends TestCase
             'null with other elements' => [
                 ['hint1', null, 'hint2', null, 'hint3'],
                 <<<HTML
-                <select name="item" aria-describedby="hint1 hint2 hint3">
+                <select aria-describedby="hint1 hint2 hint3" name="item">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -438,7 +438,7 @@ final class SelectTest extends TestCase
             'empty string' => [
                 [''],
                 <<<HTML
-                <select name="item" aria-describedby>
+                <select aria-describedby name="item">
                 <option value="1">One</option>
                 </select>
                 HTML,
@@ -470,7 +470,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="item" aria-label="test">
+            <select aria-label="test" name="item">
             <option value="1">One</option>
             </select>
             HTML;
@@ -489,7 +489,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="item" autofocus>
+            <select autofocus name="item">
             <option value="1">One</option>
             </select>
             HTML;
@@ -508,7 +508,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="item" tabindex="5">
+            <select tabindex="5" name="item">
             <option value="1">One</option>
             </select>
             HTML;
@@ -528,7 +528,7 @@ final class SelectTest extends TestCase
 
         $expected = <<<HTML
             <input type="hidden" name="item" value>
-            <select name="item[]" multiple>
+            <select multiple name="item[]">
             <option value="1">One</option>
             </select>
             HTML;
@@ -621,7 +621,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="item" required>
+            <select required name="item">
             <option value="1">One</option>
             </select>
             HTML;
@@ -640,7 +640,7 @@ final class SelectTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <select name="item" size="10">
+            <select size="10" name="item">
             <option value="1">One</option>
             </select>
             HTML;

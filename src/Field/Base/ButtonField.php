@@ -172,7 +172,7 @@ abstract class ButtonField extends PartsField
 
     final protected function generateInput(): string
     {
-        $button = ($this->button ?? Button::tag())
+        $button = ($this->button ?? new Button())
             ->type($this->getType());
 
         if (!empty($this->buttonAttributes)) {

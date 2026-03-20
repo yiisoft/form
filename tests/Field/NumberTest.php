@@ -30,7 +30,7 @@ final class NumberTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="numberform-age">Your age</label>
-                <input type="number" id="numberform-age" name="NumberForm[age]" value="42">
+                <input type="number" name="NumberForm[age]" value="42" id="numberform-age">
                 <div>Full years.</div>
                 </div>
                 HTML,
@@ -45,7 +45,7 @@ final class NumberTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="number" class="valid" name="main" value="1">
+                <input type="number" name="main" value="1" class="valid">
                 </div>
                 HTML,
                 new InputData(name: 'main', value: 1, validationErrors: []),
@@ -493,7 +493,7 @@ final class NumberTest extends TestCase
 
         $expected = <<<HTML
             <div class="invalidWrap">
-            <input type="number" class="invalid" name="company">
+            <input type="number" name="company" class="invalid">
             <div>Value cannot be blank.</div>
             </div>
             HTML;

@@ -30,7 +30,7 @@ final class ColorTest extends TestCase
                 <<<HTML
                 <div>
                 <label for="colorform-bgcolor">Background Color</label>
-                <input type="color" id="colorform-bgcolor" name="ColorForm[bgcolor]">
+                <input type="color" name="ColorForm[bgcolor]" id="colorform-bgcolor">
                 <div>Select a background color.</div>
                 </div>
                 HTML,
@@ -45,7 +45,7 @@ final class ColorTest extends TestCase
             'input-valid-class' => [
                 <<<HTML
                 <div>
-                <input type="color" class="valid" name="color">
+                <input type="color" name="color" class="valid">
                 </div>
                 HTML,
                 new InputData(
@@ -423,7 +423,7 @@ HTML;
 
         $expected = <<<HTML
 <div>
-<input type="color" class="invalid" name="color">
+<input type="color" name="color" class="invalid">
 <div>Value cannot be blank.</div>
 </div>
 HTML;
@@ -444,7 +444,7 @@ HTML;
 
         $expected = <<<HTML
             <div>
-            <input type="color" class="valid" name="color">
+            <input type="color" name="color" class="valid">
             </div>
             HTML;
 
@@ -598,7 +598,7 @@ HTML;
 
         $expectedModified = <<<HTML
             <div>
-            <input type="color" name="original" readonly disabled required autofocus>
+            <input type="color" name="original" disabled readonly required autofocus>
             </div>
             HTML;
 
@@ -621,7 +621,7 @@ HTML;
 
         $expected = <<<HTML
             <div>
-            <input type="color" name="color" disabled data-enriched="from-validation" aria-label="test-label">
+            <input type="color" name="color" data-enriched="from-validation" disabled aria-label="test-label">
             </div>
             HTML;
 
@@ -745,7 +745,7 @@ HTML;
         // With custom error, should show invalid classes even if no validation errors
         $expected = <<<HTML
             <div class="invalid-container">
-            <input type="color" class="invalid-input" name="color">
+            <input type="color" name="color" class="invalid-input">
             <div>Custom error message</div>
             </div>
             HTML;

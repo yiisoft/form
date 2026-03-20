@@ -31,8 +31,8 @@ final class RadioListTest extends TestCase
                 <div>
                 <label>Select color</label>
                 <div>
-                <label><input type="radio" name="RadioListForm[color]" value="red"> Red</label>
-                <label><input type="radio" name="RadioListForm[color]" value="blue"> Blue</label>
+                <label><input name="RadioListForm[color]" value="red" type="radio"> Red</label>
+                <label><input name="RadioListForm[color]" value="blue" type="radio"> Blue</label>
                 </div>
                 <div>Color of box.</div>
                 </div>
@@ -48,8 +48,8 @@ final class RadioListTest extends TestCase
                 <<<HTML
                 <div class="valid">
                 <div>
-                <label><input type="radio" name="color" value="red"> Red</label>
-                <label><input type="radio" name="color" value="blue"> Blue</label>
+                <label><input name="color" value="red" type="radio"> Red</label>
+                <label><input name="color" value="blue" type="radio"> Blue</label>
                 </div>
                 </div>
                 HTML,
@@ -94,10 +94,10 @@ final class RadioListTest extends TestCase
             <div>
             <div>
             <div class="form-check">
-            <label><input type="radio" name="test" value="1"> Red</label>
+            <label><input name="test" value="1" type="radio"> Red</label>
             </div>
             <div class="form-check">
-            <label><input type="radio" name="test" value="2"> Blue</label>
+            <label><input name="test" value="2" type="radio"> Blue</label>
             </div>
             </div>
             </div>
@@ -123,10 +123,10 @@ final class RadioListTest extends TestCase
             <div>
             <div>
             <div class="form-check form-check-inline">
-            <label><input type="radio" name="test" value="1"> Red</label>
+            <label><input name="test" value="1" type="radio"> Red</label>
             </div>
             <div class="form-check form-check-inline">
-            <label><input type="radio" name="test" value="2"> Blue</label>
+            <label><input name="test" value="2" type="radio"> Blue</label>
             </div>
             </div>
             </div>
@@ -148,8 +148,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2" checked> Two</label>
+            <label><input name="RadioListForm[number]" value="1" class="red" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" class="red" checked type="radio"> Two</label>
             </div>
             HTML;
 
@@ -169,8 +169,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="1" readonly> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2" readonly> Two</label>
+            <label><input name="RadioListForm[number]" value="1" readonly class="red" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" readonly class="red" type="radio"> Two</label>
             </div>
             HTML;
 
@@ -189,8 +189,8 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label class="control" data-key="x100"><input type="radio" name="RadioListForm[color]" value="Red"> Red</label>
-            <label class="control" data-key="x100"><input type="radio" name="RadioListForm[color]" value="Blue"> Blue</label>
+            <label class="control" data-key="x100"><input name="RadioListForm[color]" value="Red" type="radio"> Red</label>
+            <label class="control" data-key="x100"><input name="RadioListForm[color]" value="Blue" type="radio"> Blue</label>
             </div>
             </div>
             HTML;
@@ -210,8 +210,8 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <label class="control"><input type="radio" name="RadioListForm[color]" value="Red"> Red</label>
-            <label class="control"><input type="radio" name="RadioListForm[color]" value="Blue"> Blue</label>
+            <label class="control"><input name="RadioListForm[color]" value="Red" type="radio"> Red</label>
+            <label class="control"><input name="RadioListForm[color]" value="Blue" type="radio"> Blue</label>
             </div>
             </div>
             HTML;
@@ -232,8 +232,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2"> Two</label>
+            <label><input name="RadioListForm[number]" value="1" class="red" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" class="red" type="radio"> Two</label>
             </div>
             HTML;
 
@@ -258,8 +258,8 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <div>
             <div>
-            <input type="radio" id="id1" name="test" value="1"> <label for="id1">Red</label>
-            <input type="radio" id="id2" name="test" value="2"> <label for="id2">Blue</label>
+            <input name="test" value="1" id="id1" type="radio"> <label for="id1">Red</label>
+            <input name="test" value="2" id="id2" type="radio"> <label for="id2">Blue</label>
             </div>
             </div>
             HTML;
@@ -283,9 +283,9 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="blue" name="RadioListForm[number]" value="2"> Two</label>
-            <label><input type="radio" class="green" name="RadioListForm[number]" value="3"> Three</label>
+            <label><input name="RadioListForm[number]" value="1" class="red" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" class="blue" type="radio"> Two</label>
+            <label><input name="RadioListForm[number]" value="3" class="green" type="radio"> Three</label>
             </div>
             HTML;
 
@@ -307,10 +307,10 @@ final class RadioListTest extends TestCase
             ->render();
 
         $expected = <<<HTML
-            <input type="hidden" class="blue" name="RadioListForm[number]" value="0">
+            <input type="hidden" name="RadioListForm[number]" value="0" class="blue">
             <div>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2"> Two</label>
+            <label><input name="RadioListForm[number]" value="1" class="red" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" class="red" type="radio"> Two</label>
             </div>
             HTML;
 
@@ -337,9 +337,9 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" class="yellow" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="cyan" name="RadioListForm[number]" value="2"> Two</label>
-            <label><input type="radio" class="green" name="RadioListForm[number]" value="3"> Three</label>
+            <label><input name="RadioListForm[number]" value="1" class="yellow" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" class="cyan" type="radio"> Two</label>
+            <label><input name="RadioListForm[number]" value="3" class="green" type="radio"> Three</label>
             </div>
             HTML;
 
@@ -365,9 +365,9 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" class="yellow" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="2"> Two</label>
-            <label><input type="radio" class="red" name="RadioListForm[number]" value="3"> Three</label>
+            <label><input name="RadioListForm[number]" value="1" class="yellow" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" class="red" type="radio"> Two</label>
+            <label><input name="RadioListForm[number]" value="3" class="red" type="radio"> Three</label>
             </div>
             HTML;
 
@@ -385,8 +385,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="2"> &lt;b&gt;Two&lt;/b&gt;</label>
+            <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" type="radio"> &lt;b&gt;Two&lt;/b&gt;</label>
             </div>
             HTML;
 
@@ -404,8 +404,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="2"> <b>Two</b></label>
+            <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" type="radio"> <b>Two</b></label>
             </div>
             HTML;
 
@@ -418,8 +418,8 @@ final class RadioListTest extends TestCase
             [
                 <<<HTML
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="1"> 1</label>
-                <label><input type="radio" name="RadioListForm[number]" value="2"> 2</label>
+                <label><input name="RadioListForm[number]" value="1" type="radio"> 1</label>
+                <label><input name="RadioListForm[number]" value="2" type="radio"> 2</label>
                 </div>
                 HTML,
                 [1, 2],
@@ -427,8 +427,8 @@ final class RadioListTest extends TestCase
             [
                 <<<HTML
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="One"> One</label>
-                <label><input type="radio" name="RadioListForm[number]" value="&lt;b&gt;Two&lt;/b&gt;"> &lt;b&gt;Two&lt;/b&gt;</label>
+                <label><input name="RadioListForm[number]" value="One" type="radio"> One</label>
+                <label><input name="RadioListForm[number]" value="&lt;b&gt;Two&lt;/b&gt;" type="radio"> &lt;b&gt;Two&lt;/b&gt;</label>
                 </div>
                 HTML,
                 ['One', '<b>Two</b>'],
@@ -436,8 +436,8 @@ final class RadioListTest extends TestCase
             [
                 <<<HTML
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="1"> 1</label>
-                <label><input type="radio" name="RadioListForm[number]" value></label>
+                <label><input name="RadioListForm[number]" value="1" type="radio"> 1</label>
+                <label><input name="RadioListForm[number]" value type="radio"></label>
                 </div>
                 HTML,
                 [true, false],
@@ -472,8 +472,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="One"> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="&lt;b&gt;Two&lt;/b&gt;"> <b>Two</b></label>
+            <label><input name="RadioListForm[number]" value="One" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="&lt;b&gt;Two&lt;/b&gt;" type="radio"> <b>Two</b></label>
             </div>
             HTML;
 
@@ -486,8 +486,8 @@ final class RadioListTest extends TestCase
             [
                 <<<HTML
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
-                <label><input type="radio" name="RadioListForm[number]" value="2"> Two</label>
+                <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
+                <label><input name="RadioListForm[number]" value="2" type="radio"> Two</label>
                 </div>
                 HTML,
                 null,
@@ -495,8 +495,8 @@ final class RadioListTest extends TestCase
             [
                 <<<HTML
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
-                <label><input type="radio" name="RadioListForm[number]" value="2"> Two</label>
+                <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
+                <label><input name="RadioListForm[number]" value="2" type="radio"> Two</label>
                 </div>
                 HTML,
                 null,
@@ -505,8 +505,8 @@ final class RadioListTest extends TestCase
                 <<<HTML
                 <input type="hidden" name="RadioListForm[number]" value="7">
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
-                <label><input type="radio" name="RadioListForm[number]" value="2"> Two</label>
+                <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
+                <label><input name="RadioListForm[number]" value="2" type="radio"> Two</label>
                 </div>
                 HTML,
                 7,
@@ -515,8 +515,8 @@ final class RadioListTest extends TestCase
                 <<<HTML
                 <input type="hidden" name="RadioListForm[number]" value="7">
                 <div>
-                <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
-                <label><input type="radio" name="RadioListForm[number]" value="2"> Two</label>
+                <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
+                <label><input name="RadioListForm[number]" value="2" type="radio"> Two</label>
                 </div>
                 HTML,
                 7,
@@ -552,8 +552,8 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <input type="hidden" name="RadioListForm[number]" value="7" disabled>
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1" disabled> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="2" disabled> Two</label>
+            <label><input name="RadioListForm[number]" value="1" disabled type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" disabled type="radio"> Two</label>
             </div>
             HTML;
 
@@ -574,8 +574,8 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <input type="hidden" name="RadioListForm[number]" value="7" form="post">
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1" form="post"> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="2" form="post"> Two</label>
+            <label><input name="RadioListForm[number]" value="1" form="post" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" form="post" type="radio"> Two</label>
             </div>
             HTML;
 
@@ -594,9 +594,9 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1"> One</label>
+            <label><input name="RadioListForm[number]" value="1" type="radio"> One</label>
             <br>
-            <label><input type="radio" name="RadioListForm[number]" value="2"> Two</label>
+            <label><input name="RadioListForm[number]" value="2" type="radio"> Two</label>
             </div>
             HTML;
 
@@ -623,8 +623,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <div>0) <label><input type="radio" name="RadioListForm[number]" value="1"> One</label></div>
-            <div>1) <label><input type="radio" name="RadioListForm[number]" value="2"> Two</label></div>
+            <div>0) <label><input name="RadioListForm[number]" value="1" type="radio"> One</label></div>
+            <div>1) <label><input name="RadioListForm[number]" value="2" type="radio"> Two</label></div>
             </div>
             HTML;
 
@@ -643,8 +643,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1" form="post"> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="2" form="post"> Two</label>
+            <label><input name="RadioListForm[number]" value="1" form="post" type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" form="post" type="radio"> Two</label>
             </div>
             HTML;
 
@@ -663,8 +663,8 @@ final class RadioListTest extends TestCase
 
         $expected = <<<HTML
             <div>
-            <label><input type="radio" name="RadioListForm[number]" value="1" disabled> One</label>
-            <label><input type="radio" name="RadioListForm[number]" value="2" disabled> Two</label>
+            <label><input name="RadioListForm[number]" value="1" disabled type="radio"> One</label>
+            <label><input name="RadioListForm[number]" value="2" disabled type="radio"> Two</label>
             </div>
             HTML;
 
@@ -687,8 +687,8 @@ final class RadioListTest extends TestCase
                 true,
                 <<<HTML
                 <div>
-                <label><input type="radio" name="number" value="1" checked> One</label>
-                <label><input type="radio" name="number" value="2"> Two</label>
+                <label><input name="number" value="1" checked type="radio"> One</label>
+                <label><input name="number" value="2" type="radio"> Two</label>
                 </div>
                 HTML,
             ],
@@ -696,8 +696,8 @@ final class RadioListTest extends TestCase
                 new StringableObject('1'),
                 <<<HTML
                 <div>
-                <label><input type="radio" name="number" value="1" checked> One</label>
-                <label><input type="radio" name="number" value="2"> Two</label>
+                <label><input name="number" value="1" checked type="radio"> One</label>
+                <label><input name="number" value="2" type="radio"> Two</label>
                 </div>
                 HTML,
             ],
@@ -754,8 +754,8 @@ final class RadioListTest extends TestCase
         $expected = <<<HTML
             <div class="invalidWrap">
             <div>
-            <label><input type="radio" class="invalid" name="number" value="1"> One</label>
-            <label><input type="radio" class="invalid" name="number" value="2" checked> Two</label>
+            <label><input name="number" value="1" class="invalid" type="radio"> One</label>
+            <label><input name="number" value="2" class="invalid" checked type="radio"> Two</label>
             </div>
             <div>Value cannot be blank.</div>
             </div>
