@@ -31,6 +31,8 @@ final class Checkbox extends InputField implements ValidationClassInterface
     private array $inputLabelAttributes = [];
     private bool $inputLabelEncode = true;
     private ?string $inputValue = null;
+    private string|Stringable $beforeCheckbox = '';
+    private string|Stringable $afterCheckbox = '';
 
     /**
      * Identifies the element (or elements) that describes the object.
@@ -220,6 +222,26 @@ final class Checkbox extends InputField implements ValidationClassInterface
         return $new;
     }
 
+    /**
+     * @param string|Stringable $content Content to be rendered before the checkbox input.
+     */
+    public function beforeCheckbox(string|Stringable $content): self
+    {
+        $new = clone $this;
+        $new->beforeCheckbox = $content;
+        return $new;
+    }
+
+    /**
+     * @param string|Stringable $content Content to be rendered after the checkbox input.
+     */
+    public function afterCheckbox(string|Stringable $content): self
+    {
+        $new = clone $this;
+        $new->afterCheckbox = $content;
+        return $new;
+    }
+
     protected function generateInput(): string
     {
         $value = $this->getValue();
@@ -261,6 +283,8 @@ final class Checkbox extends InputField implements ValidationClassInterface
         }
 
         $html = $checkbox
+            ->beforeInput($this->beforeCheckbox)
+            ->afterInput($this->afterCheckbox)
             ->checked($inputValue === $value)
             ->uncheckValue($this->uncheckValue)
             ->render();
