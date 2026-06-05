@@ -2,7 +2,8 @@
 
 ## 1.5.3 under development
 
-- no changes in this release.
+- New #388: Add `beforeCheckbox()` and `afterCheckbox()` methods to `Checkbox` and `CheckboxList` fields (@vjik)
+- New #388: Add `beforeRadio()` and `afterRadio()` methods to `RadioList` field (@vjik)
 
 ## 1.5.2 March 20, 2026
 

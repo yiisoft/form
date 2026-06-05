@@ -184,6 +184,26 @@ final class RadioList extends PartsField implements ValidationClassInterface
     }
 
     /**
+     * @param string|Stringable $content Content to be rendered before each radio input.
+     */
+    public function beforeRadio(string|Stringable $content): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->beforeRadio($content);
+        return $new;
+    }
+
+    /**
+     * @param string|Stringable $content Content to be rendered after each radio input.
+     */
+    public function afterRadio(string|Stringable $content): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->afterRadio($content);
+        return $new;
+    }
+
+    /**
      * @psalm-param Closure(RadioItem):string|null $formatter
      */
     public function itemFormatter(?Closure $formatter): self

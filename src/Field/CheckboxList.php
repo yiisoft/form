@@ -183,6 +183,26 @@ final class CheckboxList extends PartsField implements ValidationClassInterface
     }
 
     /**
+     * @param string|Stringable $content Content to be rendered before each checkbox input.
+     */
+    public function beforeCheckbox(string|Stringable $content): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->beforeCheckbox($content);
+        return $new;
+    }
+
+    /**
+     * @param string|Stringable $content Content to be rendered after each checkbox input.
+     */
+    public function afterCheckbox(string|Stringable $content): self
+    {
+        $new = clone $this;
+        $new->widget = $this->widget->afterCheckbox($content);
+        return $new;
+    }
+
+    /**
      * @psalm-param Closure(CheckboxItem):string|null $formatter
      */
     public function itemFormatter(?Closure $formatter): self

@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Stringable;
 use Yiisoft\Form\Field\RadioList;
 use Yiisoft\Form\PureField\InputData;
 use Yiisoft\Form\Tests\Support\StringableObject;
@@ -764,6 +765,64 @@ final class RadioListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function dataBeforeRadio(): array
+    {
+        return [
+            'string' => ['<b>*</b>', '<b>*</b>'],
+            'stringable' => ['<b>*</b>', new StringableObject('<b>*</b>')],
+        ];
+    }
+
+    #[DataProvider('dataBeforeRadio')]
+    public function testBeforeRadio(string $expectedContent, string|Stringable $content): void
+    {
+        $result = RadioList::widget()
+            ->name('color')
+            ->items(['red' => 'Red', 'blue' => 'Blue'])
+            ->beforeRadio($content)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label>$expectedContent<input name="color" value="red" type="radio"> Red</label>
+            <label>$expectedContent<input name="color" value="blue" type="radio"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function dataAfterRadio(): array
+    {
+        return [
+            'string' => ['<b>*</b>', '<b>*</b>'],
+            'stringable' => ['<b>*</b>', new StringableObject('<b>*</b>')],
+        ];
+    }
+
+    #[DataProvider('dataAfterRadio')]
+    public function testAfterRadio(string $expectedContent, string|Stringable $content): void
+    {
+        $result = RadioList::widget()
+            ->name('color')
+            ->items(['red' => 'Red', 'blue' => 'Blue'])
+            ->afterRadio($content)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label><input name="color" value="red" type="radio">$expectedContent Red</label>
+            <label><input name="color" value="blue" type="radio">$expectedContent Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = RadioList::widget();
@@ -786,5 +845,7 @@ final class RadioListTest extends TestCase
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->separator(''));
         $this->assertNotSame($field, $field->itemFormatter(null));
+        $this->assertNotSame($field, $field->beforeRadio(''));
+        $this->assertNotSame($field, $field->afterRadio(''));
     }
 }
