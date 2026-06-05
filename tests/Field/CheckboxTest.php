@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Stringable;
 use Yiisoft\Form\Field\Checkbox;
 use Yiisoft\Form\Field\CheckboxLabelPlacement;
 use Yiisoft\Form\PureField\InputData;
@@ -123,6 +124,24 @@ final class CheckboxTest extends TestCase
             HTML;
 
         $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @see https://github.com/yiisoft/form/issues/387
+     */
+    public function testIssue387(): void
+    {
+        $result = Checkbox::widget()
+            ->useContainer(false)
+            ->inputData(new InputData(value: true, label: 'Label text'))
+            ->inputLabelClass('switch')
+            ->afterCheckbox('<span class="track"></span>')
+            ->render();
+
+        $this->assertSame(
+            '<label class="switch"><input value="1" checked type="checkbox"><span class="track"></span> Label text</label>',
+            $result,
+        );
     }
 
     public static function dataUncheckValue(): array
@@ -838,6 +857,56 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function dataBeforeCheckbox(): array
+    {
+        return [
+            'string' => ['<b>*</b>', '<b>*</b>'],
+            'stringable' => ['<b>*</b>', new StringableObject('<b>*</b>')],
+        ];
+    }
+
+    #[DataProvider('dataBeforeCheckbox')]
+    public function testBeforeCheckbox(string $expectedContent, string|Stringable $content): void
+    {
+        $result = Checkbox::widget()
+            ->beforeCheckbox($content)
+            ->label('Blue color')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label>$expectedContent<input value="1" type="checkbox"> Blue color</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function dataAfterCheckbox(): array
+    {
+        return [
+            'string' => ['<b>*</b>', '<b>*</b>'],
+            'stringable' => ['<b>*</b>', new StringableObject('<b>*</b>')],
+        ];
+    }
+
+    #[DataProvider('dataAfterCheckbox')]
+    public function testAfterCheckbox(string $expectedContent, string|Stringable $content): void
+    {
+        $result = Checkbox::widget()
+            ->afterCheckbox($content)
+            ->label('Blue color')
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label><input value="1" type="checkbox">$expectedContent Blue color</label>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $widget = Checkbox::widget();
@@ -858,5 +927,7 @@ final class CheckboxTest extends TestCase
         $this->assertNotSame($widget, $widget->autofocus());
         $this->assertNotSame($widget, $widget->tabIndex(null));
         $this->assertNotSame($widget, $widget->inputLabelEncode(true));
+        $this->assertNotSame($widget, $widget->beforeCheckbox(''));
+        $this->assertNotSame($widget, $widget->afterCheckbox(''));
     }
 }

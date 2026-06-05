@@ -8,8 +8,10 @@ use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Stringable;
 use Yiisoft\Form\Field\CheckboxList;
 use Yiisoft\Form\PureField\InputData;
+use Yiisoft\Form\Tests\Support\StringableObject;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 use Yiisoft\Html\Widget\CheckboxList\CheckboxItem;
@@ -550,6 +552,64 @@ final class CheckboxListTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public static function dataBeforeCheckbox(): array
+    {
+        return [
+            'string' => ['<b>*</b>', '<b>*</b>'],
+            'stringable' => ['<b>*</b>', new StringableObject('<b>*</b>')],
+        ];
+    }
+
+    #[DataProvider('dataBeforeCheckbox')]
+    public function testBeforeCheckbox(string $expectedContent, string|Stringable $content): void
+    {
+        $result = CheckboxList::widget()
+            ->name('color')
+            ->items(['red' => 'Red', 'blue' => 'Blue'])
+            ->beforeCheckbox($content)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label>$expectedContent<input name="color[]" value="red" type="checkbox"> Red</label>
+            <label>$expectedContent<input name="color[]" value="blue" type="checkbox"> Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public static function dataAfterCheckbox(): array
+    {
+        return [
+            'string' => ['<b>*</b>', '<b>*</b>'],
+            'stringable' => ['<b>*</b>', new StringableObject('<b>*</b>')],
+        ];
+    }
+
+    #[DataProvider('dataAfterCheckbox')]
+    public function testAfterCheckbox(string $expectedContent, string|Stringable $content): void
+    {
+        $result = CheckboxList::widget()
+            ->name('color')
+            ->items(['red' => 'Red', 'blue' => 'Blue'])
+            ->afterCheckbox($content)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <div>
+            <label><input name="color[]" value="red" type="checkbox">$expectedContent Red</label>
+            <label><input name="color[]" value="blue" type="checkbox">$expectedContent Blue</label>
+            </div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = CheckboxList::widget();
@@ -572,5 +632,7 @@ final class CheckboxListTest extends TestCase
         $this->assertNotSame($field, $field->uncheckValue(null));
         $this->assertNotSame($field, $field->separator(''));
         $this->assertNotSame($field, $field->itemFormatter(null));
+        $this->assertNotSame($field, $field->beforeCheckbox(''));
+        $this->assertNotSame($field, $field->afterCheckbox(''));
     }
 }
