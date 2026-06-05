@@ -126,6 +126,24 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    /**
+     * @see https://github.com/yiisoft/form/issues/387
+     */
+    public function testIssue387(): void
+    {
+        $result = Checkbox::widget()
+            ->useContainer(false)
+            ->inputData(new InputData(value: true, label: 'Label text'))
+            ->inputLabelClass('switch')
+            ->afterCheckbox('<span class="track"></span>')
+            ->render();
+
+        $this->assertSame(
+            '<label class="switch"><input value="1" checked type="checkbox"><span class="track"></span> Label text</label>',
+            $result,
+        );
+    }
+
     public static function dataUncheckValue(): array
     {
         return [
