@@ -26,13 +26,13 @@ final class ButtonGroup extends PartsField
     public function buttons(ButtonTag|ButtonField ...$buttons): self
     {
         $new = clone $this;
-        $htmlButtons = [];
+        $buttonTags = [];
         foreach ($buttons as $button) {
-            $htmlButtons[] = $button instanceof ButtonField
-                ? $button->getButtonTag()
+            $buttonTags[] = $button instanceof ButtonField
+                ? $button->getButton()
                 : $button;
         }
-        $new->widget = $this->widget->buttons(...$htmlButtons);
+        $new->widget = $this->widget->buttons(...$buttonTags);
         return $new;
     }
 
