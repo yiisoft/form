@@ -9,6 +9,7 @@ use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
 use Yiisoft\Form\Field\ResetButton;
 use Yiisoft\Form\Field\SubmitButton;
+use Yiisoft\Form\Tests\Support\ThemedField as Field;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 
@@ -240,6 +241,9 @@ final class ButtonGroupTest extends TestCase
                         ButtonGroup::class => [
                             'containerClass()' => ['btn-toolbar justify-content-end'],
                         ],
+                        Button::class => [
+                            'content()' => ['Click'],
+                        ],
                         ResetButton::class => [
                             'buttonClass()' => ['btn', 'btn-secondary'],
                             'content()' => ['Reset'],
@@ -254,15 +258,17 @@ final class ButtonGroupTest extends TestCase
             'default',
         );
 
-        $result = ButtonGroup::widget()
+        $result = Field::ButtonGroup()
             ->buttons(
-                ResetButton::widget(),
-                SubmitButton::widget(),
+                Field::button(),
+                Field::resetButton(),
+                Field::submitButton(),
             )
             ->render();
 
         $expected = <<<HTML
             <div class="btn-toolbar justify-content-end">
+            <button type="button">Click</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
             <button type="submit" class="btn btn-primary">Submit</button>
             </div>
