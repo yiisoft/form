@@ -231,6 +231,46 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testButtonsWithFieldButtonWithTheme(): void
+    {
+        ThemeContainer::initialize(
+            [
+                'default' => [
+                    'fieldConfigs' => [
+                        ButtonGroup::class => [
+                            'containerClass()' => ['btn-toolbar justify-content-end'],
+                        ],
+                        ResetButton::class => [
+                            'buttonClass()' => ['btn', 'btn-secondary'],
+                            'content()' => ['Reset'],
+                        ],
+                        SubmitButton::class => [
+                            'buttonClass()' => ['btn', 'btn-primary'],
+                            'content()' => ['Submit'],
+                        ],
+                    ],
+                ],
+            ],
+            'default',
+        );
+
+        $result = ButtonGroup::widget()
+            ->buttons(
+                ResetButton::widget(),
+                SubmitButton::widget(),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div class="btn-toolbar justify-content-end">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testButtonsWithFieldButtonCustomized(): void
     {
         $result = ButtonGroup::widget()
