@@ -18,6 +18,24 @@ final class ButtonFieldTest extends TestCase
         ThemeContainer::initialize();
     }
 
+    public function testGetButtonTag(): void
+    {
+        $field = StubButtonField::widget()
+            ->content('Click Me')
+            ->addButtonClass('btn');
+
+        $tag = $field->getButtonTag();
+
+        $expected = '<button type="button" class="btn">Click Me</button>';
+        $this->assertSame($expected, $tag->render());
+    }
+
+    public function testGetButtonTagImmutability(): void
+    {
+        $field = StubButtonField::widget();
+        $this->assertNotSame($field, $field->getButtonTag());
+    }
+
     public function testBase(): void
     {
         $result = StubButtonField::widget()
