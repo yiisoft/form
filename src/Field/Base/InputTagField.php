@@ -17,6 +17,8 @@ abstract class InputTagField extends BaseField
     use InputDataWithCustomNameAndValueTrait;
     use InputTagMethodsTrait;
 
+    protected bool $useContainer = false;
+
     final protected function generateContent(): ?string
     {
         return $this->generateInput();

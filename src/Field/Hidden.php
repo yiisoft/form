@@ -19,11 +19,6 @@ use function is_string;
  */
 final class Hidden extends InputTagField
 {
-    protected function beforeRender(): void
-    {
-        $this->useContainer = false;
-    }
-
     protected function generateInput(): string
     {
         $value = $this->getValue();
