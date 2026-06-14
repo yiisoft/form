@@ -6,6 +6,7 @@ namespace Yiisoft\Form\Theme;
 
 use Yiisoft\Form\Field\Base\EnrichFromValidationRules\EnrichFromValidationRulesInterface;
 use Yiisoft\Form\Field\Base\InputField;
+use Yiisoft\Form\Field\Base\InputTagField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Field\Base\Placeholder\PlaceholderInterface;
 use Yiisoft\Form\Field\Base\ValidationClass\ValidationClassInterface;
@@ -127,7 +128,7 @@ final class Theme
             }
         }
 
-        if (is_a($class, InputField::class, true)) {
+        if (is_a($class, InputField::class, true) || is_a($class, InputTagField::class, true)) {
             if ($this->shouldSetInputId !== null) {
                 $config['shouldSetInputId()'] = [$this->shouldSetInputId];
             }

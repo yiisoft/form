@@ -41,18 +41,39 @@ final class HiddenTest extends TestCase
         $field->render();
     }
 
-    public function testWithExtraConfiguration(): void
+    public function testWithoutContainer(): void
     {
         $field = Hidden::widget()
-            ->inputContainerTag('div')
-            ->useContainer(true)
-            ->template('start {input} end')
-            ->beforeInput('before')
-            ->afterInput('after');
+            ->useContainer(false);
 
         assertSame(
             '<input type="hidden">',
             $field->render(),
         );
+    }
+
+    public function testWithInputAttributes(): void
+    {
+        $field = Hidden::widget()
+            ->addInputAttributes(['data-key' => 'x100'])
+            ->inputId('custom-id');
+
+        assertSame(
+            '<input type="hidden" data-key="x100" id="custom-id">',
+            $field->render(),
+        );
+    }
+
+    public function testNoLabelRendering(): void
+    {
+        $this->assertFalse(method_exists(Hidden::widget(), 'label'));
+        $this->assertFalse(method_exists(Hidden::widget(), 'hint'));
+        $this->assertFalse(method_exists(Hidden::widget(), 'error'));
+    }
+
+    public function testNoExtraHtmlConfiguration(): void
+    {
+        $this->assertFalse(method_exists(Hidden::widget(), 'template'));
+        $this->assertFalse(method_exists(Hidden::widget(), 'inputContainer'));
     }
 }
