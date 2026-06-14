@@ -1,6 +1,6 @@
 # Yii Form Change Log
 
-## 1.5.3 under development
+## 2.0.0 under development
 
 - New #388: Add `beforeCheckbox()` and `afterCheckbox()` methods to `Checkbox` and `CheckboxList` fields (@vjik)
 - New #388: Add `beforeRadio()` and `afterRadio()` methods to `RadioList` field (@vjik)
