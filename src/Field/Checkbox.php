@@ -253,7 +253,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
         $checkbox = Html::checkbox($this->getName(), $inputValue, $inputAttributes);
 
-        $labelPlacement = $this->getLabelPlacement();
+        $labelPlacement = $this->labelPlacement;
 
         if ($labelPlacement === CheckboxLabelPlacement::WRAP) {
             $label = $this->inputLabel ?? $this->label ?? $this->getInputData()->getLabel();
@@ -283,7 +283,7 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     protected function shouldHideLabel(): bool
     {
-        return $this->getLabelPlacement() !== CheckboxLabelPlacement::DEFAULT;
+        return $this->labelPlacement !== CheckboxLabelPlacement::DEFAULT;
     }
 
     protected function prepareContainerAttributes(array &$attributes): void
@@ -315,10 +315,5 @@ final class Checkbox extends InputField implements ValidationClassInterface
         }
 
         return (string) $value;
-    }
-
-    private function getLabelPlacement(): CheckboxLabelPlacement
-    {
-        return $this->labelPlacement;
     }
 }
