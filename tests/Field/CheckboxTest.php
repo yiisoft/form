@@ -656,6 +656,20 @@ final class CheckboxTest extends TestCase
             HTML,
             CheckboxLabelPlacement::DEFAULT,
             false,
+            'Moscow',
+            true,
+        ];
+        yield 'default not encode' => [
+            <<<HTML
+            <div>
+            <label for="UID">Voronezh</label>
+            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox"> <b>Blue</b>
+            </div>
+            HTML,
+            CheckboxLabelPlacement::DEFAULT,
+            false,
+            '<b>Blue</b>',
+            false,
         ];
         yield 'wrap' => [
             <<<HTML
@@ -664,6 +678,8 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
+            true,
+            'Moscow',
             true,
         ];
         yield 'side' => [
@@ -674,17 +690,20 @@ final class CheckboxTest extends TestCase
             HTML,
             CheckboxLabelPlacement::SIDE,
             true,
+            'Moscow',
+            true,
         ];
     }
 
     #[DataProvider('dataLabelPlacementWithInputLabel')]
-    public function testLabelPlacementWithInputLabel(string $expected, CheckboxLabelPlacement $placement, bool $hideUncheck = true): void
+    public function testLabelPlacementWithInputLabel(string $expected, CheckboxLabelPlacement $placement, bool $hideUncheck, string $inputLabelValue, bool $inputLabelEncode): void
     {
         $inputData = new InputData('city', label: 'Voronezh');
 
         $widget = Checkbox::widget()
             ->inputData($inputData)
-            ->inputLabel('Moscow')
+            ->inputLabel($inputLabelValue)
+            ->inputLabelEncode($inputLabelEncode)
             ->inputId('UID')
             ->labelPlacement($placement);
 
