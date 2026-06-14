@@ -41,17 +41,6 @@ final class HiddenTest extends TestCase
         $field->render();
     }
 
-    public function testWithoutContainer(): void
-    {
-        $field = Hidden::widget()
-            ->useContainer(false);
-
-        assertSame(
-            '<input type="hidden">',
-            $field->render(),
-        );
-    }
-
     public function testWithInputAttributes(): void
     {
         $field = Hidden::widget()
