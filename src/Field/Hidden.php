@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Field;
 
 use InvalidArgumentException;
-use Yiisoft\Form\Field\Base\InputTagField;
+use Yiisoft\Form\Field\Base\BareField;
 use Yiisoft\Html\Html;
 
 use function is_string;
@@ -17,7 +17,7 @@ use function is_string;
  * @link https://html.spec.whatwg.org/multipage/input.html#hidden-state-(type=hidden)
  * @link https://developer.mozilla.org/docs/Web/HTML/Element/input/hidden
  */
-final class Hidden extends InputTagField
+final class Hidden extends BareField
 {
     protected function generateInput(): string
     {

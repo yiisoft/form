@@ -8,11 +8,11 @@ use Yiisoft\Form\Field\Base\InputData\InputDataWithCustomNameAndValueTrait;
 use Yiisoft\Form\Field\Base\InputTag\InputTagMethodsTrait;
 
 /**
- * Base class for fields that render a simple input tag without template/label/hint/error/container features.
+ * Base class for fields that render a simple HTML element without template/label/hint/error/container features.
  *
  * @see PartsField for fields that support templates, labels, hints, and errors.
  */
-abstract class InputTagField extends BaseField
+abstract class BareField extends BaseField
 {
     use InputDataWithCustomNameAndValueTrait;
     use InputTagMethodsTrait;
