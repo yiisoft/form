@@ -602,11 +602,10 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Voronezh</label>
-            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox">
+            <input name="city" value="1" id="UID" type="checkbox">
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
-            false,
         ];
         yield 'wrap' => [
             <<<HTML
@@ -615,7 +614,6 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
-            true,
         ];
         yield 'side' => [
             <<<HTML
@@ -624,25 +622,22 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
-            true,
         ];
     }
 
     #[DataProvider('dataLabelPlacement')]
-    public function testLabelPlacement(string $expected, CheckboxLabelPlacement $placement, bool $hideUncheck = true): void
+    public function testLabelPlacement(string $expected, CheckboxLabelPlacement $placement): void
     {
         $inputData = new InputData('city', label: 'Voronezh');
 
-        $widget = Checkbox::widget()
+        $result = Checkbox::widget()
             ->inputData($inputData)
             ->inputId('UID')
-            ->labelPlacement($placement);
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
 
-        if ($hideUncheck) {
-            $widget = $widget->uncheckValue(null);
-        }
-
-        $this->assertSame($expected, $widget->render());
+        $this->assertSame($expected, $result);
     }
 
     public static function dataLabelPlacementWithInputLabel(): iterable
@@ -651,25 +646,10 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Voronezh</label>
-            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox"> Moscow
+            <input name="city" value="1" id="UID" type="checkbox"> Moscow
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
-            false,
-            'Moscow',
-            true,
-        ];
-        yield 'default not encode' => [
-            <<<HTML
-            <div>
-            <label for="UID">Voronezh</label>
-            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox"> <b>Blue</b>
-            </div>
-            HTML,
-            CheckboxLabelPlacement::DEFAULT,
-            false,
-            '<b>Blue</b>',
-            false,
         ];
         yield 'wrap' => [
             <<<HTML
@@ -678,9 +658,6 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
-            true,
-            'Moscow',
-            true,
         ];
         yield 'side' => [
             <<<HTML
@@ -689,29 +666,23 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
-            true,
-            'Moscow',
-            true,
         ];
     }
 
     #[DataProvider('dataLabelPlacementWithInputLabel')]
-    public function testLabelPlacementWithInputLabel(string $expected, CheckboxLabelPlacement $placement, bool $hideUncheck, string $inputLabelValue, bool $inputLabelEncode): void
+    public function testLabelPlacementWithInputLabel(string $expected, CheckboxLabelPlacement $placement): void
     {
         $inputData = new InputData('city', label: 'Voronezh');
 
-        $widget = Checkbox::widget()
+        $result = Checkbox::widget()
             ->inputData($inputData)
-            ->inputLabel($inputLabelValue)
-            ->inputLabelEncode($inputLabelEncode)
+            ->inputLabel('Moscow')
             ->inputId('UID')
-            ->labelPlacement($placement);
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
 
-        if ($hideUncheck) {
-            $widget = $widget->uncheckValue(null);
-        }
-
-        $this->assertSame($expected, $widget->render());
+        $this->assertSame($expected, $result);
     }
 
     public static function dataLabelPlacementWithLabel(): iterable
@@ -720,11 +691,10 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Moscow</label>
-            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox">
+            <input name="city" value="1" id="UID" type="checkbox">
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
-            false,
         ];
         yield 'wrap' => [
             <<<HTML
@@ -733,7 +703,6 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
-            true,
         ];
         yield 'side' => [
             <<<HTML
@@ -742,26 +711,23 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
-            true,
         ];
     }
 
     #[DataProvider('dataLabelPlacementWithLabel')]
-    public function testLabelPlacementWithLabel(string $expected, CheckboxLabelPlacement $placement, bool $hideUncheck = true): void
+    public function testLabelPlacementWithLabel(string $expected, CheckboxLabelPlacement $placement): void
     {
         $inputData = new InputData('city', label: 'Voronezh');
 
-        $widget = Checkbox::widget()
+        $result = Checkbox::widget()
             ->inputData($inputData)
             ->label('Moscow')
             ->inputId('UID')
-            ->labelPlacement($placement);
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
 
-        if ($hideUncheck) {
-            $widget = $widget->uncheckValue(null);
-        }
-
-        $this->assertSame($expected, $widget->render());
+        $this->assertSame($expected, $result);
     }
 
     public static function dataLabelPlacementWithLabelAndInputLabel(): iterable
@@ -770,11 +736,10 @@ final class CheckboxTest extends TestCase
             <<<HTML
             <div>
             <label for="UID">Vladivostok</label>
-            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox"> Moscow
+            <input name="city" value="1" id="UID" type="checkbox"> Moscow
             </div>
             HTML,
             CheckboxLabelPlacement::DEFAULT,
-            false,
         ];
         yield 'wrap' => [
             <<<HTML
@@ -783,7 +748,6 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::WRAP,
-            true,
         ];
         yield 'side' => [
             <<<HTML
@@ -792,27 +756,66 @@ final class CheckboxTest extends TestCase
             </div>
             HTML,
             CheckboxLabelPlacement::SIDE,
-            true,
         ];
     }
 
     #[DataProvider('dataLabelPlacementWithLabelAndInputLabel')]
-    public function testLabelPlacementWithLabelAndInputLabel(string $expected, CheckboxLabelPlacement $placement, bool $hideUncheck = true): void
+    public function testLabelPlacementWithLabelAndInputLabel(string $expected, CheckboxLabelPlacement $placement): void
     {
         $inputData = new InputData('city', label: 'Voronezh');
 
-        $widget = Checkbox::widget()
+        $result = Checkbox::widget()
             ->inputData($inputData)
             ->inputLabel('Moscow')
             ->label('Vladivostok')
             ->inputId('UID')
-            ->labelPlacement($placement);
+            ->uncheckValue(null)
+            ->labelPlacement($placement)
+            ->render();
 
-        if ($hideUncheck) {
-            $widget = $widget->uncheckValue(null);
-        }
+        $this->assertSame($expected, $result);
+    }
 
-        $this->assertSame($expected, $widget->render());
+    public function testDefaultPlacementWithHiddenInput(): void
+    {
+        $inputData = new InputData('city', label: 'Voronezh');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->inputId('UID')
+            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="UID">Voronezh</label>
+            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox">
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testDefaultPlacementWithInputLabelNotEncoded(): void
+    {
+        $inputData = new InputData('city', label: 'Voronezh');
+
+        $result = Checkbox::widget()
+            ->inputData($inputData)
+            ->inputId('UID')
+            ->inputLabel('<b>Blue</b>')
+            ->inputLabelEncode(false)
+            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <label for="UID">Voronezh</label>
+            <input type="hidden" name="city" value="0"><input name="city" value="1" id="UID" type="checkbox"> <b>Blue</b>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
     }
 
     public static function dataBeforeCheckbox(): array
