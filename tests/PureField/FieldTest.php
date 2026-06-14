@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\PureField;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\PureField\Field;
 use Yiisoft\Form\Tests\Support\ThemedField;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -411,13 +412,17 @@ final class FieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'inputClass' => 'green',
+                'fieldConfigs' => [
+                    Hidden::class => [
+                        'inputId()' => ['theme-id'],
+                    ],
+                ],
             ],
         ]);
 
         $html = ThemedField::hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden">', $html);
+        $this->assertSame('<input type="hidden" id="theme-id">', $html);
     }
 
     public function testImage(): void

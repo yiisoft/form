@@ -64,7 +64,7 @@ final class Hidden extends BaseField
     public function inputClass(?string ...$class): self
     {
         $new = clone $this;
-        $new->inputAttributes['class'] = array_filter($class, static fn($c) => $c !== null);
+        $new->inputAttributes['class'] = $class;
         return $new;
     }
 
@@ -87,21 +87,7 @@ final class Hidden extends BaseField
         return $new;
     }
 
-    protected function getInputAttributes(): array
-    {
-        $attributes = $this->inputAttributes;
-
-        $this->prepareIdInInputAttributes($attributes);
-
-        return $attributes;
-    }
-
     protected function generateContent(): ?string
-    {
-        return $this->generateInput();
-    }
-
-    protected function generateInput(): string
     {
         $value = $this->getValue();
 
@@ -109,10 +95,13 @@ final class Hidden extends BaseField
             throw new InvalidArgumentException('Hidden widget requires a string, numeric or null value.');
         }
 
+        $attributes = $this->inputAttributes;
+        $this->prepareIdInInputAttributes($attributes);
+
         return Html::hiddenInput(
             $this->getName(),
             $value,
-            $this->getInputAttributes(),
+            $attributes,
         )->render();
     }
 
