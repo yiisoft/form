@@ -181,7 +181,7 @@ final class CheckboxTest extends TestCase
 
         $result = Checkbox::widget()
             ->inputData($inputData)
-            ->enclosedByLabel(false)
+            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
             ->render();
 
         $expected = <<<HTML
@@ -242,7 +242,7 @@ final class CheckboxTest extends TestCase
         $result = Checkbox::widget()
             ->inputData($inputData)
             ->inputLabel('Yes')
-            ->enclosedByLabel(false)
+            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
             ->hideLabel(false)
             ->render();
 
@@ -293,14 +293,14 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testInputLabelEncodeNotEnclosedByLabel(): void
+    public function testInputLabelEncodeWithDefaultLabelPlacement(): void
     {
         $inputData = new InputData('test-name', label: 'Blue color');
 
         $result = Checkbox::widget()
             ->inputData($inputData)
             ->inputLabel('A > B')
-            ->enclosedByLabel(false)
+            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
             ->render();
 
         $expected = <<<HTML
@@ -313,7 +313,7 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testInputLabelNotEncodeNotEnclosedByLabel(): void
+    public function testInputLabelNotEncodeWithDefaultLabelPlacement(): void
     {
         $inputData = new InputData('test-name', label: 'Blue color');
 
@@ -321,7 +321,7 @@ final class CheckboxTest extends TestCase
             ->inputData($inputData)
             ->inputLabel('<b>Blue</b>')
             ->inputLabelEncode(false)
-            ->enclosedByLabel(false)
+            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
             ->render();
 
         $expected = <<<HTML
@@ -912,7 +912,6 @@ final class CheckboxTest extends TestCase
         $widget = Checkbox::widget();
 
         $this->assertNotSame($widget, $widget->uncheckValue(null));
-        $this->assertNotSame($widget, $widget->enclosedByLabel(true));
         $this->assertNotSame($widget, $widget->labelPlacement(CheckboxLabelPlacement::DEFAULT));
         $this->assertNotSame($widget, $widget->inputLabel(null));
         $this->assertNotSame($widget, $widget->inputLabelAttributes([]));

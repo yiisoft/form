@@ -25,7 +25,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
     use ValidationClassTrait;
 
     private ?string $uncheckValue = '0';
-    private bool $enclosedByLabel = true;
     private CheckboxLabelPlacement $labelPlacement = CheckboxLabelPlacement::WRAP;
     private ?string $inputLabel = null;
     private array $inputLabelAttributes = [];
@@ -78,20 +77,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
     {
         $new = clone $this;
         $new->inputAttributes['disabled'] = $disabled;
-        return $new;
-    }
-
-    /**
-     * If the input should be enclosed by label.
-     *
-     * @param bool $value If the input should be en closed by label.
-     *
-     * @deprecated Use {@see labelPLacement()} instead it.
-     */
-    public function enclosedByLabel(bool $value): self
-    {
-        $new = clone $this;
-        $new->enclosedByLabel = $value;
         return $new;
     }
 
@@ -334,11 +319,6 @@ final class Checkbox extends InputField implements ValidationClassInterface
 
     private function getLabelPlacement(): CheckboxLabelPlacement
     {
-        // If default value, use deprecated `enclosedByLabel` property
-        if ($this->labelPlacement === CheckboxLabelPlacement::WRAP) {
-            return $this->enclosedByLabel ? CheckboxLabelPlacement::WRAP : CheckboxLabelPlacement::DEFAULT;
-        }
-
         return $this->labelPlacement;
     }
 }
