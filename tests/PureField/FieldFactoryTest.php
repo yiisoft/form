@@ -416,7 +416,7 @@ final class FieldFactoryTest extends TestCase
 
         $html = (new FieldFactory('default'))->hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden" class="green">', $html);
+        $this->assertSame('<input type="hidden">', $html);
     }
 
     public function testImage(): void

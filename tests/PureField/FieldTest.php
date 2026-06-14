@@ -417,7 +417,7 @@ final class FieldTest extends TestCase
 
         $html = ThemedField::hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden" class="green">', $html);
+        $this->assertSame('<input type="hidden">', $html);
     }
 
     public function testImage(): void
