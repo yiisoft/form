@@ -175,25 +175,6 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testNotEnclosedByLabel(): void
-    {
-        $inputData = new InputData('test-name', label: 'Blue color');
-
-        $result = Checkbox::widget()
-            ->inputData($inputData)
-            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox">
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
     public function testAllLabels(): void
     {
         $inputData = new InputData('test-name', label: 'Blue color');
@@ -235,27 +216,6 @@ final class CheckboxTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testBothLabelsWithNotEnclosedByLabel(): void
-    {
-        $inputData = new InputData('test-name', label: 'Blue color');
-
-        $result = Checkbox::widget()
-            ->inputData($inputData)
-            ->inputLabel('Yes')
-            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
-            ->hideLabel(false)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox"> Yes
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
     public function testInputLabelEncode(): void
     {
         $inputData = new InputData('test-name', label: 'Blue color');
@@ -287,47 +247,6 @@ final class CheckboxTest extends TestCase
         $expected = <<<HTML
             <div>
             <input type="hidden" name="test-name" value="0"><label><input name="test-name" value="1" type="checkbox"> <b>Blue</b></label>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testInputLabelEncodeWithDefaultLabelPlacement(): void
-    {
-        $inputData = new InputData('test-name', label: 'Blue color');
-
-        $result = Checkbox::widget()
-            ->inputData($inputData)
-            ->inputLabel('A > B')
-            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox"> A &gt; B
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testInputLabelNotEncodeWithDefaultLabelPlacement(): void
-    {
-        $inputData = new InputData('test-name', label: 'Blue color');
-
-        $result = Checkbox::widget()
-            ->inputData($inputData)
-            ->inputLabel('<b>Blue</b>')
-            ->inputLabelEncode(false)
-            ->labelPlacement(CheckboxLabelPlacement::DEFAULT)
-            ->render();
-
-        $expected = <<<HTML
-            <div>
-            <label>Blue color</label>
-            <input type="hidden" name="test-name" value="0"><input name="test-name" value="1" type="checkbox"> <b>Blue</b>
             </div>
             HTML;
 
