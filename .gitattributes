@@ -30,6 +30,7 @@
 /.styleci.yml           export-ignore
 /infection.json.dist    export-ignore
 /phpunit.xml.dist       export-ignore
+/.meta-storm.xml        export-ignore
 /psalm.xml              export-ignore
 /tests                  export-ignore
 /themes-preview         export-ignore
