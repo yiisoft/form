@@ -18,6 +18,18 @@ final class ButtonFieldTest extends TestCase
         ThemeContainer::initialize();
     }
 
+    public function testGetButton(): void
+    {
+        $field = StubButtonField::widget()
+            ->content('Click Me')
+            ->addButtonClass('btn');
+
+        $tag = $field->getButton();
+
+        $expected = '<button type="button" class="btn">Click Me</button>';
+        $this->assertSame($expected, $tag->render());
+    }
+
     public function testBase(): void
     {
         $result = StubButtonField::widget()
@@ -378,5 +390,6 @@ final class ButtonFieldTest extends TestCase
         $this->assertNotSame($field, $field->tabIndex(null));
         $this->assertNotSame($field, $field->disabled());
         $this->assertNotSame($field, $field->form(null));
+        $this->assertNotSame($field, $field->getButton());
     }
 }

@@ -170,7 +170,7 @@ abstract class ButtonField extends PartsField
         return $new;
     }
 
-    final protected function generateInput(): string
+    final public function getButton(): Button
     {
         $button = ($this->button ?? new Button())
             ->type($this->getType());
@@ -184,7 +184,12 @@ abstract class ButtonField extends PartsField
             $button = $button->content($content);
         }
 
-        return $button->render();
+        return $button;
+    }
+
+    final protected function generateInput(): string
+    {
+        return $this->getButton()->render();
     }
 
     abstract protected function getType(): string;
