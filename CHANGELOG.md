@@ -6,6 +6,7 @@
 - New #388: Add `beforeCheckbox()` and `afterCheckbox()` methods to `Checkbox` and `CheckboxList` fields (@vjik)
 - New #388: Add `beforeRadio()` and `afterRadio()` methods to `RadioList` field (@vjik)
 - Enh #386: Bump minimal `yiisoft/html` version to `^4.2` (@vjik)
+- Enh #392: Move `.meta-storm.xml` to the project root (@Mister-42)
 
 ## 1.5.2 March 20, 2026
 
