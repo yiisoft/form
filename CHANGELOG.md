@@ -3,6 +3,7 @@
 ## 1.5.3 under development
 
 - Bug #390: Remove unnecessary `PartsField` methods from `Hidden`; extend `BaseField` directly instead of `InputField` (@Mister-42)
+- New #376: Allow `ButtonField` instances in `ButtonGroup::buttons()` (@Mister-42)
 - New #388: Add `beforeCheckbox()` and `afterCheckbox()` methods to `Checkbox` and `CheckboxList` fields (@vjik)
 - New #388: Add `beforeRadio()` and `afterRadio()` methods to `RadioList` field (@vjik)
 - Enh #386: Bump minimal `yiisoft/html` version to `^4.2` (@vjik)

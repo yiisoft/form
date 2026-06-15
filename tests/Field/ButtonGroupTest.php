@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\Field;
 
 use PHPUnit\Framework\TestCase;
+use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
+use Yiisoft\Form\Field\ResetButton;
+use Yiisoft\Form\Field\SubmitButton;
+use Yiisoft\Form\Tests\Support\ThemedField as Field;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Html;
 
@@ -152,6 +156,141 @@ final class ButtonGroupTest extends TestCase
             <button type="reset">Reset</button>
             <br>
             <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsWithFieldButton(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttons(
+                Button::widget()->content('Click'),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button">Click</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsWithResetButton(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttons(
+                ResetButton::widget()->content('Reset'),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset">Reset</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsWithSubmitButton(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttons(
+                SubmitButton::widget()->content('Send'),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsWithMixedFieldButtonsAndHtmlTags(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttons(
+                Html::resetButton('Reset Data'),
+                SubmitButton::widget()->content('Send'),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset">Reset Data</button>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsWithFieldButtonWithTheme(): void
+    {
+        ThemeContainer::initialize(
+            [
+                'default' => [
+                    'fieldConfigs' => [
+                        ButtonGroup::class => [
+                            'containerClass()' => ['btn-toolbar justify-content-end'],
+                        ],
+                        Button::class => [
+                            'content()' => ['Click'],
+                        ],
+                        ResetButton::class => [
+                            'buttonClass()' => ['btn', 'btn-secondary'],
+                            'content()' => ['Reset'],
+                        ],
+                        SubmitButton::class => [
+                            'buttonClass()' => ['btn', 'btn-primary'],
+                            'content()' => ['Submit'],
+                        ],
+                    ],
+                ],
+            ],
+            'default',
+        );
+
+        $result = Field::ButtonGroup()
+            ->buttons(
+                Field::button(),
+                Field::resetButton(),
+                Field::submitButton(),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div class="btn-toolbar justify-content-end">
+            <button type="button">Click</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsWithFieldButtonCustomized(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttons(
+                SubmitButton::widget()
+                    ->content('Go!')
+                    ->addButtonClass('btn-primary')
+                    ->disabled(),
+            )
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit" class="btn-primary" disabled>Go!</button>
             </div>
             HTML;
 

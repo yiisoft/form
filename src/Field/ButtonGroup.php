@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
+use Yiisoft\Form\Field\Base\ButtonField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
@@ -22,10 +23,16 @@ final class ButtonGroup extends PartsField
         $this->widget = (new ButtonGroupWidget())->withoutContainer();
     }
 
-    public function buttons(ButtonTag ...$buttons): self
+    public function buttons(ButtonTag|ButtonField ...$buttons): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->buttons(...$buttons);
+        $buttonTags = [];
+        foreach ($buttons as $button) {
+            $buttonTags[] = $button instanceof ButtonField
+                ? $button->getButton()
+                : $button;
+        }
+        $new->widget = $this->widget->buttons(...$buttonTags);
         return $new;
     }
 
