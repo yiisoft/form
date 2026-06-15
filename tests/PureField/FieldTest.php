@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\PureField;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\PureField\Field;
 use Yiisoft\Form\Tests\Support\ThemedField;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -412,17 +411,26 @@ final class FieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'fieldConfigs' => [
-                    Hidden::class => [
-                        'inputId()' => ['theme-id'],
-                    ],
-                ],
+                'inputAttributes' => ['data-js' => 'hidden-field'],
             ],
         ]);
 
         $html = ThemedField::hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden" id="theme-id">', $html);
+        $this->assertSame('<input type="hidden" data-js="hidden-field">', $html);
+    }
+
+    public function testPartsFieldDoesNotGetInputAttributesFromTheme(): void
+    {
+        ThemeContainer::initialize([
+            'test' => [
+                'inputAttributes' => ['data-js' => 'x'],
+            ],
+        ]);
+
+        $html = Field::button(theme: 'test')->render();
+
+        $this->assertStringNotContainsString('data-js="x"', $html);
     }
 
     public function testImage(): void

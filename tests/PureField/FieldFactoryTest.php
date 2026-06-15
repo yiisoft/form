@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yiisoft\Form\Tests\PureField;
 
 use PHPUnit\Framework\TestCase;
-use Yiisoft\Form\Field\Hidden;
 use Yiisoft\Form\PureField\FieldFactory;
 use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button;
@@ -411,17 +410,13 @@ final class FieldFactoryTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'fieldConfigs' => [
-                    Hidden::class => [
-                        'inputId()' => ['theme-id'],
-                    ],
-                ],
+                'inputAttributes' => ['data-js' => 'hidden-field'],
             ],
         ]);
 
         $html = (new FieldFactory('default'))->hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden" id="theme-id">', $html);
+        $this->assertSame('<input type="hidden" data-js="hidden-field">', $html);
     }
 
     public function testImage(): void
