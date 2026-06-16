@@ -1,6 +1,12 @@
-# UPGRADE from 1.x to 2.0
+# Upgrading Instructions for Yii Form
 
-## Checkbox::enclosedByLabel() removed
+> **Important!** The following upgrading instructions are cumulative. That is, if you want
+> to upgrade from version A to version C and there is version B between A and C, you need
+> to follow the instructions for both A and B.
+
+## Upgrade from 1.x
+
+### Checkbox::enclosedByLabel() removed
 
 The method `Checkbox::enclosedByLabel()` was deprecated since version 1.2.0
 and has been removed in 2.0.0.
