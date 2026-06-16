@@ -1,10 +1,11 @@
 # Yii Form Change Log
 
-## 1.5.3 under development
+## 2.0.0 under development
 
 - New #376: Allow `ButtonField` instances in `ButtonGroup::buttons()` (@Mister-42)
 - New #388: Add `beforeCheckbox()` and `afterCheckbox()` methods to `Checkbox` and `CheckboxList` fields (@vjik)
 - New #388: Add `beforeRadio()` and `afterRadio()` methods to `RadioList` field (@vjik)
+- Chg #391: Remove deprecated `Checkbox::enclosedByLabel()` method; use `labelPlacement()` instead (@Mister-42)
 - Enh #386: Bump minimal `yiisoft/html` version to `^4.2` (@vjik)
 - Enh #392: Move `.meta-storm.xml` to the project root (@Mister-42)
 
