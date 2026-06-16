@@ -10,7 +10,7 @@ application when you upgrade the package from one version to another.
 ## Upgrade from 1.x
 
 - `Hidden` no longer extends `InputField`. It now extends `BaseField` directly. The following
-  methods are no longer available and calling them causes a **compile-time error**:
+  methods are no longer available:
   `label()`, `hint()`, `error()`, `template()`, `templateBegin()`, `templateEnd()`,
   `inputContainerTag()`, `inputContainerAttributes()`, `inputContainerClass()`,
   `addInputContainerClass()`, `beforeInput()`, `afterInput()`, `labelConfig()`, `hintConfig()`,
