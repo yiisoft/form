@@ -411,13 +411,26 @@ final class FieldTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'inputClass' => 'green',
+                'inputAttributes' => ['data-js' => 'hidden-field'],
             ],
         ]);
 
         $html = ThemedField::hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden" class="green">', $html);
+        $this->assertSame('<input type="hidden" data-js="hidden-field">', $html);
+    }
+
+    public function testPartsFieldDoesNotGetInputAttributesFromTheme(): void
+    {
+        ThemeContainer::initialize([
+            'test' => [
+                'inputAttributes' => ['data-js' => 'x'],
+            ],
+        ]);
+
+        $html = Field::button(theme: 'test')->render();
+
+        $this->assertStringNotContainsString('data-js="x"', $html);
     }
 
     public function testImage(): void
