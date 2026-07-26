@@ -8,6 +8,8 @@ use Yiisoft\Form\Field\Base\ButtonField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
+use Yiisoft\Form\Field\ResetButton;
+use Yiisoft\Form\Field\SubmitButton;
 
 /**
  * Represents a button group widget.
@@ -54,6 +56,60 @@ final class ButtonGroup extends PartsField
         $new = clone $this;
         $new->widget = $this->widget->buttonsData($data, $encode);
         return $new;
+    }
+
+    /**
+     * Creates buttons from array data using {@see ButtonField} instances instead of raw tag buttons.
+     *
+     * Each button is an array with label as first element and additional name-value pairs as attributes.
+     * The `type` attribute determines which ButtonField subclass is used:
+     * - `reset` → {@see ResetButton}
+     * - `submit` → {@see SubmitButton}
+     * - default → {@see Button}
+     *
+     * @param array $data Array of buttons. Each button is an array with label as first element and additional
+     * name-value pairs as attributes of button.
+     *
+     * Example:
+     * ```php
+     * [
+     *     ['Reset', 'type' => 'reset', 'class' => 'default'],
+     *     ['Send', 'type' => 'submit', 'class' => 'primary'],
+     * ]
+     * ```
+     * @param bool $encode Whether button content should be HTML-encoded.
+     */
+    public function buttonsFieldData(array $data, bool $encode = true): self
+    {
+        $buttons = [];
+        foreach ($data as $item) {
+            $label = $item[0] ?? '';
+            $attributes = array_slice($item, 1, null, true);
+
+            $type = $attributes['type'] ?? 'button';
+            unset($attributes['type']);
+
+            $buttonField = match ($type) {
+                'reset' => ResetButton::widget(),
+                'submit' => SubmitButton::widget(),
+                default => Button::widget(),
+            };
+
+            $buttonField = $buttonField
+                ->content($label)
+                ->encodeContent(false)
+                ->addButtonAttributes($attributes);
+
+            $buttonTag = $buttonField->getButton();
+
+            if (!$encode) {
+                $buttonTag = $buttonTag->encode(false);
+            }
+
+            $buttons[] = $buttonTag;
+        }
+
+        return $this->buttons(...$buttons);
     }
 
     public function buttonAttributes(array $attributes): self

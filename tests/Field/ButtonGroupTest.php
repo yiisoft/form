@@ -297,12 +297,121 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testButtonsFieldData(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsFieldData([
+                ['Reset', 'type' => 'reset', 'class' => 'default'],
+                ['Send >', 'type' => 'submit', 'class' => 'primary'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset" class="default">Reset</button>
+            <button type="submit" class="primary">Send &gt;</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsFieldDataDefaultType(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsFieldData([
+                ['Click', 'class' => 'btn'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button" class="btn">Click</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsFieldDataNoEncode(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsFieldData([
+                ['<b>Bold</b>', 'type' => 'submit'],
+            ], false)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit"><b>Bold</b></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsFieldDataEmpty(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsFieldData([])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsFieldDataWithTheme(): void
+    {
+        ThemeContainer::initialize(
+            [
+                'default' => [
+                    'fieldConfigs' => [
+                        ButtonGroup::class => [
+                            'containerClass()' => ['btn-toolbar justify-content-end'],
+                        ],
+                        Button::class => [
+                            'buttonClass()' => ['btn', 'btn-default'],
+                        ],
+                        ResetButton::class => [
+                            'buttonClass()' => ['btn', 'btn-secondary'],
+                        ],
+                        SubmitButton::class => [
+                            'buttonClass()' => ['btn', 'btn-primary'],
+                        ],
+                    ],
+                ],
+            ],
+            'default',
+        );
+
+        $result = Field::ButtonGroup()
+            ->buttonsFieldData([
+                ['Reset', 'type' => 'reset'],
+                ['Send', 'type' => 'submit'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div class="btn-toolbar justify-content-end">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = ButtonGroup::widget();
 
         $this->assertNotSame($field, $field->buttons());
         $this->assertNotSame($field, $field->buttonsData([]));
+        $this->assertNotSame($field, $field->buttonsFieldData([]));
         $this->assertNotSame($field, $field->buttonAttributes([]));
         $this->assertNotSame($field, $field->addButtonAttributes([]));
         $this->assertNotSame($field, $field->disabled());
