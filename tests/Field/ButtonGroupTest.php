@@ -364,6 +364,23 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testButtonsFieldDataIntegerLabel(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsFieldData([
+                [0, 'type' => 'submit'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit">0</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testButtonsFieldDataWithTheme(): void
     {
         ThemeContainer::initialize(
