@@ -103,13 +103,7 @@ final class ButtonGroup extends PartsField
                 ->encodeContent(false)
                 ->addButtonAttributes($attributes);
 
-            $buttonTag = $buttonField->getButton();
-
-            if (!$encode) {
-                $buttonTag = $buttonTag->encode(false);
-            }
-
-            $buttons[] = $buttonTag;
+            $buttons[] = $buttonField->getButton()->encode($encode);
         }
 
         return $this->buttons(...$buttons);
