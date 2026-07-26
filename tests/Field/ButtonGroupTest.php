@@ -297,13 +297,13 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsFieldData(): void
+    public function testButtonsDataThemed(): void
     {
         $result = ButtonGroup::widget()
-            ->buttonsFieldData([
+            ->buttonsData([
                 ['Reset', 'type' => 'reset', 'class' => 'default'],
                 ['Send >', 'type' => 'submit', 'class' => 'primary'],
-            ])
+            ], themed: true)
             ->render();
 
         $expected = <<<HTML
@@ -316,12 +316,12 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsFieldDataDefaultType(): void
+    public function testButtonsDataThemedDefaultType(): void
     {
         $result = ButtonGroup::widget()
-            ->buttonsFieldData([
+            ->buttonsData([
                 ['Click', 'class' => 'btn'],
-            ])
+            ], themed: true)
             ->render();
 
         $expected = <<<HTML
@@ -333,12 +333,12 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsFieldDataNoEncode(): void
+    public function testButtonsDataThemedNoEncode(): void
     {
         $result = ButtonGroup::widget()
-            ->buttonsFieldData([
+            ->buttonsData([
                 ['<b>Bold</b>', 'type' => 'submit'],
-            ], false)
+            ], false, themed: true)
             ->render();
 
         $expected = <<<HTML
@@ -350,10 +350,10 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsFieldDataEmpty(): void
+    public function testButtonsDataThemedEmpty(): void
     {
         $result = ButtonGroup::widget()
-            ->buttonsFieldData([])
+            ->buttonsData([], themed: true)
             ->render();
 
         $expected = <<<HTML
@@ -364,12 +364,12 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsFieldDataIntegerLabel(): void
+    public function testButtonsDataThemedIntegerLabel(): void
     {
         $result = ButtonGroup::widget()
-            ->buttonsFieldData([
+            ->buttonsData([
                 [0, 'type' => 'submit'],
-            ])
+            ], themed: true)
             ->render();
 
         $expected = <<<HTML
@@ -381,7 +381,7 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsFieldDataWithTheme(): void
+    public function testButtonsDataThemedWithTheme(): void
     {
         ThemeContainer::initialize(
             [
@@ -405,10 +405,10 @@ final class ButtonGroupTest extends TestCase
         );
 
         $result = Field::ButtonGroup()
-            ->buttonsFieldData([
+            ->buttonsData([
                 [null, 'type' => 'reset'],
                 ['Send', 'type' => 'submit'],
-            ])
+            ], themed: true)
             ->render();
 
         $expected = <<<HTML
@@ -427,7 +427,7 @@ final class ButtonGroupTest extends TestCase
 
         $this->assertNotSame($field, $field->buttons());
         $this->assertNotSame($field, $field->buttonsData([]));
-        $this->assertNotSame($field, $field->buttonsFieldData([]));
+        $this->assertNotSame($field, $field->buttonsData([], themed: true));
         $this->assertNotSame($field, $field->buttonAttributes([]));
         $this->assertNotSame($field, $field->addButtonAttributes([]));
         $this->assertNotSame($field, $field->disabled());
