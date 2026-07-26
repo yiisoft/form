@@ -68,7 +68,7 @@ final class ButtonGroup extends PartsField
      * - default → {@see Button}
      *
      * @param list<array> $data Array of buttons. Each button is an array with label as first element and additional
-     * name-value pairs as attributes of button.
+     * name-value pairs as attributes of button. If label is null, the content from the theme is used.
      *
      * Example:
      * ```php
@@ -83,7 +83,7 @@ final class ButtonGroup extends PartsField
     {
         $buttons = [];
         foreach ($data as $item) {
-            $label = (string) ($item[0] ?? '');
+            $label = $item[0] ?? null;
             $attributes = array_slice($item, 1, null, true);
 
             $type = $attributes['type'] ?? 'button';
@@ -95,8 +95,11 @@ final class ButtonGroup extends PartsField
                 default => Button::widget(),
             };
 
+            if ($label !== null) {
+                $buttonField = $buttonField->content((string) $label);
+            }
+
             $buttonField = $buttonField
-                ->content($label)
                 ->encodeContent(false)
                 ->addButtonAttributes($attributes);
 
