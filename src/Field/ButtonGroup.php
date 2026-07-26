@@ -67,7 +67,7 @@ final class ButtonGroup extends PartsField
      * - `submit` → {@see SubmitButton}
      * - default → {@see Button}
      *
-     * @param array $data Array of buttons. Each button is an array with label as first element and additional
+     * @param list<array> $data Array of buttons. Each button is an array with label as first element and additional
      * name-value pairs as attributes of button.
      *
      * Example:
@@ -83,7 +83,7 @@ final class ButtonGroup extends PartsField
     {
         $buttons = [];
         foreach ($data as $item) {
-            $label = $item[0] ?? '';
+            $label = (string) ($item[0] ?? '');
             $attributes = array_slice($item, 1, null, true);
 
             $type = $attributes['type'] ?? 'button';
