@@ -7,7 +7,7 @@
 - New #388: Add `beforeRadio()` and `afterRadio()` methods to `RadioList` field (@vjik)
 - Enh #386: Bump minimal `yiisoft/html` version to `^4.2` (@vjik)
 - Enh #392: Move `.meta-storm.xml` to the project root (@Mister-42)
-- Enh #399: Add `$asWidget` parameter to `ButtonGroup::buttonsData()` method (@Mister-42)
+- Enh #399: Add `$themed` parameter to `ButtonGroup::buttonsData()` method (@Mister-42)
 
 ## 1.5.2 March 20, 2026
 
