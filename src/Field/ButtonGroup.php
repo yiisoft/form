@@ -8,8 +8,8 @@ use Yiisoft\Form\Field\Base\ButtonField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
-use Yiisoft\Form\Field\ResetButton;
-use Yiisoft\Form\Field\SubmitButton;
+
+use function array_slice;
 
 /**
  * Represents a button group widget.
