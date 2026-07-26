@@ -72,17 +72,17 @@ final class ButtonGroup extends PartsField
                 $type = $attributes['type'] ?? 'button';
                 unset($attributes['type']);
 
-                $buttonField = match ($type) {
+                $buttonWidget = match ($type) {
                     'reset' => ResetButton::widget(),
                     'submit' => SubmitButton::widget(),
                     default => Button::widget(),
                 };
 
                 if ($label !== null) {
-                    $buttonField = $buttonField->content((string) $label);
+                    $buttonWidget = $buttonWidget->content((string) $label);
                 }
 
-                return $buttonField
+                return $buttonWidget
                     ->encodeContent(false)
                     ->addButtonAttributes($attributes)
                     ->getButton()
