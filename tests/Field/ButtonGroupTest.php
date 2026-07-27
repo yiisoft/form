@@ -421,6 +421,64 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testButtonsDataDefaultNotThemedWithTheme(): void
+    {
+        ThemeContainer::initialize(
+            [
+                'default' => [
+                    'fieldConfigs' => [
+                        ButtonGroup::class => [
+                            'containerClass()' => ['btn-toolbar justify-content-end'],
+                        ],
+                        ResetButton::class => [
+                            'buttonClass()' => ['btn', 'btn-secondary'],
+                            'content()' => ['Reset'],
+                        ],
+                        SubmitButton::class => [
+                            'buttonClass()' => ['btn', 'btn-primary'],
+                            'content()' => ['Submit'],
+                        ],
+                    ],
+                ],
+            ],
+            'default',
+        );
+
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Reset', 'type' => 'reset'],
+                ['Send', 'type' => 'submit'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div class="btn-toolbar justify-content-end">
+            <button type="reset">Reset</button>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedSkipsNonArrayItems(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                'invalid',
+                ['Send', 'type' => 'submit'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testImmutability(): void
     {
         $field = ButtonGroup::widget();
