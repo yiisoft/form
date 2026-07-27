@@ -445,8 +445,8 @@ final class ButtonGroupTest extends TestCase
 
         $result = Field::ButtonGroup()
             ->buttonsData([
-				[],
-				['type' => 'button'],
+                [],
+                ['type' => 'button'],
                 [null, 'type' => 'reset'],
                 ['Send', 'type' => 'submit'],
             ], themed: true)
