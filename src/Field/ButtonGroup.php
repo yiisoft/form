@@ -64,34 +64,39 @@ final class ButtonGroup extends PartsField
      */
     public function buttonsData(array $data, bool $encode = true, bool $themed = false): self
     {
-        $factory = $themed
-            ? static function (array $item, bool $encode): ButtonTag {
-                $label = $item[0] ?? null;
-                $attributes = array_slice($item, 1, null, true);
-
-                $type = $attributes['type'] ?? 'button';
-                unset($attributes['type']);
-
-                $buttonWidget = match ($type) {
-                    'reset' => ResetButton::widget(),
-                    'submit' => SubmitButton::widget(),
-                    default => Button::widget(),
-                };
-
-                if ($label !== null) {
-                    $buttonWidget = $buttonWidget->content((string) $label);
-                }
-
-                return $buttonWidget
-                    ->encodeContent(false)
-                    ->addButtonAttributes($attributes)
-                    ->getButton()
-                    ->encode($encode);
-            }
-            : null;
-
         $new = clone $this;
-        $new->widget = $this->widget->buttonsData($data, $encode, $factory);
+
+        if (!$themed) {
+            $new->widget = $this->widget->buttonsData($data, $encode);
+            return $new;
+        }
+
+        $buttonTags = [];
+        foreach ($data as $item) {
+            $label = $item[0] ?? null;
+            $attributes = array_slice($item, 1, null, true);
+
+            $type = $attributes['type'] ?? 'button';
+            unset($attributes['type']);
+
+            $buttonWidget = match ($type) {
+                'reset' => ResetButton::widget(),
+                'submit' => SubmitButton::widget(),
+                default => Button::widget(),
+            };
+
+            if ($label !== null) {
+                $buttonWidget = $buttonWidget->content((string) $label);
+            }
+
+            $buttonTags[] = $buttonWidget
+                ->encodeContent(false)
+                ->addButtonAttributes($attributes)
+                ->getButton()
+                ->encode($encode);
+        }
+
+        $new->widget = $this->widget->buttons(...$buttonTags);
         return $new;
     }
 
