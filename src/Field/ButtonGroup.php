@@ -77,7 +77,7 @@ final class ButtonGroup extends PartsField
                 $label = $item[0] ?? null;
                 $attributes = array_slice($item, 1, null, true);
 
-                $type = $attributes['type'] ?? 'button';
+                $type = strtolower((string) ($attributes['type'] ?? 'button'));
                 unset($attributes['type']);
 
                 $buttonWidget = match ($type) {

@@ -333,6 +333,42 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testButtonsDataThemedCaseInsensitiveType(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Reset', 'type' => 'RESET'],
+                ['Send', 'type' => 'Submit'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset">Reset</button>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedIntegerType(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Click', 'type' => 123],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button">Click</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
     public function testButtonsDataThemedNoEncode(): void
     {
         $result = ButtonGroup::widget()
