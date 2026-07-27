@@ -11,6 +11,7 @@ use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
 
 use function array_slice;
+use function is_array;
 
 /**
  * Represents a button group widget.
