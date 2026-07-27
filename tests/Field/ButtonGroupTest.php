@@ -426,6 +426,9 @@ final class ButtonGroupTest extends TestCase
                         ButtonGroup::class => [
                             'containerClass()' => ['btn-toolbar justify-content-end'],
                         ],
+                        Button::class => [
+                            'content()' => ['Click'],
+                        ],
                         ResetButton::class => [
                             'buttonClass()' => ['btn', 'btn-secondary'],
                             'content()' => ['Reset'],
@@ -442,6 +445,8 @@ final class ButtonGroupTest extends TestCase
 
         $result = Field::ButtonGroup()
             ->buttonsData([
+				[],
+				['type' => 'button'],
                 [null, 'type' => 'reset'],
                 ['Send', 'type' => 'submit'],
             ], themed: true)
@@ -449,6 +454,8 @@ final class ButtonGroupTest extends TestCase
 
         $expected = <<<HTML
             <div class="btn-toolbar justify-content-end">
+            <button type="button">Click</button>
+            <button type="button">Click</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
             <button type="submit" class="btn btn-primary">Send</button>
             </div>

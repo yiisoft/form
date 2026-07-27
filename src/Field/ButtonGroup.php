@@ -12,6 +12,7 @@ use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
 
 use function array_slice;
 use function is_array;
+use function strtolower;
 
 /**
  * Represents a button group widget.
