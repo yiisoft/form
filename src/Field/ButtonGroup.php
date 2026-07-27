@@ -73,6 +73,9 @@ final class ButtonGroup extends PartsField
 
         $buttonTags = [];
         foreach ($data as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
             $label = $item[0] ?? null;
             $attributes = array_slice($item, 1, null, true);
 
