@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
@@ -297,12 +298,235 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
+    public function testButtonsDataThemed(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Reset', 'type' => 'reset', 'class' => 'default'],
+                ['Send >', 'type' => 'submit', 'class' => 'primary'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset" class="default">Reset</button>
+            <button type="submit" class="primary">Send &gt;</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedDefaultType(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Click', 'class' => 'btn'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button" class="btn">Click</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedCaseInsensitiveType(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Reset', 'type' => 'RESET'],
+                ['Send', 'type' => 'Submit'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="reset">Reset</button>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedIntegerType(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Click', 'type' => 123],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="button">Click</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedNoEncode(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['<b>Bold</b>', 'type' => 'submit'],
+            ], false, themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit"><b>Bold</b></button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedEmpty(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedIntegerLabel(): void
+    {
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                [0, 'type' => 'submit'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div>
+            <button type="submit">0</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedWithTheme(): void
+    {
+        ThemeContainer::initialize(
+            [
+                'default' => [
+                    'fieldConfigs' => [
+                        ButtonGroup::class => [
+                            'containerClass()' => ['btn-toolbar justify-content-end'],
+                        ],
+                        Button::class => [
+                            'content()' => ['Click'],
+                        ],
+                        ResetButton::class => [
+                            'buttonClass()' => ['btn', 'btn-secondary'],
+                            'content()' => ['Reset'],
+                        ],
+                        SubmitButton::class => [
+                            'buttonClass()' => ['btn', 'btn-primary'],
+                            'content()' => ['Submit'],
+                        ],
+                    ],
+                ],
+            ],
+            'default',
+        );
+
+        $result = Field::ButtonGroup()
+            ->buttonsData([
+                [],
+                ['type' => 'button'],
+                [null, 'type' => 'reset'],
+                ['Send', 'type' => 'submit'],
+            ], themed: true)
+            ->render();
+
+        $expected = <<<HTML
+            <div class="btn-toolbar justify-content-end">
+            <button type="button">Click</button>
+            <button type="button">Click</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataDefaultNotThemedWithTheme(): void
+    {
+        ThemeContainer::initialize(
+            [
+                'default' => [
+                    'fieldConfigs' => [
+                        ButtonGroup::class => [
+                            'containerClass()' => ['btn-toolbar justify-content-end'],
+                        ],
+                        ResetButton::class => [
+                            'buttonClass()' => ['btn', 'btn-secondary'],
+                            'content()' => ['Reset'],
+                        ],
+                        SubmitButton::class => [
+                            'buttonClass()' => ['btn', 'btn-primary'],
+                            'content()' => ['Submit'],
+                        ],
+                    ],
+                ],
+            ],
+            'default',
+        );
+
+        $result = ButtonGroup::widget()
+            ->buttonsData([
+                ['Reset', 'type' => 'reset'],
+                ['Send', 'type' => 'submit'],
+            ])
+            ->render();
+
+        $expected = <<<HTML
+            <div class="btn-toolbar justify-content-end">
+            <button type="reset">Reset</button>
+            <button type="submit">Send</button>
+            </div>
+            HTML;
+
+        $this->assertSame($expected, $result);
+    }
+
+    public function testButtonsDataThemedThrowsExceptionForNonArrayItem(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid buttons data. A data row must be array with label as first element '
+            . 'and additional name-value pairs as attributes of button.',
+        );
+        ButtonGroup::widget()
+            ->buttonsData([
+                'invalid',
+                ['Send', 'type' => 'submit'],
+            ], themed: true)
+            ->render();
+    }
+
     public function testImmutability(): void
     {
         $field = ButtonGroup::widget();
 
         $this->assertNotSame($field, $field->buttons());
         $this->assertNotSame($field, $field->buttonsData([]));
+        $this->assertNotSame($field, $field->buttonsData([], themed: true));
         $this->assertNotSame($field, $field->buttonAttributes([]));
         $this->assertNotSame($field, $field->addButtonAttributes([]));
         $this->assertNotSame($field, $field->disabled());

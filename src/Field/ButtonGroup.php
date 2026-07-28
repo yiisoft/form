@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
+use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\ButtonField;
 use Yiisoft\Form\Field\Base\PartsField;
+use Yiisoft\Form\Theme\ThemeContainer;
 use Yiisoft\Html\Tag\Button as ButtonTag;
 use Yiisoft\Html\Widget\ButtonGroup as ButtonGroupWidget;
+
+use function array_slice;
+use function is_array;
+use function strtolower;
 
 /**
  * Represents a button group widget.
@@ -48,11 +54,59 @@ final class ButtonGroup extends PartsField
      * ]
      * ```
      * @param bool $encode Whether button content should be HTML-encoded.
+     * @param bool $themed When true, creates buttons via {@see ButtonField} instances
+     * ({@see Button}, {@see ResetButton}, {@see SubmitButton}) instead of raw tag buttons.
+     * The `type` attribute determines which subclass is used:
+     * `reset` → {@see ResetButton}, `submit` → {@see SubmitButton}, default → {@see Button}.
+     * If label is null, the content from the theme is used.
+     * Theme styling only applies when the host application has configured a theme via
+     * {@see ThemeContainer}. Without a configured theme, the output is identical to the
+     * default (non-themed) behavior.
+     *
+     * In a future major version, the default value of this parameter will change to `true`.
      */
-    public function buttonsData(array $data, bool $encode = true): self
+    public function buttonsData(array $data, bool $encode = true, bool $themed = false): self
     {
         $new = clone $this;
-        $new->widget = $this->widget->buttonsData($data, $encode);
+
+        if (!$themed) {
+            $new->widget = $this->widget->buttonsData($data, $encode);
+            return $new;
+        }
+
+        $buttonTags = [];
+        foreach ($data as $item) {
+            if (!is_array($item)) {
+                throw new InvalidArgumentException(
+                    'Invalid buttons data. A data row must be array with label as first element '
+                    . 'and additional name-value pairs as attributes of button.',
+                );
+            }
+
+            $label = $item[0] ?? null;
+            $attributes = array_slice($item, 1, null, true);
+
+            $type = strtolower((string) ($attributes['type'] ?? 'button'));
+            unset($attributes['type']);
+
+            $buttonWidget = match ($type) {
+                'reset' => ResetButton::widget(),
+                'submit' => SubmitButton::widget(),
+                default => Button::widget(),
+            };
+
+            if ($label !== null) {
+                $buttonWidget = $buttonWidget->content((string) $label);
+            }
+
+            $buttonTags[] = $buttonWidget
+                ->encodeContent(false)
+                ->addButtonAttributes($attributes)
+                ->getButton()
+                ->encode($encode);
+        }
+
+        $new->widget = $this->widget->buttons(...$buttonTags);
         return $new;
     }
 
