@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Tests\Field;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Form\Field\Button;
 use Yiisoft\Form\Field\ButtonGroup;
@@ -504,22 +505,19 @@ final class ButtonGroupTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testButtonsDataThemedSkipsNonArrayItems(): void
+    public function testButtonsDataThemedThrowsExceptionForNonArrayItem(): void
     {
-        $result = ButtonGroup::widget()
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Invalid buttons data. A data row must be array with label as first element '
+            . 'and additional name-value pairs as attributes of button.',
+        );
+        ButtonGroup::widget()
             ->buttonsData([
                 'invalid',
                 ['Send', 'type' => 'submit'],
             ], themed: true)
             ->render();
-
-        $expected = <<<HTML
-            <div>
-            <button type="submit">Send</button>
-            </div>
-            HTML;
-
-        $this->assertSame($expected, $result);
     }
 
     public function testImmutability(): void

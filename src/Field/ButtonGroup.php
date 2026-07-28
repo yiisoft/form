@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Form\Field;
 
+use InvalidArgumentException;
 use Yiisoft\Form\Field\Base\ButtonField;
 use Yiisoft\Form\Field\Base\PartsField;
 use Yiisoft\Form\Theme\ThemeContainer;
@@ -75,29 +76,34 @@ final class ButtonGroup extends PartsField
 
         $buttonTags = [];
         foreach ($data as $item) {
-            if (is_array($item)) {
-                $label = $item[0] ?? null;
-                $attributes = array_slice($item, 1, null, true);
-
-                $type = strtolower((string) ($attributes['type'] ?? 'button'));
-                unset($attributes['type']);
-
-                $buttonWidget = match ($type) {
-                    'reset' => ResetButton::widget(),
-                    'submit' => SubmitButton::widget(),
-                    default => Button::widget(),
-                };
-
-                if ($label !== null) {
-                    $buttonWidget = $buttonWidget->content((string) $label);
-                }
-
-                $buttonTags[] = $buttonWidget
-                    ->encodeContent(false)
-                    ->addButtonAttributes($attributes)
-                    ->getButton()
-                    ->encode($encode);
+            if (!is_array($item)) {
+                throw new InvalidArgumentException(
+                    'Invalid buttons data. A data row must be array with label as first element '
+                    . 'and additional name-value pairs as attributes of button.',
+                );
             }
+
+            $label = $item[0] ?? null;
+            $attributes = array_slice($item, 1, null, true);
+
+            $type = strtolower((string) ($attributes['type'] ?? 'button'));
+            unset($attributes['type']);
+
+            $buttonWidget = match ($type) {
+                'reset' => ResetButton::widget(),
+                'submit' => SubmitButton::widget(),
+                default => Button::widget(),
+            };
+
+            if ($label !== null) {
+                $buttonWidget = $buttonWidget->content((string) $label);
+            }
+
+            $buttonTags[] = $buttonWidget
+                ->encodeContent(false)
+                ->addButtonAttributes($attributes)
+                ->getButton()
+                ->encode($encode);
         }
 
         $new->widget = $this->widget->buttons(...$buttonTags);
