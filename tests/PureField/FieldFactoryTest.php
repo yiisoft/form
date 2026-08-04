@@ -410,13 +410,13 @@ final class FieldFactoryTest extends TestCase
     {
         ThemeContainer::initialize([
             'test' => [
-                'inputClass' => 'green',
+                'inputAttributes' => ['data-js' => 'hidden-field'],
             ],
         ]);
 
         $html = (new FieldFactory('default'))->hidden(theme: 'test')->render();
 
-        $this->assertSame('<input type="hidden" class="green">', $html);
+        $this->assertSame('<input type="hidden" data-js="hidden-field">', $html);
     }
 
     public function testImage(): void
