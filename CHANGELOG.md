@@ -8,6 +8,7 @@
 - Enh #386: Bump minimal `yiisoft/html` version to `^4.2` (@vjik)
 - Enh #392: Move `.meta-storm.xml` to the project root (@Mister-42)
 - New #399: Add `$themed` parameter to `ButtonGroup::buttonsData()` method (@Mister-42)
+- Enh #402: Remove unused `yiisoft/friendly-exception` dependency (@vjik)
 
 ## 1.5.2 March 20, 2026
 
